@@ -2817,6 +2817,207 @@ func (a *AculClientFilterByMetadata) String() string {
 // Client metadata key/value pairs
 type AculClientMetadata = map[string]interface{}
 
+// Array of screen configurations to update
+type AculConfigs = []*AculConfigsItem
+
+var (
+	aculConfigsItemFieldPrompt                  = big.NewInt(1 << 0)
+	aculConfigsItemFieldScreen                  = big.NewInt(1 << 1)
+	aculConfigsItemFieldRenderingMode           = big.NewInt(1 << 2)
+	aculConfigsItemFieldContextConfiguration    = big.NewInt(1 << 3)
+	aculConfigsItemFieldDefaultHeadTagsDisabled = big.NewInt(1 << 4)
+	aculConfigsItemFieldHeadTags                = big.NewInt(1 << 5)
+	aculConfigsItemFieldFilters                 = big.NewInt(1 << 6)
+	aculConfigsItemFieldUsePageTemplate         = big.NewInt(1 << 7)
+)
+
+type AculConfigsItem struct {
+	Prompt                  PromptGroupNameEnum          `json:"prompt" url:"prompt"`
+	Screen                  ScreenGroupNameEnum          `json:"screen" url:"screen"`
+	RenderingMode           AculRenderingModeEnum        `json:"rendering_mode" url:"rendering_mode"`
+	ContextConfiguration    *AculContextConfiguration    `json:"context_configuration,omitempty" url:"context_configuration,omitempty"`
+	DefaultHeadTagsDisabled *AculDefaultHeadTagsDisabled `json:"default_head_tags_disabled,omitempty" url:"default_head_tags_disabled,omitempty"`
+	HeadTags                AculHeadTags                 `json:"head_tags" url:"head_tags"`
+	Filters                 *AculFilters                 `json:"filters,omitempty" url:"filters,omitempty"`
+	UsePageTemplate         *AculUsePageTemplate         `json:"use_page_template,omitempty" url:"use_page_template,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculConfigsItem) GetPrompt() PromptGroupNameEnum {
+	if a == nil {
+		return ""
+	}
+	return a.Prompt
+}
+
+func (a *AculConfigsItem) GetScreen() ScreenGroupNameEnum {
+	if a == nil {
+		return ""
+	}
+	return a.Screen
+}
+
+func (a *AculConfigsItem) GetRenderingMode() AculRenderingModeEnum {
+	if a == nil {
+		return ""
+	}
+	return a.RenderingMode
+}
+
+func (a *AculConfigsItem) GetContextConfiguration() AculContextConfiguration {
+	if a == nil || a.ContextConfiguration == nil {
+		return nil
+	}
+	return *a.ContextConfiguration
+}
+
+func (a *AculConfigsItem) GetDefaultHeadTagsDisabled() AculDefaultHeadTagsDisabled {
+	if a == nil || a.DefaultHeadTagsDisabled == nil {
+		return nil
+	}
+	return *a.DefaultHeadTagsDisabled
+}
+
+func (a *AculConfigsItem) GetHeadTags() AculHeadTags {
+	if a == nil {
+		return nil
+	}
+	return a.HeadTags
+}
+
+func (a *AculConfigsItem) GetFilters() AculFilters {
+	if a == nil || a.Filters == nil {
+		return AculFilters{}
+	}
+	return *a.Filters
+}
+
+func (a *AculConfigsItem) GetUsePageTemplate() AculUsePageTemplate {
+	if a == nil || a.UsePageTemplate == nil {
+		return nil
+	}
+	return *a.UsePageTemplate
+}
+
+func (a *AculConfigsItem) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AculConfigsItem) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetPrompt(prompt PromptGroupNameEnum) {
+	a.Prompt = prompt
+	a.require(aculConfigsItemFieldPrompt)
+}
+
+// SetScreen sets the Screen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetScreen(screen ScreenGroupNameEnum) {
+	a.Screen = screen
+	a.require(aculConfigsItemFieldScreen)
+}
+
+// SetRenderingMode sets the RenderingMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetRenderingMode(renderingMode AculRenderingModeEnum) {
+	a.RenderingMode = renderingMode
+	a.require(aculConfigsItemFieldRenderingMode)
+}
+
+// SetContextConfiguration sets the ContextConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetContextConfiguration(contextConfiguration *AculContextConfiguration) {
+	a.ContextConfiguration = contextConfiguration
+	a.require(aculConfigsItemFieldContextConfiguration)
+}
+
+// SetDefaultHeadTagsDisabled sets the DefaultHeadTagsDisabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetDefaultHeadTagsDisabled(defaultHeadTagsDisabled *AculDefaultHeadTagsDisabled) {
+	a.DefaultHeadTagsDisabled = defaultHeadTagsDisabled
+	a.require(aculConfigsItemFieldDefaultHeadTagsDisabled)
+}
+
+// SetHeadTags sets the HeadTags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetHeadTags(headTags AculHeadTags) {
+	a.HeadTags = headTags
+	a.require(aculConfigsItemFieldHeadTags)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetFilters(filters *AculFilters) {
+	a.Filters = filters
+	a.require(aculConfigsItemFieldFilters)
+}
+
+// SetUsePageTemplate sets the UsePageTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetUsePageTemplate(usePageTemplate *AculUsePageTemplate) {
+	a.UsePageTemplate = usePageTemplate
+	a.require(aculConfigsItemFieldUsePageTemplate)
+}
+
+func (a *AculConfigsItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculConfigsItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculConfigsItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculConfigsItem) MarshalJSON() ([]byte, error) {
+	type embed AculConfigsItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AculConfigsItem) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Context values to make available
+type AculContextConfiguration = []AculContextConfigurationItem
+
+type AculContextConfigurationItem = string
+
+// Override Universal Login default head tags
+type AculDefaultHeadTagsDisabled = *bool
+
 // Domains array filter items
 type AculDomainFilter struct {
 	AculDomainFilterByID       *AculDomainFilterByID
@@ -3372,6 +3573,9 @@ func (a *AculHeadTagAttributes) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// An array of head tags
+type AculHeadTags = []*AculHeadTag
+
 // Type of match to apply
 type AculMatchTypeEnum string
 
@@ -3808,6 +4012,9 @@ func (a *AculResponseContent) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// Use page template with ACUL
+type AculUsePageTemplate = *bool
+
 var (
 	addOrganizationConnectionResponseContentFieldConnectionID            = big.NewInt(1 << 0)
 	addOrganizationConnectionResponseContentFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
@@ -4125,6 +4332,1245 @@ func (a *AssociateOrganizationClientGrantResponseContent) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+var (
+	attackProtectionCaptchaArkoseResponseContentFieldSiteKey         = big.NewInt(1 << 0)
+	attackProtectionCaptchaArkoseResponseContentFieldFailOpen        = big.NewInt(1 << 1)
+	attackProtectionCaptchaArkoseResponseContentFieldClientSubdomain = big.NewInt(1 << 2)
+	attackProtectionCaptchaArkoseResponseContentFieldVerifySubdomain = big.NewInt(1 << 3)
+)
+
+type AttackProtectionCaptchaArkoseResponseContent struct {
+	// The site key for the Arkose captcha provider.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+	// Whether the captcha should fail open.
+	FailOpen *bool `json:"fail_open,omitempty" url:"fail_open,omitempty"`
+	// The subdomain used for client requests to the Arkose captcha provider.
+	ClientSubdomain *string `json:"client_subdomain,omitempty" url:"client_subdomain,omitempty"`
+	// The subdomain used for server-side verification requests to the Arkose captcha provider.
+	VerifySubdomain *string `json:"verify_subdomain,omitempty" url:"verify_subdomain,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaArkoseResponseContent) GetSiteKey() string {
+	if a == nil || a.SiteKey == nil {
+		return ""
+	}
+	return *a.SiteKey
+}
+
+func (a *AttackProtectionCaptchaArkoseResponseContent) GetFailOpen() bool {
+	if a == nil || a.FailOpen == nil {
+		return false
+	}
+	return *a.FailOpen
+}
+
+func (a *AttackProtectionCaptchaArkoseResponseContent) GetClientSubdomain() string {
+	if a == nil || a.ClientSubdomain == nil {
+		return ""
+	}
+	return *a.ClientSubdomain
+}
+
+func (a *AttackProtectionCaptchaArkoseResponseContent) GetVerifySubdomain() string {
+	if a == nil || a.VerifySubdomain == nil {
+		return ""
+	}
+	return *a.VerifySubdomain
+}
+
+func (a *AttackProtectionCaptchaArkoseResponseContent) GetExtraProperties() map[string]interface{} {
+	return a.ExtraProperties
+}
+
+func (a *AttackProtectionCaptchaArkoseResponseContent) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaArkoseResponseContent) SetSiteKey(siteKey *string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionCaptchaArkoseResponseContentFieldSiteKey)
+}
+
+// SetFailOpen sets the FailOpen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaArkoseResponseContent) SetFailOpen(failOpen *bool) {
+	a.FailOpen = failOpen
+	a.require(attackProtectionCaptchaArkoseResponseContentFieldFailOpen)
+}
+
+// SetClientSubdomain sets the ClientSubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaArkoseResponseContent) SetClientSubdomain(clientSubdomain *string) {
+	a.ClientSubdomain = clientSubdomain
+	a.require(attackProtectionCaptchaArkoseResponseContentFieldClientSubdomain)
+}
+
+// SetVerifySubdomain sets the VerifySubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaArkoseResponseContent) SetVerifySubdomain(verifySubdomain *string) {
+	a.VerifySubdomain = verifySubdomain
+	a.require(attackProtectionCaptchaArkoseResponseContentFieldVerifySubdomain)
+}
+
+func (a *AttackProtectionCaptchaArkoseResponseContent) UnmarshalJSON(data []byte) error {
+	type embed AttackProtectionCaptchaArkoseResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaArkoseResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaArkoseResponseContent) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaArkoseResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *AttackProtectionCaptchaArkoseResponseContent) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionCaptchaAuthChallengeRequestFieldFailOpen = big.NewInt(1 << 0)
+)
+
+type AttackProtectionCaptchaAuthChallengeRequest struct {
+	// Whether the auth challenge should fail open.
+	FailOpen bool `json:"fail_open" url:"fail_open"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeRequest) GetFailOpen() bool {
+	if a == nil {
+		return false
+	}
+	return a.FailOpen
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeRequest) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeRequest) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetFailOpen sets the FailOpen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaAuthChallengeRequest) SetFailOpen(failOpen bool) {
+	a.FailOpen = failOpen
+	a.require(attackProtectionCaptchaAuthChallengeRequestFieldFailOpen)
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler AttackProtectionCaptchaAuthChallengeRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaAuthChallengeRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeRequest) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaAuthChallengeRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeRequest) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionCaptchaAuthChallengeResponseContentFieldFailOpen = big.NewInt(1 << 0)
+)
+
+type AttackProtectionCaptchaAuthChallengeResponseContent struct {
+	// Whether the auth challenge should fail open.
+	FailOpen *bool `json:"fail_open,omitempty" url:"fail_open,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeResponseContent) GetFailOpen() bool {
+	if a == nil || a.FailOpen == nil {
+		return false
+	}
+	return *a.FailOpen
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeResponseContent) GetExtraProperties() map[string]interface{} {
+	return a.ExtraProperties
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeResponseContent) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetFailOpen sets the FailOpen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaAuthChallengeResponseContent) SetFailOpen(failOpen *bool) {
+	a.FailOpen = failOpen
+	a.require(attackProtectionCaptchaAuthChallengeResponseContentFieldFailOpen)
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeResponseContent) UnmarshalJSON(data []byte) error {
+	type embed AttackProtectionCaptchaAuthChallengeResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaAuthChallengeResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeResponseContent) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaAuthChallengeResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *AttackProtectionCaptchaAuthChallengeResponseContent) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionCaptchaFriendlyCaptchaResponseContentFieldSiteKey = big.NewInt(1 << 0)
+)
+
+type AttackProtectionCaptchaFriendlyCaptchaResponseContent struct {
+	// The site key for the Friendly Captcha provider.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaFriendlyCaptchaResponseContent) GetSiteKey() string {
+	if a == nil || a.SiteKey == nil {
+		return ""
+	}
+	return *a.SiteKey
+}
+
+func (a *AttackProtectionCaptchaFriendlyCaptchaResponseContent) GetExtraProperties() map[string]interface{} {
+	return a.ExtraProperties
+}
+
+func (a *AttackProtectionCaptchaFriendlyCaptchaResponseContent) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaFriendlyCaptchaResponseContent) SetSiteKey(siteKey *string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionCaptchaFriendlyCaptchaResponseContentFieldSiteKey)
+}
+
+func (a *AttackProtectionCaptchaFriendlyCaptchaResponseContent) UnmarshalJSON(data []byte) error {
+	type embed AttackProtectionCaptchaFriendlyCaptchaResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaFriendlyCaptchaResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaFriendlyCaptchaResponseContent) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaFriendlyCaptchaResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *AttackProtectionCaptchaFriendlyCaptchaResponseContent) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionCaptchaHcaptchaResponseContentFieldSiteKey = big.NewInt(1 << 0)
+)
+
+type AttackProtectionCaptchaHcaptchaResponseContent struct {
+	// The site key for the hCaptcha provider.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaHcaptchaResponseContent) GetSiteKey() string {
+	if a == nil || a.SiteKey == nil {
+		return ""
+	}
+	return *a.SiteKey
+}
+
+func (a *AttackProtectionCaptchaHcaptchaResponseContent) GetExtraProperties() map[string]interface{} {
+	return a.ExtraProperties
+}
+
+func (a *AttackProtectionCaptchaHcaptchaResponseContent) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaHcaptchaResponseContent) SetSiteKey(siteKey *string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionCaptchaHcaptchaResponseContentFieldSiteKey)
+}
+
+func (a *AttackProtectionCaptchaHcaptchaResponseContent) UnmarshalJSON(data []byte) error {
+	type embed AttackProtectionCaptchaHcaptchaResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaHcaptchaResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaHcaptchaResponseContent) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaHcaptchaResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *AttackProtectionCaptchaHcaptchaResponseContent) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// The id of the active provider for the CAPTCHA.
+type AttackProtectionCaptchaProviderID string
+
+const (
+	AttackProtectionCaptchaProviderIDArkose              AttackProtectionCaptchaProviderID = "arkose"
+	AttackProtectionCaptchaProviderIDAuthChallenge       AttackProtectionCaptchaProviderID = "auth_challenge"
+	AttackProtectionCaptchaProviderIDFriendlyCaptcha     AttackProtectionCaptchaProviderID = "friendly_captcha"
+	AttackProtectionCaptchaProviderIDHcaptcha            AttackProtectionCaptchaProviderID = "hcaptcha"
+	AttackProtectionCaptchaProviderIDRecaptchaV2         AttackProtectionCaptchaProviderID = "recaptcha_v2"
+	AttackProtectionCaptchaProviderIDRecaptchaEnterprise AttackProtectionCaptchaProviderID = "recaptcha_enterprise"
+	AttackProtectionCaptchaProviderIDSimpleCaptcha       AttackProtectionCaptchaProviderID = "simple_captcha"
+)
+
+func NewAttackProtectionCaptchaProviderIDFromString(s string) (AttackProtectionCaptchaProviderID, error) {
+	switch s {
+	case "arkose":
+		return AttackProtectionCaptchaProviderIDArkose, nil
+	case "auth_challenge":
+		return AttackProtectionCaptchaProviderIDAuthChallenge, nil
+	case "friendly_captcha":
+		return AttackProtectionCaptchaProviderIDFriendlyCaptcha, nil
+	case "hcaptcha":
+		return AttackProtectionCaptchaProviderIDHcaptcha, nil
+	case "recaptcha_v2":
+		return AttackProtectionCaptchaProviderIDRecaptchaV2, nil
+	case "recaptcha_enterprise":
+		return AttackProtectionCaptchaProviderIDRecaptchaEnterprise, nil
+	case "simple_captcha":
+		return AttackProtectionCaptchaProviderIDSimpleCaptcha, nil
+	}
+	var t AttackProtectionCaptchaProviderID
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AttackProtectionCaptchaProviderID) Ptr() *AttackProtectionCaptchaProviderID {
+	return &a
+}
+
+var (
+	attackProtectionCaptchaRecaptchaEnterpriseResponseContentFieldSiteKey   = big.NewInt(1 << 0)
+	attackProtectionCaptchaRecaptchaEnterpriseResponseContentFieldProjectID = big.NewInt(1 << 1)
+)
+
+type AttackProtectionCaptchaRecaptchaEnterpriseResponseContent struct {
+	// The site key for the reCAPTCHA Enterprise provider.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+	// The project ID for the reCAPTCHA Enterprise provider.
+	ProjectID *string `json:"project_id,omitempty" url:"project_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) GetSiteKey() string {
+	if a == nil || a.SiteKey == nil {
+		return ""
+	}
+	return *a.SiteKey
+}
+
+func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) GetProjectID() string {
+	if a == nil || a.ProjectID == nil {
+		return ""
+	}
+	return *a.ProjectID
+}
+
+func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) GetExtraProperties() map[string]interface{} {
+	return a.ExtraProperties
+}
+
+func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) SetSiteKey(siteKey *string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionCaptchaRecaptchaEnterpriseResponseContentFieldSiteKey)
+}
+
+// SetProjectID sets the ProjectID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) SetProjectID(projectID *string) {
+	a.ProjectID = projectID
+	a.require(attackProtectionCaptchaRecaptchaEnterpriseResponseContentFieldProjectID)
+}
+
+func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) UnmarshalJSON(data []byte) error {
+	type embed AttackProtectionCaptchaRecaptchaEnterpriseResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaRecaptchaEnterpriseResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaRecaptchaEnterpriseResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionCaptchaRecaptchaV2ResponseContentFieldSiteKey = big.NewInt(1 << 0)
+)
+
+type AttackProtectionCaptchaRecaptchaV2ResponseContent struct {
+	// The site key for the reCAPTCHA v2 provider.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaRecaptchaV2ResponseContent) GetSiteKey() string {
+	if a == nil || a.SiteKey == nil {
+		return ""
+	}
+	return *a.SiteKey
+}
+
+func (a *AttackProtectionCaptchaRecaptchaV2ResponseContent) GetExtraProperties() map[string]interface{} {
+	return a.ExtraProperties
+}
+
+func (a *AttackProtectionCaptchaRecaptchaV2ResponseContent) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaRecaptchaV2ResponseContent) SetSiteKey(siteKey *string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionCaptchaRecaptchaV2ResponseContentFieldSiteKey)
+}
+
+func (a *AttackProtectionCaptchaRecaptchaV2ResponseContent) UnmarshalJSON(data []byte) error {
+	type embed AttackProtectionCaptchaRecaptchaV2ResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaRecaptchaV2ResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaRecaptchaV2ResponseContent) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaRecaptchaV2ResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *AttackProtectionCaptchaRecaptchaV2ResponseContent) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+type AttackProtectionCaptchaSimpleCaptchaResponseContent = map[string]interface{}
+
+var (
+	attackProtectionUpdateCaptchaArkoseFieldSiteKey         = big.NewInt(1 << 0)
+	attackProtectionUpdateCaptchaArkoseFieldSecret          = big.NewInt(1 << 1)
+	attackProtectionUpdateCaptchaArkoseFieldClientSubdomain = big.NewInt(1 << 2)
+	attackProtectionUpdateCaptchaArkoseFieldVerifySubdomain = big.NewInt(1 << 3)
+	attackProtectionUpdateCaptchaArkoseFieldFailOpen        = big.NewInt(1 << 4)
+)
+
+type AttackProtectionUpdateCaptchaArkose struct {
+	// The site key for the Arkose captcha provider.
+	SiteKey string `json:"site_key" url:"site_key"`
+	// The secret key for the Arkose captcha provider.
+	Secret string `json:"secret" url:"secret"`
+	// The subdomain used for client requests to the Arkose captcha provider.
+	ClientSubdomain *string `json:"client_subdomain,omitempty" url:"client_subdomain,omitempty"`
+	// The subdomain used for server-side verification requests to the Arkose captcha provider.
+	VerifySubdomain *string `json:"verify_subdomain,omitempty" url:"verify_subdomain,omitempty"`
+	// Whether the captcha should fail open.
+	FailOpen *bool `json:"fail_open,omitempty" url:"fail_open,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) GetSiteKey() string {
+	if a == nil {
+		return ""
+	}
+	return a.SiteKey
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) GetSecret() string {
+	if a == nil {
+		return ""
+	}
+	return a.Secret
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) GetClientSubdomain() string {
+	if a == nil || a.ClientSubdomain == nil {
+		return ""
+	}
+	return *a.ClientSubdomain
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) GetVerifySubdomain() string {
+	if a == nil || a.VerifySubdomain == nil {
+		return ""
+	}
+	return *a.VerifySubdomain
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) GetFailOpen() bool {
+	if a == nil || a.FailOpen == nil {
+		return false
+	}
+	return *a.FailOpen
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaArkose) SetSiteKey(siteKey string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionUpdateCaptchaArkoseFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaArkose) SetSecret(secret string) {
+	a.Secret = secret
+	a.require(attackProtectionUpdateCaptchaArkoseFieldSecret)
+}
+
+// SetClientSubdomain sets the ClientSubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaArkose) SetClientSubdomain(clientSubdomain *string) {
+	a.ClientSubdomain = clientSubdomain
+	a.require(attackProtectionUpdateCaptchaArkoseFieldClientSubdomain)
+}
+
+// SetVerifySubdomain sets the VerifySubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaArkose) SetVerifySubdomain(verifySubdomain *string) {
+	a.VerifySubdomain = verifySubdomain
+	a.require(attackProtectionUpdateCaptchaArkoseFieldVerifySubdomain)
+}
+
+// SetFailOpen sets the FailOpen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaArkose) SetFailOpen(failOpen *bool) {
+	a.FailOpen = failOpen
+	a.require(attackProtectionUpdateCaptchaArkoseFieldFailOpen)
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) UnmarshalJSON(data []byte) error {
+	type unmarshaler AttackProtectionUpdateCaptchaArkose
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttackProtectionUpdateCaptchaArkose(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionUpdateCaptchaArkose
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionUpdateCaptchaArkose) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionUpdateCaptchaFriendlyCaptchaFieldSiteKey = big.NewInt(1 << 0)
+	attackProtectionUpdateCaptchaFriendlyCaptchaFieldSecret  = big.NewInt(1 << 1)
+)
+
+type AttackProtectionUpdateCaptchaFriendlyCaptcha struct {
+	// The site key for the Friendly Captcha provider.
+	SiteKey string `json:"site_key" url:"site_key"`
+	// The secret key for the Friendly Captcha provider.
+	Secret string `json:"secret" url:"secret"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) GetSiteKey() string {
+	if a == nil {
+		return ""
+	}
+	return a.SiteKey
+}
+
+func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) GetSecret() string {
+	if a == nil {
+		return ""
+	}
+	return a.Secret
+}
+
+func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) SetSiteKey(siteKey string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionUpdateCaptchaFriendlyCaptchaFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) SetSecret(secret string) {
+	a.Secret = secret
+	a.require(attackProtectionUpdateCaptchaFriendlyCaptchaFieldSecret)
+}
+
+func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) UnmarshalJSON(data []byte) error {
+	type unmarshaler AttackProtectionUpdateCaptchaFriendlyCaptcha
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttackProtectionUpdateCaptchaFriendlyCaptcha(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionUpdateCaptchaFriendlyCaptcha
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionUpdateCaptchaHcaptchaFieldSiteKey = big.NewInt(1 << 0)
+	attackProtectionUpdateCaptchaHcaptchaFieldSecret  = big.NewInt(1 << 1)
+)
+
+type AttackProtectionUpdateCaptchaHcaptcha struct {
+	// The site key for the hCaptcha provider.
+	SiteKey string `json:"site_key" url:"site_key"`
+	// The secret key for the hCaptcha provider.
+	Secret string `json:"secret" url:"secret"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionUpdateCaptchaHcaptcha) GetSiteKey() string {
+	if a == nil {
+		return ""
+	}
+	return a.SiteKey
+}
+
+func (a *AttackProtectionUpdateCaptchaHcaptcha) GetSecret() string {
+	if a == nil {
+		return ""
+	}
+	return a.Secret
+}
+
+func (a *AttackProtectionUpdateCaptchaHcaptcha) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AttackProtectionUpdateCaptchaHcaptcha) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaHcaptcha) SetSiteKey(siteKey string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionUpdateCaptchaHcaptchaFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaHcaptcha) SetSecret(secret string) {
+	a.Secret = secret
+	a.require(attackProtectionUpdateCaptchaHcaptchaFieldSecret)
+}
+
+func (a *AttackProtectionUpdateCaptchaHcaptcha) UnmarshalJSON(data []byte) error {
+	type unmarshaler AttackProtectionUpdateCaptchaHcaptcha
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttackProtectionUpdateCaptchaHcaptcha(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionUpdateCaptchaHcaptcha) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionUpdateCaptchaHcaptcha
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionUpdateCaptchaHcaptcha) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionUpdateCaptchaRecaptchaEnterpriseFieldSiteKey   = big.NewInt(1 << 0)
+	attackProtectionUpdateCaptchaRecaptchaEnterpriseFieldAPIKey    = big.NewInt(1 << 1)
+	attackProtectionUpdateCaptchaRecaptchaEnterpriseFieldProjectID = big.NewInt(1 << 2)
+)
+
+type AttackProtectionUpdateCaptchaRecaptchaEnterprise struct {
+	// The site key for the reCAPTCHA Enterprise provider.
+	SiteKey string `json:"site_key" url:"site_key"`
+	// The API key for the reCAPTCHA Enterprise provider.
+	APIKey string `json:"api_key" url:"api_key"`
+	// The project ID for the reCAPTCHA Enterprise provider.
+	ProjectID string `json:"project_id" url:"project_id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) GetSiteKey() string {
+	if a == nil {
+		return ""
+	}
+	return a.SiteKey
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) GetAPIKey() string {
+	if a == nil {
+		return ""
+	}
+	return a.APIKey
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) GetProjectID() string {
+	if a == nil {
+		return ""
+	}
+	return a.ProjectID
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) SetSiteKey(siteKey string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionUpdateCaptchaRecaptchaEnterpriseFieldSiteKey)
+}
+
+// SetAPIKey sets the APIKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) SetAPIKey(apiKey string) {
+	a.APIKey = apiKey
+	a.require(attackProtectionUpdateCaptchaRecaptchaEnterpriseFieldAPIKey)
+}
+
+// SetProjectID sets the ProjectID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) SetProjectID(projectID string) {
+	a.ProjectID = projectID
+	a.require(attackProtectionUpdateCaptchaRecaptchaEnterpriseFieldProjectID)
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) UnmarshalJSON(data []byte) error {
+	type unmarshaler AttackProtectionUpdateCaptchaRecaptchaEnterprise
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttackProtectionUpdateCaptchaRecaptchaEnterprise(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionUpdateCaptchaRecaptchaEnterprise
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionUpdateCaptchaRecaptchaV2FieldSiteKey = big.NewInt(1 << 0)
+	attackProtectionUpdateCaptchaRecaptchaV2FieldSecret  = big.NewInt(1 << 1)
+)
+
+type AttackProtectionUpdateCaptchaRecaptchaV2 struct {
+	// The site key for the reCAPTCHA v2 provider.
+	SiteKey string `json:"site_key" url:"site_key"`
+	// The secret key for the reCAPTCHA v2 provider.
+	Secret string `json:"secret" url:"secret"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaV2) GetSiteKey() string {
+	if a == nil {
+		return ""
+	}
+	return a.SiteKey
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaV2) GetSecret() string {
+	if a == nil {
+		return ""
+	}
+	return a.Secret
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaV2) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaV2) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaRecaptchaV2) SetSiteKey(siteKey string) {
+	a.SiteKey = siteKey
+	a.require(attackProtectionUpdateCaptchaRecaptchaV2FieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionUpdateCaptchaRecaptchaV2) SetSecret(secret string) {
+	a.Secret = secret
+	a.require(attackProtectionUpdateCaptchaRecaptchaV2FieldSecret)
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaV2) UnmarshalJSON(data []byte) error {
+	type unmarshaler AttackProtectionUpdateCaptchaRecaptchaV2
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttackProtectionUpdateCaptchaRecaptchaV2(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaV2) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionUpdateCaptchaRecaptchaV2
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionUpdateCaptchaRecaptchaV2) String() string {
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
 type AuthenticationMethodTypeEnum string
 
 const (
@@ -4198,6 +5644,125 @@ func NewAuthenticationTypeEnumFromString(s string) (AuthenticationTypeEnum, erro
 func (a AuthenticationTypeEnum) Ptr() *AuthenticationTypeEnum {
 	return &a
 }
+
+// List of IP addresses or CIDR blocks to allowlist
+type BotDetectionAllowlist = []BotDetectionIPAddressOrCidrBlock
+
+// The policy that defines how often to show CAPTCHA
+type BotDetectionChallengePolicyPasswordFlowEnum string
+
+const (
+	BotDetectionChallengePolicyPasswordFlowEnumNever     BotDetectionChallengePolicyPasswordFlowEnum = "never"
+	BotDetectionChallengePolicyPasswordFlowEnumWhenRisky BotDetectionChallengePolicyPasswordFlowEnum = "when_risky"
+	BotDetectionChallengePolicyPasswordFlowEnumAlways    BotDetectionChallengePolicyPasswordFlowEnum = "always"
+)
+
+func NewBotDetectionChallengePolicyPasswordFlowEnumFromString(s string) (BotDetectionChallengePolicyPasswordFlowEnum, error) {
+	switch s {
+	case "never":
+		return BotDetectionChallengePolicyPasswordFlowEnumNever, nil
+	case "when_risky":
+		return BotDetectionChallengePolicyPasswordFlowEnumWhenRisky, nil
+	case "always":
+		return BotDetectionChallengePolicyPasswordFlowEnumAlways, nil
+	}
+	var t BotDetectionChallengePolicyPasswordFlowEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BotDetectionChallengePolicyPasswordFlowEnum) Ptr() *BotDetectionChallengePolicyPasswordFlowEnum {
+	return &b
+}
+
+// The policy that defines how often to show CAPTCHA
+type BotDetectionChallengePolicyPasswordResetFlowEnum string
+
+const (
+	BotDetectionChallengePolicyPasswordResetFlowEnumNever     BotDetectionChallengePolicyPasswordResetFlowEnum = "never"
+	BotDetectionChallengePolicyPasswordResetFlowEnumWhenRisky BotDetectionChallengePolicyPasswordResetFlowEnum = "when_risky"
+	BotDetectionChallengePolicyPasswordResetFlowEnumAlways    BotDetectionChallengePolicyPasswordResetFlowEnum = "always"
+)
+
+func NewBotDetectionChallengePolicyPasswordResetFlowEnumFromString(s string) (BotDetectionChallengePolicyPasswordResetFlowEnum, error) {
+	switch s {
+	case "never":
+		return BotDetectionChallengePolicyPasswordResetFlowEnumNever, nil
+	case "when_risky":
+		return BotDetectionChallengePolicyPasswordResetFlowEnumWhenRisky, nil
+	case "always":
+		return BotDetectionChallengePolicyPasswordResetFlowEnumAlways, nil
+	}
+	var t BotDetectionChallengePolicyPasswordResetFlowEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BotDetectionChallengePolicyPasswordResetFlowEnum) Ptr() *BotDetectionChallengePolicyPasswordResetFlowEnum {
+	return &b
+}
+
+// The policy that defines how often to show CAPTCHA
+type BotDetectionChallengePolicyPasswordlessFlowEnum string
+
+const (
+	BotDetectionChallengePolicyPasswordlessFlowEnumNever     BotDetectionChallengePolicyPasswordlessFlowEnum = "never"
+	BotDetectionChallengePolicyPasswordlessFlowEnumWhenRisky BotDetectionChallengePolicyPasswordlessFlowEnum = "when_risky"
+	BotDetectionChallengePolicyPasswordlessFlowEnumAlways    BotDetectionChallengePolicyPasswordlessFlowEnum = "always"
+)
+
+func NewBotDetectionChallengePolicyPasswordlessFlowEnumFromString(s string) (BotDetectionChallengePolicyPasswordlessFlowEnum, error) {
+	switch s {
+	case "never":
+		return BotDetectionChallengePolicyPasswordlessFlowEnumNever, nil
+	case "when_risky":
+		return BotDetectionChallengePolicyPasswordlessFlowEnumWhenRisky, nil
+	case "always":
+		return BotDetectionChallengePolicyPasswordlessFlowEnumAlways, nil
+	}
+	var t BotDetectionChallengePolicyPasswordlessFlowEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BotDetectionChallengePolicyPasswordlessFlowEnum) Ptr() *BotDetectionChallengePolicyPasswordlessFlowEnum {
+	return &b
+}
+
+// IPv4 address or CIDR block
+type BotDetectionIPv4OrCidrBlock = string
+
+// IPv6 address or CIDR block
+type BotDetectionIPv6OrCidrBlock = string
+
+// IP address (IPv4 or IPv6) or CIDR block
+type BotDetectionIPAddressOrCidrBlock = string
+
+// The level of bot detection sensitivity
+type BotDetectionLevelEnum string
+
+const (
+	BotDetectionLevelEnumLow    BotDetectionLevelEnum = "low"
+	BotDetectionLevelEnumMedium BotDetectionLevelEnum = "medium"
+	BotDetectionLevelEnumHigh   BotDetectionLevelEnum = "high"
+)
+
+func NewBotDetectionLevelEnumFromString(s string) (BotDetectionLevelEnum, error) {
+	switch s {
+	case "low":
+		return BotDetectionLevelEnumLow, nil
+	case "medium":
+		return BotDetectionLevelEnumMedium, nil
+	case "high":
+		return BotDetectionLevelEnumHigh, nil
+	}
+	var t BotDetectionLevelEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BotDetectionLevelEnum) Ptr() *BotDetectionLevelEnum {
+	return &b
+}
+
+// Whether monitoring mode is enabled (logs but does not block)
+type BotDetectionMonitoringModeEnabled = bool
 
 var (
 	brandingThemeBordersFieldButtonBorderRadius = big.NewInt(1 << 0)
@@ -6443,6 +8008,89 @@ func (b *BreachedPasswordDetectionStage) String() string {
 }
 
 var (
+	bulkUpdateAculResponseContentFieldConfigs = big.NewInt(1 << 0)
+)
+
+type BulkUpdateAculResponseContent struct {
+	Configs AculConfigs `json:"configs" url:"configs"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (b *BulkUpdateAculResponseContent) GetConfigs() AculConfigs {
+	if b == nil {
+		return nil
+	}
+	return b.Configs
+}
+
+func (b *BulkUpdateAculResponseContent) GetExtraProperties() map[string]interface{} {
+	return b.ExtraProperties
+}
+
+func (b *BulkUpdateAculResponseContent) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetConfigs sets the Configs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BulkUpdateAculResponseContent) SetConfigs(configs AculConfigs) {
+	b.Configs = configs
+	b.require(bulkUpdateAculResponseContentFieldConfigs)
+}
+
+func (b *BulkUpdateAculResponseContent) UnmarshalJSON(data []byte) error {
+	type embed BulkUpdateAculResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*b = BulkUpdateAculResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.ExtraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BulkUpdateAculResponseContent) MarshalJSON() ([]byte, error) {
+	type embed BulkUpdateAculResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, b.ExtraProperties)
+}
+
+func (b *BulkUpdateAculResponseContent) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+var (
 	clientCredentialFieldID               = big.NewInt(1 << 0)
 	clientCredentialFieldName             = big.NewInt(1 << 1)
 	clientCredentialFieldKid              = big.NewInt(1 << 2)
@@ -6946,6 +8594,183 @@ func (c *ConnectedAccount) String() string {
 // The access type for the connected account.
 type ConnectedAccountAccessTypeEnum = string
 
+// Configure the purpose of a connection to be used for authentication during login.
+var (
+	connectionAuthenticationPurposeFieldActive = big.NewInt(1 << 0)
+)
+
+type ConnectionAuthenticationPurpose struct {
+	Active bool `json:"active" url:"active"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionAuthenticationPurpose) GetActive() bool {
+	if c == nil {
+		return false
+	}
+	return c.Active
+}
+
+func (c *ConnectionAuthenticationPurpose) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionAuthenticationPurpose) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionAuthenticationPurpose) SetActive(active bool) {
+	c.Active = active
+	c.require(connectionAuthenticationPurposeFieldActive)
+}
+
+func (c *ConnectionAuthenticationPurpose) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionAuthenticationPurpose
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionAuthenticationPurpose(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionAuthenticationPurpose) MarshalJSON() ([]byte, error) {
+	type embed ConnectionAuthenticationPurpose
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionAuthenticationPurpose) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
+var (
+	connectionConnectedAccountsPurposeFieldActive         = big.NewInt(1 << 0)
+	connectionConnectedAccountsPurposeFieldCrossAppAccess = big.NewInt(1 << 1)
+)
+
+type ConnectionConnectedAccountsPurpose struct {
+	Active         bool  `json:"active" url:"active"`
+	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetActive() bool {
+	if c == nil {
+		return false
+	}
+	return c.Active
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetCrossAppAccess() bool {
+	if c == nil || c.CrossAppAccess == nil {
+		return false
+	}
+	return *c.CrossAppAccess
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionConnectedAccountsPurpose) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionConnectedAccountsPurpose) SetActive(active bool) {
+	c.Active = active
+	c.require(connectionConnectedAccountsPurposeFieldActive)
+}
+
+// SetCrossAppAccess sets the CrossAppAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionConnectedAccountsPurpose) SetCrossAppAccess(crossAppAccess *bool) {
+	c.CrossAppAccess = crossAppAccess
+	c.require(connectionConnectedAccountsPurposeFieldCrossAppAccess)
+}
+
+func (c *ConnectionConnectedAccountsPurpose) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionConnectedAccountsPurpose
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionConnectedAccountsPurpose(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionConnectedAccountsPurpose) MarshalJSON() ([]byte, error) {
+	type embed ConnectionConnectedAccountsPurpose
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionConnectedAccountsPurpose) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Connection name used in the new universal login experience
+type ConnectionDisplayName = string
+
 var (
 	connectionEnabledClientFieldClientID = big.NewInt(1 << 0)
 )
@@ -7030,6 +8855,9 @@ func (c *ConnectionEnabledClient) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
+type ConnectionEnabledClients = []string
+
 var (
 	connectionForListFieldName               = big.NewInt(1 << 0)
 	connectionForListFieldDisplayName        = big.NewInt(1 << 1)
@@ -7040,6 +8868,8 @@ var (
 	connectionForListFieldIsDomainConnection = big.NewInt(1 << 6)
 	connectionForListFieldShowAsButton       = big.NewInt(1 << 7)
 	connectionForListFieldMetadata           = big.NewInt(1 << 8)
+	connectionForListFieldAuthentication     = big.NewInt(1 << 9)
+	connectionForListFieldConnectedAccounts  = big.NewInt(1 << 10)
 )
 
 type ConnectionForList struct {
@@ -7057,8 +8887,10 @@ type ConnectionForList struct {
 	// True if the connection is domain level
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD.
-	ShowAsButton *bool                `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Metadata     *ConnectionsMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ShowAsButton      *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata          *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7128,6 +8960,20 @@ func (c *ConnectionForList) GetMetadata() ConnectionsMetadata {
 		return nil
 	}
 	return *c.Metadata
+}
+
+func (c *ConnectionForList) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *ConnectionForList) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
 }
 
 func (c *ConnectionForList) GetExtraProperties() map[string]interface{} {
@@ -7204,6 +9050,20 @@ func (c *ConnectionForList) SetMetadata(metadata *ConnectionsMetadata) {
 	c.require(connectionForListFieldMetadata)
 }
 
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForList) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(connectionForListFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForList) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(connectionForListFieldConnectedAccounts)
+}
+
 func (c *ConnectionForList) UnmarshalJSON(data []byte) error {
 	type unmarshaler ConnectionForList
 	var value unmarshaler
@@ -7242,6 +9102,12 @@ func (c *ConnectionForList) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+// The connection's identifier
+type ConnectionID = string
+
+// <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
+type ConnectionIsDomainConnection = bool
 
 var (
 	connectionKeyFieldKid          = big.NewInt(1 << 0)
@@ -7535,8 +9401,602 @@ func (c ConnectionKeyUseEnum) Ptr() *ConnectionKeyUseEnum {
 	return &c
 }
 
+// The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
+type ConnectionName = string
+
 // In order to return options in the response, the `read:connections_options` scope must be present
 type ConnectionOptions = map[string]interface{}
+
+// options for the 'ad' connection
+type ConnectionOptionsAd = map[string]interface{}
+
+// options for the 'adfs' connection
+type ConnectionOptionsAdfs = map[string]interface{}
+
+type ConnectionOptionsAmazon = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsAol = ConnectionOptionsOAuth2Common
+
+// options for the 'apple' connection
+type ConnectionOptionsApple = map[string]interface{}
+
+// options for the 'auth0' connection
+type ConnectionOptionsAuth0 = map[string]interface{}
+
+// options for the 'auth0-oidc' connection
+type ConnectionOptionsAuth0Oidc = map[string]interface{}
+
+// options for the 'waad' connection
+type ConnectionOptionsAzureAd = map[string]interface{}
+
+type ConnectionOptionsBaidu = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsBitbucket = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsBitly = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsBox = ConnectionOptionsOAuth2Common
+
+// options for the 'custom' connection
+type ConnectionOptionsCustom = map[string]interface{}
+
+type ConnectionOptionsDaccount = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsDropbox = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsDwolla = ConnectionOptionsOAuth2Common
+
+// options for the 'email' connection
+type ConnectionOptionsEmail = map[string]interface{}
+
+type ConnectionOptionsEvernote = ConnectionOptionsEvernoteCommon
+
+type ConnectionOptionsEvernoteCommon = map[string]interface{}
+
+type ConnectionOptionsEvernoteSandbox = ConnectionOptionsEvernoteCommon
+
+type ConnectionOptionsExact = ConnectionOptionsOAuth2Common
+
+// options for the 'facebook' connection
+type ConnectionOptionsFacebook = map[string]interface{}
+
+// options for the 'fitbit' connection
+type ConnectionOptionsFitbit = map[string]interface{}
+
+// options for the 'flickr' connection
+type ConnectionOptionsFlickr = map[string]interface{}
+
+// options for the 'github' connection
+type ConnectionOptionsGitHub = map[string]interface{}
+
+// options for the 'google-apps' connection
+type ConnectionOptionsGoogleApps = map[string]interface{}
+
+// options for the 'google-oauth2' connection
+type ConnectionOptionsGoogleOAuth2 = map[string]interface{}
+
+type ConnectionOptionsInstagram = ConnectionOptionsOAuth2Common
+
+// options for the 'ip' connection
+type ConnectionOptionsIP = map[string]interface{}
+
+type ConnectionOptionsLine = ConnectionOptionsOAuth2Common
+
+// options for the 'linkedin' connection
+type ConnectionOptionsLinkedin = map[string]interface{}
+
+type ConnectionOptionsMiicard = ConnectionOptionsOAuth2Common
+
+// options for the 'oauth1' connection
+type ConnectionOptionsOAuth1 = map[string]interface{}
+
+type ConnectionOptionsOAuth2 = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsOAuth2Common = map[string]interface{}
+
+// options for the 'office365' connection
+type ConnectionOptionsOffice365 = map[string]interface{}
+
+// options for the 'oidc' connection
+type ConnectionOptionsOidc = map[string]interface{}
+
+// options for the 'okta' connection
+type ConnectionOptionsOkta = map[string]interface{}
+
+type ConnectionOptionsPaypal = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsPaypalSandbox = ConnectionOptionsOAuth2Common
+
+// options for the 'pingfederate' connection
+type ConnectionOptionsPingFederate = map[string]interface{}
+
+// options for the 'planningcenter' connection
+type ConnectionOptionsPlanningCenter = map[string]interface{}
+
+type ConnectionOptionsRenren = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsSalesforce = ConnectionOptionsSalesforceCommon
+
+type ConnectionOptionsSalesforceCommon = map[string]interface{}
+
+type ConnectionOptionsSalesforceCommunity = ConnectionOptionsSalesforceCommon
+
+type ConnectionOptionsSalesforceSandbox = ConnectionOptionsSalesforceCommon
+
+// options for the 'samlp' connection
+type ConnectionOptionsSAML = map[string]interface{}
+
+type ConnectionOptionsSharepoint = ConnectionOptionsOAuth2Common
+
+// options for the 'shop' connection
+type ConnectionOptionsShop = map[string]interface{}
+
+type ConnectionOptionsShopify = ConnectionOptionsOAuth2Common
+
+// options for the 'sms' connection
+type ConnectionOptionsSms = map[string]interface{}
+
+type ConnectionOptionsSoundcloud = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsTheCity = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsTheCitySandbox = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsThirtySevenSignals = ConnectionOptionsOAuth2Common
+
+// options for the 'twitter' connection
+type ConnectionOptionsTwitter = map[string]interface{}
+
+type ConnectionOptionsUntappd = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsVkontakte = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsWeibo = ConnectionOptionsOAuth2Common
+
+// options for the 'windowslive' connection
+type ConnectionOptionsWindowsLive = map[string]interface{}
+
+type ConnectionOptionsWordpress = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsYahoo = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsYammer = ConnectionOptionsOAuth2Common
+
+type ConnectionOptionsYandex = ConnectionOptionsOAuth2Common
+
+// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
+type ConnectionRealms = []string
+
+var (
+	connectionRequestCommonFieldDisplayName        = big.NewInt(1 << 0)
+	connectionRequestCommonFieldEnabledClients     = big.NewInt(1 << 1)
+	connectionRequestCommonFieldIsDomainConnection = big.NewInt(1 << 2)
+	connectionRequestCommonFieldShowAsButton       = big.NewInt(1 << 3)
+	connectionRequestCommonFieldRealms             = big.NewInt(1 << 4)
+	connectionRequestCommonFieldMetadata           = big.NewInt(1 << 5)
+	connectionRequestCommonFieldAuthentication     = big.NewInt(1 << 6)
+	connectionRequestCommonFieldConnectedAccounts  = big.NewInt(1 << 7)
+)
+
+type ConnectionRequestCommon struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionRequestCommon) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *ConnectionRequestCommon) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *ConnectionRequestCommon) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionRequestCommon) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *ConnectionRequestCommon) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *ConnectionRequestCommon) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *ConnectionRequestCommon) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *ConnectionRequestCommon) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *ConnectionRequestCommon) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionRequestCommon) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(connectionRequestCommonFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(connectionRequestCommonFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionRequestCommonFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(connectionRequestCommonFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(connectionRequestCommonFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionRequestCommonFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(connectionRequestCommonFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(connectionRequestCommonFieldConnectedAccounts)
+}
+
+func (c *ConnectionRequestCommon) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionRequestCommon
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionRequestCommon(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionRequestCommon) MarshalJSON() ([]byte, error) {
+	type embed ConnectionRequestCommon
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionRequestCommon) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	connectionResponseCommonFieldDisplayName        = big.NewInt(1 << 0)
+	connectionResponseCommonFieldEnabledClients     = big.NewInt(1 << 1)
+	connectionResponseCommonFieldIsDomainConnection = big.NewInt(1 << 2)
+	connectionResponseCommonFieldShowAsButton       = big.NewInt(1 << 3)
+	connectionResponseCommonFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseCommonFieldMetadata           = big.NewInt(1 << 5)
+	connectionResponseCommonFieldAuthentication     = big.NewInt(1 << 6)
+	connectionResponseCommonFieldConnectedAccounts  = big.NewInt(1 << 7)
+	connectionResponseCommonFieldID                 = big.NewInt(1 << 8)
+	connectionResponseCommonFieldStrategy           = big.NewInt(1 << 9)
+	connectionResponseCommonFieldName               = big.NewInt(1 << 10)
+)
+
+type ConnectionResponseCommon struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	ID                 *ConnectionID                       `json:"id,omitempty" url:"id,omitempty"`
+	Strategy           *ConnectionIdentityProviderEnum     `json:"strategy,omitempty" url:"strategy,omitempty"`
+	Name               *ConnectionName                     `json:"name,omitempty" url:"name,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionResponseCommon) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *ConnectionResponseCommon) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *ConnectionResponseCommon) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseCommon) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *ConnectionResponseCommon) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *ConnectionResponseCommon) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *ConnectionResponseCommon) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *ConnectionResponseCommon) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *ConnectionResponseCommon) GetID() ConnectionID {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+func (c *ConnectionResponseCommon) GetStrategy() ConnectionIdentityProviderEnum {
+	if c == nil || c.Strategy == nil {
+		return ""
+	}
+	return *c.Strategy
+}
+
+func (c *ConnectionResponseCommon) GetName() ConnectionName {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+func (c *ConnectionResponseCommon) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionResponseCommon) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(connectionResponseCommonFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseCommonFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseCommonFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(connectionResponseCommonFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(connectionResponseCommonFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseCommonFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(connectionResponseCommonFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(connectionResponseCommonFieldConnectedAccounts)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetID(id *ConnectionID) {
+	c.ID = id
+	c.require(connectionResponseCommonFieldID)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetStrategy(strategy *ConnectionIdentityProviderEnum) {
+	c.Strategy = strategy
+	c.require(connectionResponseCommonFieldStrategy)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetName(name *ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseCommonFieldName)
+}
+
+func (c *ConnectionResponseCommon) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionResponseCommon
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionResponseCommon(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionResponseCommon) MarshalJSON() ([]byte, error) {
+	type embed ConnectionResponseCommon
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionResponseCommon) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
+type ConnectionShowAsButton = bool
 
 type ConnectionStrategyEnum string
 
@@ -8111,6 +10571,13832 @@ func (c *CreateBrandingThemeResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateBrandingThemeResponseContent) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=ad
+var (
+	createConnectionRequestContentAdFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentAdFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentAdFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentAdFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentAdFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentAdFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentAdFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentAdFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentAdFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentAd struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsAd                `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentAd) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentAd) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentAd) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentAd) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentAd) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentAd) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentAd) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentAd) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentAd) GetOptions() ConnectionOptionsAd {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentAd) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentAd) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentAd) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAd) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentAdFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAd) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentAdFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAd) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentAdFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAd) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentAdFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAd) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentAdFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAd) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentAdFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAd) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentAdFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAd) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentAdFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAd) SetOptions(options *ConnectionOptionsAd) {
+	c.Options = options
+	c.require(createConnectionRequestContentAdFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentAd) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentAd
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentAd(unmarshaler.embed)
+	if unmarshaler.Strategy != "ad" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "ad", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentAd) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentAd
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "ad",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentAd) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=adfs
+var (
+	createConnectionRequestContentAdfsFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentAdfsFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentAdfsFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentAdfsFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentAdfsFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentAdfsFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentAdfsFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentAdfsFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentAdfsFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentAdfs struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsAdfs              `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetOptions() ConnectionOptionsAdfs {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentAdfs) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentAdfs) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentAdfs) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAdfs) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentAdfsFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAdfs) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentAdfsFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAdfs) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentAdfsFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAdfs) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentAdfsFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAdfs) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentAdfsFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAdfs) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentAdfsFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAdfs) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentAdfsFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAdfs) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentAdfsFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAdfs) SetOptions(options *ConnectionOptionsAdfs) {
+	c.Options = options
+	c.require(createConnectionRequestContentAdfsFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentAdfs) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentAdfs
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentAdfs(unmarshaler.embed)
+	if unmarshaler.Strategy != "adfs" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "adfs", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentAdfs) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentAdfs
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "adfs",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentAdfs) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=amazon
+var (
+	createConnectionRequestContentAmazonFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentAmazonFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentAmazonFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentAmazonFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentAmazonFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentAmazonFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentAmazonFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentAmazonFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentAmazonFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentAmazon struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsAmazon            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetOptions() ConnectionOptionsAmazon {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentAmazon) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentAmazon) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentAmazon) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAmazon) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentAmazonFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAmazon) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentAmazonFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAmazon) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentAmazonFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAmazon) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentAmazonFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAmazon) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentAmazonFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAmazon) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentAmazonFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAmazon) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentAmazonFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAmazon) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentAmazonFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAmazon) SetOptions(options *ConnectionOptionsAmazon) {
+	c.Options = options
+	c.require(createConnectionRequestContentAmazonFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentAmazon) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentAmazon
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentAmazon(unmarshaler.embed)
+	if unmarshaler.Strategy != "amazon" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "amazon", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentAmazon) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentAmazon
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "amazon",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentAmazon) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=aol
+var (
+	createConnectionRequestContentAolFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentAolFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentAolFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentAolFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentAolFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentAolFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentAolFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentAolFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentAolFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentAol struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsAol               `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentAol) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentAol) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentAol) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentAol) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentAol) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentAol) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentAol) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentAol) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentAol) GetOptions() ConnectionOptionsAol {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentAol) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentAol) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentAol) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAol) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentAolFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAol) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentAolFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAol) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentAolFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAol) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentAolFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAol) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentAolFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAol) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentAolFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAol) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentAolFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAol) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentAolFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAol) SetOptions(options *ConnectionOptionsAol) {
+	c.Options = options
+	c.require(createConnectionRequestContentAolFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentAol) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentAol
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentAol(unmarshaler.embed)
+	if unmarshaler.Strategy != "aol" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "aol", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentAol) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentAol
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "aol",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentAol) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=apple
+var (
+	createConnectionRequestContentAppleFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentAppleFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentAppleFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentAppleFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentAppleFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentAppleFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentAppleFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentAppleFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentAppleFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentApple struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsApple             `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentApple) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentApple) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentApple) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentApple) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentApple) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentApple) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentApple) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentApple) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentApple) GetOptions() ConnectionOptionsApple {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentApple) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentApple) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentApple) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentApple) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentAppleFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentApple) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentAppleFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentApple) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentAppleFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentApple) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentAppleFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentApple) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentAppleFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentApple) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentAppleFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentApple) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentAppleFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentApple) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentAppleFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentApple) SetOptions(options *ConnectionOptionsApple) {
+	c.Options = options
+	c.require(createConnectionRequestContentAppleFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentApple) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentApple
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentApple(unmarshaler.embed)
+	if unmarshaler.Strategy != "apple" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "apple", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentApple) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentApple
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "apple",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentApple) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=auth0
+var (
+	createConnectionRequestContentAuth0FieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentAuth0FieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentAuth0FieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentAuth0FieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentAuth0FieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentAuth0FieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentAuth0FieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentAuth0FieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentAuth0FieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentAuth0 struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsAuth0             `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetOptions() ConnectionOptionsAuth0 {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentAuth0) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentAuth0) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentAuth0) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentAuth0FieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentAuth0FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentAuth0FieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentAuth0FieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentAuth0FieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentAuth0FieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentAuth0FieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentAuth0FieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0) SetOptions(options *ConnectionOptionsAuth0) {
+	c.Options = options
+	c.require(createConnectionRequestContentAuth0FieldOptions)
+}
+
+func (c *CreateConnectionRequestContentAuth0) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentAuth0
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentAuth0(unmarshaler.embed)
+	if unmarshaler.Strategy != "auth0" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "auth0", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentAuth0) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentAuth0
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "auth0",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentAuth0) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=auth0-oidc
+var (
+	createConnectionRequestContentAuth0OidcFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentAuth0OidcFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentAuth0OidcFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentAuth0OidcFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentAuth0OidcFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentAuth0OidcFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentAuth0OidcFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentAuth0OidcFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentAuth0OidcFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentAuth0Oidc struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsAuth0Oidc         `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetOptions() ConnectionOptionsAuth0Oidc {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0Oidc) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentAuth0OidcFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0Oidc) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentAuth0OidcFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0Oidc) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentAuth0OidcFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0Oidc) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentAuth0OidcFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0Oidc) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentAuth0OidcFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0Oidc) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentAuth0OidcFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0Oidc) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentAuth0OidcFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0Oidc) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentAuth0OidcFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAuth0Oidc) SetOptions(options *ConnectionOptionsAuth0Oidc) {
+	c.Options = options
+	c.require(createConnectionRequestContentAuth0OidcFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentAuth0Oidc
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentAuth0Oidc(unmarshaler.embed)
+	if unmarshaler.Strategy != "auth0-oidc" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "auth0-oidc", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentAuth0Oidc
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "auth0-oidc",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentAuth0Oidc) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=waad
+var (
+	createConnectionRequestContentAzureAdFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentAzureAdFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentAzureAdFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentAzureAdFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentAzureAdFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentAzureAdFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentAzureAdFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentAzureAdFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentAzureAdFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentAzureAd struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsAzureAd           `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetOptions() ConnectionOptionsAzureAd {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentAzureAd) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentAzureAd) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentAzureAd) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAzureAd) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentAzureAdFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAzureAd) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentAzureAdFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAzureAd) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentAzureAdFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAzureAd) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentAzureAdFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAzureAd) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentAzureAdFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAzureAd) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentAzureAdFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAzureAd) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentAzureAdFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAzureAd) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentAzureAdFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentAzureAd) SetOptions(options *ConnectionOptionsAzureAd) {
+	c.Options = options
+	c.require(createConnectionRequestContentAzureAdFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentAzureAd) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentAzureAd
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentAzureAd(unmarshaler.embed)
+	if unmarshaler.Strategy != "waad" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "waad", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentAzureAd) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentAzureAd
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "waad",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentAzureAd) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=baidu
+var (
+	createConnectionRequestContentBaiduFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentBaiduFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentBaiduFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentBaiduFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentBaiduFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentBaiduFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentBaiduFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentBaiduFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentBaiduFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentBaidu struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsBaidu             `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetOptions() ConnectionOptionsBaidu {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentBaidu) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentBaidu) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentBaidu) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBaidu) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentBaiduFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBaidu) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentBaiduFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBaidu) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentBaiduFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBaidu) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentBaiduFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBaidu) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentBaiduFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBaidu) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentBaiduFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBaidu) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentBaiduFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBaidu) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentBaiduFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBaidu) SetOptions(options *ConnectionOptionsBaidu) {
+	c.Options = options
+	c.require(createConnectionRequestContentBaiduFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentBaidu) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentBaidu
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentBaidu(unmarshaler.embed)
+	if unmarshaler.Strategy != "baidu" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "baidu", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentBaidu) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentBaidu
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "baidu",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentBaidu) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=bitbucket
+var (
+	createConnectionRequestContentBitbucketFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentBitbucketFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentBitbucketFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentBitbucketFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentBitbucketFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentBitbucketFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentBitbucketFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentBitbucketFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentBitbucketFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentBitbucket struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsBitbucket         `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetOptions() ConnectionOptionsBitbucket {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentBitbucket) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentBitbucket) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentBitbucket) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitbucket) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentBitbucketFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitbucket) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentBitbucketFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitbucket) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentBitbucketFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitbucket) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentBitbucketFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitbucket) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentBitbucketFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitbucket) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentBitbucketFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitbucket) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentBitbucketFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitbucket) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentBitbucketFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitbucket) SetOptions(options *ConnectionOptionsBitbucket) {
+	c.Options = options
+	c.require(createConnectionRequestContentBitbucketFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentBitbucket) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentBitbucket
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentBitbucket(unmarshaler.embed)
+	if unmarshaler.Strategy != "bitbucket" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "bitbucket", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentBitbucket) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentBitbucket
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "bitbucket",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentBitbucket) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=bitly
+var (
+	createConnectionRequestContentBitlyFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentBitlyFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentBitlyFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentBitlyFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentBitlyFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentBitlyFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentBitlyFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentBitlyFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentBitlyFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentBitly struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsBitly             `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentBitly) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentBitly) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentBitly) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentBitly) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentBitly) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentBitly) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentBitly) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentBitly) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentBitly) GetOptions() ConnectionOptionsBitly {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentBitly) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentBitly) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentBitly) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitly) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentBitlyFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitly) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentBitlyFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitly) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentBitlyFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitly) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentBitlyFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitly) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentBitlyFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitly) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentBitlyFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitly) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentBitlyFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitly) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentBitlyFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBitly) SetOptions(options *ConnectionOptionsBitly) {
+	c.Options = options
+	c.require(createConnectionRequestContentBitlyFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentBitly) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentBitly
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentBitly(unmarshaler.embed)
+	if unmarshaler.Strategy != "bitly" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "bitly", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentBitly) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentBitly
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "bitly",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentBitly) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=box
+var (
+	createConnectionRequestContentBoxFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentBoxFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentBoxFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentBoxFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentBoxFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentBoxFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentBoxFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentBoxFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentBoxFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentBox struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsBox               `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentBox) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentBox) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentBox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentBox) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentBox) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentBox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentBox) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentBox) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentBox) GetOptions() ConnectionOptionsBox {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentBox) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentBox) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentBox) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBox) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentBoxFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBox) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentBoxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentBoxFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBox) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentBoxFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBox) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentBoxFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentBoxFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBox) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentBoxFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBox) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentBoxFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentBox) SetOptions(options *ConnectionOptionsBox) {
+	c.Options = options
+	c.require(createConnectionRequestContentBoxFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentBox) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentBox
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentBox(unmarshaler.embed)
+	if unmarshaler.Strategy != "box" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "box", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentBox) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentBox
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "box",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentBox) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=custom
+var (
+	createConnectionRequestContentCustomFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentCustomFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentCustomFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentCustomFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentCustomFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentCustomFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentCustomFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentCustomFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentCustomFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentCustom struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsCustom            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentCustom) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentCustom) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentCustom) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentCustom) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentCustom) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentCustom) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentCustom) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentCustom) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentCustom) GetOptions() ConnectionOptionsCustom {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentCustom) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentCustom) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentCustom) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentCustom) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentCustomFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentCustom) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentCustomFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentCustom) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentCustomFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentCustom) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentCustomFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentCustom) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentCustomFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentCustom) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentCustomFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentCustom) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentCustomFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentCustom) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentCustomFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentCustom) SetOptions(options *ConnectionOptionsCustom) {
+	c.Options = options
+	c.require(createConnectionRequestContentCustomFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentCustom) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentCustom
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentCustom(unmarshaler.embed)
+	if unmarshaler.Strategy != "custom" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "custom", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentCustom) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentCustom
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "custom",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentCustom) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=daccount
+var (
+	createConnectionRequestContentDaccountFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentDaccountFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentDaccountFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentDaccountFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentDaccountFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentDaccountFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentDaccountFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentDaccountFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentDaccountFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentDaccount struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsDaccount          `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetOptions() ConnectionOptionsDaccount {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentDaccount) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentDaccount) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentDaccount) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDaccount) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentDaccountFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDaccount) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentDaccountFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDaccount) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentDaccountFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDaccount) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentDaccountFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDaccount) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentDaccountFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDaccount) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentDaccountFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDaccount) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentDaccountFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDaccount) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentDaccountFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDaccount) SetOptions(options *ConnectionOptionsDaccount) {
+	c.Options = options
+	c.require(createConnectionRequestContentDaccountFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentDaccount) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentDaccount
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentDaccount(unmarshaler.embed)
+	if unmarshaler.Strategy != "daccount" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "daccount", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentDaccount) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentDaccount
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "daccount",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentDaccount) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=dropbox
+var (
+	createConnectionRequestContentDropboxFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentDropboxFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentDropboxFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentDropboxFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentDropboxFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentDropboxFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentDropboxFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentDropboxFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentDropboxFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentDropbox struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsDropbox           `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetOptions() ConnectionOptionsDropbox {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentDropbox) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentDropbox) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentDropbox) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDropbox) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentDropboxFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDropbox) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentDropboxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDropbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentDropboxFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDropbox) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentDropboxFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDropbox) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentDropboxFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDropbox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentDropboxFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDropbox) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentDropboxFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDropbox) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentDropboxFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDropbox) SetOptions(options *ConnectionOptionsDropbox) {
+	c.Options = options
+	c.require(createConnectionRequestContentDropboxFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentDropbox) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentDropbox
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentDropbox(unmarshaler.embed)
+	if unmarshaler.Strategy != "dropbox" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "dropbox", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentDropbox) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentDropbox
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "dropbox",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentDropbox) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=dwolla
+var (
+	createConnectionRequestContentDwollaFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentDwollaFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentDwollaFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentDwollaFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentDwollaFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentDwollaFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentDwollaFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentDwollaFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentDwollaFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentDwolla struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsDwolla            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetOptions() ConnectionOptionsDwolla {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentDwolla) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentDwolla) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentDwolla) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDwolla) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentDwollaFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDwolla) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentDwollaFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDwolla) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentDwollaFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDwolla) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentDwollaFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDwolla) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentDwollaFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDwolla) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentDwollaFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDwolla) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentDwollaFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDwolla) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentDwollaFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentDwolla) SetOptions(options *ConnectionOptionsDwolla) {
+	c.Options = options
+	c.require(createConnectionRequestContentDwollaFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentDwolla) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentDwolla
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentDwolla(unmarshaler.embed)
+	if unmarshaler.Strategy != "dwolla" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "dwolla", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentDwolla) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentDwolla
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "dwolla",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentDwolla) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=email
+var (
+	createConnectionRequestContentEmailFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentEmailFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentEmailFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentEmailFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentEmailFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentEmailFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentEmailFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentEmailFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentEmailFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentEmail struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsEmail             `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentEmail) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentEmail) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentEmail) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentEmail) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentEmail) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentEmail) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentEmail) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentEmail) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentEmail) GetOptions() ConnectionOptionsEmail {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentEmail) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentEmail) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentEmail) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEmail) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentEmailFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEmail) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentEmailFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEmail) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentEmailFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEmail) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentEmailFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEmail) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentEmailFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEmail) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentEmailFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEmail) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentEmailFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEmail) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentEmailFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEmail) SetOptions(options *ConnectionOptionsEmail) {
+	c.Options = options
+	c.require(createConnectionRequestContentEmailFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentEmail) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentEmail
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentEmail(unmarshaler.embed)
+	if unmarshaler.Strategy != "email" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "email", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentEmail) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentEmail
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "email",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentEmail) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=evernote
+var (
+	createConnectionRequestContentEvernoteFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentEvernoteFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentEvernoteFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentEvernoteFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentEvernoteFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentEvernoteFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentEvernoteFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentEvernoteFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentEvernoteFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentEvernote struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsEvernote          `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetOptions() ConnectionOptionsEvernote {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentEvernote) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentEvernote) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentEvernote) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernote) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentEvernoteFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernote) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentEvernoteFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernote) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentEvernoteFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernote) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentEvernoteFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernote) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentEvernoteFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernote) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentEvernoteFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernote) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentEvernoteFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernote) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentEvernoteFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernote) SetOptions(options *ConnectionOptionsEvernote) {
+	c.Options = options
+	c.require(createConnectionRequestContentEvernoteFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentEvernote) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentEvernote
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentEvernote(unmarshaler.embed)
+	if unmarshaler.Strategy != "evernote" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "evernote", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentEvernote) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentEvernote
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "evernote",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentEvernote) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=evernote-sandbox
+var (
+	createConnectionRequestContentEvernoteSandboxFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentEvernoteSandboxFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentEvernoteSandboxFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentEvernoteSandboxFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentEvernoteSandboxFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentEvernoteSandboxFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentEvernoteSandboxFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentEvernoteSandboxFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentEvernoteSandboxFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentEvernoteSandbox struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsEvernoteSandbox   `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetOptions() ConnectionOptionsEvernoteSandbox {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernoteSandbox) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentEvernoteSandboxFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernoteSandbox) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentEvernoteSandboxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernoteSandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentEvernoteSandboxFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernoteSandbox) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentEvernoteSandboxFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernoteSandbox) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentEvernoteSandboxFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernoteSandbox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentEvernoteSandboxFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernoteSandbox) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentEvernoteSandboxFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernoteSandbox) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentEvernoteSandboxFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentEvernoteSandbox) SetOptions(options *ConnectionOptionsEvernoteSandbox) {
+	c.Options = options
+	c.require(createConnectionRequestContentEvernoteSandboxFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentEvernoteSandbox
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentEvernoteSandbox(unmarshaler.embed)
+	if unmarshaler.Strategy != "evernote-sandbox" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "evernote-sandbox", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentEvernoteSandbox
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "evernote-sandbox",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentEvernoteSandbox) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=exact
+var (
+	createConnectionRequestContentExactFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentExactFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentExactFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentExactFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentExactFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentExactFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentExactFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentExactFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentExactFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentExact struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsExact             `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentExact) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentExact) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentExact) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentExact) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentExact) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentExact) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentExact) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentExact) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentExact) GetOptions() ConnectionOptionsExact {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentExact) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentExact) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentExact) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentExact) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentExactFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentExact) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentExactFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentExact) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentExactFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentExact) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentExactFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentExact) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentExactFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentExact) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentExactFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentExact) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentExactFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentExact) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentExactFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentExact) SetOptions(options *ConnectionOptionsExact) {
+	c.Options = options
+	c.require(createConnectionRequestContentExactFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentExact) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentExact
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentExact(unmarshaler.embed)
+	if unmarshaler.Strategy != "exact" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "exact", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentExact) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentExact
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "exact",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentExact) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=facebook
+var (
+	createConnectionRequestContentFacebookFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentFacebookFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentFacebookFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentFacebookFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentFacebookFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentFacebookFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentFacebookFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentFacebookFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentFacebookFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentFacebook struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsFacebook          `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetOptions() ConnectionOptionsFacebook {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentFacebook) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentFacebook) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentFacebook) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFacebook) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentFacebookFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFacebook) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentFacebookFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFacebook) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentFacebookFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFacebook) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentFacebookFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFacebook) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentFacebookFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFacebook) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentFacebookFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFacebook) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentFacebookFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFacebook) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentFacebookFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFacebook) SetOptions(options *ConnectionOptionsFacebook) {
+	c.Options = options
+	c.require(createConnectionRequestContentFacebookFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentFacebook) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentFacebook
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentFacebook(unmarshaler.embed)
+	if unmarshaler.Strategy != "facebook" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "facebook", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentFacebook) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentFacebook
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "facebook",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentFacebook) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=fitbit
+var (
+	createConnectionRequestContentFitbitFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentFitbitFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentFitbitFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentFitbitFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentFitbitFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentFitbitFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentFitbitFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentFitbitFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentFitbitFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentFitbit struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsFitbit            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetOptions() ConnectionOptionsFitbit {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentFitbit) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentFitbit) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentFitbit) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFitbit) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentFitbitFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFitbit) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentFitbitFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFitbit) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentFitbitFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFitbit) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentFitbitFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFitbit) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentFitbitFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFitbit) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentFitbitFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFitbit) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentFitbitFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFitbit) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentFitbitFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFitbit) SetOptions(options *ConnectionOptionsFitbit) {
+	c.Options = options
+	c.require(createConnectionRequestContentFitbitFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentFitbit) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentFitbit
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentFitbit(unmarshaler.embed)
+	if unmarshaler.Strategy != "fitbit" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "fitbit", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentFitbit) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentFitbit
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "fitbit",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentFitbit) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=flickr
+var (
+	createConnectionRequestContentFlickrFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentFlickrFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentFlickrFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentFlickrFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentFlickrFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentFlickrFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentFlickrFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentFlickrFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentFlickrFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentFlickr struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsFlickr            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetOptions() ConnectionOptionsFlickr {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentFlickr) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentFlickr) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentFlickr) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFlickr) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentFlickrFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFlickr) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentFlickrFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFlickr) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentFlickrFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFlickr) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentFlickrFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFlickr) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentFlickrFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFlickr) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentFlickrFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFlickr) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentFlickrFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFlickr) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentFlickrFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentFlickr) SetOptions(options *ConnectionOptionsFlickr) {
+	c.Options = options
+	c.require(createConnectionRequestContentFlickrFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentFlickr) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentFlickr
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentFlickr(unmarshaler.embed)
+	if unmarshaler.Strategy != "flickr" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "flickr", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentFlickr) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentFlickr
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "flickr",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentFlickr) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=github
+var (
+	createConnectionRequestContentGitHubFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentGitHubFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentGitHubFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentGitHubFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentGitHubFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentGitHubFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentGitHubFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentGitHubFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentGitHubFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentGitHub struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsGitHub            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetOptions() ConnectionOptionsGitHub {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentGitHub) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentGitHub) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentGitHub) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGitHub) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentGitHubFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGitHub) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentGitHubFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGitHub) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentGitHubFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGitHub) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentGitHubFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGitHub) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentGitHubFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGitHub) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentGitHubFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGitHub) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentGitHubFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGitHub) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentGitHubFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGitHub) SetOptions(options *ConnectionOptionsGitHub) {
+	c.Options = options
+	c.require(createConnectionRequestContentGitHubFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentGitHub) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentGitHub
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentGitHub(unmarshaler.embed)
+	if unmarshaler.Strategy != "github" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "github", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentGitHub) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentGitHub
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "github",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentGitHub) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=google-apps
+var (
+	createConnectionRequestContentGoogleAppsFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentGoogleAppsFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentGoogleAppsFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentGoogleAppsFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentGoogleAppsFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentGoogleAppsFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentGoogleAppsFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentGoogleAppsFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentGoogleAppsFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentGoogleApps struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsGoogleApps        `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetOptions() ConnectionOptionsGoogleApps {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleApps) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentGoogleAppsFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleApps) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentGoogleAppsFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleApps) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentGoogleAppsFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleApps) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentGoogleAppsFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleApps) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentGoogleAppsFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleApps) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentGoogleAppsFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleApps) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentGoogleAppsFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleApps) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentGoogleAppsFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleApps) SetOptions(options *ConnectionOptionsGoogleApps) {
+	c.Options = options
+	c.require(createConnectionRequestContentGoogleAppsFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentGoogleApps
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentGoogleApps(unmarshaler.embed)
+	if unmarshaler.Strategy != "google-apps" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "google-apps", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentGoogleApps
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "google-apps",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentGoogleApps) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=google-oauth2
+var (
+	createConnectionRequestContentGoogleOAuth2FieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentGoogleOAuth2FieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentGoogleOAuth2FieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentGoogleOAuth2FieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentGoogleOAuth2FieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentGoogleOAuth2FieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentGoogleOAuth2FieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentGoogleOAuth2FieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentGoogleOAuth2FieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentGoogleOAuth2 struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsGoogleOAuth2      `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetOptions() ConnectionOptionsGoogleOAuth2 {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleOAuth2) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentGoogleOAuth2FieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleOAuth2) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentGoogleOAuth2FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleOAuth2) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentGoogleOAuth2FieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleOAuth2) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentGoogleOAuth2FieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleOAuth2) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentGoogleOAuth2FieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleOAuth2) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentGoogleOAuth2FieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleOAuth2) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentGoogleOAuth2FieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleOAuth2) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentGoogleOAuth2FieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentGoogleOAuth2) SetOptions(options *ConnectionOptionsGoogleOAuth2) {
+	c.Options = options
+	c.require(createConnectionRequestContentGoogleOAuth2FieldOptions)
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentGoogleOAuth2
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentGoogleOAuth2(unmarshaler.embed)
+	if unmarshaler.Strategy != "google-oauth2" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "google-oauth2", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentGoogleOAuth2
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "google-oauth2",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentGoogleOAuth2) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=instagram
+var (
+	createConnectionRequestContentInstagramFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentInstagramFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentInstagramFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentInstagramFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentInstagramFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentInstagramFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentInstagramFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentInstagramFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentInstagramFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentInstagram struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsInstagram         `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetOptions() ConnectionOptionsInstagram {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentInstagram) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentInstagram) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentInstagram) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentInstagram) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentInstagramFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentInstagram) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentInstagramFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentInstagram) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentInstagramFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentInstagram) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentInstagramFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentInstagram) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentInstagramFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentInstagram) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentInstagramFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentInstagram) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentInstagramFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentInstagram) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentInstagramFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentInstagram) SetOptions(options *ConnectionOptionsInstagram) {
+	c.Options = options
+	c.require(createConnectionRequestContentInstagramFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentInstagram) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentInstagram
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentInstagram(unmarshaler.embed)
+	if unmarshaler.Strategy != "instagram" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "instagram", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentInstagram) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentInstagram
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "instagram",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentInstagram) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=ip
+var (
+	createConnectionRequestContentIPFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentIPFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentIPFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentIPFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentIPFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentIPFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentIPFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentIPFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentIPFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentIP struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsIP                `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentIP) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentIP) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentIP) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentIP) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentIP) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentIP) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentIP) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentIP) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentIP) GetOptions() ConnectionOptionsIP {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentIP) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentIP) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentIP) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentIP) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentIPFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentIP) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentIPFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentIP) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentIPFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentIP) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentIPFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentIP) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentIPFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentIP) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentIPFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentIP) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentIPFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentIP) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentIPFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentIP) SetOptions(options *ConnectionOptionsIP) {
+	c.Options = options
+	c.require(createConnectionRequestContentIPFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentIP) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentIP
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentIP(unmarshaler.embed)
+	if unmarshaler.Strategy != "ip" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "ip", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentIP) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentIP
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "ip",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentIP) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=line
+var (
+	createConnectionRequestContentLineFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentLineFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentLineFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentLineFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentLineFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentLineFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentLineFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentLineFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentLineFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentLine struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsLine              `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentLine) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentLine) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentLine) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentLine) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentLine) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentLine) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentLine) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentLine) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentLine) GetOptions() ConnectionOptionsLine {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentLine) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentLine) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentLine) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLine) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentLineFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLine) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentLineFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLine) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentLineFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLine) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentLineFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLine) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentLineFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLine) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentLineFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLine) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentLineFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLine) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentLineFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLine) SetOptions(options *ConnectionOptionsLine) {
+	c.Options = options
+	c.require(createConnectionRequestContentLineFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentLine) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentLine
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentLine(unmarshaler.embed)
+	if unmarshaler.Strategy != "line" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "line", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentLine) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentLine
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "line",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentLine) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=linkedin
+var (
+	createConnectionRequestContentLinkedinFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentLinkedinFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentLinkedinFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentLinkedinFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentLinkedinFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentLinkedinFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentLinkedinFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentLinkedinFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentLinkedinFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentLinkedin struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsLinkedin          `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetOptions() ConnectionOptionsLinkedin {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentLinkedin) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentLinkedin) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentLinkedin) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLinkedin) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentLinkedinFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLinkedin) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentLinkedinFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLinkedin) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentLinkedinFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLinkedin) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentLinkedinFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLinkedin) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentLinkedinFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLinkedin) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentLinkedinFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLinkedin) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentLinkedinFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLinkedin) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentLinkedinFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentLinkedin) SetOptions(options *ConnectionOptionsLinkedin) {
+	c.Options = options
+	c.require(createConnectionRequestContentLinkedinFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentLinkedin) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentLinkedin
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentLinkedin(unmarshaler.embed)
+	if unmarshaler.Strategy != "linkedin" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "linkedin", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentLinkedin) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentLinkedin
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "linkedin",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentLinkedin) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=miicard
+var (
+	createConnectionRequestContentMiicardFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentMiicardFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentMiicardFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentMiicardFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentMiicardFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentMiicardFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentMiicardFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentMiicardFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentMiicardFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentMiicard struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsMiicard           `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetOptions() ConnectionOptionsMiicard {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentMiicard) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentMiicard) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentMiicard) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentMiicard) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentMiicardFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentMiicard) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentMiicardFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentMiicard) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentMiicardFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentMiicard) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentMiicardFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentMiicard) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentMiicardFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentMiicard) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentMiicardFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentMiicard) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentMiicardFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentMiicard) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentMiicardFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentMiicard) SetOptions(options *ConnectionOptionsMiicard) {
+	c.Options = options
+	c.require(createConnectionRequestContentMiicardFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentMiicard) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentMiicard
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentMiicard(unmarshaler.embed)
+	if unmarshaler.Strategy != "miicard" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "miicard", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentMiicard) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentMiicard
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "miicard",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentMiicard) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=oauth1
+var (
+	createConnectionRequestContentOAuth1FieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentOAuth1FieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentOAuth1FieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentOAuth1FieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentOAuth1FieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentOAuth1FieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentOAuth1FieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentOAuth1FieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentOAuth1FieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentOAuth1 struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsOAuth1            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetOptions() ConnectionOptionsOAuth1 {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentOAuth1) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentOAuth1) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentOAuth1) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth1) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentOAuth1FieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth1) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentOAuth1FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth1) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentOAuth1FieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth1) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentOAuth1FieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth1) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentOAuth1FieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth1) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentOAuth1FieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth1) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentOAuth1FieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth1) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentOAuth1FieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth1) SetOptions(options *ConnectionOptionsOAuth1) {
+	c.Options = options
+	c.require(createConnectionRequestContentOAuth1FieldOptions)
+}
+
+func (c *CreateConnectionRequestContentOAuth1) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentOAuth1
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentOAuth1(unmarshaler.embed)
+	if unmarshaler.Strategy != "oauth1" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "oauth1", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentOAuth1) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentOAuth1
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "oauth1",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentOAuth1) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=oauth2
+var (
+	createConnectionRequestContentOAuth2FieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentOAuth2FieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentOAuth2FieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentOAuth2FieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentOAuth2FieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentOAuth2FieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentOAuth2FieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentOAuth2FieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentOAuth2FieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentOAuth2 struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsOAuth2            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetOptions() ConnectionOptionsOAuth2 {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentOAuth2) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentOAuth2) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentOAuth2) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth2) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentOAuth2FieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth2) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentOAuth2FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth2) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentOAuth2FieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth2) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentOAuth2FieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth2) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentOAuth2FieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth2) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentOAuth2FieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth2) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentOAuth2FieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth2) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentOAuth2FieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOAuth2) SetOptions(options *ConnectionOptionsOAuth2) {
+	c.Options = options
+	c.require(createConnectionRequestContentOAuth2FieldOptions)
+}
+
+func (c *CreateConnectionRequestContentOAuth2) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentOAuth2
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentOAuth2(unmarshaler.embed)
+	if unmarshaler.Strategy != "oauth2" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "oauth2", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentOAuth2) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentOAuth2
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "oauth2",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentOAuth2) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=office365
+var (
+	createConnectionRequestContentOffice365FieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentOffice365FieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentOffice365FieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentOffice365FieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentOffice365FieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentOffice365FieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentOffice365FieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentOffice365FieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentOffice365FieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentOffice365 struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsOffice365         `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetOptions() ConnectionOptionsOffice365 {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentOffice365) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentOffice365) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentOffice365) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOffice365) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentOffice365FieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOffice365) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentOffice365FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOffice365) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentOffice365FieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOffice365) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentOffice365FieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOffice365) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentOffice365FieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOffice365) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentOffice365FieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOffice365) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentOffice365FieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOffice365) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentOffice365FieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOffice365) SetOptions(options *ConnectionOptionsOffice365) {
+	c.Options = options
+	c.require(createConnectionRequestContentOffice365FieldOptions)
+}
+
+func (c *CreateConnectionRequestContentOffice365) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentOffice365
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentOffice365(unmarshaler.embed)
+	if unmarshaler.Strategy != "office365" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "office365", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentOffice365) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentOffice365
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "office365",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentOffice365) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=oidc
+var (
+	createConnectionRequestContentOidcFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentOidcFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentOidcFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentOidcFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentOidcFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentOidcFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentOidcFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentOidcFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentOidcFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentOidc struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsOidc              `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentOidc) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentOidc) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentOidc) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentOidc) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentOidc) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentOidc) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentOidc) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentOidc) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentOidc) GetOptions() ConnectionOptionsOidc {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentOidc) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentOidc) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentOidc) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOidc) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentOidcFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOidc) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentOidcFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOidc) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentOidcFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOidc) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentOidcFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOidc) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentOidcFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOidc) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentOidcFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOidc) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentOidcFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOidc) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentOidcFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOidc) SetOptions(options *ConnectionOptionsOidc) {
+	c.Options = options
+	c.require(createConnectionRequestContentOidcFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentOidc) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentOidc
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentOidc(unmarshaler.embed)
+	if unmarshaler.Strategy != "oidc" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "oidc", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentOidc) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentOidc
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "oidc",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentOidc) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=okta
+var (
+	createConnectionRequestContentOktaFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentOktaFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentOktaFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentOktaFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentOktaFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentOktaFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentOktaFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentOktaFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentOktaFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentOkta struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsOkta              `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentOkta) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentOkta) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentOkta) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentOkta) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentOkta) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentOkta) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentOkta) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentOkta) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentOkta) GetOptions() ConnectionOptionsOkta {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentOkta) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentOkta) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentOkta) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOkta) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentOktaFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOkta) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentOktaFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOkta) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentOktaFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOkta) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentOktaFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOkta) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentOktaFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOkta) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentOktaFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOkta) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentOktaFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOkta) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentOktaFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentOkta) SetOptions(options *ConnectionOptionsOkta) {
+	c.Options = options
+	c.require(createConnectionRequestContentOktaFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentOkta) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentOkta
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentOkta(unmarshaler.embed)
+	if unmarshaler.Strategy != "okta" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "okta", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentOkta) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentOkta
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "okta",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentOkta) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=paypal
+var (
+	createConnectionRequestContentPaypalFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentPaypalFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentPaypalFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentPaypalFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentPaypalFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentPaypalFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentPaypalFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentPaypalFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentPaypalFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentPaypal struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsPaypal            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetOptions() ConnectionOptionsPaypal {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentPaypal) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentPaypal) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentPaypal) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypal) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentPaypalFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypal) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentPaypalFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypal) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentPaypalFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypal) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentPaypalFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypal) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentPaypalFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypal) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentPaypalFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypal) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentPaypalFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypal) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentPaypalFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypal) SetOptions(options *ConnectionOptionsPaypal) {
+	c.Options = options
+	c.require(createConnectionRequestContentPaypalFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentPaypal) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentPaypal
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentPaypal(unmarshaler.embed)
+	if unmarshaler.Strategy != "paypal" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "paypal", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentPaypal) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentPaypal
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "paypal",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentPaypal) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=paypal-sandbox
+var (
+	createConnectionRequestContentPaypalSandboxFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentPaypalSandboxFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentPaypalSandboxFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentPaypalSandboxFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentPaypalSandboxFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentPaypalSandboxFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentPaypalSandboxFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentPaypalSandboxFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentPaypalSandboxFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentPaypalSandbox struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsPaypalSandbox     `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetOptions() ConnectionOptionsPaypalSandbox {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypalSandbox) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentPaypalSandboxFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypalSandbox) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentPaypalSandboxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypalSandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentPaypalSandboxFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypalSandbox) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentPaypalSandboxFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypalSandbox) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentPaypalSandboxFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypalSandbox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentPaypalSandboxFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypalSandbox) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentPaypalSandboxFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypalSandbox) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentPaypalSandboxFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPaypalSandbox) SetOptions(options *ConnectionOptionsPaypalSandbox) {
+	c.Options = options
+	c.require(createConnectionRequestContentPaypalSandboxFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentPaypalSandbox
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentPaypalSandbox(unmarshaler.embed)
+	if unmarshaler.Strategy != "paypal-sandbox" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "paypal-sandbox", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentPaypalSandbox
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "paypal-sandbox",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentPaypalSandbox) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=pingfederate
+var (
+	createConnectionRequestContentPingFederateFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentPingFederateFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentPingFederateFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentPingFederateFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentPingFederateFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentPingFederateFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentPingFederateFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentPingFederateFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentPingFederateFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentPingFederate struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsPingFederate      `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetOptions() ConnectionOptionsPingFederate {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentPingFederate) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentPingFederate) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentPingFederate) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPingFederate) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentPingFederateFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPingFederate) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentPingFederateFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPingFederate) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentPingFederateFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPingFederate) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentPingFederateFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPingFederate) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentPingFederateFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPingFederate) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentPingFederateFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPingFederate) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentPingFederateFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPingFederate) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentPingFederateFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPingFederate) SetOptions(options *ConnectionOptionsPingFederate) {
+	c.Options = options
+	c.require(createConnectionRequestContentPingFederateFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentPingFederate) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentPingFederate
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentPingFederate(unmarshaler.embed)
+	if unmarshaler.Strategy != "pingfederate" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "pingfederate", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentPingFederate) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentPingFederate
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "pingfederate",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentPingFederate) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=planningcenter
+var (
+	createConnectionRequestContentPlanningCenterFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentPlanningCenterFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentPlanningCenterFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentPlanningCenterFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentPlanningCenterFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentPlanningCenterFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentPlanningCenterFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentPlanningCenterFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentPlanningCenterFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentPlanningCenter struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsPlanningCenter    `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetOptions() ConnectionOptionsPlanningCenter {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPlanningCenter) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentPlanningCenterFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPlanningCenter) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentPlanningCenterFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPlanningCenter) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentPlanningCenterFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPlanningCenter) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentPlanningCenterFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPlanningCenter) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentPlanningCenterFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPlanningCenter) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentPlanningCenterFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPlanningCenter) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentPlanningCenterFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPlanningCenter) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentPlanningCenterFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentPlanningCenter) SetOptions(options *ConnectionOptionsPlanningCenter) {
+	c.Options = options
+	c.require(createConnectionRequestContentPlanningCenterFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentPlanningCenter
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentPlanningCenter(unmarshaler.embed)
+	if unmarshaler.Strategy != "planningcenter" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "planningcenter", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentPlanningCenter
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "planningcenter",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentPlanningCenter) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=renren
+var (
+	createConnectionRequestContentRenrenFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentRenrenFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentRenrenFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentRenrenFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentRenrenFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentRenrenFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentRenrenFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentRenrenFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentRenrenFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentRenren struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsRenren            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentRenren) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentRenren) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentRenren) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentRenren) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentRenren) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentRenren) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentRenren) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentRenren) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentRenren) GetOptions() ConnectionOptionsRenren {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentRenren) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentRenren) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentRenren) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentRenren) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentRenrenFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentRenren) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentRenrenFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentRenren) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentRenrenFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentRenren) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentRenrenFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentRenren) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentRenrenFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentRenren) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentRenrenFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentRenren) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentRenrenFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentRenren) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentRenrenFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentRenren) SetOptions(options *ConnectionOptionsRenren) {
+	c.Options = options
+	c.require(createConnectionRequestContentRenrenFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentRenren) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentRenren
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentRenren(unmarshaler.embed)
+	if unmarshaler.Strategy != "renren" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "renren", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentRenren) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentRenren
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "renren",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentRenren) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=salesforce
+var (
+	createConnectionRequestContentSalesforceFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentSalesforceFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentSalesforceFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentSalesforceFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentSalesforceFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentSalesforceFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentSalesforceFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentSalesforceFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentSalesforceFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentSalesforce struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsSalesforce        `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetOptions() ConnectionOptionsSalesforce {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentSalesforce) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentSalesforce) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentSalesforce) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforce) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentSalesforceFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforce) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentSalesforceFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforce) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentSalesforceFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforce) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentSalesforceFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforce) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentSalesforceFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforce) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentSalesforceFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforce) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentSalesforceFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforce) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentSalesforceFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforce) SetOptions(options *ConnectionOptionsSalesforce) {
+	c.Options = options
+	c.require(createConnectionRequestContentSalesforceFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentSalesforce) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentSalesforce
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentSalesforce(unmarshaler.embed)
+	if unmarshaler.Strategy != "salesforce" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "salesforce", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentSalesforce) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentSalesforce
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "salesforce",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentSalesforce) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=salesforce-community
+var (
+	createConnectionRequestContentSalesforceCommunityFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentSalesforceCommunityFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentSalesforceCommunityFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentSalesforceCommunityFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentSalesforceCommunityFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentSalesforceCommunityFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentSalesforceCommunityFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentSalesforceCommunityFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentSalesforceCommunityFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentSalesforceCommunity struct {
+	DisplayName        *ConnectionDisplayName                `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients             `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                     `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose      `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose   `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsSalesforceCommunity `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetOptions() ConnectionOptionsSalesforceCommunity {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceCommunity) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentSalesforceCommunityFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceCommunity) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentSalesforceCommunityFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceCommunity) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentSalesforceCommunityFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceCommunity) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentSalesforceCommunityFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceCommunity) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentSalesforceCommunityFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceCommunity) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentSalesforceCommunityFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceCommunity) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentSalesforceCommunityFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceCommunity) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentSalesforceCommunityFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceCommunity) SetOptions(options *ConnectionOptionsSalesforceCommunity) {
+	c.Options = options
+	c.require(createConnectionRequestContentSalesforceCommunityFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentSalesforceCommunity
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentSalesforceCommunity(unmarshaler.embed)
+	if unmarshaler.Strategy != "salesforce-community" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "salesforce-community", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentSalesforceCommunity
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "salesforce-community",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentSalesforceCommunity) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=salesforce-sandbox
+var (
+	createConnectionRequestContentSalesforceSandboxFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentSalesforceSandboxFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentSalesforceSandboxFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentSalesforceSandboxFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentSalesforceSandboxFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentSalesforceSandboxFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentSalesforceSandboxFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentSalesforceSandboxFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentSalesforceSandboxFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentSalesforceSandbox struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsSalesforceSandbox `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetOptions() ConnectionOptionsSalesforceSandbox {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceSandbox) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentSalesforceSandboxFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceSandbox) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentSalesforceSandboxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceSandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentSalesforceSandboxFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceSandbox) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentSalesforceSandboxFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceSandbox) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentSalesforceSandboxFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceSandbox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentSalesforceSandboxFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceSandbox) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentSalesforceSandboxFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceSandbox) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentSalesforceSandboxFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSalesforceSandbox) SetOptions(options *ConnectionOptionsSalesforceSandbox) {
+	c.Options = options
+	c.require(createConnectionRequestContentSalesforceSandboxFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentSalesforceSandbox
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentSalesforceSandbox(unmarshaler.embed)
+	if unmarshaler.Strategy != "salesforce-sandbox" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "salesforce-sandbox", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentSalesforceSandbox
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "salesforce-sandbox",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentSalesforceSandbox) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=samlp
+var (
+	createConnectionRequestContentSAMLFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentSAMLFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentSAMLFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentSAMLFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentSAMLFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentSAMLFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentSAMLFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentSAMLFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentSAMLFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentSAML struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsSAML              `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentSAML) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentSAML) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentSAML) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentSAML) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentSAML) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentSAML) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentSAML) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentSAML) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentSAML) GetOptions() ConnectionOptionsSAML {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentSAML) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentSAML) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentSAML) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentSAMLFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentSAMLFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentSAMLFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentSAMLFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentSAMLFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentSAMLFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentSAMLFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentSAMLFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetOptions(options *ConnectionOptionsSAML) {
+	c.Options = options
+	c.require(createConnectionRequestContentSAMLFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentSAML) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentSAML
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentSAML(unmarshaler.embed)
+	if unmarshaler.Strategy != "samlp" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "samlp", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentSAML) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentSAML
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "samlp",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentSAML) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=sharepoint
+var (
+	createConnectionRequestContentSharepointFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentSharepointFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentSharepointFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentSharepointFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentSharepointFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentSharepointFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentSharepointFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentSharepointFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentSharepointFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentSharepoint struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsSharepoint        `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetOptions() ConnectionOptionsSharepoint {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentSharepoint) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentSharepoint) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentSharepoint) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSharepoint) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentSharepointFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSharepoint) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentSharepointFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSharepoint) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentSharepointFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSharepoint) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentSharepointFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSharepoint) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentSharepointFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSharepoint) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentSharepointFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSharepoint) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentSharepointFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSharepoint) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentSharepointFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSharepoint) SetOptions(options *ConnectionOptionsSharepoint) {
+	c.Options = options
+	c.require(createConnectionRequestContentSharepointFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentSharepoint) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentSharepoint
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentSharepoint(unmarshaler.embed)
+	if unmarshaler.Strategy != "sharepoint" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "sharepoint", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentSharepoint) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentSharepoint
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "sharepoint",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentSharepoint) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=shop
+var (
+	createConnectionRequestContentShopFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentShopFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentShopFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentShopFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentShopFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentShopFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentShopFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentShopFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentShopFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentShop struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsShop              `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentShop) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentShop) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentShop) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentShop) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentShop) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentShop) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentShop) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentShop) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentShop) GetOptions() ConnectionOptionsShop {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentShop) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentShop) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentShop) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShop) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentShopFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShop) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentShopFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShop) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentShopFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShop) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentShopFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShop) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentShopFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShop) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentShopFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShop) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentShopFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShop) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentShopFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShop) SetOptions(options *ConnectionOptionsShop) {
+	c.Options = options
+	c.require(createConnectionRequestContentShopFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentShop) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentShop
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentShop(unmarshaler.embed)
+	if unmarshaler.Strategy != "shop" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "shop", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentShop) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentShop
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "shop",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentShop) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=shopify
+var (
+	createConnectionRequestContentShopifyFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentShopifyFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentShopifyFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentShopifyFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentShopifyFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentShopifyFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentShopifyFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentShopifyFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentShopifyFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentShopify struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsShopify           `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentShopify) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentShopify) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentShopify) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentShopify) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentShopify) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentShopify) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentShopify) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentShopify) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentShopify) GetOptions() ConnectionOptionsShopify {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentShopify) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentShopify) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentShopify) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShopify) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentShopifyFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShopify) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentShopifyFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShopify) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentShopifyFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShopify) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentShopifyFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShopify) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentShopifyFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShopify) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentShopifyFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShopify) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentShopifyFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShopify) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentShopifyFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentShopify) SetOptions(options *ConnectionOptionsShopify) {
+	c.Options = options
+	c.require(createConnectionRequestContentShopifyFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentShopify) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentShopify
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentShopify(unmarshaler.embed)
+	if unmarshaler.Strategy != "shopify" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "shopify", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentShopify) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentShopify
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "shopify",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentShopify) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=sms
+var (
+	createConnectionRequestContentSmsFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentSmsFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentSmsFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentSmsFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentSmsFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentSmsFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentSmsFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentSmsFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentSmsFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentSms struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsSms               `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentSms) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentSms) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentSms) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentSms) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentSms) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentSms) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentSms) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentSms) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentSms) GetOptions() ConnectionOptionsSms {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentSms) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentSms) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentSms) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSms) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentSmsFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSms) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentSmsFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSms) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentSmsFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSms) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentSmsFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSms) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentSmsFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSms) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentSmsFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSms) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentSmsFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSms) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentSmsFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSms) SetOptions(options *ConnectionOptionsSms) {
+	c.Options = options
+	c.require(createConnectionRequestContentSmsFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentSms) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentSms
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentSms(unmarshaler.embed)
+	if unmarshaler.Strategy != "sms" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "sms", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentSms) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentSms
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "sms",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentSms) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=soundcloud
+var (
+	createConnectionRequestContentSoundcloudFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentSoundcloudFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentSoundcloudFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentSoundcloudFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentSoundcloudFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentSoundcloudFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentSoundcloudFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentSoundcloudFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentSoundcloudFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentSoundcloud struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsSoundcloud        `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetOptions() ConnectionOptionsSoundcloud {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSoundcloud) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentSoundcloudFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSoundcloud) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentSoundcloudFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSoundcloud) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentSoundcloudFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSoundcloud) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentSoundcloudFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSoundcloud) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentSoundcloudFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSoundcloud) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentSoundcloudFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSoundcloud) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentSoundcloudFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSoundcloud) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentSoundcloudFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSoundcloud) SetOptions(options *ConnectionOptionsSoundcloud) {
+	c.Options = options
+	c.require(createConnectionRequestContentSoundcloudFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentSoundcloud
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentSoundcloud(unmarshaler.embed)
+	if unmarshaler.Strategy != "soundcloud" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "soundcloud", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentSoundcloud
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "soundcloud",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentSoundcloud) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=thecity
+var (
+	createConnectionRequestContentTheCityFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentTheCityFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentTheCityFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentTheCityFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentTheCityFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentTheCityFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentTheCityFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentTheCityFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentTheCityFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentTheCity struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsTheCity           `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetOptions() ConnectionOptionsTheCity {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentTheCity) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentTheCity) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentTheCity) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCity) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentTheCityFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCity) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentTheCityFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCity) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentTheCityFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCity) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentTheCityFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCity) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentTheCityFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCity) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentTheCityFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCity) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentTheCityFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCity) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentTheCityFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCity) SetOptions(options *ConnectionOptionsTheCity) {
+	c.Options = options
+	c.require(createConnectionRequestContentTheCityFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentTheCity) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentTheCity
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentTheCity(unmarshaler.embed)
+	if unmarshaler.Strategy != "thecity" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "thecity", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentTheCity) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentTheCity
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "thecity",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentTheCity) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=thecity-sandbox
+var (
+	createConnectionRequestContentTheCitySandboxFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentTheCitySandboxFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentTheCitySandboxFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentTheCitySandboxFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentTheCitySandboxFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentTheCitySandboxFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentTheCitySandboxFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentTheCitySandboxFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentTheCitySandboxFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentTheCitySandbox struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsTheCitySandbox    `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetOptions() ConnectionOptionsTheCitySandbox {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCitySandbox) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentTheCitySandboxFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCitySandbox) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentTheCitySandboxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCitySandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentTheCitySandboxFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCitySandbox) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentTheCitySandboxFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCitySandbox) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentTheCitySandboxFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCitySandbox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentTheCitySandboxFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCitySandbox) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentTheCitySandboxFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCitySandbox) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentTheCitySandboxFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTheCitySandbox) SetOptions(options *ConnectionOptionsTheCitySandbox) {
+	c.Options = options
+	c.require(createConnectionRequestContentTheCitySandboxFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentTheCitySandbox
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentTheCitySandbox(unmarshaler.embed)
+	if unmarshaler.Strategy != "thecity-sandbox" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "thecity-sandbox", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentTheCitySandbox
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "thecity-sandbox",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentTheCitySandbox) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=thirtysevensignals
+var (
+	createConnectionRequestContentThirtySevenSignalsFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentThirtySevenSignalsFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentThirtySevenSignalsFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentThirtySevenSignalsFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentThirtySevenSignalsFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentThirtySevenSignalsFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentThirtySevenSignalsFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentThirtySevenSignalsFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentThirtySevenSignalsFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentThirtySevenSignals struct {
+	DisplayName        *ConnectionDisplayName               `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients            `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection        `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton              `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                    `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                 `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose     `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose  `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsThirtySevenSignals `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetOptions() ConnectionOptionsThirtySevenSignals {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentThirtySevenSignals) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentThirtySevenSignalsFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentThirtySevenSignals) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentThirtySevenSignalsFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentThirtySevenSignals) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentThirtySevenSignalsFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentThirtySevenSignals) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentThirtySevenSignalsFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentThirtySevenSignals) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentThirtySevenSignalsFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentThirtySevenSignals) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentThirtySevenSignalsFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentThirtySevenSignals) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentThirtySevenSignalsFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentThirtySevenSignals) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentThirtySevenSignalsFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentThirtySevenSignals) SetOptions(options *ConnectionOptionsThirtySevenSignals) {
+	c.Options = options
+	c.require(createConnectionRequestContentThirtySevenSignalsFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentThirtySevenSignals
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentThirtySevenSignals(unmarshaler.embed)
+	if unmarshaler.Strategy != "thirtysevensignals" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "thirtysevensignals", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentThirtySevenSignals
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "thirtysevensignals",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentThirtySevenSignals) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=twitter
+var (
+	createConnectionRequestContentTwitterFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentTwitterFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentTwitterFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentTwitterFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentTwitterFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentTwitterFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentTwitterFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentTwitterFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentTwitterFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentTwitter struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsTwitter           `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetOptions() ConnectionOptionsTwitter {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentTwitter) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentTwitter) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentTwitter) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTwitter) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentTwitterFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTwitter) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentTwitterFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTwitter) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentTwitterFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTwitter) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentTwitterFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTwitter) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentTwitterFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTwitter) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentTwitterFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTwitter) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentTwitterFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTwitter) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentTwitterFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentTwitter) SetOptions(options *ConnectionOptionsTwitter) {
+	c.Options = options
+	c.require(createConnectionRequestContentTwitterFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentTwitter) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentTwitter
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentTwitter(unmarshaler.embed)
+	if unmarshaler.Strategy != "twitter" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "twitter", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentTwitter) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentTwitter
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "twitter",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentTwitter) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=untappd
+var (
+	createConnectionRequestContentUntappdFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentUntappdFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentUntappdFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentUntappdFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentUntappdFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentUntappdFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentUntappdFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentUntappdFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentUntappdFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentUntappd struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsUntappd           `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetOptions() ConnectionOptionsUntappd {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentUntappd) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentUntappd) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentUntappd) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentUntappd) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentUntappdFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentUntappd) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentUntappdFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentUntappd) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentUntappdFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentUntappd) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentUntappdFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentUntappd) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentUntappdFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentUntappd) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentUntappdFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentUntappd) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentUntappdFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentUntappd) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentUntappdFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentUntappd) SetOptions(options *ConnectionOptionsUntappd) {
+	c.Options = options
+	c.require(createConnectionRequestContentUntappdFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentUntappd) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentUntappd
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentUntappd(unmarshaler.embed)
+	if unmarshaler.Strategy != "untappd" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "untappd", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentUntappd) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentUntappd
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "untappd",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentUntappd) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=vkontakte
+var (
+	createConnectionRequestContentVkontakteFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentVkontakteFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentVkontakteFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentVkontakteFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentVkontakteFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentVkontakteFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentVkontakteFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentVkontakteFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentVkontakteFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentVkontakte struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsVkontakte         `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetOptions() ConnectionOptionsVkontakte {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentVkontakte) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentVkontakte) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentVkontakte) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentVkontakte) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentVkontakteFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentVkontakte) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentVkontakteFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentVkontakte) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentVkontakteFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentVkontakte) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentVkontakteFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentVkontakte) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentVkontakteFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentVkontakte) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentVkontakteFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentVkontakte) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentVkontakteFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentVkontakte) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentVkontakteFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentVkontakte) SetOptions(options *ConnectionOptionsVkontakte) {
+	c.Options = options
+	c.require(createConnectionRequestContentVkontakteFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentVkontakte) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentVkontakte
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentVkontakte(unmarshaler.embed)
+	if unmarshaler.Strategy != "vkontakte" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "vkontakte", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentVkontakte) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentVkontakte
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "vkontakte",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentVkontakte) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=weibo
+var (
+	createConnectionRequestContentWeiboFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentWeiboFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentWeiboFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentWeiboFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentWeiboFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentWeiboFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentWeiboFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentWeiboFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentWeiboFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentWeibo struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsWeibo             `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetOptions() ConnectionOptionsWeibo {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentWeibo) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentWeibo) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentWeibo) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWeibo) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentWeiboFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWeibo) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentWeiboFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWeibo) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentWeiboFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWeibo) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentWeiboFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWeibo) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentWeiboFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWeibo) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentWeiboFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWeibo) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentWeiboFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWeibo) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentWeiboFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWeibo) SetOptions(options *ConnectionOptionsWeibo) {
+	c.Options = options
+	c.require(createConnectionRequestContentWeiboFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentWeibo) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentWeibo
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentWeibo(unmarshaler.embed)
+	if unmarshaler.Strategy != "weibo" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "weibo", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentWeibo) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentWeibo
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "weibo",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentWeibo) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=windowslive
+var (
+	createConnectionRequestContentWindowsLiveFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentWindowsLiveFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentWindowsLiveFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentWindowsLiveFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentWindowsLiveFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentWindowsLiveFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentWindowsLiveFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentWindowsLiveFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentWindowsLiveFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentWindowsLive struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsWindowsLive       `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetOptions() ConnectionOptionsWindowsLive {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWindowsLive) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentWindowsLiveFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWindowsLive) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentWindowsLiveFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWindowsLive) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentWindowsLiveFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWindowsLive) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentWindowsLiveFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWindowsLive) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentWindowsLiveFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWindowsLive) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentWindowsLiveFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWindowsLive) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentWindowsLiveFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWindowsLive) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentWindowsLiveFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWindowsLive) SetOptions(options *ConnectionOptionsWindowsLive) {
+	c.Options = options
+	c.require(createConnectionRequestContentWindowsLiveFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentWindowsLive
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentWindowsLive(unmarshaler.embed)
+	if unmarshaler.Strategy != "windowslive" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "windowslive", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentWindowsLive
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "windowslive",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentWindowsLive) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=wordpress
+var (
+	createConnectionRequestContentWordpressFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentWordpressFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentWordpressFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentWordpressFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentWordpressFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentWordpressFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentWordpressFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentWordpressFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentWordpressFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentWordpress struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsWordpress         `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetOptions() ConnectionOptionsWordpress {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentWordpress) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentWordpress) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentWordpress) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWordpress) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentWordpressFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWordpress) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentWordpressFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWordpress) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentWordpressFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWordpress) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentWordpressFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWordpress) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentWordpressFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWordpress) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentWordpressFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWordpress) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentWordpressFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWordpress) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentWordpressFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentWordpress) SetOptions(options *ConnectionOptionsWordpress) {
+	c.Options = options
+	c.require(createConnectionRequestContentWordpressFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentWordpress) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentWordpress
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentWordpress(unmarshaler.embed)
+	if unmarshaler.Strategy != "wordpress" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "wordpress", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentWordpress) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentWordpress
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "wordpress",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentWordpress) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=yahoo
+var (
+	createConnectionRequestContentYahooFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentYahooFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentYahooFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentYahooFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentYahooFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentYahooFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentYahooFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentYahooFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentYahooFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentYahoo struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsYahoo             `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetOptions() ConnectionOptionsYahoo {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentYahoo) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentYahoo) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentYahoo) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYahoo) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentYahooFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYahoo) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentYahooFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYahoo) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentYahooFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYahoo) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentYahooFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYahoo) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentYahooFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYahoo) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentYahooFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYahoo) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentYahooFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYahoo) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentYahooFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYahoo) SetOptions(options *ConnectionOptionsYahoo) {
+	c.Options = options
+	c.require(createConnectionRequestContentYahooFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentYahoo) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentYahoo
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentYahoo(unmarshaler.embed)
+	if unmarshaler.Strategy != "yahoo" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "yahoo", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentYahoo) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentYahoo
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "yahoo",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentYahoo) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=yammer
+var (
+	createConnectionRequestContentYammerFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentYammerFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentYammerFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentYammerFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentYammerFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentYammerFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentYammerFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentYammerFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentYammerFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentYammer struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsYammer            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentYammer) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentYammer) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentYammer) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentYammer) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentYammer) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentYammer) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentYammer) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentYammer) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentYammer) GetOptions() ConnectionOptionsYammer {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentYammer) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentYammer) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentYammer) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYammer) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentYammerFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYammer) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentYammerFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYammer) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentYammerFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYammer) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentYammerFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYammer) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentYammerFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYammer) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentYammerFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYammer) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentYammerFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYammer) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentYammerFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYammer) SetOptions(options *ConnectionOptionsYammer) {
+	c.Options = options
+	c.require(createConnectionRequestContentYammerFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentYammer) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentYammer
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentYammer(unmarshaler.embed)
+	if unmarshaler.Strategy != "yammer" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "yammer", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentYammer) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentYammer
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "yammer",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentYammer) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Create a connection with strategy=yandex
+var (
+	createConnectionRequestContentYandexFieldDisplayName        = big.NewInt(1 << 0)
+	createConnectionRequestContentYandexFieldEnabledClients     = big.NewInt(1 << 1)
+	createConnectionRequestContentYandexFieldIsDomainConnection = big.NewInt(1 << 2)
+	createConnectionRequestContentYandexFieldShowAsButton       = big.NewInt(1 << 3)
+	createConnectionRequestContentYandexFieldRealms             = big.NewInt(1 << 4)
+	createConnectionRequestContentYandexFieldMetadata           = big.NewInt(1 << 5)
+	createConnectionRequestContentYandexFieldAuthentication     = big.NewInt(1 << 6)
+	createConnectionRequestContentYandexFieldConnectedAccounts  = big.NewInt(1 << 7)
+	createConnectionRequestContentYandexFieldOptions            = big.NewInt(1 << 8)
+)
+
+type CreateConnectionRequestContentYandex struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	Options            *ConnectionOptionsYandex            `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+	strategy       string
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateConnectionRequestContentYandex) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *CreateConnectionRequestContentYandex) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *CreateConnectionRequestContentYandex) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *CreateConnectionRequestContentYandex) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateConnectionRequestContentYandex) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *CreateConnectionRequestContentYandex) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *CreateConnectionRequestContentYandex) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionRequestContentYandex) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionRequestContentYandex) GetOptions() ConnectionOptionsYandex {
+	if c == nil || c.Options == nil {
+		return nil
+	}
+	return *c.Options
+}
+
+func (c *CreateConnectionRequestContentYandex) Strategy() string {
+	return c.strategy
+}
+
+func (c *CreateConnectionRequestContentYandex) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateConnectionRequestContentYandex) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYandex) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(createConnectionRequestContentYandexFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYandex) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(createConnectionRequestContentYandexFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYandex) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(createConnectionRequestContentYandexFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYandex) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(createConnectionRequestContentYandexFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYandex) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(createConnectionRequestContentYandexFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYandex) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(createConnectionRequestContentYandexFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYandex) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionRequestContentYandexFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYandex) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionRequestContentYandexFieldConnectedAccounts)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentYandex) SetOptions(options *ConnectionOptionsYandex) {
+	c.Options = options
+	c.require(createConnectionRequestContentYandexFieldOptions)
+}
+
+func (c *CreateConnectionRequestContentYandex) UnmarshalJSON(data []byte) error {
+	type embed CreateConnectionRequestContentYandex
+	var unmarshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateConnectionRequestContentYandex(unmarshaler.embed)
+	if unmarshaler.Strategy != "yandex" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", c, "yandex", unmarshaler.Strategy)
+	}
+	c.strategy = unmarshaler.Strategy
+	extraProperties, err := internal.ExtractExtraProperties(data, *c, "strategy")
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateConnectionRequestContentYandex) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionRequestContentYandex
+	var marshaler = struct {
+		embed
+		Strategy string `json:"strategy"`
+	}{
+		embed:    embed(*c),
+		Strategy: "yandex",
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateConnectionRequestContentYandex) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -20978,6 +37264,11 @@ const (
 	EventStreamDeliveryEventTypeEnumOrganizationConnectionAdded    EventStreamDeliveryEventTypeEnum = "organization.connection.added"
 	EventStreamDeliveryEventTypeEnumOrganizationConnectionUpdated  EventStreamDeliveryEventTypeEnum = "organization.connection.updated"
 	EventStreamDeliveryEventTypeEnumOrganizationConnectionRemoved  EventStreamDeliveryEventTypeEnum = "organization.connection.removed"
+	EventStreamDeliveryEventTypeEnumGroupCreated                   EventStreamDeliveryEventTypeEnum = "group.created"
+	EventStreamDeliveryEventTypeEnumGroupUpdated                   EventStreamDeliveryEventTypeEnum = "group.updated"
+	EventStreamDeliveryEventTypeEnumGroupDeleted                   EventStreamDeliveryEventTypeEnum = "group.deleted"
+	EventStreamDeliveryEventTypeEnumGroupMemberAdded               EventStreamDeliveryEventTypeEnum = "group.member.added"
+	EventStreamDeliveryEventTypeEnumGroupMemberDeleted             EventStreamDeliveryEventTypeEnum = "group.member.deleted"
 )
 
 func NewEventStreamDeliveryEventTypeEnumFromString(s string) (EventStreamDeliveryEventTypeEnum, error) {
@@ -21008,6 +37299,16 @@ func NewEventStreamDeliveryEventTypeEnumFromString(s string) (EventStreamDeliver
 		return EventStreamDeliveryEventTypeEnumOrganizationConnectionUpdated, nil
 	case "organization.connection.removed":
 		return EventStreamDeliveryEventTypeEnumOrganizationConnectionRemoved, nil
+	case "group.created":
+		return EventStreamDeliveryEventTypeEnumGroupCreated, nil
+	case "group.updated":
+		return EventStreamDeliveryEventTypeEnumGroupUpdated, nil
+	case "group.deleted":
+		return EventStreamDeliveryEventTypeEnumGroupDeleted, nil
+	case "group.member.added":
+		return EventStreamDeliveryEventTypeEnumGroupMemberAdded, nil
+	case "group.member.deleted":
+		return EventStreamDeliveryEventTypeEnumGroupMemberDeleted, nil
 	}
 	var t EventStreamDeliveryEventTypeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -21036,6 +37337,11 @@ const (
 	EventStreamEventTypeEnumOrganizationConnectionAdded    EventStreamEventTypeEnum = "organization.connection.added"
 	EventStreamEventTypeEnumOrganizationConnectionUpdated  EventStreamEventTypeEnum = "organization.connection.updated"
 	EventStreamEventTypeEnumOrganizationConnectionRemoved  EventStreamEventTypeEnum = "organization.connection.removed"
+	EventStreamEventTypeEnumGroupCreated                   EventStreamEventTypeEnum = "group.created"
+	EventStreamEventTypeEnumGroupUpdated                   EventStreamEventTypeEnum = "group.updated"
+	EventStreamEventTypeEnumGroupDeleted                   EventStreamEventTypeEnum = "group.deleted"
+	EventStreamEventTypeEnumGroupMemberAdded               EventStreamEventTypeEnum = "group.member.added"
+	EventStreamEventTypeEnumGroupMemberDeleted             EventStreamEventTypeEnum = "group.member.deleted"
 )
 
 func NewEventStreamEventTypeEnumFromString(s string) (EventStreamEventTypeEnum, error) {
@@ -21066,6 +37372,16 @@ func NewEventStreamEventTypeEnumFromString(s string) (EventStreamEventTypeEnum, 
 		return EventStreamEventTypeEnumOrganizationConnectionUpdated, nil
 	case "organization.connection.removed":
 		return EventStreamEventTypeEnumOrganizationConnectionRemoved, nil
+	case "group.created":
+		return EventStreamEventTypeEnumGroupCreated, nil
+	case "group.updated":
+		return EventStreamEventTypeEnumGroupUpdated, nil
+	case "group.deleted":
+		return EventStreamEventTypeEnumGroupDeleted, nil
+	case "group.member.added":
+		return EventStreamEventTypeEnumGroupMemberAdded, nil
+	case "group.member.deleted":
+		return EventStreamEventTypeEnumGroupMemberDeleted, nil
 	}
 	var t EventStreamEventTypeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -21626,7 +37942,7 @@ var (
 type FlowsVaultConnectioSetupAPIKeyWithBaseURL struct {
 	Type    FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
 	APIKey  string                                 `json:"api_key" url:"api_key"`
-	BaseURL *string                                `json:"base_url,omitempty" url:"base_url,omitempty"`
+	BaseURL string                                 `json:"base_url" url:"base_url"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -21643,10 +37959,10 @@ func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetAPIKey() string {
 }
 
 func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetBaseURL() string {
-	if f == nil || f.BaseURL == nil {
+	if f == nil {
 		return ""
 	}
-	return *f.BaseURL
+	return f.BaseURL
 }
 
 func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetExtraProperties() map[string]interface{} {
@@ -21676,7 +37992,7 @@ func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetAPIKey(apiKey string) {
 
 // SetBaseURL sets the BaseURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetBaseURL(baseURL *string) {
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetBaseURL(baseURL string) {
 	f.BaseURL = baseURL
 	f.require(flowsVaultConnectioSetupAPIKeyWithBaseURLFieldBaseURL)
 }
@@ -23890,6 +40206,359 @@ func (g *GetAculResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetAculResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getAttackProtectionCaptchaResponseContentFieldActiveProviderID    = big.NewInt(1 << 0)
+	getAttackProtectionCaptchaResponseContentFieldArkose              = big.NewInt(1 << 1)
+	getAttackProtectionCaptchaResponseContentFieldAuthChallenge       = big.NewInt(1 << 2)
+	getAttackProtectionCaptchaResponseContentFieldHcaptcha            = big.NewInt(1 << 3)
+	getAttackProtectionCaptchaResponseContentFieldFriendlyCaptcha     = big.NewInt(1 << 4)
+	getAttackProtectionCaptchaResponseContentFieldRecaptchaEnterprise = big.NewInt(1 << 5)
+	getAttackProtectionCaptchaResponseContentFieldRecaptchaV2         = big.NewInt(1 << 6)
+	getAttackProtectionCaptchaResponseContentFieldSimpleCaptcha       = big.NewInt(1 << 7)
+)
+
+type GetAttackProtectionCaptchaResponseContent struct {
+	ActiveProviderID    *string                                                    `json:"active_provider_id,omitempty" url:"active_provider_id,omitempty"`
+	Arkose              *AttackProtectionCaptchaArkoseResponseContent              `json:"arkose,omitempty" url:"arkose,omitempty"`
+	AuthChallenge       *AttackProtectionCaptchaAuthChallengeResponseContent       `json:"auth_challenge,omitempty" url:"auth_challenge,omitempty"`
+	Hcaptcha            *AttackProtectionCaptchaHcaptchaResponseContent            `json:"hcaptcha,omitempty" url:"hcaptcha,omitempty"`
+	FriendlyCaptcha     *AttackProtectionCaptchaFriendlyCaptchaResponseContent     `json:"friendly_captcha,omitempty" url:"friendly_captcha,omitempty"`
+	RecaptchaEnterprise *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent `json:"recaptcha_enterprise,omitempty" url:"recaptcha_enterprise,omitempty"`
+	RecaptchaV2         *AttackProtectionCaptchaRecaptchaV2ResponseContent         `json:"recaptcha_v2,omitempty" url:"recaptcha_v2,omitempty"`
+	SimpleCaptcha       *AttackProtectionCaptchaSimpleCaptchaResponseContent       `json:"simple_captcha,omitempty" url:"simple_captcha,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetActiveProviderID() string {
+	if g == nil || g.ActiveProviderID == nil {
+		return ""
+	}
+	return *g.ActiveProviderID
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetArkose() AttackProtectionCaptchaArkoseResponseContent {
+	if g == nil || g.Arkose == nil {
+		return AttackProtectionCaptchaArkoseResponseContent{}
+	}
+	return *g.Arkose
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetAuthChallenge() AttackProtectionCaptchaAuthChallengeResponseContent {
+	if g == nil || g.AuthChallenge == nil {
+		return AttackProtectionCaptchaAuthChallengeResponseContent{}
+	}
+	return *g.AuthChallenge
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetHcaptcha() AttackProtectionCaptchaHcaptchaResponseContent {
+	if g == nil || g.Hcaptcha == nil {
+		return AttackProtectionCaptchaHcaptchaResponseContent{}
+	}
+	return *g.Hcaptcha
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetFriendlyCaptcha() AttackProtectionCaptchaFriendlyCaptchaResponseContent {
+	if g == nil || g.FriendlyCaptcha == nil {
+		return AttackProtectionCaptchaFriendlyCaptchaResponseContent{}
+	}
+	return *g.FriendlyCaptcha
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetRecaptchaEnterprise() AttackProtectionCaptchaRecaptchaEnterpriseResponseContent {
+	if g == nil || g.RecaptchaEnterprise == nil {
+		return AttackProtectionCaptchaRecaptchaEnterpriseResponseContent{}
+	}
+	return *g.RecaptchaEnterprise
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetRecaptchaV2() AttackProtectionCaptchaRecaptchaV2ResponseContent {
+	if g == nil || g.RecaptchaV2 == nil {
+		return AttackProtectionCaptchaRecaptchaV2ResponseContent{}
+	}
+	return *g.RecaptchaV2
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetSimpleCaptcha() AttackProtectionCaptchaSimpleCaptchaResponseContent {
+	if g == nil || g.SimpleCaptcha == nil {
+		return nil
+	}
+	return *g.SimpleCaptcha
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.ExtraProperties
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAttackProtectionCaptchaResponseContent) SetActiveProviderID(activeProviderID *string) {
+	g.ActiveProviderID = activeProviderID
+	g.require(getAttackProtectionCaptchaResponseContentFieldActiveProviderID)
+}
+
+// SetArkose sets the Arkose field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAttackProtectionCaptchaResponseContent) SetArkose(arkose *AttackProtectionCaptchaArkoseResponseContent) {
+	g.Arkose = arkose
+	g.require(getAttackProtectionCaptchaResponseContentFieldArkose)
+}
+
+// SetAuthChallenge sets the AuthChallenge field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAttackProtectionCaptchaResponseContent) SetAuthChallenge(authChallenge *AttackProtectionCaptchaAuthChallengeResponseContent) {
+	g.AuthChallenge = authChallenge
+	g.require(getAttackProtectionCaptchaResponseContentFieldAuthChallenge)
+}
+
+// SetHcaptcha sets the Hcaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAttackProtectionCaptchaResponseContent) SetHcaptcha(hcaptcha *AttackProtectionCaptchaHcaptchaResponseContent) {
+	g.Hcaptcha = hcaptcha
+	g.require(getAttackProtectionCaptchaResponseContentFieldHcaptcha)
+}
+
+// SetFriendlyCaptcha sets the FriendlyCaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAttackProtectionCaptchaResponseContent) SetFriendlyCaptcha(friendlyCaptcha *AttackProtectionCaptchaFriendlyCaptchaResponseContent) {
+	g.FriendlyCaptcha = friendlyCaptcha
+	g.require(getAttackProtectionCaptchaResponseContentFieldFriendlyCaptcha)
+}
+
+// SetRecaptchaEnterprise sets the RecaptchaEnterprise field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAttackProtectionCaptchaResponseContent) SetRecaptchaEnterprise(recaptchaEnterprise *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) {
+	g.RecaptchaEnterprise = recaptchaEnterprise
+	g.require(getAttackProtectionCaptchaResponseContentFieldRecaptchaEnterprise)
+}
+
+// SetRecaptchaV2 sets the RecaptchaV2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAttackProtectionCaptchaResponseContent) SetRecaptchaV2(recaptchaV2 *AttackProtectionCaptchaRecaptchaV2ResponseContent) {
+	g.RecaptchaV2 = recaptchaV2
+	g.require(getAttackProtectionCaptchaResponseContentFieldRecaptchaV2)
+}
+
+// SetSimpleCaptcha sets the SimpleCaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAttackProtectionCaptchaResponseContent) SetSimpleCaptcha(simpleCaptcha *AttackProtectionCaptchaSimpleCaptchaResponseContent) {
+	g.SimpleCaptcha = simpleCaptcha
+	g.require(getAttackProtectionCaptchaResponseContentFieldSimpleCaptcha)
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetAttackProtectionCaptchaResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetAttackProtectionCaptchaResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetAttackProtectionCaptchaResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getBotDetectionSettingsResponseContentFieldBotDetectionLevel            = big.NewInt(1 << 0)
+	getBotDetectionSettingsResponseContentFieldChallengePasswordPolicy      = big.NewInt(1 << 1)
+	getBotDetectionSettingsResponseContentFieldChallengePasswordlessPolicy  = big.NewInt(1 << 2)
+	getBotDetectionSettingsResponseContentFieldChallengePasswordResetPolicy = big.NewInt(1 << 3)
+	getBotDetectionSettingsResponseContentFieldAllowlist                    = big.NewInt(1 << 4)
+	getBotDetectionSettingsResponseContentFieldMonitoringModeEnabled        = big.NewInt(1 << 5)
+)
+
+type GetBotDetectionSettingsResponseContent struct {
+	BotDetectionLevel            BotDetectionLevelEnum                            `json:"bot_detection_level" url:"bot_detection_level"`
+	ChallengePasswordPolicy      BotDetectionChallengePolicyPasswordFlowEnum      `json:"challenge_password_policy" url:"challenge_password_policy"`
+	ChallengePasswordlessPolicy  BotDetectionChallengePolicyPasswordlessFlowEnum  `json:"challenge_passwordless_policy" url:"challenge_passwordless_policy"`
+	ChallengePasswordResetPolicy BotDetectionChallengePolicyPasswordResetFlowEnum `json:"challenge_password_reset_policy" url:"challenge_password_reset_policy"`
+	Allowlist                    BotDetectionAllowlist                            `json:"allowlist" url:"allowlist"`
+	MonitoringModeEnabled        BotDetectionMonitoringModeEnabled                `json:"monitoring_mode_enabled" url:"monitoring_mode_enabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetBotDetectionLevel() BotDetectionLevelEnum {
+	if g == nil {
+		return ""
+	}
+	return g.BotDetectionLevel
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetChallengePasswordPolicy() BotDetectionChallengePolicyPasswordFlowEnum {
+	if g == nil {
+		return ""
+	}
+	return g.ChallengePasswordPolicy
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetChallengePasswordlessPolicy() BotDetectionChallengePolicyPasswordlessFlowEnum {
+	if g == nil {
+		return ""
+	}
+	return g.ChallengePasswordlessPolicy
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetChallengePasswordResetPolicy() BotDetectionChallengePolicyPasswordResetFlowEnum {
+	if g == nil {
+		return ""
+	}
+	return g.ChallengePasswordResetPolicy
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetAllowlist() BotDetectionAllowlist {
+	if g == nil {
+		return nil
+	}
+	return g.Allowlist
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetMonitoringModeEnabled() BotDetectionMonitoringModeEnabled {
+	if g == nil {
+		return false
+	}
+	return g.MonitoringModeEnabled
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetBotDetectionSettingsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetBotDetectionLevel sets the BotDetectionLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetBotDetectionLevel(botDetectionLevel BotDetectionLevelEnum) {
+	g.BotDetectionLevel = botDetectionLevel
+	g.require(getBotDetectionSettingsResponseContentFieldBotDetectionLevel)
+}
+
+// SetChallengePasswordPolicy sets the ChallengePasswordPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetChallengePasswordPolicy(challengePasswordPolicy BotDetectionChallengePolicyPasswordFlowEnum) {
+	g.ChallengePasswordPolicy = challengePasswordPolicy
+	g.require(getBotDetectionSettingsResponseContentFieldChallengePasswordPolicy)
+}
+
+// SetChallengePasswordlessPolicy sets the ChallengePasswordlessPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetChallengePasswordlessPolicy(challengePasswordlessPolicy BotDetectionChallengePolicyPasswordlessFlowEnum) {
+	g.ChallengePasswordlessPolicy = challengePasswordlessPolicy
+	g.require(getBotDetectionSettingsResponseContentFieldChallengePasswordlessPolicy)
+}
+
+// SetChallengePasswordResetPolicy sets the ChallengePasswordResetPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetChallengePasswordResetPolicy(challengePasswordResetPolicy BotDetectionChallengePolicyPasswordResetFlowEnum) {
+	g.ChallengePasswordResetPolicy = challengePasswordResetPolicy
+	g.require(getBotDetectionSettingsResponseContentFieldChallengePasswordResetPolicy)
+}
+
+// SetAllowlist sets the Allowlist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetAllowlist(allowlist BotDetectionAllowlist) {
+	g.Allowlist = allowlist
+	g.require(getBotDetectionSettingsResponseContentFieldAllowlist)
+}
+
+// SetMonitoringModeEnabled sets the MonitoringModeEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetMonitoringModeEnabled(monitoringModeEnabled BotDetectionMonitoringModeEnabled) {
+	g.MonitoringModeEnabled = monitoringModeEnabled
+	g.require(getBotDetectionSettingsResponseContentFieldMonitoringModeEnabled)
+}
+
+func (g *GetBotDetectionSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetBotDetectionSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetBotDetectionSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetBotDetectionSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetBotDetectionSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetBotDetectionSettingsResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -29344,37 +46013,38 @@ func (g *GetSuspiciousIPThrottlingSettingsResponseContent) String() string {
 }
 
 var (
-	getTenantSettingsResponseContentFieldChangePassword                             = big.NewInt(1 << 0)
-	getTenantSettingsResponseContentFieldGuardianMfaPage                            = big.NewInt(1 << 1)
-	getTenantSettingsResponseContentFieldDefaultAudience                            = big.NewInt(1 << 2)
-	getTenantSettingsResponseContentFieldDefaultDirectory                           = big.NewInt(1 << 3)
-	getTenantSettingsResponseContentFieldErrorPage                                  = big.NewInt(1 << 4)
-	getTenantSettingsResponseContentFieldDeviceFlow                                 = big.NewInt(1 << 5)
-	getTenantSettingsResponseContentFieldDefaultTokenQuota                          = big.NewInt(1 << 6)
-	getTenantSettingsResponseContentFieldFlags                                      = big.NewInt(1 << 7)
-	getTenantSettingsResponseContentFieldFriendlyName                               = big.NewInt(1 << 8)
-	getTenantSettingsResponseContentFieldPictureURL                                 = big.NewInt(1 << 9)
-	getTenantSettingsResponseContentFieldSupportEmail                               = big.NewInt(1 << 10)
-	getTenantSettingsResponseContentFieldSupportURL                                 = big.NewInt(1 << 11)
-	getTenantSettingsResponseContentFieldAllowedLogoutURLs                          = big.NewInt(1 << 12)
-	getTenantSettingsResponseContentFieldSessionLifetime                            = big.NewInt(1 << 13)
-	getTenantSettingsResponseContentFieldIdleSessionLifetime                        = big.NewInt(1 << 14)
-	getTenantSettingsResponseContentFieldEphemeralSessionLifetime                   = big.NewInt(1 << 15)
-	getTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime               = big.NewInt(1 << 16)
-	getTenantSettingsResponseContentFieldSandboxVersion                             = big.NewInt(1 << 17)
-	getTenantSettingsResponseContentFieldLegacySandboxVersion                       = big.NewInt(1 << 18)
-	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                   = big.NewInt(1 << 19)
-	getTenantSettingsResponseContentFieldDefaultRedirectionURI                      = big.NewInt(1 << 20)
-	getTenantSettingsResponseContentFieldEnabledLocales                             = big.NewInt(1 << 21)
-	getTenantSettingsResponseContentFieldSessionCookie                              = big.NewInt(1 << 22)
-	getTenantSettingsResponseContentFieldSessions                                   = big.NewInt(1 << 23)
-	getTenantSettingsResponseContentFieldOidcLogout                                 = big.NewInt(1 << 24)
-	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI   = big.NewInt(1 << 25)
-	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction              = big.NewInt(1 << 26)
-	getTenantSettingsResponseContentFieldAcrValuesSupported                         = big.NewInt(1 << 27)
-	getTenantSettingsResponseContentFieldMtls                                       = big.NewInt(1 << 28)
-	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported       = big.NewInt(1 << 29)
-	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported = big.NewInt(1 << 30)
+	getTenantSettingsResponseContentFieldChangePassword                                 = big.NewInt(1 << 0)
+	getTenantSettingsResponseContentFieldGuardianMfaPage                                = big.NewInt(1 << 1)
+	getTenantSettingsResponseContentFieldDefaultAudience                                = big.NewInt(1 << 2)
+	getTenantSettingsResponseContentFieldDefaultDirectory                               = big.NewInt(1 << 3)
+	getTenantSettingsResponseContentFieldErrorPage                                      = big.NewInt(1 << 4)
+	getTenantSettingsResponseContentFieldDeviceFlow                                     = big.NewInt(1 << 5)
+	getTenantSettingsResponseContentFieldDefaultTokenQuota                              = big.NewInt(1 << 6)
+	getTenantSettingsResponseContentFieldFlags                                          = big.NewInt(1 << 7)
+	getTenantSettingsResponseContentFieldFriendlyName                                   = big.NewInt(1 << 8)
+	getTenantSettingsResponseContentFieldPictureURL                                     = big.NewInt(1 << 9)
+	getTenantSettingsResponseContentFieldSupportEmail                                   = big.NewInt(1 << 10)
+	getTenantSettingsResponseContentFieldSupportURL                                     = big.NewInt(1 << 11)
+	getTenantSettingsResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
+	getTenantSettingsResponseContentFieldSessionLifetime                                = big.NewInt(1 << 13)
+	getTenantSettingsResponseContentFieldIdleSessionLifetime                            = big.NewInt(1 << 14)
+	getTenantSettingsResponseContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 15)
+	getTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 16)
+	getTenantSettingsResponseContentFieldSandboxVersion                                 = big.NewInt(1 << 17)
+	getTenantSettingsResponseContentFieldLegacySandboxVersion                           = big.NewInt(1 << 18)
+	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
+	getTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
+	getTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
+	getTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 22)
+	getTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 23)
+	getTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 24)
+	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 25)
+	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 26)
+	getTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 27)
+	getTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 28)
+	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 29)
+	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 30)
+	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 31)
 )
 
 type GetTenantSettingsResponseContent struct {
@@ -29430,6 +46100,10 @@ type GetTenantSettingsResponseContent struct {
 	PushedAuthorizationRequestsSupported *bool `json:"pushed_authorization_requests_supported,omitempty" url:"pushed_authorization_requests_supported,omitempty"`
 	// Supports iss parameter in authorization responses
 	AuthorizationResponseIssParameterSupported *bool `json:"authorization_response_iss_parameter_supported,omitempty" url:"authorization_response_iss_parameter_supported,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -29653,6 +46327,13 @@ func (g *GetTenantSettingsResponseContent) GetAuthorizationResponseIssParameterS
 		return false
 	}
 	return *g.AuthorizationResponseIssParameterSupported
+}
+
+func (g *GetTenantSettingsResponseContent) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if g == nil || g.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *g.SkipNonVerifiableCallbackURIConfirmationPrompt
 }
 
 func (g *GetTenantSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -29881,6 +46562,13 @@ func (g *GetTenantSettingsResponseContent) SetPushedAuthorizationRequestsSupport
 func (g *GetTenantSettingsResponseContent) SetAuthorizationResponseIssParameterSupported(authorizationResponseIssParameterSupported *bool) {
 	g.AuthorizationResponseIssParameterSupported = authorizationResponseIssParameterSupported
 	g.require(getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported)
+}
+
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTenantSettingsResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	g.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	g.require(getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
 }
 
 func (g *GetTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -30480,101 +47168,6 @@ func (g *GetUserAuthenticationMethodResponseContent) String() string {
 }
 
 var (
-	getUserGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
-	getUserGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
-)
-
-type GetUserGroupsResponseContent struct {
-	Groups []*Group `json:"groups" url:"groups"`
-	// A token to retrieve the next page of results.
-	Next *string `json:"next,omitempty" url:"next,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (g *GetUserGroupsResponseContent) GetGroups() []*Group {
-	if g == nil {
-		return nil
-	}
-	return g.Groups
-}
-
-func (g *GetUserGroupsResponseContent) GetNext() string {
-	if g == nil || g.Next == nil {
-		return ""
-	}
-	return *g.Next
-}
-
-func (g *GetUserGroupsResponseContent) GetExtraProperties() map[string]interface{} {
-	return g.extraProperties
-}
-
-func (g *GetUserGroupsResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
-	}
-	g.explicitFields.Or(g.explicitFields, field)
-}
-
-// SetGroups sets the Groups field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserGroupsResponseContent) SetGroups(groups []*Group) {
-	g.Groups = groups
-	g.require(getUserGroupsResponseContentFieldGroups)
-}
-
-// SetNext sets the Next field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserGroupsResponseContent) SetNext(next *string) {
-	g.Next = next
-	g.require(getUserGroupsResponseContentFieldNext)
-}
-
-func (g *GetUserGroupsResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetUserGroupsResponseContent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*g = GetUserGroupsResponseContent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *g)
-	if err != nil {
-		return err
-	}
-	g.extraProperties = extraProperties
-	g.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (g *GetUserGroupsResponseContent) MarshalJSON() ([]byte, error) {
-	type embed GetUserGroupsResponseContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*g),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (g *GetUserGroupsResponseContent) String() string {
-	if len(g.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(g); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", g)
-}
-
-var (
 	getVerifiableCredentialTemplateResponseContentFieldID                         = big.NewInt(1 << 0)
 	getVerifiableCredentialTemplateResponseContentFieldName                       = big.NewInt(1 << 1)
 	getVerifiableCredentialTemplateResponseContentFieldType                       = big.NewInt(1 << 2)
@@ -30836,8 +47429,9 @@ type Group struct {
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
 }
 
 func (g *Group) GetID() string {
@@ -30904,7 +47498,7 @@ func (g *Group) GetUpdatedAt() time.Time {
 }
 
 func (g *Group) GetExtraProperties() map[string]interface{} {
-	return g.extraProperties
+	return g.ExtraProperties
 }
 
 func (g *Group) require(field *big.Int) {
@@ -30996,7 +47590,7 @@ func (g *Group) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
-	g.extraProperties = extraProperties
+	g.ExtraProperties = extraProperties
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -31013,7 +47607,7 @@ func (g *Group) MarshalJSON() ([]byte, error) {
 		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
-	return json.Marshal(explicitMarshaler)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *Group) String() string {
@@ -41236,7 +57830,7 @@ func (p PreferredAuthenticationMethodEnum) Ptr() *PreferredAuthenticationMethodE
 	return &p
 }
 
-// Name of the prompt.
+// Name of the prompt
 type PromptGroupNameEnum string
 
 const (
@@ -43527,6 +60121,7 @@ const (
 	ScreenGroupNameEnumBruteForceProtectionUnblock               ScreenGroupNameEnum = "brute-force-protection-unblock"
 	ScreenGroupNameEnumBruteForceProtectionUnblockSuccess        ScreenGroupNameEnum = "brute-force-protection-unblock-success"
 	ScreenGroupNameEnumBruteForceProtectionUnblockFailure        ScreenGroupNameEnum = "brute-force-protection-unblock-failure"
+	ScreenGroupNameEnumAsyncApprovalError                        ScreenGroupNameEnum = "async-approval-error"
 	ScreenGroupNameEnumAsyncApprovalWrongUser                    ScreenGroupNameEnum = "async-approval-wrong-user"
 	ScreenGroupNameEnumAsyncApprovalAccepted                     ScreenGroupNameEnum = "async-approval-accepted"
 	ScreenGroupNameEnumAsyncApprovalDenied                       ScreenGroupNameEnum = "async-approval-denied"
@@ -43704,6 +60299,8 @@ func NewScreenGroupNameEnumFromString(s string) (ScreenGroupNameEnum, error) {
 		return ScreenGroupNameEnumBruteForceProtectionUnblockSuccess, nil
 	case "brute-force-protection-unblock-failure":
 		return ScreenGroupNameEnumBruteForceProtectionUnblockFailure, nil
+	case "async-approval-error":
+		return ScreenGroupNameEnumAsyncApprovalError, nil
 	case "async-approval-wrong-user":
 		return ScreenGroupNameEnumAsyncApprovalWrongUser, nil
 	case "async-approval-accepted":
@@ -50425,6 +67022,359 @@ func (u *UpdateAculResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	updateAttackProtectionCaptchaResponseContentFieldActiveProviderID    = big.NewInt(1 << 0)
+	updateAttackProtectionCaptchaResponseContentFieldArkose              = big.NewInt(1 << 1)
+	updateAttackProtectionCaptchaResponseContentFieldAuthChallenge       = big.NewInt(1 << 2)
+	updateAttackProtectionCaptchaResponseContentFieldHcaptcha            = big.NewInt(1 << 3)
+	updateAttackProtectionCaptchaResponseContentFieldFriendlyCaptcha     = big.NewInt(1 << 4)
+	updateAttackProtectionCaptchaResponseContentFieldRecaptchaEnterprise = big.NewInt(1 << 5)
+	updateAttackProtectionCaptchaResponseContentFieldRecaptchaV2         = big.NewInt(1 << 6)
+	updateAttackProtectionCaptchaResponseContentFieldSimpleCaptcha       = big.NewInt(1 << 7)
+)
+
+type UpdateAttackProtectionCaptchaResponseContent struct {
+	ActiveProviderID    *string                                                    `json:"active_provider_id,omitempty" url:"active_provider_id,omitempty"`
+	Arkose              *AttackProtectionCaptchaArkoseResponseContent              `json:"arkose,omitempty" url:"arkose,omitempty"`
+	AuthChallenge       *AttackProtectionCaptchaAuthChallengeResponseContent       `json:"auth_challenge,omitempty" url:"auth_challenge,omitempty"`
+	Hcaptcha            *AttackProtectionCaptchaHcaptchaResponseContent            `json:"hcaptcha,omitempty" url:"hcaptcha,omitempty"`
+	FriendlyCaptcha     *AttackProtectionCaptchaFriendlyCaptchaResponseContent     `json:"friendly_captcha,omitempty" url:"friendly_captcha,omitempty"`
+	RecaptchaEnterprise *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent `json:"recaptcha_enterprise,omitempty" url:"recaptcha_enterprise,omitempty"`
+	RecaptchaV2         *AttackProtectionCaptchaRecaptchaV2ResponseContent         `json:"recaptcha_v2,omitempty" url:"recaptcha_v2,omitempty"`
+	SimpleCaptcha       *AttackProtectionCaptchaSimpleCaptchaResponseContent       `json:"simple_captcha,omitempty" url:"simple_captcha,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetActiveProviderID() string {
+	if u == nil || u.ActiveProviderID == nil {
+		return ""
+	}
+	return *u.ActiveProviderID
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetArkose() AttackProtectionCaptchaArkoseResponseContent {
+	if u == nil || u.Arkose == nil {
+		return AttackProtectionCaptchaArkoseResponseContent{}
+	}
+	return *u.Arkose
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetAuthChallenge() AttackProtectionCaptchaAuthChallengeResponseContent {
+	if u == nil || u.AuthChallenge == nil {
+		return AttackProtectionCaptchaAuthChallengeResponseContent{}
+	}
+	return *u.AuthChallenge
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetHcaptcha() AttackProtectionCaptchaHcaptchaResponseContent {
+	if u == nil || u.Hcaptcha == nil {
+		return AttackProtectionCaptchaHcaptchaResponseContent{}
+	}
+	return *u.Hcaptcha
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetFriendlyCaptcha() AttackProtectionCaptchaFriendlyCaptchaResponseContent {
+	if u == nil || u.FriendlyCaptcha == nil {
+		return AttackProtectionCaptchaFriendlyCaptchaResponseContent{}
+	}
+	return *u.FriendlyCaptcha
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetRecaptchaEnterprise() AttackProtectionCaptchaRecaptchaEnterpriseResponseContent {
+	if u == nil || u.RecaptchaEnterprise == nil {
+		return AttackProtectionCaptchaRecaptchaEnterpriseResponseContent{}
+	}
+	return *u.RecaptchaEnterprise
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetRecaptchaV2() AttackProtectionCaptchaRecaptchaV2ResponseContent {
+	if u == nil || u.RecaptchaV2 == nil {
+		return AttackProtectionCaptchaRecaptchaV2ResponseContent{}
+	}
+	return *u.RecaptchaV2
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetSimpleCaptcha() AttackProtectionCaptchaSimpleCaptchaResponseContent {
+	if u == nil || u.SimpleCaptcha == nil {
+		return nil
+	}
+	return *u.SimpleCaptcha
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.ExtraProperties
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaResponseContent) SetActiveProviderID(activeProviderID *string) {
+	u.ActiveProviderID = activeProviderID
+	u.require(updateAttackProtectionCaptchaResponseContentFieldActiveProviderID)
+}
+
+// SetArkose sets the Arkose field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaResponseContent) SetArkose(arkose *AttackProtectionCaptchaArkoseResponseContent) {
+	u.Arkose = arkose
+	u.require(updateAttackProtectionCaptchaResponseContentFieldArkose)
+}
+
+// SetAuthChallenge sets the AuthChallenge field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaResponseContent) SetAuthChallenge(authChallenge *AttackProtectionCaptchaAuthChallengeResponseContent) {
+	u.AuthChallenge = authChallenge
+	u.require(updateAttackProtectionCaptchaResponseContentFieldAuthChallenge)
+}
+
+// SetHcaptcha sets the Hcaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaResponseContent) SetHcaptcha(hcaptcha *AttackProtectionCaptchaHcaptchaResponseContent) {
+	u.Hcaptcha = hcaptcha
+	u.require(updateAttackProtectionCaptchaResponseContentFieldHcaptcha)
+}
+
+// SetFriendlyCaptcha sets the FriendlyCaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaResponseContent) SetFriendlyCaptcha(friendlyCaptcha *AttackProtectionCaptchaFriendlyCaptchaResponseContent) {
+	u.FriendlyCaptcha = friendlyCaptcha
+	u.require(updateAttackProtectionCaptchaResponseContentFieldFriendlyCaptcha)
+}
+
+// SetRecaptchaEnterprise sets the RecaptchaEnterprise field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaResponseContent) SetRecaptchaEnterprise(recaptchaEnterprise *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) {
+	u.RecaptchaEnterprise = recaptchaEnterprise
+	u.require(updateAttackProtectionCaptchaResponseContentFieldRecaptchaEnterprise)
+}
+
+// SetRecaptchaV2 sets the RecaptchaV2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaResponseContent) SetRecaptchaV2(recaptchaV2 *AttackProtectionCaptchaRecaptchaV2ResponseContent) {
+	u.RecaptchaV2 = recaptchaV2
+	u.require(updateAttackProtectionCaptchaResponseContentFieldRecaptchaV2)
+}
+
+// SetSimpleCaptcha sets the SimpleCaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaResponseContent) SetSimpleCaptcha(simpleCaptcha *AttackProtectionCaptchaSimpleCaptchaResponseContent) {
+	u.SimpleCaptcha = simpleCaptcha
+	u.require(updateAttackProtectionCaptchaResponseContentFieldSimpleCaptcha)
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateAttackProtectionCaptchaResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateAttackProtectionCaptchaResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.ExtraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateAttackProtectionCaptchaResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateBotDetectionSettingsResponseContentFieldBotDetectionLevel            = big.NewInt(1 << 0)
+	updateBotDetectionSettingsResponseContentFieldChallengePasswordPolicy      = big.NewInt(1 << 1)
+	updateBotDetectionSettingsResponseContentFieldChallengePasswordlessPolicy  = big.NewInt(1 << 2)
+	updateBotDetectionSettingsResponseContentFieldChallengePasswordResetPolicy = big.NewInt(1 << 3)
+	updateBotDetectionSettingsResponseContentFieldAllowlist                    = big.NewInt(1 << 4)
+	updateBotDetectionSettingsResponseContentFieldMonitoringModeEnabled        = big.NewInt(1 << 5)
+)
+
+type UpdateBotDetectionSettingsResponseContent struct {
+	BotDetectionLevel            *BotDetectionLevelEnum                            `json:"bot_detection_level,omitempty" url:"bot_detection_level,omitempty"`
+	ChallengePasswordPolicy      *BotDetectionChallengePolicyPasswordFlowEnum      `json:"challenge_password_policy,omitempty" url:"challenge_password_policy,omitempty"`
+	ChallengePasswordlessPolicy  *BotDetectionChallengePolicyPasswordlessFlowEnum  `json:"challenge_passwordless_policy,omitempty" url:"challenge_passwordless_policy,omitempty"`
+	ChallengePasswordResetPolicy *BotDetectionChallengePolicyPasswordResetFlowEnum `json:"challenge_password_reset_policy,omitempty" url:"challenge_password_reset_policy,omitempty"`
+	Allowlist                    *BotDetectionAllowlist                            `json:"allowlist,omitempty" url:"allowlist,omitempty"`
+	MonitoringModeEnabled        *BotDetectionMonitoringModeEnabled                `json:"monitoring_mode_enabled,omitempty" url:"monitoring_mode_enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetBotDetectionLevel() BotDetectionLevelEnum {
+	if u == nil || u.BotDetectionLevel == nil {
+		return ""
+	}
+	return *u.BotDetectionLevel
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetChallengePasswordPolicy() BotDetectionChallengePolicyPasswordFlowEnum {
+	if u == nil || u.ChallengePasswordPolicy == nil {
+		return ""
+	}
+	return *u.ChallengePasswordPolicy
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetChallengePasswordlessPolicy() BotDetectionChallengePolicyPasswordlessFlowEnum {
+	if u == nil || u.ChallengePasswordlessPolicy == nil {
+		return ""
+	}
+	return *u.ChallengePasswordlessPolicy
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetChallengePasswordResetPolicy() BotDetectionChallengePolicyPasswordResetFlowEnum {
+	if u == nil || u.ChallengePasswordResetPolicy == nil {
+		return ""
+	}
+	return *u.ChallengePasswordResetPolicy
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetAllowlist() BotDetectionAllowlist {
+	if u == nil || u.Allowlist == nil {
+		return nil
+	}
+	return *u.Allowlist
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetMonitoringModeEnabled() BotDetectionMonitoringModeEnabled {
+	if u == nil || u.MonitoringModeEnabled == nil {
+		return false
+	}
+	return *u.MonitoringModeEnabled
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetBotDetectionLevel sets the BotDetectionLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetBotDetectionLevel(botDetectionLevel *BotDetectionLevelEnum) {
+	u.BotDetectionLevel = botDetectionLevel
+	u.require(updateBotDetectionSettingsResponseContentFieldBotDetectionLevel)
+}
+
+// SetChallengePasswordPolicy sets the ChallengePasswordPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetChallengePasswordPolicy(challengePasswordPolicy *BotDetectionChallengePolicyPasswordFlowEnum) {
+	u.ChallengePasswordPolicy = challengePasswordPolicy
+	u.require(updateBotDetectionSettingsResponseContentFieldChallengePasswordPolicy)
+}
+
+// SetChallengePasswordlessPolicy sets the ChallengePasswordlessPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetChallengePasswordlessPolicy(challengePasswordlessPolicy *BotDetectionChallengePolicyPasswordlessFlowEnum) {
+	u.ChallengePasswordlessPolicy = challengePasswordlessPolicy
+	u.require(updateBotDetectionSettingsResponseContentFieldChallengePasswordlessPolicy)
+}
+
+// SetChallengePasswordResetPolicy sets the ChallengePasswordResetPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetChallengePasswordResetPolicy(challengePasswordResetPolicy *BotDetectionChallengePolicyPasswordResetFlowEnum) {
+	u.ChallengePasswordResetPolicy = challengePasswordResetPolicy
+	u.require(updateBotDetectionSettingsResponseContentFieldChallengePasswordResetPolicy)
+}
+
+// SetAllowlist sets the Allowlist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetAllowlist(allowlist *BotDetectionAllowlist) {
+	u.Allowlist = allowlist
+	u.require(updateBotDetectionSettingsResponseContentFieldAllowlist)
+}
+
+// SetMonitoringModeEnabled sets the MonitoringModeEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetMonitoringModeEnabled(monitoringModeEnabled *BotDetectionMonitoringModeEnabled) {
+	u.MonitoringModeEnabled = monitoringModeEnabled
+	u.require(updateBotDetectionSettingsResponseContentFieldMonitoringModeEnabled)
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateBotDetectionSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateBotDetectionSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateBotDetectionSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
 // Phone provider configuration schema
 var (
 	updateBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
@@ -52995,37 +69945,38 @@ func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) String() string {
 }
 
 var (
-	updateTenantSettingsResponseContentFieldChangePassword                             = big.NewInt(1 << 0)
-	updateTenantSettingsResponseContentFieldGuardianMfaPage                            = big.NewInt(1 << 1)
-	updateTenantSettingsResponseContentFieldDefaultAudience                            = big.NewInt(1 << 2)
-	updateTenantSettingsResponseContentFieldDefaultDirectory                           = big.NewInt(1 << 3)
-	updateTenantSettingsResponseContentFieldErrorPage                                  = big.NewInt(1 << 4)
-	updateTenantSettingsResponseContentFieldDeviceFlow                                 = big.NewInt(1 << 5)
-	updateTenantSettingsResponseContentFieldDefaultTokenQuota                          = big.NewInt(1 << 6)
-	updateTenantSettingsResponseContentFieldFlags                                      = big.NewInt(1 << 7)
-	updateTenantSettingsResponseContentFieldFriendlyName                               = big.NewInt(1 << 8)
-	updateTenantSettingsResponseContentFieldPictureURL                                 = big.NewInt(1 << 9)
-	updateTenantSettingsResponseContentFieldSupportEmail                               = big.NewInt(1 << 10)
-	updateTenantSettingsResponseContentFieldSupportURL                                 = big.NewInt(1 << 11)
-	updateTenantSettingsResponseContentFieldAllowedLogoutURLs                          = big.NewInt(1 << 12)
-	updateTenantSettingsResponseContentFieldSessionLifetime                            = big.NewInt(1 << 13)
-	updateTenantSettingsResponseContentFieldIdleSessionLifetime                        = big.NewInt(1 << 14)
-	updateTenantSettingsResponseContentFieldEphemeralSessionLifetime                   = big.NewInt(1 << 15)
-	updateTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime               = big.NewInt(1 << 16)
-	updateTenantSettingsResponseContentFieldSandboxVersion                             = big.NewInt(1 << 17)
-	updateTenantSettingsResponseContentFieldLegacySandboxVersion                       = big.NewInt(1 << 18)
-	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                   = big.NewInt(1 << 19)
-	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                      = big.NewInt(1 << 20)
-	updateTenantSettingsResponseContentFieldEnabledLocales                             = big.NewInt(1 << 21)
-	updateTenantSettingsResponseContentFieldSessionCookie                              = big.NewInt(1 << 22)
-	updateTenantSettingsResponseContentFieldSessions                                   = big.NewInt(1 << 23)
-	updateTenantSettingsResponseContentFieldOidcLogout                                 = big.NewInt(1 << 24)
-	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI   = big.NewInt(1 << 25)
-	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction              = big.NewInt(1 << 26)
-	updateTenantSettingsResponseContentFieldAcrValuesSupported                         = big.NewInt(1 << 27)
-	updateTenantSettingsResponseContentFieldMtls                                       = big.NewInt(1 << 28)
-	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported       = big.NewInt(1 << 29)
-	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported = big.NewInt(1 << 30)
+	updateTenantSettingsResponseContentFieldChangePassword                                 = big.NewInt(1 << 0)
+	updateTenantSettingsResponseContentFieldGuardianMfaPage                                = big.NewInt(1 << 1)
+	updateTenantSettingsResponseContentFieldDefaultAudience                                = big.NewInt(1 << 2)
+	updateTenantSettingsResponseContentFieldDefaultDirectory                               = big.NewInt(1 << 3)
+	updateTenantSettingsResponseContentFieldErrorPage                                      = big.NewInt(1 << 4)
+	updateTenantSettingsResponseContentFieldDeviceFlow                                     = big.NewInt(1 << 5)
+	updateTenantSettingsResponseContentFieldDefaultTokenQuota                              = big.NewInt(1 << 6)
+	updateTenantSettingsResponseContentFieldFlags                                          = big.NewInt(1 << 7)
+	updateTenantSettingsResponseContentFieldFriendlyName                                   = big.NewInt(1 << 8)
+	updateTenantSettingsResponseContentFieldPictureURL                                     = big.NewInt(1 << 9)
+	updateTenantSettingsResponseContentFieldSupportEmail                                   = big.NewInt(1 << 10)
+	updateTenantSettingsResponseContentFieldSupportURL                                     = big.NewInt(1 << 11)
+	updateTenantSettingsResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
+	updateTenantSettingsResponseContentFieldSessionLifetime                                = big.NewInt(1 << 13)
+	updateTenantSettingsResponseContentFieldIdleSessionLifetime                            = big.NewInt(1 << 14)
+	updateTenantSettingsResponseContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 15)
+	updateTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 16)
+	updateTenantSettingsResponseContentFieldSandboxVersion                                 = big.NewInt(1 << 17)
+	updateTenantSettingsResponseContentFieldLegacySandboxVersion                           = big.NewInt(1 << 18)
+	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
+	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
+	updateTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
+	updateTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 22)
+	updateTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 23)
+	updateTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 24)
+	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 25)
+	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 26)
+	updateTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 27)
+	updateTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 28)
+	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 29)
+	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 30)
+	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 31)
 )
 
 type UpdateTenantSettingsResponseContent struct {
@@ -53081,6 +70032,10 @@ type UpdateTenantSettingsResponseContent struct {
 	PushedAuthorizationRequestsSupported *bool `json:"pushed_authorization_requests_supported,omitempty" url:"pushed_authorization_requests_supported,omitempty"`
 	// Supports iss parameter in authorization responses
 	AuthorizationResponseIssParameterSupported *bool `json:"authorization_response_iss_parameter_supported,omitempty" url:"authorization_response_iss_parameter_supported,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -53304,6 +70259,13 @@ func (u *UpdateTenantSettingsResponseContent) GetAuthorizationResponseIssParamet
 		return false
 	}
 	return *u.AuthorizationResponseIssParameterSupported
+}
+
+func (u *UpdateTenantSettingsResponseContent) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if u == nil || u.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *u.SkipNonVerifiableCallbackURIConfirmationPrompt
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -53532,6 +70494,13 @@ func (u *UpdateTenantSettingsResponseContent) SetPushedAuthorizationRequestsSupp
 func (u *UpdateTenantSettingsResponseContent) SetAuthorizationResponseIssParameterSupported(authorizationResponseIssParameterSupported *bool) {
 	u.AuthorizationResponseIssParameterSupported = authorizationResponseIssParameterSupported
 	u.require(updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported)
+}
+
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	u.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	u.require(updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
 }
 
 func (u *UpdateTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -54902,6 +71871,253 @@ func NewUserEnrollmentStatusEnumFromString(s string) (UserEnrollmentStatusEnum, 
 
 func (u UserEnrollmentStatusEnum) Ptr() *UserEnrollmentStatusEnum {
 	return &u
+}
+
+var (
+	userGroupsResponseSchemaFieldID                  = big.NewInt(1 << 0)
+	userGroupsResponseSchemaFieldName                = big.NewInt(1 << 1)
+	userGroupsResponseSchemaFieldExternalID          = big.NewInt(1 << 2)
+	userGroupsResponseSchemaFieldConnectionID        = big.NewInt(1 << 3)
+	userGroupsResponseSchemaFieldOrganizationID      = big.NewInt(1 << 4)
+	userGroupsResponseSchemaFieldTenantName          = big.NewInt(1 << 5)
+	userGroupsResponseSchemaFieldDescription         = big.NewInt(1 << 6)
+	userGroupsResponseSchemaFieldCreatedAt           = big.NewInt(1 << 7)
+	userGroupsResponseSchemaFieldUpdatedAt           = big.NewInt(1 << 8)
+	userGroupsResponseSchemaFieldMembershipCreatedAt = big.NewInt(1 << 9)
+)
+
+type UserGroupsResponseSchema struct {
+	// Unique identifier for the group (service-generated).
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Name of the group. Must be unique within its scope (connection, organization, or tenant). Must contain between 1 and 128 printable ASCII characters.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// External identifier for the group, often used for SCIM synchronization. Max length of 256 characters.
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
+	// Identifier for the connection this group belongs to (if a connection group).
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// Identifier for the organization this group belongs to (if an organization group).
+	OrganizationID *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	// Identifier for the tenant this group belongs to.
+	TenantName  *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// Timestamp of when the group was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp of when the group was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// Timestamp of when the group membership was added.
+	MembershipCreatedAt *time.Time `json:"membership_created_at,omitempty" url:"membership_created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserGroupsResponseSchema) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UserGroupsResponseSchema) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+func (u *UserGroupsResponseSchema) GetExternalID() string {
+	if u == nil || u.ExternalID == nil {
+		return ""
+	}
+	return *u.ExternalID
+}
+
+func (u *UserGroupsResponseSchema) GetConnectionID() string {
+	if u == nil || u.ConnectionID == nil {
+		return ""
+	}
+	return *u.ConnectionID
+}
+
+func (u *UserGroupsResponseSchema) GetOrganizationID() string {
+	if u == nil || u.OrganizationID == nil {
+		return ""
+	}
+	return *u.OrganizationID
+}
+
+func (u *UserGroupsResponseSchema) GetTenantName() string {
+	if u == nil || u.TenantName == nil {
+		return ""
+	}
+	return *u.TenantName
+}
+
+func (u *UserGroupsResponseSchema) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UserGroupsResponseSchema) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetUpdatedAt() time.Time {
+	if u == nil || u.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *u.UpdatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetMembershipCreatedAt() time.Time {
+	if u == nil || u.MembershipCreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.MembershipCreatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UserGroupsResponseSchema) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetID(id *string) {
+	u.ID = id
+	u.require(userGroupsResponseSchemaFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetName(name *string) {
+	u.Name = name
+	u.require(userGroupsResponseSchemaFieldName)
+}
+
+// SetExternalID sets the ExternalID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetExternalID(externalID *string) {
+	u.ExternalID = externalID
+	u.require(userGroupsResponseSchemaFieldExternalID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetConnectionID(connectionID *string) {
+	u.ConnectionID = connectionID
+	u.require(userGroupsResponseSchemaFieldConnectionID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetOrganizationID(organizationID *string) {
+	u.OrganizationID = organizationID
+	u.require(userGroupsResponseSchemaFieldOrganizationID)
+}
+
+// SetTenantName sets the TenantName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetTenantName(tenantName *string) {
+	u.TenantName = tenantName
+	u.require(userGroupsResponseSchemaFieldTenantName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetDescription(description *string) {
+	u.Description = description
+	u.require(userGroupsResponseSchemaFieldDescription)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetCreatedAt(createdAt *time.Time) {
+	u.CreatedAt = createdAt
+	u.require(userGroupsResponseSchemaFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(userGroupsResponseSchemaFieldUpdatedAt)
+}
+
+// SetMembershipCreatedAt sets the MembershipCreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetMembershipCreatedAt(membershipCreatedAt *time.Time) {
+	u.MembershipCreatedAt = membershipCreatedAt
+	u.require(userGroupsResponseSchemaFieldMembershipCreatedAt)
+}
+
+func (u *UserGroupsResponseSchema) UnmarshalJSON(data []byte) error {
+	type embed UserGroupsResponseSchema
+	var unmarshaler = struct {
+		embed
+		CreatedAt           *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt           *internal.DateTime `json:"updated_at,omitempty"`
+		MembershipCreatedAt *internal.DateTime `json:"membership_created_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UserGroupsResponseSchema(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	u.MembershipCreatedAt = unmarshaler.MembershipCreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserGroupsResponseSchema) MarshalJSON() ([]byte, error) {
+	type embed UserGroupsResponseSchema
+	var marshaler = struct {
+		embed
+		CreatedAt           *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt           *internal.DateTime `json:"updated_at,omitempty"`
+		MembershipCreatedAt *internal.DateTime `json:"membership_created_at,omitempty"`
+	}{
+		embed:               embed(*u),
+		CreatedAt:           internal.NewOptionalDateTime(u.CreatedAt),
+		UpdatedAt:           internal.NewOptionalDateTime(u.UpdatedAt),
+		MembershipCreatedAt: internal.NewOptionalDateTime(u.MembershipCreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserGroupsResponseSchema) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 // user_id of the secondary user account being linked.

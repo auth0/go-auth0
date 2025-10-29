@@ -146,6 +146,55 @@ func TestPromptsRenderingListWithWireMock(
 	require.True(t, ok, "WireMock request was not matched")
 }
 
+func TestPromptsRenderingBulkUpdateWithWireMock(
+	t *testing.T,
+) {
+	// wiremock client and server initialized in shared main_test.go
+	defer WireMockClient.Reset()
+	stub := gowiremock.Patch(gowiremock.URLPathTemplate("/prompts/rendering")).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "object",
+                    "required": ["configs"],
+                    "properties": {
+                        "configs": {"type": "array", "items": {"type": "object"}}
+                    },
+                    "additionalProperties": true
+                }`, "V202012")).WillReturnResponse(
+		gowiremock.NewResponse().WithJSONBody(
+			map[string]interface{}{"configs": []interface{}{map[string]interface{}{"prompt": "login", "screen": "login", "rendering_mode": "advanced", "context_configuration": []interface{}{"context_configuration"}, "default_head_tags_disabled": true, "head_tags": []interface{}{map[string]interface{}{}}, "use_page_template": true}}},
+		).WithStatus(http.StatusOK),
+	)
+	err := WireMockClient.StubFor(stub)
+	require.NoError(t, err, "Failed to create WireMock stub")
+
+	client := client.NewWithOptions(
+		option.WithBaseURL(
+			WireMockBaseURL,
+		),
+	)
+	request := &management.BulkUpdateAculRequestContent{
+		Configs: []*management.AculConfigsItem{
+			&management.AculConfigsItem{
+				Prompt:        management.PromptGroupNameEnumLogin,
+				Screen:        management.ScreenGroupNameEnumLogin,
+				RenderingMode: management.AculRenderingModeEnumAdvanced,
+				HeadTags: []*management.AculHeadTag{
+					&management.AculHeadTag{},
+				},
+			},
+		},
+	}
+	_, invocationErr := client.Prompts.Rendering.BulkUpdate(
+		context.TODO(),
+		request,
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
+	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
+	require.True(t, ok, "WireMock request was not matched")
+}
+
 func TestPromptsRenderingGetWithWireMock(
 	t *testing.T,
 ) {
@@ -196,9 +245,9 @@ func TestPromptsRenderingUpdateWithWireMock(
 	).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
                     "$schema": "https://json-schema.org/draft/2020-12/schema",
                     "type": "object",
-                    "required": [],
+                    "required": ["rendering_mode", "head_tags"],
                     "properties": {
-                        
+                        "rendering_mode": {"type": "string"}, "head_tags": {"type": "array", "items": {"type": "object"}}
                     },
                     "additionalProperties": true
                 }`, "V202012")).WillReturnResponse(
@@ -214,7 +263,12 @@ func TestPromptsRenderingUpdateWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.UpdateAculRequestContent{}
+	request := &management.UpdateAculRequestContent{
+		RenderingMode: management.AculRenderingModeEnumAdvanced,
+		HeadTags: []*management.AculHeadTag{
+			&management.AculHeadTag{},
+		},
+	}
 	_, invocationErr := client.Prompts.Rendering.Update(
 		context.TODO(),
 		management.PromptGroupNameEnumLogin.Ptr(),
