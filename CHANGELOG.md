@@ -1,5 +1,11 @@
 # Change Log
 
+## [v2.0.2](https://github.com/auth0/go-auth0/tree/v2.0.2) (2025-10-29)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.0.1...v2.0.2)
+
+**Fixed**
+- fix: correct OAuth token URL construction for all credential options [\#641](https://github.com/auth0/go-auth0/pull/641) ([developerkunal](https://github.com/developerkunal))
+
 ## [v2.0.1](https://github.com/auth0/go-auth0/tree/v2.0.1) (2025-10-13)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.0.0...v2.0.1)
 
