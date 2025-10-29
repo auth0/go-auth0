@@ -103,7 +103,7 @@ func TestClientsConnectionsGetWithWireMock(
 		gowiremock.Matching("id"),
 	).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"connections": []interface{}{map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "is_domain_connection": true, "show_as_button": true}}, "next": "next"},
+			map[string]interface{}{"connections": []interface{}{map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "is_domain_connection": true, "show_as_button": true, "authentication": map[string]interface{}{"active": true}, "connected_accounts": map[string]interface{}{"active": true}}}, "next": "next"},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)

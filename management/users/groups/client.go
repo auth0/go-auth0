@@ -33,14 +33,14 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Retrieve the first <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors">multi-factor authentication</a> enrollment that a specific user has confirmed.
+// List all groups to which this user belongs.
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the user to list groups for.
 	id string,
 	request *management.GetUserGroupsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.Group], error) {
+) (*core.Page[*management.UserGroupsResponseSchema], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -84,11 +84,11 @@ func (c *Client) Get(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.GetUserGroupsResponseContent) *internal.PageResponse[*string, *management.Group] {
+	readPageResponse := func(response *management.GetUserGroupsPaginatedResponseContent) *internal.PageResponse[*string, *management.UserGroupsResponseSchema] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Groups
-		return &internal.PageResponse[*string, *management.Group]{
+		return &internal.PageResponse[*string, *management.UserGroupsResponseSchema]{
 			Next:    next,
 			Results: results,
 			Done:    next == zeroValue,

@@ -6946,6 +6946,183 @@ func (c *ConnectedAccount) String() string {
 // The access type for the connected account.
 type ConnectedAccountAccessTypeEnum = string
 
+// Configure the purpose of a connection to be used for authentication during login.
+var (
+	connectionAuthenticationPurposeFieldActive = big.NewInt(1 << 0)
+)
+
+type ConnectionAuthenticationPurpose struct {
+	Active bool `json:"active" url:"active"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionAuthenticationPurpose) GetActive() bool {
+	if c == nil {
+		return false
+	}
+	return c.Active
+}
+
+func (c *ConnectionAuthenticationPurpose) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionAuthenticationPurpose) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionAuthenticationPurpose) SetActive(active bool) {
+	c.Active = active
+	c.require(connectionAuthenticationPurposeFieldActive)
+}
+
+func (c *ConnectionAuthenticationPurpose) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionAuthenticationPurpose
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionAuthenticationPurpose(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionAuthenticationPurpose) MarshalJSON() ([]byte, error) {
+	type embed ConnectionAuthenticationPurpose
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionAuthenticationPurpose) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
+var (
+	connectionConnectedAccountsPurposeFieldActive         = big.NewInt(1 << 0)
+	connectionConnectedAccountsPurposeFieldCrossAppAccess = big.NewInt(1 << 1)
+)
+
+type ConnectionConnectedAccountsPurpose struct {
+	Active         bool  `json:"active" url:"active"`
+	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetActive() bool {
+	if c == nil {
+		return false
+	}
+	return c.Active
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetCrossAppAccess() bool {
+	if c == nil || c.CrossAppAccess == nil {
+		return false
+	}
+	return *c.CrossAppAccess
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionConnectedAccountsPurpose) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionConnectedAccountsPurpose) SetActive(active bool) {
+	c.Active = active
+	c.require(connectionConnectedAccountsPurposeFieldActive)
+}
+
+// SetCrossAppAccess sets the CrossAppAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionConnectedAccountsPurpose) SetCrossAppAccess(crossAppAccess *bool) {
+	c.CrossAppAccess = crossAppAccess
+	c.require(connectionConnectedAccountsPurposeFieldCrossAppAccess)
+}
+
+func (c *ConnectionConnectedAccountsPurpose) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionConnectedAccountsPurpose
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionConnectedAccountsPurpose(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionConnectedAccountsPurpose) MarshalJSON() ([]byte, error) {
+	type embed ConnectionConnectedAccountsPurpose
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionConnectedAccountsPurpose) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Connection name used in the new universal login experience
+type ConnectionDisplayName = string
+
 var (
 	connectionEnabledClientFieldClientID = big.NewInt(1 << 0)
 )
@@ -7030,6 +7207,9 @@ func (c *ConnectionEnabledClient) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
+type ConnectionEnabledClients = []string
+
 var (
 	connectionForListFieldName               = big.NewInt(1 << 0)
 	connectionForListFieldDisplayName        = big.NewInt(1 << 1)
@@ -7040,6 +7220,8 @@ var (
 	connectionForListFieldIsDomainConnection = big.NewInt(1 << 6)
 	connectionForListFieldShowAsButton       = big.NewInt(1 << 7)
 	connectionForListFieldMetadata           = big.NewInt(1 << 8)
+	connectionForListFieldAuthentication     = big.NewInt(1 << 9)
+	connectionForListFieldConnectedAccounts  = big.NewInt(1 << 10)
 )
 
 type ConnectionForList struct {
@@ -7057,8 +7239,10 @@ type ConnectionForList struct {
 	// True if the connection is domain level
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD.
-	ShowAsButton *bool                `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Metadata     *ConnectionsMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ShowAsButton      *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata          *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7128,6 +7312,20 @@ func (c *ConnectionForList) GetMetadata() ConnectionsMetadata {
 		return nil
 	}
 	return *c.Metadata
+}
+
+func (c *ConnectionForList) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *ConnectionForList) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
 }
 
 func (c *ConnectionForList) GetExtraProperties() map[string]interface{} {
@@ -7204,6 +7402,20 @@ func (c *ConnectionForList) SetMetadata(metadata *ConnectionsMetadata) {
 	c.require(connectionForListFieldMetadata)
 }
 
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForList) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(connectionForListFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionForList) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(connectionForListFieldConnectedAccounts)
+}
+
 func (c *ConnectionForList) UnmarshalJSON(data []byte) error {
 	type unmarshaler ConnectionForList
 	var value unmarshaler
@@ -7242,6 +7454,12 @@ func (c *ConnectionForList) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+// The connection's identifier
+type ConnectionID = string
+
+// <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
+type ConnectionIsDomainConnection = bool
 
 var (
 	connectionKeyFieldKid          = big.NewInt(1 << 0)
@@ -7535,8 +7753,445 @@ func (c ConnectionKeyUseEnum) Ptr() *ConnectionKeyUseEnum {
 	return &c
 }
 
+// The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
+type ConnectionName = string
+
 // In order to return options in the response, the `read:connections_options` scope must be present
 type ConnectionOptions = map[string]interface{}
+
+// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
+type ConnectionRealms = []string
+
+var (
+	connectionRequestCommonFieldDisplayName        = big.NewInt(1 << 0)
+	connectionRequestCommonFieldEnabledClients     = big.NewInt(1 << 1)
+	connectionRequestCommonFieldIsDomainConnection = big.NewInt(1 << 2)
+	connectionRequestCommonFieldShowAsButton       = big.NewInt(1 << 3)
+	connectionRequestCommonFieldRealms             = big.NewInt(1 << 4)
+	connectionRequestCommonFieldMetadata           = big.NewInt(1 << 5)
+	connectionRequestCommonFieldAuthentication     = big.NewInt(1 << 6)
+	connectionRequestCommonFieldConnectedAccounts  = big.NewInt(1 << 7)
+)
+
+type ConnectionRequestCommon struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionRequestCommon) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *ConnectionRequestCommon) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *ConnectionRequestCommon) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionRequestCommon) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *ConnectionRequestCommon) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *ConnectionRequestCommon) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *ConnectionRequestCommon) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *ConnectionRequestCommon) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *ConnectionRequestCommon) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionRequestCommon) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(connectionRequestCommonFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(connectionRequestCommonFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionRequestCommonFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(connectionRequestCommonFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(connectionRequestCommonFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionRequestCommonFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(connectionRequestCommonFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionRequestCommon) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(connectionRequestCommonFieldConnectedAccounts)
+}
+
+func (c *ConnectionRequestCommon) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionRequestCommon
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionRequestCommon(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionRequestCommon) MarshalJSON() ([]byte, error) {
+	type embed ConnectionRequestCommon
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionRequestCommon) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	connectionResponseCommonFieldDisplayName        = big.NewInt(1 << 0)
+	connectionResponseCommonFieldEnabledClients     = big.NewInt(1 << 1)
+	connectionResponseCommonFieldIsDomainConnection = big.NewInt(1 << 2)
+	connectionResponseCommonFieldShowAsButton       = big.NewInt(1 << 3)
+	connectionResponseCommonFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseCommonFieldMetadata           = big.NewInt(1 << 5)
+	connectionResponseCommonFieldAuthentication     = big.NewInt(1 << 6)
+	connectionResponseCommonFieldConnectedAccounts  = big.NewInt(1 << 7)
+	connectionResponseCommonFieldID                 = big.NewInt(1 << 8)
+	connectionResponseCommonFieldStrategy           = big.NewInt(1 << 9)
+	connectionResponseCommonFieldName               = big.NewInt(1 << 10)
+)
+
+type ConnectionResponseCommon struct {
+	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
+	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication     *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts  *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	ID                 *ConnectionID                       `json:"id,omitempty" url:"id,omitempty"`
+	Strategy           *ConnectionIdentityProviderEnum     `json:"strategy,omitempty" url:"strategy,omitempty"`
+	Name               *ConnectionName                     `json:"name,omitempty" url:"name,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionResponseCommon) GetDisplayName() ConnectionDisplayName {
+	if c == nil || c.DisplayName == nil {
+		return ""
+	}
+	return *c.DisplayName
+}
+
+func (c *ConnectionResponseCommon) GetEnabledClients() ConnectionEnabledClients {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return *c.EnabledClients
+}
+
+func (c *ConnectionResponseCommon) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseCommon) GetShowAsButton() ConnectionShowAsButton {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *ConnectionResponseCommon) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
+}
+
+func (c *ConnectionResponseCommon) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
+}
+
+func (c *ConnectionResponseCommon) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *ConnectionResponseCommon) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
+}
+
+func (c *ConnectionResponseCommon) GetID() ConnectionID {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+func (c *ConnectionResponseCommon) GetStrategy() ConnectionIdentityProviderEnum {
+	if c == nil || c.Strategy == nil {
+		return ""
+	}
+	return *c.Strategy
+}
+
+func (c *ConnectionResponseCommon) GetName() ConnectionName {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+func (c *ConnectionResponseCommon) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionResponseCommon) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetDisplayName(displayName *ConnectionDisplayName) {
+	c.DisplayName = displayName
+	c.require(connectionResponseCommonFieldDisplayName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetEnabledClients(enabledClients *ConnectionEnabledClients) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseCommonFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseCommonFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetShowAsButton(showAsButton *ConnectionShowAsButton) {
+	c.ShowAsButton = showAsButton
+	c.require(connectionResponseCommonFieldShowAsButton)
+}
+
+// SetRealms sets the Realms field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetRealms(realms *ConnectionRealms) {
+	c.Realms = realms
+	c.require(connectionResponseCommonFieldRealms)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseCommonFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(connectionResponseCommonFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(connectionResponseCommonFieldConnectedAccounts)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetID(id *ConnectionID) {
+	c.ID = id
+	c.require(connectionResponseCommonFieldID)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetStrategy(strategy *ConnectionIdentityProviderEnum) {
+	c.Strategy = strategy
+	c.require(connectionResponseCommonFieldStrategy)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetName(name *ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseCommonFieldName)
+}
+
+func (c *ConnectionResponseCommon) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionResponseCommon
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionResponseCommon(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionResponseCommon) MarshalJSON() ([]byte, error) {
+	type embed ConnectionResponseCommon
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionResponseCommon) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
+type ConnectionShowAsButton = bool
 
 type ConnectionStrategyEnum string
 
@@ -21626,7 +22281,7 @@ var (
 type FlowsVaultConnectioSetupAPIKeyWithBaseURL struct {
 	Type    FlowsVaultConnectioSetupTypeAPIKeyEnum `json:"type" url:"type"`
 	APIKey  string                                 `json:"api_key" url:"api_key"`
-	BaseURL *string                                `json:"base_url,omitempty" url:"base_url,omitempty"`
+	BaseURL string                                 `json:"base_url" url:"base_url"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -21643,10 +22298,10 @@ func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetAPIKey() string {
 }
 
 func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetBaseURL() string {
-	if f == nil || f.BaseURL == nil {
+	if f == nil {
 		return ""
 	}
-	return *f.BaseURL
+	return f.BaseURL
 }
 
 func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetExtraProperties() map[string]interface{} {
@@ -21676,7 +22331,7 @@ func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetAPIKey(apiKey string) {
 
 // SetBaseURL sets the BaseURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetBaseURL(baseURL *string) {
+func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) SetBaseURL(baseURL string) {
 	f.BaseURL = baseURL
 	f.require(flowsVaultConnectioSetupAPIKeyWithBaseURLFieldBaseURL)
 }
@@ -23890,6 +24545,185 @@ func (g *GetAculResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetAculResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getAttackProtectionCaptchaResponseContentFieldActiveProviderID = big.NewInt(1 << 0)
+)
+
+type GetAttackProtectionCaptchaResponseContent struct {
+	ActiveProviderID *string `json:"active_provider_id,omitempty" url:"active_provider_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetActiveProviderID() string {
+	if g == nil || g.ActiveProviderID == nil {
+		return ""
+	}
+	return *g.ActiveProviderID
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.ExtraProperties
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAttackProtectionCaptchaResponseContent) SetActiveProviderID(activeProviderID *string) {
+	g.ActiveProviderID = activeProviderID
+	g.require(getAttackProtectionCaptchaResponseContentFieldActiveProviderID)
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetAttackProtectionCaptchaResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetAttackProtectionCaptchaResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetAttackProtectionCaptchaResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetAttackProtectionCaptchaResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getBotDetectionSettingsResponseContentFieldAllowlist             = big.NewInt(1 << 0)
+	getBotDetectionSettingsResponseContentFieldMonitoringModeEnabled = big.NewInt(1 << 1)
+)
+
+type GetBotDetectionSettingsResponseContent struct {
+	// List of IP addresses or CIDR blocks to allowlist
+	Allowlist []interface{} `json:"allowlist" url:"allowlist"`
+	// Whether monitoring mode is enabled (logs but does not block)
+	MonitoringModeEnabled bool `json:"monitoring_mode_enabled" url:"monitoring_mode_enabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetAllowlist() []interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.Allowlist
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetMonitoringModeEnabled() bool {
+	if g == nil {
+		return false
+	}
+	return g.MonitoringModeEnabled
+}
+
+func (g *GetBotDetectionSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetBotDetectionSettingsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetAllowlist sets the Allowlist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetAllowlist(allowlist []interface{}) {
+	g.Allowlist = allowlist
+	g.require(getBotDetectionSettingsResponseContentFieldAllowlist)
+}
+
+// SetMonitoringModeEnabled sets the MonitoringModeEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBotDetectionSettingsResponseContent) SetMonitoringModeEnabled(monitoringModeEnabled bool) {
+	g.MonitoringModeEnabled = monitoringModeEnabled
+	g.require(getBotDetectionSettingsResponseContentFieldMonitoringModeEnabled)
+}
+
+func (g *GetBotDetectionSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetBotDetectionSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetBotDetectionSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetBotDetectionSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetBotDetectionSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetBotDetectionSettingsResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -29344,37 +30178,38 @@ func (g *GetSuspiciousIPThrottlingSettingsResponseContent) String() string {
 }
 
 var (
-	getTenantSettingsResponseContentFieldChangePassword                             = big.NewInt(1 << 0)
-	getTenantSettingsResponseContentFieldGuardianMfaPage                            = big.NewInt(1 << 1)
-	getTenantSettingsResponseContentFieldDefaultAudience                            = big.NewInt(1 << 2)
-	getTenantSettingsResponseContentFieldDefaultDirectory                           = big.NewInt(1 << 3)
-	getTenantSettingsResponseContentFieldErrorPage                                  = big.NewInt(1 << 4)
-	getTenantSettingsResponseContentFieldDeviceFlow                                 = big.NewInt(1 << 5)
-	getTenantSettingsResponseContentFieldDefaultTokenQuota                          = big.NewInt(1 << 6)
-	getTenantSettingsResponseContentFieldFlags                                      = big.NewInt(1 << 7)
-	getTenantSettingsResponseContentFieldFriendlyName                               = big.NewInt(1 << 8)
-	getTenantSettingsResponseContentFieldPictureURL                                 = big.NewInt(1 << 9)
-	getTenantSettingsResponseContentFieldSupportEmail                               = big.NewInt(1 << 10)
-	getTenantSettingsResponseContentFieldSupportURL                                 = big.NewInt(1 << 11)
-	getTenantSettingsResponseContentFieldAllowedLogoutURLs                          = big.NewInt(1 << 12)
-	getTenantSettingsResponseContentFieldSessionLifetime                            = big.NewInt(1 << 13)
-	getTenantSettingsResponseContentFieldIdleSessionLifetime                        = big.NewInt(1 << 14)
-	getTenantSettingsResponseContentFieldEphemeralSessionLifetime                   = big.NewInt(1 << 15)
-	getTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime               = big.NewInt(1 << 16)
-	getTenantSettingsResponseContentFieldSandboxVersion                             = big.NewInt(1 << 17)
-	getTenantSettingsResponseContentFieldLegacySandboxVersion                       = big.NewInt(1 << 18)
-	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                   = big.NewInt(1 << 19)
-	getTenantSettingsResponseContentFieldDefaultRedirectionURI                      = big.NewInt(1 << 20)
-	getTenantSettingsResponseContentFieldEnabledLocales                             = big.NewInt(1 << 21)
-	getTenantSettingsResponseContentFieldSessionCookie                              = big.NewInt(1 << 22)
-	getTenantSettingsResponseContentFieldSessions                                   = big.NewInt(1 << 23)
-	getTenantSettingsResponseContentFieldOidcLogout                                 = big.NewInt(1 << 24)
-	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI   = big.NewInt(1 << 25)
-	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction              = big.NewInt(1 << 26)
-	getTenantSettingsResponseContentFieldAcrValuesSupported                         = big.NewInt(1 << 27)
-	getTenantSettingsResponseContentFieldMtls                                       = big.NewInt(1 << 28)
-	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported       = big.NewInt(1 << 29)
-	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported = big.NewInt(1 << 30)
+	getTenantSettingsResponseContentFieldChangePassword                                 = big.NewInt(1 << 0)
+	getTenantSettingsResponseContentFieldGuardianMfaPage                                = big.NewInt(1 << 1)
+	getTenantSettingsResponseContentFieldDefaultAudience                                = big.NewInt(1 << 2)
+	getTenantSettingsResponseContentFieldDefaultDirectory                               = big.NewInt(1 << 3)
+	getTenantSettingsResponseContentFieldErrorPage                                      = big.NewInt(1 << 4)
+	getTenantSettingsResponseContentFieldDeviceFlow                                     = big.NewInt(1 << 5)
+	getTenantSettingsResponseContentFieldDefaultTokenQuota                              = big.NewInt(1 << 6)
+	getTenantSettingsResponseContentFieldFlags                                          = big.NewInt(1 << 7)
+	getTenantSettingsResponseContentFieldFriendlyName                                   = big.NewInt(1 << 8)
+	getTenantSettingsResponseContentFieldPictureURL                                     = big.NewInt(1 << 9)
+	getTenantSettingsResponseContentFieldSupportEmail                                   = big.NewInt(1 << 10)
+	getTenantSettingsResponseContentFieldSupportURL                                     = big.NewInt(1 << 11)
+	getTenantSettingsResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
+	getTenantSettingsResponseContentFieldSessionLifetime                                = big.NewInt(1 << 13)
+	getTenantSettingsResponseContentFieldIdleSessionLifetime                            = big.NewInt(1 << 14)
+	getTenantSettingsResponseContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 15)
+	getTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 16)
+	getTenantSettingsResponseContentFieldSandboxVersion                                 = big.NewInt(1 << 17)
+	getTenantSettingsResponseContentFieldLegacySandboxVersion                           = big.NewInt(1 << 18)
+	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
+	getTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
+	getTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
+	getTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 22)
+	getTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 23)
+	getTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 24)
+	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 25)
+	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 26)
+	getTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 27)
+	getTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 28)
+	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 29)
+	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 30)
+	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 31)
 )
 
 type GetTenantSettingsResponseContent struct {
@@ -29430,6 +30265,10 @@ type GetTenantSettingsResponseContent struct {
 	PushedAuthorizationRequestsSupported *bool `json:"pushed_authorization_requests_supported,omitempty" url:"pushed_authorization_requests_supported,omitempty"`
 	// Supports iss parameter in authorization responses
 	AuthorizationResponseIssParameterSupported *bool `json:"authorization_response_iss_parameter_supported,omitempty" url:"authorization_response_iss_parameter_supported,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -29653,6 +30492,13 @@ func (g *GetTenantSettingsResponseContent) GetAuthorizationResponseIssParameterS
 		return false
 	}
 	return *g.AuthorizationResponseIssParameterSupported
+}
+
+func (g *GetTenantSettingsResponseContent) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if g == nil || g.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *g.SkipNonVerifiableCallbackURIConfirmationPrompt
 }
 
 func (g *GetTenantSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -29881,6 +30727,13 @@ func (g *GetTenantSettingsResponseContent) SetPushedAuthorizationRequestsSupport
 func (g *GetTenantSettingsResponseContent) SetAuthorizationResponseIssParameterSupported(authorizationResponseIssParameterSupported *bool) {
 	g.AuthorizationResponseIssParameterSupported = authorizationResponseIssParameterSupported
 	g.require(getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported)
+}
+
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTenantSettingsResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	g.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	g.require(getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
 }
 
 func (g *GetTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -30480,14 +31333,20 @@ func (g *GetUserAuthenticationMethodResponseContent) String() string {
 }
 
 var (
-	getUserGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
-	getUserGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
+	getUserGroupsPaginatedResponseContentFieldGroups = big.NewInt(1 << 0)
+	getUserGroupsPaginatedResponseContentFieldNext   = big.NewInt(1 << 1)
+	getUserGroupsPaginatedResponseContentFieldStart  = big.NewInt(1 << 2)
+	getUserGroupsPaginatedResponseContentFieldLimit  = big.NewInt(1 << 3)
+	getUserGroupsPaginatedResponseContentFieldTotal  = big.NewInt(1 << 4)
 )
 
-type GetUserGroupsResponseContent struct {
-	Groups []*Group `json:"groups" url:"groups"`
-	// A token to retrieve the next page of results.
-	Next *string `json:"next,omitempty" url:"next,omitempty"`
+type GetUserGroupsPaginatedResponseContent struct {
+	Groups []*UserGroupsResponseSchema `json:"groups" url:"groups"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next  *string  `json:"next,omitempty" url:"next,omitempty"`
+	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
+	Limit *float64 `json:"limit,omitempty" url:"limit,omitempty"`
+	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -30496,25 +31355,46 @@ type GetUserGroupsResponseContent struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetUserGroupsResponseContent) GetGroups() []*Group {
+func (g *GetUserGroupsPaginatedResponseContent) GetGroups() []*UserGroupsResponseSchema {
 	if g == nil {
 		return nil
 	}
 	return g.Groups
 }
 
-func (g *GetUserGroupsResponseContent) GetNext() string {
+func (g *GetUserGroupsPaginatedResponseContent) GetNext() string {
 	if g == nil || g.Next == nil {
 		return ""
 	}
 	return *g.Next
 }
 
-func (g *GetUserGroupsResponseContent) GetExtraProperties() map[string]interface{} {
+func (g *GetUserGroupsPaginatedResponseContent) GetStart() float64 {
+	if g == nil || g.Start == nil {
+		return 0
+	}
+	return *g.Start
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) GetLimit() float64 {
+	if g == nil || g.Limit == nil {
+		return 0
+	}
+	return *g.Limit
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) GetTotal() float64 {
+	if g == nil || g.Total == nil {
+		return 0
+	}
+	return *g.Total
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
 }
 
-func (g *GetUserGroupsResponseContent) require(field *big.Int) {
+func (g *GetUserGroupsPaginatedResponseContent) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
@@ -30523,25 +31403,46 @@ func (g *GetUserGroupsResponseContent) require(field *big.Int) {
 
 // SetGroups sets the Groups field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserGroupsResponseContent) SetGroups(groups []*Group) {
+func (g *GetUserGroupsPaginatedResponseContent) SetGroups(groups []*UserGroupsResponseSchema) {
 	g.Groups = groups
-	g.require(getUserGroupsResponseContentFieldGroups)
+	g.require(getUserGroupsPaginatedResponseContentFieldGroups)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserGroupsResponseContent) SetNext(next *string) {
+func (g *GetUserGroupsPaginatedResponseContent) SetNext(next *string) {
 	g.Next = next
-	g.require(getUserGroupsResponseContentFieldNext)
+	g.require(getUserGroupsPaginatedResponseContentFieldNext)
 }
 
-func (g *GetUserGroupsResponseContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetUserGroupsResponseContent
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserGroupsPaginatedResponseContent) SetStart(start *float64) {
+	g.Start = start
+	g.require(getUserGroupsPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserGroupsPaginatedResponseContent) SetLimit(limit *float64) {
+	g.Limit = limit
+	g.require(getUserGroupsPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserGroupsPaginatedResponseContent) SetTotal(total *float64) {
+	g.Total = total
+	g.require(getUserGroupsPaginatedResponseContentFieldTotal)
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetUserGroupsPaginatedResponseContent
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*g = GetUserGroupsResponseContent(value)
+	*g = GetUserGroupsPaginatedResponseContent(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
@@ -30551,8 +31452,8 @@ func (g *GetUserGroupsResponseContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (g *GetUserGroupsResponseContent) MarshalJSON() ([]byte, error) {
-	type embed GetUserGroupsResponseContent
+func (g *GetUserGroupsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetUserGroupsPaginatedResponseContent
 	var marshaler = struct {
 		embed
 	}{
@@ -30562,7 +31463,7 @@ func (g *GetUserGroupsResponseContent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (g *GetUserGroupsResponseContent) String() string {
+func (g *GetUserGroupsPaginatedResponseContent) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -30836,8 +31737,9 @@ type Group struct {
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
 }
 
 func (g *Group) GetID() string {
@@ -30904,7 +31806,7 @@ func (g *Group) GetUpdatedAt() time.Time {
 }
 
 func (g *Group) GetExtraProperties() map[string]interface{} {
-	return g.extraProperties
+	return g.ExtraProperties
 }
 
 func (g *Group) require(field *big.Int) {
@@ -30996,7 +31898,7 @@ func (g *Group) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
-	g.extraProperties = extraProperties
+	g.ExtraProperties = extraProperties
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -31013,7 +31915,7 @@ func (g *Group) MarshalJSON() ([]byte, error) {
 		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
-	return json.Marshal(explicitMarshaler)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
 }
 
 func (g *Group) String() string {
@@ -43527,6 +44429,7 @@ const (
 	ScreenGroupNameEnumBruteForceProtectionUnblock               ScreenGroupNameEnum = "brute-force-protection-unblock"
 	ScreenGroupNameEnumBruteForceProtectionUnblockSuccess        ScreenGroupNameEnum = "brute-force-protection-unblock-success"
 	ScreenGroupNameEnumBruteForceProtectionUnblockFailure        ScreenGroupNameEnum = "brute-force-protection-unblock-failure"
+	ScreenGroupNameEnumAsyncApprovalError                        ScreenGroupNameEnum = "async-approval-error"
 	ScreenGroupNameEnumAsyncApprovalWrongUser                    ScreenGroupNameEnum = "async-approval-wrong-user"
 	ScreenGroupNameEnumAsyncApprovalAccepted                     ScreenGroupNameEnum = "async-approval-accepted"
 	ScreenGroupNameEnumAsyncApprovalDenied                       ScreenGroupNameEnum = "async-approval-denied"
@@ -43704,6 +44607,8 @@ func NewScreenGroupNameEnumFromString(s string) (ScreenGroupNameEnum, error) {
 		return ScreenGroupNameEnumBruteForceProtectionUnblockSuccess, nil
 	case "brute-force-protection-unblock-failure":
 		return ScreenGroupNameEnumBruteForceProtectionUnblockFailure, nil
+	case "async-approval-error":
+		return ScreenGroupNameEnumAsyncApprovalError, nil
 	case "async-approval-wrong-user":
 		return ScreenGroupNameEnumAsyncApprovalWrongUser, nil
 	case "async-approval-accepted":
@@ -50425,6 +51330,185 @@ func (u *UpdateAculResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+var (
+	updateAttackProtectionCaptchaResponseContentFieldActiveProviderID = big.NewInt(1 << 0)
+)
+
+type UpdateAttackProtectionCaptchaResponseContent struct {
+	ActiveProviderID *string `json:"active_provider_id,omitempty" url:"active_provider_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetActiveProviderID() string {
+	if u == nil || u.ActiveProviderID == nil {
+		return ""
+	}
+	return *u.ActiveProviderID
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.ExtraProperties
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaResponseContent) SetActiveProviderID(activeProviderID *string) {
+	u.ActiveProviderID = activeProviderID
+	u.require(updateAttackProtectionCaptchaResponseContentFieldActiveProviderID)
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateAttackProtectionCaptchaResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateAttackProtectionCaptchaResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.ExtraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateAttackProtectionCaptchaResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
+}
+
+func (u *UpdateAttackProtectionCaptchaResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateBotDetectionSettingsResponseContentFieldAllowlist             = big.NewInt(1 << 0)
+	updateBotDetectionSettingsResponseContentFieldMonitoringModeEnabled = big.NewInt(1 << 1)
+)
+
+type UpdateBotDetectionSettingsResponseContent struct {
+	// List of IP addresses or CIDR blocks to allowlist
+	Allowlist []interface{} `json:"allowlist,omitempty" url:"allowlist,omitempty"`
+	// Whether monitoring mode is enabled (logs but does not block)
+	MonitoringModeEnabled *bool `json:"monitoring_mode_enabled,omitempty" url:"monitoring_mode_enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetAllowlist() []interface{} {
+	if u == nil || u.Allowlist == nil {
+		return nil
+	}
+	return u.Allowlist
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetMonitoringModeEnabled() bool {
+	if u == nil || u.MonitoringModeEnabled == nil {
+		return false
+	}
+	return *u.MonitoringModeEnabled
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetAllowlist sets the Allowlist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetAllowlist(allowlist []interface{}) {
+	u.Allowlist = allowlist
+	u.require(updateBotDetectionSettingsResponseContentFieldAllowlist)
+}
+
+// SetMonitoringModeEnabled sets the MonitoringModeEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBotDetectionSettingsResponseContent) SetMonitoringModeEnabled(monitoringModeEnabled *bool) {
+	u.MonitoringModeEnabled = monitoringModeEnabled
+	u.require(updateBotDetectionSettingsResponseContentFieldMonitoringModeEnabled)
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateBotDetectionSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateBotDetectionSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateBotDetectionSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateBotDetectionSettingsResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
 // Phone provider configuration schema
 var (
 	updateBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
@@ -52995,37 +54079,38 @@ func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) String() string {
 }
 
 var (
-	updateTenantSettingsResponseContentFieldChangePassword                             = big.NewInt(1 << 0)
-	updateTenantSettingsResponseContentFieldGuardianMfaPage                            = big.NewInt(1 << 1)
-	updateTenantSettingsResponseContentFieldDefaultAudience                            = big.NewInt(1 << 2)
-	updateTenantSettingsResponseContentFieldDefaultDirectory                           = big.NewInt(1 << 3)
-	updateTenantSettingsResponseContentFieldErrorPage                                  = big.NewInt(1 << 4)
-	updateTenantSettingsResponseContentFieldDeviceFlow                                 = big.NewInt(1 << 5)
-	updateTenantSettingsResponseContentFieldDefaultTokenQuota                          = big.NewInt(1 << 6)
-	updateTenantSettingsResponseContentFieldFlags                                      = big.NewInt(1 << 7)
-	updateTenantSettingsResponseContentFieldFriendlyName                               = big.NewInt(1 << 8)
-	updateTenantSettingsResponseContentFieldPictureURL                                 = big.NewInt(1 << 9)
-	updateTenantSettingsResponseContentFieldSupportEmail                               = big.NewInt(1 << 10)
-	updateTenantSettingsResponseContentFieldSupportURL                                 = big.NewInt(1 << 11)
-	updateTenantSettingsResponseContentFieldAllowedLogoutURLs                          = big.NewInt(1 << 12)
-	updateTenantSettingsResponseContentFieldSessionLifetime                            = big.NewInt(1 << 13)
-	updateTenantSettingsResponseContentFieldIdleSessionLifetime                        = big.NewInt(1 << 14)
-	updateTenantSettingsResponseContentFieldEphemeralSessionLifetime                   = big.NewInt(1 << 15)
-	updateTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime               = big.NewInt(1 << 16)
-	updateTenantSettingsResponseContentFieldSandboxVersion                             = big.NewInt(1 << 17)
-	updateTenantSettingsResponseContentFieldLegacySandboxVersion                       = big.NewInt(1 << 18)
-	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                   = big.NewInt(1 << 19)
-	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                      = big.NewInt(1 << 20)
-	updateTenantSettingsResponseContentFieldEnabledLocales                             = big.NewInt(1 << 21)
-	updateTenantSettingsResponseContentFieldSessionCookie                              = big.NewInt(1 << 22)
-	updateTenantSettingsResponseContentFieldSessions                                   = big.NewInt(1 << 23)
-	updateTenantSettingsResponseContentFieldOidcLogout                                 = big.NewInt(1 << 24)
-	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI   = big.NewInt(1 << 25)
-	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction              = big.NewInt(1 << 26)
-	updateTenantSettingsResponseContentFieldAcrValuesSupported                         = big.NewInt(1 << 27)
-	updateTenantSettingsResponseContentFieldMtls                                       = big.NewInt(1 << 28)
-	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported       = big.NewInt(1 << 29)
-	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported = big.NewInt(1 << 30)
+	updateTenantSettingsResponseContentFieldChangePassword                                 = big.NewInt(1 << 0)
+	updateTenantSettingsResponseContentFieldGuardianMfaPage                                = big.NewInt(1 << 1)
+	updateTenantSettingsResponseContentFieldDefaultAudience                                = big.NewInt(1 << 2)
+	updateTenantSettingsResponseContentFieldDefaultDirectory                               = big.NewInt(1 << 3)
+	updateTenantSettingsResponseContentFieldErrorPage                                      = big.NewInt(1 << 4)
+	updateTenantSettingsResponseContentFieldDeviceFlow                                     = big.NewInt(1 << 5)
+	updateTenantSettingsResponseContentFieldDefaultTokenQuota                              = big.NewInt(1 << 6)
+	updateTenantSettingsResponseContentFieldFlags                                          = big.NewInt(1 << 7)
+	updateTenantSettingsResponseContentFieldFriendlyName                                   = big.NewInt(1 << 8)
+	updateTenantSettingsResponseContentFieldPictureURL                                     = big.NewInt(1 << 9)
+	updateTenantSettingsResponseContentFieldSupportEmail                                   = big.NewInt(1 << 10)
+	updateTenantSettingsResponseContentFieldSupportURL                                     = big.NewInt(1 << 11)
+	updateTenantSettingsResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
+	updateTenantSettingsResponseContentFieldSessionLifetime                                = big.NewInt(1 << 13)
+	updateTenantSettingsResponseContentFieldIdleSessionLifetime                            = big.NewInt(1 << 14)
+	updateTenantSettingsResponseContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 15)
+	updateTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 16)
+	updateTenantSettingsResponseContentFieldSandboxVersion                                 = big.NewInt(1 << 17)
+	updateTenantSettingsResponseContentFieldLegacySandboxVersion                           = big.NewInt(1 << 18)
+	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
+	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
+	updateTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
+	updateTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 22)
+	updateTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 23)
+	updateTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 24)
+	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 25)
+	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 26)
+	updateTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 27)
+	updateTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 28)
+	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 29)
+	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 30)
+	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 31)
 )
 
 type UpdateTenantSettingsResponseContent struct {
@@ -53081,6 +54166,10 @@ type UpdateTenantSettingsResponseContent struct {
 	PushedAuthorizationRequestsSupported *bool `json:"pushed_authorization_requests_supported,omitempty" url:"pushed_authorization_requests_supported,omitempty"`
 	// Supports iss parameter in authorization responses
 	AuthorizationResponseIssParameterSupported *bool `json:"authorization_response_iss_parameter_supported,omitempty" url:"authorization_response_iss_parameter_supported,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -53304,6 +54393,13 @@ func (u *UpdateTenantSettingsResponseContent) GetAuthorizationResponseIssParamet
 		return false
 	}
 	return *u.AuthorizationResponseIssParameterSupported
+}
+
+func (u *UpdateTenantSettingsResponseContent) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if u == nil || u.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *u.SkipNonVerifiableCallbackURIConfirmationPrompt
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -53532,6 +54628,13 @@ func (u *UpdateTenantSettingsResponseContent) SetPushedAuthorizationRequestsSupp
 func (u *UpdateTenantSettingsResponseContent) SetAuthorizationResponseIssParameterSupported(authorizationResponseIssParameterSupported *bool) {
 	u.AuthorizationResponseIssParameterSupported = authorizationResponseIssParameterSupported
 	u.require(updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported)
+}
+
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	u.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	u.require(updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
 }
 
 func (u *UpdateTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -54902,6 +56005,253 @@ func NewUserEnrollmentStatusEnumFromString(s string) (UserEnrollmentStatusEnum, 
 
 func (u UserEnrollmentStatusEnum) Ptr() *UserEnrollmentStatusEnum {
 	return &u
+}
+
+var (
+	userGroupsResponseSchemaFieldID                  = big.NewInt(1 << 0)
+	userGroupsResponseSchemaFieldName                = big.NewInt(1 << 1)
+	userGroupsResponseSchemaFieldExternalID          = big.NewInt(1 << 2)
+	userGroupsResponseSchemaFieldConnectionID        = big.NewInt(1 << 3)
+	userGroupsResponseSchemaFieldOrganizationID      = big.NewInt(1 << 4)
+	userGroupsResponseSchemaFieldTenantName          = big.NewInt(1 << 5)
+	userGroupsResponseSchemaFieldDescription         = big.NewInt(1 << 6)
+	userGroupsResponseSchemaFieldCreatedAt           = big.NewInt(1 << 7)
+	userGroupsResponseSchemaFieldUpdatedAt           = big.NewInt(1 << 8)
+	userGroupsResponseSchemaFieldMembershipCreatedAt = big.NewInt(1 << 9)
+)
+
+type UserGroupsResponseSchema struct {
+	// Unique identifier for the group (service-generated).
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Name of the group. Must be unique within its scope (connection, organization, or tenant). Must contain between 1 and 128 printable ASCII characters.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// External identifier for the group, often used for SCIM synchronization. Max length of 256 characters.
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
+	// Identifier for the connection this group belongs to (if a connection group).
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// Identifier for the organization this group belongs to (if an organization group).
+	OrganizationID *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	// Identifier for the tenant this group belongs to.
+	TenantName  *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// Timestamp of when the group was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp of when the group was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// Timestamp of when the group membership was added.
+	MembershipCreatedAt *time.Time `json:"membership_created_at,omitempty" url:"membership_created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserGroupsResponseSchema) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UserGroupsResponseSchema) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+func (u *UserGroupsResponseSchema) GetExternalID() string {
+	if u == nil || u.ExternalID == nil {
+		return ""
+	}
+	return *u.ExternalID
+}
+
+func (u *UserGroupsResponseSchema) GetConnectionID() string {
+	if u == nil || u.ConnectionID == nil {
+		return ""
+	}
+	return *u.ConnectionID
+}
+
+func (u *UserGroupsResponseSchema) GetOrganizationID() string {
+	if u == nil || u.OrganizationID == nil {
+		return ""
+	}
+	return *u.OrganizationID
+}
+
+func (u *UserGroupsResponseSchema) GetTenantName() string {
+	if u == nil || u.TenantName == nil {
+		return ""
+	}
+	return *u.TenantName
+}
+
+func (u *UserGroupsResponseSchema) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UserGroupsResponseSchema) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetUpdatedAt() time.Time {
+	if u == nil || u.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *u.UpdatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetMembershipCreatedAt() time.Time {
+	if u == nil || u.MembershipCreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.MembershipCreatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UserGroupsResponseSchema) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetID(id *string) {
+	u.ID = id
+	u.require(userGroupsResponseSchemaFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetName(name *string) {
+	u.Name = name
+	u.require(userGroupsResponseSchemaFieldName)
+}
+
+// SetExternalID sets the ExternalID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetExternalID(externalID *string) {
+	u.ExternalID = externalID
+	u.require(userGroupsResponseSchemaFieldExternalID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetConnectionID(connectionID *string) {
+	u.ConnectionID = connectionID
+	u.require(userGroupsResponseSchemaFieldConnectionID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetOrganizationID(organizationID *string) {
+	u.OrganizationID = organizationID
+	u.require(userGroupsResponseSchemaFieldOrganizationID)
+}
+
+// SetTenantName sets the TenantName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetTenantName(tenantName *string) {
+	u.TenantName = tenantName
+	u.require(userGroupsResponseSchemaFieldTenantName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetDescription(description *string) {
+	u.Description = description
+	u.require(userGroupsResponseSchemaFieldDescription)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetCreatedAt(createdAt *time.Time) {
+	u.CreatedAt = createdAt
+	u.require(userGroupsResponseSchemaFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(userGroupsResponseSchemaFieldUpdatedAt)
+}
+
+// SetMembershipCreatedAt sets the MembershipCreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetMembershipCreatedAt(membershipCreatedAt *time.Time) {
+	u.MembershipCreatedAt = membershipCreatedAt
+	u.require(userGroupsResponseSchemaFieldMembershipCreatedAt)
+}
+
+func (u *UserGroupsResponseSchema) UnmarshalJSON(data []byte) error {
+	type embed UserGroupsResponseSchema
+	var unmarshaler = struct {
+		embed
+		CreatedAt           *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt           *internal.DateTime `json:"updated_at,omitempty"`
+		MembershipCreatedAt *internal.DateTime `json:"membership_created_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UserGroupsResponseSchema(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	u.MembershipCreatedAt = unmarshaler.MembershipCreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserGroupsResponseSchema) MarshalJSON() ([]byte, error) {
+	type embed UserGroupsResponseSchema
+	var marshaler = struct {
+		embed
+		CreatedAt           *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt           *internal.DateTime `json:"updated_at,omitempty"`
+		MembershipCreatedAt *internal.DateTime `json:"membership_created_at,omitempty"`
+	}{
+		embed:               embed(*u),
+		CreatedAt:           internal.NewOptionalDateTime(u.CreatedAt),
+		UpdatedAt:           internal.NewOptionalDateTime(u.UpdatedAt),
+		MembershipCreatedAt: internal.NewOptionalDateTime(u.MembershipCreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserGroupsResponseSchema) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 // user_id of the secondary user account being linked.

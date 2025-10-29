@@ -1686,9 +1686,10 @@ type ConnectionPropertiesOptions struct {
 	// An array of user fields that should not be stored in the Auth0 database (https://auth0.com/docs/security/data-security/denylist)
 	NonPersistentAttrs []string `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	// Order of precedence for attribute types. If the property is not specified, the default precedence of attributes will be used.
-	Precedence          []ConnectionIdentifierPrecedenceEnum `json:"precedence,omitempty" url:"precedence,omitempty"`
-	Attributes          *ConnectionAttributes                `json:"attributes,omitempty" url:"attributes,omitempty"`
-	EnableScriptContext *bool                                `json:"enable_script_context,omitempty" url:"enable_script_context,omitempty"`
+	Precedence []ConnectionIdentifierPrecedenceEnum `json:"precedence,omitempty" url:"precedence,omitempty"`
+	Attributes *ConnectionAttributes                `json:"attributes,omitempty" url:"attributes,omitempty"`
+	// Set to true to inject context into custom DB scripts (warning: cannot be disabled once enabled)
+	EnableScriptContext *bool `json:"enable_script_context,omitempty" url:"enable_script_context,omitempty"`
 	// Set to true to use a legacy user store
 	EnabledDatabaseCustomization *bool `json:"enabledDatabaseCustomization,omitempty" url:"enabledDatabaseCustomization,omitempty"`
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
@@ -2652,6 +2653,8 @@ var (
 	createConnectionResponseContentFieldIsDomainConnection = big.NewInt(1 << 7)
 	createConnectionResponseContentFieldShowAsButton       = big.NewInt(1 << 8)
 	createConnectionResponseContentFieldMetadata           = big.NewInt(1 << 9)
+	createConnectionResponseContentFieldAuthentication     = big.NewInt(1 << 10)
+	createConnectionResponseContentFieldConnectedAccounts  = big.NewInt(1 << 11)
 )
 
 type CreateConnectionResponseContent struct {
@@ -2671,8 +2674,10 @@ type CreateConnectionResponseContent struct {
 	// True if the connection is domain level
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD.
-	ShowAsButton *bool                `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Metadata     *ConnectionsMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ShowAsButton      *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata          *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2749,6 +2754,20 @@ func (c *CreateConnectionResponseContent) GetMetadata() ConnectionsMetadata {
 		return nil
 	}
 	return *c.Metadata
+}
+
+func (c *CreateConnectionResponseContent) GetAuthentication() ConnectionAuthenticationPurpose {
+	if c == nil || c.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *c.Authentication
+}
+
+func (c *CreateConnectionResponseContent) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if c == nil || c.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *c.ConnectedAccounts
 }
 
 func (c *CreateConnectionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -2830,6 +2849,20 @@ func (c *CreateConnectionResponseContent) SetShowAsButton(showAsButton *bool) {
 func (c *CreateConnectionResponseContent) SetMetadata(metadata *ConnectionsMetadata) {
 	c.Metadata = metadata
 	c.require(createConnectionResponseContentFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionResponseContent) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	c.Authentication = authentication
+	c.require(createConnectionResponseContentFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionResponseContent) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	c.ConnectedAccounts = connectedAccounts
+	c.require(createConnectionResponseContentFieldConnectedAccounts)
 }
 
 func (c *CreateConnectionResponseContent) UnmarshalJSON(data []byte) error {
@@ -3010,6 +3043,8 @@ var (
 	getConnectionResponseContentFieldIsDomainConnection = big.NewInt(1 << 7)
 	getConnectionResponseContentFieldShowAsButton       = big.NewInt(1 << 8)
 	getConnectionResponseContentFieldMetadata           = big.NewInt(1 << 9)
+	getConnectionResponseContentFieldAuthentication     = big.NewInt(1 << 10)
+	getConnectionResponseContentFieldConnectedAccounts  = big.NewInt(1 << 11)
 )
 
 type GetConnectionResponseContent struct {
@@ -3029,8 +3064,10 @@ type GetConnectionResponseContent struct {
 	// True if the connection is domain level
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD.
-	ShowAsButton *bool                `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Metadata     *ConnectionsMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ShowAsButton      *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata          *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3107,6 +3144,20 @@ func (g *GetConnectionResponseContent) GetMetadata() ConnectionsMetadata {
 		return nil
 	}
 	return *g.Metadata
+}
+
+func (g *GetConnectionResponseContent) GetAuthentication() ConnectionAuthenticationPurpose {
+	if g == nil || g.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *g.Authentication
+}
+
+func (g *GetConnectionResponseContent) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if g == nil || g.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *g.ConnectedAccounts
 }
 
 func (g *GetConnectionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -3188,6 +3239,20 @@ func (g *GetConnectionResponseContent) SetShowAsButton(showAsButton *bool) {
 func (g *GetConnectionResponseContent) SetMetadata(metadata *ConnectionsMetadata) {
 	g.Metadata = metadata
 	g.require(getConnectionResponseContentFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionResponseContent) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	g.Authentication = authentication
+	g.require(getConnectionResponseContentFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionResponseContent) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	g.ConnectedAccounts = connectedAccounts
+	g.require(getConnectionResponseContentFieldConnectedAccounts)
 }
 
 func (g *GetConnectionResponseContent) UnmarshalJSON(data []byte) error {
@@ -3748,9 +3813,10 @@ type UpdateConnectionOptions struct {
 	// An array of user fields that should not be stored in the Auth0 database (https://auth0.com/docs/security/data-security/denylist)
 	NonPersistentAttrs []string `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	// Order of precedence for attribute types. If the property is not specified, the default precedence of attributes will be used.
-	Precedence          []ConnectionIdentifierPrecedenceEnum `json:"precedence,omitempty" url:"precedence,omitempty"`
-	Attributes          *ConnectionAttributes                `json:"attributes,omitempty" url:"attributes,omitempty"`
-	EnableScriptContext *bool                                `json:"enable_script_context,omitempty" url:"enable_script_context,omitempty"`
+	Precedence []ConnectionIdentifierPrecedenceEnum `json:"precedence,omitempty" url:"precedence,omitempty"`
+	Attributes *ConnectionAttributes                `json:"attributes,omitempty" url:"attributes,omitempty"`
+	// Set to true to inject context into custom DB scripts (warning: cannot be disabled once enabled)
+	EnableScriptContext *bool `json:"enable_script_context,omitempty" url:"enable_script_context,omitempty"`
 	// Set to true to use a legacy user store
 	EnabledDatabaseCustomization *bool `json:"enabledDatabaseCustomization,omitempty" url:"enabledDatabaseCustomization,omitempty"`
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
@@ -4242,6 +4308,8 @@ var (
 	updateConnectionResponseContentFieldIsDomainConnection = big.NewInt(1 << 7)
 	updateConnectionResponseContentFieldShowAsButton       = big.NewInt(1 << 8)
 	updateConnectionResponseContentFieldMetadata           = big.NewInt(1 << 9)
+	updateConnectionResponseContentFieldAuthentication     = big.NewInt(1 << 10)
+	updateConnectionResponseContentFieldConnectedAccounts  = big.NewInt(1 << 11)
 )
 
 type UpdateConnectionResponseContent struct {
@@ -4261,8 +4329,10 @@ type UpdateConnectionResponseContent struct {
 	// True if the connection is domain level
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD.
-	ShowAsButton *bool                `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Metadata     *ConnectionsMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ShowAsButton      *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata          *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4339,6 +4409,20 @@ func (u *UpdateConnectionResponseContent) GetMetadata() ConnectionsMetadata {
 		return nil
 	}
 	return *u.Metadata
+}
+
+func (u *UpdateConnectionResponseContent) GetAuthentication() ConnectionAuthenticationPurpose {
+	if u == nil || u.Authentication == nil {
+		return ConnectionAuthenticationPurpose{}
+	}
+	return *u.Authentication
+}
+
+func (u *UpdateConnectionResponseContent) GetConnectedAccounts() ConnectionConnectedAccountsPurpose {
+	if u == nil || u.ConnectedAccounts == nil {
+		return ConnectionConnectedAccountsPurpose{}
+	}
+	return *u.ConnectedAccounts
 }
 
 func (u *UpdateConnectionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -4420,6 +4504,20 @@ func (u *UpdateConnectionResponseContent) SetShowAsButton(showAsButton *bool) {
 func (u *UpdateConnectionResponseContent) SetMetadata(metadata *ConnectionsMetadata) {
 	u.Metadata = metadata
 	u.require(updateConnectionResponseContentFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionResponseContent) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	u.Authentication = authentication
+	u.require(updateConnectionResponseContentFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionResponseContent) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	u.ConnectedAccounts = connectedAccounts
+	u.require(updateConnectionResponseContentFieldConnectedAccounts)
 }
 
 func (u *UpdateConnectionResponseContent) UnmarshalJSON(data []byte) error {

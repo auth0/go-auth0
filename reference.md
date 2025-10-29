@@ -1461,6 +1461,14 @@ client.Clients.Create(
 <dl>
 <dd>
 
+**isTokenEndpointIPHeaderTrusted:** `*bool` — If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **appType:** `*management.ClientAppTypeEnum` 
     
 </dd>
@@ -1685,6 +1693,18 @@ client.Clients.Create(
 <dl>
 <dd>
 
+**skipNonVerifiableCallbackURIConfirmationPrompt:** `*bool` 
+
+Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **parRequestExpiry:** `*int` — Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
     
 </dd>
@@ -1702,6 +1722,14 @@ client.Clients.Create(
 <dd>
 
 **resourceServerIdentifier:** `*string` — The identifier of the resource server that this client is linked to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration` 
     
 </dd>
 </dl>
@@ -2124,6 +2152,14 @@ client.Clients.Update(
 <dl>
 <dd>
 
+**isTokenEndpointIPHeaderTrusted:** `*bool` — If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **appType:** `*management.ClientAppTypeEnum` 
     
 </dd>
@@ -2300,7 +2336,27 @@ client.Clients.Update(
 <dl>
 <dd>
 
+**skipNonVerifiableCallbackURIConfirmationPrompt:** `*bool` 
+
+Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **parRequestExpiry:** `*int` — Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration` 
     
 </dd>
 </dl>
@@ -2626,6 +2682,22 @@ client.Connections.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**authentication:** `*management.ConnectionAuthenticationPurpose` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectedAccounts:** `*management.ConnectionConnectedAccountsPurpose` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -2882,6 +2954,22 @@ client.Connections.Update(
 <dd>
 
 **metadata:** `*management.ConnectionsMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authentication:** `*management.ConnectionAuthenticationPurpose` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectedAccounts:** `*management.ConnectionConnectedAccountsPurpose` 
     
 </dd>
 </dl>
@@ -13417,6 +13505,116 @@ client.Anomaly.Blocks.UnblockIP(
 </dl>
 </details>
 
+## AttackProtection BotDetection
+<details><summary><code>client.AttackProtection.BotDetection.Get() -> *management.GetBotDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the Bot Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.BotDetection.Get(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.BotDetection.Update(request) -> *management.UpdateBotDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the Bot Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateBotDetectionSettingsRequestContent{}
+client.AttackProtection.BotDetection.Update(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**allowlist:** `[]any` — List of IP addresses or CIDR blocks to allowlist
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**monitoringModeEnabled:** `*bool` — Whether monitoring mode is enabled (logs but does not block)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## AttackProtection BreachedPasswordDetection
 <details><summary><code>client.AttackProtection.BreachedPasswordDetection.Get() -> *management.GetBreachedPasswordDetectionSettingsResponseContent</code></summary>
 <dl>
@@ -13687,6 +13885,93 @@ Account Lockout: Determines whether or not IP address is used when counting fail
 
 **maxAttempts:** `*int` — Maximum number of unsuccessful attempts.
     
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AttackProtection Captcha
+<details><summary><code>client.AttackProtection.Captcha.Get() -> *management.GetAttackProtectionCaptchaResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the CAPTCHA configuration for your client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.Captcha.Get(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.Captcha.Update(request) -> *management.UpdateAttackProtectionCaptchaResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update existing CAPTCHA configuration for your client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateAttackProtectionCaptchaRequestContent{}
+client.AttackProtection.Captcha.Update(
+        context.TODO(),
+        request,
+    )
+}
+```
 </dd>
 </dl>
 </dd>
@@ -17737,6 +18022,7 @@ request := &management.CreateFlowsVaultConnectionRequestContent{
                         "API_KEY",
                     ),
                     APIKey: "api_key",
+                    BaseURL: "base_url",
                 },
             },
         },
@@ -23051,7 +23337,12 @@ Learn more about <a href='https://auth0.com/docs/customize/login-pages/advanced-
 <dd>
 
 ```go
-request := &management.UpdateAculRequestContent{}
+request := &management.UpdateAculRequestContent{
+        RenderingMode: management.AculRenderingModeEnumAdvanced,
+        HeadTags: []*management.AculHeadTag{
+            &management.AculHeadTag{},
+        },
+    }
 client.Prompts.Rendering.Update(
         context.TODO(),
         management.PromptGroupNameEnumLogin.Ptr(),
@@ -24762,6 +25053,18 @@ client.Tenants.Settings.Update(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**skipNonVerifiableCallbackURIConfirmationPrompt:** `*bool` 
+
+Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -25651,7 +25954,7 @@ client.Users.FederatedConnectionsTokensets.Delete(
 </details>
 
 ## Users Groups
-<details><summary><code>client.Users.Groups.Get(ID) -> *management.GetUserGroupsResponseContent</code></summary>
+<details><summary><code>client.Users.Groups.Get(ID) -> *management.GetUserGroupsPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -25663,7 +25966,7 @@ client.Users.FederatedConnectionsTokensets.Delete(
 <dl>
 <dd>
 
-Retrieve the first <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors">multi-factor authentication</a> enrollment that a specific user has confirmed.
+List all groups to which this user belongs.
 </dd>
 </dl>
 </dd>
@@ -25679,6 +25982,12 @@ Retrieve the first <a href="https://auth0.com/docs/secure/multi-factor-authentic
 
 ```go
 request := &management.GetUserGroupsRequestParameters{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -25714,6 +26023,22 @@ client.Users.Groups.Get(
 <dl>
 <dd>
 
+**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **from:** `*string` — Optional Id from which to start selection.
     
 </dd>
@@ -25722,7 +26047,7 @@ client.Users.Groups.Get(
 <dl>
 <dd>
 
-**take:** `*int` — Number of results per page. Defaults to 25.
+**take:** `*int` — Number of results per page. Defaults to 50.
     
 </dd>
 </dl>
