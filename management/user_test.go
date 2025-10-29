@@ -339,11 +339,18 @@ func TestUser_MarshalJSON(t *testing.T) {
 
 func TestUser_UnmarshalJSON(t *testing.T) {
 	for payload, expected := range map[string]*User{
-		`{}`:                         {EmailVerified: nil},
-		`{"email_verified":true}`:    {EmailVerified: auth0.Bool(true)},
-		`{"email_verified":false}`:   {EmailVerified: auth0.Bool(false)},
-		`{"email_verified":"true"}`:  {EmailVerified: auth0.Bool(true)},
-		`{"email_verified":"false"}`: {EmailVerified: auth0.Bool(false)},
+		`{}`:                                     {EmailVerified: nil},
+		`{"email_verified":true}`:                {EmailVerified: auth0.Bool(true)},
+		`{"email_verified":false}`:               {EmailVerified: auth0.Bool(false)},
+		`{"email_verified":"true"}`:              {EmailVerified: auth0.Bool(true)},
+		`{"email_verified":"false"}`:             {EmailVerified: auth0.Bool(false)},
+		`{"email_verified":"myemail@dummy.com"}`: {EmailVerified: auth0.Bool(true)}, // Any non-empty string is truthy
+		`{"email_verified":"1"}`:                 {EmailVerified: auth0.Bool(true)},
+		`{"email_verified":"0"}`:                 {EmailVerified: auth0.Bool(false)},
+		`{"email_verified":"T"}`:                 {EmailVerified: auth0.Bool(true)},
+		`{"email_verified":"F"}`:                 {EmailVerified: auth0.Bool(false)},
+		`{"email_verified":"random-string"}`:     {EmailVerified: auth0.Bool(true)},  // Any non-empty string is truthy
+		`{"email_verified":""}`:                  {EmailVerified: auth0.Bool(false)}, // Empty string is falsy
 	} {
 		var actual User
 		err := json.Unmarshal([]byte(payload), &actual)

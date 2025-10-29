@@ -144,9 +144,14 @@ func (u *User) UnmarshalJSON(b []byte) error {
 		case bool:
 			emailVerified = rawEmailVerified
 		case string:
-			emailVerified, err = strconv.ParseBool(rawEmailVerified)
-			if err != nil {
-				return err
+			// Try parsing as a standard boolean first
+			parsed, err := strconv.ParseBool(rawEmailVerified)
+			if err == nil {
+				emailVerified = parsed
+			} else {
+				// If parsing fails, treat any non-empty string as truthy (verified)
+				// This handles cases where email_verified is set to an email address or other string value
+				emailVerified = rawEmailVerified != ""
 			}
 		default:
 			panic(reflect.TypeOf(rawEmailVerified))
