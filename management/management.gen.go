@@ -1608,6 +1608,14 @@ func (c *Client) GetAppType() string {
 	return *c.AppType
 }
 
+// GetAsyncApprovalNotificationChannels returns the AsyncApprovalNotificationChannels field if it's non-nil, zero value otherwise.
+func (c *Client) GetAsyncApprovalNotificationChannels() []string {
+	if c == nil || c.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *c.AsyncApprovalNotificationChannels
+}
+
 // GetCallbacks returns the Callbacks field if it's non-nil, zero value otherwise.
 func (c *Client) GetCallbacks() []string {
 	if c == nil || c.Callbacks == nil {
