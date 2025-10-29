@@ -180,6 +180,20 @@ type Client struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+
+	// OrganizationDiscoveryMethods is the method for discovering organizations during the `pre_login_prompt`.
+	// `email` allows users to find their organization by entering their email address and performing domain matching, while `organization_name`
+	// requires users to enter the organization name directly. These methods can be combined.
+	// Setting this property requires that OrganizationRequireBehavior is set to `pre_login_prompt`.
+	// To unset values (set to null), use a PATCH request like this:
+	// PATCH /api/v2/clients/{id}
+	// {
+	//	 "organization_discovery_methods": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	OrganizationDiscoveryMethods *[]string `json:"organization_discovery_methods,omitempty"`
 }
 
 // ClientTokenExchange allows configuration for token exchange.

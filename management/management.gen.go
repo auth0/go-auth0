@@ -469,6 +469,19 @@ func (a *ActionVersionList) String() string {
 	return Stringify(a)
 }
 
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (a *Authentication) GetActive() bool {
+	if a == nil || a.Active == nil {
+		return false
+	}
+	return *a.Active
+}
+
+// String returns a string representation of Authentication.
+func (a *Authentication) String() string {
+	return Stringify(a)
+}
+
 // GetAuthenticationMethods returns the AuthenticationMethods field if it's non-nil, zero value otherwise.
 func (a *AuthenticationMethod) GetAuthenticationMethods() []AuthenticationMethodReference {
 	if a == nil || a.AuthenticationMethods == nil {
@@ -1819,6 +1832,14 @@ func (c *Client) GetOIDCLogout() *OIDCLogout {
 	return c.OIDCLogout
 }
 
+// GetOrganizationDiscoveryMethods returns the OrganizationDiscoveryMethods field if it's non-nil, zero value otherwise.
+func (c *Client) GetOrganizationDiscoveryMethods() []string {
+	if c == nil || c.OrganizationDiscoveryMethods == nil {
+		return nil
+	}
+	return *c.OrganizationDiscoveryMethods
+}
+
 // GetOrganizationRequireBehavior returns the OrganizationRequireBehavior field if it's non-nil, zero value otherwise.
 func (c *Client) GetOrganizationRequireBehavior() string {
 	if c == nil || c.OrganizationRequireBehavior == nil {
@@ -2584,6 +2605,35 @@ func (c *CloudBeesClientAddon) String() string {
 // String returns a string representation of ConcurClientAddon.
 func (c *ConcurClientAddon) String() string {
 	return Stringify(c)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (c *ConnectedAccounts) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+// String returns a string representation of ConnectedAccounts.
+func (c *ConnectedAccounts) String() string {
+	return Stringify(c)
+}
+
+// GetAuthentication returns the Authentication field.
+func (c *Connection) GetAuthentication() *Authentication {
+	if c == nil {
+		return nil
+	}
+	return c.Authentication
+}
+
+// GetConnectedAccounts returns the ConnectedAccounts field.
+func (c *Connection) GetConnectedAccounts() *ConnectedAccounts {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectedAccounts
 }
 
 // GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
@@ -7294,6 +7344,11 @@ func (d *DeviceCredentialList) String() string {
 	return Stringify(d)
 }
 
+// String returns a string representation of DiscoveryDomainList.
+func (d *DiscoveryDomainList) String() string {
+	return Stringify(d)
+}
+
 // String returns a string representation of DropboxClientAddon.
 func (d *DropboxClientAddon) String() string {
 	return Stringify(d)
@@ -10006,6 +10061,51 @@ func (o *OrganizationConnectionDetails) String() string {
 
 // String returns a string representation of OrganizationConnectionList.
 func (o *OrganizationConnectionList) String() string {
+	return Stringify(o)
+}
+
+// GetDomain returns the Domain field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetDomain() string {
+	if o == nil || o.Domain == nil {
+		return ""
+	}
+	return *o.Domain
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetID() string {
+	if o == nil || o.ID == nil {
+		return ""
+	}
+	return *o.ID
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetStatus() string {
+	if o == nil || o.Status == nil {
+		return ""
+	}
+	return *o.Status
+}
+
+// GetVerificationHost returns the VerificationHost field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetVerificationHost() string {
+	if o == nil || o.VerificationHost == nil {
+		return ""
+	}
+	return *o.VerificationHost
+}
+
+// GetVerificationTXT returns the VerificationTXT field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetVerificationTXT() string {
+	if o == nil || o.VerificationTXT == nil {
+		return ""
+	}
+	return *o.VerificationTXT
+}
+
+// String returns a string representation of OrganizationDiscoveryDomain.
+func (o *OrganizationDiscoveryDomain) String() string {
 	return Stringify(o)
 }
 

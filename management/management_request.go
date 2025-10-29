@@ -24,6 +24,7 @@ func compileWhitelistedPathPatterns() []*regexp.Regexp {
 		`^/api/v2/users$`,
 		`^/api/v2/users/[^/]+$`,
 		`^/api/v2/guardian/enrollments/ticket$`,
+		"^/api/v2/self-service-profiles/[^/]+/sso-ticket$",
 	}
 
 	compiled := make([]*regexp.Regexp, len(patterns))
