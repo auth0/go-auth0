@@ -14,7 +14,6 @@ import (
 	connectedaccounts "github.com/auth0/go-auth0/v2/management/users/connectedaccounts"
 	enrollments "github.com/auth0/go-auth0/v2/management/users/enrollments"
 	federatedconnectionstokensets "github.com/auth0/go-auth0/v2/management/users/federatedconnectionstokensets"
-	groups "github.com/auth0/go-auth0/v2/management/users/groups"
 	identities "github.com/auth0/go-auth0/v2/management/users/identities"
 	logs "github.com/auth0/go-auth0/v2/management/users/logs"
 	multifactor "github.com/auth0/go-auth0/v2/management/users/multifactor"
@@ -35,7 +34,6 @@ type Client struct {
 	ConnectedAccounts             *connectedaccounts.Client
 	Enrollments                   *enrollments.Client
 	FederatedConnectionsTokensets *federatedconnectionstokensets.Client
-	Groups                        *groups.Client
 	Identities                    *identities.Client
 	Logs                          *logs.Client
 	Multifactor                   *multifactor.Client
@@ -58,7 +56,6 @@ func NewClient(options *core.RequestOptions) *Client {
 		ConnectedAccounts:             connectedaccounts.NewClient(options),
 		Enrollments:                   enrollments.NewClient(options),
 		FederatedConnectionsTokensets: federatedconnectionstokensets.NewClient(options),
-		Groups:                        groups.NewClient(options),
 		Identities:                    identities.NewClient(options),
 		Logs:                          logs.NewClient(options),
 		Multifactor:                   multifactor.NewClient(options),

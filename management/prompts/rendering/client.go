@@ -107,6 +107,54 @@ func (c *Client) List(
 	return pager.GetPage(ctx, &next)
 }
 
+// Learn more about <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>configuring render settings</a> for advanced customization.
+//
+// <p>
+//
+//	Example <code>head_tags</code> array. See our <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>documentation</a> on using Liquid variables within head tags.
+//
+// </p>
+//
+//	<pre>{
+//	  "head_tags": [
+//	    {
+//	      "tag": "script",
+//	      "attributes": {
+//	        "defer": true,
+//	        "src": "URL_TO_ASSET",
+//	        "async": true,
+//	        "integrity": [
+//	          "ASSET_SHA"
+//	        ]
+//	      }
+//	    },
+//	    {
+//	      "tag": "link",
+//	      "attributes": {
+//	        "href": "URL_TO_ASSET",
+//	        "rel": "stylesheet"
+//	      }
+//	    }
+//	  ]
+//	}
+//
+// </pre>
+func (c *Client) BulkUpdate(
+	ctx context.Context,
+	request *management.BulkUpdateAculRequestContent,
+	opts ...option.RequestOption,
+) (*management.BulkUpdateAculResponseContent, error) {
+	response, err := c.WithRawResponse.BulkUpdate(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Get render settings for a screen.
 func (c *Client) Get(
 	ctx context.Context,

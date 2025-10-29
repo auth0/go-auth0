@@ -100,7 +100,7 @@ func TestConnectionsListWithWireMock(
 	defer WireMockClient.Reset()
 	stub := gowiremock.Get(gowiremock.URLPathTemplate("/connections")).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"next": "next", "connections": []interface{}{map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "is_domain_connection": true, "show_as_button": true}}},
+			map[string]interface{}{"next": "next", "connections": []interface{}{map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "is_domain_connection": true, "show_as_button": true, "authentication": map[string]interface{}{"active": true}, "connected_accounts": map[string]interface{}{"active": true}}}},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)
@@ -154,7 +154,7 @@ func TestConnectionsCreateWithWireMock(
                     "additionalProperties": true
                 }`, "V202012")).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "enabled_clients": []interface{}{"enabled_clients"}, "is_domain_connection": true, "show_as_button": true, "metadata": map[string]interface{}{"key": "value"}},
+			map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "enabled_clients": []interface{}{"enabled_clients"}, "is_domain_connection": true, "show_as_button": true, "metadata": map[string]interface{}{"key": "value"}, "authentication": map[string]interface{}{"active": true}, "connected_accounts": map[string]interface{}{"active": true, "cross_app_access": true}},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)
@@ -190,7 +190,7 @@ func TestConnectionsGetWithWireMock(
 		gowiremock.Matching("id"),
 	).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "enabled_clients": []interface{}{"enabled_clients"}, "is_domain_connection": true, "show_as_button": true, "metadata": map[string]interface{}{"key": "value"}},
+			map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "enabled_clients": []interface{}{"enabled_clients"}, "is_domain_connection": true, "show_as_button": true, "metadata": map[string]interface{}{"key": "value"}, "authentication": map[string]interface{}{"active": true}, "connected_accounts": map[string]interface{}{"active": true, "cross_app_access": true}},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)
@@ -271,7 +271,7 @@ func TestConnectionsUpdateWithWireMock(
                     "additionalProperties": true
                 }`, "V202012")).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "enabled_clients": []interface{}{"enabled_clients"}, "is_domain_connection": true, "show_as_button": true, "metadata": map[string]interface{}{"key": "value"}},
+			map[string]interface{}{"name": "name", "display_name": "display_name", "options": map[string]interface{}{"key": "value"}, "id": "id", "strategy": "strategy", "realms": []interface{}{"realms"}, "enabled_clients": []interface{}{"enabled_clients"}, "is_domain_connection": true, "show_as_button": true, "metadata": map[string]interface{}{"key": "value"}, "authentication": map[string]interface{}{"active": true}, "connected_accounts": map[string]interface{}{"active": true, "cross_app_access": true}},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)

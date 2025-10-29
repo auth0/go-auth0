@@ -18,6 +18,7 @@ var (
 	createCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 5)
 	createCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 6)
 	createCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 7)
+	createCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 8)
 )
 
 type CreateCustomDomainResponseContent struct {
@@ -33,7 +34,8 @@ type CreateCustomDomainResponseContent struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -96,6 +98,13 @@ func (c *CreateCustomDomainResponseContent) GetTLSPolicy() string {
 		return ""
 	}
 	return *c.TLSPolicy
+}
+
+func (c *CreateCustomDomainResponseContent) GetCertificate() DomainCertificate {
+	if c == nil || c.Certificate == nil {
+		return DomainCertificate{}
+	}
+	return *c.Certificate
 }
 
 func (c *CreateCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
@@ -165,6 +174,13 @@ func (c *CreateCustomDomainResponseContent) SetTLSPolicy(tlsPolicy *string) {
 	c.require(createCustomDomainResponseContentFieldTLSPolicy)
 }
 
+// SetCertificate sets the Certificate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetCertificate(certificate *DomainCertificate) {
+	c.Certificate = certificate
+	c.require(createCustomDomainResponseContentFieldCertificate)
+}
+
 func (c *CreateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateCustomDomainResponseContent
 	var value unmarshaler
@@ -214,6 +230,7 @@ var (
 	customDomainFieldVerification         = big.NewInt(1 << 6)
 	customDomainFieldCustomClientIPHeader = big.NewInt(1 << 7)
 	customDomainFieldTLSPolicy            = big.NewInt(1 << 8)
+	customDomainFieldCertificate          = big.NewInt(1 << 9)
 )
 
 type CustomDomain struct {
@@ -231,7 +248,8 @@ type CustomDomain struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -301,6 +319,13 @@ func (c *CustomDomain) GetTLSPolicy() string {
 		return ""
 	}
 	return *c.TLSPolicy
+}
+
+func (c *CustomDomain) GetCertificate() DomainCertificate {
+	if c == nil || c.Certificate == nil {
+		return DomainCertificate{}
+	}
+	return *c.Certificate
 }
 
 func (c *CustomDomain) GetExtraProperties() map[string]interface{} {
@@ -375,6 +400,13 @@ func (c *CustomDomain) SetCustomClientIPHeader(customClientIPHeader *string) {
 func (c *CustomDomain) SetTLSPolicy(tlsPolicy *string) {
 	c.TLSPolicy = tlsPolicy
 	c.require(customDomainFieldTLSPolicy)
+}
+
+// SetCertificate sets the Certificate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetCertificate(certificate *DomainCertificate) {
+	c.Certificate = certificate
+	c.require(customDomainFieldCertificate)
 }
 
 func (c *CustomDomain) UnmarshalJSON(data []byte) error {
@@ -528,14 +560,203 @@ func (c CustomDomainTypeEnum) Ptr() *CustomDomainTypeEnum {
 // Custom domain verification method. Must be `txt`.
 type CustomDomainVerificationMethodEnum = string
 
+// Certificate information. This object is relevant only for Custom Domains with Auth0-Managed Certificates.
+var (
+	domainCertificateFieldStatus               = big.NewInt(1 << 0)
+	domainCertificateFieldErrorMsg             = big.NewInt(1 << 1)
+	domainCertificateFieldCertificateAuthority = big.NewInt(1 << 2)
+	domainCertificateFieldRenewsBefore         = big.NewInt(1 << 3)
+)
+
+type DomainCertificate struct {
+	Status *DomainCertificateStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	// A user-friendly error message will be presented if the certificate status is provisioning_failed or renewing_failed.
+	ErrorMsg             *string                         `json:"error_msg,omitempty" url:"error_msg,omitempty"`
+	CertificateAuthority *DomainCertificateAuthorityEnum `json:"certificate_authority,omitempty" url:"certificate_authority,omitempty"`
+	// The certificate will be renewed prior to this date.
+	RenewsBefore *string `json:"renews_before,omitempty" url:"renews_before,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (d *DomainCertificate) GetStatus() DomainCertificateStatusEnum {
+	if d == nil || d.Status == nil {
+		return ""
+	}
+	return *d.Status
+}
+
+func (d *DomainCertificate) GetErrorMsg() string {
+	if d == nil || d.ErrorMsg == nil {
+		return ""
+	}
+	return *d.ErrorMsg
+}
+
+func (d *DomainCertificate) GetCertificateAuthority() DomainCertificateAuthorityEnum {
+	if d == nil || d.CertificateAuthority == nil {
+		return ""
+	}
+	return *d.CertificateAuthority
+}
+
+func (d *DomainCertificate) GetRenewsBefore() string {
+	if d == nil || d.RenewsBefore == nil {
+		return ""
+	}
+	return *d.RenewsBefore
+}
+
+func (d *DomainCertificate) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
+}
+
+func (d *DomainCertificate) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainCertificate) SetStatus(status *DomainCertificateStatusEnum) {
+	d.Status = status
+	d.require(domainCertificateFieldStatus)
+}
+
+// SetErrorMsg sets the ErrorMsg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainCertificate) SetErrorMsg(errorMsg *string) {
+	d.ErrorMsg = errorMsg
+	d.require(domainCertificateFieldErrorMsg)
+}
+
+// SetCertificateAuthority sets the CertificateAuthority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainCertificate) SetCertificateAuthority(certificateAuthority *DomainCertificateAuthorityEnum) {
+	d.CertificateAuthority = certificateAuthority
+	d.require(domainCertificateFieldCertificateAuthority)
+}
+
+// SetRenewsBefore sets the RenewsBefore field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainCertificate) SetRenewsBefore(renewsBefore *string) {
+	d.RenewsBefore = renewsBefore
+	d.require(domainCertificateFieldRenewsBefore)
+}
+
+func (d *DomainCertificate) UnmarshalJSON(data []byte) error {
+	type unmarshaler DomainCertificate
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DomainCertificate(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DomainCertificate) MarshalJSON() ([]byte, error) {
+	type embed DomainCertificate
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (d *DomainCertificate) String() string {
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
+// The Certificate Authority issued the certificate.
+type DomainCertificateAuthorityEnum string
+
+const (
+	DomainCertificateAuthorityEnumLetsencrypt DomainCertificateAuthorityEnum = "letsencrypt"
+	DomainCertificateAuthorityEnumGoogletrust DomainCertificateAuthorityEnum = "googletrust"
+)
+
+func NewDomainCertificateAuthorityEnumFromString(s string) (DomainCertificateAuthorityEnum, error) {
+	switch s {
+	case "letsencrypt":
+		return DomainCertificateAuthorityEnumLetsencrypt, nil
+	case "googletrust":
+		return DomainCertificateAuthorityEnumGoogletrust, nil
+	}
+	var t DomainCertificateAuthorityEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (d DomainCertificateAuthorityEnum) Ptr() *DomainCertificateAuthorityEnum {
+	return &d
+}
+
+// The provisioning status of the certificate.
+type DomainCertificateStatusEnum string
+
+const (
+	DomainCertificateStatusEnumProvisioning       DomainCertificateStatusEnum = "provisioning"
+	DomainCertificateStatusEnumProvisioningFailed DomainCertificateStatusEnum = "provisioning_failed"
+	DomainCertificateStatusEnumProvisioned        DomainCertificateStatusEnum = "provisioned"
+	DomainCertificateStatusEnumRenewingFailed     DomainCertificateStatusEnum = "renewing_failed"
+)
+
+func NewDomainCertificateStatusEnumFromString(s string) (DomainCertificateStatusEnum, error) {
+	switch s {
+	case "provisioning":
+		return DomainCertificateStatusEnumProvisioning, nil
+	case "provisioning_failed":
+		return DomainCertificateStatusEnumProvisioningFailed, nil
+	case "provisioned":
+		return DomainCertificateStatusEnumProvisioned, nil
+	case "renewing_failed":
+		return DomainCertificateStatusEnumRenewingFailed, nil
+	}
+	var t DomainCertificateStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (d DomainCertificateStatusEnum) Ptr() *DomainCertificateStatusEnum {
+	return &d
+}
+
 // Domain verification settings.
 var (
-	domainVerificationFieldMethods = big.NewInt(1 << 0)
+	domainVerificationFieldMethods        = big.NewInt(1 << 0)
+	domainVerificationFieldStatus         = big.NewInt(1 << 1)
+	domainVerificationFieldErrorMsg       = big.NewInt(1 << 2)
+	domainVerificationFieldLastVerifiedAt = big.NewInt(1 << 3)
 )
 
 type DomainVerification struct {
 	// Domain verification methods.
-	Methods []*DomainVerificationMethod `json:"methods,omitempty" url:"methods,omitempty"`
+	Methods []*DomainVerificationMethod   `json:"methods,omitempty" url:"methods,omitempty"`
+	Status  *DomainVerificationStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	// The user0-friendly error message in case of failed verification. This field is relevant only for Custom Domains with Auth0-Managed Certificates.
+	ErrorMsg *string `json:"error_msg,omitempty" url:"error_msg,omitempty"`
+	// The date and time when the custom domain was last verified. This field is relevant only for Custom Domains with Auth0-Managed Certificates.
+	LastVerifiedAt *string `json:"last_verified_at,omitempty" url:"last_verified_at,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -549,6 +770,27 @@ func (d *DomainVerification) GetMethods() []*DomainVerificationMethod {
 		return nil
 	}
 	return d.Methods
+}
+
+func (d *DomainVerification) GetStatus() DomainVerificationStatusEnum {
+	if d == nil || d.Status == nil {
+		return ""
+	}
+	return *d.Status
+}
+
+func (d *DomainVerification) GetErrorMsg() string {
+	if d == nil || d.ErrorMsg == nil {
+		return ""
+	}
+	return *d.ErrorMsg
+}
+
+func (d *DomainVerification) GetLastVerifiedAt() string {
+	if d == nil || d.LastVerifiedAt == nil {
+		return ""
+	}
+	return *d.LastVerifiedAt
 }
 
 func (d *DomainVerification) GetExtraProperties() map[string]interface{} {
@@ -567,6 +809,27 @@ func (d *DomainVerification) require(field *big.Int) {
 func (d *DomainVerification) SetMethods(methods []*DomainVerificationMethod) {
 	d.Methods = methods
 	d.require(domainVerificationFieldMethods)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainVerification) SetStatus(status *DomainVerificationStatusEnum) {
+	d.Status = status
+	d.require(domainVerificationFieldStatus)
+}
+
+// SetErrorMsg sets the ErrorMsg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainVerification) SetErrorMsg(errorMsg *string) {
+	d.ErrorMsg = errorMsg
+	d.require(domainVerificationFieldErrorMsg)
+}
+
+// SetLastVerifiedAt sets the LastVerifiedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DomainVerification) SetLastVerifiedAt(lastVerifiedAt *string) {
+	d.LastVerifiedAt = lastVerifiedAt
+	d.require(domainVerificationFieldLastVerifiedAt)
 }
 
 func (d *DomainVerification) UnmarshalJSON(data []byte) error {
@@ -743,6 +1006,32 @@ func (d DomainVerificationMethodNameEnum) Ptr() *DomainVerificationMethodNameEnu
 	return &d
 }
 
+// The DNS record verification status. This field is relevant only for Custom Domains with Auth0-Managed Certificates.
+type DomainVerificationStatusEnum string
+
+const (
+	DomainVerificationStatusEnumVerified DomainVerificationStatusEnum = "verified"
+	DomainVerificationStatusEnumPending  DomainVerificationStatusEnum = "pending"
+	DomainVerificationStatusEnumFailed   DomainVerificationStatusEnum = "failed"
+)
+
+func NewDomainVerificationStatusEnumFromString(s string) (DomainVerificationStatusEnum, error) {
+	switch s {
+	case "verified":
+		return DomainVerificationStatusEnumVerified, nil
+	case "pending":
+		return DomainVerificationStatusEnumPending, nil
+	case "failed":
+		return DomainVerificationStatusEnumFailed, nil
+	}
+	var t DomainVerificationStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (d DomainVerificationStatusEnum) Ptr() *DomainVerificationStatusEnum {
+	return &d
+}
+
 var (
 	getCustomDomainResponseContentFieldCustomDomainID       = big.NewInt(1 << 0)
 	getCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
@@ -753,6 +1042,7 @@ var (
 	getCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 6)
 	getCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 7)
 	getCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 8)
+	getCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 9)
 )
 
 type GetCustomDomainResponseContent struct {
@@ -770,7 +1060,8 @@ type GetCustomDomainResponseContent struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -840,6 +1131,13 @@ func (g *GetCustomDomainResponseContent) GetTLSPolicy() string {
 		return ""
 	}
 	return *g.TLSPolicy
+}
+
+func (g *GetCustomDomainResponseContent) GetCertificate() DomainCertificate {
+	if g == nil || g.Certificate == nil {
+		return DomainCertificate{}
+	}
+	return *g.Certificate
 }
 
 func (g *GetCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
@@ -914,6 +1212,13 @@ func (g *GetCustomDomainResponseContent) SetCustomClientIPHeader(customClientIPH
 func (g *GetCustomDomainResponseContent) SetTLSPolicy(tlsPolicy *string) {
 	g.TLSPolicy = tlsPolicy
 	g.require(getCustomDomainResponseContentFieldTLSPolicy)
+}
+
+// SetCertificate sets the Certificate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetCertificate(certificate *DomainCertificate) {
+	g.Certificate = certificate
+	g.require(getCustomDomainResponseContentFieldCertificate)
 }
 
 func (g *GetCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
@@ -1062,6 +1367,7 @@ var (
 	updateCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 5)
 	updateCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 6)
 	updateCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 7)
+	updateCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 8)
 )
 
 type UpdateCustomDomainResponseContent struct {
@@ -1077,7 +1383,8 @@ type UpdateCustomDomainResponseContent struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1140,6 +1447,13 @@ func (u *UpdateCustomDomainResponseContent) GetTLSPolicy() string {
 		return ""
 	}
 	return *u.TLSPolicy
+}
+
+func (u *UpdateCustomDomainResponseContent) GetCertificate() DomainCertificate {
+	if u == nil || u.Certificate == nil {
+		return DomainCertificate{}
+	}
+	return *u.Certificate
 }
 
 func (u *UpdateCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1209,6 +1523,13 @@ func (u *UpdateCustomDomainResponseContent) SetTLSPolicy(tlsPolicy *string) {
 	u.require(updateCustomDomainResponseContentFieldTLSPolicy)
 }
 
+// SetCertificate sets the Certificate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetCertificate(certificate *DomainCertificate) {
+	u.Certificate = certificate
+	u.require(updateCustomDomainResponseContentFieldCertificate)
+}
+
 func (u *UpdateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler UpdateCustomDomainResponseContent
 	var value unmarshaler
@@ -1259,6 +1580,7 @@ var (
 	verifyCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 7)
 	verifyCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 8)
 	verifyCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 9)
+	verifyCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 10)
 )
 
 type VerifyCustomDomainResponseContent struct {
@@ -1278,7 +1600,8 @@ type VerifyCustomDomainResponseContent struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy *string `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1355,6 +1678,13 @@ func (v *VerifyCustomDomainResponseContent) GetTLSPolicy() string {
 		return ""
 	}
 	return *v.TLSPolicy
+}
+
+func (v *VerifyCustomDomainResponseContent) GetCertificate() DomainCertificate {
+	if v == nil || v.Certificate == nil {
+		return DomainCertificate{}
+	}
+	return *v.Certificate
 }
 
 func (v *VerifyCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1436,6 +1766,13 @@ func (v *VerifyCustomDomainResponseContent) SetCustomClientIPHeader(customClient
 func (v *VerifyCustomDomainResponseContent) SetTLSPolicy(tlsPolicy *string) {
 	v.TLSPolicy = tlsPolicy
 	v.require(verifyCustomDomainResponseContentFieldTLSPolicy)
+}
+
+// SetCertificate sets the Certificate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetCertificate(certificate *DomainCertificate) {
+	v.Certificate = certificate
+	v.require(verifyCustomDomainResponseContentFieldCertificate)
 }
 
 func (v *VerifyCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
