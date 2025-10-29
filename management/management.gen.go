@@ -5161,6 +5161,83 @@ func (c *ConnectionOptionsLinkedin) String() string {
 	return Stringify(c)
 }
 
+// GetAccessTokenURL returns the AccessTokenURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth1) GetAccessTokenURL() string {
+	if c == nil || c.AccessTokenURL == nil {
+		return ""
+	}
+	return *c.AccessTokenURL
+}
+
+// GetConsumerKey returns the ConsumerKey field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth1) GetConsumerKey() string {
+	if c == nil || c.ConsumerKey == nil {
+		return ""
+	}
+	return *c.ConsumerKey
+}
+
+// GetConsumerSecret returns the ConsumerSecret field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth1) GetConsumerSecret() string {
+	if c == nil || c.ConsumerSecret == nil {
+		return ""
+	}
+	return *c.ConsumerSecret
+}
+
+// GetCustomHeaders returns the CustomHeaders field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth1) GetCustomHeaders() map[string]string {
+	if c == nil || c.CustomHeaders == nil {
+		return map[string]string{}
+	}
+	return *c.CustomHeaders
+}
+
+// GetRequestTokenURL returns the RequestTokenURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth1) GetRequestTokenURL() string {
+	if c == nil || c.RequestTokenURL == nil {
+		return ""
+	}
+	return *c.RequestTokenURL
+}
+
+// GetScripts returns the Scripts field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth1) GetScripts() map[string]string {
+	if c == nil || c.Scripts == nil {
+		return map[string]string{}
+	}
+	return *c.Scripts
+}
+
+// GetSessionKey returns the SessionKey field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth1) GetSessionKey() string {
+	if c == nil || c.SessionKey == nil {
+		return ""
+	}
+	return *c.SessionKey
+}
+
+// GetSignatureMethod returns the SignatureMethod field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth1) GetSignatureMethod() string {
+	if c == nil || c.SignatureMethod == nil {
+		return ""
+	}
+	return *c.SignatureMethod
+}
+
+// GetUserAuthorizationURL returns the UserAuthorizationURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth1) GetUserAuthorizationURL() string {
+	if c == nil || c.UserAuthorizationURL == nil {
+		return ""
+	}
+	return *c.UserAuthorizationURL
+}
+
+// String returns a string representation of ConnectionOptionsOAuth1.
+func (c *ConnectionOptionsOAuth1) String() string {
+	return Stringify(c)
+}
+
 // GetAuthorizationURL returns the AuthorizationURL field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOAuth2) GetAuthorizationURL() string {
 	if c == nil || c.AuthorizationURL == nil {

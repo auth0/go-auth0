@@ -1,0 +1,138 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 470
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test-OAuth1-Connection-1761733321","strategy":"oauth1","options":{"consumer_key":"test-consumer-key","consumer_secret":"test-consumer-secret","requestTokenURL":"https://api.twitter.com/oauth/request_token","accessTokenURL":"https://api.twitter.com/oauth/access_token","userAuthorizationURL":"https://api.twitter.com/oauth/authorize","signatureMethod":"HMAC-SHA1","scripts":{"fetchUserProfile":"function(token, tokenSecret, ctx, cb) { return cb(null, {}); }"}}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.30.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 594
+        uncompressed: false
+        body: '{"id":"con_XVG0Y0akK0fOnX13","options":{"consumer_key":"test-consumer-key","consumer_secret":"test-consumer-secret","requestTokenURL":"https://api.twitter.com/oauth/request_token","accessTokenURL":"https://api.twitter.com/oauth/access_token","userAuthorizationURL":"https://api.twitter.com/oauth/authorize","signatureMethod":"HMAC-SHA1","scripts":{"fetchUserProfile":"function(token, tokenSecret, ctx, cb) { return cb(null, {}); }"}},"strategy":"oauth1","name":"Test-OAuth1-Connection-1761733321","is_domain_connection":false,"enabled_clients":[],"realms":["Test-OAuth1-Connection-1761733321"]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 404.716459ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.30.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections?include_totals=true&name=Test-OAuth1-Connection-1761733321&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"total":1,"start":0,"limit":50,"connections":[{"id":"con_XVG0Y0akK0fOnX13","options":{"scripts":{"fetchUserProfile":"function(token, tokenSecret, ctx, cb) { return cb(null, {}); }"},"consumer_key":"test-consumer-key","accessTokenURL":"https://api.twitter.com/oauth/access_token","consumer_secret":"test-consumer-secret","requestTokenURL":"https://api.twitter.com/oauth/request_token","signatureMethod":"HMAC-SHA1","userAuthorizationURL":"https://api.twitter.com/oauth/authorize"},"strategy":"oauth1","name":"Test-OAuth1-Connection-1761733321","is_domain_connection":false,"realms":["Test-OAuth1-Connection-1761733321"],"enabled_clients":[]}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 343.191667ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.30.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_XVG0Y0akK0fOnX13
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 41
+        uncompressed: false
+        body: '{"deleted_at":"2025-10-29T10:22:04.707Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 202 Accepted
+        code: 202
+        duration: 386.192334ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.30.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_XVG0Y0akK0fOnX13
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 357.749042ms
