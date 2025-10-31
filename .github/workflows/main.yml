@@ -28,7 +28,7 @@ jobs:
       - name: Check for linting errors
         uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9 # pin@8.0.0
         with:
-          version: latest
+          version: v2.5.0 # pin@v2.5.0 due to issues with later versions
           args: -v -c .golangci.yml
 
   tests:

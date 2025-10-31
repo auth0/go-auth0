@@ -27,7 +27,7 @@ deps: ## Download dependencies
 
 $(GO_BIN)/golangci-lint:
 	${call print, "Installing golangci-lint"}
-	@go install -v github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
+	@go install -v github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.5.0
 
 $(GO_BIN)/govulncheck:
 	${call print, "Installing govulncheck"}
