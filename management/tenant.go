@@ -64,6 +64,14 @@ type Tenant struct {
 	// idle_session_lifetime_in_minutes instead.
 	IdleSessionLifetime *float64 `json:"idle_session_lifetime,omitempty"`
 
+	// EphemeralSessionLifetime specifies the absolute lifetime (in hours) for non-persistent sessions.
+	// Values < 1 are converted to minutes and marshaled as ephemeral_session_lifetime_in_minutes.
+	EphemeralSessionLifetime *float64 `json:"ephemeral_session_lifetime,omitempty"`
+
+	// IdleEphemeralSessionLifetime specifies the inactivity timeout (in hours) for non-persistent sessions.
+	// Values < 1 are converted to minutes and marshaled as idle_ephemeral_session_lifetime_in_minutes.
+	IdleEphemeralSessionLifetime *float64 `json:"idle_ephemeral_session_lifetime,omitempty"`
+
 	// The selected sandbox version to be used for the extensibility environment
 	SandboxVersion *string `json:"sandbox_version,omitempty"`
 
@@ -186,11 +194,13 @@ func (t *Tenant) MarshalJSON() ([]byte, error) {
 
 	type tenantWrapper struct {
 		*tenant
-		SessionLifetimeInMinutes     *int `json:"session_lifetime_in_minutes,omitempty"`
-		IdleSessionLifetimeInMinutes *int `json:"idle_session_lifetime_in_minutes,omitempty"`
+		SessionLifetimeInMinutes              *int `json:"session_lifetime_in_minutes,omitempty"`
+		IdleSessionLifetimeInMinutes          *int `json:"idle_session_lifetime_in_minutes,omitempty"`
+		EphemeralSessionLifetimeInMinutes     *int `json:"ephemeral_session_lifetime_in_minutes,omitempty"`
+		IdleEphemeralSessionLifetimeInMinutes *int `json:"idle_ephemeral_session_lifetime_in_minutes,omitempty"`
 	}
 
-	w := &tenantWrapper{(*tenant)(t), nil, nil}
+	w := &tenantWrapper{(*tenant)(t), nil, nil, nil, nil}
 
 	if t.SessionLifetime != nil {
 		sessionLifetime := t.GetSessionLifetime()
@@ -215,6 +225,32 @@ func (t *Tenant) MarshalJSON() ([]byte, error) {
 			defer func() { w.IdleSessionLifetime = &idleSessionLifetime }()
 		} else {
 			w.IdleSessionLifetime = auth0.Float64(math.Round(idleSessionLifetime))
+		}
+	}
+
+	if t.EphemeralSessionLifetime != nil {
+		ephemeralLifetime := t.GetEphemeralSessionLifetime()
+
+		if ephemeralLifetime < 1 {
+			w.EphemeralSessionLifetimeInMinutes = auth0.Int(int(math.Round(ephemeralLifetime * 60.0)))
+			w.EphemeralSessionLifetime = nil
+
+			defer func() { w.EphemeralSessionLifetime = &ephemeralLifetime }()
+		} else {
+			w.EphemeralSessionLifetime = auth0.Float64(math.Round(ephemeralLifetime))
+		}
+	}
+
+	if t.IdleEphemeralSessionLifetime != nil {
+		idleEphemeralLifetime := t.GetIdleEphemeralSessionLifetime()
+
+		if idleEphemeralLifetime < 1 {
+			w.IdleEphemeralSessionLifetimeInMinutes = auth0.Int(int(math.Round(idleEphemeralLifetime * 60.0)))
+			w.IdleEphemeralSessionLifetime = nil
+
+			defer func() { w.IdleEphemeralSessionLifetime = &idleEphemeralLifetime }()
+		} else {
+			w.IdleEphemeralSessionLifetime = auth0.Float64(math.Round(idleEphemeralLifetime))
 		}
 	}
 

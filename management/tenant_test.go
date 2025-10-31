@@ -27,12 +27,15 @@ func TestTenantManager(t *testing.T) {
 	})
 
 	newTenantSettings := &Tenant{
-		FriendlyName:          auth0.String("My Example Tenant"),
-		SupportURL:            auth0.String("https://support.example.com"),
-		SupportEmail:          auth0.String("support@example.com"),
-		DefaultRedirectionURI: auth0.String("https://example.com/login"),
-		SessionLifetime:       auth0.Float64(1080),
-		IdleSessionLifetime:   auth0.Float64(720.2), // will be rounded off
+		FriendlyName:                 auth0.String("My Example Tenant"),
+		SupportURL:                   auth0.String("https://support.example.com"),
+		SupportEmail:                 auth0.String("support@example.com"),
+		DefaultRedirectionURI:        auth0.String("https://example.com/login"),
+		SessionLifetime:              auth0.Float64(1080),
+		IdleSessionLifetime:          auth0.Float64(720.2), // will be rounded off
+		EphemeralSessionLifetime:     auth0.Float64(1.5),   // 1.5 hours
+		IdleEphemeralSessionLifetime: auth0.Float64(0.25),  // 15 minutes
+
 		SessionCookie: &TenantSessionCookie{
 			Mode: auth0.String("non-persistent"),
 		},
@@ -89,6 +92,9 @@ func TestTenantManager(t *testing.T) {
 	assert.Equal(t, newTenantSettings.GetOIDCLogout().GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery(), actualTenantSettings.GetOIDCLogout().GetOIDCResourceProviderLogoutEndSessionEndpointDiscovery())
 	assert.Equal(t, newTenantSettings.GetDefaultTokenQuota().GetClients().GetClientCredentials(), actualTenantSettings.GetDefaultTokenQuota().GetClients().GetClientCredentials())
 	assert.Equal(t, newTenantSettings.GetDefaultTokenQuota().GetOrganizations().GetClientCredentials(), actualTenantSettings.GetDefaultTokenQuota().GetOrganizations().GetClientCredentials())
+	assert.Equal(t, newTenantSettings.GetEphemeralSessionLifetime(), actualTenantSettings.GetEphemeralSessionLifetime())
+	assert.Equal(t, newTenantSettings.GetIdleEphemeralSessionLifetime(), actualTenantSettings.GetIdleEphemeralSessionLifetime())
+	assert.Equal(t, actualTenantSettings.GetIdleEphemeralSessionLifetime(), 0.25) // rounded if necessary
 
 	// If ACRValuesSupported and MTLS is not Passed Should not change the values.
 	updatedNewTenant := &Tenant{
@@ -195,19 +201,23 @@ func TestTenantManager_NullableFields(t *testing.T) {
 
 func TestTenant_MarshalJSON(t *testing.T) {
 	for tenant, expected := range map[*Tenant]string{
-		{}:                                         `{}`,
-		{SessionLifetime: auth0.Float64(1.2)}:      `{"session_lifetime":1}`,
-		{SessionLifetime: auth0.Float64(1.19)}:     `{"session_lifetime":1}`,
-		{SessionLifetime: auth0.Float64(1)}:        `{"session_lifetime":1}`,
-		{SessionLifetime: auth0.Float64(720)}:      `{"session_lifetime":720}`,
-		{IdleSessionLifetime: auth0.Float64(1)}:    `{"idle_session_lifetime":1}`,
-		{IdleSessionLifetime: auth0.Float64(1.2)}:  `{"idle_session_lifetime":1}`,
-		{SessionLifetime: auth0.Float64(0.25)}:     `{"session_lifetime_in_minutes":15}`,
-		{SessionLifetime: auth0.Float64(0.5)}:      `{"session_lifetime_in_minutes":30}`,
-		{SessionLifetime: auth0.Float64(0.99)}:     `{"session_lifetime_in_minutes":59}`,
-		{IdleSessionLifetime: auth0.Float64(0.25)}: `{"idle_session_lifetime_in_minutes":15}`,
-		{AllowedLogoutURLs: nil}:                   `{}`,
-		{AllowedLogoutURLs: &[]string{}}:           `{"allowed_logout_urls":[]}`,
+		{}:                                                  `{}`,
+		{SessionLifetime: auth0.Float64(1.2)}:               `{"session_lifetime":1}`,
+		{SessionLifetime: auth0.Float64(1.19)}:              `{"session_lifetime":1}`,
+		{SessionLifetime: auth0.Float64(1)}:                 `{"session_lifetime":1}`,
+		{SessionLifetime: auth0.Float64(720)}:               `{"session_lifetime":720}`,
+		{IdleSessionLifetime: auth0.Float64(1)}:             `{"idle_session_lifetime":1}`,
+		{IdleSessionLifetime: auth0.Float64(1.2)}:           `{"idle_session_lifetime":1}`,
+		{SessionLifetime: auth0.Float64(0.25)}:              `{"session_lifetime_in_minutes":15}`,
+		{SessionLifetime: auth0.Float64(0.5)}:               `{"session_lifetime_in_minutes":30}`,
+		{SessionLifetime: auth0.Float64(0.99)}:              `{"session_lifetime_in_minutes":59}`,
+		{IdleSessionLifetime: auth0.Float64(0.25)}:          `{"idle_session_lifetime_in_minutes":15}`,
+		{EphemeralSessionLifetime: auth0.Float64(2)}:        `{"ephemeral_session_lifetime":2}`,
+		{EphemeralSessionLifetime: auth0.Float64(0.5)}:      `{"ephemeral_session_lifetime_in_minutes":30}`,
+		{IdleEphemeralSessionLifetime: auth0.Float64(0.25)}: `{"idle_ephemeral_session_lifetime_in_minutes":15}`,
+		{IdleEphemeralSessionLifetime: auth0.Float64(2)}:    `{"idle_ephemeral_session_lifetime":2}`,
+		{AllowedLogoutURLs: nil}:                            `{}`,
+		{AllowedLogoutURLs: &[]string{}}:                    `{"allowed_logout_urls":[]}`,
 	} {
 		payload, err := json.Marshal(tenant)
 		assert.NoError(t, err)
