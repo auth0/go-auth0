@@ -119,6 +119,7 @@ type Client struct {
 
 	// URLs that are valid to call back from Auth0 for OIDC backchannel logout.
 	// This feature currently must be enabled for your tenant.
+	//
 	// Deprecated: use OIDCLogout instead of OIDCBackchannelLogout.
 	OIDCBackchannelLogout *OIDCBackchannelLogout `json:"oidc_backchannel_logout,omitempty"`
 
@@ -433,6 +434,7 @@ type PrivateKeyJWT struct {
 }
 
 // OIDCBackchannelLogout defines the `oidc_backchannel_logout` settings for the client.
+//
 // Deprecated: use OIDCLogout instead of OIDCBackchannelLogout.
 type OIDCBackchannelLogout struct {
 	BackChannelLogoutURLs *[]string `json:"backchannel_logout_urls,omitempty"`
