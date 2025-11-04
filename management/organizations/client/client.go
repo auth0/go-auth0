@@ -71,7 +71,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListOrganizationsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.Organization], error) {
+) (*core.Page[*string, *management.Organization], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -92,7 +92,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -112,11 +112,11 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListOrganizationsPaginatedResponseContent) *internal.PageResponse[*string, *management.Organization] {
+	readPageResponse := func(response *management.ListOrganizationsPaginatedResponseContent) *core.PageResponse[*string, *management.Organization] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Organizations
-		return &internal.PageResponse[*string, *management.Organization]{
+		return &core.PageResponse[*string, *management.Organization]{
 			Next:    next,
 			Results: results,
 			Done:    next == zeroValue,

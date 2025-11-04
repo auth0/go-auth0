@@ -43,7 +43,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListHooksRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.Hook], error) {
+) (*core.Page[*int, *management.Hook], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -66,7 +66,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -94,10 +94,10 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListHooksOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.Hook] {
+	readPageResponse := func(response *management.ListHooksOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.Hook] {
 		next += 1
 		results := response.Hooks
-		return &internal.PageResponse[*int, *management.Hook]{
+		return &core.PageResponse[*int, *management.Hook]{
 			Next:    &next,
 			Results: results,
 		}

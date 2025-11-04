@@ -48,7 +48,7 @@ func (c *Client) List(
 	id string,
 	request *management.ListUserLogsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.Log], error) {
+) (*core.Page[*int, *management.Log], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -74,7 +74,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -102,10 +102,10 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.UserListLogOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.Log] {
+	readPageResponse := func(response *management.UserListLogOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.Log] {
 		next += 1
 		results := response.Logs
-		return &internal.PageResponse[*int, *management.Log]{
+		return &core.PageResponse[*int, *management.Log]{
 			Next:    &next,
 			Results: results,
 		}

@@ -39,7 +39,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListFormsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.FormSummary], error) {
+) (*core.Page[*int, *management.FormSummary], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -62,7 +62,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -90,10 +90,10 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListFormsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.FormSummary] {
+	readPageResponse := func(response *management.ListFormsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.FormSummary] {
 		next += 1
 		results := response.Forms
-		return &internal.PageResponse[*int, *management.FormSummary]{
+		return &core.PageResponse[*int, *management.FormSummary]{
 			Next:    &next,
 			Results: results,
 		}

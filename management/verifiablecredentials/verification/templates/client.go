@@ -38,7 +38,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListVerifiableCredentialTemplatesRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.VerifiableCredentialTemplateResponse], error) {
+) (*core.Page[*string, *management.VerifiableCredentialTemplateResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -59,7 +59,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -79,11 +79,11 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListVerifiableCredentialTemplatesPaginatedResponseContent) *internal.PageResponse[*string, *management.VerifiableCredentialTemplateResponse] {
+	readPageResponse := func(response *management.ListVerifiableCredentialTemplatesPaginatedResponseContent) *core.PageResponse[*string, *management.VerifiableCredentialTemplateResponse] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Templates
-		return &internal.PageResponse[*string, *management.VerifiableCredentialTemplateResponse]{
+		return &core.PageResponse[*string, *management.VerifiableCredentialTemplateResponse]{
 			Next:    next,
 			Results: results,
 			Done:    next == zeroValue,

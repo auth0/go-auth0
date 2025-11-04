@@ -45,7 +45,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.FlowsListRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*management.FlowSummary], error) {
+) (*core.Page[*int, *management.FlowSummary], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -68,7 +68,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -96,10 +96,10 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListFlowsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.FlowSummary] {
+	readPageResponse := func(response *management.ListFlowsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.FlowSummary] {
 		next += 1
 		results := response.Flows
-		return &internal.PageResponse[*int, *management.FlowSummary]{
+		return &core.PageResponse[*int, *management.FlowSummary]{
 			Next:    &next,
 			Results: results,
 		}

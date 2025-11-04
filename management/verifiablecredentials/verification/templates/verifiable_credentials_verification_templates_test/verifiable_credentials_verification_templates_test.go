@@ -3,109 +3,69 @@
 package verifiable_credentials_verification_templates_test
 
 import (
+	bytes "bytes"
 	context "context"
-	fmt "fmt"
+	json "encoding/json"
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	gowiremock "github.com/wiremock/go-wiremock"
-	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
 	http "net/http"
-	os "os"
 	testing "testing"
 )
 
-// TestMain sets up shared test fixtures for all tests in this package// Global test fixtures
-var (
-	WireMockContainer *wiremocktestcontainersgo.WireMockContainer
-	WireMockBaseURL   string
-	WireMockClient    *gowiremock.Client
-)
+func ResetWireMockRequests(
+	t *testing.T,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
+	require.NoError(t, err)
+}
 
-// TestMain sets up shared test fixtures for all tests in this package
-func TestMain(m *testing.M) {
-	// Setup shared WireMock container
-	ctx := context.Background()
-	container, err := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
-		ctx,
-		&testing.T{},
-		wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
-	)
-	if err != nil {
-		fmt.Printf("Failed to start WireMock container: %v\n", err)
-		os.Exit(1)
-	}
-
-	// Store global references
-	WireMockContainer = container
-
-	// Try to get the base URL using the standard method first
-	baseURL, err := container.Endpoint(ctx, "")
-	if err == nil {
-		// Standard method worked (running outside DinD)
-		// This uses the mapped port (e.g., localhost:59553)
-		WireMockBaseURL = "http://" + baseURL
-		WireMockClient = container.Client
-	} else {
-		// Standard method failed, use internal IP fallback (DinD environment)
-		fmt.Printf("Standard endpoint resolution failed, using internal IP fallback: %v\n", err)
-
-		inspect, err := container.Inspect(ctx)
-		if err != nil {
-			fmt.Printf("Failed to inspect WireMock container: %v\n", err)
-			os.Exit(1)
-		}
-
-		// Find the IP address from the container's networks
-		var containerIP string
-		for _, network := range inspect.NetworkSettings.Networks {
-			if network.IPAddress != "" {
-				containerIP = network.IPAddress
-				break
+func VerifyRequestCount(
+	t *testing.T,
+	method string,
+	urlPath string,
+	queryParams map[string]string,
+	expected int,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	var reqBody bytes.Buffer
+	reqBody.WriteString(`{"method":"`)
+	reqBody.WriteString(method)
+	reqBody.WriteString(`","urlPath":"`)
+	reqBody.WriteString(urlPath)
+	reqBody.WriteString(`"}`)
+	if len(queryParams) > 0 {
+		reqBody.WriteString(`,"queryParameters":{`)
+		first := true
+		for key, value := range queryParams {
+			if !first {
+				reqBody.WriteString(",")
 			}
+			reqBody.WriteString(`"`)
+			reqBody.WriteString(key)
+			reqBody.WriteString(`":{"equalTo":"`)
+			reqBody.WriteString(value)
+			reqBody.WriteString(`"}`)
+			first = false
 		}
-
-		if containerIP == "" {
-			fmt.Printf("Failed to get WireMock container IP address\n")
-			os.Exit(1)
-		}
-
-		// In DinD, use the internal port directly (8080 for WireMock HTTP)
-		// Don't use the mapped port since it doesn't exist in this environment
-		WireMockBaseURL = fmt.Sprintf("http://%s:8080", containerIP)
-
-		// The container.Client was created with a bad URL, so we need a new one
-		WireMockClient = gowiremock.NewClient(WireMockBaseURL)
+		reqBody.WriteString("}")
 	}
-
-	fmt.Printf("WireMock available at: %s\n", WireMockBaseURL)
-
-	// Run all tests
-	code := m.Run()
-
-	// Cleanup
-	if WireMockContainer != nil {
-		WireMockContainer.Terminate(ctx)
+	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
+	require.NoError(t, err)
+	var result struct {
+		Requests []interface{} `json:"requests"`
 	}
-
-	// Exit with the same code as the tests
-	os.Exit(code)
+	json.NewDecoder(resp.Body).Decode(&result)
+	require.Equal(t, expected, len(result.Requests))
 }
 
 func TestVerifiableCredentialsVerificationTemplatesListWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/verifiable-credentials/verification/templates")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"next": "next", "templates": []interface{}{map[string]interface{}{"id": "id", "name": "name", "type": "type", "dialect": "dialect", "presentation": map[string]interface{}{"org.iso.18013.5.1.mDL": map[string]interface{}{"org.iso.18013.5.1": map[string]interface{}{}}}, "custom_certificate_authority": "custom_certificate_authority", "well_known_trusted_issuers": "well_known_trusted_issuers", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -125,32 +85,14 @@ func TestVerifiableCredentialsVerificationTemplatesListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "GET", "/verifiable-credentials/verification/templates", map[string]string{"from": "from", "take": "1"}, 1)
 }
 
 func TestVerifiableCredentialsVerificationTemplatesCreateWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Post(gowiremock.URLPathTemplate("/verifiable-credentials/verification/templates")).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "object",
-                    "required": ["name", "type", "dialect", "presentation", "well_known_trusted_issuers"],
-                    "properties": {
-                        "name": {"type": "string"}, "type": {"type": "string"}, "dialect": {"type": "string"}, "presentation": {"type": "object"}, "well_known_trusted_issuers": {"type": "string"}
-                    },
-                    "additionalProperties": true
-                }`, "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"id": "id", "name": "name", "type": "type", "dialect": "dialect", "presentation": map[string]interface{}{"org.iso.18013.5.1.mDL": map[string]interface{}{"org.iso.18013.5.1": map[string]interface{}{}}}, "custom_certificate_authority": "custom_certificate_authority", "well_known_trusted_issuers": "well_known_trusted_issuers", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -173,27 +115,14 @@ func TestVerifiableCredentialsVerificationTemplatesCreateWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "POST", "/verifiable-credentials/verification/templates", nil, 1)
 }
 
 func TestVerifiableCredentialsVerificationTemplatesGetWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/verifiable-credentials/verification/templates/{id}")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"id": "id", "name": "name", "type": "type", "dialect": "dialect", "presentation": map[string]interface{}{"org.iso.18013.5.1.mDL": map[string]interface{}{"org.iso.18013.5.1": map[string]interface{}{}}}, "custom_certificate_authority": "custom_certificate_authority", "well_known_trusted_issuers": "well_known_trusted_issuers", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -205,27 +134,14 @@ func TestVerifiableCredentialsVerificationTemplatesGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "GET", "/verifiable-credentials/verification/templates/id", nil, 1)
 }
 
 func TestVerifiableCredentialsVerificationTemplatesDeleteWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Delete(gowiremock.URLPathTemplate("/verifiable-credentials/verification/templates/{id}")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -237,35 +153,14 @@ func TestVerifiableCredentialsVerificationTemplatesDeleteWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "DELETE", "/verifiable-credentials/verification/templates/id", nil, 1)
 }
 
 func TestVerifiableCredentialsVerificationTemplatesUpdateWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Patch(gowiremock.URLPathTemplate("/verifiable-credentials/verification/templates/{id}")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "object",
-                    "required": [],
-                    "properties": {
-                        
-                    },
-                    "additionalProperties": true
-                }`, "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"id": "id", "name": "name", "type": "type", "dialect": "dialect", "presentation": map[string]interface{}{"org.iso.18013.5.1.mDL": map[string]interface{}{"org.iso.18013.5.1": map[string]interface{}{}}}, "custom_certificate_authority": "custom_certificate_authority", "well_known_trusted_issuers": "well_known_trusted_issuers", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -279,7 +174,5 @@ func TestVerifiableCredentialsVerificationTemplatesUpdateWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "PATCH", "/verifiable-credentials/verification/templates/id", nil, 1)
 }

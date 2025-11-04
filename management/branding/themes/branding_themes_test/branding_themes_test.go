@@ -3,117 +3,69 @@
 package branding_themes_test
 
 import (
+	bytes "bytes"
 	context "context"
-	fmt "fmt"
+	json "encoding/json"
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	gowiremock "github.com/wiremock/go-wiremock"
-	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
 	http "net/http"
-	os "os"
 	testing "testing"
 )
 
-// TestMain sets up shared test fixtures for all tests in this package// Global test fixtures
-var (
-	WireMockContainer *wiremocktestcontainersgo.WireMockContainer
-	WireMockBaseURL   string
-	WireMockClient    *gowiremock.Client
-)
+func ResetWireMockRequests(
+	t *testing.T,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
+	require.NoError(t, err)
+}
 
-// TestMain sets up shared test fixtures for all tests in this package
-func TestMain(m *testing.M) {
-	// Setup shared WireMock container
-	ctx := context.Background()
-	container, err := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
-		ctx,
-		&testing.T{},
-		wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
-	)
-	if err != nil {
-		fmt.Printf("Failed to start WireMock container: %v\n", err)
-		os.Exit(1)
-	}
-
-	// Store global references
-	WireMockContainer = container
-
-	// Try to get the base URL using the standard method first
-	baseURL, err := container.Endpoint(ctx, "")
-	if err == nil {
-		// Standard method worked (running outside DinD)
-		// This uses the mapped port (e.g., localhost:59553)
-		WireMockBaseURL = "http://" + baseURL
-		WireMockClient = container.Client
-	} else {
-		// Standard method failed, use internal IP fallback (DinD environment)
-		fmt.Printf("Standard endpoint resolution failed, using internal IP fallback: %v\n", err)
-
-		inspect, err := container.Inspect(ctx)
-		if err != nil {
-			fmt.Printf("Failed to inspect WireMock container: %v\n", err)
-			os.Exit(1)
-		}
-
-		// Find the IP address from the container's networks
-		var containerIP string
-		for _, network := range inspect.NetworkSettings.Networks {
-			if network.IPAddress != "" {
-				containerIP = network.IPAddress
-				break
+func VerifyRequestCount(
+	t *testing.T,
+	method string,
+	urlPath string,
+	queryParams map[string]string,
+	expected int,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	var reqBody bytes.Buffer
+	reqBody.WriteString(`{"method":"`)
+	reqBody.WriteString(method)
+	reqBody.WriteString(`","urlPath":"`)
+	reqBody.WriteString(urlPath)
+	reqBody.WriteString(`"}`)
+	if len(queryParams) > 0 {
+		reqBody.WriteString(`,"queryParameters":{`)
+		first := true
+		for key, value := range queryParams {
+			if !first {
+				reqBody.WriteString(",")
 			}
+			reqBody.WriteString(`"`)
+			reqBody.WriteString(key)
+			reqBody.WriteString(`":{"equalTo":"`)
+			reqBody.WriteString(value)
+			reqBody.WriteString(`"}`)
+			first = false
 		}
-
-		if containerIP == "" {
-			fmt.Printf("Failed to get WireMock container IP address\n")
-			os.Exit(1)
-		}
-
-		// In DinD, use the internal port directly (8080 for WireMock HTTP)
-		// Don't use the mapped port since it doesn't exist in this environment
-		WireMockBaseURL = fmt.Sprintf("http://%s:8080", containerIP)
-
-		// The container.Client was created with a bad URL, so we need a new one
-		WireMockClient = gowiremock.NewClient(WireMockBaseURL)
+		reqBody.WriteString("}")
 	}
-
-	fmt.Printf("WireMock available at: %s\n", WireMockBaseURL)
-
-	// Run all tests
-	code := m.Run()
-
-	// Cleanup
-	if WireMockContainer != nil {
-		WireMockContainer.Terminate(ctx)
+	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
+	require.NoError(t, err)
+	var result struct {
+		Requests []interface{} `json:"requests"`
 	}
-
-	// Exit with the same code as the tests
-	os.Exit(code)
+	json.NewDecoder(resp.Body).Decode(&result)
+	require.Equal(t, expected, len(result.Requests))
 }
 
 func TestBrandingThemesCreateWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Post(gowiremock.URLPathTemplate("/branding/themes")).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "object",
-                    "required": ["borders", "colors", "fonts", "page_background", "widget"],
-                    "properties": {
-                        "borders": {"type": "object"}, "colors": {"type": "object"}, "fonts": {"type": "object"}, "page_background": {"type": "object"}, "widget": {"type": "object"}
-                    },
-                    "additionalProperties": true
-                }`, "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"borders": map[string]interface{}{"button_border_radius": 1.1, "button_border_weight": 1.1, "buttons_style": "pill", "input_border_radius": 1.1, "input_border_weight": 1.1, "inputs_style": "pill", "show_widget_shadow": true, "widget_border_weight": 1.1, "widget_corner_radius": 1.1}, "colors": map[string]interface{}{"base_focus_color": "base_focus_color", "base_hover_color": "base_hover_color", "body_text": "body_text", "captcha_widget_theme": "auto", "error": "error", "header": "header", "icons": "icons", "input_background": "input_background", "input_border": "input_border", "input_filled_text": "input_filled_text", "input_labels_placeholders": "input_labels_placeholders", "links_focused_components": "links_focused_components", "primary_button": "primary_button", "primary_button_label": "primary_button_label", "read_only_background": "read_only_background", "secondary_button_border": "secondary_button_border", "secondary_button_label": "secondary_button_label", "success": "success", "widget_background": "widget_background", "widget_border": "widget_border"}, "displayName": "displayName", "fonts": map[string]interface{}{"body_text": map[string]interface{}{"bold": true, "size": 1.1}, "buttons_text": map[string]interface{}{"bold": true, "size": 1.1}, "font_url": "font_url", "input_labels": map[string]interface{}{"bold": true, "size": 1.1}, "links": map[string]interface{}{"bold": true, "size": 1.1}, "links_style": "normal", "reference_text_size": 1.1, "subtitle": map[string]interface{}{"bold": true, "size": 1.1}, "title": map[string]interface{}{"bold": true, "size": 1.1}}, "page_background": map[string]interface{}{"background_color": "background_color", "background_image_url": "background_image_url", "page_layout": "center"}, "themeId": "themeId", "widget": map[string]interface{}{"header_text_alignment": "center", "logo_height": 1.1, "logo_position": "center", "logo_url": "logo_url", "social_buttons_layout": "bottom"}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -197,24 +149,14 @@ func TestBrandingThemesCreateWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "POST", "/branding/themes", nil, 1)
 }
 
 func TestBrandingThemesGetDefaultWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/branding/themes/default")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"borders": map[string]interface{}{"button_border_radius": 1.1, "button_border_weight": 1.1, "buttons_style": "pill", "input_border_radius": 1.1, "input_border_weight": 1.1, "inputs_style": "pill", "show_widget_shadow": true, "widget_border_weight": 1.1, "widget_corner_radius": 1.1}, "colors": map[string]interface{}{"base_focus_color": "base_focus_color", "base_hover_color": "base_hover_color", "body_text": "body_text", "captcha_widget_theme": "auto", "error": "error", "header": "header", "icons": "icons", "input_background": "input_background", "input_border": "input_border", "input_filled_text": "input_filled_text", "input_labels_placeholders": "input_labels_placeholders", "links_focused_components": "links_focused_components", "primary_button": "primary_button", "primary_button_label": "primary_button_label", "read_only_background": "read_only_background", "secondary_button_border": "secondary_button_border", "secondary_button_label": "secondary_button_label", "success": "success", "widget_background": "widget_background", "widget_border": "widget_border"}, "displayName": "displayName", "fonts": map[string]interface{}{"body_text": map[string]interface{}{"bold": true, "size": 1.1}, "buttons_text": map[string]interface{}{"bold": true, "size": 1.1}, "font_url": "font_url", "input_labels": map[string]interface{}{"bold": true, "size": 1.1}, "links": map[string]interface{}{"bold": true, "size": 1.1}, "links_style": "normal", "reference_text_size": 1.1, "subtitle": map[string]interface{}{"bold": true, "size": 1.1}, "title": map[string]interface{}{"bold": true, "size": 1.1}}, "page_background": map[string]interface{}{"background_color": "background_color", "background_image_url": "background_image_url", "page_layout": "center"}, "themeId": "themeId", "widget": map[string]interface{}{"header_text_alignment": "center", "logo_height": 1.1, "logo_position": "center", "logo_url": "logo_url", "social_buttons_layout": "bottom"}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -225,27 +167,14 @@ func TestBrandingThemesGetDefaultWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "GET", "/branding/themes/default", nil, 1)
 }
 
 func TestBrandingThemesGetWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/branding/themes/{themeId}")).WithPathParam(
-		"themeId",
-		gowiremock.Matching("themeId"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"borders": map[string]interface{}{"button_border_radius": 1.1, "button_border_weight": 1.1, "buttons_style": "pill", "input_border_radius": 1.1, "input_border_weight": 1.1, "inputs_style": "pill", "show_widget_shadow": true, "widget_border_weight": 1.1, "widget_corner_radius": 1.1}, "colors": map[string]interface{}{"base_focus_color": "base_focus_color", "base_hover_color": "base_hover_color", "body_text": "body_text", "captcha_widget_theme": "auto", "error": "error", "header": "header", "icons": "icons", "input_background": "input_background", "input_border": "input_border", "input_filled_text": "input_filled_text", "input_labels_placeholders": "input_labels_placeholders", "links_focused_components": "links_focused_components", "primary_button": "primary_button", "primary_button_label": "primary_button_label", "read_only_background": "read_only_background", "secondary_button_border": "secondary_button_border", "secondary_button_label": "secondary_button_label", "success": "success", "widget_background": "widget_background", "widget_border": "widget_border"}, "displayName": "displayName", "fonts": map[string]interface{}{"body_text": map[string]interface{}{"bold": true, "size": 1.1}, "buttons_text": map[string]interface{}{"bold": true, "size": 1.1}, "font_url": "font_url", "input_labels": map[string]interface{}{"bold": true, "size": 1.1}, "links": map[string]interface{}{"bold": true, "size": 1.1}, "links_style": "normal", "reference_text_size": 1.1, "subtitle": map[string]interface{}{"bold": true, "size": 1.1}, "title": map[string]interface{}{"bold": true, "size": 1.1}}, "page_background": map[string]interface{}{"background_color": "background_color", "background_image_url": "background_image_url", "page_layout": "center"}, "themeId": "themeId", "widget": map[string]interface{}{"header_text_alignment": "center", "logo_height": 1.1, "logo_position": "center", "logo_url": "logo_url", "social_buttons_layout": "bottom"}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -257,27 +186,14 @@ func TestBrandingThemesGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "GET", "/branding/themes/themeId", nil, 1)
 }
 
 func TestBrandingThemesDeleteWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Delete(gowiremock.URLPathTemplate("/branding/themes/{themeId}")).WithPathParam(
-		"themeId",
-		gowiremock.Matching("themeId"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -289,35 +205,14 @@ func TestBrandingThemesDeleteWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "DELETE", "/branding/themes/themeId", nil, 1)
 }
 
 func TestBrandingThemesUpdateWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Patch(gowiremock.URLPathTemplate("/branding/themes/{themeId}")).WithPathParam(
-		"themeId",
-		gowiremock.Matching("themeId"),
-	).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "object",
-                    "required": ["borders", "colors", "fonts", "page_background", "widget"],
-                    "properties": {
-                        "borders": {"type": "object"}, "colors": {"type": "object"}, "fonts": {"type": "object"}, "page_background": {"type": "object"}, "widget": {"type": "object"}
-                    },
-                    "additionalProperties": true
-                }`, "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"borders": map[string]interface{}{"button_border_radius": 1.1, "button_border_weight": 1.1, "buttons_style": "pill", "input_border_radius": 1.1, "input_border_weight": 1.1, "inputs_style": "pill", "show_widget_shadow": true, "widget_border_weight": 1.1, "widget_corner_radius": 1.1}, "colors": map[string]interface{}{"base_focus_color": "base_focus_color", "base_hover_color": "base_hover_color", "body_text": "body_text", "captcha_widget_theme": "auto", "error": "error", "header": "header", "icons": "icons", "input_background": "input_background", "input_border": "input_border", "input_filled_text": "input_filled_text", "input_labels_placeholders": "input_labels_placeholders", "links_focused_components": "links_focused_components", "primary_button": "primary_button", "primary_button_label": "primary_button_label", "read_only_background": "read_only_background", "secondary_button_border": "secondary_button_border", "secondary_button_label": "secondary_button_label", "success": "success", "widget_background": "widget_background", "widget_border": "widget_border"}, "displayName": "displayName", "fonts": map[string]interface{}{"body_text": map[string]interface{}{"bold": true, "size": 1.1}, "buttons_text": map[string]interface{}{"bold": true, "size": 1.1}, "font_url": "font_url", "input_labels": map[string]interface{}{"bold": true, "size": 1.1}, "links": map[string]interface{}{"bold": true, "size": 1.1}, "links_style": "normal", "reference_text_size": 1.1, "subtitle": map[string]interface{}{"bold": true, "size": 1.1}, "title": map[string]interface{}{"bold": true, "size": 1.1}}, "page_background": map[string]interface{}{"background_color": "background_color", "background_image_url": "background_image_url", "page_layout": "center"}, "themeId": "themeId", "widget": map[string]interface{}{"header_text_alignment": "center", "logo_height": 1.1, "logo_position": "center", "logo_url": "logo_url", "social_buttons_layout": "bottom"}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -402,7 +297,5 @@ func TestBrandingThemesUpdateWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "PATCH", "/branding/themes/themeId", nil, 1)
 }

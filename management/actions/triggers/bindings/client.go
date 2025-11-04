@@ -42,7 +42,7 @@ func (c *Client) List(
 	triggerID management.ActionTriggerTypeEnum,
 	request *management.ListActionTriggerBindingsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.ActionBinding], error) {
+) (*core.Page[*int, *management.ActionBinding], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -67,7 +67,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -95,10 +95,10 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListActionBindingsPaginatedResponseContent) *internal.PageResponse[*int, *management.ActionBinding] {
+	readPageResponse := func(response *management.ListActionBindingsPaginatedResponseContent) *core.PageResponse[*int, *management.ActionBinding] {
 		next += 1
 		results := response.Bindings
-		return &internal.PageResponse[*int, *management.ActionBinding]{
+		return &core.PageResponse[*int, *management.ActionBinding]{
 			Next:    &next,
 			Results: results,
 		}

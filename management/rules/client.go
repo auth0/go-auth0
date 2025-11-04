@@ -40,7 +40,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListRulesRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.Rule], error) {
+) (*core.Page[*int, *management.Rule], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -63,7 +63,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -91,10 +91,10 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListRulesOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.Rule] {
+	readPageResponse := func(response *management.ListRulesOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.Rule] {
 		next += 1
 		results := response.Rules
-		return &internal.PageResponse[*int, *management.Rule]{
+		return &core.PageResponse[*int, *management.Rule]{
 			Next:    &next,
 			Results: results,
 		}
