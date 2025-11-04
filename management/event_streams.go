@@ -1774,6 +1774,11 @@ const (
 	EventStreamTestEventTypeEnumOrganizationConnectionAdded    EventStreamTestEventTypeEnum = "organization.connection.added"
 	EventStreamTestEventTypeEnumOrganizationConnectionUpdated  EventStreamTestEventTypeEnum = "organization.connection.updated"
 	EventStreamTestEventTypeEnumOrganizationConnectionRemoved  EventStreamTestEventTypeEnum = "organization.connection.removed"
+	EventStreamTestEventTypeEnumGroupCreated                   EventStreamTestEventTypeEnum = "group.created"
+	EventStreamTestEventTypeEnumGroupUpdated                   EventStreamTestEventTypeEnum = "group.updated"
+	EventStreamTestEventTypeEnumGroupDeleted                   EventStreamTestEventTypeEnum = "group.deleted"
+	EventStreamTestEventTypeEnumGroupMemberAdded               EventStreamTestEventTypeEnum = "group.member.added"
+	EventStreamTestEventTypeEnumGroupMemberDeleted             EventStreamTestEventTypeEnum = "group.member.deleted"
 )
 
 func NewEventStreamTestEventTypeEnumFromString(s string) (EventStreamTestEventTypeEnum, error) {
@@ -1804,6 +1809,16 @@ func NewEventStreamTestEventTypeEnumFromString(s string) (EventStreamTestEventTy
 		return EventStreamTestEventTypeEnumOrganizationConnectionUpdated, nil
 	case "organization.connection.removed":
 		return EventStreamTestEventTypeEnumOrganizationConnectionRemoved, nil
+	case "group.created":
+		return EventStreamTestEventTypeEnumGroupCreated, nil
+	case "group.updated":
+		return EventStreamTestEventTypeEnumGroupUpdated, nil
+	case "group.deleted":
+		return EventStreamTestEventTypeEnumGroupDeleted, nil
+	case "group.member.added":
+		return EventStreamTestEventTypeEnumGroupMemberAdded, nil
+	case "group.member.deleted":
+		return EventStreamTestEventTypeEnumGroupMemberDeleted, nil
 	}
 	var t EventStreamTestEventTypeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
