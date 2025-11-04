@@ -1461,6 +1461,14 @@ client.Clients.Create(
 <dl>
 <dd>
 
+**isTokenEndpointIPHeaderTrusted:** `*bool` — If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **appType:** `*management.ClientAppTypeEnum` 
     
 </dd>
@@ -1685,6 +1693,18 @@ client.Clients.Create(
 <dl>
 <dd>
 
+**skipNonVerifiableCallbackURIConfirmationPrompt:** `*bool` 
+
+Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **parRequestExpiry:** `*int` — Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
     
 </dd>
@@ -1702,6 +1722,14 @@ client.Clients.Create(
 <dd>
 
 **resourceServerIdentifier:** `*string` — The identifier of the resource server that this client is linked to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration` 
     
 </dd>
 </dl>
@@ -2124,6 +2152,14 @@ client.Clients.Update(
 <dl>
 <dd>
 
+**isTokenEndpointIPHeaderTrusted:** `*bool` — If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **appType:** `*management.ClientAppTypeEnum` 
     
 </dd>
@@ -2300,7 +2336,27 @@ client.Clients.Update(
 <dl>
 <dd>
 
+**skipNonVerifiableCallbackURIConfirmationPrompt:** `*bool` 
+
+Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **parRequestExpiry:** `*int` — Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration` 
     
 </dd>
 </dl>
@@ -2626,6 +2682,22 @@ client.Connections.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**authentication:** `*management.ConnectionAuthenticationPurpose` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectedAccounts:** `*management.ConnectionConnectedAccountsPurpose` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -2882,6 +2954,22 @@ client.Connections.Update(
 <dd>
 
 **metadata:** `*management.ConnectionsMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authentication:** `*management.ConnectionAuthenticationPurpose` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectedAccounts:** `*management.ConnectionConnectedAccountsPurpose` 
     
 </dd>
 </dl>
@@ -13417,6 +13505,148 @@ client.Anomaly.Blocks.UnblockIP(
 </dl>
 </details>
 
+## AttackProtection BotDetection
+<details><summary><code>client.AttackProtection.BotDetection.Get() -> *management.GetBotDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the Bot Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.BotDetection.Get(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.BotDetection.Update(request) -> *management.UpdateBotDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the Bot Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateBotDetectionSettingsRequestContent{}
+client.AttackProtection.BotDetection.Update(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**botDetectionLevel:** `*management.BotDetectionLevelEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**challengePasswordPolicy:** `*management.BotDetectionChallengePolicyPasswordFlowEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**challengePasswordlessPolicy:** `*management.BotDetectionChallengePolicyPasswordlessFlowEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**challengePasswordResetPolicy:** `*management.BotDetectionChallengePolicyPasswordResetFlowEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowlist:** `*management.BotDetectionAllowlist` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**monitoringModeEnabled:** `*management.BotDetectionMonitoringModeEnabled` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## AttackProtection BreachedPasswordDetection
 <details><summary><code>client.AttackProtection.BreachedPasswordDetection.Get() -> *management.GetBreachedPasswordDetectionSettingsResponseContent</code></summary>
 <dl>
@@ -13686,6 +13916,164 @@ Account Lockout: Determines whether or not IP address is used when counting fail
 <dd>
 
 **maxAttempts:** `*int` — Maximum number of unsuccessful attempts.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AttackProtection Captcha
+<details><summary><code>client.AttackProtection.Captcha.Get() -> *management.GetAttackProtectionCaptchaResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the CAPTCHA configuration for your client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.Captcha.Get(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.Captcha.Update(request) -> *management.UpdateAttackProtectionCaptchaResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update existing CAPTCHA configuration for your client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateAttackProtectionCaptchaRequestContent{}
+client.AttackProtection.Captcha.Update(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**activeProviderID:** `*management.AttackProtectionCaptchaProviderID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**arkose:** `*management.AttackProtectionUpdateCaptchaArkose` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authChallenge:** `*management.AttackProtectionCaptchaAuthChallengeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hcaptcha:** `*management.AttackProtectionUpdateCaptchaHcaptcha` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**friendlyCaptcha:** `*management.AttackProtectionUpdateCaptchaFriendlyCaptcha` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recaptchaEnterprise:** `*management.AttackProtectionUpdateCaptchaRecaptchaEnterprise` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recaptchaV2:** `*management.AttackProtectionUpdateCaptchaRecaptchaV2` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**simpleCaptcha:** `*management.AttackProtectionCaptchaSimpleCaptchaResponseContent` 
     
 </dd>
 </dl>
@@ -17737,6 +18125,7 @@ request := &management.CreateFlowsVaultConnectionRequestContent{
                         "API_KEY",
                     ),
                     APIKey: "api_key",
+                    BaseURL: "base_url",
                 },
             },
         },
@@ -21441,6 +21830,379 @@ client.Organizations.ClientGrants.Delete(
 </dl>
 </details>
 
+## Organizations DiscoveryDomains
+<details><summary><code>client.Organizations.DiscoveryDomains.List(ID) -> *management.ListOrganizationDiscoveryDomainsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve list of all organization discovery domains associated with the specified organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationDiscoveryDomainsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.DiscoveryDomains.List(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DiscoveryDomains.Create(ID, request) -> *management.CreateOrganizationDiscoveryDomainResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the verification status for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationDiscoveryDomainRequestContent{
+        Domain: "domain",
+    }
+client.Organizations.DiscoveryDomains.Create(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domain:** `string` — The domain name to associate with the organization e.g. acme.com.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.OrganizationDiscoveryDomainStatus` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DiscoveryDomains.Get(ID, DiscoveryDomainID) -> *management.GetOrganizationDiscoveryDomainResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a single organization discovery domain specified by ID. 
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DiscoveryDomains.Get(
+        context.TODO(),
+        "id",
+        "discovery_domain_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**discoveryDomainID:** `string` — ID of the discovery domain.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DiscoveryDomains.Delete(ID, DiscoveryDomainID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a discovery domain from an organization. This action cannot be undone. 
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DiscoveryDomains.Delete(
+        context.TODO(),
+        "id",
+        "discovery_domain_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**discoveryDomainID:** `string` — ID of the discovery domain.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DiscoveryDomains.Update(ID, DiscoveryDomainID, request) -> *management.UpdateOrganizationDiscoveryDomainResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the verification status for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateOrganizationDiscoveryDomainRequestContent{}
+client.Organizations.DiscoveryDomains.Update(
+        context.TODO(),
+        "id",
+        "discovery_domain_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**discoveryDomainID:** `string` — ID of the discovery domain to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.OrganizationDiscoveryDomainStatus` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Organizations EnabledConnections
 <details><summary><code>client.Organizations.EnabledConnections.List(ID) -> *management.ListOrganizationConnectionsOffsetPaginatedResponseContent</code></summary>
 <dl>
@@ -22930,6 +23692,103 @@ client.Prompts.Rendering.List(
 </dl>
 </details>
 
+<details><summary><code>client.Prompts.Rendering.BulkUpdate(request) -> *management.BulkUpdateAculResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Learn more about <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>configuring render settings</a> for advanced customization.
+
+<p>
+  Example <code>head_tags</code> array. See our <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>documentation</a> on using Liquid variables within head tags.
+</p>
+<pre>{
+  "head_tags": [
+    {
+      "tag": "script",
+      "attributes": {
+        "defer": true,
+        "src": "URL_TO_ASSET",
+        "async": true,
+        "integrity": [
+          "ASSET_SHA"
+        ]
+      }
+    },
+    {
+      "tag": "link",
+      "attributes": {
+        "href": "URL_TO_ASSET",
+        "rel": "stylesheet"
+      }
+    }
+  ]
+}
+</pre>
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.BulkUpdateAculRequestContent{
+        Configs: []*management.AculConfigsItem{
+            &management.AculConfigsItem{
+                Prompt: management.PromptGroupNameEnumLogin,
+                Screen: management.ScreenGroupNameEnumLogin,
+                RenderingMode: management.AculRenderingModeEnumAdvanced,
+                HeadTags: []*management.AculHeadTag{
+                    &management.AculHeadTag{},
+                },
+            },
+        },
+    }
+client.Prompts.Rendering.BulkUpdate(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**configs:** `management.AculConfigs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Prompts.Rendering.Get(Prompt, Screen) -> *management.GetAculResponseContent</code></summary>
 <dl>
 <dd>
@@ -23051,7 +23910,12 @@ Learn more about <a href='https://auth0.com/docs/customize/login-pages/advanced-
 <dd>
 
 ```go
-request := &management.UpdateAculRequestContent{}
+request := &management.UpdateAculRequestContent{
+        RenderingMode: management.AculRenderingModeEnumAdvanced,
+        HeadTags: []*management.AculHeadTag{
+            &management.AculHeadTag{},
+        },
+    }
 client.Prompts.Rendering.Update(
         context.TODO(),
         management.PromptGroupNameEnumLogin.Ptr(),
@@ -24762,6 +25626,18 @@ client.Tenants.Settings.Update(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**skipNonVerifiableCallbackURIConfirmationPrompt:** `*bool` 
+
+Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -25639,90 +26515,6 @@ client.Users.FederatedConnectionsTokensets.Delete(
 <dd>
 
 **tokensetID:** `string` — The tokenset id
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Groups
-<details><summary><code>client.Users.Groups.Get(ID) -> *management.GetUserGroupsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the first <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors">multi-factor authentication</a> enrollment that a specific user has confirmed.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetUserGroupsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Users.Groups.Get(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to list groups for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 25.
     
 </dd>
 </dl>

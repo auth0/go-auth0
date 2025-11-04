@@ -9,6 +9,7 @@ import (
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	clientgrants "github.com/auth0/go-auth0/v2/management/organizations/clientgrants"
+	discoverydomains "github.com/auth0/go-auth0/v2/management/organizations/discoverydomains"
 	enabledconnections "github.com/auth0/go-auth0/v2/management/organizations/enabledconnections"
 	invitations "github.com/auth0/go-auth0/v2/management/organizations/invitations"
 	client "github.com/auth0/go-auth0/v2/management/organizations/members/client"
@@ -18,6 +19,7 @@ import (
 type Client struct {
 	WithRawResponse    *RawClient
 	ClientGrants       *clientgrants.Client
+	DiscoveryDomains   *discoverydomains.Client
 	EnabledConnections *enabledconnections.Client
 	Invitations        *invitations.Client
 	Members            *client.Client
@@ -30,6 +32,7 @@ type Client struct {
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		ClientGrants:       clientgrants.NewClient(options),
+		DiscoveryDomains:   discoverydomains.NewClient(options),
 		EnabledConnections: enabledconnections.NewClient(options),
 		Invitations:        invitations.NewClient(options),
 		Members:            client.NewClient(options),

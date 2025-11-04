@@ -10,55 +10,80 @@ import (
 	time "time"
 )
 
+type AsyncApprovalNotificationsChannelsEnum string
+
+const (
+	AsyncApprovalNotificationsChannelsEnumGuardianPush AsyncApprovalNotificationsChannelsEnum = "guardian-push"
+	AsyncApprovalNotificationsChannelsEnumEmail        AsyncApprovalNotificationsChannelsEnum = "email"
+)
+
+func NewAsyncApprovalNotificationsChannelsEnumFromString(s string) (AsyncApprovalNotificationsChannelsEnum, error) {
+	switch s {
+	case "guardian-push":
+		return AsyncApprovalNotificationsChannelsEnumGuardianPush, nil
+	case "email":
+		return AsyncApprovalNotificationsChannelsEnumEmail, nil
+	}
+	var t AsyncApprovalNotificationsChannelsEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AsyncApprovalNotificationsChannelsEnum) Ptr() *AsyncApprovalNotificationsChannelsEnum {
+	return &a
+}
+
 var (
-	clientFieldClientID                           = big.NewInt(1 << 0)
-	clientFieldTenant                             = big.NewInt(1 << 1)
-	clientFieldName                               = big.NewInt(1 << 2)
-	clientFieldDescription                        = big.NewInt(1 << 3)
-	clientFieldGlobal                             = big.NewInt(1 << 4)
-	clientFieldClientSecret                       = big.NewInt(1 << 5)
-	clientFieldAppType                            = big.NewInt(1 << 6)
-	clientFieldLogoURI                            = big.NewInt(1 << 7)
-	clientFieldIsFirstParty                       = big.NewInt(1 << 8)
-	clientFieldOidcConformant                     = big.NewInt(1 << 9)
-	clientFieldCallbacks                          = big.NewInt(1 << 10)
-	clientFieldAllowedOrigins                     = big.NewInt(1 << 11)
-	clientFieldWebOrigins                         = big.NewInt(1 << 12)
-	clientFieldClientAliases                      = big.NewInt(1 << 13)
-	clientFieldAllowedClients                     = big.NewInt(1 << 14)
-	clientFieldAllowedLogoutURLs                  = big.NewInt(1 << 15)
-	clientFieldSessionTransfer                    = big.NewInt(1 << 16)
-	clientFieldOidcLogout                         = big.NewInt(1 << 17)
-	clientFieldGrantTypes                         = big.NewInt(1 << 18)
-	clientFieldJwtConfiguration                   = big.NewInt(1 << 19)
-	clientFieldSigningKeys                        = big.NewInt(1 << 20)
-	clientFieldEncryptionKey                      = big.NewInt(1 << 21)
-	clientFieldSSO                                = big.NewInt(1 << 22)
-	clientFieldSSODisabled                        = big.NewInt(1 << 23)
-	clientFieldCrossOriginAuthentication          = big.NewInt(1 << 24)
-	clientFieldCrossOriginLoc                     = big.NewInt(1 << 25)
-	clientFieldCustomLoginPageOn                  = big.NewInt(1 << 26)
-	clientFieldCustomLoginPage                    = big.NewInt(1 << 27)
-	clientFieldCustomLoginPagePreview             = big.NewInt(1 << 28)
-	clientFieldFormTemplate                       = big.NewInt(1 << 29)
-	clientFieldAddons                             = big.NewInt(1 << 30)
-	clientFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	clientFieldClientMetadata                     = big.NewInt(1 << 32)
-	clientFieldMobile                             = big.NewInt(1 << 33)
-	clientFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	clientFieldRefreshToken                       = big.NewInt(1 << 35)
-	clientFieldDefaultOrganization                = big.NewInt(1 << 36)
-	clientFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	clientFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	clientFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	clientFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	clientFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	clientFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	clientFieldSignedRequestObject                = big.NewInt(1 << 43)
-	clientFieldComplianceLevel                    = big.NewInt(1 << 44)
-	clientFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	clientFieldTokenQuota                         = big.NewInt(1 << 46)
-	clientFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	clientFieldClientID                                       = big.NewInt(1 << 0)
+	clientFieldTenant                                         = big.NewInt(1 << 1)
+	clientFieldName                                           = big.NewInt(1 << 2)
+	clientFieldDescription                                    = big.NewInt(1 << 3)
+	clientFieldGlobal                                         = big.NewInt(1 << 4)
+	clientFieldClientSecret                                   = big.NewInt(1 << 5)
+	clientFieldAppType                                        = big.NewInt(1 << 6)
+	clientFieldLogoURI                                        = big.NewInt(1 << 7)
+	clientFieldIsFirstParty                                   = big.NewInt(1 << 8)
+	clientFieldOidcConformant                                 = big.NewInt(1 << 9)
+	clientFieldCallbacks                                      = big.NewInt(1 << 10)
+	clientFieldAllowedOrigins                                 = big.NewInt(1 << 11)
+	clientFieldWebOrigins                                     = big.NewInt(1 << 12)
+	clientFieldClientAliases                                  = big.NewInt(1 << 13)
+	clientFieldAllowedClients                                 = big.NewInt(1 << 14)
+	clientFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
+	clientFieldSessionTransfer                                = big.NewInt(1 << 16)
+	clientFieldOidcLogout                                     = big.NewInt(1 << 17)
+	clientFieldGrantTypes                                     = big.NewInt(1 << 18)
+	clientFieldJwtConfiguration                               = big.NewInt(1 << 19)
+	clientFieldSigningKeys                                    = big.NewInt(1 << 20)
+	clientFieldEncryptionKey                                  = big.NewInt(1 << 21)
+	clientFieldSSO                                            = big.NewInt(1 << 22)
+	clientFieldSSODisabled                                    = big.NewInt(1 << 23)
+	clientFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
+	clientFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
+	clientFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
+	clientFieldCustomLoginPage                                = big.NewInt(1 << 27)
+	clientFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
+	clientFieldFormTemplate                                   = big.NewInt(1 << 29)
+	clientFieldAddons                                         = big.NewInt(1 << 30)
+	clientFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
+	clientFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
+	clientFieldClientMetadata                                 = big.NewInt(1 << 33)
+	clientFieldMobile                                         = big.NewInt(1 << 34)
+	clientFieldInitiateLoginURI                               = big.NewInt(1 << 35)
+	clientFieldRefreshToken                                   = big.NewInt(1 << 36)
+	clientFieldDefaultOrganization                            = big.NewInt(1 << 37)
+	clientFieldOrganizationUsage                              = big.NewInt(1 << 38)
+	clientFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
+	clientFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
+	clientFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
+	clientFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
+	clientFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
+	clientFieldSignedRequestObject                            = big.NewInt(1 << 44)
+	clientFieldComplianceLevel                                = big.NewInt(1 << 45)
+	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
+	clientFieldParRequestExpiry                               = big.NewInt(1 << 47)
+	clientFieldTokenQuota                                     = big.NewInt(1 << 48)
+	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type Client struct {
@@ -118,8 +143,10 @@ type Client struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -135,11 +162,16 @@ type Client struct {
 	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
 	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
 	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -373,6 +405,13 @@ func (c *Client) GetTokenEndpointAuthMethod() ClientTokenEndpointAuthMethodEnum 
 	return *c.TokenEndpointAuthMethod
 }
 
+func (c *Client) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if c == nil || c.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *c.IsTokenEndpointIPHeaderTrusted
+}
+
 func (c *Client) GetClientMetadata() ClientMetadata {
 	if c == nil || c.ClientMetadata == nil {
 		return nil
@@ -464,6 +503,13 @@ func (c *Client) GetComplianceLevel() ClientComplianceLevelEnum {
 	return *c.ComplianceLevel
 }
 
+func (c *Client) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if c == nil || c.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *c.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
 func (c *Client) GetParRequestExpiry() int {
 	if c == nil || c.ParRequestExpiry == nil {
 		return 0
@@ -483,6 +529,13 @@ func (c *Client) GetResourceServerIdentifier() string {
 		return ""
 	}
 	return *c.ResourceServerIdentifier
+}
+
+func (c *Client) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if c == nil || c.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *c.AsyncApprovalNotificationChannels
 }
 
 func (c *Client) GetExtraProperties() map[string]interface{} {
@@ -720,6 +773,13 @@ func (c *Client) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ClientToken
 	c.require(clientFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	c.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	c.require(clientFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -811,6 +871,13 @@ func (c *Client) SetComplianceLevel(complianceLevel *ClientComplianceLevelEnum) 
 	c.require(clientFieldComplianceLevel)
 }
 
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	c.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	c.require(clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetParRequestExpiry(parRequestExpiry *int) {
@@ -830,6 +897,13 @@ func (c *Client) SetTokenQuota(tokenQuota *TokenQuota) {
 func (c *Client) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	c.ResourceServerIdentifier = resourceServerIdentifier
 	c.require(clientFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	c.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	c.require(clientFieldAsyncApprovalNotificationChannels)
 }
 
 func (c *Client) UnmarshalJSON(data []byte) error {
@@ -4624,6 +4698,12 @@ func (c ClientAppTypeEnum) Ptr() *ClientAppTypeEnum {
 	return &c
 }
 
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+type ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration = []AsyncApprovalNotificationsChannelsEnum
+
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+type ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration = []AsyncApprovalNotificationsChannelsEnum
+
 // Defines client authentication methods.
 var (
 	clientAuthenticationMethodFieldPrivateKeyJwt           = big.NewInt(1 << 0)
@@ -6954,54 +7034,57 @@ func (c ClientTokenEndpointAuthMethodOrNullEnum) Ptr() *ClientTokenEndpointAuthM
 }
 
 var (
-	createClientResponseContentFieldClientID                           = big.NewInt(1 << 0)
-	createClientResponseContentFieldTenant                             = big.NewInt(1 << 1)
-	createClientResponseContentFieldName                               = big.NewInt(1 << 2)
-	createClientResponseContentFieldDescription                        = big.NewInt(1 << 3)
-	createClientResponseContentFieldGlobal                             = big.NewInt(1 << 4)
-	createClientResponseContentFieldClientSecret                       = big.NewInt(1 << 5)
-	createClientResponseContentFieldAppType                            = big.NewInt(1 << 6)
-	createClientResponseContentFieldLogoURI                            = big.NewInt(1 << 7)
-	createClientResponseContentFieldIsFirstParty                       = big.NewInt(1 << 8)
-	createClientResponseContentFieldOidcConformant                     = big.NewInt(1 << 9)
-	createClientResponseContentFieldCallbacks                          = big.NewInt(1 << 10)
-	createClientResponseContentFieldAllowedOrigins                     = big.NewInt(1 << 11)
-	createClientResponseContentFieldWebOrigins                         = big.NewInt(1 << 12)
-	createClientResponseContentFieldClientAliases                      = big.NewInt(1 << 13)
-	createClientResponseContentFieldAllowedClients                     = big.NewInt(1 << 14)
-	createClientResponseContentFieldAllowedLogoutURLs                  = big.NewInt(1 << 15)
-	createClientResponseContentFieldSessionTransfer                    = big.NewInt(1 << 16)
-	createClientResponseContentFieldOidcLogout                         = big.NewInt(1 << 17)
-	createClientResponseContentFieldGrantTypes                         = big.NewInt(1 << 18)
-	createClientResponseContentFieldJwtConfiguration                   = big.NewInt(1 << 19)
-	createClientResponseContentFieldSigningKeys                        = big.NewInt(1 << 20)
-	createClientResponseContentFieldEncryptionKey                      = big.NewInt(1 << 21)
-	createClientResponseContentFieldSSO                                = big.NewInt(1 << 22)
-	createClientResponseContentFieldSSODisabled                        = big.NewInt(1 << 23)
-	createClientResponseContentFieldCrossOriginAuthentication          = big.NewInt(1 << 24)
-	createClientResponseContentFieldCrossOriginLoc                     = big.NewInt(1 << 25)
-	createClientResponseContentFieldCustomLoginPageOn                  = big.NewInt(1 << 26)
-	createClientResponseContentFieldCustomLoginPage                    = big.NewInt(1 << 27)
-	createClientResponseContentFieldCustomLoginPagePreview             = big.NewInt(1 << 28)
-	createClientResponseContentFieldFormTemplate                       = big.NewInt(1 << 29)
-	createClientResponseContentFieldAddons                             = big.NewInt(1 << 30)
-	createClientResponseContentFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	createClientResponseContentFieldClientMetadata                     = big.NewInt(1 << 32)
-	createClientResponseContentFieldMobile                             = big.NewInt(1 << 33)
-	createClientResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	createClientResponseContentFieldRefreshToken                       = big.NewInt(1 << 35)
-	createClientResponseContentFieldDefaultOrganization                = big.NewInt(1 << 36)
-	createClientResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	createClientResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	createClientResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	createClientResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	createClientResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	createClientResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	createClientResponseContentFieldSignedRequestObject                = big.NewInt(1 << 43)
-	createClientResponseContentFieldComplianceLevel                    = big.NewInt(1 << 44)
-	createClientResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	createClientResponseContentFieldTokenQuota                         = big.NewInt(1 << 46)
-	createClientResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	createClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
+	createClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
+	createClientResponseContentFieldName                                           = big.NewInt(1 << 2)
+	createClientResponseContentFieldDescription                                    = big.NewInt(1 << 3)
+	createClientResponseContentFieldGlobal                                         = big.NewInt(1 << 4)
+	createClientResponseContentFieldClientSecret                                   = big.NewInt(1 << 5)
+	createClientResponseContentFieldAppType                                        = big.NewInt(1 << 6)
+	createClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 7)
+	createClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 8)
+	createClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 9)
+	createClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 10)
+	createClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 11)
+	createClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 12)
+	createClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 13)
+	createClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 14)
+	createClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
+	createClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 16)
+	createClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 17)
+	createClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 18)
+	createClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 19)
+	createClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 20)
+	createClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 21)
+	createClientResponseContentFieldSSO                                            = big.NewInt(1 << 22)
+	createClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 23)
+	createClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
+	createClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
+	createClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
+	createClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 27)
+	createClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
+	createClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 29)
+	createClientResponseContentFieldAddons                                         = big.NewInt(1 << 30)
+	createClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
+	createClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
+	createClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
+	createClientResponseContentFieldMobile                                         = big.NewInt(1 << 34)
+	createClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
+	createClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 36)
+	createClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 37)
+	createClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 38)
+	createClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
+	createClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
+	createClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
+	createClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
+	createClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
+	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
+	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
+	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
+	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
+	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type CreateClientResponseContent struct {
@@ -7061,8 +7144,10 @@ type CreateClientResponseContent struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -7078,11 +7163,16 @@ type CreateClientResponseContent struct {
 	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
 	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
 	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7316,6 +7406,13 @@ func (c *CreateClientResponseContent) GetTokenEndpointAuthMethod() ClientTokenEn
 	return *c.TokenEndpointAuthMethod
 }
 
+func (c *CreateClientResponseContent) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if c == nil || c.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *c.IsTokenEndpointIPHeaderTrusted
+}
+
 func (c *CreateClientResponseContent) GetClientMetadata() ClientMetadata {
 	if c == nil || c.ClientMetadata == nil {
 		return nil
@@ -7407,6 +7504,13 @@ func (c *CreateClientResponseContent) GetComplianceLevel() ClientComplianceLevel
 	return *c.ComplianceLevel
 }
 
+func (c *CreateClientResponseContent) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if c == nil || c.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *c.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
 func (c *CreateClientResponseContent) GetParRequestExpiry() int {
 	if c == nil || c.ParRequestExpiry == nil {
 		return 0
@@ -7426,6 +7530,13 @@ func (c *CreateClientResponseContent) GetResourceServerIdentifier() string {
 		return ""
 	}
 	return *c.ResourceServerIdentifier
+}
+
+func (c *CreateClientResponseContent) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if c == nil || c.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *c.AsyncApprovalNotificationChannels
 }
 
 func (c *CreateClientResponseContent) GetExtraProperties() map[string]interface{} {
@@ -7663,6 +7774,13 @@ func (c *CreateClientResponseContent) SetTokenEndpointAuthMethod(tokenEndpointAu
 	c.require(createClientResponseContentFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	c.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	c.require(createClientResponseContentFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateClientResponseContent) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -7754,6 +7872,13 @@ func (c *CreateClientResponseContent) SetComplianceLevel(complianceLevel *Client
 	c.require(createClientResponseContentFieldComplianceLevel)
 }
 
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	c.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	c.require(createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateClientResponseContent) SetParRequestExpiry(parRequestExpiry *int) {
@@ -7773,6 +7898,13 @@ func (c *CreateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (c *CreateClientResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	c.ResourceServerIdentifier = resourceServerIdentifier
 	c.require(createClientResponseContentFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	c.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	c.require(createClientResponseContentFieldAsyncApprovalNotificationChannels)
 }
 
 func (c *CreateClientResponseContent) UnmarshalJSON(data []byte) error {
@@ -7898,54 +8030,57 @@ func (c *CredentialID) String() string {
 }
 
 var (
-	getClientResponseContentFieldClientID                           = big.NewInt(1 << 0)
-	getClientResponseContentFieldTenant                             = big.NewInt(1 << 1)
-	getClientResponseContentFieldName                               = big.NewInt(1 << 2)
-	getClientResponseContentFieldDescription                        = big.NewInt(1 << 3)
-	getClientResponseContentFieldGlobal                             = big.NewInt(1 << 4)
-	getClientResponseContentFieldClientSecret                       = big.NewInt(1 << 5)
-	getClientResponseContentFieldAppType                            = big.NewInt(1 << 6)
-	getClientResponseContentFieldLogoURI                            = big.NewInt(1 << 7)
-	getClientResponseContentFieldIsFirstParty                       = big.NewInt(1 << 8)
-	getClientResponseContentFieldOidcConformant                     = big.NewInt(1 << 9)
-	getClientResponseContentFieldCallbacks                          = big.NewInt(1 << 10)
-	getClientResponseContentFieldAllowedOrigins                     = big.NewInt(1 << 11)
-	getClientResponseContentFieldWebOrigins                         = big.NewInt(1 << 12)
-	getClientResponseContentFieldClientAliases                      = big.NewInt(1 << 13)
-	getClientResponseContentFieldAllowedClients                     = big.NewInt(1 << 14)
-	getClientResponseContentFieldAllowedLogoutURLs                  = big.NewInt(1 << 15)
-	getClientResponseContentFieldSessionTransfer                    = big.NewInt(1 << 16)
-	getClientResponseContentFieldOidcLogout                         = big.NewInt(1 << 17)
-	getClientResponseContentFieldGrantTypes                         = big.NewInt(1 << 18)
-	getClientResponseContentFieldJwtConfiguration                   = big.NewInt(1 << 19)
-	getClientResponseContentFieldSigningKeys                        = big.NewInt(1 << 20)
-	getClientResponseContentFieldEncryptionKey                      = big.NewInt(1 << 21)
-	getClientResponseContentFieldSSO                                = big.NewInt(1 << 22)
-	getClientResponseContentFieldSSODisabled                        = big.NewInt(1 << 23)
-	getClientResponseContentFieldCrossOriginAuthentication          = big.NewInt(1 << 24)
-	getClientResponseContentFieldCrossOriginLoc                     = big.NewInt(1 << 25)
-	getClientResponseContentFieldCustomLoginPageOn                  = big.NewInt(1 << 26)
-	getClientResponseContentFieldCustomLoginPage                    = big.NewInt(1 << 27)
-	getClientResponseContentFieldCustomLoginPagePreview             = big.NewInt(1 << 28)
-	getClientResponseContentFieldFormTemplate                       = big.NewInt(1 << 29)
-	getClientResponseContentFieldAddons                             = big.NewInt(1 << 30)
-	getClientResponseContentFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	getClientResponseContentFieldClientMetadata                     = big.NewInt(1 << 32)
-	getClientResponseContentFieldMobile                             = big.NewInt(1 << 33)
-	getClientResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	getClientResponseContentFieldRefreshToken                       = big.NewInt(1 << 35)
-	getClientResponseContentFieldDefaultOrganization                = big.NewInt(1 << 36)
-	getClientResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	getClientResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	getClientResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	getClientResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	getClientResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	getClientResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	getClientResponseContentFieldSignedRequestObject                = big.NewInt(1 << 43)
-	getClientResponseContentFieldComplianceLevel                    = big.NewInt(1 << 44)
-	getClientResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	getClientResponseContentFieldTokenQuota                         = big.NewInt(1 << 46)
-	getClientResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	getClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
+	getClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
+	getClientResponseContentFieldName                                           = big.NewInt(1 << 2)
+	getClientResponseContentFieldDescription                                    = big.NewInt(1 << 3)
+	getClientResponseContentFieldGlobal                                         = big.NewInt(1 << 4)
+	getClientResponseContentFieldClientSecret                                   = big.NewInt(1 << 5)
+	getClientResponseContentFieldAppType                                        = big.NewInt(1 << 6)
+	getClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 7)
+	getClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 8)
+	getClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 9)
+	getClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 10)
+	getClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 11)
+	getClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 12)
+	getClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 13)
+	getClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 14)
+	getClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
+	getClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 16)
+	getClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 17)
+	getClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 18)
+	getClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 19)
+	getClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 20)
+	getClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 21)
+	getClientResponseContentFieldSSO                                            = big.NewInt(1 << 22)
+	getClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 23)
+	getClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
+	getClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
+	getClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
+	getClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 27)
+	getClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
+	getClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 29)
+	getClientResponseContentFieldAddons                                         = big.NewInt(1 << 30)
+	getClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
+	getClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
+	getClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
+	getClientResponseContentFieldMobile                                         = big.NewInt(1 << 34)
+	getClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
+	getClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 36)
+	getClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 37)
+	getClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 38)
+	getClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
+	getClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
+	getClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
+	getClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
+	getClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
+	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
+	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
+	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
+	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
+	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type GetClientResponseContent struct {
@@ -8005,8 +8140,10 @@ type GetClientResponseContent struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -8022,11 +8159,16 @@ type GetClientResponseContent struct {
 	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
 	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
 	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -8260,6 +8402,13 @@ func (g *GetClientResponseContent) GetTokenEndpointAuthMethod() ClientTokenEndpo
 	return *g.TokenEndpointAuthMethod
 }
 
+func (g *GetClientResponseContent) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if g == nil || g.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *g.IsTokenEndpointIPHeaderTrusted
+}
+
 func (g *GetClientResponseContent) GetClientMetadata() ClientMetadata {
 	if g == nil || g.ClientMetadata == nil {
 		return nil
@@ -8351,6 +8500,13 @@ func (g *GetClientResponseContent) GetComplianceLevel() ClientComplianceLevelEnu
 	return *g.ComplianceLevel
 }
 
+func (g *GetClientResponseContent) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if g == nil || g.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *g.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
 func (g *GetClientResponseContent) GetParRequestExpiry() int {
 	if g == nil || g.ParRequestExpiry == nil {
 		return 0
@@ -8370,6 +8526,13 @@ func (g *GetClientResponseContent) GetResourceServerIdentifier() string {
 		return ""
 	}
 	return *g.ResourceServerIdentifier
+}
+
+func (g *GetClientResponseContent) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if g == nil || g.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *g.AsyncApprovalNotificationChannels
 }
 
 func (g *GetClientResponseContent) GetExtraProperties() map[string]interface{} {
@@ -8607,6 +8770,13 @@ func (g *GetClientResponseContent) SetTokenEndpointAuthMethod(tokenEndpointAuthM
 	g.require(getClientResponseContentFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	g.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	g.require(getClientResponseContentFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientResponseContent) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -8698,6 +8868,13 @@ func (g *GetClientResponseContent) SetComplianceLevel(complianceLevel *ClientCom
 	g.require(getClientResponseContentFieldComplianceLevel)
 }
 
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	g.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	g.require(getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientResponseContent) SetParRequestExpiry(parRequestExpiry *int) {
@@ -8717,6 +8894,13 @@ func (g *GetClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (g *GetClientResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	g.ResourceServerIdentifier = resourceServerIdentifier
 	g.require(getClientResponseContentFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	g.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	g.require(getClientResponseContentFieldAsyncApprovalNotificationChannels)
 }
 
 func (g *GetClientResponseContent) UnmarshalJSON(data []byte) error {
@@ -9534,54 +9718,57 @@ func (r RefreshTokenRotationTypeEnum) Ptr() *RefreshTokenRotationTypeEnum {
 }
 
 var (
-	rotateClientSecretResponseContentFieldClientID                           = big.NewInt(1 << 0)
-	rotateClientSecretResponseContentFieldTenant                             = big.NewInt(1 << 1)
-	rotateClientSecretResponseContentFieldName                               = big.NewInt(1 << 2)
-	rotateClientSecretResponseContentFieldDescription                        = big.NewInt(1 << 3)
-	rotateClientSecretResponseContentFieldGlobal                             = big.NewInt(1 << 4)
-	rotateClientSecretResponseContentFieldClientSecret                       = big.NewInt(1 << 5)
-	rotateClientSecretResponseContentFieldAppType                            = big.NewInt(1 << 6)
-	rotateClientSecretResponseContentFieldLogoURI                            = big.NewInt(1 << 7)
-	rotateClientSecretResponseContentFieldIsFirstParty                       = big.NewInt(1 << 8)
-	rotateClientSecretResponseContentFieldOidcConformant                     = big.NewInt(1 << 9)
-	rotateClientSecretResponseContentFieldCallbacks                          = big.NewInt(1 << 10)
-	rotateClientSecretResponseContentFieldAllowedOrigins                     = big.NewInt(1 << 11)
-	rotateClientSecretResponseContentFieldWebOrigins                         = big.NewInt(1 << 12)
-	rotateClientSecretResponseContentFieldClientAliases                      = big.NewInt(1 << 13)
-	rotateClientSecretResponseContentFieldAllowedClients                     = big.NewInt(1 << 14)
-	rotateClientSecretResponseContentFieldAllowedLogoutURLs                  = big.NewInt(1 << 15)
-	rotateClientSecretResponseContentFieldSessionTransfer                    = big.NewInt(1 << 16)
-	rotateClientSecretResponseContentFieldOidcLogout                         = big.NewInt(1 << 17)
-	rotateClientSecretResponseContentFieldGrantTypes                         = big.NewInt(1 << 18)
-	rotateClientSecretResponseContentFieldJwtConfiguration                   = big.NewInt(1 << 19)
-	rotateClientSecretResponseContentFieldSigningKeys                        = big.NewInt(1 << 20)
-	rotateClientSecretResponseContentFieldEncryptionKey                      = big.NewInt(1 << 21)
-	rotateClientSecretResponseContentFieldSSO                                = big.NewInt(1 << 22)
-	rotateClientSecretResponseContentFieldSSODisabled                        = big.NewInt(1 << 23)
-	rotateClientSecretResponseContentFieldCrossOriginAuthentication          = big.NewInt(1 << 24)
-	rotateClientSecretResponseContentFieldCrossOriginLoc                     = big.NewInt(1 << 25)
-	rotateClientSecretResponseContentFieldCustomLoginPageOn                  = big.NewInt(1 << 26)
-	rotateClientSecretResponseContentFieldCustomLoginPage                    = big.NewInt(1 << 27)
-	rotateClientSecretResponseContentFieldCustomLoginPagePreview             = big.NewInt(1 << 28)
-	rotateClientSecretResponseContentFieldFormTemplate                       = big.NewInt(1 << 29)
-	rotateClientSecretResponseContentFieldAddons                             = big.NewInt(1 << 30)
-	rotateClientSecretResponseContentFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	rotateClientSecretResponseContentFieldClientMetadata                     = big.NewInt(1 << 32)
-	rotateClientSecretResponseContentFieldMobile                             = big.NewInt(1 << 33)
-	rotateClientSecretResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	rotateClientSecretResponseContentFieldRefreshToken                       = big.NewInt(1 << 35)
-	rotateClientSecretResponseContentFieldDefaultOrganization                = big.NewInt(1 << 36)
-	rotateClientSecretResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	rotateClientSecretResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	rotateClientSecretResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	rotateClientSecretResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	rotateClientSecretResponseContentFieldSignedRequestObject                = big.NewInt(1 << 43)
-	rotateClientSecretResponseContentFieldComplianceLevel                    = big.NewInt(1 << 44)
-	rotateClientSecretResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	rotateClientSecretResponseContentFieldTokenQuota                         = big.NewInt(1 << 46)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	rotateClientSecretResponseContentFieldClientID                                       = big.NewInt(1 << 0)
+	rotateClientSecretResponseContentFieldTenant                                         = big.NewInt(1 << 1)
+	rotateClientSecretResponseContentFieldName                                           = big.NewInt(1 << 2)
+	rotateClientSecretResponseContentFieldDescription                                    = big.NewInt(1 << 3)
+	rotateClientSecretResponseContentFieldGlobal                                         = big.NewInt(1 << 4)
+	rotateClientSecretResponseContentFieldClientSecret                                   = big.NewInt(1 << 5)
+	rotateClientSecretResponseContentFieldAppType                                        = big.NewInt(1 << 6)
+	rotateClientSecretResponseContentFieldLogoURI                                        = big.NewInt(1 << 7)
+	rotateClientSecretResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 8)
+	rotateClientSecretResponseContentFieldOidcConformant                                 = big.NewInt(1 << 9)
+	rotateClientSecretResponseContentFieldCallbacks                                      = big.NewInt(1 << 10)
+	rotateClientSecretResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 11)
+	rotateClientSecretResponseContentFieldWebOrigins                                     = big.NewInt(1 << 12)
+	rotateClientSecretResponseContentFieldClientAliases                                  = big.NewInt(1 << 13)
+	rotateClientSecretResponseContentFieldAllowedClients                                 = big.NewInt(1 << 14)
+	rotateClientSecretResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
+	rotateClientSecretResponseContentFieldSessionTransfer                                = big.NewInt(1 << 16)
+	rotateClientSecretResponseContentFieldOidcLogout                                     = big.NewInt(1 << 17)
+	rotateClientSecretResponseContentFieldGrantTypes                                     = big.NewInt(1 << 18)
+	rotateClientSecretResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 19)
+	rotateClientSecretResponseContentFieldSigningKeys                                    = big.NewInt(1 << 20)
+	rotateClientSecretResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 21)
+	rotateClientSecretResponseContentFieldSSO                                            = big.NewInt(1 << 22)
+	rotateClientSecretResponseContentFieldSSODisabled                                    = big.NewInt(1 << 23)
+	rotateClientSecretResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
+	rotateClientSecretResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
+	rotateClientSecretResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
+	rotateClientSecretResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 27)
+	rotateClientSecretResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
+	rotateClientSecretResponseContentFieldFormTemplate                                   = big.NewInt(1 << 29)
+	rotateClientSecretResponseContentFieldAddons                                         = big.NewInt(1 << 30)
+	rotateClientSecretResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
+	rotateClientSecretResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
+	rotateClientSecretResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
+	rotateClientSecretResponseContentFieldMobile                                         = big.NewInt(1 << 34)
+	rotateClientSecretResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
+	rotateClientSecretResponseContentFieldRefreshToken                                   = big.NewInt(1 << 36)
+	rotateClientSecretResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 37)
+	rotateClientSecretResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 38)
+	rotateClientSecretResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
+	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
+	rotateClientSecretResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
+	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
+	rotateClientSecretResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
+	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
+	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
+	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
+	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
+	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -9641,8 +9828,10 @@ type RotateClientSecretResponseContent struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -9658,11 +9847,16 @@ type RotateClientSecretResponseContent struct {
 	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
 	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
 	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9896,6 +10090,13 @@ func (r *RotateClientSecretResponseContent) GetTokenEndpointAuthMethod() ClientT
 	return *r.TokenEndpointAuthMethod
 }
 
+func (r *RotateClientSecretResponseContent) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if r == nil || r.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *r.IsTokenEndpointIPHeaderTrusted
+}
+
 func (r *RotateClientSecretResponseContent) GetClientMetadata() ClientMetadata {
 	if r == nil || r.ClientMetadata == nil {
 		return nil
@@ -9987,6 +10188,13 @@ func (r *RotateClientSecretResponseContent) GetComplianceLevel() ClientComplianc
 	return *r.ComplianceLevel
 }
 
+func (r *RotateClientSecretResponseContent) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if r == nil || r.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *r.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
 func (r *RotateClientSecretResponseContent) GetParRequestExpiry() int {
 	if r == nil || r.ParRequestExpiry == nil {
 		return 0
@@ -10006,6 +10214,13 @@ func (r *RotateClientSecretResponseContent) GetResourceServerIdentifier() string
 		return ""
 	}
 	return *r.ResourceServerIdentifier
+}
+
+func (r *RotateClientSecretResponseContent) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if r == nil || r.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *r.AsyncApprovalNotificationChannels
 }
 
 func (r *RotateClientSecretResponseContent) GetExtraProperties() map[string]interface{} {
@@ -10243,6 +10458,13 @@ func (r *RotateClientSecretResponseContent) SetTokenEndpointAuthMethod(tokenEndp
 	r.require(rotateClientSecretResponseContentFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	r.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	r.require(rotateClientSecretResponseContentFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -10334,6 +10556,13 @@ func (r *RotateClientSecretResponseContent) SetComplianceLevel(complianceLevel *
 	r.require(rotateClientSecretResponseContentFieldComplianceLevel)
 }
 
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	r.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	r.require(rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetParRequestExpiry(parRequestExpiry *int) {
@@ -10353,6 +10582,13 @@ func (r *RotateClientSecretResponseContent) SetTokenQuota(tokenQuota *TokenQuota
 func (r *RotateClientSecretResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	r.ResourceServerIdentifier = resourceServerIdentifier
 	r.require(rotateClientSecretResponseContentFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	r.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	r.require(rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels)
 }
 
 func (r *RotateClientSecretResponseContent) UnmarshalJSON(data []byte) error {
@@ -10399,54 +10635,57 @@ func (r *RotateClientSecretResponseContent) String() string {
 }
 
 var (
-	updateClientResponseContentFieldClientID                           = big.NewInt(1 << 0)
-	updateClientResponseContentFieldTenant                             = big.NewInt(1 << 1)
-	updateClientResponseContentFieldName                               = big.NewInt(1 << 2)
-	updateClientResponseContentFieldDescription                        = big.NewInt(1 << 3)
-	updateClientResponseContentFieldGlobal                             = big.NewInt(1 << 4)
-	updateClientResponseContentFieldClientSecret                       = big.NewInt(1 << 5)
-	updateClientResponseContentFieldAppType                            = big.NewInt(1 << 6)
-	updateClientResponseContentFieldLogoURI                            = big.NewInt(1 << 7)
-	updateClientResponseContentFieldIsFirstParty                       = big.NewInt(1 << 8)
-	updateClientResponseContentFieldOidcConformant                     = big.NewInt(1 << 9)
-	updateClientResponseContentFieldCallbacks                          = big.NewInt(1 << 10)
-	updateClientResponseContentFieldAllowedOrigins                     = big.NewInt(1 << 11)
-	updateClientResponseContentFieldWebOrigins                         = big.NewInt(1 << 12)
-	updateClientResponseContentFieldClientAliases                      = big.NewInt(1 << 13)
-	updateClientResponseContentFieldAllowedClients                     = big.NewInt(1 << 14)
-	updateClientResponseContentFieldAllowedLogoutURLs                  = big.NewInt(1 << 15)
-	updateClientResponseContentFieldSessionTransfer                    = big.NewInt(1 << 16)
-	updateClientResponseContentFieldOidcLogout                         = big.NewInt(1 << 17)
-	updateClientResponseContentFieldGrantTypes                         = big.NewInt(1 << 18)
-	updateClientResponseContentFieldJwtConfiguration                   = big.NewInt(1 << 19)
-	updateClientResponseContentFieldSigningKeys                        = big.NewInt(1 << 20)
-	updateClientResponseContentFieldEncryptionKey                      = big.NewInt(1 << 21)
-	updateClientResponseContentFieldSSO                                = big.NewInt(1 << 22)
-	updateClientResponseContentFieldSSODisabled                        = big.NewInt(1 << 23)
-	updateClientResponseContentFieldCrossOriginAuthentication          = big.NewInt(1 << 24)
-	updateClientResponseContentFieldCrossOriginLoc                     = big.NewInt(1 << 25)
-	updateClientResponseContentFieldCustomLoginPageOn                  = big.NewInt(1 << 26)
-	updateClientResponseContentFieldCustomLoginPage                    = big.NewInt(1 << 27)
-	updateClientResponseContentFieldCustomLoginPagePreview             = big.NewInt(1 << 28)
-	updateClientResponseContentFieldFormTemplate                       = big.NewInt(1 << 29)
-	updateClientResponseContentFieldAddons                             = big.NewInt(1 << 30)
-	updateClientResponseContentFieldTokenEndpointAuthMethod            = big.NewInt(1 << 31)
-	updateClientResponseContentFieldClientMetadata                     = big.NewInt(1 << 32)
-	updateClientResponseContentFieldMobile                             = big.NewInt(1 << 33)
-	updateClientResponseContentFieldInitiateLoginURI                   = big.NewInt(1 << 34)
-	updateClientResponseContentFieldRefreshToken                       = big.NewInt(1 << 35)
-	updateClientResponseContentFieldDefaultOrganization                = big.NewInt(1 << 36)
-	updateClientResponseContentFieldOrganizationUsage                  = big.NewInt(1 << 37)
-	updateClientResponseContentFieldOrganizationRequireBehavior        = big.NewInt(1 << 38)
-	updateClientResponseContentFieldOrganizationDiscoveryMethods       = big.NewInt(1 << 39)
-	updateClientResponseContentFieldClientAuthenticationMethods        = big.NewInt(1 << 40)
-	updateClientResponseContentFieldRequirePushedAuthorizationRequests = big.NewInt(1 << 41)
-	updateClientResponseContentFieldRequireProofOfPossession           = big.NewInt(1 << 42)
-	updateClientResponseContentFieldSignedRequestObject                = big.NewInt(1 << 43)
-	updateClientResponseContentFieldComplianceLevel                    = big.NewInt(1 << 44)
-	updateClientResponseContentFieldParRequestExpiry                   = big.NewInt(1 << 45)
-	updateClientResponseContentFieldTokenQuota                         = big.NewInt(1 << 46)
-	updateClientResponseContentFieldResourceServerIdentifier           = big.NewInt(1 << 47)
+	updateClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
+	updateClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
+	updateClientResponseContentFieldName                                           = big.NewInt(1 << 2)
+	updateClientResponseContentFieldDescription                                    = big.NewInt(1 << 3)
+	updateClientResponseContentFieldGlobal                                         = big.NewInt(1 << 4)
+	updateClientResponseContentFieldClientSecret                                   = big.NewInt(1 << 5)
+	updateClientResponseContentFieldAppType                                        = big.NewInt(1 << 6)
+	updateClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 7)
+	updateClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 8)
+	updateClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 9)
+	updateClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 10)
+	updateClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 11)
+	updateClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 12)
+	updateClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 13)
+	updateClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 14)
+	updateClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
+	updateClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 16)
+	updateClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 17)
+	updateClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 18)
+	updateClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 19)
+	updateClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 20)
+	updateClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 21)
+	updateClientResponseContentFieldSSO                                            = big.NewInt(1 << 22)
+	updateClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 23)
+	updateClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
+	updateClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
+	updateClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
+	updateClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 27)
+	updateClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
+	updateClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 29)
+	updateClientResponseContentFieldAddons                                         = big.NewInt(1 << 30)
+	updateClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
+	updateClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
+	updateClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
+	updateClientResponseContentFieldMobile                                         = big.NewInt(1 << 34)
+	updateClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
+	updateClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 36)
+	updateClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 37)
+	updateClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 38)
+	updateClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
+	updateClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
+	updateClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
+	updateClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
+	updateClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
+	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
+	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
+	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
+	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
+	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type UpdateClientResponseContent struct {
@@ -10506,8 +10745,10 @@ type UpdateClientResponseContent struct {
 	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
 	Addons                  *ClientAddons                      `json:"addons,omitempty" url:"addons,omitempty"`
 	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	ClientMetadata          *ClientMetadata                    `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
-	Mobile                  *ClientMobile                      `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
@@ -10523,11 +10764,16 @@ type UpdateClientResponseContent struct {
 	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
 	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
 	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10761,6 +11007,13 @@ func (u *UpdateClientResponseContent) GetTokenEndpointAuthMethod() ClientTokenEn
 	return *u.TokenEndpointAuthMethod
 }
 
+func (u *UpdateClientResponseContent) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if u == nil || u.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *u.IsTokenEndpointIPHeaderTrusted
+}
+
 func (u *UpdateClientResponseContent) GetClientMetadata() ClientMetadata {
 	if u == nil || u.ClientMetadata == nil {
 		return nil
@@ -10852,6 +11105,13 @@ func (u *UpdateClientResponseContent) GetComplianceLevel() ClientComplianceLevel
 	return *u.ComplianceLevel
 }
 
+func (u *UpdateClientResponseContent) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if u == nil || u.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *u.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
 func (u *UpdateClientResponseContent) GetParRequestExpiry() int {
 	if u == nil || u.ParRequestExpiry == nil {
 		return 0
@@ -10871,6 +11131,13 @@ func (u *UpdateClientResponseContent) GetResourceServerIdentifier() string {
 		return ""
 	}
 	return *u.ResourceServerIdentifier
+}
+
+func (u *UpdateClientResponseContent) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if u == nil || u.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *u.AsyncApprovalNotificationChannels
 }
 
 func (u *UpdateClientResponseContent) GetExtraProperties() map[string]interface{} {
@@ -11108,6 +11375,13 @@ func (u *UpdateClientResponseContent) SetTokenEndpointAuthMethod(tokenEndpointAu
 	u.require(updateClientResponseContentFieldTokenEndpointAuthMethod)
 }
 
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	u.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	u.require(updateClientResponseContentFieldIsTokenEndpointIPHeaderTrusted)
+}
+
 // SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateClientResponseContent) SetClientMetadata(clientMetadata *ClientMetadata) {
@@ -11199,6 +11473,13 @@ func (u *UpdateClientResponseContent) SetComplianceLevel(complianceLevel *Client
 	u.require(updateClientResponseContentFieldComplianceLevel)
 }
 
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	u.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	u.require(updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateClientResponseContent) SetParRequestExpiry(parRequestExpiry *int) {
@@ -11218,6 +11499,13 @@ func (u *UpdateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (u *UpdateClientResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	u.ResourceServerIdentifier = resourceServerIdentifier
 	u.require(updateClientResponseContentFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	u.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	u.require(updateClientResponseContentFieldAsyncApprovalNotificationChannels)
 }
 
 func (u *UpdateClientResponseContent) UnmarshalJSON(data []byte) error {

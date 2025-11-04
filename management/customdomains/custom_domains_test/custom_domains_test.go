@@ -100,7 +100,7 @@ func TestCustomDomainsListWithWireMock(
 	defer WireMockClient.Reset()
 	stub := gowiremock.Get(gowiremock.URLPathTemplate("/custom-domains")).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			[]interface{}{map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "origin_domain_name": "origin_domain_name", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy"}},
+			[]interface{}{map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "origin_domain_name": "origin_domain_name", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}, "status": "verified", "error_msg": "error_msg", "last_verified_at": "last_verified_at"}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy", "certificate": map[string]interface{}{"status": "provisioning", "error_msg": "error_msg", "certificate_authority": "letsencrypt", "renews_before": "renews_before"}}},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)
@@ -136,7 +136,7 @@ func TestCustomDomainsCreateWithWireMock(
                     "additionalProperties": true
                 }`, "V202012")).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy"},
+			map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}, "status": "verified", "error_msg": "error_msg", "last_verified_at": "last_verified_at"}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy", "certificate": map[string]interface{}{"status": "provisioning", "error_msg": "error_msg", "certificate_authority": "letsencrypt", "renews_before": "renews_before"}},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)
@@ -172,7 +172,7 @@ func TestCustomDomainsGetWithWireMock(
 		gowiremock.Matching("id"),
 	).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "origin_domain_name": "origin_domain_name", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy"},
+			map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "origin_domain_name": "origin_domain_name", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}, "status": "verified", "error_msg": "error_msg", "last_verified_at": "last_verified_at"}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy", "certificate": map[string]interface{}{"status": "provisioning", "error_msg": "error_msg", "certificate_authority": "letsencrypt", "renews_before": "renews_before"}},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)
@@ -244,7 +244,7 @@ func TestCustomDomainsUpdateWithWireMock(
                     "additionalProperties": true
                 }`, "V202012")).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy"},
+			map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}, "status": "verified", "error_msg": "error_msg", "last_verified_at": "last_verified_at"}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy", "certificate": map[string]interface{}{"status": "provisioning", "error_msg": "error_msg", "certificate_authority": "letsencrypt", "renews_before": "renews_before"}},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)
@@ -310,7 +310,7 @@ func TestCustomDomainsVerifyWithWireMock(
 		gowiremock.Matching("id"),
 	).WillReturnResponse(
 		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "cname_api_key": "cname_api_key", "origin_domain_name": "origin_domain_name", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy"},
+			map[string]interface{}{"custom_domain_id": "custom_domain_id", "domain": "domain", "primary": true, "status": "pending_verification", "type": "auth0_managed_certs", "cname_api_key": "cname_api_key", "origin_domain_name": "origin_domain_name", "verification": map[string]interface{}{"methods": []interface{}{map[string]interface{}{"name": "cname", "record": "record"}}, "status": "verified", "error_msg": "error_msg", "last_verified_at": "last_verified_at"}, "custom_client_ip_header": "custom_client_ip_header", "tls_policy": "tls_policy", "certificate": map[string]interface{}{"status": "provisioning", "error_msg": "error_msg", "certificate_authority": "letsencrypt", "renews_before": "renews_before"}},
 		).WithStatus(http.StatusOK),
 	)
 	err := WireMockClient.StubFor(stub)
