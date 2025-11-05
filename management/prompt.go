@@ -726,7 +726,7 @@ func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, 
 // BulkUpdateRendering updates the settings for multiple ACUL screens in a single request.
 //
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-bulk-rendering
-func (m *PromptManager) BulkUpdateRendering(ctx context.Context, c *PromptRenderingUpdateRequest, opts ...RequestOption) (*PromptRenderingUpdateRequest, error) {
+func (m *PromptManager) BulkUpdateRendering(ctx context.Context, c *PromptRenderingUpdateRequest, opts ...RequestOption) error {
 	if c != nil && c.PromptRenderings != nil {
 		for i, rendering := range c.PromptRenderings {
 			if rendering != nil {
@@ -735,15 +735,7 @@ func (m *PromptManager) BulkUpdateRendering(ctx context.Context, c *PromptRender
 		}
 	}
 
-	err := m.management.Request(ctx, "PATCH", m.management.URI("prompts", "rendering"), c, opts...)
-	if err != nil {
-		return nil, err
-	}
-
-	// Since the management library doesn't support getting response body from PATCH easily,
-	// we'll return the input as confirmation for now
-	// TODO: Enhance this when the management library supports response body for PATCH
-	return c, nil
+	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", "rendering"), c, opts...)
 }
 
 // ListRendering lists the settings for all the ACUL.

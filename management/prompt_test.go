@@ -521,10 +521,11 @@ func cleanupPromptPartials(t *testing.T, prompt PromptType) {
 func TestPromptManager_BulkUpdateRendering(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
 	client := givenAClient(t)
 
-	// Create test configurations for multiple prompts/screens using prompt constants
-	bulkConfig := &PromptRenderingUpdateRequest{
+	updateData := &PromptRenderingUpdateRequest{
 		PromptRenderings: []*PromptRendering{
 			{
 				Prompt:                  &[]PromptType{PromptSignup}[0],
@@ -591,27 +592,35 @@ func TestPromptManager_BulkUpdateRendering(t *testing.T) {
 		},
 	}
 
-	// Test bulk update
-	result, err := api.Prompt.BulkUpdateRendering(context.Background(), bulkConfig)
+	err := api.Prompt.BulkUpdateRendering(context.Background(), updateData)
 	assert.NoError(t, err)
-	assert.NotNil(t, result)
 
 	// Verify the configurations were applied by reading them back
-	signupRendering, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
+	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
 	assert.NoError(t, err)
-	assert.Equal(t, RenderingModeAdvanced, *signupRendering.GetRenderingMode())
-	assert.True(t, signupRendering.GetUsePageTemplate())
+	assert.Equal(t, updateData.PromptRenderings[0].GetRenderingMode(), actual.GetRenderingMode())
+	assert.Equal(t, updateData.PromptRenderings[0].GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.PromptRenderings[0].GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, updateData.PromptRenderings[0].GetFilters(), actual.GetFilters())
+	assert.Equal(t, updateData.PromptRenderings[0].GetUsePageTemplate(), actual.GetUsePageTemplate())
+	assert.Equal(t, PromptSignup, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 
-	signupIDRendering, err := api.Prompt.ReadRendering(context.Background(), PromptSignupID, ScreenSignupID)
+	actual, err = api.Prompt.ReadRendering(context.Background(), PromptSignupID, ScreenSignupID)
 	assert.NoError(t, err)
-	assert.Equal(t, RenderingModeAdvanced, *signupIDRendering.GetRenderingMode())
-	assert.False(t, signupIDRendering.GetUsePageTemplate())
-	assert.True(t, signupIDRendering.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, updateData.PromptRenderings[1].GetRenderingMode(), actual.GetRenderingMode())
+	assert.Equal(t, updateData.PromptRenderings[1].GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.PromptRenderings[1].GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, updateData.PromptRenderings[1].GetUsePageTemplate(), actual.GetUsePageTemplate())
+	assert.Equal(t, PromptSignupID, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignupID, *actual.GetScreen())
 
-	loginRendering, err := api.Prompt.ReadRendering(context.Background(), PromptLogin, ScreenLogin)
+	actual, err = api.Prompt.ReadRendering(context.Background(), PromptLogin, ScreenLogin)
 	assert.NoError(t, err)
-	assert.Equal(t, RenderingModeAdvanced, *loginRendering.GetRenderingMode())
-	assert.True(t, loginRendering.GetUsePageTemplate())
-	assert.False(t, loginRendering.GetDefaultHeadTagsDisabled())
-
+	assert.Equal(t, updateData.PromptRenderings[2].GetRenderingMode(), actual.GetRenderingMode())
+	assert.Equal(t, updateData.PromptRenderings[2].GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.PromptRenderings[2].GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, updateData.PromptRenderings[2].GetUsePageTemplate(), actual.GetUsePageTemplate())
+	assert.Equal(t, PromptLogin, *actual.GetPrompt())
+	assert.Equal(t, ScreenLogin, *actual.GetScreen())
 }
