@@ -2,6 +2,7 @@ package management
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 	"net/http"
@@ -685,12 +686,142 @@ func givenAnOrganizationInvitation(t *testing.T, orgID string) *OrganizationInvi
 	return orgInvite
 }
 
+func TestOrganizationManager_DiscoveryDomains(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	domain := givenAnOrganizationDiscoveryDomain(t, org.GetID())
+
+	domains, err := api.Organization.DiscoveryDomains(context.Background(), org.GetID())
+	assert.NoError(t, err)
+	assert.GreaterOrEqual(t, len(domains.Domains), 1)
+	assert.Equal(t, domain.GetID(), domains.Domains[0].GetID())
+}
+
+func TestOrganizationManager_CreateDiscoveryDomain(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	domain := &OrganizationDiscoveryDomain{
+		Domain: auth0.String(fmt.Sprintf("test-domain-%d.com", rand.Intn(999))),
+	}
+
+	err := api.Organization.CreateDiscoveryDomain(context.Background(), org.GetID(), domain)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, domain.GetID())
+
+	t.Cleanup(func() {
+		cleanupOrganizationDiscoveryDomain(t, org.GetID(), domain.GetID())
+	})
+}
+
+func TestOrganizationManager_DiscoveryDomain(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	domain := givenAnOrganizationDiscoveryDomain(t, org.GetID())
+
+	actualDomain, err := api.Organization.DiscoveryDomain(context.Background(), org.GetID(), domain.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, domain.GetID(), actualDomain.GetID())
+	assert.Equal(t, domain.GetDomain(), actualDomain.GetDomain())
+}
+
+func TestOrganizationManager_UpdateDiscoveryDomain(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	domain := givenAnOrganizationDiscoveryDomain(t, org.GetID())
+
+	// Update domain status - only status can be updated via PATCH
+	updatedDomain := &OrganizationDiscoveryDomain{
+		Status: auth0.String("verified"),
+	}
+
+	err := api.Organization.UpdateDiscoveryDomain(context.Background(), org.GetID(), domain.GetID(), updatedDomain)
+	assert.NoError(t, err)
+}
+
+func TestOrganizationManager_UpdateDiscoveryDomain_NilDomain(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	err := api.Organization.UpdateDiscoveryDomain(context.Background(), "org_123", "domain_123", nil)
+	assert.EqualError(t, err, "organization discovery domain cannot be nil")
+}
+
+func TestOrganizationManager_DeleteDiscoveryDomain(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+	domain := givenAnOrganizationDiscoveryDomain(t, org.GetID())
+
+	err := api.Organization.DeleteDiscoveryDomain(context.Background(), org.GetID(), domain.GetID())
+	assert.NoError(t, err)
+
+	actualDomain, err := api.Organization.DiscoveryDomain(context.Background(), org.GetID(), domain.GetID())
+	assert.Error(t, err)
+	assert.Empty(t, actualDomain)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusNotFound, err.(Error).Status())
+}
+
+func TestOrganizationManager_DiscoveryDomainsCheckpointPagination(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := givenAnOrganization(t)
+
+	// Create multiple domains
+	for i := 0; i < 3; i++ {
+		givenAnOrganizationDiscoveryDomain(t, org.GetID())
+	}
+
+	domains, err := api.Organization.DiscoveryDomains(context.Background(), org.GetID(), Take(2))
+	assert.NoError(t, err)
+	assert.GreaterOrEqual(t, len(domains.Domains), 2)
+	assert.True(t, domains.HasNext())
+
+	domains, err = api.Organization.DiscoveryDomains(context.Background(), org.GetID(), Take(2), From(domains.Next))
+	assert.NoError(t, err)
+	assert.GreaterOrEqual(t, len(domains.Domains), 1)
+	assert.False(t, domains.HasNext())
+}
+
+func givenAnOrganizationDiscoveryDomain(t *testing.T, orgID string) *OrganizationDiscoveryDomain {
+	t.Helper()
+
+	domain := &OrganizationDiscoveryDomain{
+		Domain: auth0.String(fmt.Sprintf("test-domain-%d.com", rand.Intn(999))),
+	}
+
+	err := api.Organization.CreateDiscoveryDomain(context.Background(), orgID, domain)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupOrganizationDiscoveryDomain(t, orgID, domain.GetID())
+	})
+
+	return domain
+}
+
+func cleanupOrganizationDiscoveryDomain(t *testing.T, orgID, domainID string) {
+	t.Helper()
+
+	err := api.Organization.DeleteDiscoveryDomain(context.Background(), orgID, domainID)
+	if err != nil {
+		var apiErr Error
+		if errors.As(err, &apiErr) && apiErr.Status() != http.StatusNotFound {
+			t.Error(err)
+		}
+	}
+}
+
 func cleanupOrganization(t *testing.T, orgID string) {
 	t.Helper()
 
 	err := api.Organization.Delete(context.Background(), orgID)
 	if err != nil {
-		if err.(Error).Status() != http.StatusNotFound {
+		var apiErr Error
+		if errors.As(err, &apiErr) && apiErr.Status() != http.StatusNotFound {
 			t.Error(err)
 		}
 	}

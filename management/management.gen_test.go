@@ -2052,6 +2052,16 @@ func TestClient_GetAppType(tt *testing.T) {
 	c.GetAppType()
 }
 
+func TestClient_GetAsyncApprovalNotificationChannels(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{AsyncApprovalNotificationChannels: &zeroValue}
+	c.GetAsyncApprovalNotificationChannels()
+	c = &Client{}
+	c.GetAsyncApprovalNotificationChannels()
+	c = nil
+	c.GetAsyncApprovalNotificationChannels()
+}
+
 func TestClient_GetCallbacks(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{Callbacks: &zeroValue}
@@ -2309,6 +2319,16 @@ func TestClient_GetOIDCLogout(tt *testing.T) {
 	c.GetOIDCLogout()
 	c = nil
 	c.GetOIDCLogout()
+}
+
+func TestClient_GetOrganizationDiscoveryMethods(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{OrganizationDiscoveryMethods: &zeroValue}
+	c.GetOrganizationDiscoveryMethods()
+	c = &Client{}
+	c.GetOrganizationDiscoveryMethods()
+	c = nil
+	c.GetOrganizationDiscoveryMethods()
 }
 
 func TestClient_GetOrganizationRequireBehavior(tt *testing.T) {
@@ -6360,6 +6380,104 @@ func TestConnectionOptionsLinkedin_String(t *testing.T) {
 	}
 }
 
+func TestConnectionOptionsOAuth1_GetAccessTokenURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{AccessTokenURL: &zeroValue}
+	c.GetAccessTokenURL()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetAccessTokenURL()
+	c = nil
+	c.GetAccessTokenURL()
+}
+
+func TestConnectionOptionsOAuth1_GetConsumerKey(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{ConsumerKey: &zeroValue}
+	c.GetConsumerKey()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetConsumerKey()
+	c = nil
+	c.GetConsumerKey()
+}
+
+func TestConnectionOptionsOAuth1_GetConsumerSecret(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{ConsumerSecret: &zeroValue}
+	c.GetConsumerSecret()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetConsumerSecret()
+	c = nil
+	c.GetConsumerSecret()
+}
+
+func TestConnectionOptionsOAuth1_GetCustomHeaders(tt *testing.T) {
+	var zeroValue map[string]string
+	c := &ConnectionOptionsOAuth1{CustomHeaders: &zeroValue}
+	c.GetCustomHeaders()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetCustomHeaders()
+	c = nil
+	c.GetCustomHeaders()
+}
+
+func TestConnectionOptionsOAuth1_GetRequestTokenURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{RequestTokenURL: &zeroValue}
+	c.GetRequestTokenURL()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetRequestTokenURL()
+	c = nil
+	c.GetRequestTokenURL()
+}
+
+func TestConnectionOptionsOAuth1_GetScripts(tt *testing.T) {
+	var zeroValue map[string]string
+	c := &ConnectionOptionsOAuth1{Scripts: &zeroValue}
+	c.GetScripts()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetScripts()
+	c = nil
+	c.GetScripts()
+}
+
+func TestConnectionOptionsOAuth1_GetSessionKey(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{SessionKey: &zeroValue}
+	c.GetSessionKey()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetSessionKey()
+	c = nil
+	c.GetSessionKey()
+}
+
+func TestConnectionOptionsOAuth1_GetSignatureMethod(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{SignatureMethod: &zeroValue}
+	c.GetSignatureMethod()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetSignatureMethod()
+	c = nil
+	c.GetSignatureMethod()
+}
+
+func TestConnectionOptionsOAuth1_GetUserAuthorizationURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{UserAuthorizationURL: &zeroValue}
+	c.GetUserAuthorizationURL()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetUserAuthorizationURL()
+	c = nil
+	c.GetUserAuthorizationURL()
+}
+
+func TestConnectionOptionsOAuth1_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsOAuth1{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestConnectionOptionsOAuth2_GetAuthorizationURL(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOAuth2{AuthorizationURL: &zeroValue}
@@ -9084,6 +9202,14 @@ func TestDeviceCredential_String(t *testing.T) {
 func TestDeviceCredentialList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &DeviceCredentialList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestDiscoveryDomainList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &DiscoveryDomainList{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -12573,6 +12699,64 @@ func TestOrganizationConnectionDetails_String(t *testing.T) {
 func TestOrganizationConnectionList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &OrganizationConnectionList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestOrganizationDiscoveryDomain_GetDomain(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{Domain: &zeroValue}
+	o.GetDomain()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetDomain()
+	o = nil
+	o.GetDomain()
+}
+
+func TestOrganizationDiscoveryDomain_GetID(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{ID: &zeroValue}
+	o.GetID()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetID()
+	o = nil
+	o.GetID()
+}
+
+func TestOrganizationDiscoveryDomain_GetStatus(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{Status: &zeroValue}
+	o.GetStatus()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetStatus()
+	o = nil
+	o.GetStatus()
+}
+
+func TestOrganizationDiscoveryDomain_GetVerificationHost(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{VerificationHost: &zeroValue}
+	o.GetVerificationHost()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetVerificationHost()
+	o = nil
+	o.GetVerificationHost()
+}
+
+func TestOrganizationDiscoveryDomain_GetVerificationTXT(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationDiscoveryDomain{VerificationTXT: &zeroValue}
+	o.GetVerificationTXT()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetVerificationTXT()
+	o = nil
+	o.GetVerificationTXT()
+}
+
+func TestOrganizationDiscoveryDomain_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &OrganizationDiscoveryDomain{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

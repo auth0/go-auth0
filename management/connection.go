@@ -42,6 +42,8 @@ const (
 	ConnectionStrategyOIDC = "oidc"
 	// ConnectionStrategyOAuth2 constant.
 	ConnectionStrategyOAuth2 = "oauth2"
+	// ConnectionStrategyOAuth1 constant.
+	ConnectionStrategyOAuth1 = "oauth1"
 	// ConnectionStrategyAD constant.
 	ConnectionStrategyAD = "ad"
 	// ConnectionStrategyADFS constant.
@@ -382,6 +384,8 @@ func (c *Connection) UnmarshalJSON(b []byte) error {
 			v = &ConnectionOptionsSMS{}
 		case ConnectionStrategyOIDC:
 			v = &ConnectionOptionsOIDC{}
+		case ConnectionStrategyOAuth1:
+			v = &ConnectionOptionsOAuth1{}
 		case ConnectionStrategyOAuth2,
 			ConnectionStrategyDropbox,
 			ConnectionStrategyBitBucket,
@@ -1334,6 +1338,37 @@ func (c *ConnectionOptionsOAuth2) SetScopes(enable bool, scopes ...string) {
 	sort.Strings(scopeSlice)
 	scope := strings.Join(scopeSlice, " ")
 	c.Scope = &scope
+}
+
+// ConnectionOptionsOAuth1 is used to configure an OAuth1 Connection.
+type ConnectionOptionsOAuth1 struct {
+	// ConsumerKey identifies the client to the service provider.
+	ConsumerKey *string `json:"consumer_key,omitempty"`
+
+	// ConsumerSecret is the secret used to establish ownership of the consumer key.
+	ConsumerSecret *string `json:"consumer_secret,omitempty"`
+
+	// RequestTokenURL is the URL used to obtain an unauthorized request token.
+	RequestTokenURL *string `json:"requestTokenURL,omitempty"`
+
+	// AccessTokenURL is the URL used to exchange a user-authorized request token for an access token.
+	AccessTokenURL *string `json:"accessTokenURL,omitempty"`
+
+	// UserAuthorizationURL is the URL used to obtain user authorization.
+	UserAuthorizationURL *string `json:"userAuthorizationURL,omitempty"`
+
+	// SessionKey is the session key for storing the request token.
+	SessionKey *string `json:"sessionKey,omitempty"`
+
+	// SignatureMethod is the signature method used to sign the request (default: 'HMAC-SHA1').
+	SignatureMethod *string `json:"signatureMethod,omitempty"`
+
+	// CustomHeaders specifies custom headers.
+	CustomHeaders *map[string]string `json:"customHeaders,omitempty"`
+
+	// Scripts contains scripts for the connection.
+	// Allowed keys are: "fetchUserProfile"
+	Scripts *map[string]string `json:"scripts,omitempty"`
 }
 
 // ConnectionOptionsAD is used to configure an AD Connection.
