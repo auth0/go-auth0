@@ -1240,6 +1240,68 @@ XzvXjHGyxWVu0jdvS9hyhJzP4165k1cYDgx8mmg0VxR7j79LmCUDsFcvvSrAOf6y
 	return credential
 }
 
+func TestClient_OrganizationDiscoveryMethods(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	t.Run("Create client with organization discovery methods", func(t *testing.T) {
+		client := &Client{
+			Name:                         auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+			Description:                  auth0.String("This is a test client with organization discovery methods."),
+			OrganizationUsage:            auth0.String("allow"),
+			OrganizationRequireBehavior:  auth0.String("pre_login_prompt"),
+			OrganizationDiscoveryMethods: &[]string{"email", "organization_name"},
+		}
+
+		err := api.Client.Create(context.Background(), client)
+		assert.NoError(t, err)
+		assert.NotEmpty(t, client.GetClientID())
+
+		// Verify the client was created with the correct organization discovery methods
+		retrievedClient, err := api.Client.Read(context.Background(), client.GetClientID())
+		assert.NoError(t, err)
+		assert.Equal(t, "allow", retrievedClient.GetOrganizationUsage())
+		assert.Equal(t, "pre_login_prompt", retrievedClient.GetOrganizationRequireBehavior())
+		assert.NotNil(t, retrievedClient.OrganizationDiscoveryMethods)
+		assert.ElementsMatch(t, []string{"email", "organization_name"}, *retrievedClient.OrganizationDiscoveryMethods)
+
+		t.Cleanup(func() {
+			cleanupClient(t, client.GetClientID())
+		})
+	})
+
+	t.Run("Update client organization discovery methods", func(t *testing.T) {
+		// Create client with initial discovery method
+		client := &Client{
+			Name:                         auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+			Description:                  auth0.String("This is a test client for updating discovery methods."),
+			OrganizationUsage:            auth0.String("allow"),
+			OrganizationRequireBehavior:  auth0.String("pre_login_prompt"),
+			OrganizationDiscoveryMethods: &[]string{"email"},
+		}
+
+		err := api.Client.Create(context.Background(), client)
+		assert.NoError(t, err)
+		assert.NotEmpty(t, client.GetClientID())
+
+		// Update to include both methods
+		updateClient := &Client{
+			OrganizationDiscoveryMethods: &[]string{"email", "organization_name"},
+		}
+
+		err = api.Client.Update(context.Background(), client.GetClientID(), updateClient)
+		assert.NoError(t, err)
+
+		// Verify the update
+		retrievedClient, err := api.Client.Read(context.Background(), client.GetClientID())
+		assert.NoError(t, err)
+		assert.NotNil(t, retrievedClient.OrganizationDiscoveryMethods)
+		assert.ElementsMatch(t, []string{"email", "organization_name"}, *retrievedClient.OrganizationDiscoveryMethods)
+		t.Cleanup(func() {
+			cleanupClient(t, client.GetClientID())
+		})
+	})
+}
+
 func cleanupCredential(t *testing.T, clientID string, credentialID string) {
 	t.Helper()
 

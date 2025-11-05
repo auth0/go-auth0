@@ -501,6 +501,24 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 			DigestAlgorithm:    auth0.String("sha256"),
 		},
 	},
+	{
+		name: "OAuth1 Connection",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-OAuth1-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("oauth1"),
+		},
+		options: &ConnectionOptionsOAuth1{
+			ConsumerKey:          auth0.String("test-consumer-key"),
+			ConsumerSecret:       auth0.String("test-consumer-secret"),
+			RequestTokenURL:      auth0.String("https://api.twitter.com/oauth/request_token"),
+			AccessTokenURL:       auth0.String("https://api.twitter.com/oauth/access_token"),
+			UserAuthorizationURL: auth0.String("https://api.twitter.com/oauth/authorize"),
+			SignatureMethod:      auth0.String("HMAC-SHA1"),
+			Scripts: &map[string]string{
+				"fetchUserProfile": "function(token, tokenSecret, ctx, cb) { return cb(null, {}); }",
+			},
+		},
+	},
 }
 
 type connectionTestCase struct {
@@ -949,8 +967,9 @@ func TestConnectionManager_Update(t *testing.T) {
 				testCase.connection.GetStrategy() == "okta" ||
 				testCase.connection.GetStrategy() == "adfs" ||
 				testCase.connection.GetStrategy() == "waad" ||
-				testCase.connection.GetStrategy() == "pingfederate" {
-				t.Skip("Skipping because we can't create an oidc, okta, samlp, adfs, waad, or pingfederate connection with no options")
+				testCase.connection.GetStrategy() == "pingfederate" ||
+				testCase.connection.GetStrategy() == "oauth1" {
+				t.Skip("Skipping because we can't create an oidc, okta, samlp, adfs, waad, pingfederate, or oauth1 connection with no options")
 			}
 
 			configureHTTPTestRecordings(t)
@@ -1552,6 +1571,83 @@ func getStrategyVersion(strategy string, options interface{}) int {
 		return options.(*ConnectionOptionsOAuth2).GetStrategyVersion()
 	default:
 		return -1
+	}
+}
+
+func TestOAuth1Connection_MarshalJSON(t *testing.T) {
+	for connection, expected := range map[*ConnectionOptionsOAuth1]string{
+		{
+			ConsumerKey:          auth0.String("test-key"),
+			ConsumerSecret:       auth0.String("test-secret"),
+			RequestTokenURL:      auth0.String("https://example.com/oauth/request_token"),
+			AccessTokenURL:       auth0.String("https://example.com/oauth/access_token"),
+			UserAuthorizationURL: auth0.String("https://example.com/oauth/authorize"),
+		}: `{"consumer_key":"test-key","consumer_secret":"test-secret","requestTokenURL":"https://example.com/oauth/request_token","accessTokenURL":"https://example.com/oauth/access_token","userAuthorizationURL":"https://example.com/oauth/authorize"}`,
+		{
+			ConsumerKey:          auth0.String("test-key"),
+			ConsumerSecret:       auth0.String("test-secret"),
+			RequestTokenURL:      auth0.String("https://example.com/oauth/request_token"),
+			AccessTokenURL:       auth0.String("https://example.com/oauth/access_token"),
+			UserAuthorizationURL: auth0.String("https://example.com/oauth/authorize"),
+			SessionKey:           auth0.String("oauth_token"),
+			SignatureMethod:      auth0.String("HMAC-SHA1"),
+		}: `{"consumer_key":"test-key","consumer_secret":"test-secret","requestTokenURL":"https://example.com/oauth/request_token","accessTokenURL":"https://example.com/oauth/access_token","userAuthorizationURL":"https://example.com/oauth/authorize","sessionKey":"oauth_token","signatureMethod":"HMAC-SHA1"}`,
+		{
+			ConsumerKey:          auth0.String("test-key"),
+			ConsumerSecret:       auth0.String("test-secret"),
+			RequestTokenURL:      auth0.String("https://example.com/oauth/request_token"),
+			AccessTokenURL:       auth0.String("https://example.com/oauth/access_token"),
+			UserAuthorizationURL: auth0.String("https://example.com/oauth/authorize"),
+			CustomHeaders: &map[string]string{
+				"X-Custom-Header": "custom-value",
+			},
+			Scripts: &map[string]string{
+				"fetchUserProfile": "function(token, tokenSecret, ctx, cb) { cb(null, {}); }",
+			},
+		}: `{"consumer_key":"test-key","consumer_secret":"test-secret","requestTokenURL":"https://example.com/oauth/request_token","accessTokenURL":"https://example.com/oauth/access_token","userAuthorizationURL":"https://example.com/oauth/authorize","customHeaders":{"X-Custom-Header":"custom-value"},"scripts":{"fetchUserProfile":"function(token, tokenSecret, ctx, cb) { cb(null, {}); }"}}`,
+	} {
+		payload, err := json.Marshal(connection)
+		assert.NoError(t, err)
+		assert.JSONEq(t, expected, string(payload))
+	}
+}
+
+func TestOAuth1Connection_UnmarshalJSON(t *testing.T) {
+	for expectedAsString, expected := range map[string]*ConnectionOptionsOAuth1{
+		`{"consumer_key":"test-key","consumer_secret":"test-secret","requestTokenURL":"https://example.com/oauth/request_token","accessTokenURL":"https://example.com/oauth/access_token","userAuthorizationURL":"https://example.com/oauth/authorize"}`: {
+			ConsumerKey:          auth0.String("test-key"),
+			ConsumerSecret:       auth0.String("test-secret"),
+			RequestTokenURL:      auth0.String("https://example.com/oauth/request_token"),
+			AccessTokenURL:       auth0.String("https://example.com/oauth/access_token"),
+			UserAuthorizationURL: auth0.String("https://example.com/oauth/authorize"),
+		},
+		`{"consumer_key":"test-key","consumer_secret":"test-secret","requestTokenURL":"https://example.com/oauth/request_token","accessTokenURL":"https://example.com/oauth/access_token","userAuthorizationURL":"https://example.com/oauth/authorize","sessionKey":"oauth_token","signatureMethod":"HMAC-SHA1"}`: {
+			ConsumerKey:          auth0.String("test-key"),
+			ConsumerSecret:       auth0.String("test-secret"),
+			RequestTokenURL:      auth0.String("https://example.com/oauth/request_token"),
+			AccessTokenURL:       auth0.String("https://example.com/oauth/access_token"),
+			UserAuthorizationURL: auth0.String("https://example.com/oauth/authorize"),
+			SessionKey:           auth0.String("oauth_token"),
+			SignatureMethod:      auth0.String("HMAC-SHA1"),
+		},
+		`{"consumer_key":"test-key","consumer_secret":"test-secret","requestTokenURL":"https://example.com/oauth/request_token","accessTokenURL":"https://example.com/oauth/access_token","userAuthorizationURL":"https://example.com/oauth/authorize","customHeaders":{"X-Custom-Header":"custom-value"},"scripts":{"fetchUserProfile":"function(token, tokenSecret, ctx, cb) { cb(null, {}); }"}}`: {
+			ConsumerKey:          auth0.String("test-key"),
+			ConsumerSecret:       auth0.String("test-secret"),
+			RequestTokenURL:      auth0.String("https://example.com/oauth/request_token"),
+			AccessTokenURL:       auth0.String("https://example.com/oauth/access_token"),
+			UserAuthorizationURL: auth0.String("https://example.com/oauth/authorize"),
+			CustomHeaders: &map[string]string{
+				"X-Custom-Header": "custom-value",
+			},
+			Scripts: &map[string]string{
+				"fetchUserProfile": "function(token, tokenSecret, ctx, cb) { cb(null, {}); }",
+			},
+		},
+	} {
+		var actual *ConnectionOptionsOAuth1
+		err := json.Unmarshal([]byte(expectedAsString), &actual)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, actual)
 	}
 }
 
