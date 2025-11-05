@@ -517,3 +517,101 @@ func cleanupPromptPartials(t *testing.T, prompt PromptType) {
 	err := api.Prompt.DeletePartials(context.Background(), prompt)
 	assert.NoError(t, err)
 }
+
+func TestPromptManager_BulkUpdateRendering(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	client := givenAClient(t)
+
+	// Create test configurations for multiple prompts/screens using prompt constants
+	bulkConfig := &PromptRenderingUpdateRequest{
+		PromptRenderings: []*PromptRendering{
+			{
+				Prompt:                  &[]PromptType{PromptSignup}[0],
+				Screen:                  &[]ScreenName{ScreenSignup}[0],
+				RenderingMode:           &[]RenderingMode{RenderingModeAdvanced}[0],
+				ContextConfiguration:    &[]string{"branding.settings"},
+				DefaultHeadTagsDisabled: auth0.Bool(false),
+				HeadTags: []interface{}{
+					map[string]interface{}{
+						"tag":     "script",
+						"content": "",
+						"attributes": map[string]interface{}{
+							"src":   "https://example.com/script1.js",
+							"async": true,
+						},
+					},
+				},
+				Filters: &PromptRenderingFilters{
+					MatchType: auth0.String("includes_any"),
+					Clients: &[]PromptRenderingFilter{
+						{
+							ID: auth0.String(client.GetClientID()),
+						},
+					},
+				},
+				UsePageTemplate: auth0.Bool(true),
+			},
+			{
+				Prompt:                  &[]PromptType{PromptSignupID}[0],
+				Screen:                  &[]ScreenName{ScreenSignupID}[0],
+				RenderingMode:           &[]RenderingMode{RenderingModeAdvanced}[0],
+				ContextConfiguration:    &[]string{"branding.themes.default"},
+				DefaultHeadTagsDisabled: auth0.Bool(true),
+				HeadTags: []interface{}{
+					map[string]interface{}{
+						"tag":     "link",
+						"content": "",
+						"attributes": map[string]interface{}{
+							"rel":  "stylesheet",
+							"href": "https://example.com/styles.css",
+						},
+					},
+				},
+				UsePageTemplate: auth0.Bool(false),
+			},
+			{
+				Prompt:                  &[]PromptType{PromptLogin}[0],
+				Screen:                  &[]ScreenName{ScreenLogin}[0],
+				RenderingMode:           &[]RenderingMode{RenderingModeAdvanced}[0],
+				ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default"},
+				DefaultHeadTagsDisabled: auth0.Bool(false),
+				HeadTags: []interface{}{
+					map[string]interface{}{
+						"tag":     "script",
+						"content": "",
+						"attributes": map[string]interface{}{
+							"src":   "https://example.com/login-script.js",
+							"defer": true,
+						},
+					},
+				},
+				UsePageTemplate: auth0.Bool(true),
+			},
+		},
+	}
+
+	// Test bulk update
+	result, err := api.Prompt.BulkUpdateRendering(context.Background(), bulkConfig)
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+
+	// Verify the configurations were applied by reading them back
+	signupRendering, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
+	assert.NoError(t, err)
+	assert.Equal(t, RenderingModeAdvanced, *signupRendering.GetRenderingMode())
+	assert.True(t, signupRendering.GetUsePageTemplate())
+
+	signupIDRendering, err := api.Prompt.ReadRendering(context.Background(), PromptSignupID, ScreenSignupID)
+	assert.NoError(t, err)
+	assert.Equal(t, RenderingModeAdvanced, *signupIDRendering.GetRenderingMode())
+	assert.False(t, signupIDRendering.GetUsePageTemplate())
+	assert.True(t, signupIDRendering.GetDefaultHeadTagsDisabled())
+
+	loginRendering, err := api.Prompt.ReadRendering(context.Background(), PromptLogin, ScreenLogin)
+	assert.NoError(t, err)
+	assert.Equal(t, RenderingModeAdvanced, *loginRendering.GetRenderingMode())
+	assert.True(t, loginRendering.GetUsePageTemplate())
+	assert.False(t, loginRendering.GetDefaultHeadTagsDisabled())
+
+}
