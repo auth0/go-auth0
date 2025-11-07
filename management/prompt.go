@@ -690,13 +690,14 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 	}
 }
 
+// TODO: use cleanForPatch iteratively in BulkUpdateRendering once the API reverts the additional validation.
 func (c *PromptRendering) cleanForBulkPatch() *PromptRendering {
 	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
 		return &PromptRendering{
 			Prompt:        c.Prompt,
 			Screen:        c.Screen,
 			RenderingMode: c.RenderingMode,
-			HeadTags:      []interface{}{}, // Required empty array for standard mode
+			HeadTags:      []interface{}{}, // Required empty array for standard mode.
 		}
 	}
 
