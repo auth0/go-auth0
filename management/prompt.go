@@ -501,6 +501,11 @@ type PromptRenderingList struct {
 	PromptRenderings []*PromptRendering `json:"configs"`
 }
 
+// PromptRenderingUpdateRequest is used to update prompt rendering settings.
+type PromptRenderingUpdateRequest struct {
+	PromptRenderings []*PromptRendering `json:"configs"`
+}
+
 // MarshalJSON implements a custom [json.Marshaler].
 func (c *PromptPartials) MarshalJSON() ([]byte, error) {
 	body := map[string]PromptPartials{
@@ -685,6 +690,29 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 	}
 }
 
+// TODO: use cleanForPatch iteratively in BulkUpdateRendering once the API reverts the additional validation.
+func (c *PromptRendering) cleanForBulkPatch() *PromptRendering {
+	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
+		return &PromptRendering{
+			Prompt:        c.Prompt,
+			Screen:        c.Screen,
+			RenderingMode: c.RenderingMode,
+			HeadTags:      []interface{}{}, // Required empty array for standard mode.
+		}
+	}
+
+	return &PromptRendering{
+		Prompt:                  c.Prompt,
+		Screen:                  c.Screen,
+		RenderingMode:           c.RenderingMode,
+		ContextConfiguration:    c.ContextConfiguration,
+		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
+		HeadTags:                c.HeadTags,
+		Filters:                 c.Filters,
+		UsePageTemplate:         c.UsePageTemplate,
+	}
+}
+
 // UpdateRendering updates the settings for the ACUL.
 //
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-rendering
@@ -694,6 +722,21 @@ func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, 
 	}
 
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
+}
+
+// BulkUpdateRendering updates the settings for multiple ACUL screens in a single request.
+//
+// See: https://auth0.com/docs/api/management/v2/prompts/patch-bulk-rendering
+func (m *PromptManager) BulkUpdateRendering(ctx context.Context, c *PromptRenderingUpdateRequest, opts ...RequestOption) error {
+	if c != nil && c.PromptRenderings != nil {
+		for i, rendering := range c.PromptRenderings {
+			if rendering != nil {
+				c.PromptRenderings[i] = rendering.cleanForBulkPatch()
+			}
+		}
+	}
+
+	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", "rendering"), c, opts...)
 }
 
 // ListRendering lists the settings for all the ACUL.
