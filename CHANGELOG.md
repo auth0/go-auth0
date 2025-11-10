@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.31.0](https://github.com/auth0/go-auth0/tree/v1.31.0) (2025-10-31)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.30.0...v1.31.0)
+
+**Added**
+- feat: Add `OAuth1` connection strategy support in `ConnectionManager` [\#640](https://github.com/auth0/go-auth0/pull/640) ([developerkunal](https://github.com/developerkunal))
+- feat: Add AsyncApprovalNotificationChannels support to Client [\#635](https://github.com/auth0/go-auth0/pull/635) ([developerkunal](https://github.com/developerkunal))
+- feat: support Organization Domain Discovery [\#612](https://github.com/auth0/go-auth0/pull/612) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.30.0](https://github.com/auth0/go-auth0/tree/v1.30.0) (2025-10-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.29.0...v1.30.0)
 

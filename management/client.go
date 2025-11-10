@@ -119,6 +119,7 @@ type Client struct {
 
 	// URLs that are valid to call back from Auth0 for OIDC backchannel logout.
 	// This feature currently must be enabled for your tenant.
+	//
 	// Deprecated: use OIDCLogout instead of OIDCBackchannelLogout.
 	OIDCBackchannelLogout *OIDCBackchannelLogout `json:"oidc_backchannel_logout,omitempty"`
 
@@ -194,6 +195,23 @@ type Client struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	OrganizationDiscoveryMethods *[]string `json:"organization_discovery_methods,omitempty"`
+
+	// AsyncApprovalNotificationChannels is an array of notification channels for contacting
+	// the user when their approval is required.
+	//
+	// Valid values: "guardian-push", "email".
+	//
+	// Default value: ["guardian-push"]
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	// PATCH /api/v2/clients/{id}
+	// {
+	//	 "async_approval_notification_channels": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	AsyncApprovalNotificationChannels *[]string `json:"async_approval_notification_channels,omitempty"`
 }
 
 // ClientTokenExchange allows configuration for token exchange.
@@ -416,6 +434,7 @@ type PrivateKeyJWT struct {
 }
 
 // OIDCBackchannelLogout defines the `oidc_backchannel_logout` settings for the client.
+//
 // Deprecated: use OIDCLogout instead of OIDCBackchannelLogout.
 type OIDCBackchannelLogout struct {
 	BackChannelLogoutURLs *[]string `json:"backchannel_logout_urls,omitempty"`

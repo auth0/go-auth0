@@ -2052,6 +2052,16 @@ func TestClient_GetAppType(tt *testing.T) {
 	c.GetAppType()
 }
 
+func TestClient_GetAsyncApprovalNotificationChannels(tt *testing.T) {
+	var zeroValue []string
+	c := &Client{AsyncApprovalNotificationChannels: &zeroValue}
+	c.GetAsyncApprovalNotificationChannels()
+	c = &Client{}
+	c.GetAsyncApprovalNotificationChannels()
+	c = nil
+	c.GetAsyncApprovalNotificationChannels()
+}
+
 func TestClient_GetCallbacks(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{Callbacks: &zeroValue}
@@ -6365,6 +6375,104 @@ func TestConnectionOptionsLinkedin_GetUpstreamParams(tt *testing.T) {
 func TestConnectionOptionsLinkedin_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsLinkedin{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsOAuth1_GetAccessTokenURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{AccessTokenURL: &zeroValue}
+	c.GetAccessTokenURL()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetAccessTokenURL()
+	c = nil
+	c.GetAccessTokenURL()
+}
+
+func TestConnectionOptionsOAuth1_GetConsumerKey(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{ConsumerKey: &zeroValue}
+	c.GetConsumerKey()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetConsumerKey()
+	c = nil
+	c.GetConsumerKey()
+}
+
+func TestConnectionOptionsOAuth1_GetConsumerSecret(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{ConsumerSecret: &zeroValue}
+	c.GetConsumerSecret()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetConsumerSecret()
+	c = nil
+	c.GetConsumerSecret()
+}
+
+func TestConnectionOptionsOAuth1_GetCustomHeaders(tt *testing.T) {
+	var zeroValue map[string]string
+	c := &ConnectionOptionsOAuth1{CustomHeaders: &zeroValue}
+	c.GetCustomHeaders()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetCustomHeaders()
+	c = nil
+	c.GetCustomHeaders()
+}
+
+func TestConnectionOptionsOAuth1_GetRequestTokenURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{RequestTokenURL: &zeroValue}
+	c.GetRequestTokenURL()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetRequestTokenURL()
+	c = nil
+	c.GetRequestTokenURL()
+}
+
+func TestConnectionOptionsOAuth1_GetScripts(tt *testing.T) {
+	var zeroValue map[string]string
+	c := &ConnectionOptionsOAuth1{Scripts: &zeroValue}
+	c.GetScripts()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetScripts()
+	c = nil
+	c.GetScripts()
+}
+
+func TestConnectionOptionsOAuth1_GetSessionKey(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{SessionKey: &zeroValue}
+	c.GetSessionKey()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetSessionKey()
+	c = nil
+	c.GetSessionKey()
+}
+
+func TestConnectionOptionsOAuth1_GetSignatureMethod(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{SignatureMethod: &zeroValue}
+	c.GetSignatureMethod()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetSignatureMethod()
+	c = nil
+	c.GetSignatureMethod()
+}
+
+func TestConnectionOptionsOAuth1_GetUserAuthorizationURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOAuth1{UserAuthorizationURL: &zeroValue}
+	c.GetUserAuthorizationURL()
+	c = &ConnectionOptionsOAuth1{}
+	c.GetUserAuthorizationURL()
+	c = nil
+	c.GetUserAuthorizationURL()
+}
+
+func TestConnectionOptionsOAuth1_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsOAuth1{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
