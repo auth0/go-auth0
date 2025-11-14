@@ -1308,3 +1308,212 @@ func cleanupCredential(t *testing.T, clientID string, credentialID string) {
 	err := api.Client.DeleteCredential(context.Background(), clientID, credentialID)
 	require.NoError(t, err)
 }
+
+func TestClient_ExpressConfiguration(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	t.Run("Create Express Configuration Client", func(t *testing.T) {
+		expectedClient := &Client{
+			Name:                        auth0.Stringf("My OIN Integration Application (%s)", time.Now().Format(time.StampMilli)),
+			AppType:                     auth0.String("express_configuration"),
+			OrganizationRequireBehavior: auth0.String("post_login_prompt"),
+			ClientAuthenticationMethods: &ClientAuthenticationMethods{
+				PrivateKeyJWT: &PrivateKeyJWT{
+					Credentials: &[]Credential{
+						{
+							Name:           auth0.Stringf("Test Credential (%s)", time.Now().Format(time.StampMilli)),
+							CredentialType: auth0.String("public_key"),
+							PEM: auth0.String(`-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAua6LXMfgDE/tDdkOL1Oe
+3oWUwg1r4dSTg9L7RCcI5hItUzmkVofHtWN0H4CH2lm2ANmaJUsnhzctYowYW2+R
+tHvU9afTmtbdhpy993972hUqZSYLsE3iGziphYkOKVsqq38+VRH3TNg93zSLoRao
+JnTTkMXseVqiyqYRmFN8+gQQoEclHSGPUWQG5XMZ+hhuXeFyo+Yw/qbZWca/6/2I
+3rsca9jXR1alhxhHrXrg8N4Dm3gBgGbmiht6YYYT2Tyl1OqB9+iOI/9D7dfoCF6X
+AWJXRE454cmC8k8oucpjZVpflA+ocKshwPDR6YTLQYbXYiaWxEoaz0QGUErNQBnG
+I+sr9jDY3ua/s6HF6h0qyi/HVZH4wx+m4CtOfJoYTjrGBbaRszzUxhtSN2/MhXDu
++a35q9/2zcu/3fjkkfVvGUt+NyyiYOKQ9vsJC1g/xxdUWtowjNwjfZE2zcG4usi8
+r38Bp0lmiipAsMLduZM/D5dFXkRdWCBNDfULmmg/4nv2wwjbjQuLemAMh7mmrztW
+i/85WMnjKQZT8NqS43pmgyIzg1gK1neMqdS90YmQ/PvJ36qALxCs245w1JpN9BAL
+JbwxCg/dbmKT7PalfWrksx9hGcJxtGqebldaOpw+5GVIPxxtC1C0gVr9BKeiDS3f
+aibASY5pIRiKENmbZELDtucCAwEAAQ==
+-----END PUBLIC KEY-----`),
+						},
+					},
+				},
+			},
+		}
+
+		err := api.Client.Create(context.Background(), expectedClient)
+		assert.NoError(t, err)
+		assert.NotEmpty(t, expectedClient.GetClientID())
+		assert.Equal(t, "express_configuration", expectedClient.GetAppType())
+
+		t.Cleanup(func() {
+			cleanupClient(t, expectedClient.GetClientID())
+		})
+	})
+
+	t.Run("Read Express Configuration Client", func(t *testing.T) {
+		client := givenAnExpressConfigurationClient(t)
+
+		retrievedClient, err := api.Client.Read(context.Background(), client.GetClientID())
+		assert.NoError(t, err)
+		assert.Equal(t, client.GetClientID(), retrievedClient.GetClientID())
+		assert.Equal(t, "express_configuration", retrievedClient.GetAppType())
+		assert.Equal(t, "post_login_prompt", retrievedClient.GetOrganizationRequireBehavior())
+		assert.NotNil(t, retrievedClient.ClientAuthenticationMethods)
+		assert.NotNil(t, retrievedClient.ClientAuthenticationMethods.PrivateKeyJWT)
+	})
+
+	t.Run("Create Express Configuration with Settings", func(t *testing.T) {
+		// Create an Express Configuration client to reference in okta_oin_client_id
+		expressConfigClient := &Client{
+			Name:    auth0.Stringf("OIN Express Config Client (%s)", time.Now().Format(time.StampMilli)),
+			AppType: auth0.String("express_configuration"),
+		}
+		err := api.Client.Create(context.Background(), expressConfigClient)
+		require.NoError(t, err)
+		t.Cleanup(func() {
+			cleanupClient(t, expressConfigClient.GetClientID())
+		})
+
+		// Create a user attribute profile
+		userAttributeProfile := givenAUserAttributeProfile(t)
+
+		// Create a regular_web client (NOT express_configuration) with express_configuration settings
+		mainClient := &Client{
+			Name:    auth0.Stringf("Regular Web Client with Express Config (%s)", time.Now().Format(time.StampMilli)),
+			AppType: auth0.String("regular_web"),
+			ExpressConfiguration: &ExpressConfiguration{
+				OktaOINClientID:          expressConfigClient.ClientID,
+				ConnectionProfileID:      auth0.String("cop_1cu7hYRotxr9BYXXwLH14g"),
+				InitiateLoginURITemplate: auth0.String("https://example.com/login?org={organization_name}"),
+				AdminLoginDomain:         auth0.String("admin.example.com"),
+				EnableClient:             auth0.Bool(true),
+				EnableOrganization:       auth0.Bool(true),
+				UserAttributeProfileID:   userAttributeProfile.ID,
+			},
+		}
+
+		err = api.Client.Create(context.Background(), mainClient)
+		assert.NoError(t, err)
+		t.Cleanup(func() {
+			cleanupClient(t, mainClient.GetClientID())
+		})
+
+		// Read back and verify the fields
+		updatedClient, err := api.Client.Read(context.Background(), mainClient.GetClientID())
+		assert.NoError(t, err)
+		assert.NotNil(t, updatedClient.ExpressConfiguration)
+		assert.Equal(t, expressConfigClient.GetClientID(), updatedClient.ExpressConfiguration.GetOktaOINClientID())
+		assert.Equal(t, "https://example.com/login?org={organization_name}", updatedClient.ExpressConfiguration.GetInitiateLoginURITemplate())
+		assert.Equal(t, "admin.example.com", updatedClient.ExpressConfiguration.GetAdminLoginDomain())
+		assert.Equal(t, userAttributeProfile.GetID(), updatedClient.ExpressConfiguration.GetUserAttributeProfileID())
+		assert.True(t, updatedClient.ExpressConfiguration.GetEnableClient())
+		assert.True(t, updatedClient.ExpressConfiguration.GetEnableOrganization())
+	})
+
+	t.Run("Create Express Configuration with LinkedClients", func(t *testing.T) {
+		// Create an Express Configuration client for okta_oin_client_id
+		expressConfigClient := &Client{
+			Name:    auth0.Stringf("OIN Express Config Client (%s)", time.Now().Format(time.StampMilli)),
+			AppType: auth0.String("express_configuration"),
+		}
+		err := api.Client.Create(context.Background(), expressConfigClient)
+		require.NoError(t, err)
+		t.Cleanup(func() {
+			cleanupClient(t, expressConfigClient.GetClientID())
+		})
+
+		// Create a user attribute profile
+		userAttributeProfile := givenAUserAttributeProfile(t)
+
+		// Create a regular web client to link
+		linkedWebClient := &Client{
+			Name:    auth0.Stringf("Linked Web Client (%s)", time.Now().Format(time.StampMilli)),
+			AppType: auth0.String("regular_web"),
+		}
+		err = api.Client.Create(context.Background(), linkedWebClient)
+		require.NoError(t, err)
+		t.Cleanup(func() {
+			cleanupClient(t, linkedWebClient.GetClientID())
+		})
+
+		// Create a regular_web client (NOT express_configuration) with express_configuration and linked clients
+		mainClient := &Client{
+			Name:    auth0.Stringf("Regular Web Client with Express Config and Links (%s)", time.Now().Format(time.StampMilli)),
+			AppType: auth0.String("regular_web"),
+			ExpressConfiguration: &ExpressConfiguration{
+				OktaOINClientID:          expressConfigClient.ClientID,
+				ConnectionProfileID:      auth0.String("cop_1cu7hYRotxr9BYXXwLH14g"),
+				InitiateLoginURITemplate: auth0.String("https://example.com/login?org={organization_name}"),
+				AdminLoginDomain:         auth0.String("admin.example.com"),
+				EnableClient:             auth0.Bool(true),
+				EnableOrganization:       auth0.Bool(true),
+				UserAttributeProfileID:   userAttributeProfile.ID,
+				LinkedClients: &[]LinkedClient{
+					{
+						ClientID: linkedWebClient.ClientID,
+					},
+				},
+			},
+		}
+
+		err = api.Client.Create(context.Background(), mainClient)
+		assert.NoError(t, err)
+		t.Cleanup(func() {
+			cleanupClient(t, mainClient.GetClientID())
+		})
+
+		// Read back and verify the linked clients
+		createdClient, err := api.Client.Read(context.Background(), mainClient.GetClientID())
+		assert.NoError(t, err)
+		assert.NotNil(t, createdClient.ExpressConfiguration)
+		assert.NotNil(t, createdClient.ExpressConfiguration.LinkedClients)
+		assert.GreaterOrEqual(t, len(*createdClient.ExpressConfiguration.LinkedClients), 1)
+		assert.Equal(t, linkedWebClient.GetClientID(), (*createdClient.ExpressConfiguration.LinkedClients)[0].GetClientID())
+	})
+}
+
+func givenAnExpressConfigurationClient(t *testing.T) *Client {
+	t.Helper()
+
+	client := &Client{
+		Name:                        auth0.Stringf("Test Express Config Client (%s)", time.Now().Format(time.StampMilli)),
+		AppType:                     auth0.String("express_configuration"),
+		OrganizationRequireBehavior: auth0.String("post_login_prompt"),
+		ClientAuthenticationMethods: &ClientAuthenticationMethods{
+			PrivateKeyJWT: &PrivateKeyJWT{
+				Credentials: &[]Credential{
+					{
+						Name:           auth0.Stringf("Test Credential (%s)", time.Now().Format(time.StampMilli)),
+						CredentialType: auth0.String("public_key"),
+						PEM: auth0.String(`-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAua6LXMfgDE/tDdkOL1Oe
+3oWUwg1r4dSTg9L7RCcI5hItUzmkVofHtWN0H4CH2lm2ANmaJUsnhzctYowYW2+R
+tHvU9afTmtbdhpy993972hUqZSYLsE3iGziphYkOKVsqq38+VRH3TNg93zSLoRao
+JnTTkMXseVqiyqYRmFN8+gQQoEclHSGPUWQG5XMZ+hhuXeFyo+Yw/qbZWca/6/2I
+3rsca9jXR1alhxhHrXrg8N4Dm3gBgGbmiht6YYYT2Tyl1OqB9+iOI/9D7dfoCF6X
+AWJXRE454cmC8k8oucpjZVpflA+ocKshwPDR6YTLQYbXYiaWxEoaz0QGUErNQBnG
+I+sr9jDY3ua/s6HF6h0qyi/HVZH4wx+m4CtOfJoYTjrGBbaRszzUxhtSN2/MhXDu
++a35q9/2zcu/3fjkkfVvGUt+NyyiYOKQ9vsJC1g/xxdUWtowjNwjfZE2zcG4usi8
+r38Bp0lmiipAsMLduZM/D5dFXkRdWCBNDfULmmg/4nv2wwjbjQuLemAMh7mmrztW
+i/85WMnjKQZT8NqS43pmgyIzg1gK1neMqdS90YmQ/PvJ36qALxCs245w1JpN9BAL
+JbwxCg/dbmKT7PalfWrksx9hGcJxtGqebldaOpw+5GVIPxxtC1C0gVr9BKeiDS3f
+aibASY5pIRiKENmbZELDtucCAwEAAQ==
+-----END PUBLIC KEY-----`),
+					},
+				},
+			},
+		},
+	}
+
+	err := api.Client.Create(context.Background(), client)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupClient(t, client.GetClientID())
+	})
+
+	return client
+}

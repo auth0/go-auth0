@@ -297,3 +297,113 @@ func cleanupResourceServer(t *testing.T, resourceServerID string) {
 	err := api.ResourceServer.Delete(context.Background(), resourceServerID)
 	require.NoError(t, err)
 }
+
+func TestResourceServer_ExpressConfiguration(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	const expressConfigureURN = "urn:auth0:express-configure"
+
+	t.Run("Create Express Configuration Resource Server", func(t *testing.T) {
+		// The urn:auth0:express-configure resource server is created using a predefined template
+		// Only the identifier should be sent; other fields are ignored or will cause errors
+		expectedResourceServer := &ResourceServer{
+			Identifier: auth0.String(expressConfigureURN),
+		}
+
+		err := api.ResourceServer.Create(context.Background(), expectedResourceServer)
+		assert.NoError(t, err)
+		assert.NotEmpty(t, expectedResourceServer.GetID())
+
+		t.Cleanup(func() {
+			cleanupResourceServer(t, expectedResourceServer.GetID())
+		})
+	})
+
+	t.Run("Read Express Configuration Resource Server", func(t *testing.T) {
+		// Create the resource server first
+		resourceServer := &ResourceServer{
+			Identifier: auth0.String(expressConfigureURN),
+		}
+
+		err := api.ResourceServer.Create(context.Background(), resourceServer)
+		require.NoError(t, err)
+		defer cleanupResourceServer(t, resourceServer.GetID())
+
+		// Read it back and verify the predefined template values
+		actualResourceServer, err := api.ResourceServer.Read(context.Background(), resourceServer.GetID())
+		assert.NoError(t, err)
+		assert.Equal(t, expressConfigureURN, actualResourceServer.GetIdentifier())
+		assert.Equal(t, "Okta OIN Express Configuration API", actualResourceServer.GetName())
+		assert.Equal(t, true, actualResourceServer.GetIsSystem())
+		assert.Equal(t, "RS256", actualResourceServer.GetSigningAlgorithm())
+		assert.Equal(t, 300, actualResourceServer.GetTokenLifetime())
+		assert.Equal(t, false, actualResourceServer.GetAllowOfflineAccess())
+		assert.Equal(t, false, actualResourceServer.GetSkipConsentForVerifiableFirstPartyClients())
+		assert.Equal(t, true, actualResourceServer.GetEnforcePolicies())
+
+		// Verify the scopes are correct
+		assert.NotNil(t, actualResourceServer.Scopes)
+		assert.Equal(t, 2, len(*actualResourceServer.Scopes))
+
+		var foundSSOScope, foundSCIMScope bool
+		for _, scope := range *actualResourceServer.Scopes {
+			if scope.GetValue() == "express_configure:sso" {
+				foundSSOScope = true
+				assert.Equal(t, "Ability to create SSO configurations", scope.GetDescription())
+			}
+			if scope.GetValue() == "express_configure:scim" {
+				foundSCIMScope = true
+				assert.Equal(t, "Ability to create scim configurations", scope.GetDescription())
+			}
+		}
+		assert.True(t, foundSSOScope, "express_configure:sso scope should exist")
+		assert.True(t, foundSCIMScope, "express_configure:scim scope should exist")
+	})
+
+	t.Run("Update Express Configuration Resource Server Should Be Rejected", func(t *testing.T) {
+		// Create the resource server first
+		resourceServer := &ResourceServer{
+			Identifier: auth0.String(expressConfigureURN),
+		}
+
+		err := api.ResourceServer.Create(context.Background(), resourceServer)
+		require.NoError(t, err)
+		defer cleanupResourceServer(t, resourceServer.GetID())
+
+		// Attempt to update the resource server - this should be rejected
+		// because no fields are modifiable on urn:auth0:express-configure
+		updatedResourceServer := &ResourceServer{
+			Name: auth0.String("Modified Name"),
+		}
+
+		err = api.ResourceServer.Update(context.Background(), resourceServer.GetID(), updatedResourceServer)
+		assert.Error(t, err, "Update should be rejected for Express Configuration resource server")
+	})
+
+	t.Run("List Resource Servers Includes Express Configuration", func(t *testing.T) {
+		// Create the resource server first
+		resourceServer := &ResourceServer{
+			Identifier: auth0.String(expressConfigureURN),
+		}
+
+		err := api.ResourceServer.Create(context.Background(), resourceServer)
+		require.NoError(t, err)
+		defer cleanupResourceServer(t, resourceServer.GetID())
+
+		// List all resource servers and verify Express Configuration is included
+		resourceServerList, err := api.ResourceServer.List(context.Background())
+		assert.NoError(t, err)
+		assert.NotNil(t, resourceServerList)
+
+		var foundExpressConfig bool
+		for _, rs := range resourceServerList.ResourceServers {
+			if rs.GetIdentifier() == expressConfigureURN {
+				foundExpressConfig = true
+				assert.NotNil(t, rs.Scopes)
+				assert.Equal(t, 2, len(*rs.Scopes))
+				break
+			}
+		}
+		assert.True(t, foundExpressConfig, "urn:auth0:express-configure should exist in resource server list")
+	})
+}
