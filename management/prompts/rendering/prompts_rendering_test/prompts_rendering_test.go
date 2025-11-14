@@ -175,12 +175,8 @@ func TestPromptsRenderingBulkUpdateWithWireMock(
 	request := &management.BulkUpdateAculRequestContent{
 		Configs: []*management.AculConfigsItem{
 			&management.AculConfigsItem{
-				Prompt:        management.PromptGroupNameEnumLogin,
-				Screen:        management.ScreenGroupNameEnumLogin,
-				RenderingMode: management.AculRenderingModeEnumAdvanced,
-				HeadTags: []*management.AculHeadTag{
-					&management.AculHeadTag{},
-				},
+				Prompt: management.PromptGroupNameEnumLogin,
+				Screen: management.ScreenGroupNameEnumLogin,
 			},
 		},
 	}
@@ -245,9 +241,9 @@ func TestPromptsRenderingUpdateWithWireMock(
 	).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
                     "$schema": "https://json-schema.org/draft/2020-12/schema",
                     "type": "object",
-                    "required": ["rendering_mode", "head_tags"],
+                    "required": [],
                     "properties": {
-                        "rendering_mode": {"type": "string"}, "head_tags": {"type": "array", "items": {"type": "object"}}
+                        
                     },
                     "additionalProperties": true
                 }`, "V202012")).WillReturnResponse(
@@ -263,12 +259,7 @@ func TestPromptsRenderingUpdateWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.UpdateAculRequestContent{
-		RenderingMode: management.AculRenderingModeEnumAdvanced,
-		HeadTags: []*management.AculHeadTag{
-			&management.AculHeadTag{},
-		},
-	}
+	request := &management.UpdateAculRequestContent{}
 	_, invocationErr := client.Prompts.Rendering.Update(
 		context.TODO(),
 		management.PromptGroupNameEnumLogin.Ptr(),

@@ -9,6 +9,7 @@ import (
 	brandingclient "github.com/auth0/go-auth0/v2/management/branding/client"
 	clientgrantsclient "github.com/auth0/go-auth0/v2/management/clientgrants/client"
 	clientsclient "github.com/auth0/go-auth0/v2/management/clients/client"
+	connectionprofiles "github.com/auth0/go-auth0/v2/management/connectionprofiles"
 	connectionsclient "github.com/auth0/go-auth0/v2/management/connections/client"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	customdomains "github.com/auth0/go-auth0/v2/management/customdomains"
@@ -54,6 +55,7 @@ type Management struct {
 	Branding              *brandingclient.Client
 	ClientGrants          *clientgrantsclient.Client
 	Clients               *clientsclient.Client
+	ConnectionProfiles    *connectionprofiles.Client
 	Connections           *connectionsclient.Client
 	CustomDomains         *customdomains.Client
 	DeviceCredentials     *devicecredentials.Client
@@ -104,6 +106,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Branding:              brandingclient.NewClient(options),
 		ClientGrants:          clientgrantsclient.NewClient(options),
 		Clients:               clientsclient.NewClient(options),
+		ConnectionProfiles:    connectionprofiles.NewClient(options),
 		Connections:           connectionsclient.NewClient(options),
 		CustomDomains:         customdomains.NewClient(options),
 		DeviceCredentials:     devicecredentials.NewClient(options),
