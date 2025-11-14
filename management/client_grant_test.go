@@ -289,9 +289,11 @@ func TestClientGrant_IsSystem(t *testing.T) {
 
 		// Find our user-created grant
 		foundUserGrant := false
+
 		for _, grant := range grantList.ClientGrants {
 			if grant.GetID() == userGrant.GetID() {
 				foundUserGrant = true
+
 				assert.False(t, grant.GetIsSystem(), "User-created grant should have is_system=false")
 			}
 			// System grants should have is_system=true
@@ -301,6 +303,7 @@ func TestClientGrant_IsSystem(t *testing.T) {
 				assert.NotEmpty(t, grant.GetID())
 			}
 		}
+
 		assert.True(t, foundUserGrant, "Should find the user-created grant in the list")
 	})
 }

@@ -217,6 +217,8 @@ type Client struct {
 	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty"`
 }
 
+// ExpressConfiguration represents the OIN Express Configuration settings for a client.
+// This is used for Okta Integration Network (OIN) applications to configure SSO and SCIM provisioning.
 type ExpressConfiguration struct {
 	// InitiateLoginURITemplate is the URI users should bookmark to log in to this application.
 	// Variable substitution is permitted for the following properties: organization_name, organization_id, and connection_name.
@@ -239,6 +241,8 @@ type ExpressConfiguration struct {
 	OINSubmissionID *string `json:"oin_submission_id,omitempty"`
 }
 
+// LinkedClient represents a client that is linked to an Express Configuration client.
+// This is typically used to associate web or mobile clients with an OIN Express Configuration.
 type LinkedClient struct {
 	// ClientID is the ID of the linked client.
 	ClientID *string `json:"client_id,omitempty"`

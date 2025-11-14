@@ -346,16 +346,21 @@ func TestResourceServer_ExpressConfiguration(t *testing.T) {
 		assert.Equal(t, 2, len(*actualResourceServer.Scopes))
 
 		var foundSSOScope, foundSCIMScope bool
+
 		for _, scope := range *actualResourceServer.Scopes {
 			if scope.GetValue() == "express_configure:sso" {
 				foundSSOScope = true
+
 				assert.Equal(t, "Ability to create SSO configurations", scope.GetDescription())
 			}
+
 			if scope.GetValue() == "express_configure:scim" {
 				foundSCIMScope = true
+
 				assert.Equal(t, "Ability to create scim configurations", scope.GetDescription())
 			}
 		}
+
 		assert.True(t, foundSSOScope, "express_configure:sso scope should exist")
 		assert.True(t, foundSCIMScope, "express_configure:scim scope should exist")
 	})
@@ -396,14 +401,18 @@ func TestResourceServer_ExpressConfiguration(t *testing.T) {
 		assert.NotNil(t, resourceServerList)
 
 		var foundExpressConfig bool
+
 		for _, rs := range resourceServerList.ResourceServers {
 			if rs.GetIdentifier() == expressConfigureURN {
 				foundExpressConfig = true
+
 				assert.NotNil(t, rs.Scopes)
 				assert.Equal(t, 2, len(*rs.Scopes))
+
 				break
 			}
 		}
+
 		assert.True(t, foundExpressConfig, "urn:auth0:express-configure should exist in resource server list")
 	})
 }
