@@ -2206,6 +2206,13 @@ func TestClient_GetEncryptionKey(tt *testing.T) {
 	c.GetEncryptionKey()
 }
 
+func TestClient_GetExpressConfiguration(tt *testing.T) {
+	c := &Client{}
+	c.GetExpressConfiguration()
+	c = nil
+	c.GetExpressConfiguration()
+}
+
 func TestClient_GetFormTemplate(tt *testing.T) {
 	var zeroValue string
 	c := &Client{FormTemplate: &zeroValue}
@@ -2790,6 +2797,16 @@ func TestClientGrant_GetID(tt *testing.T) {
 	c.GetID()
 	c = nil
 	c.GetID()
+}
+
+func TestClientGrant_GetIsSystem(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientGrant{IsSystem: &zeroValue}
+	c.GetIsSystem()
+	c = &ClientGrant{}
+	c.GetIsSystem()
+	c = nil
+	c.GetIsSystem()
 }
 
 func TestClientGrant_GetOrganizationUsage(tt *testing.T) {
@@ -10213,6 +10230,104 @@ func TestEventStreamSubscription_String(t *testing.T) {
 	}
 }
 
+func TestExpressConfiguration_GetAdminLoginDomain(tt *testing.T) {
+	var zeroValue string
+	e := &ExpressConfiguration{AdminLoginDomain: &zeroValue}
+	e.GetAdminLoginDomain()
+	e = &ExpressConfiguration{}
+	e.GetAdminLoginDomain()
+	e = nil
+	e.GetAdminLoginDomain()
+}
+
+func TestExpressConfiguration_GetConnectionProfileID(tt *testing.T) {
+	var zeroValue string
+	e := &ExpressConfiguration{ConnectionProfileID: &zeroValue}
+	e.GetConnectionProfileID()
+	e = &ExpressConfiguration{}
+	e.GetConnectionProfileID()
+	e = nil
+	e.GetConnectionProfileID()
+}
+
+func TestExpressConfiguration_GetEnableClient(tt *testing.T) {
+	var zeroValue bool
+	e := &ExpressConfiguration{EnableClient: &zeroValue}
+	e.GetEnableClient()
+	e = &ExpressConfiguration{}
+	e.GetEnableClient()
+	e = nil
+	e.GetEnableClient()
+}
+
+func TestExpressConfiguration_GetEnableOrganization(tt *testing.T) {
+	var zeroValue bool
+	e := &ExpressConfiguration{EnableOrganization: &zeroValue}
+	e.GetEnableOrganization()
+	e = &ExpressConfiguration{}
+	e.GetEnableOrganization()
+	e = nil
+	e.GetEnableOrganization()
+}
+
+func TestExpressConfiguration_GetInitiateLoginURITemplate(tt *testing.T) {
+	var zeroValue string
+	e := &ExpressConfiguration{InitiateLoginURITemplate: &zeroValue}
+	e.GetInitiateLoginURITemplate()
+	e = &ExpressConfiguration{}
+	e.GetInitiateLoginURITemplate()
+	e = nil
+	e.GetInitiateLoginURITemplate()
+}
+
+func TestExpressConfiguration_GetLinkedClients(tt *testing.T) {
+	var zeroValue []LinkedClient
+	e := &ExpressConfiguration{LinkedClients: &zeroValue}
+	e.GetLinkedClients()
+	e = &ExpressConfiguration{}
+	e.GetLinkedClients()
+	e = nil
+	e.GetLinkedClients()
+}
+
+func TestExpressConfiguration_GetOINSubmissionID(tt *testing.T) {
+	var zeroValue string
+	e := &ExpressConfiguration{OINSubmissionID: &zeroValue}
+	e.GetOINSubmissionID()
+	e = &ExpressConfiguration{}
+	e.GetOINSubmissionID()
+	e = nil
+	e.GetOINSubmissionID()
+}
+
+func TestExpressConfiguration_GetOktaOINClientID(tt *testing.T) {
+	var zeroValue string
+	e := &ExpressConfiguration{OktaOINClientID: &zeroValue}
+	e.GetOktaOINClientID()
+	e = &ExpressConfiguration{}
+	e.GetOktaOINClientID()
+	e = nil
+	e.GetOktaOINClientID()
+}
+
+func TestExpressConfiguration_GetUserAttributeProfileID(tt *testing.T) {
+	var zeroValue string
+	e := &ExpressConfiguration{UserAttributeProfileID: &zeroValue}
+	e.GetUserAttributeProfileID()
+	e = &ExpressConfiguration{}
+	e.GetUserAttributeProfileID()
+	e = nil
+	e.GetUserAttributeProfileID()
+}
+
+func TestExpressConfiguration_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ExpressConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestFirebaseClientAddon_GetClientEmail(tt *testing.T) {
 	var zeroValue string
 	f := &FirebaseClientAddon{ClientEmail: &zeroValue}
@@ -11090,6 +11205,24 @@ func TestLayerClientAddon_GetProviderID(tt *testing.T) {
 func TestLayerClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &LayerClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestLinkedClient_GetClientID(tt *testing.T) {
+	var zeroValue string
+	l := &LinkedClient{ClientID: &zeroValue}
+	l.GetClientID()
+	l = &LinkedClient{}
+	l.GetClientID()
+	l = nil
+	l.GetClientID()
+}
+
+func TestLinkedClient_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &LinkedClient{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -13781,6 +13914,16 @@ func TestResourceServer_GetIdentifier(tt *testing.T) {
 	r.GetIdentifier()
 	r = nil
 	r.GetIdentifier()
+}
+
+func TestResourceServer_GetIsSystem(tt *testing.T) {
+	var zeroValue bool
+	r := &ResourceServer{IsSystem: &zeroValue}
+	r.GetIsSystem()
+	r = &ResourceServer{}
+	r.GetIsSystem()
+	r = nil
+	r.GetIsSystem()
 }
 
 func TestResourceServer_GetName(tt *testing.T) {

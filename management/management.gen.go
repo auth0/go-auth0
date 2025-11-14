@@ -1736,6 +1736,14 @@ func (c *Client) GetEncryptionKey() map[string]string {
 	return *c.EncryptionKey
 }
 
+// GetExpressConfiguration returns the ExpressConfiguration field.
+func (c *Client) GetExpressConfiguration() *ExpressConfiguration {
+	if c == nil {
+		return nil
+	}
+	return c.ExpressConfiguration
+}
+
 // GetFormTemplate returns the FormTemplate field if it's non-nil, zero value otherwise.
 func (c *Client) GetFormTemplate() string {
 	if c == nil || c.FormTemplate == nil {
@@ -2298,6 +2306,14 @@ func (c *ClientGrant) GetID() string {
 		return ""
 	}
 	return *c.ID
+}
+
+// GetIsSystem returns the IsSystem field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetIsSystem() bool {
+	if c == nil || c.IsSystem == nil {
+		return false
+	}
+	return *c.IsSystem
 }
 
 // GetOrganizationUsage returns the OrganizationUsage field if it's non-nil, zero value otherwise.
@@ -8202,6 +8218,83 @@ func (e *EventStreamSubscription) String() string {
 	return Stringify(e)
 }
 
+// GetAdminLoginDomain returns the AdminLoginDomain field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetAdminLoginDomain() string {
+	if e == nil || e.AdminLoginDomain == nil {
+		return ""
+	}
+	return *e.AdminLoginDomain
+}
+
+// GetConnectionProfileID returns the ConnectionProfileID field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetConnectionProfileID() string {
+	if e == nil || e.ConnectionProfileID == nil {
+		return ""
+	}
+	return *e.ConnectionProfileID
+}
+
+// GetEnableClient returns the EnableClient field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetEnableClient() bool {
+	if e == nil || e.EnableClient == nil {
+		return false
+	}
+	return *e.EnableClient
+}
+
+// GetEnableOrganization returns the EnableOrganization field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetEnableOrganization() bool {
+	if e == nil || e.EnableOrganization == nil {
+		return false
+	}
+	return *e.EnableOrganization
+}
+
+// GetInitiateLoginURITemplate returns the InitiateLoginURITemplate field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetInitiateLoginURITemplate() string {
+	if e == nil || e.InitiateLoginURITemplate == nil {
+		return ""
+	}
+	return *e.InitiateLoginURITemplate
+}
+
+// GetLinkedClients returns the LinkedClients field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetLinkedClients() []LinkedClient {
+	if e == nil || e.LinkedClients == nil {
+		return nil
+	}
+	return *e.LinkedClients
+}
+
+// GetOINSubmissionID returns the OINSubmissionID field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetOINSubmissionID() string {
+	if e == nil || e.OINSubmissionID == nil {
+		return ""
+	}
+	return *e.OINSubmissionID
+}
+
+// GetOktaOINClientID returns the OktaOINClientID field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetOktaOINClientID() string {
+	if e == nil || e.OktaOINClientID == nil {
+		return ""
+	}
+	return *e.OktaOINClientID
+}
+
+// GetUserAttributeProfileID returns the UserAttributeProfileID field if it's non-nil, zero value otherwise.
+func (e *ExpressConfiguration) GetUserAttributeProfileID() string {
+	if e == nil || e.UserAttributeProfileID == nil {
+		return ""
+	}
+	return *e.UserAttributeProfileID
+}
+
+// String returns a string representation of ExpressConfiguration.
+func (e *ExpressConfiguration) String() string {
+	return Stringify(e)
+}
+
 // GetClientEmail returns the ClientEmail field if it's non-nil, zero value otherwise.
 func (f *FirebaseClientAddon) GetClientEmail() string {
 	if f == nil || f.ClientEmail == nil {
@@ -8889,6 +8982,19 @@ func (l *LayerClientAddon) GetProviderID() string {
 
 // String returns a string representation of LayerClientAddon.
 func (l *LayerClientAddon) String() string {
+	return Stringify(l)
+}
+
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (l *LinkedClient) GetClientID() string {
+	if l == nil || l.ClientID == nil {
+		return ""
+	}
+	return *l.ClientID
+}
+
+// String returns a string representation of LinkedClient.
+func (l *LinkedClient) String() string {
 	return Stringify(l)
 }
 
@@ -10985,6 +11091,14 @@ func (r *ResourceServer) GetIdentifier() string {
 		return ""
 	}
 	return *r.Identifier
+}
+
+// GetIsSystem returns the IsSystem field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetIsSystem() bool {
+	if r == nil || r.IsSystem == nil {
+		return false
+	}
+	return *r.IsSystem
 }
 
 // GetName returns the Name field if it's non-nil, zero value otherwise.

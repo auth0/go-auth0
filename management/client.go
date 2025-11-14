@@ -33,7 +33,7 @@ type Client struct {
 	// Additional possible values: "rms", "box", "cloudbees", "concur", "dropbox",
 	// "mscrm", "echosign", "egnyte", "newrelic", "office365", "salesforce",
 	// "sentry", "sharepoint", "slack", "springcm", "zendesk", "zoom",
-	// "sso_integration", "oag".
+	// "sso_integration", "oag", "express_configuration".
 	AppType *string `json:"app_type,omitempty"`
 
 	// The URL of the client logo (recommended size: 150x150).
@@ -212,6 +212,40 @@ type Client struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	AsyncApprovalNotificationChannels *[]string `json:"async_approval_notification_channels,omitempty"`
+	// ExpressConfiguration holds the express configuration for the client.
+	// Application-specific configuration for use with the OIN Express Configuration feature
+	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty"`
+}
+
+// ExpressConfiguration represents the OIN Express Configuration settings for a client.
+// This is used for Okta Integration Network (OIN) applications to configure SSO and SCIM provisioning.
+type ExpressConfiguration struct {
+	// InitiateLoginURITemplate is the URI users should bookmark to log in to this application.
+	// Variable substitution is permitted for the following properties: organization_name, organization_id, and connection_name.
+	InitiateLoginURITemplate *string `json:"initiate_login_uri_template,omitempty"`
+	// UserAttributeProfileID is the ID of the user attribute profile to use for this application.
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty"`
+	// ConnectionProfileID is the ID of the connection profile to use for this application.
+	ConnectionProfileID *string `json:"connection_profile_id,omitempty"`
+	// EnableClient indicates when true, all connections made via express configuration will be enabled for this application.
+	EnableClient *bool `json:"enable_client,omitempty"`
+	// EnableOrganization When true, all connections made via express configuration will have the associated organization enabled.
+	EnableOrganization *bool `json:"enable_organization,omitempty"`
+	// LinkedClients is a list of client IDs that are linked to this express configuration (e.g. web or mobile clients).
+	LinkedClients *[]LinkedClient `json:"linked_clients,omitempty"`
+	// OktaOINClientID is the unique identifier for the Okta OIN Express Configuration Client, which Okta will use for this application.
+	OktaOINClientID *string `json:"okta_oin_client_id,omitempty"`
+	// AdminLoginDomain is the domain that admins are expected to log in via for authenticating for express configuration.
+	AdminLoginDomain *string `json:"admin_login_domain,omitempty"`
+	// OINSubmissionID is the identifier of the published application in the OKTA OIN.
+	OINSubmissionID *string `json:"oin_submission_id,omitempty"`
+}
+
+// LinkedClient represents a client that is linked to an Express Configuration client.
+// This is typically used to associate web or mobile clients with an OIN Express Configuration.
+type LinkedClient struct {
+	// ClientID is the ID of the linked client.
+	ClientID *string `json:"client_id,omitempty"`
 }
 
 // ClientTokenExchange allows configuration for token exchange.
