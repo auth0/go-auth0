@@ -674,12 +674,6 @@ func (m *PromptManager) ReadRendering(ctx context.Context, prompt PromptType, sc
 }
 
 func (c *PromptRendering) cleanForPatch() *PromptRendering {
-	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
-		return &PromptRendering{
-			RenderingMode: c.RenderingMode,
-		}
-	}
-
 	return &PromptRendering{
 		RenderingMode:           c.RenderingMode,
 		ContextConfiguration:    c.ContextConfiguration,
@@ -692,15 +686,6 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 
 // TODO: use cleanForPatch iteratively in BulkUpdateRendering once the API reverts the additional validation.
 func (c *PromptRendering) cleanForBulkPatch() *PromptRendering {
-	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
-		return &PromptRendering{
-			Prompt:        c.Prompt,
-			Screen:        c.Screen,
-			RenderingMode: c.RenderingMode,
-			HeadTags:      []interface{}{}, // Required empty array for standard mode.
-		}
-	}
-
 	return &PromptRendering{
 		Prompt:                  c.Prompt,
 		Screen:                  c.Screen,
@@ -728,11 +713,13 @@ func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, 
 //
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-bulk-rendering
 func (m *PromptManager) BulkUpdateRendering(ctx context.Context, c *PromptRenderingUpdateRequest, opts ...RequestOption) error {
-	if c != nil && c.PromptRenderings != nil {
-		for i, rendering := range c.PromptRenderings {
-			if rendering != nil {
-				c.PromptRenderings[i] = rendering.cleanForBulkPatch()
-			}
+	if c == nil || len(c.PromptRenderings) == 0 {
+		return nil
+	}
+
+	for i, rendering := range c.PromptRenderings {
+		if rendering != nil {
+			c.PromptRenderings[i] = rendering.cleanForBulkPatch()
 		}
 	}
 

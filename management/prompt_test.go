@@ -179,7 +179,6 @@ func TestPromptManager_ListRendering(t *testing.T) {
 	assert.Greater(t, len(actual.PromptRenderings), 0)
 }
 
-// Able to update the renderingMode to advanced and the setting configs when parsing the advanced renderingMode in payload.
 func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -219,50 +218,6 @@ func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
-// Unable to update the setting configs and only able to update the renderingMode to standard when parsing the standard renderingMode in payload.
-func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
-	configureHTTPTestRecordings(t)
-
-	_ = givenACustomDomain(t)
-	_ = givenAUniversalLoginTemplate(t)
-	client := givenAClient(t)
-	expected := givenAPromptRendering(t, RenderingModeAdvanced, client.GetClientID())
-
-	updateData := &PromptRendering{
-		RenderingMode:           &RenderingModeStandard,
-		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"},
-		DefaultHeadTagsDisabled: auth0.Bool(true),
-		Filters: &PromptRenderingFilters{
-			MatchType: auth0.String("excludes_any"),
-			Clients: &[]PromptRenderingFilter{
-				{
-					ID: auth0.String(client.GetClientID()),
-					Metadata: &map[string]interface{}{
-						"key2": "value2",
-					},
-				},
-			},
-		},
-		UsePageTemplate: auth0.Bool(false),
-	}
-
-	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, updateData)
-	assert.NoError(t, err)
-
-	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
-	assert.NoError(t, err)
-
-	assert.Equal(t, updateData.GetRenderingMode(), actual.GetRenderingMode())
-	assert.NotEqual(t, updateData.GetContextConfiguration(), actual.GetContextConfiguration())
-	assert.NotEqual(t, updateData.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
-	assert.NotEqual(t, updateData.GetFilters(), actual.GetFilters())
-	assert.NotEqual(t, updateData.GetUsePageTemplate(), actual.GetUsePageTemplate())
-	assert.Equal(t, expected.HeadTags, actual.HeadTags)
-	assert.Equal(t, PromptSignup, *actual.GetPrompt())
-	assert.Equal(t, ScreenSignup, *actual.GetScreen())
-}
-
-// Able to update the setting's configs even the existing renderingMode is standard since renderingMode is not parsed in payload(updateData).
 func TestPromptManager_UpdateRendering(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
