@@ -13553,6 +13553,14 @@ func TestPromptRendering_String(t *testing.T) {
 	}
 }
 
+func TestPromptRenderingBulkUpdate_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PromptRenderingBulkUpdate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestPromptRenderingFilter_GetID(tt *testing.T) {
 	var zeroValue string
 	p := &PromptRenderingFilter{ID: &zeroValue}

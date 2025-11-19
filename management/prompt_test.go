@@ -163,6 +163,8 @@ func TestPromptManager_ListRendering(t *testing.T) {
 	for _, r := range actual.PromptRenderings {
 		if r.RenderingMode != nil && expected.RenderingMode != nil &&
 			*r.GetRenderingMode() == *expected.GetRenderingMode() &&
+			*r.GetScreen() == *expected.GetScreen() &&
+			*r.GetPrompt() == *expected.GetPrompt() &&
 			assert.Equal(t, expected.GetContextConfiguration(), r.GetContextConfiguration()) &&
 			assert.Equal(t, expected.GetDefaultHeadTagsDisabled(), r.GetDefaultHeadTagsDisabled()) &&
 			assert.Equal(t, expected.GetFilters(), r.GetFilters()) &&
@@ -177,7 +179,6 @@ func TestPromptManager_ListRendering(t *testing.T) {
 	assert.Greater(t, len(actual.PromptRenderings), 0)
 }
 
-// Able to update the renderingMode to advanced and the setting configs when parsing the advanced renderingMode in payload.
 func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -195,6 +196,8 @@ func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 			Clients: &[]PromptRenderingFilter{
 				{
 					ID: auth0.String(client.GetClientID()),
+				},
+				{
 					Metadata: &map[string]interface{}{
 						"key2": "value2",
 					},
@@ -217,7 +220,6 @@ func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
-// Unable to update the setting configs and only able to update the renderingMode to standard when parsing the standard renderingMode in payload.
 func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -235,6 +237,8 @@ func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 			Clients: &[]PromptRenderingFilter{
 				{
 					ID: auth0.String(client.GetClientID()),
+				},
+				{
 					Metadata: &map[string]interface{}{
 						"key2": "value2",
 					},
@@ -251,16 +255,15 @@ func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.Equal(t, updateData.GetRenderingMode(), actual.GetRenderingMode())
-	assert.NotEqual(t, updateData.GetContextConfiguration(), actual.GetContextConfiguration())
-	assert.NotEqual(t, updateData.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
-	assert.NotEqual(t, updateData.GetFilters(), actual.GetFilters())
-	assert.NotEqual(t, updateData.GetUsePageTemplate(), actual.GetUsePageTemplate())
+	assert.Equal(t, updateData.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, updateData.GetFilters(), actual.GetFilters())
+	assert.Equal(t, updateData.GetUsePageTemplate(), actual.GetUsePageTemplate())
 	assert.Equal(t, expected.HeadTags, actual.HeadTags)
 	assert.Equal(t, PromptSignup, *actual.GetPrompt())
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
-// Able to update the setting's configs even the existing renderingMode is standard since renderingMode is not parsed in payload(updateData).
 func TestPromptManager_UpdateRendering(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -277,6 +280,8 @@ func TestPromptManager_UpdateRendering(t *testing.T) {
 			Clients: &[]PromptRenderingFilter{
 				{
 					ID: auth0.String(client.GetClientID()),
+				},
+				{
 					Metadata: &map[string]interface{}{
 						"key2": "value2",
 					},
@@ -491,6 +496,8 @@ func givenAPromptRendering(t *testing.T, mode RenderingMode, clientID string) *P
 			Clients: &[]PromptRenderingFilter{
 				{
 					ID: auth0.String(clientID),
+				},
+				{
 					Metadata: &map[string]interface{}{
 						"key1": "value1",
 					},
@@ -503,6 +510,9 @@ func givenAPromptRendering(t *testing.T, mode RenderingMode, clientID string) *P
 	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, settings)
 	assert.NoError(t, err)
 
+	settings, err = api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
+	assert.NoError(t, err)
+
 	return settings
 }
 
@@ -511,4 +521,111 @@ func cleanupPromptPartials(t *testing.T, prompt PromptType) {
 
 	err := api.Prompt.DeletePartials(context.Background(), prompt)
 	assert.NoError(t, err)
+}
+
+func TestPromptManager_BulkUpdateRendering(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
+	client := givenAClient(t)
+
+	updateData := &PromptRenderingBulkUpdate{
+		PromptRenderings: []*PromptRendering{
+			{
+				Prompt:                  &[]PromptType{PromptSignup}[0],
+				Screen:                  &[]ScreenName{ScreenSignup}[0],
+				RenderingMode:           &[]RenderingMode{RenderingModeAdvanced}[0],
+				ContextConfiguration:    &[]string{"branding.settings"},
+				DefaultHeadTagsDisabled: auth0.Bool(false),
+				HeadTags: []interface{}{
+					map[string]interface{}{
+						"tag":     "script",
+						"content": "",
+						"attributes": map[string]interface{}{
+							"src":   "https://example.com/script1.js",
+							"async": true,
+						},
+					},
+				},
+				Filters: &PromptRenderingFilters{
+					MatchType: auth0.String("includes_any"),
+					Clients: &[]PromptRenderingFilter{
+						{
+							ID: auth0.String(client.GetClientID()),
+						},
+					},
+				},
+				UsePageTemplate: auth0.Bool(true),
+			},
+			{
+				Prompt:                  &[]PromptType{PromptSignupID}[0],
+				Screen:                  &[]ScreenName{ScreenSignupID}[0],
+				RenderingMode:           &[]RenderingMode{RenderingModeAdvanced}[0],
+				ContextConfiguration:    &[]string{"branding.themes.default"},
+				DefaultHeadTagsDisabled: auth0.Bool(true),
+				HeadTags: []interface{}{
+					map[string]interface{}{
+						"tag":     "link",
+						"content": "",
+						"attributes": map[string]interface{}{
+							"rel":  "stylesheet",
+							"href": "https://example.com/styles.css",
+						},
+					},
+				},
+				UsePageTemplate: auth0.Bool(false),
+			},
+			{
+				Prompt:                  &[]PromptType{PromptLogin}[0],
+				Screen:                  &[]ScreenName{ScreenLogin}[0],
+				RenderingMode:           &[]RenderingMode{RenderingModeAdvanced}[0],
+				ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default"},
+				DefaultHeadTagsDisabled: auth0.Bool(false),
+				HeadTags: []interface{}{
+					map[string]interface{}{
+						"tag":     "script",
+						"content": "",
+						"attributes": map[string]interface{}{
+							"src":   "https://example.com/login-script.js",
+							"defer": true,
+						},
+					},
+				},
+				UsePageTemplate: auth0.Bool(true),
+			},
+		},
+	}
+
+	err := api.Prompt.BulkUpdateRendering(context.Background(), updateData)
+	assert.NoError(t, err)
+
+	// Verify the configurations were applied by reading them back
+	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
+	assert.NoError(t, err)
+	assert.Equal(t, updateData.PromptRenderings[0].GetRenderingMode(), actual.GetRenderingMode())
+	assert.Equal(t, updateData.PromptRenderings[0].GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.PromptRenderings[0].GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, updateData.PromptRenderings[0].GetFilters(), actual.GetFilters())
+	assert.Equal(t, updateData.PromptRenderings[0].GetUsePageTemplate(), actual.GetUsePageTemplate())
+	assert.Equal(t, PromptSignup, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignup, *actual.GetScreen())
+
+	actual, err = api.Prompt.ReadRendering(context.Background(), PromptSignupID, ScreenSignupID)
+	assert.NoError(t, err)
+	assert.Equal(t, updateData.PromptRenderings[1].GetRenderingMode(), actual.GetRenderingMode())
+	assert.Equal(t, updateData.PromptRenderings[1].GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.PromptRenderings[1].GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, updateData.PromptRenderings[1].GetUsePageTemplate(), actual.GetUsePageTemplate())
+	assert.Equal(t, PromptSignupID, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignupID, *actual.GetScreen())
+
+	actual, err = api.Prompt.ReadRendering(context.Background(), PromptLogin, ScreenLogin)
+	assert.NoError(t, err)
+	assert.Equal(t, updateData.PromptRenderings[2].GetRenderingMode(), actual.GetRenderingMode())
+	assert.Equal(t, updateData.PromptRenderings[2].GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.PromptRenderings[2].GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, updateData.PromptRenderings[2].GetUsePageTemplate(), actual.GetUsePageTemplate())
+	assert.Equal(t, PromptLogin, *actual.GetPrompt())
+	assert.Equal(t, ScreenLogin, *actual.GetScreen())
 }
