@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.32.0](https://github.com/auth0/go-auth0/tree/v1.32.0) (2025-11-19)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.31.0...v1.32.0)
+
+**Added**
+- feat: [Superfed] go-auth0 SDK Support [\#652](https://github.com/auth0/go-auth0/pull/652) ([developerkunal](https://github.com/developerkunal))
+- feat: Support Ephemeral Lifetime configuration in the Tenant Settings [\#614](https://github.com/auth0/go-auth0/pull/614) ([nelsonmaia](https://github.com/nelsonmaia))
+- feat: Refactor PromptRendering handling [\#594](https://github.com/auth0/go-auth0/pull/594) ([ramya18101](https://github.com/ramya18101))
+
 ## [v1.31.0](https://github.com/auth0/go-auth0/tree/v1.31.0) (2025-10-31)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.30.0...v1.31.0)
 
