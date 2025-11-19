@@ -196,6 +196,8 @@ func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 			Clients: &[]PromptRenderingFilter{
 				{
 					ID: auth0.String(client.GetClientID()),
+				},
+				{
 					Metadata: &map[string]interface{}{
 						"key2": "value2",
 					},
@@ -218,6 +220,50 @@ func TestPromptManager_UpdateRenderingWithAdvancedMode(t *testing.T) {
 	assert.Equal(t, ScreenSignup, *actual.GetScreen())
 }
 
+func TestPromptManager_UpdateRenderingWithStandardMode(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	_ = givenACustomDomain(t)
+	_ = givenAUniversalLoginTemplate(t)
+	client := givenAClient(t)
+	expected := givenAPromptRendering(t, RenderingModeAdvanced, client.GetClientID())
+
+	updateData := &PromptRendering{
+		RenderingMode:           &RenderingModeStandard,
+		ContextConfiguration:    &[]string{"branding.settings", "branding.themes.default", "client.logo_uri"},
+		DefaultHeadTagsDisabled: auth0.Bool(true),
+		Filters: &PromptRenderingFilters{
+			MatchType: auth0.String("excludes_any"),
+			Clients: &[]PromptRenderingFilter{
+				{
+					ID: auth0.String(client.GetClientID()),
+				},
+				{
+					Metadata: &map[string]interface{}{
+						"key2": "value2",
+					},
+				},
+			},
+		},
+		UsePageTemplate: auth0.Bool(false),
+	}
+
+	err := api.Prompt.UpdateRendering(context.Background(), PromptSignup, ScreenSignup, updateData)
+	assert.NoError(t, err)
+
+	actual, err := api.Prompt.ReadRendering(context.Background(), PromptSignup, ScreenSignup)
+	assert.NoError(t, err)
+
+	assert.Equal(t, updateData.GetRenderingMode(), actual.GetRenderingMode())
+	assert.Equal(t, updateData.GetContextConfiguration(), actual.GetContextConfiguration())
+	assert.Equal(t, updateData.GetDefaultHeadTagsDisabled(), actual.GetDefaultHeadTagsDisabled())
+	assert.Equal(t, updateData.GetFilters(), actual.GetFilters())
+	assert.Equal(t, updateData.GetUsePageTemplate(), actual.GetUsePageTemplate())
+	assert.Equal(t, expected.HeadTags, actual.HeadTags)
+	assert.Equal(t, PromptSignup, *actual.GetPrompt())
+	assert.Equal(t, ScreenSignup, *actual.GetScreen())
+}
+
 func TestPromptManager_UpdateRendering(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -234,6 +280,8 @@ func TestPromptManager_UpdateRendering(t *testing.T) {
 			Clients: &[]PromptRenderingFilter{
 				{
 					ID: auth0.String(client.GetClientID()),
+				},
+				{
 					Metadata: &map[string]interface{}{
 						"key2": "value2",
 					},
@@ -448,6 +496,8 @@ func givenAPromptRendering(t *testing.T, mode RenderingMode, clientID string) *P
 			Clients: &[]PromptRenderingFilter{
 				{
 					ID: auth0.String(clientID),
+				},
+				{
 					Metadata: &map[string]interface{}{
 						"key1": "value1",
 					},
