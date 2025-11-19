@@ -1,5 +1,11 @@
 # Change Log
 
+## [v2.2.0](https://github.com/auth0/go-auth0/tree/v2.2.0) (2025-11-19)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.1.0...v2.2.0)
+
+**Added**
+- SDK Update: Connection Profiles, Express Configuration, and API Enhancements [\#653](https://github.com/auth0/go-auth0/pull/653) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.1.0](https://github.com/auth0/go-auth0/tree/v2.1.0) (2025-11-04)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.0.2...v2.1.0)
 
