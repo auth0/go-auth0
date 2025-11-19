@@ -163,7 +163,7 @@ func TestPromptManager_ListRendering(t *testing.T) {
 	for _, r := range actual.PromptRenderings {
 		if r.RenderingMode != nil && expected.RenderingMode != nil &&
 			*r.GetRenderingMode() == *expected.GetRenderingMode() &&
-			*r.GetScreen() == *expected.Screen &&
+			*r.GetScreen() == *expected.GetScreen() &&
 			*r.GetPrompt() == *expected.GetPrompt() &&
 			assert.Equal(t, expected.GetContextConfiguration(), r.GetContextConfiguration()) &&
 			assert.Equal(t, expected.GetDefaultHeadTagsDisabled(), r.GetDefaultHeadTagsDisabled()) &&
