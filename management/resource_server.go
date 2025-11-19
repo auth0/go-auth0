@@ -52,6 +52,10 @@ type ResourceServer struct {
 	// Enables the enforcement of the authorization policies.
 	EnforcePolicies *bool `json:"enforce_policies,omitempty"`
 
+	// IsSystem indicates if this is a system-managed resource server.
+	// System resource servers are created and managed by Auth0 and cannot be modified.
+	IsSystem *bool `json:"is_system,omitempty"`
+
 	// TokenDialect specifies the dialect of access tokens that should be issued for this resource server.
 	//
 	// Available options:

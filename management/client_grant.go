@@ -32,6 +32,9 @@ type ClientGrant struct {
 
 	// AuthorizationDetailsTypes defines the types of authorization details allowed for this client grant.
 	AuthorizationDetailsTypes *[]string `json:"authorization_details_types,omitempty"`
+
+	// IsSystem indicates whether this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
+	IsSystem *bool `json:"is_system,omitempty"`
 }
 
 // ClientGrantList is a list of ClientGrants.
