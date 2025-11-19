@@ -501,8 +501,8 @@ type PromptRenderingList struct {
 	PromptRenderings []*PromptRendering `json:"configs"`
 }
 
-// PromptRenderingUpdateRequest is used to update prompt rendering settings.
-type PromptRenderingUpdateRequest struct {
+// PromptRenderingBulkUpdate is used to update prompt rendering settings.
+type PromptRenderingBulkUpdate struct {
 	PromptRenderings []*PromptRendering `json:"configs"`
 }
 
@@ -673,19 +673,18 @@ func (m *PromptManager) ReadRendering(ctx context.Context, prompt PromptType, sc
 	return
 }
 
-func (c *PromptRendering) cleanForPatch() *PromptRendering {
-	return &PromptRendering{
-		RenderingMode:           c.RenderingMode,
-		ContextConfiguration:    c.ContextConfiguration,
-		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
-		HeadTags:                c.HeadTags,
-		Filters:                 c.Filters,
-		UsePageTemplate:         c.UsePageTemplate,
+func (c *PromptRendering) cleanForPatch(isBulk bool) *PromptRendering {
+	if !isBulk {
+		return &PromptRendering{
+			RenderingMode:           c.RenderingMode,
+			ContextConfiguration:    c.ContextConfiguration,
+			DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
+			HeadTags:                c.HeadTags,
+			Filters:                 c.Filters,
+			UsePageTemplate:         c.UsePageTemplate,
+		}
 	}
-}
 
-// TODO: use cleanForPatch iteratively in BulkUpdateRendering once the API reverts the additional validation.
-func (c *PromptRendering) cleanForBulkPatch() *PromptRendering {
 	return &PromptRendering{
 		Prompt:                  c.Prompt,
 		Screen:                  c.Screen,
@@ -703,7 +702,7 @@ func (c *PromptRendering) cleanForBulkPatch() *PromptRendering {
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-rendering
 func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptRendering, opts ...RequestOption) error {
 	if c != nil {
-		c = c.cleanForPatch()
+		c = c.cleanForPatch(false)
 	}
 
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
@@ -712,14 +711,14 @@ func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, 
 // BulkUpdateRendering updates the settings for multiple ACUL screens in a single request.
 //
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-bulk-rendering
-func (m *PromptManager) BulkUpdateRendering(ctx context.Context, c *PromptRenderingUpdateRequest, opts ...RequestOption) error {
+func (m *PromptManager) BulkUpdateRendering(ctx context.Context, c *PromptRenderingBulkUpdate, opts ...RequestOption) error {
 	if c == nil || len(c.PromptRenderings) == 0 {
 		return nil
 	}
 
 	for i, rendering := range c.PromptRenderings {
 		if rendering != nil {
-			c.PromptRenderings[i] = rendering.cleanForBulkPatch()
+			c.PromptRenderings[i] = rendering.cleanForPatch(true)
 		}
 	}
 

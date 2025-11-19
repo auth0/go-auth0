@@ -480,7 +480,7 @@ func TestPromptManager_BulkUpdateRendering(t *testing.T) {
 	_ = givenAUniversalLoginTemplate(t)
 	client := givenAClient(t)
 
-	updateData := &PromptRenderingUpdateRequest{
+	updateData := &PromptRenderingBulkUpdate{
 		PromptRenderings: []*PromptRendering{
 			{
 				Prompt:                  &[]PromptType{PromptSignup}[0],

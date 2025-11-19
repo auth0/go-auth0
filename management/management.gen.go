@@ -10704,6 +10704,11 @@ func (p *PromptRendering) String() string {
 	return Stringify(p)
 }
 
+// String returns a string representation of PromptRenderingBulkUpdate.
+func (p *PromptRenderingBulkUpdate) String() string {
+	return Stringify(p)
+}
+
 // GetID returns the ID field if it's non-nil, zero value otherwise.
 func (p *PromptRenderingFilter) GetID() string {
 	if p == nil || p.ID == nil {
@@ -10764,11 +10769,6 @@ func (p *PromptRenderingFilters) String() string {
 
 // String returns a string representation of PromptRenderingList.
 func (p *PromptRenderingList) String() string {
-	return Stringify(p)
-}
-
-// String returns a string representation of PromptRenderingUpdateRequest.
-func (p *PromptRenderingUpdateRequest) String() string {
 	return Stringify(p)
 }
 
