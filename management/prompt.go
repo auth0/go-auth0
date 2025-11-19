@@ -501,6 +501,11 @@ type PromptRenderingList struct {
 	PromptRenderings []*PromptRendering `json:"configs"`
 }
 
+// PromptRenderingBulkUpdate is used to update prompt rendering settings.
+type PromptRenderingBulkUpdate struct {
+	PromptRenderings []*PromptRendering `json:"configs"`
+}
+
 // MarshalJSON implements a custom [json.Marshaler].
 func (c *PromptPartials) MarshalJSON() ([]byte, error) {
 	body := map[string]PromptPartials{
@@ -668,14 +673,21 @@ func (m *PromptManager) ReadRendering(ctx context.Context, prompt PromptType, sc
 	return
 }
 
-func (c *PromptRendering) cleanForPatch() *PromptRendering {
-	if c.RenderingMode != nil && *c.RenderingMode == RenderingModeStandard {
+func (c *PromptRendering) cleanForPatch(isBulk bool) *PromptRendering {
+	if !isBulk {
 		return &PromptRendering{
-			RenderingMode: c.RenderingMode,
+			RenderingMode:           c.RenderingMode,
+			ContextConfiguration:    c.ContextConfiguration,
+			DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
+			HeadTags:                c.HeadTags,
+			Filters:                 c.Filters,
+			UsePageTemplate:         c.UsePageTemplate,
 		}
 	}
 
 	return &PromptRendering{
+		Prompt:                  c.Prompt,
+		Screen:                  c.Screen,
 		RenderingMode:           c.RenderingMode,
 		ContextConfiguration:    c.ContextConfiguration,
 		DefaultHeadTagsDisabled: c.DefaultHeadTagsDisabled,
@@ -690,10 +702,27 @@ func (c *PromptRendering) cleanForPatch() *PromptRendering {
 // See: https://auth0.com/docs/api/management/v2/prompts/patch-rendering
 func (m *PromptManager) UpdateRendering(ctx context.Context, prompt PromptType, screen ScreenName, c *PromptRendering, opts ...RequestOption) error {
 	if c != nil {
-		c = c.cleanForPatch()
+		c = c.cleanForPatch(false)
 	}
 
 	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", string(prompt), "screen", string(screen), "rendering"), c, opts...)
+}
+
+// BulkUpdateRendering updates the settings for multiple ACUL screens in a single request.
+//
+// See: https://auth0.com/docs/api/management/v2/prompts/patch-bulk-rendering
+func (m *PromptManager) BulkUpdateRendering(ctx context.Context, c *PromptRenderingBulkUpdate, opts ...RequestOption) error {
+	if c == nil || len(c.PromptRenderings) == 0 {
+		return nil
+	}
+
+	for i, rendering := range c.PromptRenderings {
+		if rendering != nil {
+			c.PromptRenderings[i] = rendering.cleanForPatch(true)
+		}
+	}
+
+	return m.management.Request(ctx, "PATCH", m.management.URI("prompts", "rendering"), c, opts...)
 }
 
 // ListRendering lists the settings for all the ACUL.
