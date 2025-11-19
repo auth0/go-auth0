@@ -16366,6 +16366,16 @@ func TestTenant_GetEnabledLocales(tt *testing.T) {
 	t.GetEnabledLocales()
 }
 
+func TestTenant_GetEphemeralSessionLifetime(tt *testing.T) {
+	var zeroValue float64
+	t := &Tenant{EphemeralSessionLifetime: &zeroValue}
+	t.GetEphemeralSessionLifetime()
+	t = &Tenant{}
+	t.GetEphemeralSessionLifetime()
+	t = nil
+	t.GetEphemeralSessionLifetime()
+}
+
 func TestTenant_GetErrorPage(tt *testing.T) {
 	t := &Tenant{}
 	t.GetErrorPage()
@@ -16395,6 +16405,16 @@ func TestTenant_GetGuardianMFAPage(tt *testing.T) {
 	t.GetGuardianMFAPage()
 	t = nil
 	t.GetGuardianMFAPage()
+}
+
+func TestTenant_GetIdleEphemeralSessionLifetime(tt *testing.T) {
+	var zeroValue float64
+	t := &Tenant{IdleEphemeralSessionLifetime: &zeroValue}
+	t.GetIdleEphemeralSessionLifetime()
+	t = &Tenant{}
+	t.GetIdleEphemeralSessionLifetime()
+	t = nil
+	t.GetIdleEphemeralSessionLifetime()
 }
 
 func TestTenant_GetIdleSessionLifetime(tt *testing.T) {
