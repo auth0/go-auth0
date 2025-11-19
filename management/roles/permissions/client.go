@@ -42,7 +42,7 @@ func (c *Client) List(
 	id string,
 	request *management.ListRolePermissionsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.PermissionsResponsePayload], error) {
+) (*core.Page[*int, *management.PermissionsResponsePayload], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -68,7 +68,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -96,10 +96,10 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListRolePermissionsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.PermissionsResponsePayload] {
+	readPageResponse := func(response *management.ListRolePermissionsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.PermissionsResponsePayload] {
 		next += 1
 		results := response.Permissions
-		return &internal.PageResponse[*int, *management.PermissionsResponsePayload]{
+		return &core.PageResponse[*int, *management.PermissionsResponsePayload]{
 			Next:    &next,
 			Results: results,
 		}

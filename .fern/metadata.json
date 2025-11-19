@@ -1,0 +1,22 @@
+{
+  "cliVersion": "0.107.3",
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "1.16.3",
+  "generatorConfig": {
+    "module": {
+      "path": "github.com/auth0/go-auth0/v2"
+    },
+    "union": "v1",
+    "packageName": "management",
+    "packagePath": "management",
+    "clientName": "Management",
+    "clientConstructorName": "NewWithOptions",
+    "alwaysSendRequiredProperties": true,
+    "inlinePathParameters": true,
+    "inlineFileProperties": true,
+    "useDefaultRequestParameterValues": true,
+    "gettersPassByValue": true,
+    "exportAllRequestsAtRoot": true,
+    "enableWireTests": true
+  }
+}

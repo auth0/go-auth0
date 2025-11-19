@@ -38,7 +38,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListConnectionProfileRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.ConnectionProfile], error) {
+) (*core.Page[*string, *management.ConnectionProfile], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -59,7 +59,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -79,11 +79,11 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListConnectionProfilesPaginatedResponseContent) *internal.PageResponse[*string, *management.ConnectionProfile] {
+	readPageResponse := func(response *management.ListConnectionProfilesPaginatedResponseContent) *core.PageResponse[*string, *management.ConnectionProfile] {
 		var zeroValue *string
 		next := response.Next
 		results := response.ConnectionProfiles
-		return &internal.PageResponse[*string, *management.ConnectionProfile]{
+		return &core.PageResponse[*string, *management.ConnectionProfile]{
 			Next:    next,
 			Results: results,
 			Done:    next == zeroValue,

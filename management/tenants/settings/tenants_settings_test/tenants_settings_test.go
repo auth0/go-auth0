@@ -3,109 +3,69 @@
 package tenants_settings_test
 
 import (
+	bytes "bytes"
 	context "context"
-	fmt "fmt"
+	json "encoding/json"
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	gowiremock "github.com/wiremock/go-wiremock"
-	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
 	http "net/http"
-	os "os"
 	testing "testing"
 )
 
-// TestMain sets up shared test fixtures for all tests in this package// Global test fixtures
-var (
-	WireMockContainer *wiremocktestcontainersgo.WireMockContainer
-	WireMockBaseURL   string
-	WireMockClient    *gowiremock.Client
-)
+func ResetWireMockRequests(
+	t *testing.T,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
+	require.NoError(t, err)
+}
 
-// TestMain sets up shared test fixtures for all tests in this package
-func TestMain(m *testing.M) {
-	// Setup shared WireMock container
-	ctx := context.Background()
-	container, err := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
-		ctx,
-		&testing.T{},
-		wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
-	)
-	if err != nil {
-		fmt.Printf("Failed to start WireMock container: %v\n", err)
-		os.Exit(1)
-	}
-
-	// Store global references
-	WireMockContainer = container
-
-	// Try to get the base URL using the standard method first
-	baseURL, err := container.Endpoint(ctx, "")
-	if err == nil {
-		// Standard method worked (running outside DinD)
-		// This uses the mapped port (e.g., localhost:59553)
-		WireMockBaseURL = "http://" + baseURL
-		WireMockClient = container.Client
-	} else {
-		// Standard method failed, use internal IP fallback (DinD environment)
-		fmt.Printf("Standard endpoint resolution failed, using internal IP fallback: %v\n", err)
-
-		inspect, err := container.Inspect(ctx)
-		if err != nil {
-			fmt.Printf("Failed to inspect WireMock container: %v\n", err)
-			os.Exit(1)
-		}
-
-		// Find the IP address from the container's networks
-		var containerIP string
-		for _, network := range inspect.NetworkSettings.Networks {
-			if network.IPAddress != "" {
-				containerIP = network.IPAddress
-				break
+func VerifyRequestCount(
+	t *testing.T,
+	method string,
+	urlPath string,
+	queryParams map[string]string,
+	expected int,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	var reqBody bytes.Buffer
+	reqBody.WriteString(`{"method":"`)
+	reqBody.WriteString(method)
+	reqBody.WriteString(`","urlPath":"`)
+	reqBody.WriteString(urlPath)
+	reqBody.WriteString(`"}`)
+	if len(queryParams) > 0 {
+		reqBody.WriteString(`,"queryParameters":{`)
+		first := true
+		for key, value := range queryParams {
+			if !first {
+				reqBody.WriteString(",")
 			}
+			reqBody.WriteString(`"`)
+			reqBody.WriteString(key)
+			reqBody.WriteString(`":{"equalTo":"`)
+			reqBody.WriteString(value)
+			reqBody.WriteString(`"}`)
+			first = false
 		}
-
-		if containerIP == "" {
-			fmt.Printf("Failed to get WireMock container IP address\n")
-			os.Exit(1)
-		}
-
-		// In DinD, use the internal port directly (8080 for WireMock HTTP)
-		// Don't use the mapped port since it doesn't exist in this environment
-		WireMockBaseURL = fmt.Sprintf("http://%s:8080", containerIP)
-
-		// The container.Client was created with a bad URL, so we need a new one
-		WireMockClient = gowiremock.NewClient(WireMockBaseURL)
+		reqBody.WriteString("}")
 	}
-
-	fmt.Printf("WireMock available at: %s\n", WireMockBaseURL)
-
-	// Run all tests
-	code := m.Run()
-
-	// Cleanup
-	if WireMockContainer != nil {
-		WireMockContainer.Terminate(ctx)
+	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
+	require.NoError(t, err)
+	var result struct {
+		Requests []interface{} `json:"requests"`
 	}
-
-	// Exit with the same code as the tests
-	os.Exit(code)
+	json.NewDecoder(resp.Body).Decode(&result)
+	require.Equal(t, expected, len(result.Requests))
 }
 
 func TestTenantsSettingsGetWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/tenants/settings")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"change_password": map[string]interface{}{"enabled": true, "html": "html"}, "guardian_mfa_page": map[string]interface{}{"enabled": true, "html": "html"}, "default_audience": "default_audience", "default_directory": "default_directory", "error_page": map[string]interface{}{"html": "html", "show_log_link": true, "url": "url"}, "device_flow": map[string]interface{}{"charset": "base20", "mask": "mask"}, "default_token_quota": map[string]interface{}{"clients": map[string]interface{}{"client_credentials": map[string]interface{}{}}, "organizations": map[string]interface{}{"client_credentials": map[string]interface{}{}}}, "flags": map[string]interface{}{"change_pwd_flow_v1": true, "enable_apis_section": true, "disable_impersonation": true, "enable_client_connections": true, "enable_pipeline2": true, "allow_legacy_delegation_grant_types": true, "allow_legacy_ro_grant_types": true, "allow_legacy_tokeninfo_endpoint": true, "enable_legacy_profile": true, "enable_idtoken_api2": true, "enable_public_signup_user_exists_error": true, "enable_sso": true, "allow_changing_enable_sso": true, "disable_clickjack_protection_headers": true, "no_disclose_enterprise_connections": true, "enforce_client_authentication_on_passwordless_start": true, "enable_adfs_waad_email_verification": true, "revoke_refresh_token_grant": true, "dashboard_log_streams_next": true, "dashboard_insights_view": true, "disable_fields_map_fix": true, "mfa_show_factor_list_on_enrollment": true, "remove_alg_from_jwks": true, "improved_signup_bot_detection_in_classic": true, "genai_trial": true, "enable_dynamic_client_registration": true, "disable_management_api_sms_obfuscation": true, "trust_azure_adfs_email_verified_connection_property": true, "custom_domains_provisioning": true}, "friendly_name": "friendly_name", "picture_url": "picture_url", "support_email": "support_email", "support_url": "support_url", "allowed_logout_urls": []interface{}{"allowed_logout_urls"}, "session_lifetime": 1.1, "idle_session_lifetime": 1.1, "ephemeral_session_lifetime": 1.1, "idle_ephemeral_session_lifetime": 1.1, "sandbox_version": "sandbox_version", "legacy_sandbox_version": "legacy_sandbox_version", "sandbox_versions_available": []interface{}{"sandbox_versions_available"}, "default_redirection_uri": "default_redirection_uri", "enabled_locales": []interface{}{"am"}, "session_cookie": map[string]interface{}{"mode": "persistent"}, "sessions": map[string]interface{}{"oidc_logout_prompt_enabled": true}, "oidc_logout": map[string]interface{}{"rp_logout_end_session_endpoint_discovery": true}, "allow_organization_name_in_authentication_api": true, "customize_mfa_in_postlogin_action": true, "acr_values_supported": []interface{}{"acr_values_supported"}, "mtls": map[string]interface{}{"enable_endpoint_aliases": true}, "pushed_authorization_requests_supported": true, "authorization_response_iss_parameter_supported": true, "skip_non_verifiable_callback_uri_confirmation_prompt": true, "resource_parameter_profile": "audience"},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -125,32 +85,14 @@ func TestTenantsSettingsGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "GET", "/tenants/settings", map[string]string{"fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestTenantsSettingsUpdateWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Patch(gowiremock.URLPathTemplate("/tenants/settings")).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "object",
-                    "required": [],
-                    "properties": {
-                        
-                    },
-                    "additionalProperties": true
-                }`, "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"change_password": map[string]interface{}{"enabled": true, "html": "html"}, "guardian_mfa_page": map[string]interface{}{"enabled": true, "html": "html"}, "default_audience": "default_audience", "default_directory": "default_directory", "error_page": map[string]interface{}{"html": "html", "show_log_link": true, "url": "url"}, "device_flow": map[string]interface{}{"charset": "base20", "mask": "mask"}, "default_token_quota": map[string]interface{}{"clients": map[string]interface{}{"client_credentials": map[string]interface{}{}}, "organizations": map[string]interface{}{"client_credentials": map[string]interface{}{}}}, "flags": map[string]interface{}{"change_pwd_flow_v1": true, "enable_apis_section": true, "disable_impersonation": true, "enable_client_connections": true, "enable_pipeline2": true, "allow_legacy_delegation_grant_types": true, "allow_legacy_ro_grant_types": true, "allow_legacy_tokeninfo_endpoint": true, "enable_legacy_profile": true, "enable_idtoken_api2": true, "enable_public_signup_user_exists_error": true, "enable_sso": true, "allow_changing_enable_sso": true, "disable_clickjack_protection_headers": true, "no_disclose_enterprise_connections": true, "enforce_client_authentication_on_passwordless_start": true, "enable_adfs_waad_email_verification": true, "revoke_refresh_token_grant": true, "dashboard_log_streams_next": true, "dashboard_insights_view": true, "disable_fields_map_fix": true, "mfa_show_factor_list_on_enrollment": true, "remove_alg_from_jwks": true, "improved_signup_bot_detection_in_classic": true, "genai_trial": true, "enable_dynamic_client_registration": true, "disable_management_api_sms_obfuscation": true, "trust_azure_adfs_email_verified_connection_property": true, "custom_domains_provisioning": true}, "friendly_name": "friendly_name", "picture_url": "picture_url", "support_email": "support_email", "support_url": "support_url", "allowed_logout_urls": []interface{}{"allowed_logout_urls"}, "session_lifetime": 1.1, "idle_session_lifetime": 1.1, "ephemeral_session_lifetime": 1.1, "idle_ephemeral_session_lifetime": 1.1, "sandbox_version": "sandbox_version", "legacy_sandbox_version": "legacy_sandbox_version", "sandbox_versions_available": []interface{}{"sandbox_versions_available"}, "default_redirection_uri": "default_redirection_uri", "enabled_locales": []interface{}{"am"}, "session_cookie": map[string]interface{}{"mode": "persistent"}, "sessions": map[string]interface{}{"oidc_logout_prompt_enabled": true}, "oidc_logout": map[string]interface{}{"rp_logout_end_session_endpoint_discovery": true}, "allow_organization_name_in_authentication_api": true, "customize_mfa_in_postlogin_action": true, "acr_values_supported": []interface{}{"acr_values_supported"}, "mtls": map[string]interface{}{"enable_endpoint_aliases": true}, "pushed_authorization_requests_supported": true, "authorization_response_iss_parameter_supported": true, "skip_non_verifiable_callback_uri_confirmation_prompt": true, "resource_parameter_profile": "audience"},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -163,7 +105,5 @@ func TestTenantsSettingsUpdateWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "PATCH", "/tenants/settings", nil, 1)
 }
