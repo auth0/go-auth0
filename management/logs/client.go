@@ -72,7 +72,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListLogsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.Log], error) {
+) (*core.Page[*int, *management.Log, *management.ListLogOffsetPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -95,7 +95,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -123,12 +123,13 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListLogOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.Log] {
+	readPageResponse := func(response *management.ListLogOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.Log, *management.ListLogOffsetPaginatedResponseContent] {
 		next += 1
 		results := response.Logs
-		return &internal.PageResponse[*int, *management.Log]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *management.Log, *management.ListLogOffsetPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(

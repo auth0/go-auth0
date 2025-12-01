@@ -50,7 +50,7 @@ func (c *Client) Get(
 	id string,
 	request *management.ConnectionsGetRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*management.ConnectionForList], error) {
+) (*core.Page[*string, *management.ConnectionForList, *management.ListClientConnectionsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -74,7 +74,7 @@ func (c *Client) Get(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -94,14 +94,15 @@ func (c *Client) Get(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListClientConnectionsResponseContent) *internal.PageResponse[*string, *management.ConnectionForList] {
+	readPageResponse := func(response *management.ListClientConnectionsResponseContent) *core.PageResponse[*string, *management.ConnectionForList, *management.ListClientConnectionsResponseContent] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Connections
-		return &internal.PageResponse[*string, *management.ConnectionForList]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *management.ConnectionForList, *management.ListClientConnectionsResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(

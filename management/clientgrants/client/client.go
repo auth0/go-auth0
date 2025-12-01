@@ -41,7 +41,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListClientGrantsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.ClientGrantResponseContent], error) {
+) (*core.Page[*string, *management.ClientGrantResponseContent, *management.ListClientGrantPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -62,7 +62,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -82,14 +82,15 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListClientGrantPaginatedResponseContent) *internal.PageResponse[*string, *management.ClientGrantResponseContent] {
+	readPageResponse := func(response *management.ListClientGrantPaginatedResponseContent) *core.PageResponse[*string, *management.ClientGrantResponseContent, *management.ListClientGrantPaginatedResponseContent] {
 		var zeroValue *string
 		next := response.Next
 		results := response.ClientGrants
-		return &internal.PageResponse[*string, *management.ClientGrantResponseContent]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *management.ClientGrantResponseContent, *management.ListClientGrantPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(

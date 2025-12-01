@@ -42,7 +42,7 @@ func (c *Client) List(
 	id string,
 	request *management.ListUserAuthenticationMethodsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.UserAuthenticationMethod], error) {
+) (*core.Page[*int, *management.UserAuthenticationMethod, *management.ListUserAuthenticationMethodsOffsetPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -68,7 +68,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -96,12 +96,13 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListUserAuthenticationMethodsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.UserAuthenticationMethod] {
+	readPageResponse := func(response *management.ListUserAuthenticationMethodsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.UserAuthenticationMethod, *management.ListUserAuthenticationMethodsOffsetPaginatedResponseContent] {
 		next += 1
 		results := response.Authenticators
-		return &internal.PageResponse[*int, *management.UserAuthenticationMethod]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *management.UserAuthenticationMethod, *management.ListUserAuthenticationMethodsOffsetPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(

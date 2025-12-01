@@ -46,7 +46,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListSelfServiceProfilesRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.SelfServiceProfile], error) {
+) (*core.Page[*int, *management.SelfServiceProfile, *management.ListSelfServiceProfilesPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -69,7 +69,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -97,12 +97,13 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListSelfServiceProfilesPaginatedResponseContent) *internal.PageResponse[*int, *management.SelfServiceProfile] {
+	readPageResponse := func(response *management.ListSelfServiceProfilesPaginatedResponseContent) *core.PageResponse[*int, *management.SelfServiceProfile, *management.ListSelfServiceProfilesPaginatedResponseContent] {
 		next += 1
 		results := response.SelfServiceProfiles
-		return &internal.PageResponse[*int, *management.SelfServiceProfile]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *management.SelfServiceProfile, *management.ListSelfServiceProfilesPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(

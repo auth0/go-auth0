@@ -46,7 +46,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.TokenExchangeProfilesListRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*management.TokenExchangeProfileResponseContent], error) {
+) (*core.Page[*string, *management.TokenExchangeProfileResponseContent, *management.ListTokenExchangeProfileResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -67,7 +67,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -87,14 +87,15 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListTokenExchangeProfileResponseContent) *internal.PageResponse[*string, *management.TokenExchangeProfileResponseContent] {
+	readPageResponse := func(response *management.ListTokenExchangeProfileResponseContent) *core.PageResponse[*string, *management.TokenExchangeProfileResponseContent, *management.ListTokenExchangeProfileResponseContent] {
 		var zeroValue *string
 		next := response.Next
 		results := response.TokenExchangeProfiles
-		return &internal.PageResponse[*string, *management.TokenExchangeProfileResponseContent]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *management.TokenExchangeProfileResponseContent, *management.ListTokenExchangeProfileResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
