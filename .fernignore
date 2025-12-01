@@ -28,3 +28,4 @@ opslevel.yml
 .golangci.yml
 EXAMPLES.md
 MIGRATION_GUIDE.md
+.fern/
