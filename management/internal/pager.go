@@ -27,30 +27,15 @@ type Pager[
 	readPageResponse PageResponseFunc[Cursor, Response, Results]
 }
 
-// PageRequest represents the information required to identify a single page.
-type PageRequest[Cursor comparable] struct {
-	Cursor Cursor
-
-	// Holds the value of the response type (populated by the *Caller).
-	Response any
-}
-
-// PageResponse represents the information associated with a single page.
-type PageResponse[Cursor comparable, Result any] struct {
-	Results []Result
-	Next    Cursor
-	Done    bool
-}
-
 // PageRequestFunc prepares the *CallParams from the given page request.
-type PageRequestFunc[Cursor comparable] func(request *PageRequest[Cursor]) *CallParams
+type PageRequestFunc[Cursor comparable] func(request *core.PageRequest[Cursor]) *CallParams
 
 // PageResponseFunc extracts the next page information from the response.
 type PageResponseFunc[
 	Cursor comparable,
 	Response any,
 	Results any,
-] func(Response) *PageResponse[Cursor, Results]
+] func(Response) *core.PageResponse[Cursor, Results, Response]
 
 // NewCursorPager constructs a new Pager that fetches pages from a paginated endpoint.
 func NewCursorPager[Cursor comparable, Response any, Results any](
@@ -85,24 +70,29 @@ func (p *Pager[
 	Cursor,
 	Response,
 	Results,
-]) GetPage(ctx context.Context, cursor Cursor) (*core.Page[Results], error) {
+]) GetPage(ctx context.Context, cursor Cursor) (*core.Page[Cursor, Results, Response], error) {
 	var response Response
-	pageRequest := &PageRequest[Cursor]{
+	pageRequest := &core.PageRequest[Cursor]{
 		Cursor:   cursor,
 		Response: &response,
 	}
 
 	callParams := p.prepareCall(pageRequest)
-	if _, err := p.caller.Call(ctx, callParams); err != nil {
+	httpResponse, err := p.caller.Call(ctx, callParams)
+	if err != nil {
 		return nil, err
 	}
 
 	pageResponse := p.readPageResponse(response)
 
 	if p.mode == PagerModeOffset {
-		return &core.Page[Results]{
-			Results: pageResponse.Results,
-			NextPageFunc: func(ctx context.Context) (*core.Page[Results], error) {
+		return &core.Page[Cursor, Results, Response]{
+			Results:     pageResponse.Results,
+			Response:    pageResponse.Response,
+			RawResponse: *pageResponse,
+			StatusCode:  httpResponse.StatusCode,
+			Header:      httpResponse.Header,
+			NextPageFunc: func(ctx context.Context) (*core.Page[Cursor, Results, Response], error) {
 				page, err := p.GetPage(ctx, pageResponse.Next)
 				if err != nil {
 					return nil, err
@@ -115,9 +105,13 @@ func (p *Pager[
 		}, nil
 	}
 
-	return &core.Page[Results]{
-		Results: pageResponse.Results,
-		NextPageFunc: func(ctx context.Context) (*core.Page[Results], error) {
+	return &core.Page[Cursor, Results, Response]{
+		Results:     pageResponse.Results,
+		Response:    pageResponse.Response,
+		RawResponse: *pageResponse,
+		StatusCode:  httpResponse.StatusCode,
+		Header:      httpResponse.Header,
+		NextPageFunc: func(ctx context.Context) (*core.Page[Cursor, Results, Response], error) {
 			if pageResponse.Done {
 				return nil, core.ErrNoPages
 			}

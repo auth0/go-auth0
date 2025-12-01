@@ -2834,10 +2834,10 @@ var (
 type AculConfigsItem struct {
 	Prompt                  PromptGroupNameEnum          `json:"prompt" url:"prompt"`
 	Screen                  ScreenGroupNameEnum          `json:"screen" url:"screen"`
-	RenderingMode           *AculRenderingModeEnum       `json:"rendering_mode,omitempty" url:"rendering_mode,omitempty"`
+	RenderingMode           AculRenderingModeEnum        `json:"rendering_mode" url:"rendering_mode"`
 	ContextConfiguration    *AculContextConfiguration    `json:"context_configuration,omitempty" url:"context_configuration,omitempty"`
 	DefaultHeadTagsDisabled *AculDefaultHeadTagsDisabled `json:"default_head_tags_disabled,omitempty" url:"default_head_tags_disabled,omitempty"`
-	HeadTags                *AculHeadTags                `json:"head_tags,omitempty" url:"head_tags,omitempty"`
+	HeadTags                AculHeadTags                 `json:"head_tags" url:"head_tags"`
 	Filters                 *AculFilters                 `json:"filters,omitempty" url:"filters,omitempty"`
 	UsePageTemplate         *AculUsePageTemplate         `json:"use_page_template,omitempty" url:"use_page_template,omitempty"`
 
@@ -2863,10 +2863,10 @@ func (a *AculConfigsItem) GetScreen() ScreenGroupNameEnum {
 }
 
 func (a *AculConfigsItem) GetRenderingMode() AculRenderingModeEnum {
-	if a == nil || a.RenderingMode == nil {
+	if a == nil {
 		return ""
 	}
-	return *a.RenderingMode
+	return a.RenderingMode
 }
 
 func (a *AculConfigsItem) GetContextConfiguration() AculContextConfiguration {
@@ -2884,10 +2884,10 @@ func (a *AculConfigsItem) GetDefaultHeadTagsDisabled() AculDefaultHeadTagsDisabl
 }
 
 func (a *AculConfigsItem) GetHeadTags() AculHeadTags {
-	if a == nil || a.HeadTags == nil {
+	if a == nil {
 		return nil
 	}
-	return *a.HeadTags
+	return a.HeadTags
 }
 
 func (a *AculConfigsItem) GetFilters() AculFilters {
@@ -2931,7 +2931,7 @@ func (a *AculConfigsItem) SetScreen(screen ScreenGroupNameEnum) {
 
 // SetRenderingMode sets the RenderingMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AculConfigsItem) SetRenderingMode(renderingMode *AculRenderingModeEnum) {
+func (a *AculConfigsItem) SetRenderingMode(renderingMode AculRenderingModeEnum) {
 	a.RenderingMode = renderingMode
 	a.require(aculConfigsItemFieldRenderingMode)
 }
@@ -2952,7 +2952,7 @@ func (a *AculConfigsItem) SetDefaultHeadTagsDisabled(defaultHeadTagsDisabled *Ac
 
 // SetHeadTags sets the HeadTags field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AculConfigsItem) SetHeadTags(headTags *AculHeadTags) {
+func (a *AculConfigsItem) SetHeadTags(headTags AculHeadTags) {
 	a.HeadTags = headTags
 	a.require(aculConfigsItemFieldHeadTags)
 }
@@ -5726,20 +5726,14 @@ func (b BotDetectionChallengePolicyPasswordlessFlowEnum) Ptr() *BotDetectionChal
 	return &b
 }
 
-// CIDR block
-type BotDetectionCidrBlock = string
-
 // IPv4 address or CIDR block
-type BotDetectionIPv4 = string
+type BotDetectionIPv4OrCidrBlock = string
 
 // IPv6 address or CIDR block
-type BotDetectionIPv6 = string
+type BotDetectionIPv6OrCidrBlock = string
 
 // IP address (IPv4 or IPv6) or CIDR block
 type BotDetectionIPAddressOrCidrBlock = string
-
-// IPv6 CIDR block
-type BotDetectionIpv6CidrBlock = string
 
 // The level of bot detection sensitivity
 type BotDetectionLevelEnum string
@@ -8679,18 +8673,6 @@ func (c *ConnectionAuthenticationPurpose) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Indicates whether brute force protection is enabled.
-type ConnectionBruteForceProtection = bool
-
-// The client ID of the connection.
-type ConnectionClientID = string
-
-// The client secret of the connection.
-type ConnectionClientSecret = string
-
-// A hash of configuration key/value pairs.
-type ConnectionConfiguration = map[string]string
-
 // Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	connectionConnectedAccountsPurposeFieldActive         = big.NewInt(1 << 0)
@@ -8786,17 +8768,8 @@ func (c *ConnectionConnectedAccountsPurpose) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Indicates whether to disable self-service change password. Set to true to stop the "Forgot Password" being displayed on login pages
-type ConnectionDisableSelfServiceChangePassword = bool
-
-// Set to true to disable signups
-type ConnectionDisableSignup = bool
-
 // Connection name used in the new universal login experience
 type ConnectionDisplayName = string
-
-// Set to true to inject context into custom DB scripts (warning: cannot be disabled once enabled)
-type ConnectionEnableScriptContext = bool
 
 var (
 	connectionEnabledClientFieldClientID = big.NewInt(1 << 0)
@@ -8884,9 +8857,6 @@ func (c *ConnectionEnabledClient) String() string {
 
 // DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 type ConnectionEnabledClients = []string
-
-// Set to true to use a legacy user store
-type ConnectionEnabledDatabaseCustomization = bool
 
 var (
 	connectionForListFieldName               = big.NewInt(1 << 0)
@@ -9135,12 +9105,6 @@ func (c *ConnectionForList) String() string {
 
 // The connection's identifier
 type ConnectionID = string
-
-// Order of precedence for attribute types. If the property is not specified, the default precedence of attributes will be used.
-type ConnectionIdentifierPrecedence = []ConnectionIdentifierPrecedenceEnum
-
-// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
-type ConnectionImportMode = bool
 
 // <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
 type ConnectionIsDomainConnection = bool
@@ -9437,108 +9401,8 @@ func (c ConnectionKeyUseEnum) Ptr() *ConnectionKeyUseEnum {
 	return &c
 }
 
-// Multi-factor authentication configuration
-var (
-	connectionMfaFieldActive               = big.NewInt(1 << 0)
-	connectionMfaFieldReturnEnrollSettings = big.NewInt(1 << 1)
-)
-
-type ConnectionMfa struct {
-	// Indicates whether MFA is active for this connection
-	Active *bool `json:"active,omitempty" url:"active,omitempty"`
-	// Indicates whether to return MFA enrollment settings
-	ReturnEnrollSettings *bool `json:"return_enroll_settings,omitempty" url:"return_enroll_settings,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *ConnectionMfa) GetActive() bool {
-	if c == nil || c.Active == nil {
-		return false
-	}
-	return *c.Active
-}
-
-func (c *ConnectionMfa) GetReturnEnrollSettings() bool {
-	if c == nil || c.ReturnEnrollSettings == nil {
-		return false
-	}
-	return *c.ReturnEnrollSettings
-}
-
-func (c *ConnectionMfa) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *ConnectionMfa) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
-	}
-	c.explicitFields.Or(c.explicitFields, field)
-}
-
-// SetActive sets the Active field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionMfa) SetActive(active *bool) {
-	c.Active = active
-	c.require(connectionMfaFieldActive)
-}
-
-// SetReturnEnrollSettings sets the ReturnEnrollSettings field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionMfa) SetReturnEnrollSettings(returnEnrollSettings *bool) {
-	c.ReturnEnrollSettings = returnEnrollSettings
-	c.require(connectionMfaFieldReturnEnrollSettings)
-}
-
-func (c *ConnectionMfa) UnmarshalJSON(data []byte) error {
-	type unmarshaler ConnectionMfa
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = ConnectionMfa(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *ConnectionMfa) MarshalJSON() ([]byte, error) {
-	type embed ConnectionMfa
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (c *ConnectionMfa) String() string {
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
 // The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
 type ConnectionName = string
-
-// An array of user fields that should not be stored in the Auth0 database (https://auth0.com/docs/security/data-security/denylist)
-type ConnectionNonPersistentAttrs = []string
 
 // In order to return options in the response, the `read:connections_options` scope must be present
 type ConnectionOptions = map[string]interface{}
@@ -9549,427 +9413,15 @@ type ConnectionOptionsAd = map[string]interface{}
 // options for the 'adfs' connection
 type ConnectionOptionsAdfs = map[string]interface{}
 
-type ConnectionOptionsAmazon = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsAmazon = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsAol = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsAol = ConnectionOptionsOAuth2Common
 
 // options for the 'apple' connection
 type ConnectionOptionsApple = map[string]interface{}
 
 // options for the 'auth0' connection
-var (
-	connectionOptionsAuth0FieldNonPersistentAttrs               = big.NewInt(1 << 0)
-	connectionOptionsAuth0FieldAttributes                       = big.NewInt(1 << 1)
-	connectionOptionsAuth0FieldAuthenticationMethods            = big.NewInt(1 << 2)
-	connectionOptionsAuth0FieldBruteForceProtection             = big.NewInt(1 << 3)
-	connectionOptionsAuth0FieldConfiguration                    = big.NewInt(1 << 4)
-	connectionOptionsAuth0FieldCustomScripts                    = big.NewInt(1 << 5)
-	connectionOptionsAuth0FieldDisableSelfServiceChangePassword = big.NewInt(1 << 6)
-	connectionOptionsAuth0FieldDisableSignup                    = big.NewInt(1 << 7)
-	connectionOptionsAuth0FieldEnableScriptContext              = big.NewInt(1 << 8)
-	connectionOptionsAuth0FieldEnabledDatabaseCustomization     = big.NewInt(1 << 9)
-	connectionOptionsAuth0FieldImportMode                       = big.NewInt(1 << 10)
-	connectionOptionsAuth0FieldMfa                              = big.NewInt(1 << 11)
-	connectionOptionsAuth0FieldPasskeyOptions                   = big.NewInt(1 << 12)
-	connectionOptionsAuth0FieldPasswordPolicy                   = big.NewInt(1 << 13)
-	connectionOptionsAuth0FieldPasswordComplexityOptions        = big.NewInt(1 << 14)
-	connectionOptionsAuth0FieldPasswordDictionary               = big.NewInt(1 << 15)
-	connectionOptionsAuth0FieldPasswordHistory                  = big.NewInt(1 << 16)
-	connectionOptionsAuth0FieldPasswordNoPersonalInfo           = big.NewInt(1 << 17)
-	connectionOptionsAuth0FieldPrecedence                       = big.NewInt(1 << 18)
-	connectionOptionsAuth0FieldRealmFallback                    = big.NewInt(1 << 19)
-	connectionOptionsAuth0FieldRequiresUsername                 = big.NewInt(1 << 20)
-	connectionOptionsAuth0FieldValidation                       = big.NewInt(1 << 21)
-)
-
-type ConnectionOptionsAuth0 struct {
-	NonPersistentAttrs               *ConnectionNonPersistentAttrs               `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
-	Attributes                       *ConnectionAttributes                       `json:"attributes,omitempty" url:"attributes,omitempty"`
-	AuthenticationMethods            *ConnectionAuthenticationMethods            `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
-	BruteForceProtection             *ConnectionBruteForceProtection             `json:"brute_force_protection,omitempty" url:"brute_force_protection,omitempty"`
-	Configuration                    *ConnectionConfiguration                    `json:"configuration,omitempty" url:"configuration,omitempty"`
-	CustomScripts                    *ConnectionCustomScripts                    `json:"customScripts,omitempty" url:"customScripts,omitempty"`
-	DisableSelfServiceChangePassword *ConnectionDisableSelfServiceChangePassword `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
-	DisableSignup                    *ConnectionDisableSignup                    `json:"disable_signup,omitempty" url:"disable_signup,omitempty"`
-	EnableScriptContext              *ConnectionEnableScriptContext              `json:"enable_script_context,omitempty" url:"enable_script_context,omitempty"`
-	EnabledDatabaseCustomization     *ConnectionEnabledDatabaseCustomization     `json:"enabledDatabaseCustomization,omitempty" url:"enabledDatabaseCustomization,omitempty"`
-	ImportMode                       *ConnectionImportMode                       `json:"import_mode,omitempty" url:"import_mode,omitempty"`
-	Mfa                              *ConnectionMfa                              `json:"mfa,omitempty" url:"mfa,omitempty"`
-	PasskeyOptions                   *ConnectionPasskeyOptions                   `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
-	PasswordPolicy                   *ConnectionPasswordPolicyEnum               `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
-	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions        `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
-	PasswordDictionary               *ConnectionPasswordDictionaryOptions        `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
-	PasswordHistory                  *ConnectionPasswordHistoryOptions           `json:"password_history,omitempty" url:"password_history,omitempty"`
-	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions    `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
-	Precedence                       *ConnectionIdentifierPrecedence             `json:"precedence,omitempty" url:"precedence,omitempty"`
-	RealmFallback                    *ConnectionRealmFallback                    `json:"realm_fallback,omitempty" url:"realm_fallback,omitempty"`
-	RequiresUsername                 *ConnectionRequiresUsername                 `json:"requires_username,omitempty" url:"requires_username,omitempty"`
-	Validation                       *ConnectionValidationOptions                `json:"validation,omitempty" url:"validation,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *ConnectionOptionsAuth0) GetNonPersistentAttrs() ConnectionNonPersistentAttrs {
-	if c == nil || c.NonPersistentAttrs == nil {
-		return nil
-	}
-	return *c.NonPersistentAttrs
-}
-
-func (c *ConnectionOptionsAuth0) GetAttributes() ConnectionAttributes {
-	if c == nil || c.Attributes == nil {
-		return ConnectionAttributes{}
-	}
-	return *c.Attributes
-}
-
-func (c *ConnectionOptionsAuth0) GetAuthenticationMethods() ConnectionAuthenticationMethods {
-	if c == nil || c.AuthenticationMethods == nil {
-		return ConnectionAuthenticationMethods{}
-	}
-	return *c.AuthenticationMethods
-}
-
-func (c *ConnectionOptionsAuth0) GetBruteForceProtection() ConnectionBruteForceProtection {
-	if c == nil || c.BruteForceProtection == nil {
-		return false
-	}
-	return *c.BruteForceProtection
-}
-
-func (c *ConnectionOptionsAuth0) GetConfiguration() ConnectionConfiguration {
-	if c == nil || c.Configuration == nil {
-		return nil
-	}
-	return *c.Configuration
-}
-
-func (c *ConnectionOptionsAuth0) GetCustomScripts() ConnectionCustomScripts {
-	if c == nil || c.CustomScripts == nil {
-		return ConnectionCustomScripts{}
-	}
-	return *c.CustomScripts
-}
-
-func (c *ConnectionOptionsAuth0) GetDisableSelfServiceChangePassword() ConnectionDisableSelfServiceChangePassword {
-	if c == nil || c.DisableSelfServiceChangePassword == nil {
-		return false
-	}
-	return *c.DisableSelfServiceChangePassword
-}
-
-func (c *ConnectionOptionsAuth0) GetDisableSignup() ConnectionDisableSignup {
-	if c == nil || c.DisableSignup == nil {
-		return false
-	}
-	return *c.DisableSignup
-}
-
-func (c *ConnectionOptionsAuth0) GetEnableScriptContext() ConnectionEnableScriptContext {
-	if c == nil || c.EnableScriptContext == nil {
-		return false
-	}
-	return *c.EnableScriptContext
-}
-
-func (c *ConnectionOptionsAuth0) GetEnabledDatabaseCustomization() ConnectionEnabledDatabaseCustomization {
-	if c == nil || c.EnabledDatabaseCustomization == nil {
-		return false
-	}
-	return *c.EnabledDatabaseCustomization
-}
-
-func (c *ConnectionOptionsAuth0) GetImportMode() ConnectionImportMode {
-	if c == nil || c.ImportMode == nil {
-		return false
-	}
-	return *c.ImportMode
-}
-
-func (c *ConnectionOptionsAuth0) GetMfa() ConnectionMfa {
-	if c == nil || c.Mfa == nil {
-		return ConnectionMfa{}
-	}
-	return *c.Mfa
-}
-
-func (c *ConnectionOptionsAuth0) GetPasskeyOptions() ConnectionPasskeyOptions {
-	if c == nil || c.PasskeyOptions == nil {
-		return ConnectionPasskeyOptions{}
-	}
-	return *c.PasskeyOptions
-}
-
-func (c *ConnectionOptionsAuth0) GetPasswordPolicy() ConnectionPasswordPolicyEnum {
-	if c == nil || c.PasswordPolicy == nil {
-		return ""
-	}
-	return *c.PasswordPolicy
-}
-
-func (c *ConnectionOptionsAuth0) GetPasswordComplexityOptions() ConnectionPasswordComplexityOptions {
-	if c == nil || c.PasswordComplexityOptions == nil {
-		return ConnectionPasswordComplexityOptions{}
-	}
-	return *c.PasswordComplexityOptions
-}
-
-func (c *ConnectionOptionsAuth0) GetPasswordDictionary() ConnectionPasswordDictionaryOptions {
-	if c == nil || c.PasswordDictionary == nil {
-		return ConnectionPasswordDictionaryOptions{}
-	}
-	return *c.PasswordDictionary
-}
-
-func (c *ConnectionOptionsAuth0) GetPasswordHistory() ConnectionPasswordHistoryOptions {
-	if c == nil || c.PasswordHistory == nil {
-		return ConnectionPasswordHistoryOptions{}
-	}
-	return *c.PasswordHistory
-}
-
-func (c *ConnectionOptionsAuth0) GetPasswordNoPersonalInfo() ConnectionPasswordNoPersonalInfoOptions {
-	if c == nil || c.PasswordNoPersonalInfo == nil {
-		return ConnectionPasswordNoPersonalInfoOptions{}
-	}
-	return *c.PasswordNoPersonalInfo
-}
-
-func (c *ConnectionOptionsAuth0) GetPrecedence() ConnectionIdentifierPrecedence {
-	if c == nil || c.Precedence == nil {
-		return nil
-	}
-	return *c.Precedence
-}
-
-func (c *ConnectionOptionsAuth0) GetRealmFallback() ConnectionRealmFallback {
-	if c == nil || c.RealmFallback == nil {
-		return false
-	}
-	return *c.RealmFallback
-}
-
-func (c *ConnectionOptionsAuth0) GetRequiresUsername() ConnectionRequiresUsername {
-	if c == nil || c.RequiresUsername == nil {
-		return false
-	}
-	return *c.RequiresUsername
-}
-
-func (c *ConnectionOptionsAuth0) GetValidation() ConnectionValidationOptions {
-	if c == nil || c.Validation == nil {
-		return ConnectionValidationOptions{}
-	}
-	return *c.Validation
-}
-
-func (c *ConnectionOptionsAuth0) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *ConnectionOptionsAuth0) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
-	}
-	c.explicitFields.Or(c.explicitFields, field)
-}
-
-// SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetNonPersistentAttrs(nonPersistentAttrs *ConnectionNonPersistentAttrs) {
-	c.NonPersistentAttrs = nonPersistentAttrs
-	c.require(connectionOptionsAuth0FieldNonPersistentAttrs)
-}
-
-// SetAttributes sets the Attributes field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetAttributes(attributes *ConnectionAttributes) {
-	c.Attributes = attributes
-	c.require(connectionOptionsAuth0FieldAttributes)
-}
-
-// SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetAuthenticationMethods(authenticationMethods *ConnectionAuthenticationMethods) {
-	c.AuthenticationMethods = authenticationMethods
-	c.require(connectionOptionsAuth0FieldAuthenticationMethods)
-}
-
-// SetBruteForceProtection sets the BruteForceProtection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetBruteForceProtection(bruteForceProtection *ConnectionBruteForceProtection) {
-	c.BruteForceProtection = bruteForceProtection
-	c.require(connectionOptionsAuth0FieldBruteForceProtection)
-}
-
-// SetConfiguration sets the Configuration field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetConfiguration(configuration *ConnectionConfiguration) {
-	c.Configuration = configuration
-	c.require(connectionOptionsAuth0FieldConfiguration)
-}
-
-// SetCustomScripts sets the CustomScripts field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetCustomScripts(customScripts *ConnectionCustomScripts) {
-	c.CustomScripts = customScripts
-	c.require(connectionOptionsAuth0FieldCustomScripts)
-}
-
-// SetDisableSelfServiceChangePassword sets the DisableSelfServiceChangePassword field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetDisableSelfServiceChangePassword(disableSelfServiceChangePassword *ConnectionDisableSelfServiceChangePassword) {
-	c.DisableSelfServiceChangePassword = disableSelfServiceChangePassword
-	c.require(connectionOptionsAuth0FieldDisableSelfServiceChangePassword)
-}
-
-// SetDisableSignup sets the DisableSignup field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetDisableSignup(disableSignup *ConnectionDisableSignup) {
-	c.DisableSignup = disableSignup
-	c.require(connectionOptionsAuth0FieldDisableSignup)
-}
-
-// SetEnableScriptContext sets the EnableScriptContext field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetEnableScriptContext(enableScriptContext *ConnectionEnableScriptContext) {
-	c.EnableScriptContext = enableScriptContext
-	c.require(connectionOptionsAuth0FieldEnableScriptContext)
-}
-
-// SetEnabledDatabaseCustomization sets the EnabledDatabaseCustomization field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetEnabledDatabaseCustomization(enabledDatabaseCustomization *ConnectionEnabledDatabaseCustomization) {
-	c.EnabledDatabaseCustomization = enabledDatabaseCustomization
-	c.require(connectionOptionsAuth0FieldEnabledDatabaseCustomization)
-}
-
-// SetImportMode sets the ImportMode field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetImportMode(importMode *ConnectionImportMode) {
-	c.ImportMode = importMode
-	c.require(connectionOptionsAuth0FieldImportMode)
-}
-
-// SetMfa sets the Mfa field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetMfa(mfa *ConnectionMfa) {
-	c.Mfa = mfa
-	c.require(connectionOptionsAuth0FieldMfa)
-}
-
-// SetPasskeyOptions sets the PasskeyOptions field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetPasskeyOptions(passkeyOptions *ConnectionPasskeyOptions) {
-	c.PasskeyOptions = passkeyOptions
-	c.require(connectionOptionsAuth0FieldPasskeyOptions)
-}
-
-// SetPasswordPolicy sets the PasswordPolicy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetPasswordPolicy(passwordPolicy *ConnectionPasswordPolicyEnum) {
-	c.PasswordPolicy = passwordPolicy
-	c.require(connectionOptionsAuth0FieldPasswordPolicy)
-}
-
-// SetPasswordComplexityOptions sets the PasswordComplexityOptions field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetPasswordComplexityOptions(passwordComplexityOptions *ConnectionPasswordComplexityOptions) {
-	c.PasswordComplexityOptions = passwordComplexityOptions
-	c.require(connectionOptionsAuth0FieldPasswordComplexityOptions)
-}
-
-// SetPasswordDictionary sets the PasswordDictionary field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetPasswordDictionary(passwordDictionary *ConnectionPasswordDictionaryOptions) {
-	c.PasswordDictionary = passwordDictionary
-	c.require(connectionOptionsAuth0FieldPasswordDictionary)
-}
-
-// SetPasswordHistory sets the PasswordHistory field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetPasswordHistory(passwordHistory *ConnectionPasswordHistoryOptions) {
-	c.PasswordHistory = passwordHistory
-	c.require(connectionOptionsAuth0FieldPasswordHistory)
-}
-
-// SetPasswordNoPersonalInfo sets the PasswordNoPersonalInfo field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetPasswordNoPersonalInfo(passwordNoPersonalInfo *ConnectionPasswordNoPersonalInfoOptions) {
-	c.PasswordNoPersonalInfo = passwordNoPersonalInfo
-	c.require(connectionOptionsAuth0FieldPasswordNoPersonalInfo)
-}
-
-// SetPrecedence sets the Precedence field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetPrecedence(precedence *ConnectionIdentifierPrecedence) {
-	c.Precedence = precedence
-	c.require(connectionOptionsAuth0FieldPrecedence)
-}
-
-// SetRealmFallback sets the RealmFallback field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetRealmFallback(realmFallback *ConnectionRealmFallback) {
-	c.RealmFallback = realmFallback
-	c.require(connectionOptionsAuth0FieldRealmFallback)
-}
-
-// SetRequiresUsername sets the RequiresUsername field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetRequiresUsername(requiresUsername *ConnectionRequiresUsername) {
-	c.RequiresUsername = requiresUsername
-	c.require(connectionOptionsAuth0FieldRequiresUsername)
-}
-
-// SetValidation sets the Validation field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAuth0) SetValidation(validation *ConnectionValidationOptions) {
-	c.Validation = validation
-	c.require(connectionOptionsAuth0FieldValidation)
-}
-
-func (c *ConnectionOptionsAuth0) UnmarshalJSON(data []byte) error {
-	type unmarshaler ConnectionOptionsAuth0
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = ConnectionOptionsAuth0(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *ConnectionOptionsAuth0) MarshalJSON() ([]byte, error) {
-	type embed ConnectionOptionsAuth0
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (c *ConnectionOptionsAuth0) String() string {
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
+type ConnectionOptionsAuth0 = map[string]interface{}
 
 // options for the 'auth0-oidc' connection
 type ConnectionOptionsAuth0Oidc = map[string]interface{}
@@ -9977,101 +9429,22 @@ type ConnectionOptionsAuth0Oidc = map[string]interface{}
 // options for the 'waad' connection
 type ConnectionOptionsAzureAd = map[string]interface{}
 
-type ConnectionOptionsBaidu = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsBaidu = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsBitbucket = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsBitbucket = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsBitly = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsBitly = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsBox = *ConnectionOptionsOAuth2Common
-
-// Common attributes for connection options including non-persistent attributes and cross-app access
-var (
-	connectionOptionsCommonFieldNonPersistentAttrs = big.NewInt(1 << 0)
-)
-
-type ConnectionOptionsCommon struct {
-	NonPersistentAttrs *ConnectionNonPersistentAttrs `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *ConnectionOptionsCommon) GetNonPersistentAttrs() ConnectionNonPersistentAttrs {
-	if c == nil || c.NonPersistentAttrs == nil {
-		return nil
-	}
-	return *c.NonPersistentAttrs
-}
-
-func (c *ConnectionOptionsCommon) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *ConnectionOptionsCommon) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
-	}
-	c.explicitFields.Or(c.explicitFields, field)
-}
-
-// SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsCommon) SetNonPersistentAttrs(nonPersistentAttrs *ConnectionNonPersistentAttrs) {
-	c.NonPersistentAttrs = nonPersistentAttrs
-	c.require(connectionOptionsCommonFieldNonPersistentAttrs)
-}
-
-func (c *ConnectionOptionsCommon) UnmarshalJSON(data []byte) error {
-	type unmarshaler ConnectionOptionsCommon
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = ConnectionOptionsCommon(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *ConnectionOptionsCommon) MarshalJSON() ([]byte, error) {
-	type embed ConnectionOptionsCommon
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (c *ConnectionOptionsCommon) String() string {
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
+type ConnectionOptionsBox = ConnectionOptionsOAuth2Common
 
 // options for the 'custom' connection
 type ConnectionOptionsCustom = map[string]interface{}
 
-type ConnectionOptionsDaccount = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsDaccount = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsDropbox = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsDropbox = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsDwolla = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsDwolla = ConnectionOptionsOAuth2Common
 
 // options for the 'email' connection
 type ConnectionOptionsEmail = map[string]interface{}
@@ -10082,7 +9455,7 @@ type ConnectionOptionsEvernoteCommon = map[string]interface{}
 
 type ConnectionOptionsEvernoteSandbox = ConnectionOptionsEvernoteCommon
 
-type ConnectionOptionsExact = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsExact = ConnectionOptionsOAuth2Common
 
 // options for the 'facebook' connection
 type ConnectionOptionsFacebook = map[string]interface{}
@@ -10102,164 +9475,24 @@ type ConnectionOptionsGoogleApps = map[string]interface{}
 // options for the 'google-oauth2' connection
 type ConnectionOptionsGoogleOAuth2 = map[string]interface{}
 
-type ConnectionOptionsInstagram = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsInstagram = ConnectionOptionsOAuth2Common
 
 // options for the 'ip' connection
 type ConnectionOptionsIP = map[string]interface{}
 
-type ConnectionOptionsLine = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsLine = ConnectionOptionsOAuth2Common
 
 // options for the 'linkedin' connection
 type ConnectionOptionsLinkedin = map[string]interface{}
 
-type ConnectionOptionsMiicard = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsMiicard = ConnectionOptionsOAuth2Common
 
 // options for the 'oauth1' connection
 type ConnectionOptionsOAuth1 = map[string]interface{}
 
-type ConnectionOptionsOAuth2 = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsOAuth2 = ConnectionOptionsOAuth2Common
 
-var (
-	connectionOptionsOAuth2CommonFieldNonPersistentAttrs    = big.NewInt(1 << 0)
-	connectionOptionsOAuth2CommonFieldClientID              = big.NewInt(1 << 1)
-	connectionOptionsOAuth2CommonFieldClientSecret          = big.NewInt(1 << 2)
-	connectionOptionsOAuth2CommonFieldUpstreamParams        = big.NewInt(1 << 3)
-	connectionOptionsOAuth2CommonFieldSetUserRootAttributes = big.NewInt(1 << 4)
-)
-
-type ConnectionOptionsOAuth2Common struct {
-	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
-	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
-	ClientSecret          *ConnectionClientSecret              `json:"client_secret,omitempty" url:"client_secret,omitempty"`
-	UpstreamParams        *ConnectionUpstreamParams            `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	SetUserRootAttributes *ConnectionSetUserRootAttributesEnum `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *ConnectionOptionsOAuth2Common) GetNonPersistentAttrs() ConnectionNonPersistentAttrs {
-	if c == nil || c.NonPersistentAttrs == nil {
-		return nil
-	}
-	return *c.NonPersistentAttrs
-}
-
-func (c *ConnectionOptionsOAuth2Common) GetClientID() ConnectionClientID {
-	if c == nil || c.ClientID == nil {
-		return ""
-	}
-	return *c.ClientID
-}
-
-func (c *ConnectionOptionsOAuth2Common) GetClientSecret() ConnectionClientSecret {
-	if c == nil || c.ClientSecret == nil {
-		return ""
-	}
-	return *c.ClientSecret
-}
-
-func (c *ConnectionOptionsOAuth2Common) GetUpstreamParams() ConnectionUpstreamParams {
-	if c == nil || c.UpstreamParams == nil {
-		return nil
-	}
-	return *c.UpstreamParams
-}
-
-func (c *ConnectionOptionsOAuth2Common) GetSetUserRootAttributes() ConnectionSetUserRootAttributesEnum {
-	if c == nil || c.SetUserRootAttributes == nil {
-		return ""
-	}
-	return *c.SetUserRootAttributes
-}
-
-func (c *ConnectionOptionsOAuth2Common) GetExtraProperties() map[string]interface{} {
-	return c.extraProperties
-}
-
-func (c *ConnectionOptionsOAuth2Common) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
-	}
-	c.explicitFields.Or(c.explicitFields, field)
-}
-
-// SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsOAuth2Common) SetNonPersistentAttrs(nonPersistentAttrs *ConnectionNonPersistentAttrs) {
-	c.NonPersistentAttrs = nonPersistentAttrs
-	c.require(connectionOptionsOAuth2CommonFieldNonPersistentAttrs)
-}
-
-// SetClientID sets the ClientID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsOAuth2Common) SetClientID(clientID *ConnectionClientID) {
-	c.ClientID = clientID
-	c.require(connectionOptionsOAuth2CommonFieldClientID)
-}
-
-// SetClientSecret sets the ClientSecret field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsOAuth2Common) SetClientSecret(clientSecret *ConnectionClientSecret) {
-	c.ClientSecret = clientSecret
-	c.require(connectionOptionsOAuth2CommonFieldClientSecret)
-}
-
-// SetUpstreamParams sets the UpstreamParams field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsOAuth2Common) SetUpstreamParams(upstreamParams *ConnectionUpstreamParams) {
-	c.UpstreamParams = upstreamParams
-	c.require(connectionOptionsOAuth2CommonFieldUpstreamParams)
-}
-
-// SetSetUserRootAttributes sets the SetUserRootAttributes field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsOAuth2Common) SetSetUserRootAttributes(setUserRootAttributes *ConnectionSetUserRootAttributesEnum) {
-	c.SetUserRootAttributes = setUserRootAttributes
-	c.require(connectionOptionsOAuth2CommonFieldSetUserRootAttributes)
-}
-
-func (c *ConnectionOptionsOAuth2Common) UnmarshalJSON(data []byte) error {
-	type unmarshaler ConnectionOptionsOAuth2Common
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = ConnectionOptionsOAuth2Common(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *ConnectionOptionsOAuth2Common) MarshalJSON() ([]byte, error) {
-	type embed ConnectionOptionsOAuth2Common
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (c *ConnectionOptionsOAuth2Common) String() string {
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
+type ConnectionOptionsOAuth2Common = map[string]interface{}
 
 // options for the 'office365' connection
 type ConnectionOptionsOffice365 = map[string]interface{}
@@ -10270,9 +9503,9 @@ type ConnectionOptionsOidc = map[string]interface{}
 // options for the 'okta' connection
 type ConnectionOptionsOkta = map[string]interface{}
 
-type ConnectionOptionsPaypal = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsPaypal = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsPaypalSandbox = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsPaypalSandbox = ConnectionOptionsOAuth2Common
 
 // options for the 'pingfederate' connection
 type ConnectionOptionsPingFederate = map[string]interface{}
@@ -10280,7 +9513,7 @@ type ConnectionOptionsPingFederate = map[string]interface{}
 // options for the 'planningcenter' connection
 type ConnectionOptionsPlanningCenter = map[string]interface{}
 
-type ConnectionOptionsRenren = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsRenren = ConnectionOptionsOAuth2Common
 
 type ConnectionOptionsSalesforce = ConnectionOptionsSalesforceCommon
 
@@ -10293,46 +9526,43 @@ type ConnectionOptionsSalesforceSandbox = ConnectionOptionsSalesforceCommon
 // options for the 'samlp' connection
 type ConnectionOptionsSAML = map[string]interface{}
 
-type ConnectionOptionsSharepoint = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsSharepoint = ConnectionOptionsOAuth2Common
 
 // options for the 'shop' connection
 type ConnectionOptionsShop = map[string]interface{}
 
-type ConnectionOptionsShopify = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsShopify = ConnectionOptionsOAuth2Common
 
 // options for the 'sms' connection
 type ConnectionOptionsSms = map[string]interface{}
 
-type ConnectionOptionsSoundcloud = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsSoundcloud = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsTheCity = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsTheCity = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsTheCitySandbox = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsTheCitySandbox = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsThirtySevenSignals = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsThirtySevenSignals = ConnectionOptionsOAuth2Common
 
 // options for the 'twitter' connection
 type ConnectionOptionsTwitter = map[string]interface{}
 
-type ConnectionOptionsUntappd = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsUntappd = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsVkontakte = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsVkontakte = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsWeibo = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsWeibo = ConnectionOptionsOAuth2Common
 
 // options for the 'windowslive' connection
 type ConnectionOptionsWindowsLive = map[string]interface{}
 
-type ConnectionOptionsWordpress = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsWordpress = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsYahoo = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsYahoo = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsYammer = *ConnectionOptionsOAuth2Common
+type ConnectionOptionsYammer = ConnectionOptionsOAuth2Common
 
-type ConnectionOptionsYandex = *ConnectionOptionsOAuth2Common
-
-// Indicates whether to use realm fallback.
-type ConnectionRealmFallback = bool
+type ConnectionOptionsYandex = ConnectionOptionsOAuth2Common
 
 // Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
 type ConnectionRealms = []string
@@ -10526,9 +9756,6 @@ func (c *ConnectionRequestCommon) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
-
-// Indicates whether the user is required to provide a username in addition to an email address.
-type ConnectionRequiresUsername = bool
 
 var (
 	connectionResponseCommonFieldDisplayName        = big.NewInt(1 << 0)
@@ -12137,7 +11364,7 @@ func (c *ConnectionResponseContentAuth0) GetConnectedAccounts() ConnectionConnec
 
 func (c *ConnectionResponseContentAuth0) GetOptions() ConnectionOptionsAuth0 {
 	if c == nil || c.Options == nil {
-		return ConnectionOptionsAuth0{}
+		return nil
 	}
 	return *c.Options
 }
@@ -28370,7 +27597,7 @@ func (c *CreateConnectionRequestContentAuth0) GetConnectedAccounts() ConnectionC
 
 func (c *CreateConnectionRequestContentAuth0) GetOptions() ConnectionOptionsAuth0 {
 	if c == nil || c.Options == nil {
-		return ConnectionOptionsAuth0{}
+		return nil
 	}
 	return *c.Options
 }
@@ -62920,7 +62147,6 @@ var (
 	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 29)
 	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 30)
 	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 31)
-	getTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 32)
 )
 
 type GetTenantSettingsResponseContent struct {
@@ -62979,8 +62205,7 @@ type GetTenantSettingsResponseContent struct {
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
-	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                                   `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
-	ResourceParameterProfile                       *TenantSettingsResourceParameterProfile `json:"resource_parameter_profile,omitempty" url:"resource_parameter_profile,omitempty"`
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -63211,13 +62436,6 @@ func (g *GetTenantSettingsResponseContent) GetSkipNonVerifiableCallbackURIConfir
 		return false
 	}
 	return *g.SkipNonVerifiableCallbackURIConfirmationPrompt
-}
-
-func (g *GetTenantSettingsResponseContent) GetResourceParameterProfile() TenantSettingsResourceParameterProfile {
-	if g == nil || g.ResourceParameterProfile == nil {
-		return ""
-	}
-	return *g.ResourceParameterProfile
 }
 
 func (g *GetTenantSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -63453,13 +62671,6 @@ func (g *GetTenantSettingsResponseContent) SetAuthorizationResponseIssParameterS
 func (g *GetTenantSettingsResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
 	g.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
 	g.require(getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
-}
-
-// SetResourceParameterProfile sets the ResourceParameterProfile field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTenantSettingsResponseContent) SetResourceParameterProfile(resourceParameterProfile *TenantSettingsResourceParameterProfile) {
-	g.ResourceParameterProfile = resourceParameterProfile
-	g.require(getTenantSettingsResponseContentFieldResourceParameterProfile)
 }
 
 func (g *GetTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -78138,7 +77349,7 @@ var (
 
 type SelfServiceProfileSSOTicketProvisioningConfig struct {
 	// The scopes of the SCIM tokens generated during the self-service flow.
-	Scopes []SelfServiceProfileSSOTicketProvisioningScopeEnum `json:"scopes,omitempty" url:"scopes,omitempty"`
+	Scopes []SelfServiceProfileSSOTicketProvisioningScopeEnum `json:"scopes" url:"scopes"`
 	// Lifetime of the tokens in seconds. Must be greater than 900. If not provided, the tokens don't expire.
 	TokenLifetime *int `json:"token_lifetime,omitempty" url:"token_lifetime,omitempty"`
 
@@ -78150,7 +77361,7 @@ type SelfServiceProfileSSOTicketProvisioningConfig struct {
 }
 
 func (s *SelfServiceProfileSSOTicketProvisioningConfig) GetScopes() []SelfServiceProfileSSOTicketProvisioningScopeEnum {
-	if s == nil || s.Scopes == nil {
+	if s == nil {
 		return nil
 	}
 	return s.Scopes
@@ -83354,29 +82565,6 @@ func (t *TenantSettingsPasswordPage) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
-// Profile that determines how the identity of the protected resource (i.e., API) can be specified in the OAuth endpoints when access is being requested. When set to audience (default), the audience parameter is used to specify the resource server. When set to compatibility, the audience parameter is still checked first, but if it not provided, then the resource parameter can be used to specify the resource server.
-type TenantSettingsResourceParameterProfile string
-
-const (
-	TenantSettingsResourceParameterProfileAudience      TenantSettingsResourceParameterProfile = "audience"
-	TenantSettingsResourceParameterProfileCompatibility TenantSettingsResourceParameterProfile = "compatibility"
-)
-
-func NewTenantSettingsResourceParameterProfileFromString(s string) (TenantSettingsResourceParameterProfile, error) {
-	switch s {
-	case "audience":
-		return TenantSettingsResourceParameterProfileAudience, nil
-	case "compatibility":
-		return TenantSettingsResourceParameterProfileCompatibility, nil
-	}
-	var t TenantSettingsResourceParameterProfile
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (t TenantSettingsResourceParameterProfile) Ptr() *TenantSettingsResourceParameterProfile {
-	return &t
-}
-
 // Sessions related settings for tenant
 var (
 	tenantSettingsSessionsFieldOidcLogoutPromptEnabled = big.NewInt(1 << 0)
@@ -87304,7 +86492,6 @@ var (
 	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 29)
 	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 30)
 	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 31)
-	updateTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 32)
 )
 
 type UpdateTenantSettingsResponseContent struct {
@@ -87363,8 +86550,7 @@ type UpdateTenantSettingsResponseContent struct {
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
-	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                                   `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
-	ResourceParameterProfile                       *TenantSettingsResourceParameterProfile `json:"resource_parameter_profile,omitempty" url:"resource_parameter_profile,omitempty"`
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -87595,13 +86781,6 @@ func (u *UpdateTenantSettingsResponseContent) GetSkipNonVerifiableCallbackURICon
 		return false
 	}
 	return *u.SkipNonVerifiableCallbackURIConfirmationPrompt
-}
-
-func (u *UpdateTenantSettingsResponseContent) GetResourceParameterProfile() TenantSettingsResourceParameterProfile {
-	if u == nil || u.ResourceParameterProfile == nil {
-		return ""
-	}
-	return *u.ResourceParameterProfile
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -87837,13 +87016,6 @@ func (u *UpdateTenantSettingsResponseContent) SetAuthorizationResponseIssParamet
 func (u *UpdateTenantSettingsResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
 	u.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
 	u.require(updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
-}
-
-// SetResourceParameterProfile sets the ResourceParameterProfile field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateTenantSettingsResponseContent) SetResourceParameterProfile(resourceParameterProfile *TenantSettingsResourceParameterProfile) {
-	u.ResourceParameterProfile = resourceParameterProfile
-	u.require(updateTenantSettingsResponseContentFieldResourceParameterProfile)
 }
 
 func (u *UpdateTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {

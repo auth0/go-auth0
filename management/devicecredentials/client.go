@@ -40,7 +40,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListDeviceCredentialsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.DeviceCredential], error) {
+) (*core.Page[*int, *management.DeviceCredential, *management.ListDeviceCredentialsOffsetPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -63,7 +63,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -91,12 +91,13 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListDeviceCredentialsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.DeviceCredential] {
+	readPageResponse := func(response *management.ListDeviceCredentialsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.DeviceCredential, *management.ListDeviceCredentialsOffsetPaginatedResponseContent] {
 		next += 1
 		results := response.DeviceCredentials
-		return &internal.PageResponse[*int, *management.DeviceCredential]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *management.DeviceCredential, *management.ListDeviceCredentialsOffsetPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(

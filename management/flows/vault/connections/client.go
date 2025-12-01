@@ -39,7 +39,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListFlowsVaultConnectionsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.FlowsVaultConnectionSummary], error) {
+) (*core.Page[*int, *management.FlowsVaultConnectionSummary, *management.ListFlowsVaultConnectionsOffsetPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -62,7 +62,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -90,12 +90,13 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListFlowsVaultConnectionsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.FlowsVaultConnectionSummary] {
+	readPageResponse := func(response *management.ListFlowsVaultConnectionsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.FlowsVaultConnectionSummary, *management.ListFlowsVaultConnectionsOffsetPaginatedResponseContent] {
 		next += 1
 		results := response.Connections
-		return &internal.PageResponse[*int, *management.FlowsVaultConnectionSummary]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *management.FlowsVaultConnectionSummary, *management.ListFlowsVaultConnectionsOffsetPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(

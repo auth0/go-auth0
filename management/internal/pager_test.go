@@ -9,6 +9,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/auth0/go-auth0/v2/management/core"
 )
 
 type TestPageResponse struct {
@@ -110,7 +112,7 @@ func TestPager(t *testing.T) {
 			)
 			pager := NewCursorPager(
 				caller,
-				func(request *PageRequest[*string]) *CallParams {
+				func(request *core.PageRequest[*string]) *CallParams {
 					url := server.URL
 					if request.Cursor != nil {
 						url += "?cursor=" + *request.Cursor
@@ -121,7 +123,7 @@ func TestPager(t *testing.T) {
 						Response: request.Response,
 					}
 				},
-				func(response *TestPageResponse) *PageResponse[*string, *TestPageItem] {
+				func(response *TestPageResponse) *core.PageResponse[*string, *TestPageItem, *TestPageResponse] {
 					var items []*TestPageItem
 					for _, item := range response.Items {
 						itemCopy := item
@@ -131,10 +133,11 @@ func TestPager(t *testing.T) {
 					if response.Next != "" {
 						next = &response.Next
 					}
-					return &PageResponse[*string, *TestPageItem]{
-						Results: items,
-						Next:    next,
-						Done:    response.Next == "",
+					return &core.PageResponse[*string, *TestPageItem, *TestPageResponse]{
+						Results:  items,
+						Response: response,
+						Next:     next,
+						Done:     response.Next == "",
 					}
 				},
 			)
@@ -145,6 +148,12 @@ func TestPager(t *testing.T) {
 				return
 			}
 			require.NoError(t, err)
+
+			require.NotNil(t, page.Response)
+			if len(tt.givePages) > 0 {
+				assert.Equal(t, tt.givePages[0].Items, page.Response.Items)
+				assert.Equal(t, tt.givePages[0].Next, page.Response.Next)
+			}
 
 			var items []TestPageItem
 			iter := page.Iterator()

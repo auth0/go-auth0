@@ -68,7 +68,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListConnectionsQueryParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.ConnectionForList], error) {
+) (*core.Page[*string, *management.ConnectionForList, *management.ListConnectionsCheckpointPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -89,7 +89,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -109,14 +109,15 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListConnectionsCheckpointPaginatedResponseContent) *internal.PageResponse[*string, *management.ConnectionForList] {
+	readPageResponse := func(response *management.ListConnectionsCheckpointPaginatedResponseContent) *core.PageResponse[*string, *management.ConnectionForList, *management.ListConnectionsCheckpointPaginatedResponseContent] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Connections
-		return &internal.PageResponse[*string, *management.ConnectionForList]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *management.ConnectionForList, *management.ListConnectionsCheckpointPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(

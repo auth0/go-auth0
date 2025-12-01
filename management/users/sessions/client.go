@@ -40,7 +40,7 @@ func (c *Client) List(
 	userID string,
 	request *management.ListUserSessionsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.SessionResponseContent], error) {
+) (*core.Page[*string, *management.SessionResponseContent, *management.ListUserSessionsPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -64,7 +64,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -84,14 +84,15 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListUserSessionsPaginatedResponseContent) *internal.PageResponse[*string, *management.SessionResponseContent] {
+	readPageResponse := func(response *management.ListUserSessionsPaginatedResponseContent) *core.PageResponse[*string, *management.SessionResponseContent, *management.ListUserSessionsPaginatedResponseContent] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Sessions
-		return &internal.PageResponse[*string, *management.SessionResponseContent]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *management.SessionResponseContent, *management.ListUserSessionsPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(

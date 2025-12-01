@@ -82,9 +82,8 @@ var (
 	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
 	clientFieldParRequestExpiry                               = big.NewInt(1 << 47)
 	clientFieldTokenQuota                                     = big.NewInt(1 << 48)
-	clientFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type Client struct {
@@ -168,9 +167,8 @@ type Client struct {
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -524,13 +522,6 @@ func (c *Client) GetTokenQuota() TokenQuota {
 		return TokenQuota{}
 	}
 	return *c.TokenQuota
-}
-
-func (c *Client) GetExpressConfiguration() ExpressConfiguration {
-	if c == nil || c.ExpressConfiguration == nil {
-		return ExpressConfiguration{}
-	}
-	return *c.ExpressConfiguration
 }
 
 func (c *Client) GetResourceServerIdentifier() string {
@@ -899,13 +890,6 @@ func (c *Client) SetParRequestExpiry(parRequestExpiry *int) {
 func (c *Client) SetTokenQuota(tokenQuota *TokenQuota) {
 	c.TokenQuota = tokenQuota
 	c.require(clientFieldTokenQuota)
-}
-
-// SetExpressConfiguration sets the ExpressConfiguration field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *Client) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
-	c.ExpressConfiguration = expressConfiguration
-	c.require(clientFieldExpressConfiguration)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
@@ -7099,9 +7083,8 @@ var (
 	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
 	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
 	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type CreateClientResponseContent struct {
@@ -7185,9 +7168,8 @@ type CreateClientResponseContent struct {
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -7541,13 +7523,6 @@ func (c *CreateClientResponseContent) GetTokenQuota() TokenQuota {
 		return TokenQuota{}
 	}
 	return *c.TokenQuota
-}
-
-func (c *CreateClientResponseContent) GetExpressConfiguration() ExpressConfiguration {
-	if c == nil || c.ExpressConfiguration == nil {
-		return ExpressConfiguration{}
-	}
-	return *c.ExpressConfiguration
 }
 
 func (c *CreateClientResponseContent) GetResourceServerIdentifier() string {
@@ -7918,13 +7893,6 @@ func (c *CreateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 	c.require(createClientResponseContentFieldTokenQuota)
 }
 
-// SetExpressConfiguration sets the ExpressConfiguration field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateClientResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
-	c.ExpressConfiguration = expressConfiguration
-	c.require(createClientResponseContentFieldExpressConfiguration)
-}
-
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateClientResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
@@ -8061,438 +8029,6 @@ func (c *CredentialID) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Application specific configuration for use with the OIN Express Configuration feature.
-var (
-	expressConfigurationFieldInitiateLoginURITemplate = big.NewInt(1 << 0)
-	expressConfigurationFieldUserAttributeProfileID   = big.NewInt(1 << 1)
-	expressConfigurationFieldConnectionProfileID      = big.NewInt(1 << 2)
-	expressConfigurationFieldEnableClient             = big.NewInt(1 << 3)
-	expressConfigurationFieldEnableOrganization       = big.NewInt(1 << 4)
-	expressConfigurationFieldLinkedClients            = big.NewInt(1 << 5)
-	expressConfigurationFieldOktaOinClientID          = big.NewInt(1 << 6)
-	expressConfigurationFieldAdminLoginDomain         = big.NewInt(1 << 7)
-	expressConfigurationFieldOinSubmissionID          = big.NewInt(1 << 8)
-)
-
-type ExpressConfiguration struct {
-	// The URI users should bookmark to log in to this application. Variable substitution is permitted for the following properties: organization_name, organization_id, and connection_name.
-	InitiateLoginURITemplate string `json:"initiate_login_uri_template" url:"initiate_login_uri_template"`
-	// The ID of the user attribute profile to use for this application.
-	UserAttributeProfileID string `json:"user_attribute_profile_id" url:"user_attribute_profile_id"`
-	// The ID of the connection profile to use for this application.
-	ConnectionProfileID string `json:"connection_profile_id" url:"connection_profile_id"`
-	// When true, all connections made via express configuration will be enabled for this application.
-	EnableClient bool `json:"enable_client" url:"enable_client"`
-	// When true, all connections made via express configuration will have the associated organization enabled.
-	EnableOrganization bool `json:"enable_organization" url:"enable_organization"`
-	// List of client IDs that are linked to this express configuration (e.g. web or mobile clients).
-	LinkedClients []*LinkedClientConfiguration `json:"linked_clients,omitempty" url:"linked_clients,omitempty"`
-	// This is the unique identifier for the Okta OIN Express Configuration Client, which Okta will use for this application.
-	OktaOinClientID string `json:"okta_oin_client_id" url:"okta_oin_client_id"`
-	// This is the domain that admins are expected to log in via for authenticating for express configuration. It can be either the canonical domain or a registered custom domain.
-	AdminLoginDomain string `json:"admin_login_domain" url:"admin_login_domain"`
-	// The identifier of the published application in the OKTA OIN.
-	OinSubmissionID *string `json:"oin_submission_id,omitempty" url:"oin_submission_id,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (e *ExpressConfiguration) GetInitiateLoginURITemplate() string {
-	if e == nil {
-		return ""
-	}
-	return e.InitiateLoginURITemplate
-}
-
-func (e *ExpressConfiguration) GetUserAttributeProfileID() string {
-	if e == nil {
-		return ""
-	}
-	return e.UserAttributeProfileID
-}
-
-func (e *ExpressConfiguration) GetConnectionProfileID() string {
-	if e == nil {
-		return ""
-	}
-	return e.ConnectionProfileID
-}
-
-func (e *ExpressConfiguration) GetEnableClient() bool {
-	if e == nil {
-		return false
-	}
-	return e.EnableClient
-}
-
-func (e *ExpressConfiguration) GetEnableOrganization() bool {
-	if e == nil {
-		return false
-	}
-	return e.EnableOrganization
-}
-
-func (e *ExpressConfiguration) GetLinkedClients() []*LinkedClientConfiguration {
-	if e == nil || e.LinkedClients == nil {
-		return nil
-	}
-	return e.LinkedClients
-}
-
-func (e *ExpressConfiguration) GetOktaOinClientID() string {
-	if e == nil {
-		return ""
-	}
-	return e.OktaOinClientID
-}
-
-func (e *ExpressConfiguration) GetAdminLoginDomain() string {
-	if e == nil {
-		return ""
-	}
-	return e.AdminLoginDomain
-}
-
-func (e *ExpressConfiguration) GetOinSubmissionID() string {
-	if e == nil || e.OinSubmissionID == nil {
-		return ""
-	}
-	return *e.OinSubmissionID
-}
-
-func (e *ExpressConfiguration) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExpressConfiguration) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
-	}
-	e.explicitFields.Or(e.explicitFields, field)
-}
-
-// SetInitiateLoginURITemplate sets the InitiateLoginURITemplate field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfiguration) SetInitiateLoginURITemplate(initiateLoginURITemplate string) {
-	e.InitiateLoginURITemplate = initiateLoginURITemplate
-	e.require(expressConfigurationFieldInitiateLoginURITemplate)
-}
-
-// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfiguration) SetUserAttributeProfileID(userAttributeProfileID string) {
-	e.UserAttributeProfileID = userAttributeProfileID
-	e.require(expressConfigurationFieldUserAttributeProfileID)
-}
-
-// SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfiguration) SetConnectionProfileID(connectionProfileID string) {
-	e.ConnectionProfileID = connectionProfileID
-	e.require(expressConfigurationFieldConnectionProfileID)
-}
-
-// SetEnableClient sets the EnableClient field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfiguration) SetEnableClient(enableClient bool) {
-	e.EnableClient = enableClient
-	e.require(expressConfigurationFieldEnableClient)
-}
-
-// SetEnableOrganization sets the EnableOrganization field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfiguration) SetEnableOrganization(enableOrganization bool) {
-	e.EnableOrganization = enableOrganization
-	e.require(expressConfigurationFieldEnableOrganization)
-}
-
-// SetLinkedClients sets the LinkedClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfiguration) SetLinkedClients(linkedClients []*LinkedClientConfiguration) {
-	e.LinkedClients = linkedClients
-	e.require(expressConfigurationFieldLinkedClients)
-}
-
-// SetOktaOinClientID sets the OktaOinClientID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfiguration) SetOktaOinClientID(oktaOinClientID string) {
-	e.OktaOinClientID = oktaOinClientID
-	e.require(expressConfigurationFieldOktaOinClientID)
-}
-
-// SetAdminLoginDomain sets the AdminLoginDomain field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfiguration) SetAdminLoginDomain(adminLoginDomain string) {
-	e.AdminLoginDomain = adminLoginDomain
-	e.require(expressConfigurationFieldAdminLoginDomain)
-}
-
-// SetOinSubmissionID sets the OinSubmissionID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfiguration) SetOinSubmissionID(oinSubmissionID *string) {
-	e.OinSubmissionID = oinSubmissionID
-	e.require(expressConfigurationFieldOinSubmissionID)
-}
-
-func (e *ExpressConfiguration) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExpressConfiguration
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExpressConfiguration(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-	e.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (e *ExpressConfiguration) MarshalJSON() ([]byte, error) {
-	type embed ExpressConfiguration
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*e),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (e *ExpressConfiguration) String() string {
-	if len(e.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
-// Application specific configuration for use with the OIN Express Configuration feature.
-var (
-	expressConfigurationOrNullFieldInitiateLoginURITemplate = big.NewInt(1 << 0)
-	expressConfigurationOrNullFieldUserAttributeProfileID   = big.NewInt(1 << 1)
-	expressConfigurationOrNullFieldConnectionProfileID      = big.NewInt(1 << 2)
-	expressConfigurationOrNullFieldEnableClient             = big.NewInt(1 << 3)
-	expressConfigurationOrNullFieldEnableOrganization       = big.NewInt(1 << 4)
-	expressConfigurationOrNullFieldLinkedClients            = big.NewInt(1 << 5)
-	expressConfigurationOrNullFieldOktaOinClientID          = big.NewInt(1 << 6)
-	expressConfigurationOrNullFieldAdminLoginDomain         = big.NewInt(1 << 7)
-	expressConfigurationOrNullFieldOinSubmissionID          = big.NewInt(1 << 8)
-)
-
-type ExpressConfigurationOrNull struct {
-	// The URI users should bookmark to log in to this application. Variable substitution is permitted for the following properties: organization_name, organization_id, and connection_name.
-	InitiateLoginURITemplate string `json:"initiate_login_uri_template" url:"initiate_login_uri_template"`
-	// The ID of the user attribute profile to use for this application.
-	UserAttributeProfileID string `json:"user_attribute_profile_id" url:"user_attribute_profile_id"`
-	// The ID of the connection profile to use for this application.
-	ConnectionProfileID string `json:"connection_profile_id" url:"connection_profile_id"`
-	// When true, all connections made via express configuration will be enabled for this application.
-	EnableClient bool `json:"enable_client" url:"enable_client"`
-	// When true, all connections made via express configuration will have the associated organization enabled.
-	EnableOrganization bool `json:"enable_organization" url:"enable_organization"`
-	// List of client IDs that are linked to this express configuration (e.g. web or mobile clients).
-	LinkedClients []*LinkedClientConfiguration `json:"linked_clients,omitempty" url:"linked_clients,omitempty"`
-	// This is the unique identifier for the Okta OIN Express Configuration Client, which Okta will use for this application.
-	OktaOinClientID string `json:"okta_oin_client_id" url:"okta_oin_client_id"`
-	// This is the domain that admins are expected to log in via for authenticating for express configuration. It can be either the canonical domain or a registered custom domain.
-	AdminLoginDomain string `json:"admin_login_domain" url:"admin_login_domain"`
-	// The identifier of the published application in the OKTA OIN.
-	OinSubmissionID *string `json:"oin_submission_id,omitempty" url:"oin_submission_id,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (e *ExpressConfigurationOrNull) GetInitiateLoginURITemplate() string {
-	if e == nil {
-		return ""
-	}
-	return e.InitiateLoginURITemplate
-}
-
-func (e *ExpressConfigurationOrNull) GetUserAttributeProfileID() string {
-	if e == nil {
-		return ""
-	}
-	return e.UserAttributeProfileID
-}
-
-func (e *ExpressConfigurationOrNull) GetConnectionProfileID() string {
-	if e == nil {
-		return ""
-	}
-	return e.ConnectionProfileID
-}
-
-func (e *ExpressConfigurationOrNull) GetEnableClient() bool {
-	if e == nil {
-		return false
-	}
-	return e.EnableClient
-}
-
-func (e *ExpressConfigurationOrNull) GetEnableOrganization() bool {
-	if e == nil {
-		return false
-	}
-	return e.EnableOrganization
-}
-
-func (e *ExpressConfigurationOrNull) GetLinkedClients() []*LinkedClientConfiguration {
-	if e == nil || e.LinkedClients == nil {
-		return nil
-	}
-	return e.LinkedClients
-}
-
-func (e *ExpressConfigurationOrNull) GetOktaOinClientID() string {
-	if e == nil {
-		return ""
-	}
-	return e.OktaOinClientID
-}
-
-func (e *ExpressConfigurationOrNull) GetAdminLoginDomain() string {
-	if e == nil {
-		return ""
-	}
-	return e.AdminLoginDomain
-}
-
-func (e *ExpressConfigurationOrNull) GetOinSubmissionID() string {
-	if e == nil || e.OinSubmissionID == nil {
-		return ""
-	}
-	return *e.OinSubmissionID
-}
-
-func (e *ExpressConfigurationOrNull) GetExtraProperties() map[string]interface{} {
-	return e.extraProperties
-}
-
-func (e *ExpressConfigurationOrNull) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
-	}
-	e.explicitFields.Or(e.explicitFields, field)
-}
-
-// SetInitiateLoginURITemplate sets the InitiateLoginURITemplate field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfigurationOrNull) SetInitiateLoginURITemplate(initiateLoginURITemplate string) {
-	e.InitiateLoginURITemplate = initiateLoginURITemplate
-	e.require(expressConfigurationOrNullFieldInitiateLoginURITemplate)
-}
-
-// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfigurationOrNull) SetUserAttributeProfileID(userAttributeProfileID string) {
-	e.UserAttributeProfileID = userAttributeProfileID
-	e.require(expressConfigurationOrNullFieldUserAttributeProfileID)
-}
-
-// SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfigurationOrNull) SetConnectionProfileID(connectionProfileID string) {
-	e.ConnectionProfileID = connectionProfileID
-	e.require(expressConfigurationOrNullFieldConnectionProfileID)
-}
-
-// SetEnableClient sets the EnableClient field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfigurationOrNull) SetEnableClient(enableClient bool) {
-	e.EnableClient = enableClient
-	e.require(expressConfigurationOrNullFieldEnableClient)
-}
-
-// SetEnableOrganization sets the EnableOrganization field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfigurationOrNull) SetEnableOrganization(enableOrganization bool) {
-	e.EnableOrganization = enableOrganization
-	e.require(expressConfigurationOrNullFieldEnableOrganization)
-}
-
-// SetLinkedClients sets the LinkedClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfigurationOrNull) SetLinkedClients(linkedClients []*LinkedClientConfiguration) {
-	e.LinkedClients = linkedClients
-	e.require(expressConfigurationOrNullFieldLinkedClients)
-}
-
-// SetOktaOinClientID sets the OktaOinClientID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfigurationOrNull) SetOktaOinClientID(oktaOinClientID string) {
-	e.OktaOinClientID = oktaOinClientID
-	e.require(expressConfigurationOrNullFieldOktaOinClientID)
-}
-
-// SetAdminLoginDomain sets the AdminLoginDomain field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfigurationOrNull) SetAdminLoginDomain(adminLoginDomain string) {
-	e.AdminLoginDomain = adminLoginDomain
-	e.require(expressConfigurationOrNullFieldAdminLoginDomain)
-}
-
-// SetOinSubmissionID sets the OinSubmissionID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExpressConfigurationOrNull) SetOinSubmissionID(oinSubmissionID *string) {
-	e.OinSubmissionID = oinSubmissionID
-	e.require(expressConfigurationOrNullFieldOinSubmissionID)
-}
-
-func (e *ExpressConfigurationOrNull) UnmarshalJSON(data []byte) error {
-	type unmarshaler ExpressConfigurationOrNull
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*e = ExpressConfigurationOrNull(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
-	if err != nil {
-		return err
-	}
-	e.extraProperties = extraProperties
-	e.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (e *ExpressConfigurationOrNull) MarshalJSON() ([]byte, error) {
-	type embed ExpressConfigurationOrNull
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*e),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (e *ExpressConfigurationOrNull) String() string {
-	if len(e.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(e); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", e)
-}
-
 var (
 	getClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
 	getClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
@@ -8543,9 +8079,8 @@ var (
 	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
 	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
 	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type GetClientResponseContent struct {
@@ -8629,9 +8164,8 @@ type GetClientResponseContent struct {
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -8985,13 +8519,6 @@ func (g *GetClientResponseContent) GetTokenQuota() TokenQuota {
 		return TokenQuota{}
 	}
 	return *g.TokenQuota
-}
-
-func (g *GetClientResponseContent) GetExpressConfiguration() ExpressConfiguration {
-	if g == nil || g.ExpressConfiguration == nil {
-		return ExpressConfiguration{}
-	}
-	return *g.ExpressConfiguration
 }
 
 func (g *GetClientResponseContent) GetResourceServerIdentifier() string {
@@ -9362,13 +8889,6 @@ func (g *GetClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 	g.require(getClientResponseContentFieldTokenQuota)
 }
 
-// SetExpressConfiguration sets the ExpressConfiguration field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetClientResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
-	g.ExpressConfiguration = expressConfiguration
-	g.require(getClientResponseContentFieldExpressConfiguration)
-}
-
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
@@ -9424,86 +8944,6 @@ func (g *GetClientResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
-}
-
-// Configuration for linked clients in the OIN Express Configuration feature.
-var (
-	linkedClientConfigurationFieldClientID = big.NewInt(1 << 0)
-)
-
-type LinkedClientConfiguration struct {
-	// The ID of the linked client.
-	ClientID string `json:"client_id" url:"client_id"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (l *LinkedClientConfiguration) GetClientID() string {
-	if l == nil {
-		return ""
-	}
-	return l.ClientID
-}
-
-func (l *LinkedClientConfiguration) GetExtraProperties() map[string]interface{} {
-	return l.extraProperties
-}
-
-func (l *LinkedClientConfiguration) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
-	}
-	l.explicitFields.Or(l.explicitFields, field)
-}
-
-// SetClientID sets the ClientID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *LinkedClientConfiguration) SetClientID(clientID string) {
-	l.ClientID = clientID
-	l.require(linkedClientConfigurationFieldClientID)
-}
-
-func (l *LinkedClientConfiguration) UnmarshalJSON(data []byte) error {
-	type unmarshaler LinkedClientConfiguration
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*l = LinkedClientConfiguration(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *l)
-	if err != nil {
-		return err
-	}
-	l.extraProperties = extraProperties
-	l.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (l *LinkedClientConfiguration) MarshalJSON() ([]byte, error) {
-	type embed LinkedClientConfiguration
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*l),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (l *LinkedClientConfiguration) String() string {
-	if len(l.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(l); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", l)
 }
 
 var (
@@ -10327,9 +9767,8 @@ var (
 	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
 	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
 	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -10413,9 +9852,8 @@ type RotateClientSecretResponseContent struct {
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -10769,13 +10207,6 @@ func (r *RotateClientSecretResponseContent) GetTokenQuota() TokenQuota {
 		return TokenQuota{}
 	}
 	return *r.TokenQuota
-}
-
-func (r *RotateClientSecretResponseContent) GetExpressConfiguration() ExpressConfiguration {
-	if r == nil || r.ExpressConfiguration == nil {
-		return ExpressConfiguration{}
-	}
-	return *r.ExpressConfiguration
 }
 
 func (r *RotateClientSecretResponseContent) GetResourceServerIdentifier() string {
@@ -11146,13 +10577,6 @@ func (r *RotateClientSecretResponseContent) SetTokenQuota(tokenQuota *TokenQuota
 	r.require(rotateClientSecretResponseContentFieldTokenQuota)
 }
 
-// SetExpressConfiguration sets the ExpressConfiguration field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RotateClientSecretResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
-	r.ExpressConfiguration = expressConfiguration
-	r.require(rotateClientSecretResponseContentFieldExpressConfiguration)
-}
-
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
@@ -11260,9 +10684,8 @@ var (
 	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
 	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
 	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 50)
 )
 
 type UpdateClientResponseContent struct {
@@ -11346,9 +10769,8 @@ type UpdateClientResponseContent struct {
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry *int        `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota       *TokenQuota `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -11702,13 +11124,6 @@ func (u *UpdateClientResponseContent) GetTokenQuota() TokenQuota {
 		return TokenQuota{}
 	}
 	return *u.TokenQuota
-}
-
-func (u *UpdateClientResponseContent) GetExpressConfiguration() ExpressConfiguration {
-	if u == nil || u.ExpressConfiguration == nil {
-		return ExpressConfiguration{}
-	}
-	return *u.ExpressConfiguration
 }
 
 func (u *UpdateClientResponseContent) GetResourceServerIdentifier() string {
@@ -12077,13 +11492,6 @@ func (u *UpdateClientResponseContent) SetParRequestExpiry(parRequestExpiry *int)
 func (u *UpdateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 	u.TokenQuota = tokenQuota
 	u.require(updateClientResponseContentFieldTokenQuota)
-}
-
-// SetExpressConfiguration sets the ExpressConfiguration field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateClientResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
-	u.ExpressConfiguration = expressConfiguration
-	u.require(updateClientResponseContentFieldExpressConfiguration)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;

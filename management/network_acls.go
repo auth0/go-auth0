@@ -791,14 +791,13 @@ func (n *NetworkACLRule) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Identifies the origin of the request as the Management API (management), Authentication API (authentication), Dynamic Client Registration API (dynamic_client_registration), or any (tenant)
+// Identifies the origin of the request as the Management API (management), Authentication API (authentication), or either (tenant)
 type NetworkACLRuleScopeEnum string
 
 const (
-	NetworkACLRuleScopeEnumManagement                NetworkACLRuleScopeEnum = "management"
-	NetworkACLRuleScopeEnumAuthentication            NetworkACLRuleScopeEnum = "authentication"
-	NetworkACLRuleScopeEnumTenant                    NetworkACLRuleScopeEnum = "tenant"
-	NetworkACLRuleScopeEnumDynamicClientRegistration NetworkACLRuleScopeEnum = "dynamic_client_registration"
+	NetworkACLRuleScopeEnumManagement     NetworkACLRuleScopeEnum = "management"
+	NetworkACLRuleScopeEnumAuthentication NetworkACLRuleScopeEnum = "authentication"
+	NetworkACLRuleScopeEnumTenant         NetworkACLRuleScopeEnum = "tenant"
 )
 
 func NewNetworkACLRuleScopeEnumFromString(s string) (NetworkACLRuleScopeEnum, error) {
@@ -809,8 +808,6 @@ func NewNetworkACLRuleScopeEnumFromString(s string) (NetworkACLRuleScopeEnum, er
 		return NetworkACLRuleScopeEnumAuthentication, nil
 	case "tenant":
 		return NetworkACLRuleScopeEnumTenant, nil
-	case "dynamic_client_registration":
-		return NetworkACLRuleScopeEnumDynamicClientRegistration, nil
 	}
 	var t NetworkACLRuleScopeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)

@@ -40,7 +40,7 @@ func (c *Client) List(
 	id string,
 	request *management.ListOrganizationDiscoveryDomainsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.OrganizationDiscoveryDomain], error) {
+) (*core.Page[*string, *management.OrganizationDiscoveryDomain, *management.ListOrganizationDiscoveryDomainsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -64,7 +64,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -84,14 +84,15 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListOrganizationDiscoveryDomainsResponseContent) *internal.PageResponse[*string, *management.OrganizationDiscoveryDomain] {
+	readPageResponse := func(response *management.ListOrganizationDiscoveryDomainsResponseContent) *core.PageResponse[*string, *management.OrganizationDiscoveryDomain, *management.ListOrganizationDiscoveryDomainsResponseContent] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Domains
-		return &internal.PageResponse[*string, *management.OrganizationDiscoveryDomain]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *management.OrganizationDiscoveryDomain, *management.ListOrganizationDiscoveryDomainsResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
