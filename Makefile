@@ -47,7 +47,21 @@ check-vuln: $(GO_BIN)/govulncheck ## Check for vulnerabilities
 #-----------------------------------------------------------------------------------------------------------------------
 .PHONY: test test-record test-e2e
 
-test: ## Run tests with http recordings. To run a specific test pass the FILTER var. Usage `make test FILTER="TestResourceServer_Read"`
+WIREMOCK_COMPOSE_FILE := wiremock/docker-compose.test.yml
+WIREMOCK_URL ?= http://localhost:8080
+
+test: ## Run tests. To run a specific test pass the FILTER var. Usage `make test FILTER="TestResourceServer_Read"`
+	@if curl -s $(WIREMOCK_URL)/__admin/mappings > /dev/null 2>&1; then \
+		echo "==> WireMock is running at $(WIREMOCK_URL)"; \
+	else \
+		echo "==> Starting WireMock container..."; \
+		docker compose -f $(WIREMOCK_COMPOSE_FILE) up -d; \
+		until curl -s $(WIREMOCK_URL)/__admin/mappings > /dev/null 2>&1; do \
+			echo "Waiting for WireMock..."; \
+			sleep 1; \
+		done; \
+		echo "==> WireMock is ready at $(WIREMOCK_URL)"; \
+	fi
 	@echo "==> Running tests with http recordings..."
 	@AUTH0_HTTP_RECORDINGS=on \
 		AUTH0_DOMAIN=go-auth0-dev.eu.auth0.com \
@@ -57,17 +71,21 @@ test: ## Run tests with http recordings. To run a specific test pass the FILTER 
 		-coverpkg=./... \
 		-covermode=atomic \
 		-coverprofile=coverage.out \
-		./...
+		./... ; \
+		EXIT_CODE=$$?; \
+		echo "==> Stopping WireMock container..."; \
+		docker compose -f $(WIREMOCK_COMPOSE_FILE) down -v; \
+		exit $$EXIT_CODE
 
-test-record: ## Run tests and record http interactions. To run a specific test pass the FILTER var. Usage `make test-record FILTER="TestResourceServer_Read"`
-	@echo "==> Running tests and recording http interactions..."
+test-record: ## Run authentication tests and record http interactions. To run a specific test pass the FILTER var. Usage `make test-record FILTER="TestResourceServer_Read"`
+	@echo "==> Running authentication tests and recording http interactions..."
 	@AUTH0_HTTP_RECORDINGS=on \
 		go test \
 		-run "$(FILTER)" \
-		./...
+		./authentication/...
 
-test-e2e: ## Run tests without http recordings. To run a specific test pass the FILTER var. Usage `make test-e2e FILTER="TestResourceServer_Read"`
-	@echo "==> Running tests against a real Auth0 tenant..."
+test-e2e: ## Run authentication tests without http recordings. To run a specific test pass the FILTER var. Usage `make test-e2e FILTER="TestResourceServer_Read"`
+	@echo "==> Running authentication tests against a real Auth0 tenant..."
 	@go test \
 		-run "$(FILTER)" \
 		-cover \
@@ -75,4 +93,4 @@ test-e2e: ## Run tests without http recordings. To run a specific test pass the 
 		-covermode=atomic \
 		-coverprofile=coverage.out \
 		-timeout 20m \
-		./...
+		./authentication/...
