@@ -3,109 +3,69 @@
 package clients_test
 
 import (
+	bytes "bytes"
 	context "context"
-	fmt "fmt"
+	json "encoding/json"
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	gowiremock "github.com/wiremock/go-wiremock"
-	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
 	http "net/http"
-	os "os"
 	testing "testing"
 )
 
-// TestMain sets up shared test fixtures for all tests in this package// Global test fixtures
-var (
-	WireMockContainer *wiremocktestcontainersgo.WireMockContainer
-	WireMockBaseURL   string
-	WireMockClient    *gowiremock.Client
-)
+func ResetWireMockRequests(
+	t *testing.T,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
+	require.NoError(t, err)
+}
 
-// TestMain sets up shared test fixtures for all tests in this package
-func TestMain(m *testing.M) {
-	// Setup shared WireMock container
-	ctx := context.Background()
-	container, err := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
-		ctx,
-		&testing.T{},
-		wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
-	)
-	if err != nil {
-		fmt.Printf("Failed to start WireMock container: %v\n", err)
-		os.Exit(1)
-	}
-
-	// Store global references
-	WireMockContainer = container
-
-	// Try to get the base URL using the standard method first
-	baseURL, err := container.Endpoint(ctx, "")
-	if err == nil {
-		// Standard method worked (running outside DinD)
-		// This uses the mapped port (e.g., localhost:59553)
-		WireMockBaseURL = "http://" + baseURL
-		WireMockClient = container.Client
-	} else {
-		// Standard method failed, use internal IP fallback (DinD environment)
-		fmt.Printf("Standard endpoint resolution failed, using internal IP fallback: %v\n", err)
-
-		inspect, err := container.Inspect(ctx)
-		if err != nil {
-			fmt.Printf("Failed to inspect WireMock container: %v\n", err)
-			os.Exit(1)
-		}
-
-		// Find the IP address from the container's networks
-		var containerIP string
-		for _, network := range inspect.NetworkSettings.Networks {
-			if network.IPAddress != "" {
-				containerIP = network.IPAddress
-				break
+func VerifyRequestCount(
+	t *testing.T,
+	method string,
+	urlPath string,
+	queryParams map[string]string,
+	expected int,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	var reqBody bytes.Buffer
+	reqBody.WriteString(`{"method":"`)
+	reqBody.WriteString(method)
+	reqBody.WriteString(`","urlPath":"`)
+	reqBody.WriteString(urlPath)
+	reqBody.WriteString(`"}`)
+	if len(queryParams) > 0 {
+		reqBody.WriteString(`,"queryParameters":{`)
+		first := true
+		for key, value := range queryParams {
+			if !first {
+				reqBody.WriteString(",")
 			}
+			reqBody.WriteString(`"`)
+			reqBody.WriteString(key)
+			reqBody.WriteString(`":{"equalTo":"`)
+			reqBody.WriteString(value)
+			reqBody.WriteString(`"}`)
+			first = false
 		}
-
-		if containerIP == "" {
-			fmt.Printf("Failed to get WireMock container IP address\n")
-			os.Exit(1)
-		}
-
-		// In DinD, use the internal port directly (8080 for WireMock HTTP)
-		// Don't use the mapped port since it doesn't exist in this environment
-		WireMockBaseURL = fmt.Sprintf("http://%s:8080", containerIP)
-
-		// The container.Client was created with a bad URL, so we need a new one
-		WireMockClient = gowiremock.NewClient(WireMockBaseURL)
+		reqBody.WriteString("}")
 	}
-
-	fmt.Printf("WireMock available at: %s\n", WireMockBaseURL)
-
-	// Run all tests
-	code := m.Run()
-
-	// Cleanup
-	if WireMockContainer != nil {
-		WireMockContainer.Terminate(ctx)
+	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
+	require.NoError(t, err)
+	var result struct {
+		Requests []interface{} `json:"requests"`
 	}
-
-	// Exit with the same code as the tests
-	os.Exit(code)
+	json.NewDecoder(resp.Body).Decode(&result)
+	require.Equal(t, expected, len(result.Requests))
 }
 
 func TestClientsListWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/clients")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"start": 1.1, "limit": 1.1, "total": 1.1, "clients": []interface{}{map[string]interface{}{"client_id": "client_id", "tenant": "tenant", "name": "name", "description": "description", "global": true, "client_secret": "client_secret", "app_type": "native", "logo_uri": "logo_uri", "is_first_party": true, "oidc_conformant": true, "callbacks": []interface{}{"callbacks"}, "allowed_origins": []interface{}{"allowed_origins"}, "web_origins": []interface{}{"web_origins"}, "client_aliases": []interface{}{"client_aliases"}, "allowed_clients": []interface{}{"allowed_clients"}, "allowed_logout_urls": []interface{}{"allowed_logout_urls"}, "grant_types": []interface{}{"grant_types"}, "signing_keys": []interface{}{map[string]interface{}{}}, "sso": true, "sso_disabled": true, "cross_origin_authentication": true, "cross_origin_loc": "cross_origin_loc", "custom_login_page_on": true, "custom_login_page": "custom_login_page", "custom_login_page_preview": "custom_login_page_preview", "form_template": "form_template", "token_endpoint_auth_method": "none", "is_token_endpoint_ip_header_trusted": true, "client_metadata": map[string]interface{}{"key": "value"}, "initiate_login_uri": "initiate_login_uri", "refresh_token": map[string]interface{}{"rotation_type": "rotating", "expiration_type": "expiring"}, "default_organization": map[string]interface{}{"organization_id": "organization_id", "flows": []interface{}{"client_credentials"}}, "organization_usage": "deny", "organization_require_behavior": "no_prompt", "organization_discovery_methods": []interface{}{"email"}, "require_pushed_authorization_requests": true, "require_proof_of_possession": true, "compliance_level": "none", "skip_non_verifiable_callback_uri_confirmation_prompt": true, "par_request_expiry": 1, "token_quota": map[string]interface{}{"client_credentials": map[string]interface{}{}}, "express_configuration": map[string]interface{}{"initiate_login_uri_template": "initiate_login_uri_template", "user_attribute_profile_id": "user_attribute_profile_id", "connection_profile_id": "connection_profile_id", "enable_client": true, "enable_organization": true, "okta_oin_client_id": "okta_oin_client_id", "admin_login_domain": "admin_login_domain"}, "resource_server_identifier": "resource_server_identifier", "async_approval_notification_channels": []interface{}{"guardian-push"}}}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -146,32 +106,14 @@ func TestClientsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "GET", "/clients", map[string]string{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "is_global": "true", "is_first_party": "true", "app_type": "app_type", "q": "q"}, 1)
 }
 
 func TestClientsCreateWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Post(gowiremock.URLPathTemplate("/clients")).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "object",
-                    "required": ["name"],
-                    "properties": {
-                        "name": {"type": "string"}
-                    },
-                    "additionalProperties": true
-                }`, "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"client_id": "client_id", "tenant": "tenant", "name": "name", "description": "description", "global": true, "client_secret": "client_secret", "app_type": "native", "logo_uri": "logo_uri", "is_first_party": true, "oidc_conformant": true, "callbacks": []interface{}{"callbacks"}, "allowed_origins": []interface{}{"allowed_origins"}, "web_origins": []interface{}{"web_origins"}, "client_aliases": []interface{}{"client_aliases"}, "allowed_clients": []interface{}{"allowed_clients"}, "allowed_logout_urls": []interface{}{"allowed_logout_urls"}, "session_transfer": map[string]interface{}{"can_create_session_transfer_token": true, "enforce_cascade_revocation": true, "allowed_authentication_methods": []interface{}{"cookie"}, "enforce_device_binding": "ip", "allow_refresh_token": true, "enforce_online_refresh_tokens": true}, "oidc_logout": map[string]interface{}{"backchannel_logout_urls": []interface{}{"backchannel_logout_urls"}, "backchannel_logout_initiators": map[string]interface{}{"mode": "custom", "selected_initiators": []interface{}{"rp-logout"}}, "backchannel_logout_session_metadata": map[string]interface{}{"include": true}}, "grant_types": []interface{}{"grant_types"}, "jwt_configuration": map[string]interface{}{"lifetime_in_seconds": 1, "secret_encoded": true, "scopes": map[string]interface{}{"key": "value"}, "alg": "HS256"}, "signing_keys": []interface{}{map[string]interface{}{"pkcs7": "pkcs7", "cert": "cert", "subject": "subject"}}, "encryption_key": map[string]interface{}{"pub": "pub", "cert": "cert", "subject": "subject"}, "sso": true, "sso_disabled": true, "cross_origin_authentication": true, "cross_origin_loc": "cross_origin_loc", "custom_login_page_on": true, "custom_login_page": "custom_login_page", "custom_login_page_preview": "custom_login_page_preview", "form_template": "form_template", "addons": map[string]interface{}{"aws": map[string]interface{}{"principal": "principal", "role": "role", "lifetime_in_seconds": 1}, "azure_blob": map[string]interface{}{"accountName": "accountName", "storageAccessKey": "storageAccessKey", "containerName": "containerName", "blobName": "blobName", "expiration": 1, "signedIdentifier": "signedIdentifier", "blob_read": true, "blob_write": true, "blob_delete": true, "container_read": true, "container_write": true, "container_delete": true, "container_list": true}, "azure_sb": map[string]interface{}{"namespace": "namespace", "sasKeyName": "sasKeyName", "sasKey": "sasKey", "entityPath": "entityPath", "expiration": 1}, "rms": map[string]interface{}{"url": "url"}, "mscrm": map[string]interface{}{"url": "url"}, "slack": map[string]interface{}{"team": "team"}, "sentry": map[string]interface{}{"org_slug": "org_slug", "base_url": "base_url"}, "box": map[string]interface{}{"key": "value"}, "cloudbees": map[string]interface{}{"key": "value"}, "concur": map[string]interface{}{"key": "value"}, "dropbox": map[string]interface{}{"key": "value"}, "echosign": map[string]interface{}{"domain": "domain"}, "egnyte": map[string]interface{}{"domain": "domain"}, "firebase": map[string]interface{}{"secret": "secret", "private_key_id": "private_key_id", "private_key": "private_key", "client_email": "client_email", "lifetime_in_seconds": 1}, "newrelic": map[string]interface{}{"account": "account"}, "office365": map[string]interface{}{"domain": "domain", "connection": "connection"}, "salesforce": map[string]interface{}{"entity_id": "entity_id"}, "salesforce_api": map[string]interface{}{"clientid": "clientid", "principal": "principal", "communityName": "communityName", "community_url_section": "community_url_section"}, "salesforce_sandbox_api": map[string]interface{}{"clientid": "clientid", "principal": "principal", "communityName": "communityName", "community_url_section": "community_url_section"}, "samlp": map[string]interface{}{"mappings": map[string]interface{}{"key": "value"}, "audience": "audience", "recipient": "recipient", "createUpnClaim": true, "mapUnknownClaimsAsIs": true, "passthroughClaimsWithNoMapping": true, "mapIdentities": true, "signatureAlgorithm": "signatureAlgorithm", "digestAlgorithm": "digestAlgorithm", "issuer": "issuer", "destination": "destination", "lifetimeInSeconds": 1, "signResponse": true, "nameIdentifierFormat": "nameIdentifierFormat", "nameIdentifierProbes": []interface{}{"nameIdentifierProbes"}, "authnContextClassRef": "authnContextClassRef"}, "layer": map[string]interface{}{"providerId": "providerId", "keyId": "keyId", "privateKey": "privateKey", "principal": "principal", "expiration": 1}, "sap_api": map[string]interface{}{"clientid": "clientid", "usernameAttribute": "usernameAttribute", "tokenEndpointUrl": "tokenEndpointUrl", "scope": "scope", "servicePassword": "servicePassword", "nameIdentifierFormat": "nameIdentifierFormat"}, "sharepoint": map[string]interface{}{"url": "url", "external_url": []interface{}{"external_url"}}, "springcm": map[string]interface{}{"acsurl": "acsurl"}, "wams": map[string]interface{}{"masterkey": "masterkey"}, "wsfed": map[string]interface{}{"key": "value"}, "zendesk": map[string]interface{}{"accountName": "accountName"}, "zoom": map[string]interface{}{"account": "account"}, "sso_integration": map[string]interface{}{"name": "name", "version": "version"}}, "token_endpoint_auth_method": "none", "is_token_endpoint_ip_header_trusted": true, "client_metadata": map[string]interface{}{"key": "value"}, "mobile": map[string]interface{}{"android": map[string]interface{}{"app_package_name": "app_package_name", "sha256_cert_fingerprints": []interface{}{"sha256_cert_fingerprints"}}, "ios": map[string]interface{}{"team_id": "team_id", "app_bundle_identifier": "app_bundle_identifier"}}, "initiate_login_uri": "initiate_login_uri", "refresh_token": map[string]interface{}{"rotation_type": "rotating", "expiration_type": "expiring", "leeway": 1, "token_lifetime": 1, "infinite_token_lifetime": true, "idle_token_lifetime": 1, "infinite_idle_token_lifetime": true}, "default_organization": map[string]interface{}{"organization_id": "organization_id", "flows": []interface{}{"client_credentials"}}, "organization_usage": "deny", "organization_require_behavior": "no_prompt", "organization_discovery_methods": []interface{}{"email"}, "client_authentication_methods": map[string]interface{}{"private_key_jwt": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "tls_client_auth": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "self_signed_tls_client_auth": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}}, "require_pushed_authorization_requests": true, "require_proof_of_possession": true, "signed_request_object": map[string]interface{}{"required": true, "credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "compliance_level": "none", "skip_non_verifiable_callback_uri_confirmation_prompt": true, "par_request_expiry": 1, "token_quota": map[string]interface{}{"client_credentials": map[string]interface{}{"enforce": true, "per_day": 1, "per_hour": 1}}, "express_configuration": map[string]interface{}{"initiate_login_uri_template": "initiate_login_uri_template", "user_attribute_profile_id": "user_attribute_profile_id", "connection_profile_id": "connection_profile_id", "enable_client": true, "enable_organization": true, "linked_clients": []interface{}{map[string]interface{}{"client_id": "client_id"}}, "okta_oin_client_id": "okta_oin_client_id", "admin_login_domain": "admin_login_domain", "oin_submission_id": "oin_submission_id"}, "resource_server_identifier": "resource_server_identifier", "async_approval_notification_channels": []interface{}{"guardian-push"}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -186,27 +128,14 @@ func TestClientsCreateWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "POST", "/clients", nil, 1)
 }
 
 func TestClientsGetWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/clients/{id}")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"client_id": "client_id", "tenant": "tenant", "name": "name", "description": "description", "global": true, "client_secret": "client_secret", "app_type": "native", "logo_uri": "logo_uri", "is_first_party": true, "oidc_conformant": true, "callbacks": []interface{}{"callbacks"}, "allowed_origins": []interface{}{"allowed_origins"}, "web_origins": []interface{}{"web_origins"}, "client_aliases": []interface{}{"client_aliases"}, "allowed_clients": []interface{}{"allowed_clients"}, "allowed_logout_urls": []interface{}{"allowed_logout_urls"}, "session_transfer": map[string]interface{}{"can_create_session_transfer_token": true, "enforce_cascade_revocation": true, "allowed_authentication_methods": []interface{}{"cookie"}, "enforce_device_binding": "ip", "allow_refresh_token": true, "enforce_online_refresh_tokens": true}, "oidc_logout": map[string]interface{}{"backchannel_logout_urls": []interface{}{"backchannel_logout_urls"}, "backchannel_logout_initiators": map[string]interface{}{"mode": "custom", "selected_initiators": []interface{}{"rp-logout"}}, "backchannel_logout_session_metadata": map[string]interface{}{"include": true}}, "grant_types": []interface{}{"grant_types"}, "jwt_configuration": map[string]interface{}{"lifetime_in_seconds": 1, "secret_encoded": true, "scopes": map[string]interface{}{"key": "value"}, "alg": "HS256"}, "signing_keys": []interface{}{map[string]interface{}{"pkcs7": "pkcs7", "cert": "cert", "subject": "subject"}}, "encryption_key": map[string]interface{}{"pub": "pub", "cert": "cert", "subject": "subject"}, "sso": true, "sso_disabled": true, "cross_origin_authentication": true, "cross_origin_loc": "cross_origin_loc", "custom_login_page_on": true, "custom_login_page": "custom_login_page", "custom_login_page_preview": "custom_login_page_preview", "form_template": "form_template", "addons": map[string]interface{}{"aws": map[string]interface{}{"principal": "principal", "role": "role", "lifetime_in_seconds": 1}, "azure_blob": map[string]interface{}{"accountName": "accountName", "storageAccessKey": "storageAccessKey", "containerName": "containerName", "blobName": "blobName", "expiration": 1, "signedIdentifier": "signedIdentifier", "blob_read": true, "blob_write": true, "blob_delete": true, "container_read": true, "container_write": true, "container_delete": true, "container_list": true}, "azure_sb": map[string]interface{}{"namespace": "namespace", "sasKeyName": "sasKeyName", "sasKey": "sasKey", "entityPath": "entityPath", "expiration": 1}, "rms": map[string]interface{}{"url": "url"}, "mscrm": map[string]interface{}{"url": "url"}, "slack": map[string]interface{}{"team": "team"}, "sentry": map[string]interface{}{"org_slug": "org_slug", "base_url": "base_url"}, "box": map[string]interface{}{"key": "value"}, "cloudbees": map[string]interface{}{"key": "value"}, "concur": map[string]interface{}{"key": "value"}, "dropbox": map[string]interface{}{"key": "value"}, "echosign": map[string]interface{}{"domain": "domain"}, "egnyte": map[string]interface{}{"domain": "domain"}, "firebase": map[string]interface{}{"secret": "secret", "private_key_id": "private_key_id", "private_key": "private_key", "client_email": "client_email", "lifetime_in_seconds": 1}, "newrelic": map[string]interface{}{"account": "account"}, "office365": map[string]interface{}{"domain": "domain", "connection": "connection"}, "salesforce": map[string]interface{}{"entity_id": "entity_id"}, "salesforce_api": map[string]interface{}{"clientid": "clientid", "principal": "principal", "communityName": "communityName", "community_url_section": "community_url_section"}, "salesforce_sandbox_api": map[string]interface{}{"clientid": "clientid", "principal": "principal", "communityName": "communityName", "community_url_section": "community_url_section"}, "samlp": map[string]interface{}{"mappings": map[string]interface{}{"key": "value"}, "audience": "audience", "recipient": "recipient", "createUpnClaim": true, "mapUnknownClaimsAsIs": true, "passthroughClaimsWithNoMapping": true, "mapIdentities": true, "signatureAlgorithm": "signatureAlgorithm", "digestAlgorithm": "digestAlgorithm", "issuer": "issuer", "destination": "destination", "lifetimeInSeconds": 1, "signResponse": true, "nameIdentifierFormat": "nameIdentifierFormat", "nameIdentifierProbes": []interface{}{"nameIdentifierProbes"}, "authnContextClassRef": "authnContextClassRef"}, "layer": map[string]interface{}{"providerId": "providerId", "keyId": "keyId", "privateKey": "privateKey", "principal": "principal", "expiration": 1}, "sap_api": map[string]interface{}{"clientid": "clientid", "usernameAttribute": "usernameAttribute", "tokenEndpointUrl": "tokenEndpointUrl", "scope": "scope", "servicePassword": "servicePassword", "nameIdentifierFormat": "nameIdentifierFormat"}, "sharepoint": map[string]interface{}{"url": "url", "external_url": []interface{}{"external_url"}}, "springcm": map[string]interface{}{"acsurl": "acsurl"}, "wams": map[string]interface{}{"masterkey": "masterkey"}, "wsfed": map[string]interface{}{"key": "value"}, "zendesk": map[string]interface{}{"accountName": "accountName"}, "zoom": map[string]interface{}{"account": "account"}, "sso_integration": map[string]interface{}{"name": "name", "version": "version"}}, "token_endpoint_auth_method": "none", "is_token_endpoint_ip_header_trusted": true, "client_metadata": map[string]interface{}{"key": "value"}, "mobile": map[string]interface{}{"android": map[string]interface{}{"app_package_name": "app_package_name", "sha256_cert_fingerprints": []interface{}{"sha256_cert_fingerprints"}}, "ios": map[string]interface{}{"team_id": "team_id", "app_bundle_identifier": "app_bundle_identifier"}}, "initiate_login_uri": "initiate_login_uri", "refresh_token": map[string]interface{}{"rotation_type": "rotating", "expiration_type": "expiring", "leeway": 1, "token_lifetime": 1, "infinite_token_lifetime": true, "idle_token_lifetime": 1, "infinite_idle_token_lifetime": true}, "default_organization": map[string]interface{}{"organization_id": "organization_id", "flows": []interface{}{"client_credentials"}}, "organization_usage": "deny", "organization_require_behavior": "no_prompt", "organization_discovery_methods": []interface{}{"email"}, "client_authentication_methods": map[string]interface{}{"private_key_jwt": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "tls_client_auth": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "self_signed_tls_client_auth": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}}, "require_pushed_authorization_requests": true, "require_proof_of_possession": true, "signed_request_object": map[string]interface{}{"required": true, "credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "compliance_level": "none", "skip_non_verifiable_callback_uri_confirmation_prompt": true, "par_request_expiry": 1, "token_quota": map[string]interface{}{"client_credentials": map[string]interface{}{"enforce": true, "per_day": 1, "per_hour": 1}}, "express_configuration": map[string]interface{}{"initiate_login_uri_template": "initiate_login_uri_template", "user_attribute_profile_id": "user_attribute_profile_id", "connection_profile_id": "connection_profile_id", "enable_client": true, "enable_organization": true, "linked_clients": []interface{}{map[string]interface{}{"client_id": "client_id"}}, "okta_oin_client_id": "okta_oin_client_id", "admin_login_domain": "admin_login_domain", "oin_submission_id": "oin_submission_id"}, "resource_server_identifier": "resource_server_identifier", "async_approval_notification_channels": []interface{}{"guardian-push"}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -227,27 +156,14 @@ func TestClientsGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "GET", "/clients/id", map[string]string{"fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestClientsDeleteWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Delete(gowiremock.URLPathTemplate("/clients/{id}")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -259,35 +175,14 @@ func TestClientsDeleteWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "DELETE", "/clients/id", nil, 1)
 }
 
 func TestClientsUpdateWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Patch(gowiremock.URLPathTemplate("/clients/{id}")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "object",
-                    "required": [],
-                    "properties": {
-                        
-                    },
-                    "additionalProperties": true
-                }`, "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"client_id": "client_id", "tenant": "tenant", "name": "name", "description": "description", "global": true, "client_secret": "client_secret", "app_type": "native", "logo_uri": "logo_uri", "is_first_party": true, "oidc_conformant": true, "callbacks": []interface{}{"callbacks"}, "allowed_origins": []interface{}{"allowed_origins"}, "web_origins": []interface{}{"web_origins"}, "client_aliases": []interface{}{"client_aliases"}, "allowed_clients": []interface{}{"allowed_clients"}, "allowed_logout_urls": []interface{}{"allowed_logout_urls"}, "session_transfer": map[string]interface{}{"can_create_session_transfer_token": true, "enforce_cascade_revocation": true, "allowed_authentication_methods": []interface{}{"cookie"}, "enforce_device_binding": "ip", "allow_refresh_token": true, "enforce_online_refresh_tokens": true}, "oidc_logout": map[string]interface{}{"backchannel_logout_urls": []interface{}{"backchannel_logout_urls"}, "backchannel_logout_initiators": map[string]interface{}{"mode": "custom", "selected_initiators": []interface{}{"rp-logout"}}, "backchannel_logout_session_metadata": map[string]interface{}{"include": true}}, "grant_types": []interface{}{"grant_types"}, "jwt_configuration": map[string]interface{}{"lifetime_in_seconds": 1, "secret_encoded": true, "scopes": map[string]interface{}{"key": "value"}, "alg": "HS256"}, "signing_keys": []interface{}{map[string]interface{}{"pkcs7": "pkcs7", "cert": "cert", "subject": "subject"}}, "encryption_key": map[string]interface{}{"pub": "pub", "cert": "cert", "subject": "subject"}, "sso": true, "sso_disabled": true, "cross_origin_authentication": true, "cross_origin_loc": "cross_origin_loc", "custom_login_page_on": true, "custom_login_page": "custom_login_page", "custom_login_page_preview": "custom_login_page_preview", "form_template": "form_template", "addons": map[string]interface{}{"aws": map[string]interface{}{"principal": "principal", "role": "role", "lifetime_in_seconds": 1}, "azure_blob": map[string]interface{}{"accountName": "accountName", "storageAccessKey": "storageAccessKey", "containerName": "containerName", "blobName": "blobName", "expiration": 1, "signedIdentifier": "signedIdentifier", "blob_read": true, "blob_write": true, "blob_delete": true, "container_read": true, "container_write": true, "container_delete": true, "container_list": true}, "azure_sb": map[string]interface{}{"namespace": "namespace", "sasKeyName": "sasKeyName", "sasKey": "sasKey", "entityPath": "entityPath", "expiration": 1}, "rms": map[string]interface{}{"url": "url"}, "mscrm": map[string]interface{}{"url": "url"}, "slack": map[string]interface{}{"team": "team"}, "sentry": map[string]interface{}{"org_slug": "org_slug", "base_url": "base_url"}, "box": map[string]interface{}{"key": "value"}, "cloudbees": map[string]interface{}{"key": "value"}, "concur": map[string]interface{}{"key": "value"}, "dropbox": map[string]interface{}{"key": "value"}, "echosign": map[string]interface{}{"domain": "domain"}, "egnyte": map[string]interface{}{"domain": "domain"}, "firebase": map[string]interface{}{"secret": "secret", "private_key_id": "private_key_id", "private_key": "private_key", "client_email": "client_email", "lifetime_in_seconds": 1}, "newrelic": map[string]interface{}{"account": "account"}, "office365": map[string]interface{}{"domain": "domain", "connection": "connection"}, "salesforce": map[string]interface{}{"entity_id": "entity_id"}, "salesforce_api": map[string]interface{}{"clientid": "clientid", "principal": "principal", "communityName": "communityName", "community_url_section": "community_url_section"}, "salesforce_sandbox_api": map[string]interface{}{"clientid": "clientid", "principal": "principal", "communityName": "communityName", "community_url_section": "community_url_section"}, "samlp": map[string]interface{}{"mappings": map[string]interface{}{"key": "value"}, "audience": "audience", "recipient": "recipient", "createUpnClaim": true, "mapUnknownClaimsAsIs": true, "passthroughClaimsWithNoMapping": true, "mapIdentities": true, "signatureAlgorithm": "signatureAlgorithm", "digestAlgorithm": "digestAlgorithm", "issuer": "issuer", "destination": "destination", "lifetimeInSeconds": 1, "signResponse": true, "nameIdentifierFormat": "nameIdentifierFormat", "nameIdentifierProbes": []interface{}{"nameIdentifierProbes"}, "authnContextClassRef": "authnContextClassRef"}, "layer": map[string]interface{}{"providerId": "providerId", "keyId": "keyId", "privateKey": "privateKey", "principal": "principal", "expiration": 1}, "sap_api": map[string]interface{}{"clientid": "clientid", "usernameAttribute": "usernameAttribute", "tokenEndpointUrl": "tokenEndpointUrl", "scope": "scope", "servicePassword": "servicePassword", "nameIdentifierFormat": "nameIdentifierFormat"}, "sharepoint": map[string]interface{}{"url": "url", "external_url": []interface{}{"external_url"}}, "springcm": map[string]interface{}{"acsurl": "acsurl"}, "wams": map[string]interface{}{"masterkey": "masterkey"}, "wsfed": map[string]interface{}{"key": "value"}, "zendesk": map[string]interface{}{"accountName": "accountName"}, "zoom": map[string]interface{}{"account": "account"}, "sso_integration": map[string]interface{}{"name": "name", "version": "version"}}, "token_endpoint_auth_method": "none", "is_token_endpoint_ip_header_trusted": true, "client_metadata": map[string]interface{}{"key": "value"}, "mobile": map[string]interface{}{"android": map[string]interface{}{"app_package_name": "app_package_name", "sha256_cert_fingerprints": []interface{}{"sha256_cert_fingerprints"}}, "ios": map[string]interface{}{"team_id": "team_id", "app_bundle_identifier": "app_bundle_identifier"}}, "initiate_login_uri": "initiate_login_uri", "refresh_token": map[string]interface{}{"rotation_type": "rotating", "expiration_type": "expiring", "leeway": 1, "token_lifetime": 1, "infinite_token_lifetime": true, "idle_token_lifetime": 1, "infinite_idle_token_lifetime": true}, "default_organization": map[string]interface{}{"organization_id": "organization_id", "flows": []interface{}{"client_credentials"}}, "organization_usage": "deny", "organization_require_behavior": "no_prompt", "organization_discovery_methods": []interface{}{"email"}, "client_authentication_methods": map[string]interface{}{"private_key_jwt": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "tls_client_auth": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "self_signed_tls_client_auth": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}}, "require_pushed_authorization_requests": true, "require_proof_of_possession": true, "signed_request_object": map[string]interface{}{"required": true, "credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "compliance_level": "none", "skip_non_verifiable_callback_uri_confirmation_prompt": true, "par_request_expiry": 1, "token_quota": map[string]interface{}{"client_credentials": map[string]interface{}{"enforce": true, "per_day": 1, "per_hour": 1}}, "express_configuration": map[string]interface{}{"initiate_login_uri_template": "initiate_login_uri_template", "user_attribute_profile_id": "user_attribute_profile_id", "connection_profile_id": "connection_profile_id", "enable_client": true, "enable_organization": true, "linked_clients": []interface{}{map[string]interface{}{"client_id": "client_id"}}, "okta_oin_client_id": "okta_oin_client_id", "admin_login_domain": "admin_login_domain", "oin_submission_id": "oin_submission_id"}, "resource_server_identifier": "resource_server_identifier", "async_approval_notification_channels": []interface{}{"guardian-push"}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -301,27 +196,14 @@ func TestClientsUpdateWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "PATCH", "/clients/id", nil, 1)
 }
 
 func TestClientsRotateSecretWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Post(gowiremock.URLPathTemplate("/clients/{id}/rotate-secret")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"client_id": "client_id", "tenant": "tenant", "name": "name", "description": "description", "global": true, "client_secret": "client_secret", "app_type": "native", "logo_uri": "logo_uri", "is_first_party": true, "oidc_conformant": true, "callbacks": []interface{}{"callbacks"}, "allowed_origins": []interface{}{"allowed_origins"}, "web_origins": []interface{}{"web_origins"}, "client_aliases": []interface{}{"client_aliases"}, "allowed_clients": []interface{}{"allowed_clients"}, "allowed_logout_urls": []interface{}{"allowed_logout_urls"}, "session_transfer": map[string]interface{}{"can_create_session_transfer_token": true, "enforce_cascade_revocation": true, "allowed_authentication_methods": []interface{}{"cookie"}, "enforce_device_binding": "ip", "allow_refresh_token": true, "enforce_online_refresh_tokens": true}, "oidc_logout": map[string]interface{}{"backchannel_logout_urls": []interface{}{"backchannel_logout_urls"}, "backchannel_logout_initiators": map[string]interface{}{"mode": "custom", "selected_initiators": []interface{}{"rp-logout"}}, "backchannel_logout_session_metadata": map[string]interface{}{"include": true}}, "grant_types": []interface{}{"grant_types"}, "jwt_configuration": map[string]interface{}{"lifetime_in_seconds": 1, "secret_encoded": true, "scopes": map[string]interface{}{"key": "value"}, "alg": "HS256"}, "signing_keys": []interface{}{map[string]interface{}{"pkcs7": "pkcs7", "cert": "cert", "subject": "subject"}}, "encryption_key": map[string]interface{}{"pub": "pub", "cert": "cert", "subject": "subject"}, "sso": true, "sso_disabled": true, "cross_origin_authentication": true, "cross_origin_loc": "cross_origin_loc", "custom_login_page_on": true, "custom_login_page": "custom_login_page", "custom_login_page_preview": "custom_login_page_preview", "form_template": "form_template", "addons": map[string]interface{}{"aws": map[string]interface{}{"principal": "principal", "role": "role", "lifetime_in_seconds": 1}, "azure_blob": map[string]interface{}{"accountName": "accountName", "storageAccessKey": "storageAccessKey", "containerName": "containerName", "blobName": "blobName", "expiration": 1, "signedIdentifier": "signedIdentifier", "blob_read": true, "blob_write": true, "blob_delete": true, "container_read": true, "container_write": true, "container_delete": true, "container_list": true}, "azure_sb": map[string]interface{}{"namespace": "namespace", "sasKeyName": "sasKeyName", "sasKey": "sasKey", "entityPath": "entityPath", "expiration": 1}, "rms": map[string]interface{}{"url": "url"}, "mscrm": map[string]interface{}{"url": "url"}, "slack": map[string]interface{}{"team": "team"}, "sentry": map[string]interface{}{"org_slug": "org_slug", "base_url": "base_url"}, "box": map[string]interface{}{"key": "value"}, "cloudbees": map[string]interface{}{"key": "value"}, "concur": map[string]interface{}{"key": "value"}, "dropbox": map[string]interface{}{"key": "value"}, "echosign": map[string]interface{}{"domain": "domain"}, "egnyte": map[string]interface{}{"domain": "domain"}, "firebase": map[string]interface{}{"secret": "secret", "private_key_id": "private_key_id", "private_key": "private_key", "client_email": "client_email", "lifetime_in_seconds": 1}, "newrelic": map[string]interface{}{"account": "account"}, "office365": map[string]interface{}{"domain": "domain", "connection": "connection"}, "salesforce": map[string]interface{}{"entity_id": "entity_id"}, "salesforce_api": map[string]interface{}{"clientid": "clientid", "principal": "principal", "communityName": "communityName", "community_url_section": "community_url_section"}, "salesforce_sandbox_api": map[string]interface{}{"clientid": "clientid", "principal": "principal", "communityName": "communityName", "community_url_section": "community_url_section"}, "samlp": map[string]interface{}{"mappings": map[string]interface{}{"key": "value"}, "audience": "audience", "recipient": "recipient", "createUpnClaim": true, "mapUnknownClaimsAsIs": true, "passthroughClaimsWithNoMapping": true, "mapIdentities": true, "signatureAlgorithm": "signatureAlgorithm", "digestAlgorithm": "digestAlgorithm", "issuer": "issuer", "destination": "destination", "lifetimeInSeconds": 1, "signResponse": true, "nameIdentifierFormat": "nameIdentifierFormat", "nameIdentifierProbes": []interface{}{"nameIdentifierProbes"}, "authnContextClassRef": "authnContextClassRef"}, "layer": map[string]interface{}{"providerId": "providerId", "keyId": "keyId", "privateKey": "privateKey", "principal": "principal", "expiration": 1}, "sap_api": map[string]interface{}{"clientid": "clientid", "usernameAttribute": "usernameAttribute", "tokenEndpointUrl": "tokenEndpointUrl", "scope": "scope", "servicePassword": "servicePassword", "nameIdentifierFormat": "nameIdentifierFormat"}, "sharepoint": map[string]interface{}{"url": "url", "external_url": []interface{}{"external_url"}}, "springcm": map[string]interface{}{"acsurl": "acsurl"}, "wams": map[string]interface{}{"masterkey": "masterkey"}, "wsfed": map[string]interface{}{"key": "value"}, "zendesk": map[string]interface{}{"accountName": "accountName"}, "zoom": map[string]interface{}{"account": "account"}, "sso_integration": map[string]interface{}{"name": "name", "version": "version"}}, "token_endpoint_auth_method": "none", "is_token_endpoint_ip_header_trusted": true, "client_metadata": map[string]interface{}{"key": "value"}, "mobile": map[string]interface{}{"android": map[string]interface{}{"app_package_name": "app_package_name", "sha256_cert_fingerprints": []interface{}{"sha256_cert_fingerprints"}}, "ios": map[string]interface{}{"team_id": "team_id", "app_bundle_identifier": "app_bundle_identifier"}}, "initiate_login_uri": "initiate_login_uri", "refresh_token": map[string]interface{}{"rotation_type": "rotating", "expiration_type": "expiring", "leeway": 1, "token_lifetime": 1, "infinite_token_lifetime": true, "idle_token_lifetime": 1, "infinite_idle_token_lifetime": true}, "default_organization": map[string]interface{}{"organization_id": "organization_id", "flows": []interface{}{"client_credentials"}}, "organization_usage": "deny", "organization_require_behavior": "no_prompt", "organization_discovery_methods": []interface{}{"email"}, "client_authentication_methods": map[string]interface{}{"private_key_jwt": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "tls_client_auth": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "self_signed_tls_client_auth": map[string]interface{}{"credentials": []interface{}{map[string]interface{}{"id": "id"}}}}, "require_pushed_authorization_requests": true, "require_proof_of_possession": true, "signed_request_object": map[string]interface{}{"required": true, "credentials": []interface{}{map[string]interface{}{"id": "id"}}}, "compliance_level": "none", "skip_non_verifiable_callback_uri_confirmation_prompt": true, "par_request_expiry": 1, "token_quota": map[string]interface{}{"client_credentials": map[string]interface{}{"enforce": true, "per_day": 1, "per_hour": 1}}, "express_configuration": map[string]interface{}{"initiate_login_uri_template": "initiate_login_uri_template", "user_attribute_profile_id": "user_attribute_profile_id", "connection_profile_id": "connection_profile_id", "enable_client": true, "enable_organization": true, "linked_clients": []interface{}{map[string]interface{}{"client_id": "client_id"}}, "okta_oin_client_id": "okta_oin_client_id", "admin_login_domain": "admin_login_domain", "oin_submission_id": "oin_submission_id"}, "resource_server_identifier": "resource_server_identifier", "async_approval_notification_channels": []interface{}{"guardian-push"}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -333,7 +215,5 @@ func TestClientsRotateSecretWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "POST", "/clients/id/rotate-secret", nil, 1)
 }

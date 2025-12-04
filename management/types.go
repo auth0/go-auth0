@@ -9133,6 +9133,9 @@ func (c *ConnectionForList) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Array of freeform scopes
+type ConnectionFreeformScopes = []string
+
 // The connection's identifier
 type ConnectionID = string
 
@@ -9554,7 +9557,255 @@ type ConnectionOptionsAmazon = *ConnectionOptionsOAuth2Common
 type ConnectionOptionsAol = *ConnectionOptionsOAuth2Common
 
 // options for the 'apple' connection
-type ConnectionOptionsApple = map[string]interface{}
+var (
+	connectionOptionsAppleFieldAppSecret             = big.NewInt(1 << 0)
+	connectionOptionsAppleFieldClientID              = big.NewInt(1 << 1)
+	connectionOptionsAppleFieldEmail                 = big.NewInt(1 << 2)
+	connectionOptionsAppleFieldFreeformScopes        = big.NewInt(1 << 3)
+	connectionOptionsAppleFieldKid                   = big.NewInt(1 << 4)
+	connectionOptionsAppleFieldName                  = big.NewInt(1 << 5)
+	connectionOptionsAppleFieldNonPersistentAttrs    = big.NewInt(1 << 6)
+	connectionOptionsAppleFieldScope                 = big.NewInt(1 << 7)
+	connectionOptionsAppleFieldSetUserRootAttributes = big.NewInt(1 << 8)
+	connectionOptionsAppleFieldTeamID                = big.NewInt(1 << 9)
+	connectionOptionsAppleFieldUpstreamParams        = big.NewInt(1 << 10)
+)
+
+type ConnectionOptionsApple struct {
+	// Apple App Secret (must be a PEM)
+	AppSecret *string `json:"app_secret,omitempty" url:"app_secret,omitempty"`
+	// Apple Services ID
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// Whether to request email from Apple
+	Email *bool `json:"email,omitempty" url:"email,omitempty"`
+	// Array of freeform scopes
+	FreeformScopes *ConnectionFreeformScopes `json:"freeform_scopes,omitempty" url:"freeform_scopes,omitempty"`
+	// Apple Key ID
+	Kid *string `json:"kid,omitempty" url:"kid,omitempty"`
+	// Whether to request name from Apple
+	Name                  *bool                                `json:"name,omitempty" url:"name,omitempty"`
+	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
+	Scope                 *ConnectionScopeString               `json:"scope,omitempty" url:"scope,omitempty"`
+	SetUserRootAttributes *ConnectionSetUserRootAttributesEnum `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	// Apple Team ID
+	TeamID         *string                   `json:"team_id,omitempty" url:"team_id,omitempty"`
+	UpstreamParams *ConnectionUpstreamParams `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ConnectionOptionsApple) GetAppSecret() string {
+	if c == nil || c.AppSecret == nil {
+		return ""
+	}
+	return *c.AppSecret
+}
+
+func (c *ConnectionOptionsApple) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+func (c *ConnectionOptionsApple) GetEmail() bool {
+	if c == nil || c.Email == nil {
+		return false
+	}
+	return *c.Email
+}
+
+func (c *ConnectionOptionsApple) GetFreeformScopes() ConnectionFreeformScopes {
+	if c == nil || c.FreeformScopes == nil {
+		return nil
+	}
+	return *c.FreeformScopes
+}
+
+func (c *ConnectionOptionsApple) GetKid() string {
+	if c == nil || c.Kid == nil {
+		return ""
+	}
+	return *c.Kid
+}
+
+func (c *ConnectionOptionsApple) GetName() bool {
+	if c == nil || c.Name == nil {
+		return false
+	}
+	return *c.Name
+}
+
+func (c *ConnectionOptionsApple) GetNonPersistentAttrs() ConnectionNonPersistentAttrs {
+	if c == nil || c.NonPersistentAttrs == nil {
+		return nil
+	}
+	return *c.NonPersistentAttrs
+}
+
+func (c *ConnectionOptionsApple) GetScope() ConnectionScopeString {
+	if c == nil || c.Scope == nil {
+		return ""
+	}
+	return *c.Scope
+}
+
+func (c *ConnectionOptionsApple) GetSetUserRootAttributes() ConnectionSetUserRootAttributesEnum {
+	if c == nil || c.SetUserRootAttributes == nil {
+		return ""
+	}
+	return *c.SetUserRootAttributes
+}
+
+func (c *ConnectionOptionsApple) GetTeamID() string {
+	if c == nil || c.TeamID == nil {
+		return ""
+	}
+	return *c.TeamID
+}
+
+func (c *ConnectionOptionsApple) GetUpstreamParams() ConnectionUpstreamParams {
+	if c == nil || c.UpstreamParams == nil {
+		return nil
+	}
+	return *c.UpstreamParams
+}
+
+func (c *ConnectionOptionsApple) GetExtraProperties() map[string]interface{} {
+	return c.ExtraProperties
+}
+
+func (c *ConnectionOptionsApple) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetAppSecret sets the AppSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetAppSecret(appSecret *string) {
+	c.AppSecret = appSecret
+	c.require(connectionOptionsAppleFieldAppSecret)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(connectionOptionsAppleFieldClientID)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetEmail(email *bool) {
+	c.Email = email
+	c.require(connectionOptionsAppleFieldEmail)
+}
+
+// SetFreeformScopes sets the FreeformScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetFreeformScopes(freeformScopes *ConnectionFreeformScopes) {
+	c.FreeformScopes = freeformScopes
+	c.require(connectionOptionsAppleFieldFreeformScopes)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetKid(kid *string) {
+	c.Kid = kid
+	c.require(connectionOptionsAppleFieldKid)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetName(name *bool) {
+	c.Name = name
+	c.require(connectionOptionsAppleFieldName)
+}
+
+// SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetNonPersistentAttrs(nonPersistentAttrs *ConnectionNonPersistentAttrs) {
+	c.NonPersistentAttrs = nonPersistentAttrs
+	c.require(connectionOptionsAppleFieldNonPersistentAttrs)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetScope(scope *ConnectionScopeString) {
+	c.Scope = scope
+	c.require(connectionOptionsAppleFieldScope)
+}
+
+// SetSetUserRootAttributes sets the SetUserRootAttributes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetSetUserRootAttributes(setUserRootAttributes *ConnectionSetUserRootAttributesEnum) {
+	c.SetUserRootAttributes = setUserRootAttributes
+	c.require(connectionOptionsAppleFieldSetUserRootAttributes)
+}
+
+// SetTeamID sets the TeamID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetTeamID(teamID *string) {
+	c.TeamID = teamID
+	c.require(connectionOptionsAppleFieldTeamID)
+}
+
+// SetUpstreamParams sets the UpstreamParams field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsApple) SetUpstreamParams(upstreamParams *ConnectionUpstreamParams) {
+	c.UpstreamParams = upstreamParams
+	c.require(connectionOptionsAppleFieldUpstreamParams)
+}
+
+func (c *ConnectionOptionsApple) UnmarshalJSON(data []byte) error {
+	type embed ConnectionOptionsApple
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ConnectionOptionsApple(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionOptionsApple) MarshalJSON() ([]byte, error) {
+	type embed ConnectionOptionsApple
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *ConnectionOptionsApple) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
 
 // options for the 'auth0' connection
 var (
@@ -11882,7 +12133,7 @@ func (c *ConnectionResponseContentApple) GetConnectedAccounts() ConnectionConnec
 
 func (c *ConnectionResponseContentApple) GetOptions() ConnectionOptionsApple {
 	if c == nil || c.Options == nil {
-		return nil
+		return ConnectionOptionsApple{}
 	}
 	return *c.Options
 }
@@ -26578,6 +26829,9 @@ func (c *ConnectionResponseContentYandex) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Space separated list of scopes
+type ConnectionScopeString = string
+
 // Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
 type ConnectionShowAsButton = bool
 
@@ -28147,7 +28401,7 @@ func (c *CreateConnectionRequestContentApple) GetConnectedAccounts() ConnectionC
 
 func (c *CreateConnectionRequestContentApple) GetOptions() ConnectionOptionsApple {
 	if c == nil || c.Options == nil {
-		return nil
+		return ConnectionOptionsApple{}
 	}
 	return *c.Options
 }

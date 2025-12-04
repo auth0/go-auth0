@@ -40,7 +40,7 @@ func (c *Client) List(
 	userID string,
 	request *management.ListRefreshTokensRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.RefreshTokenResponseContent], error) {
+) (*core.Page[*string, *management.RefreshTokenResponseContent, *management.ListRefreshTokensPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -64,7 +64,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*string]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("from", *pageRequest.Cursor)
 		}
@@ -84,14 +84,15 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListRefreshTokensPaginatedResponseContent) *internal.PageResponse[*string, *management.RefreshTokenResponseContent] {
+	readPageResponse := func(response *management.ListRefreshTokensPaginatedResponseContent) *core.PageResponse[*string, *management.RefreshTokenResponseContent, *management.ListRefreshTokensPaginatedResponseContent] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Tokens
-		return &internal.PageResponse[*string, *management.RefreshTokenResponseContent]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *management.RefreshTokenResponseContent, *management.ListRefreshTokensPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(

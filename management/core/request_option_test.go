@@ -1,98 +1,74 @@
 package core
 
 import (
+	"bytes"
 	"context"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
+	"encoding/json"
 	"encoding/pem"
-	"fmt"
 	"net/http"
 	"os"
 	"testing"
-
-	gowiremock "github.com/wiremock/go-wiremock"
-	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-// Global test fixtures
+// WireMock configuration - expects WireMock to be running via docker compose
 var (
-	WireMockContainer *wiremocktestcontainersgo.WireMockContainer
-	WireMockBaseURL   string
-	WireMockClient    *gowiremock.Client
+	WireMockBaseURL = getWireMockBaseURL()
 )
 
-// TestMain sets up shared test fixtures for all tests in this package
-func TestMain(m *testing.M) {
-	// Setup shared WireMock container
-	ctx := context.Background()
-	container, err := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
-		ctx,
-		&testing.T{},
-		wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
-	)
-	if err != nil {
-		fmt.Printf("Failed to start WireMock container: %v\n", err)
-		os.Exit(1)
+func getWireMockBaseURL() string {
+	if url := os.Getenv("WIREMOCK_URL"); url != "" {
+		return url
+	}
+	return "http://localhost:8080"
+}
+
+// setupWireMockStub creates a stub for the OAuth token endpoint
+func setupWireMockStub(t *testing.T, accessToken string) {
+	t.Helper()
+
+	stub := map[string]interface{}{
+		"request": map[string]interface{}{
+			"method":  "POST",
+			"urlPath": "/oauth/token",
+		},
+		"response": map[string]interface{}{
+			"status": http.StatusOK,
+			"headers": map[string]string{
+				"Content-Type": "application/json",
+			},
+			"jsonBody": map[string]interface{}{
+				"access_token": accessToken,
+				"token_type":   "Bearer",
+				"expires_in":   86400,
+			},
+		},
 	}
 
-	// Store global references
-	WireMockContainer = container
+	body, err := json.Marshal(stub)
+	require.NoError(t, err)
 
-	// Try to get the base URL using the standard method first
-	baseURL, err := container.Endpoint(ctx, "")
-	if err == nil {
-		// Standard method worked (running outside DinD)
-		// This uses the mapped port (e.g., localhost:59553)
-		WireMockBaseURL = "http://" + baseURL
-		WireMockClient = container.Client
-	} else {
-		// Standard method failed, use internal IP fallback (DinD environment)
-		fmt.Printf("Standard endpoint resolution failed, using internal IP fallback: %v\n", err)
+	resp, err := http.Post(WireMockBaseURL+"/__admin/mappings", "application/json", bytes.NewReader(body))
+	require.NoError(t, err)
+	defer resp.Body.Close()
+	require.Equal(t, http.StatusCreated, resp.StatusCode, "Failed to create WireMock stub")
+}
 
-		inspect, err := container.Inspect(ctx)
-		if err != nil {
-			fmt.Printf("Failed to inspect WireMock container: %v\n", err)
-			os.Exit(1)
-		}
+// resetWireMock clears all stubs
+func resetWireMock(t *testing.T) {
+	t.Helper()
 
-		// Find the IP address from the container's networks
-		var containerIP string
-		for _, network := range inspect.NetworkSettings.Networks {
-			if network.IPAddress != "" {
-				containerIP = network.IPAddress
-				break
-			}
-		}
+	req, err := http.NewRequest(http.MethodDelete, WireMockBaseURL+"/__admin/mappings", nil)
+	require.NoError(t, err)
 
-		if containerIP == "" {
-			fmt.Printf("Failed to get WireMock container IP address\n")
-			os.Exit(1)
-		}
-
-		// In DinD, use the internal port directly (8080 for WireMock HTTP)
-		// Don't use the mapped port since it doesn't exist in this environment
-		WireMockBaseURL = fmt.Sprintf("http://%s:8080", containerIP)
-
-		// The container.Client was created with a bad URL, so we need a new one
-		WireMockClient = gowiremock.NewClient(WireMockBaseURL)
-	}
-
-	fmt.Printf("WireMock available at: %s\n", WireMockBaseURL)
-
-	// Run all tests
-	code := m.Run()
-
-	// Cleanup
-	if WireMockContainer != nil {
-		WireMockContainer.Terminate(ctx)
-	}
-
-	// Exit with the same code as the tests
-	os.Exit(code)
+	resp, err := http.DefaultClient.Do(req)
+	require.NoError(t, err)
+	defer resp.Body.Close()
 }
 
 // generateTestRSAPrivateKey generates a test RSA private key in PEM format
@@ -115,20 +91,10 @@ func generateTestRSAPrivateKey(t *testing.T) string {
 
 func TestClientCredentialsAndAudienceOption_TokenURL(t *testing.T) {
 	// Reset WireMock state before each test
-	defer WireMockClient.Reset()
+	defer resetWireMock(t)
 
 	// Mock the OAuth token endpoint
-	stub := gowiremock.Post(gowiremock.URLPathEqualTo("/oauth/token")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{
-				"access_token": "test-token",
-				"token_type":   "Bearer",
-				"expires_in":   86400,
-			},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
+	setupWireMockStub(t, "test-token")
 
 	tests := []struct {
 		name     string
@@ -178,20 +144,10 @@ func TestClientCredentialsAndAudienceOption_TokenURL(t *testing.T) {
 
 func TestClientCredentialsOption_TokenURL(t *testing.T) {
 	// Reset WireMock state before each test
-	defer WireMockClient.Reset()
+	defer resetWireMock(t)
 
 	// Mock the OAuth token endpoint
-	stub := gowiremock.Post(gowiremock.URLPathEqualTo("/oauth/token")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{
-				"access_token": "test-token",
-				"token_type":   "Bearer",
-				"expires_in":   86400,
-			},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
+	setupWireMockStub(t, "test-token")
 
 	tests := []struct {
 		name    string
@@ -238,20 +194,10 @@ func TestClientCredentialsOption_TokenURL(t *testing.T) {
 func TestClientCredentialsAndAudienceOption_Consistency(t *testing.T) {
 	// This test ensures ClientCredentialsAndAudienceOption behaves the same as ClientCredentialsOption
 	// in terms of URL construction
-	defer WireMockClient.Reset()
+	defer resetWireMock(t)
 
 	// Mock the OAuth token endpoint
-	stub := gowiremock.Post(gowiremock.URLPathEqualTo("/oauth/token")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{
-				"access_token": "test-token",
-				"token_type":   "Bearer",
-				"expires_in":   86400,
-			},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
+	setupWireMockStub(t, "test-token")
 
 	ctx := context.Background()
 	baseURL := WireMockBaseURL + "/api/v2"
@@ -291,20 +237,10 @@ func TestClientCredentialsAndAudienceOption_Consistency(t *testing.T) {
 
 func TestClientCredentialsPrivateKeyJwtOption_TokenURL(t *testing.T) {
 	// Reset WireMock state before each test
-	defer WireMockClient.Reset()
+	defer resetWireMock(t)
 
 	// Mock the OAuth token endpoint
-	stub := gowiremock.Post(gowiremock.URLPathEqualTo("/oauth/token")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{
-				"access_token": "test-token-jwt",
-				"token_type":   "Bearer",
-				"expires_in":   86400,
-			},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
+	setupWireMockStub(t, "test-token-jwt")
 
 	// Generate a test RSA private key
 	privateKeyPEM := generateTestRSAPrivateKey(t)
@@ -354,20 +290,10 @@ func TestClientCredentialsPrivateKeyJwtOption_TokenURL(t *testing.T) {
 
 func TestClientCredentialsPrivateKeyJwtAndAudienceOption_TokenURL(t *testing.T) {
 	// Reset WireMock state before each test
-	defer WireMockClient.Reset()
+	defer resetWireMock(t)
 
 	// Mock the OAuth token endpoint
-	stub := gowiremock.Post(gowiremock.URLPathEqualTo("/oauth/token")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{
-				"access_token": "test-token-jwt-audience",
-				"token_type":   "Bearer",
-				"expires_in":   86400,
-			},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
+	setupWireMockStub(t, "test-token-jwt-audience")
 
 	// Generate a test RSA private key
 	privateKeyPEM := generateTestRSAPrivateKey(t)

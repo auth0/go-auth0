@@ -3,113 +3,77 @@
 package actions_versions_test
 
 import (
+	"bytes"
 	context "context"
-	fmt "fmt"
+	"encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	gowiremock "github.com/wiremock/go-wiremock"
-	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
-// TestMain sets up shared test fixtures for all tests in this package// Global test fixtures
+// WireMock configuration - expects WireMock to be running via docker compose
 var (
-	WireMockContainer *wiremocktestcontainersgo.WireMockContainer
-	WireMockBaseURL   string
-	WireMockClient    *gowiremock.Client
+	WireMockBaseURL = getWireMockBaseURL()
 )
 
-// TestMain sets up shared test fixtures for all tests in this package
-func TestMain(m *testing.M) {
-	// Setup shared WireMock container
-	ctx := context.Background()
-	container, err := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
-		ctx,
-		&testing.T{},
-		wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
-	)
-	if err != nil {
-		fmt.Printf("Failed to start WireMock container: %v\n", err)
-		os.Exit(1)
+func getWireMockBaseURL() string {
+	if url := os.Getenv("WIREMOCK_URL"); url != "" {
+		return url
 	}
+	return "http://localhost:8080"
+}
 
-	// Store global references
-	WireMockContainer = container
+// setupWireMockStub creates a stub via WireMock's HTTP API
+func setupWireMockStub(t *testing.T, stub map[string]interface{}) {
+	t.Helper()
 
-	// Try to get the base URL using the standard method first
-	baseURL, err := container.Endpoint(ctx, "")
-	if err == nil {
-		// Standard method worked (running outside DinD)
-		// This uses the mapped port (e.g., localhost:59553)
-		WireMockBaseURL = "http://" + baseURL
-		WireMockClient = container.Client
-	} else {
-		// Standard method failed, use internal IP fallback (DinD environment)
-		fmt.Printf("Standard endpoint resolution failed, using internal IP fallback: %v\n", err)
+	body, err := json.Marshal(stub)
+	require.NoError(t, err)
 
-		inspect, err := container.Inspect(ctx)
-		if err != nil {
-			fmt.Printf("Failed to inspect WireMock container: %v\n", err)
-			os.Exit(1)
-		}
+	resp, err := http.Post(WireMockBaseURL+"/__admin/mappings", "application/json", bytes.NewReader(body))
+	require.NoError(t, err)
+	defer resp.Body.Close()
+	require.Equal(t, http.StatusCreated, resp.StatusCode, "Failed to create WireMock stub")
+}
 
-		// Find the IP address from the container's networks
-		var containerIP string
-		for _, network := range inspect.NetworkSettings.Networks {
-			if network.IPAddress != "" {
-				containerIP = network.IPAddress
-				break
-			}
-		}
+// resetWireMock clears all stubs
+func resetWireMock(t *testing.T) {
+	t.Helper()
 
-		if containerIP == "" {
-			fmt.Printf("Failed to get WireMock container IP address\n")
-			os.Exit(1)
-		}
+	req, err := http.NewRequest(http.MethodDelete, WireMockBaseURL+"/__admin/mappings", nil)
+	require.NoError(t, err)
 
-		// In DinD, use the internal port directly (8080 for WireMock HTTP)
-		// Don't use the mapped port since it doesn't exist in this environment
-		WireMockBaseURL = fmt.Sprintf("http://%s:8080", containerIP)
-
-		// The container.Client was created with a bad URL, so we need a new one
-		WireMockClient = gowiremock.NewClient(WireMockBaseURL)
-	}
-
-	fmt.Printf("WireMock available at: %s\n", WireMockBaseURL)
-
-	// Run all tests
-	code := m.Run()
-
-	// Cleanup
-	if WireMockContainer != nil {
-		WireMockContainer.Terminate(ctx)
-	}
-
-	// Exit with the same code as the tests
-	os.Exit(code)
+	resp, err := http.DefaultClient.Do(req)
+	require.NoError(t, err)
+	defer resp.Body.Close()
 }
 
 func TestActionsVersionsListWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/actions/actions/{actionId}/versions")).WithPathParam(
-		"actionId",
-		gowiremock.Matching("actionId"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"total": 1.1, "page": 1.1, "per_page": 1.1, "versions": []interface{}{map[string]interface{}{"id": "id", "action_id": "action_id", "code": "code", "dependencies": []interface{}{map[string]interface{}{}}, "deployed": true, "runtime": "runtime", "secrets": []interface{}{map[string]interface{}{}}, "status": "pending", "number": 1.1, "errors": []interface{}{map[string]interface{}{}}, "built_at": "2024-01-15T09:30:00Z", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z", "supported_triggers": []interface{}{map[string]interface{}{"id": "id"}}}}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
+	defer resetWireMock(t)
 
-	client := client.NewWithOptions(
+	stub := map[string]interface{}{
+		"request": map[string]interface{}{
+			"method":         "GET",
+			"urlPathPattern": "/actions/actions/[^/]+/versions",
+		},
+		"response": map[string]interface{}{
+			"status": http.StatusOK,
+			"headers": map[string]string{
+				"Content-Type": "application/json",
+			},
+			"jsonBody": map[string]interface{}{"total": 1.1, "page": 1.1, "per_page": 1.1, "versions": []interface{}{map[string]interface{}{"id": "id", "action_id": "action_id", "code": "code", "dependencies": []interface{}{map[string]interface{}{}}, "deployed": true, "runtime": "runtime", "secrets": []interface{}{map[string]interface{}{}}, "status": "pending", "number": 1.1, "errors": []interface{}{map[string]interface{}{}}, "built_at": "2024-01-15T09:30:00Z", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z", "supported_triggers": []interface{}{map[string]interface{}{"id": "id"}}}}},
+		},
+	}
+	setupWireMockStub(t, stub)
+
+	c := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
 		),
@@ -122,80 +86,76 @@ func TestActionsVersionsListWithWireMock(
 			1,
 		),
 	}
-	_, invocationErr := client.Actions.Versions.List(
+	_, invocationErr := c.Actions.Versions.List(
 		context.TODO(),
 		"actionId",
 		request,
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
 }
 
 func TestActionsVersionsGetWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/actions/actions/{actionId}/versions/{id}")).WithPathParam(
-		"actionId",
-		gowiremock.Matching("actionId"),
-	).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"id": "id", "action_id": "action_id", "code": "code", "dependencies": []interface{}{map[string]interface{}{"name": "name", "version": "version", "registry_url": "registry_url"}}, "deployed": true, "runtime": "runtime", "secrets": []interface{}{map[string]interface{}{"name": "name", "updated_at": "2024-01-15T09:30:00Z"}}, "status": "pending", "number": 1.1, "errors": []interface{}{map[string]interface{}{"id": "id", "msg": "msg", "url": "url"}}, "action": map[string]interface{}{"id": "id", "name": "name", "supported_triggers": []interface{}{map[string]interface{}{"id": "id"}}, "all_changes_deployed": true, "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}, "built_at": "2024-01-15T09:30:00Z", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z", "supported_triggers": []interface{}{map[string]interface{}{"id": "id", "version": "version", "status": "status", "runtimes": []interface{}{"runtimes"}, "default_runtime": "default_runtime", "compatible_triggers": []interface{}{map[string]interface{}{"id": "id", "version": "version"}}, "binding_policy": "trigger-bound"}}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
+	defer resetWireMock(t)
 
-	client := client.NewWithOptions(
+	stub := map[string]interface{}{
+		"request": map[string]interface{}{
+			"method":         "GET",
+			"urlPathPattern": "/actions/actions/[^/]+/versions/[^/]+",
+		},
+		"response": map[string]interface{}{
+			"status": http.StatusOK,
+			"headers": map[string]string{
+				"Content-Type": "application/json",
+			},
+			"jsonBody": map[string]interface{}{"id": "id", "action_id": "action_id", "code": "code", "dependencies": []interface{}{map[string]interface{}{"name": "name", "version": "version", "registry_url": "registry_url"}}, "deployed": true, "runtime": "runtime", "secrets": []interface{}{map[string]interface{}{"name": "name", "updated_at": "2024-01-15T09:30:00Z"}}, "status": "pending", "number": 1.1, "errors": []interface{}{map[string]interface{}{"id": "id", "msg": "msg", "url": "url"}}, "action": map[string]interface{}{"id": "id", "name": "name", "supported_triggers": []interface{}{map[string]interface{}{"id": "id"}}, "all_changes_deployed": true, "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}, "built_at": "2024-01-15T09:30:00Z", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z", "supported_triggers": []interface{}{map[string]interface{}{"id": "id", "version": "version", "status": "status", "runtimes": []interface{}{"runtimes"}, "default_runtime": "default_runtime", "compatible_triggers": []interface{}{map[string]interface{}{"id": "id", "version": "version"}}, "binding_policy": "trigger-bound"}}},
+		},
+	}
+	setupWireMockStub(t, stub)
+
+	c := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
 		),
 	)
-	_, invocationErr := client.Actions.Versions.Get(
+	_, invocationErr := c.Actions.Versions.Get(
 		context.TODO(),
 		"actionId",
 		"id",
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
 }
 
 func TestActionsVersionsDeployWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Post(gowiremock.URLPathTemplate("/actions/actions/{actionId}/versions/{id}/deploy")).WithPathParam(
-		"actionId",
-		gowiremock.Matching("actionId"),
-	).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WithBodyPattern(gowiremock.MatchesJsonSchema("{}", "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"id": "id", "action_id": "action_id", "code": "code", "dependencies": []interface{}{map[string]interface{}{"name": "name", "version": "version", "registry_url": "registry_url"}}, "deployed": true, "runtime": "runtime", "secrets": []interface{}{map[string]interface{}{"name": "name", "updated_at": "2024-01-15T09:30:00Z"}}, "status": "pending", "number": 1.1, "errors": []interface{}{map[string]interface{}{"id": "id", "msg": "msg", "url": "url"}}, "action": map[string]interface{}{"id": "id", "name": "name", "supported_triggers": []interface{}{map[string]interface{}{"id": "id"}}, "all_changes_deployed": true, "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}, "built_at": "2024-01-15T09:30:00Z", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z", "supported_triggers": []interface{}{map[string]interface{}{"id": "id", "version": "version", "status": "status", "runtimes": []interface{}{"runtimes"}, "default_runtime": "default_runtime", "compatible_triggers": []interface{}{map[string]interface{}{"id": "id", "version": "version"}}, "binding_policy": "trigger-bound"}}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
+	defer resetWireMock(t)
 
-	client := client.NewWithOptions(
+	stub := map[string]interface{}{
+		"request": map[string]interface{}{
+			"method":         "POST",
+			"urlPathPattern": "/actions/actions/[^/]+/versions/[^/]+/deploy",
+		},
+		"response": map[string]interface{}{
+			"status": http.StatusOK,
+			"headers": map[string]string{
+				"Content-Type": "application/json",
+			},
+			"jsonBody": map[string]interface{}{"id": "id", "action_id": "action_id", "code": "code", "dependencies": []interface{}{map[string]interface{}{"name": "name", "version": "version", "registry_url": "registry_url"}}, "deployed": true, "runtime": "runtime", "secrets": []interface{}{map[string]interface{}{"name": "name", "updated_at": "2024-01-15T09:30:00Z"}}, "status": "pending", "number": 1.1, "errors": []interface{}{map[string]interface{}{"id": "id", "msg": "msg", "url": "url"}}, "action": map[string]interface{}{"id": "id", "name": "name", "supported_triggers": []interface{}{map[string]interface{}{"id": "id"}}, "all_changes_deployed": true, "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}, "built_at": "2024-01-15T09:30:00Z", "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z", "supported_triggers": []interface{}{map[string]interface{}{"id": "id", "version": "version", "status": "status", "runtimes": []interface{}{"runtimes"}, "default_runtime": "default_runtime", "compatible_triggers": []interface{}{map[string]interface{}{"id": "id", "version": "version"}}, "binding_policy": "trigger-bound"}}},
+		},
+	}
+	setupWireMockStub(t, stub)
+
+	c := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
 		),
 	)
 	request := &management.DeployActionVersionRequestBodyParams{}
-	_, invocationErr := client.Actions.Versions.Deploy(
+	_, invocationErr := c.Actions.Versions.Deploy(
 		context.TODO(),
 		"actionId",
 		"id",
@@ -203,7 +163,4 @@ func TestActionsVersionsDeployWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
 }

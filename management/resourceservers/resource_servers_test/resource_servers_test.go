@@ -3,109 +3,69 @@
 package resource_servers_test
 
 import (
+	bytes "bytes"
 	context "context"
-	fmt "fmt"
+	json "encoding/json"
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	gowiremock "github.com/wiremock/go-wiremock"
-	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
 	http "net/http"
-	os "os"
 	testing "testing"
 )
 
-// TestMain sets up shared test fixtures for all tests in this package// Global test fixtures
-var (
-	WireMockContainer *wiremocktestcontainersgo.WireMockContainer
-	WireMockBaseURL   string
-	WireMockClient    *gowiremock.Client
-)
+func ResetWireMockRequests(
+	t *testing.T,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
+	require.NoError(t, err)
+}
 
-// TestMain sets up shared test fixtures for all tests in this package
-func TestMain(m *testing.M) {
-	// Setup shared WireMock container
-	ctx := context.Background()
-	container, err := wiremocktestcontainersgo.RunContainerAndStopOnCleanup(
-		ctx,
-		&testing.T{},
-		wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
-	)
-	if err != nil {
-		fmt.Printf("Failed to start WireMock container: %v\n", err)
-		os.Exit(1)
-	}
-
-	// Store global references
-	WireMockContainer = container
-
-	// Try to get the base URL using the standard method first
-	baseURL, err := container.Endpoint(ctx, "")
-	if err == nil {
-		// Standard method worked (running outside DinD)
-		// This uses the mapped port (e.g., localhost:59553)
-		WireMockBaseURL = "http://" + baseURL
-		WireMockClient = container.Client
-	} else {
-		// Standard method failed, use internal IP fallback (DinD environment)
-		fmt.Printf("Standard endpoint resolution failed, using internal IP fallback: %v\n", err)
-
-		inspect, err := container.Inspect(ctx)
-		if err != nil {
-			fmt.Printf("Failed to inspect WireMock container: %v\n", err)
-			os.Exit(1)
-		}
-
-		// Find the IP address from the container's networks
-		var containerIP string
-		for _, network := range inspect.NetworkSettings.Networks {
-			if network.IPAddress != "" {
-				containerIP = network.IPAddress
-				break
+func VerifyRequestCount(
+	t *testing.T,
+	method string,
+	urlPath string,
+	queryParams map[string]string,
+	expected int,
+) {
+	WiremockAdminURL := "http://localhost:8080/__admin"
+	var reqBody bytes.Buffer
+	reqBody.WriteString(`{"method":"`)
+	reqBody.WriteString(method)
+	reqBody.WriteString(`","urlPath":"`)
+	reqBody.WriteString(urlPath)
+	reqBody.WriteString(`"}`)
+	if len(queryParams) > 0 {
+		reqBody.WriteString(`,"queryParameters":{`)
+		first := true
+		for key, value := range queryParams {
+			if !first {
+				reqBody.WriteString(",")
 			}
+			reqBody.WriteString(`"`)
+			reqBody.WriteString(key)
+			reqBody.WriteString(`":{"equalTo":"`)
+			reqBody.WriteString(value)
+			reqBody.WriteString(`"}`)
+			first = false
 		}
-
-		if containerIP == "" {
-			fmt.Printf("Failed to get WireMock container IP address\n")
-			os.Exit(1)
-		}
-
-		// In DinD, use the internal port directly (8080 for WireMock HTTP)
-		// Don't use the mapped port since it doesn't exist in this environment
-		WireMockBaseURL = fmt.Sprintf("http://%s:8080", containerIP)
-
-		// The container.Client was created with a bad URL, so we need a new one
-		WireMockClient = gowiremock.NewClient(WireMockBaseURL)
+		reqBody.WriteString("}")
 	}
-
-	fmt.Printf("WireMock available at: %s\n", WireMockBaseURL)
-
-	// Run all tests
-	code := m.Run()
-
-	// Cleanup
-	if WireMockContainer != nil {
-		WireMockContainer.Terminate(ctx)
+	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
+	require.NoError(t, err)
+	var result struct {
+		Requests []interface{} `json:"requests"`
 	}
-
-	// Exit with the same code as the tests
-	os.Exit(code)
+	json.NewDecoder(resp.Body).Decode(&result)
+	require.Equal(t, expected, len(result.Requests))
 }
 
 func TestResourceServersListWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/resource-servers")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"start": 1.1, "limit": 1.1, "total": 1.1, "resource_servers": []interface{}{map[string]interface{}{"id": "id", "name": "name", "is_system": true, "identifier": "identifier", "scopes": []interface{}{map[string]interface{}{"value": "value"}}, "signing_alg": "HS256", "signing_secret": "signing_secret", "allow_offline_access": true, "skip_consent_for_verifiable_first_party_clients": true, "token_lifetime": 1, "token_lifetime_for_web": 1, "enforce_policies": true, "token_dialect": "access_token", "token_encryption": map[string]interface{}{"format": "compact-nested-jwe", "encryption_key": map[string]interface{}{"alg": "RSA-OAEP-256", "pem": "pem"}}, "consent_policy": "transactional-authorization-with-mfa", "proof_of_possession": map[string]interface{}{"mechanism": "mtls", "required": true}, "client_id": "client_id"}}},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -131,32 +91,14 @@ func TestResourceServersListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "GET", "/resource-servers", map[string]string{"page": "1", "per_page": "1", "include_totals": "true", "include_fields": "true"}, 1)
 }
 
 func TestResourceServersCreateWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Post(gowiremock.URLPathTemplate("/resource-servers")).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "object",
-                    "required": ["identifier"],
-                    "properties": {
-                        "identifier": {"type": "string"}
-                    },
-                    "additionalProperties": true
-                }`, "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"id": "id", "name": "name", "is_system": true, "identifier": "identifier", "scopes": []interface{}{map[string]interface{}{"value": "value", "description": "description"}}, "signing_alg": "HS256", "signing_secret": "signing_secret", "allow_offline_access": true, "skip_consent_for_verifiable_first_party_clients": true, "token_lifetime": 1, "token_lifetime_for_web": 1, "enforce_policies": true, "token_dialect": "access_token", "token_encryption": map[string]interface{}{"format": "compact-nested-jwe", "encryption_key": map[string]interface{}{"name": "name", "alg": "RSA-OAEP-256", "kid": "kid", "pem": "pem"}}, "consent_policy": "transactional-authorization-with-mfa", "authorization_details": []interface{}{map[string]interface{}{"key": "value"}}, "proof_of_possession": map[string]interface{}{"mechanism": "mtls", "required": true}, "subject_type_authorization": map[string]interface{}{"user": map[string]interface{}{"policy": "allow_all"}, "client": map[string]interface{}{"policy": "deny_all"}}, "client_id": "client_id"},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -171,27 +113,14 @@ func TestResourceServersCreateWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "POST", "/resource-servers", nil, 1)
 }
 
 func TestResourceServersGetWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Get(gowiremock.URLPathTemplate("/resource-servers/{id}")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"id": "id", "name": "name", "is_system": true, "identifier": "identifier", "scopes": []interface{}{map[string]interface{}{"value": "value", "description": "description"}}, "signing_alg": "HS256", "signing_secret": "signing_secret", "allow_offline_access": true, "skip_consent_for_verifiable_first_party_clients": true, "token_lifetime": 1, "token_lifetime_for_web": 1, "enforce_policies": true, "token_dialect": "access_token", "token_encryption": map[string]interface{}{"format": "compact-nested-jwe", "encryption_key": map[string]interface{}{"name": "name", "alg": "RSA-OAEP-256", "kid": "kid", "pem": "pem"}}, "consent_policy": "transactional-authorization-with-mfa", "authorization_details": []interface{}{map[string]interface{}{"key": "value"}}, "proof_of_possession": map[string]interface{}{"mechanism": "mtls", "required": true}, "subject_type_authorization": map[string]interface{}{"user": map[string]interface{}{"policy": "allow_all"}, "client": map[string]interface{}{"policy": "deny_all"}}, "client_id": "client_id"},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -209,27 +138,14 @@ func TestResourceServersGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "GET", "/resource-servers/id", map[string]string{"include_fields": "true"}, 1)
 }
 
 func TestResourceServersDeleteWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Delete(gowiremock.URLPathTemplate("/resource-servers/{id}")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -241,35 +157,14 @@ func TestResourceServersDeleteWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "DELETE", "/resource-servers/id", nil, 1)
 }
 
 func TestResourceServersUpdateWithWireMock(
 	t *testing.T,
 ) {
-	// wiremock client and server initialized in shared main_test.go
-	defer WireMockClient.Reset()
-	stub := gowiremock.Patch(gowiremock.URLPathTemplate("/resource-servers/{id}")).WithPathParam(
-		"id",
-		gowiremock.Matching("id"),
-	).WithBodyPattern(gowiremock.MatchesJsonSchema(`{
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
-                    "type": "object",
-                    "required": [],
-                    "properties": {
-                        
-                    },
-                    "additionalProperties": true
-                }`, "V202012")).WillReturnResponse(
-		gowiremock.NewResponse().WithJSONBody(
-			map[string]interface{}{"id": "id", "name": "name", "is_system": true, "identifier": "identifier", "scopes": []interface{}{map[string]interface{}{"value": "value", "description": "description"}}, "signing_alg": "HS256", "signing_secret": "signing_secret", "allow_offline_access": true, "skip_consent_for_verifiable_first_party_clients": true, "token_lifetime": 1, "token_lifetime_for_web": 1, "enforce_policies": true, "token_dialect": "access_token", "token_encryption": map[string]interface{}{"format": "compact-nested-jwe", "encryption_key": map[string]interface{}{"name": "name", "alg": "RSA-OAEP-256", "kid": "kid", "pem": "pem"}}, "consent_policy": "transactional-authorization-with-mfa", "authorization_details": []interface{}{map[string]interface{}{"key": "value"}}, "proof_of_possession": map[string]interface{}{"mechanism": "mtls", "required": true}, "subject_type_authorization": map[string]interface{}{"user": map[string]interface{}{"policy": "allow_all"}, "client": map[string]interface{}{"policy": "deny_all"}}, "client_id": "client_id"},
-		).WithStatus(http.StatusOK),
-	)
-	err := WireMockClient.StubFor(stub)
-	require.NoError(t, err, "Failed to create WireMock stub")
-
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
 	client := client.NewWithOptions(
 		option.WithBaseURL(
 			WireMockBaseURL,
@@ -283,7 +178,5 @@ func TestResourceServersUpdateWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	ok, countErr := WireMockClient.Verify(stub.Request(), 1)
-	require.NoError(t, countErr, "Failed to verify WireMock request was matched")
-	require.True(t, ok, "WireMock request was not matched")
+	VerifyRequestCount(t, "PATCH", "/resource-servers/id", nil, 1)
 }

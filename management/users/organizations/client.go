@@ -42,7 +42,7 @@ func (c *Client) List(
 	id string,
 	request *management.ListUserOrganizationsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*management.Organization], error) {
+) (*core.Page[*int, *management.Organization, *management.ListUserOrganizationsOffsetPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -68,7 +68,7 @@ func (c *Client) List(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	prepareCall := func(pageRequest *internal.PageRequest[*int]) *internal.CallParams {
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
 		if pageRequest.Cursor != nil {
 			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
 		}
@@ -96,12 +96,13 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListUserOrganizationsOffsetPaginatedResponseContent) *internal.PageResponse[*int, *management.Organization] {
+	readPageResponse := func(response *management.ListUserOrganizationsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.Organization, *management.ListUserOrganizationsOffsetPaginatedResponseContent] {
 		next += 1
 		results := response.Organizations
-		return &internal.PageResponse[*int, *management.Organization]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *management.Organization, *management.ListUserOrganizationsOffsetPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(
