@@ -6,8 +6,9 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	clients "github.com/auth0/go-auth0/v2/management/connections/clients"
+	client "github.com/auth0/go-auth0/v2/management/connections/directoryprovisioning/client"
 	keys "github.com/auth0/go-auth0/v2/management/connections/keys"
-	client "github.com/auth0/go-auth0/v2/management/connections/scimconfiguration/client"
+	scimconfigurationclient "github.com/auth0/go-auth0/v2/management/connections/scimconfiguration/client"
 	users "github.com/auth0/go-auth0/v2/management/connections/users"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
@@ -16,11 +17,12 @@ import (
 )
 
 type Client struct {
-	WithRawResponse   *RawClient
-	Clients           *clients.Client
-	Keys              *keys.Client
-	SCIMConfiguration *client.Client
-	Users             *users.Client
+	WithRawResponse       *RawClient
+	Clients               *clients.Client
+	DirectoryProvisioning *client.Client
+	Keys                  *keys.Client
+	SCIMConfiguration     *scimconfigurationclient.Client
+	Users                 *users.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -29,13 +31,14 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		Clients:           clients.NewClient(options),
-		Keys:              keys.NewClient(options),
-		SCIMConfiguration: client.NewClient(options),
-		Users:             users.NewClient(options),
-		WithRawResponse:   NewRawClient(options),
-		options:           options,
-		baseURL:           options.BaseURL,
+		Clients:               clients.NewClient(options),
+		DirectoryProvisioning: client.NewClient(options),
+		Keys:                  keys.NewClient(options),
+		SCIMConfiguration:     scimconfigurationclient.NewClient(options),
+		Users:                 users.NewClient(options),
+		WithRawResponse:       NewRawClient(options),
+		options:               options,
+		baseURL:               options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

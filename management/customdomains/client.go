@@ -35,10 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 // Retrieve details on <a href="https://auth0.com/docs/custom-domains">custom domains</a>.
 func (c *Client) List(
 	ctx context.Context,
+	request *management.ListCustomDomainsRequestParameters,
 	opts ...option.RequestOption,
 ) (management.ListCustomDomainsResponseContent, error) {
 	response, err := c.WithRawResponse.List(
 		ctx,
+		request,
 		opts...,
 	)
 	if err != nil {

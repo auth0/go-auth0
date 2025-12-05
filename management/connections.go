@@ -2907,13 +2907,16 @@ func (c *CreateConnectionResponseContent) String() string {
 // Configuration for the email attribute for users.
 var (
 	emailAttributeFieldIdentifier         = big.NewInt(1 << 0)
-	emailAttributeFieldProfileRequired    = big.NewInt(1 << 1)
-	emailAttributeFieldVerificationMethod = big.NewInt(1 << 2)
-	emailAttributeFieldSignup             = big.NewInt(1 << 3)
+	emailAttributeFieldUnique             = big.NewInt(1 << 1)
+	emailAttributeFieldProfileRequired    = big.NewInt(1 << 2)
+	emailAttributeFieldVerificationMethod = big.NewInt(1 << 3)
+	emailAttributeFieldSignup             = big.NewInt(1 << 4)
 )
 
 type EmailAttribute struct {
 	Identifier *ConnectionAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
+	// Determines if the attribute is unique in a given connection
+	Unique *bool `json:"unique,omitempty" url:"unique,omitempty"`
 	// Determines if property should be required for users
 	ProfileRequired    *bool                   `json:"profile_required,omitempty" url:"profile_required,omitempty"`
 	VerificationMethod *VerificationMethodEnum `json:"verification_method,omitempty" url:"verification_method,omitempty"`
@@ -2931,6 +2934,13 @@ func (e *EmailAttribute) GetIdentifier() ConnectionAttributeIdentifier {
 		return ConnectionAttributeIdentifier{}
 	}
 	return *e.Identifier
+}
+
+func (e *EmailAttribute) GetUnique() bool {
+	if e == nil || e.Unique == nil {
+		return false
+	}
+	return *e.Unique
 }
 
 func (e *EmailAttribute) GetProfileRequired() bool {
@@ -2970,6 +2980,13 @@ func (e *EmailAttribute) require(field *big.Int) {
 func (e *EmailAttribute) SetIdentifier(identifier *ConnectionAttributeIdentifier) {
 	e.Identifier = identifier
 	e.require(emailAttributeFieldIdentifier)
+}
+
+// SetUnique sets the Unique field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EmailAttribute) SetUnique(unique *bool) {
+	e.Unique = unique
+	e.require(emailAttributeFieldUnique)
 }
 
 // SetProfileRequired sets the ProfileRequired field and marks it as non-optional;

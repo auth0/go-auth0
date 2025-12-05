@@ -9,6 +9,112 @@ import (
 	big "math/big"
 )
 
+// The user's identity. If you set this value, you must also send the user_id parameter.
+var (
+	changePasswordTicketIdentityFieldUserID       = big.NewInt(1 << 0)
+	changePasswordTicketIdentityFieldProvider     = big.NewInt(1 << 1)
+	changePasswordTicketIdentityFieldConnectionID = big.NewInt(1 << 2)
+)
+
+type ChangePasswordTicketIdentity struct {
+	// user_id of the identity.
+	UserID   string                        `json:"user_id" url:"user_id"`
+	Provider IdentityProviderOnlyAuth0Enum `json:"provider" url:"provider"`
+	// connection_id of the identity.
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ChangePasswordTicketIdentity) GetUserID() string {
+	if c == nil {
+		return ""
+	}
+	return c.UserID
+}
+
+func (c *ChangePasswordTicketIdentity) GetConnectionID() string {
+	if c == nil || c.ConnectionID == nil {
+		return ""
+	}
+	return *c.ConnectionID
+}
+
+func (c *ChangePasswordTicketIdentity) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ChangePasswordTicketIdentity) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ChangePasswordTicketIdentity) SetUserID(userID string) {
+	c.UserID = userID
+	c.require(changePasswordTicketIdentityFieldUserID)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ChangePasswordTicketIdentity) SetProvider(provider IdentityProviderOnlyAuth0Enum) {
+	c.Provider = provider
+	c.require(changePasswordTicketIdentityFieldProvider)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ChangePasswordTicketIdentity) SetConnectionID(connectionID *string) {
+	c.ConnectionID = connectionID
+	c.require(changePasswordTicketIdentityFieldConnectionID)
+}
+
+func (c *ChangePasswordTicketIdentity) UnmarshalJSON(data []byte) error {
+	type unmarshaler ChangePasswordTicketIdentity
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ChangePasswordTicketIdentity(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ChangePasswordTicketIdentity) MarshalJSON() ([]byte, error) {
+	type embed ChangePasswordTicketIdentity
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ChangePasswordTicketIdentity) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	changePasswordTicketResponseContentFieldTicket = big.NewInt(1 << 0)
 )
@@ -92,6 +198,9 @@ func (c *ChangePasswordTicketResponseContent) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+// Identity provider name of the identity. Only `auth0` is supported
+type IdentityProviderOnlyAuth0Enum = string
 
 var (
 	verifyEmailTicketResponseContentFieldTicket = big.NewInt(1 << 0)

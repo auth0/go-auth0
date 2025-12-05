@@ -80,11 +80,12 @@ var (
 	clientFieldSignedRequestObject                            = big.NewInt(1 << 44)
 	clientFieldComplianceLevel                                = big.NewInt(1 << 45)
 	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	clientFieldParRequestExpiry                               = big.NewInt(1 << 47)
-	clientFieldTokenQuota                                     = big.NewInt(1 << 48)
-	clientFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	clientFieldTokenExchange                                  = big.NewInt(1 << 47)
+	clientFieldParRequestExpiry                               = big.NewInt(1 << 48)
+	clientFieldTokenQuota                                     = big.NewInt(1 << 49)
+	clientFieldExpressConfiguration                           = big.NewInt(1 << 50)
+	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
 )
 
 type Client struct {
@@ -166,7 +167,8 @@ type Client struct {
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
-	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
@@ -510,6 +512,13 @@ func (c *Client) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
 		return false
 	}
 	return *c.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
+func (c *Client) GetTokenExchange() ClientTokenExchangeConfiguration {
+	if c == nil || c.TokenExchange == nil {
+		return ClientTokenExchangeConfiguration{}
+	}
+	return *c.TokenExchange
 }
 
 func (c *Client) GetParRequestExpiry() int {
@@ -885,6 +894,13 @@ func (c *Client) SetComplianceLevel(complianceLevel *ClientComplianceLevelEnum) 
 func (c *Client) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
 	c.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
 	c.require(clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
+// SetTokenExchange sets the TokenExchange field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetTokenExchange(tokenExchange *ClientTokenExchangeConfiguration) {
+	c.TokenExchange = tokenExchange
+	c.require(clientFieldTokenExchange)
 }
 
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
@@ -7049,6 +7065,168 @@ func (c ClientTokenEndpointAuthMethodOrNullEnum) Ptr() *ClientTokenEndpointAuthM
 	return &c
 }
 
+// Configuration for token exchange.
+var (
+	clientTokenExchangeConfigurationFieldAllowAnyProfileOfType = big.NewInt(1 << 0)
+)
+
+type ClientTokenExchangeConfiguration struct {
+	// List the enabled token exchange types for this client.
+	AllowAnyProfileOfType []ClientTokenExchangeTypeEnum `json:"allow_any_profile_of_type,omitempty" url:"allow_any_profile_of_type,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientTokenExchangeConfiguration) GetAllowAnyProfileOfType() []ClientTokenExchangeTypeEnum {
+	if c == nil || c.AllowAnyProfileOfType == nil {
+		return nil
+	}
+	return c.AllowAnyProfileOfType
+}
+
+func (c *ClientTokenExchangeConfiguration) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ClientTokenExchangeConfiguration) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetAllowAnyProfileOfType sets the AllowAnyProfileOfType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientTokenExchangeConfiguration) SetAllowAnyProfileOfType(allowAnyProfileOfType []ClientTokenExchangeTypeEnum) {
+	c.AllowAnyProfileOfType = allowAnyProfileOfType
+	c.require(clientTokenExchangeConfigurationFieldAllowAnyProfileOfType)
+}
+
+func (c *ClientTokenExchangeConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientTokenExchangeConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientTokenExchangeConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientTokenExchangeConfiguration) MarshalJSON() ([]byte, error) {
+	type embed ClientTokenExchangeConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientTokenExchangeConfiguration) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Configuration for token exchange.
+var (
+	clientTokenExchangeConfigurationOrNullFieldAllowAnyProfileOfType = big.NewInt(1 << 0)
+)
+
+type ClientTokenExchangeConfigurationOrNull struct {
+	// List the enabled token exchange types for this client.
+	AllowAnyProfileOfType []ClientTokenExchangeTypeEnum `json:"allow_any_profile_of_type,omitempty" url:"allow_any_profile_of_type,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientTokenExchangeConfigurationOrNull) GetAllowAnyProfileOfType() []ClientTokenExchangeTypeEnum {
+	if c == nil || c.AllowAnyProfileOfType == nil {
+		return nil
+	}
+	return c.AllowAnyProfileOfType
+}
+
+func (c *ClientTokenExchangeConfigurationOrNull) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ClientTokenExchangeConfigurationOrNull) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetAllowAnyProfileOfType sets the AllowAnyProfileOfType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientTokenExchangeConfigurationOrNull) SetAllowAnyProfileOfType(allowAnyProfileOfType []ClientTokenExchangeTypeEnum) {
+	c.AllowAnyProfileOfType = allowAnyProfileOfType
+	c.require(clientTokenExchangeConfigurationOrNullFieldAllowAnyProfileOfType)
+}
+
+func (c *ClientTokenExchangeConfigurationOrNull) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientTokenExchangeConfigurationOrNull
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientTokenExchangeConfigurationOrNull(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientTokenExchangeConfigurationOrNull) MarshalJSON() ([]byte, error) {
+	type embed ClientTokenExchangeConfigurationOrNull
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientTokenExchangeConfigurationOrNull) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type ClientTokenExchangeTypeEnum = string
+
 var (
 	createClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
 	createClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
@@ -7097,11 +7275,12 @@ var (
 	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
 	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
 	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
-	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 47)
+	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
+	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
+	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
 )
 
 type CreateClientResponseContent struct {
@@ -7183,7 +7362,8 @@ type CreateClientResponseContent struct {
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
-	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
@@ -7527,6 +7707,13 @@ func (c *CreateClientResponseContent) GetSkipNonVerifiableCallbackURIConfirmatio
 		return false
 	}
 	return *c.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
+func (c *CreateClientResponseContent) GetTokenExchange() ClientTokenExchangeConfiguration {
+	if c == nil || c.TokenExchange == nil {
+		return ClientTokenExchangeConfiguration{}
+	}
+	return *c.TokenExchange
 }
 
 func (c *CreateClientResponseContent) GetParRequestExpiry() int {
@@ -7902,6 +8089,13 @@ func (c *CreateClientResponseContent) SetComplianceLevel(complianceLevel *Client
 func (c *CreateClientResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
 	c.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
 	c.require(createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
+// SetTokenExchange sets the TokenExchange field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetTokenExchange(tokenExchange *ClientTokenExchangeConfiguration) {
+	c.TokenExchange = tokenExchange
+	c.require(createClientResponseContentFieldTokenExchange)
 }
 
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
@@ -8541,11 +8735,12 @@ var (
 	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
 	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
 	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
-	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 47)
+	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
+	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
+	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
 )
 
 type GetClientResponseContent struct {
@@ -8627,7 +8822,8 @@ type GetClientResponseContent struct {
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
-	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
@@ -8971,6 +9167,13 @@ func (g *GetClientResponseContent) GetSkipNonVerifiableCallbackURIConfirmationPr
 		return false
 	}
 	return *g.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
+func (g *GetClientResponseContent) GetTokenExchange() ClientTokenExchangeConfiguration {
+	if g == nil || g.TokenExchange == nil {
+		return ClientTokenExchangeConfiguration{}
+	}
+	return *g.TokenExchange
 }
 
 func (g *GetClientResponseContent) GetParRequestExpiry() int {
@@ -9346,6 +9549,13 @@ func (g *GetClientResponseContent) SetComplianceLevel(complianceLevel *ClientCom
 func (g *GetClientResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
 	g.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
 	g.require(getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
+// SetTokenExchange sets the TokenExchange field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetTokenExchange(tokenExchange *ClientTokenExchangeConfiguration) {
+	g.TokenExchange = tokenExchange
+	g.require(getClientResponseContentFieldTokenExchange)
 }
 
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
@@ -10325,11 +10535,12 @@ var (
 	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
 	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
 	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
-	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 47)
+	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
+	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
+	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -10411,7 +10622,8 @@ type RotateClientSecretResponseContent struct {
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
-	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
@@ -10755,6 +10967,13 @@ func (r *RotateClientSecretResponseContent) GetSkipNonVerifiableCallbackURIConfi
 		return false
 	}
 	return *r.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
+func (r *RotateClientSecretResponseContent) GetTokenExchange() ClientTokenExchangeConfiguration {
+	if r == nil || r.TokenExchange == nil {
+		return ClientTokenExchangeConfiguration{}
+	}
+	return *r.TokenExchange
 }
 
 func (r *RotateClientSecretResponseContent) GetParRequestExpiry() int {
@@ -11132,6 +11351,13 @@ func (r *RotateClientSecretResponseContent) SetSkipNonVerifiableCallbackURIConfi
 	r.require(rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
 }
 
+// SetTokenExchange sets the TokenExchange field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetTokenExchange(tokenExchange *ClientTokenExchangeConfiguration) {
+	r.TokenExchange = tokenExchange
+	r.require(rotateClientSecretResponseContentFieldTokenExchange)
+}
+
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetParRequestExpiry(parRequestExpiry *int) {
@@ -11258,11 +11484,12 @@ var (
 	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
 	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
 	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
-	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 49)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 51)
+	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 47)
+	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
+	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
+	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
 )
 
 type UpdateClientResponseContent struct {
@@ -11344,7 +11571,8 @@ type UpdateClientResponseContent struct {
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
-	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
 	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
@@ -11688,6 +11916,13 @@ func (u *UpdateClientResponseContent) GetSkipNonVerifiableCallbackURIConfirmatio
 		return false
 	}
 	return *u.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
+func (u *UpdateClientResponseContent) GetTokenExchange() ClientTokenExchangeConfiguration {
+	if u == nil || u.TokenExchange == nil {
+		return ClientTokenExchangeConfiguration{}
+	}
+	return *u.TokenExchange
 }
 
 func (u *UpdateClientResponseContent) GetParRequestExpiry() int {
@@ -12063,6 +12298,13 @@ func (u *UpdateClientResponseContent) SetComplianceLevel(complianceLevel *Client
 func (u *UpdateClientResponseContent) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
 	u.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
 	u.require(updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
+// SetTokenExchange sets the TokenExchange field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetTokenExchange(tokenExchange *ClientTokenExchangeConfiguration) {
+	u.TokenExchange = tokenExchange
+	u.require(updateClientResponseContentFieldTokenExchange)
 }
 
 // SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
