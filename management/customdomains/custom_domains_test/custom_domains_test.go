@@ -72,12 +72,6 @@ func TestCustomDomainsListWithWireMock(
 		),
 	)
 	request := &management.ListCustomDomainsRequestParameters{
-		Take: management.Int(
-			1,
-		),
-		From: management.String(
-			"from",
-		),
 		Q: management.String(
 			"q",
 		),
@@ -97,7 +91,7 @@ func TestCustomDomainsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/custom-domains", map[string]string{"take": "1", "from": "from", "q": "q", "fields": "fields", "include_fields": "true", "sort": "sort"}, 1)
+	VerifyRequestCount(t, "GET", "/custom-domains", map[string]string{"q": "q", "fields": "fields", "include_fields": "true", "sort": "sort"}, 1)
 }
 
 func TestCustomDomainsCreateWithWireMock(

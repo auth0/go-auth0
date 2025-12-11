@@ -9433,10 +9433,10 @@ type ConnectionDisplayName = string
 // JSON array containing a list of the JWS signing algorithms (alg values) supported by the Token Endpoint for the signature on the JWT [JWT] used to authenticate the Client at the Token Endpoint for the private_key_jwt and client_secret_jwt authentication methods. Servers SHOULD support RS256. The value none MUST NOT be used.
 type ConnectionDisplayValuesSupported = []string
 
-type ConnectionDomainAliases = []string
-
 // Alternative domain names associated with this Azure AD tenant. Allows users from multiple verified domains to authenticate through this connection. Can be an array of domain strings.
 type ConnectionDomainAliasesAzureAd = []string
+
+type ConnectionDomainAliasesOne = []string
 
 // Domain of the Okta organization (e.g., dev-123456.okta.com). Should be just the domain of the okta server with no scheme or trailing backslash. Discovery runs only when connection.options.oidc_metadata is empty and a domain is provided
 type ConnectionDomainOkta = string
@@ -11205,7 +11205,7 @@ type ConnectionOptionsAzureAd struct {
 	Scope                              *ConnectionScopeAzureAd                           `json:"scope,omitempty" url:"scope,omitempty"`
 	SetUserRootAttributes              *ConnectionSetUserRootAttributesEnum              `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
 	ShouldTrustEmailVerifiedConnection *ConnectionShouldTrustEmailVerifiedConnectionEnum `json:"should_trust_email_verified_connection,omitempty" url:"should_trust_email_verified_connection,omitempty"`
-	TenantDomain                       *ConnectionTenantDomainAzureAd                    `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
+	TenantDomain                       *ConnectionTenantDomainAzureAdOne                 `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
 	TenantID                           *ConnectionTenantIDAzureAd                        `json:"tenantId,omitempty" url:"tenantId,omitempty"`
 	Thumbprints                        *ConnectionThumbprints                            `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
 	UpstreamParams                     *ConnectionUpstreamParamsAzureAd                  `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
@@ -11642,7 +11642,7 @@ func (c *ConnectionOptionsAzureAd) GetShouldTrustEmailVerifiedConnection() Conne
 	return *c.ShouldTrustEmailVerifiedConnection
 }
 
-func (c *ConnectionOptionsAzureAd) GetTenantDomain() ConnectionTenantDomainAzureAd {
+func (c *ConnectionOptionsAzureAd) GetTenantDomain() ConnectionTenantDomainAzureAdOne {
 	if c == nil || c.TenantDomain == nil {
 		return ""
 	}
@@ -12131,7 +12131,7 @@ func (c *ConnectionOptionsAzureAd) SetShouldTrustEmailVerifiedConnection(shouldT
 
 // SetTenantDomain sets the TenantDomain field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsAzureAd) SetTenantDomain(tenantDomain *ConnectionTenantDomainAzureAd) {
+func (c *ConnectionOptionsAzureAd) SetTenantDomain(tenantDomain *ConnectionTenantDomainAzureAdOne) {
 	c.TenantDomain = tenantDomain
 	c.require(connectionOptionsAzureAdFieldTenantDomain)
 }
@@ -12232,7 +12232,7 @@ type ConnectionOptionsBitly = *ConnectionOptionsOAuth2Common
 
 type ConnectionOptionsBox = *ConnectionOptionsOAuth2Common
 
-// Common attributes for connection options including non-persistent attributes and cross-app access
+// Common attributes for connection options including non-persistent attributes and Cross App Access
 var (
 	connectionOptionsCommonFieldNonPersistentAttrs = big.NewInt(1 << 0)
 )
@@ -12341,7 +12341,7 @@ type ConnectionOptionsCommonOidc struct {
 	ClientSecret                     *ConnectionClientSecretOidc                 `json:"client_secret,omitempty" url:"client_secret,omitempty"`
 	ConnectionSettings               *ConnectionConnectionSettings               `json:"connection_settings,omitempty" url:"connection_settings,omitempty"`
 	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
-	DomainAliases                    *ConnectionDomainAliases                    `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
+	DomainAliases                    *ConnectionDomainAliasesOne                 `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
 	IconURL                          *ConnectionIconURL                          `json:"icon_url,omitempty" url:"icon_url,omitempty"`
 	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs        `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	Issuer                           *ConnectionIssuer                           `json:"issuer,omitempty" url:"issuer,omitempty"`
@@ -12400,7 +12400,7 @@ func (c *ConnectionOptionsCommonOidc) GetFederatedConnectionsAccessTokens() Conn
 	return *c.FederatedConnectionsAccessTokens
 }
 
-func (c *ConnectionOptionsCommonOidc) GetDomainAliases() ConnectionDomainAliases {
+func (c *ConnectionOptionsCommonOidc) GetDomainAliases() ConnectionDomainAliasesOne {
 	if c == nil || c.DomainAliases == nil {
 		return nil
 	}
@@ -12553,7 +12553,7 @@ func (c *ConnectionOptionsCommonOidc) SetFederatedConnectionsAccessTokens(federa
 
 // SetDomainAliases sets the DomainAliases field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsCommonOidc) SetDomainAliases(domainAliases *ConnectionDomainAliases) {
+func (c *ConnectionOptionsCommonOidc) SetDomainAliases(domainAliases *ConnectionDomainAliasesOne) {
 	c.DomainAliases = domainAliases
 	c.require(connectionOptionsCommonOidcFieldDomainAliases)
 }
@@ -14577,7 +14577,7 @@ type ConnectionOptionsOidc struct {
 	ClientSecret                     *ConnectionClientSecretOidc                 `json:"client_secret,omitempty" url:"client_secret,omitempty"`
 	ConnectionSettings               *ConnectionConnectionSettings               `json:"connection_settings,omitempty" url:"connection_settings,omitempty"`
 	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
-	DomainAliases                    *ConnectionDomainAliases                    `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
+	DomainAliases                    *ConnectionDomainAliasesOne                 `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
 	IconURL                          *ConnectionIconURL                          `json:"icon_url,omitempty" url:"icon_url,omitempty"`
 	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs        `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	Issuer                           *ConnectionIssuer                           `json:"issuer,omitempty" url:"issuer,omitempty"`
@@ -14639,7 +14639,7 @@ func (c *ConnectionOptionsOidc) GetFederatedConnectionsAccessTokens() Connection
 	return *c.FederatedConnectionsAccessTokens
 }
 
-func (c *ConnectionOptionsOidc) GetDomainAliases() ConnectionDomainAliases {
+func (c *ConnectionOptionsOidc) GetDomainAliases() ConnectionDomainAliasesOne {
 	if c == nil || c.DomainAliases == nil {
 		return nil
 	}
@@ -14820,7 +14820,7 @@ func (c *ConnectionOptionsOidc) SetFederatedConnectionsAccessTokens(federatedCon
 
 // SetDomainAliases sets the DomainAliases field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsOidc) SetDomainAliases(domainAliases *ConnectionDomainAliases) {
+func (c *ConnectionOptionsOidc) SetDomainAliases(domainAliases *ConnectionDomainAliasesOne) {
 	c.DomainAliases = domainAliases
 	c.require(connectionOptionsOidcFieldDomainAliases)
 }
@@ -15668,7 +15668,7 @@ type ConnectionOptionsOkta struct {
 	ClientSecret                     *ConnectionClientSecretOidc                 `json:"client_secret,omitempty" url:"client_secret,omitempty"`
 	ConnectionSettings               *ConnectionConnectionSettings               `json:"connection_settings,omitempty" url:"connection_settings,omitempty"`
 	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
-	DomainAliases                    *ConnectionDomainAliases                    `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
+	DomainAliases                    *ConnectionDomainAliasesOne                 `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
 	IconURL                          *ConnectionIconURL                          `json:"icon_url,omitempty" url:"icon_url,omitempty"`
 	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs        `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	Issuer                           *ConnectionIssuer                           `json:"issuer,omitempty" url:"issuer,omitempty"`
@@ -15730,7 +15730,7 @@ func (c *ConnectionOptionsOkta) GetFederatedConnectionsAccessTokens() Connection
 	return *c.FederatedConnectionsAccessTokens
 }
 
-func (c *ConnectionOptionsOkta) GetDomainAliases() ConnectionDomainAliases {
+func (c *ConnectionOptionsOkta) GetDomainAliases() ConnectionDomainAliasesOne {
 	if c == nil || c.DomainAliases == nil {
 		return nil
 	}
@@ -15904,7 +15904,7 @@ func (c *ConnectionOptionsOkta) SetFederatedConnectionsAccessTokens(federatedCon
 
 // SetDomainAliases sets the DomainAliases field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionOptionsOkta) SetDomainAliases(domainAliases *ConnectionDomainAliases) {
+func (c *ConnectionOptionsOkta) SetDomainAliases(domainAliases *ConnectionDomainAliasesOne) {
 	c.DomainAliases = domainAliases
 	c.require(connectionOptionsOktaFieldDomainAliases)
 }
@@ -32679,7 +32679,7 @@ type ConnectionSubjectTypesSupported = []string
 // Tenant domain
 type ConnectionTenantDomain = *string
 
-type ConnectionTenantDomainAzureAd = string
+type ConnectionTenantDomainAzureAdOne = string
 
 // The Azure AD tenant ID as a UUID. The unique identifier for your Azure AD organization. Must be a valid 36-character UUID.
 type ConnectionTenantIDAzureAd = string
@@ -56580,11 +56580,12 @@ func (c *CreateImportUsersResponseContent) String() string {
 }
 
 var (
-	createOrganizationDiscoveryDomainResponseContentFieldID               = big.NewInt(1 << 0)
-	createOrganizationDiscoveryDomainResponseContentFieldDomain           = big.NewInt(1 << 1)
-	createOrganizationDiscoveryDomainResponseContentFieldStatus           = big.NewInt(1 << 2)
-	createOrganizationDiscoveryDomainResponseContentFieldVerificationTxt  = big.NewInt(1 << 3)
-	createOrganizationDiscoveryDomainResponseContentFieldVerificationHost = big.NewInt(1 << 4)
+	createOrganizationDiscoveryDomainResponseContentFieldID                          = big.NewInt(1 << 0)
+	createOrganizationDiscoveryDomainResponseContentFieldDomain                      = big.NewInt(1 << 1)
+	createOrganizationDiscoveryDomainResponseContentFieldStatus                      = big.NewInt(1 << 2)
+	createOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	createOrganizationDiscoveryDomainResponseContentFieldVerificationTxt             = big.NewInt(1 << 4)
+	createOrganizationDiscoveryDomainResponseContentFieldVerificationHost            = big.NewInt(1 << 5)
 )
 
 type CreateOrganizationDiscoveryDomainResponseContent struct {
@@ -56593,6 +56594,8 @@ type CreateOrganizationDiscoveryDomainResponseContent struct {
 	// The domain name to associate with the organization e.g. acme.com.
 	Domain string                            `json:"domain" url:"domain"`
 	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery. Note: This field is only returned when the ss_org_dove_enabled feature flag is enabled for the tenant.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
 	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
 	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
 	// The full domain where the TXT record should be added.
@@ -56624,6 +56627,13 @@ func (c *CreateOrganizationDiscoveryDomainResponseContent) GetStatus() Organizat
 		return ""
 	}
 	return c.Status
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) GetUseForOrganizationDiscovery() bool {
+	if c == nil || c.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *c.UseForOrganizationDiscovery
 }
 
 func (c *CreateOrganizationDiscoveryDomainResponseContent) GetVerificationTxt() string {
@@ -56670,6 +56680,13 @@ func (c *CreateOrganizationDiscoveryDomainResponseContent) SetDomain(domain stri
 func (c *CreateOrganizationDiscoveryDomainResponseContent) SetStatus(status OrganizationDiscoveryDomainStatus) {
 	c.Status = status
 	c.require(createOrganizationDiscoveryDomainResponseContentFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationDiscoveryDomainResponseContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	c.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	c.require(createOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery)
 }
 
 // SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;
@@ -69620,11 +69637,175 @@ func (g *GetOrganizationConnectionResponseContent) String() string {
 }
 
 var (
-	getOrganizationDiscoveryDomainResponseContentFieldID               = big.NewInt(1 << 0)
-	getOrganizationDiscoveryDomainResponseContentFieldDomain           = big.NewInt(1 << 1)
-	getOrganizationDiscoveryDomainResponseContentFieldStatus           = big.NewInt(1 << 2)
-	getOrganizationDiscoveryDomainResponseContentFieldVerificationTxt  = big.NewInt(1 << 3)
-	getOrganizationDiscoveryDomainResponseContentFieldVerificationHost = big.NewInt(1 << 4)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldID                          = big.NewInt(1 << 0)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldDomain                      = big.NewInt(1 << 1)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldStatus                      = big.NewInt(1 << 2)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldVerificationTxt             = big.NewInt(1 << 4)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldVerificationHost            = big.NewInt(1 << 5)
+)
+
+type GetOrganizationDiscoveryDomainByNameResponseContent struct {
+	// Organization discovery domain identifier.
+	ID string `json:"id" url:"id"`
+	// The domain name to associate with the organization e.g. acme.com.
+	Domain string                            `json:"domain" url:"domain"`
+	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery. Note: This field is only returned when the ss_org_dove_enabled feature flag is enabled for the tenant.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
+	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
+	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
+	// The full domain where the TXT record should be added.
+	VerificationHost string `json:"verification_host" url:"verification_host"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetDomain() string {
+	if g == nil {
+		return ""
+	}
+	return g.Domain
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetStatus() OrganizationDiscoveryDomainStatus {
+	if g == nil {
+		return ""
+	}
+	return g.Status
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetUseForOrganizationDiscovery() bool {
+	if g == nil || g.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *g.UseForOrganizationDiscovery
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetVerificationTxt() string {
+	if g == nil {
+		return ""
+	}
+	return g.VerificationTxt
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetVerificationHost() string {
+	if g == nil {
+		return ""
+	}
+	return g.VerificationHost
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldID)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetDomain(domain string) {
+	g.Domain = domain
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldDomain)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetStatus(status OrganizationDiscoveryDomainStatus) {
+	g.Status = status
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	g.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldUseForOrganizationDiscovery)
+}
+
+// SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetVerificationTxt(verificationTxt string) {
+	g.VerificationTxt = verificationTxt
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldVerificationTxt)
+}
+
+// SetVerificationHost sets the VerificationHost field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetVerificationHost(verificationHost string) {
+	g.VerificationHost = verificationHost
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldVerificationHost)
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetOrganizationDiscoveryDomainByNameResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetOrganizationDiscoveryDomainByNameResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetOrganizationDiscoveryDomainByNameResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getOrganizationDiscoveryDomainResponseContentFieldID                          = big.NewInt(1 << 0)
+	getOrganizationDiscoveryDomainResponseContentFieldDomain                      = big.NewInt(1 << 1)
+	getOrganizationDiscoveryDomainResponseContentFieldStatus                      = big.NewInt(1 << 2)
+	getOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	getOrganizationDiscoveryDomainResponseContentFieldVerificationTxt             = big.NewInt(1 << 4)
+	getOrganizationDiscoveryDomainResponseContentFieldVerificationHost            = big.NewInt(1 << 5)
 )
 
 type GetOrganizationDiscoveryDomainResponseContent struct {
@@ -69633,6 +69814,8 @@ type GetOrganizationDiscoveryDomainResponseContent struct {
 	// The domain name to associate with the organization e.g. acme.com.
 	Domain string                            `json:"domain" url:"domain"`
 	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery. Note: This field is only returned when the ss_org_dove_enabled feature flag is enabled for the tenant.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
 	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
 	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
 	// The full domain where the TXT record should be added.
@@ -69664,6 +69847,13 @@ func (g *GetOrganizationDiscoveryDomainResponseContent) GetStatus() Organization
 		return ""
 	}
 	return g.Status
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) GetUseForOrganizationDiscovery() bool {
+	if g == nil || g.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *g.UseForOrganizationDiscovery
 }
 
 func (g *GetOrganizationDiscoveryDomainResponseContent) GetVerificationTxt() string {
@@ -69710,6 +69900,13 @@ func (g *GetOrganizationDiscoveryDomainResponseContent) SetDomain(domain string)
 func (g *GetOrganizationDiscoveryDomainResponseContent) SetStatus(status OrganizationDiscoveryDomainStatus) {
 	g.Status = status
 	g.require(getOrganizationDiscoveryDomainResponseContentFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainResponseContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	g.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	g.require(getOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery)
 }
 
 // SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;
@@ -80616,11 +80813,12 @@ func (o *OrganizationConnectionInformation) String() string {
 }
 
 var (
-	organizationDiscoveryDomainFieldID               = big.NewInt(1 << 0)
-	organizationDiscoveryDomainFieldDomain           = big.NewInt(1 << 1)
-	organizationDiscoveryDomainFieldStatus           = big.NewInt(1 << 2)
-	organizationDiscoveryDomainFieldVerificationTxt  = big.NewInt(1 << 3)
-	organizationDiscoveryDomainFieldVerificationHost = big.NewInt(1 << 4)
+	organizationDiscoveryDomainFieldID                          = big.NewInt(1 << 0)
+	organizationDiscoveryDomainFieldDomain                      = big.NewInt(1 << 1)
+	organizationDiscoveryDomainFieldStatus                      = big.NewInt(1 << 2)
+	organizationDiscoveryDomainFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	organizationDiscoveryDomainFieldVerificationTxt             = big.NewInt(1 << 4)
+	organizationDiscoveryDomainFieldVerificationHost            = big.NewInt(1 << 5)
 )
 
 type OrganizationDiscoveryDomain struct {
@@ -80629,6 +80827,8 @@ type OrganizationDiscoveryDomain struct {
 	// The domain name to associate with the organization e.g. acme.com.
 	Domain string                            `json:"domain" url:"domain"`
 	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery. Note: This field is only returned when the ss_org_dove_enabled feature flag is enabled for the tenant.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
 	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
 	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
 	// The full domain where the TXT record should be added.
@@ -80660,6 +80860,13 @@ func (o *OrganizationDiscoveryDomain) GetStatus() OrganizationDiscoveryDomainSta
 		return ""
 	}
 	return o.Status
+}
+
+func (o *OrganizationDiscoveryDomain) GetUseForOrganizationDiscovery() bool {
+	if o == nil || o.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *o.UseForOrganizationDiscovery
 }
 
 func (o *OrganizationDiscoveryDomain) GetVerificationTxt() string {
@@ -80706,6 +80913,13 @@ func (o *OrganizationDiscoveryDomain) SetDomain(domain string) {
 func (o *OrganizationDiscoveryDomain) SetStatus(status OrganizationDiscoveryDomainStatus) {
 	o.Status = status
 	o.require(organizationDiscoveryDomainFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationDiscoveryDomain) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	o.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	o.require(organizationDiscoveryDomainFieldUseForOrganizationDiscovery)
 }
 
 // SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;
@@ -88298,116 +88512,6 @@ func (s *SetGuardianFactorsProviderPhoneTwilioResponseContent) String() string {
 }
 
 var (
-	setGuardianFactorsProviderPushNotificationApnsRequestContentFieldSandbox  = big.NewInt(1 << 0)
-	setGuardianFactorsProviderPushNotificationApnsRequestContentFieldBundleID = big.NewInt(1 << 1)
-	setGuardianFactorsProviderPushNotificationApnsRequestContentFieldP12      = big.NewInt(1 << 2)
-)
-
-type SetGuardianFactorsProviderPushNotificationApnsRequestContent struct {
-	Sandbox  *bool   `json:"sandbox,omitempty" url:"sandbox,omitempty"`
-	BundleID *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
-	P12      *string `json:"p12,omitempty" url:"p12,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) GetSandbox() bool {
-	if s == nil || s.Sandbox == nil {
-		return false
-	}
-	return *s.Sandbox
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) GetBundleID() string {
-	if s == nil || s.BundleID == nil {
-		return ""
-	}
-	return *s.BundleID
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) GetP12() string {
-	if s == nil || s.P12 == nil {
-		return ""
-	}
-	return *s.P12
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
-	}
-	s.explicitFields.Or(s.explicitFields, field)
-}
-
-// SetSandbox sets the Sandbox field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) SetSandbox(sandbox *bool) {
-	s.Sandbox = sandbox
-	s.require(setGuardianFactorsProviderPushNotificationApnsRequestContentFieldSandbox)
-}
-
-// SetBundleID sets the BundleID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) SetBundleID(bundleID *string) {
-	s.BundleID = bundleID
-	s.require(setGuardianFactorsProviderPushNotificationApnsRequestContentFieldBundleID)
-}
-
-// SetP12 sets the P12 field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) SetP12(p12 *string) {
-	s.P12 = p12
-	s.require(setGuardianFactorsProviderPushNotificationApnsRequestContentFieldP12)
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetGuardianFactorsProviderPushNotificationApnsRequestContent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SetGuardianFactorsProviderPushNotificationApnsRequestContent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-	s.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetGuardianFactorsProviderPushNotificationApnsRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) String() string {
-	if len(s.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
-var (
 	setGuardianFactorsProviderPushNotificationApnsResponseContentFieldSandbox  = big.NewInt(1 << 0)
 	setGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleID = big.NewInt(1 << 1)
 )
@@ -88501,163 +88605,7 @@ func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) String()
 	return fmt.Sprintf("%#v", s)
 }
 
-var (
-	setGuardianFactorsProviderPushNotificationFcmRequestContentFieldServerKey = big.NewInt(1 << 0)
-)
-
-type SetGuardianFactorsProviderPushNotificationFcmRequestContent struct {
-	ServerKey *string `json:"server_key,omitempty" url:"server_key,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmRequestContent) GetServerKey() string {
-	if s == nil || s.ServerKey == nil {
-		return ""
-	}
-	return *s.ServerKey
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmRequestContent) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmRequestContent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
-	}
-	s.explicitFields.Or(s.explicitFields, field)
-}
-
-// SetServerKey sets the ServerKey field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorsProviderPushNotificationFcmRequestContent) SetServerKey(serverKey *string) {
-	s.ServerKey = serverKey
-	s.require(setGuardianFactorsProviderPushNotificationFcmRequestContentFieldServerKey)
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetGuardianFactorsProviderPushNotificationFcmRequestContent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SetGuardianFactorsProviderPushNotificationFcmRequestContent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-	s.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetGuardianFactorsProviderPushNotificationFcmRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmRequestContent) String() string {
-	if len(s.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
-
 type SetGuardianFactorsProviderPushNotificationFcmResponseContent = map[string]interface{}
-
-var (
-	setGuardianFactorsProviderPushNotificationFcmv1RequestContentFieldServerCredentials = big.NewInt(1 << 0)
-)
-
-type SetGuardianFactorsProviderPushNotificationFcmv1RequestContent struct {
-	ServerCredentials *string `json:"server_credentials,omitempty" url:"server_credentials,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmv1RequestContent) GetServerCredentials() string {
-	if s == nil || s.ServerCredentials == nil {
-		return ""
-	}
-	return *s.ServerCredentials
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmv1RequestContent) GetExtraProperties() map[string]interface{} {
-	return s.extraProperties
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmv1RequestContent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
-	}
-	s.explicitFields.Or(s.explicitFields, field)
-}
-
-// SetServerCredentials sets the ServerCredentials field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorsProviderPushNotificationFcmv1RequestContent) SetServerCredentials(serverCredentials *string) {
-	s.ServerCredentials = serverCredentials
-	s.require(setGuardianFactorsProviderPushNotificationFcmv1RequestContentFieldServerCredentials)
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmv1RequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetGuardianFactorsProviderPushNotificationFcmv1RequestContent
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*s = SetGuardianFactorsProviderPushNotificationFcmv1RequestContent(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *s)
-	if err != nil {
-		return err
-	}
-	s.extraProperties = extraProperties
-	s.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmv1RequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetGuardianFactorsProviderPushNotificationFcmv1RequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationFcmv1RequestContent) String() string {
-	if len(s.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
-}
 
 type SetGuardianFactorsProviderPushNotificationFcmv1ResponseContent = map[string]interface{}
 
@@ -94796,6 +94744,104 @@ func (u *UpdateGuardianFactorDuoSettingsResponseContent) String() string {
 }
 
 var (
+	updateGuardianFactorsProviderPushNotificationApnsResponseContentFieldSandbox  = big.NewInt(1 << 0)
+	updateGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleID = big.NewInt(1 << 1)
+)
+
+type UpdateGuardianFactorsProviderPushNotificationApnsResponseContent struct {
+	Sandbox  *bool   `json:"sandbox,omitempty" url:"sandbox,omitempty"`
+	BundleID *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) GetSandbox() bool {
+	if u == nil || u.Sandbox == nil {
+		return false
+	}
+	return *u.Sandbox
+}
+
+func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) GetBundleID() string {
+	if u == nil || u.BundleID == nil {
+		return ""
+	}
+	return *u.BundleID
+}
+
+func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetSandbox sets the Sandbox field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) SetSandbox(sandbox *bool) {
+	u.Sandbox = sandbox
+	u.require(updateGuardianFactorsProviderPushNotificationApnsResponseContentFieldSandbox)
+}
+
+// SetBundleID sets the BundleID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) SetBundleID(bundleID *string) {
+	u.BundleID = bundleID
+	u.require(updateGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleID)
+}
+
+func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateGuardianFactorsProviderPushNotificationApnsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateGuardianFactorsProviderPushNotificationApnsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateGuardianFactorsProviderPushNotificationApnsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UpdateGuardianFactorsProviderPushNotificationFcmResponseContent = map[string]interface{}
+
+type UpdateGuardianFactorsProviderPushNotificationFcmv1ResponseContent = map[string]interface{}
+
+var (
 	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyID                = big.NewInt(1 << 0)
 	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsSecretAccessKey            = big.NewInt(1 << 1)
 	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsRegion                     = big.NewInt(1 << 2)
@@ -95087,11 +95133,12 @@ func (u *UpdateOrganizationConnectionResponseContent) String() string {
 }
 
 var (
-	updateOrganizationDiscoveryDomainResponseContentFieldID               = big.NewInt(1 << 0)
-	updateOrganizationDiscoveryDomainResponseContentFieldDomain           = big.NewInt(1 << 1)
-	updateOrganizationDiscoveryDomainResponseContentFieldStatus           = big.NewInt(1 << 2)
-	updateOrganizationDiscoveryDomainResponseContentFieldVerificationTxt  = big.NewInt(1 << 3)
-	updateOrganizationDiscoveryDomainResponseContentFieldVerificationHost = big.NewInt(1 << 4)
+	updateOrganizationDiscoveryDomainResponseContentFieldID                          = big.NewInt(1 << 0)
+	updateOrganizationDiscoveryDomainResponseContentFieldDomain                      = big.NewInt(1 << 1)
+	updateOrganizationDiscoveryDomainResponseContentFieldStatus                      = big.NewInt(1 << 2)
+	updateOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	updateOrganizationDiscoveryDomainResponseContentFieldVerificationTxt             = big.NewInt(1 << 4)
+	updateOrganizationDiscoveryDomainResponseContentFieldVerificationHost            = big.NewInt(1 << 5)
 )
 
 type UpdateOrganizationDiscoveryDomainResponseContent struct {
@@ -95100,6 +95147,8 @@ type UpdateOrganizationDiscoveryDomainResponseContent struct {
 	// The domain name to associate with the organization e.g. acme.com.
 	Domain string                            `json:"domain" url:"domain"`
 	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery. Note: This field is only returned when the ss_org_dove_enabled feature flag is enabled for the tenant.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
 	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
 	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
 	// The full domain where the TXT record should be added.
@@ -95131,6 +95180,13 @@ func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetStatus() Organizat
 		return ""
 	}
 	return u.Status
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetUseForOrganizationDiscovery() bool {
+	if u == nil || u.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *u.UseForOrganizationDiscovery
 }
 
 func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetVerificationTxt() string {
@@ -95177,6 +95233,13 @@ func (u *UpdateOrganizationDiscoveryDomainResponseContent) SetDomain(domain stri
 func (u *UpdateOrganizationDiscoveryDomainResponseContent) SetStatus(status OrganizationDiscoveryDomainStatus) {
 	u.Status = status
 	u.require(updateOrganizationDiscoveryDomainResponseContentFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	u.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	u.require(updateOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery)
 }
 
 // SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;

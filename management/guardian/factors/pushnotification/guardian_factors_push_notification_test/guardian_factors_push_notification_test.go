@@ -96,6 +96,26 @@ func TestGuardianFactorsPushNotificationSetApnsProviderWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "PUT", "/guardian/factors/push-notification/providers/apns", nil, 1)
+}
+
+func TestGuardianFactorsPushNotificationUpdateApnsProviderWithWireMock(
+	t *testing.T,
+) {
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
+	client := client.NewWithOptions(
+		option.WithBaseURL(
+			WireMockBaseURL,
+		),
+	)
+	request := &management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent{}
+	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateApnsProvider(
+		context.TODO(),
+		request,
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "PATCH", "/guardian/factors/push-notification/providers/apns", nil, 1)
 }
 
@@ -116,6 +136,26 @@ func TestGuardianFactorsPushNotificationSetFcmProviderWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "PUT", "/guardian/factors/push-notification/providers/fcm", nil, 1)
+}
+
+func TestGuardianFactorsPushNotificationUpdateFcmProviderWithWireMock(
+	t *testing.T,
+) {
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
+	client := client.NewWithOptions(
+		option.WithBaseURL(
+			WireMockBaseURL,
+		),
+	)
+	request := &management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent{}
+	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateFcmProvider(
+		context.TODO(),
+		request,
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "PATCH", "/guardian/factors/push-notification/providers/fcm", nil, 1)
 }
 
@@ -131,6 +171,26 @@ func TestGuardianFactorsPushNotificationSetFcmv1ProviderWithWireMock(
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetFcmv1Provider(
+		context.TODO(),
+		request,
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "PUT", "/guardian/factors/push-notification/providers/fcmv1", nil, 1)
+}
+
+func TestGuardianFactorsPushNotificationUpdateFcmv1ProviderWithWireMock(
+	t *testing.T,
+) {
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
+	client := client.NewWithOptions(
+		option.WithBaseURL(
+			WireMockBaseURL,
+		),
+	)
+	request := &management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
+	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(
 		context.TODO(),
 		request,
 	)

@@ -47,7 +47,7 @@ func (c *Client) GetApnsProvider(
 	return response.Body, nil
 }
 
-// Modify configuration details of the multi-factor authentication APNS provider associated with your tenant.
+// Overwrite all configuration details of the multi-factor authentication APNS provider associated with your tenant.
 func (c *Client) SetApnsProvider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPushNotificationApnsRequestContent,
@@ -64,7 +64,24 @@ func (c *Client) SetApnsProvider(
 	return response.Body, nil
 }
 
-// Modify configuration details of the multi-factor authentication FCM provider associated with your tenant.
+// Modify configuration details of the multi-factor authentication APNS provider associated with your tenant.
+func (c *Client) UpdateApnsProvider(
+	ctx context.Context,
+	request *management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent,
+	opts ...option.RequestOption,
+) (*management.UpdateGuardianFactorsProviderPushNotificationApnsResponseContent, error) {
+	response, err := c.WithRawResponse.UpdateApnsProvider(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Overwrite all configuration details of the multi-factor authentication FCM provider associated with your tenant.
 func (c *Client) SetFcmProvider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPushNotificationFcmRequestContent,
@@ -81,13 +98,47 @@ func (c *Client) SetFcmProvider(
 	return response.Body, nil
 }
 
-// Modify configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
+// Modify configuration details of the multi-factor authentication FCM provider associated with your tenant.
+func (c *Client) UpdateFcmProvider(
+	ctx context.Context,
+	request *management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent,
+	opts ...option.RequestOption,
+) (management.UpdateGuardianFactorsProviderPushNotificationFcmResponseContent, error) {
+	response, err := c.WithRawResponse.UpdateFcmProvider(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Overwrite all configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
 func (c *Client) SetFcmv1Provider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent,
 	opts ...option.RequestOption,
 ) (management.SetGuardianFactorsProviderPushNotificationFcmv1ResponseContent, error) {
 	response, err := c.WithRawResponse.SetFcmv1Provider(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Modify configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
+func (c *Client) UpdateFcmv1Provider(
+	ctx context.Context,
+	request *management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent,
+	opts ...option.RequestOption,
+) (management.UpdateGuardianFactorsProviderPushNotificationFcmv1ResponseContent, error) {
+	response, err := c.WithRawResponse.UpdateFcmv1Provider(
 		ctx,
 		request,
 		opts...,
