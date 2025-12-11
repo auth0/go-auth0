@@ -3600,12 +3600,6 @@ Retrieve details on <a href="https://auth0.com/docs/custom-domains">custom domai
 
 ```go
 request := &management.ListCustomDomainsRequestParameters{
-        Take: management.Int(
-            1,
-        ),
-        From: management.String(
-            "from",
-        ),
         Q: management.String(
             "q",
         ),
@@ -3634,22 +3628,6 @@ client.CustomDomains.List(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -20266,7 +20244,7 @@ client.Guardian.Factors.PushNotification.GetApnsProvider(
 <dl>
 <dd>
 
-Modify configuration details of the multi-factor authentication APNS provider associated with your tenant.
+Overwrite all configuration details of the multi-factor authentication APNS provider associated with your tenant.
 </dd>
 </dl>
 </dd>
@@ -20301,7 +20279,98 @@ client.Guardian.Factors.PushNotification.SetApnsProvider(
 <dl>
 <dd>
 
-**request:** `*management.SetGuardianFactorsProviderPushNotificationApnsRequestContent` 
+**sandbox:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bundleID:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**p12:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.Factors.PushNotification.UpdateApnsProvider(request) -> *management.UpdateGuardianFactorsProviderPushNotificationApnsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify configuration details of the multi-factor authentication APNS provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent{}
+client.Guardian.Factors.PushNotification.UpdateApnsProvider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sandbox:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bundleID:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**p12:** `*string` 
     
 </dd>
 </dl>
@@ -20325,7 +20394,7 @@ client.Guardian.Factors.PushNotification.SetApnsProvider(
 <dl>
 <dd>
 
-Modify configuration details of the multi-factor authentication FCM provider associated with your tenant.
+Overwrite all configuration details of the multi-factor authentication FCM provider associated with your tenant.
 </dd>
 </dl>
 </dd>
@@ -20360,7 +20429,66 @@ client.Guardian.Factors.PushNotification.SetFcmProvider(
 <dl>
 <dd>
 
-**request:** `*management.SetGuardianFactorsProviderPushNotificationFcmRequestContent` 
+**serverKey:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.Factors.PushNotification.UpdateFcmProvider(request) -> management.UpdateGuardianFactorsProviderPushNotificationFcmResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify configuration details of the multi-factor authentication FCM provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent{}
+client.Guardian.Factors.PushNotification.UpdateFcmProvider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serverKey:** `*string` 
     
 </dd>
 </dl>
@@ -20384,7 +20512,7 @@ client.Guardian.Factors.PushNotification.SetFcmProvider(
 <dl>
 <dd>
 
-Modify configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
+Overwrite all configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
 </dd>
 </dl>
 </dd>
@@ -20419,7 +20547,66 @@ client.Guardian.Factors.PushNotification.SetFcmv1Provider(
 <dl>
 <dd>
 
-**request:** `*management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent` 
+**serverCredentials:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(request) -> management.UpdateGuardianFactorsProviderPushNotificationFcmv1ResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
+client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serverCredentials:** `*string` 
     
 </dd>
 </dl>
@@ -22940,7 +23127,7 @@ client.Organizations.DiscoveryDomains.List(
 <dl>
 <dd>
 
-Update the verification status for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>.
+Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>. The <code>use_for_organization_discovery</code> field can be <code>true</code> or <code>false</code> (default: <code>true</code>).
 </dd>
 </dl>
 </dd>
@@ -22995,6 +23182,14 @@ client.Organizations.DiscoveryDomains.Create(
 <dd>
 
 **status:** `*management.OrganizationDiscoveryDomainStatus` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*bool` — Indicates whether this discovery domain should be used for organization discovery.
     
 </dd>
 </dl>
@@ -23152,7 +23347,7 @@ client.Organizations.DiscoveryDomains.Delete(
 <dl>
 <dd>
 
-Update the verification status for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>.
+Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>. The <code>use_for_organization_discovery</code> field can be <code>true</code> or <code>false</code> (default: <code>true</code>).
 </dd>
 </dl>
 </dd>
@@ -23206,6 +23401,14 @@ client.Organizations.DiscoveryDomains.Update(
 <dd>
 
 **status:** `*management.OrganizationDiscoveryDomainStatus` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*bool` — Indicates whether this discovery domain should be used for organization discovery.
     
 </dd>
 </dl>

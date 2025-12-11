@@ -103,7 +103,7 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
-// Update the verification status for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>.
+// Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>. The <code>use_for_organization_discovery</code> field can be <code>true</code> or <code>false</code> (default: <code>true</code>).
 func (c *Client) Create(
 	ctx context.Context,
 	// ID of the organization.
@@ -165,7 +165,7 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Update the verification status for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>.
+// Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>. The <code>use_for_organization_discovery</code> field can be <code>true</code> or <code>false</code> (default: <code>true</code>).
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the organization.
