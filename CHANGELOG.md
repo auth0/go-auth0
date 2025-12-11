@@ -1,5 +1,12 @@
 # Change Log
 
+## [v2.3.0](https://github.com/auth0/go-auth0/tree/v2.3.0) (2025-12-11)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.2.0...v2.3.0)
+
+**Added**
+- feat!: Add Multi-Resource Refresh Token Policies, Guardian MFA Update Methods, and Organization Discovery Enhancements [\#667](https://github.com/auth0/go-auth0/pull/667) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: Add Directory Provisioning API, Token Exchange configuration, and Custom Domains enhancements [\#663](https://github.com/auth0/go-auth0/pull/663) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.2.0](https://github.com/auth0/go-auth0/tree/v2.2.0) (2025-11-19)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.1.0...v2.2.0)
 
