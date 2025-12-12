@@ -67,3 +67,23 @@ func (c *Client) Delete(
 	}
 	return nil
 }
+
+// Update a refresh token by its ID.
+func (c *Client) Update(
+	ctx context.Context,
+	// ID of the refresh token to update.
+	id string,
+	request *management.UpdateRefreshTokenRequestContent,
+	opts ...option.RequestOption,
+) (*management.UpdateRefreshTokenResponseContent, error) {
+	response, err := c.WithRawResponse.Update(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
