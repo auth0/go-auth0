@@ -123,6 +123,27 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Retrieve details about a single organization discovery domain specified by domain name.
+func (c *Client) GetByName(
+	ctx context.Context,
+	// ID of the organization.
+	id string,
+	// Domain name of the discovery domain.
+	discoveryDomain string,
+	opts ...option.RequestOption,
+) (*management.GetOrganizationDiscoveryDomainByNameResponseContent, error) {
+	response, err := c.WithRawResponse.GetByName(
+		ctx,
+		id,
+		discoveryDomain,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Retrieve details about a single organization discovery domain specified by ID.
 func (c *Client) Get(
 	ctx context.Context,

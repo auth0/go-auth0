@@ -79388,6 +79388,8 @@ const (
 	OauthScopeUpdateResourceServers OauthScope = "update:resource_servers"
 	// Read Refresh Tokens
 	OauthScopeReadRefreshTokens OauthScope = "read:refresh_tokens"
+	// Update Refresh Tokens
+	OauthScopeUpdateRefreshTokens OauthScope = "update:refresh_tokens"
 	// Delete Refresh Tokens
 	OauthScopeDeleteRefreshTokens OauthScope = "delete:refresh_tokens"
 	// Create Resource Servers
@@ -79892,6 +79894,8 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeUpdateResourceServers, nil
 	case "read:refresh_tokens":
 		return OauthScopeReadRefreshTokens, nil
+	case "update:refresh_tokens":
+		return OauthScopeUpdateRefreshTokens, nil
 	case "delete:refresh_tokens":
 		return OauthScopeDeleteRefreshTokens, nil
 	case "create:resource_servers":
@@ -84031,6 +84035,9 @@ func (r *RefreshTokenDevice) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+// Metadata associated with the refresh token, in the form of an object with string values (max 255 chars). Maximum of 25 metadata properties allowed.
+type RefreshTokenMetadata = map[string]interface{}
+
 var (
 	refreshTokenResourceServerFieldAudience = big.NewInt(1 << 0)
 	refreshTokenResourceServerFieldScopes   = big.NewInt(1 << 1)
@@ -84133,17 +84140,18 @@ func (r *RefreshTokenResourceServer) String() string {
 }
 
 var (
-	refreshTokenResponseContentFieldID              = big.NewInt(1 << 0)
-	refreshTokenResponseContentFieldUserID          = big.NewInt(1 << 1)
-	refreshTokenResponseContentFieldCreatedAt       = big.NewInt(1 << 2)
-	refreshTokenResponseContentFieldIdleExpiresAt   = big.NewInt(1 << 3)
-	refreshTokenResponseContentFieldExpiresAt       = big.NewInt(1 << 4)
-	refreshTokenResponseContentFieldDevice          = big.NewInt(1 << 5)
-	refreshTokenResponseContentFieldClientID        = big.NewInt(1 << 6)
-	refreshTokenResponseContentFieldSessionID       = big.NewInt(1 << 7)
-	refreshTokenResponseContentFieldRotating        = big.NewInt(1 << 8)
-	refreshTokenResponseContentFieldResourceServers = big.NewInt(1 << 9)
-	refreshTokenResponseContentFieldLastExchangedAt = big.NewInt(1 << 10)
+	refreshTokenResponseContentFieldID                   = big.NewInt(1 << 0)
+	refreshTokenResponseContentFieldUserID               = big.NewInt(1 << 1)
+	refreshTokenResponseContentFieldCreatedAt            = big.NewInt(1 << 2)
+	refreshTokenResponseContentFieldIdleExpiresAt        = big.NewInt(1 << 3)
+	refreshTokenResponseContentFieldExpiresAt            = big.NewInt(1 << 4)
+	refreshTokenResponseContentFieldDevice               = big.NewInt(1 << 5)
+	refreshTokenResponseContentFieldClientID             = big.NewInt(1 << 6)
+	refreshTokenResponseContentFieldSessionID            = big.NewInt(1 << 7)
+	refreshTokenResponseContentFieldRotating             = big.NewInt(1 << 8)
+	refreshTokenResponseContentFieldResourceServers      = big.NewInt(1 << 9)
+	refreshTokenResponseContentFieldRefreshTokenMetadata = big.NewInt(1 << 10)
+	refreshTokenResponseContentFieldLastExchangedAt      = big.NewInt(1 << 11)
 )
 
 type RefreshTokenResponseContent struct {
@@ -84161,8 +84169,9 @@ type RefreshTokenResponseContent struct {
 	// True if the token is a rotating refresh token
 	Rotating *bool `json:"rotating,omitempty" url:"rotating,omitempty"`
 	// A list of the resource server IDs associated to this refresh-token and their granted scopes
-	ResourceServers []*RefreshTokenResourceServer `json:"resource_servers,omitempty" url:"resource_servers,omitempty"`
-	LastExchangedAt *RefreshTokenDate             `json:"last_exchanged_at,omitempty" url:"last_exchanged_at,omitempty"`
+	ResourceServers      []*RefreshTokenResourceServer `json:"resource_servers,omitempty" url:"resource_servers,omitempty"`
+	RefreshTokenMetadata *RefreshTokenMetadata         `json:"refresh_token_metadata,omitempty" url:"refresh_token_metadata,omitempty"`
+	LastExchangedAt      *RefreshTokenDate             `json:"last_exchanged_at,omitempty" url:"last_exchanged_at,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -84240,6 +84249,13 @@ func (r *RefreshTokenResponseContent) GetResourceServers() []*RefreshTokenResour
 		return nil
 	}
 	return r.ResourceServers
+}
+
+func (r *RefreshTokenResponseContent) GetRefreshTokenMetadata() RefreshTokenMetadata {
+	if r == nil || r.RefreshTokenMetadata == nil {
+		return nil
+	}
+	return *r.RefreshTokenMetadata
 }
 
 func (r *RefreshTokenResponseContent) GetLastExchangedAt() RefreshTokenDate {
@@ -84328,6 +84344,13 @@ func (r *RefreshTokenResponseContent) SetRotating(rotating *bool) {
 func (r *RefreshTokenResponseContent) SetResourceServers(resourceServers []*RefreshTokenResourceServer) {
 	r.ResourceServers = resourceServers
 	r.require(refreshTokenResponseContentFieldResourceServers)
+}
+
+// SetRefreshTokenMetadata sets the RefreshTokenMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RefreshTokenResponseContent) SetRefreshTokenMetadata(refreshTokenMetadata *RefreshTokenMetadata) {
+	r.RefreshTokenMetadata = refreshTokenMetadata
+	r.require(refreshTokenResponseContentFieldRefreshTokenMetadata)
 }
 
 // SetLastExchangedAt sets the LastExchangedAt field and marks it as non-optional;

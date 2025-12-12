@@ -8740,6 +8740,74 @@ client.RefreshTokens.Delete(
 </dl>
 </details>
 
+<details><summary><code>client.RefreshTokens.Update(ID, request) -> *management.UpdateRefreshTokenResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a refresh token by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateRefreshTokenRequestContent{}
+client.RefreshTokens.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the refresh token to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**refreshTokenMetadata:** `*management.RefreshTokenMetadata` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ResourceServers
 <details><summary><code>client.ResourceServers.List() -> *management.ListResourceServerOffsetPaginatedResponseContent</code></summary>
 <dl>
@@ -23201,6 +23269,74 @@ client.Organizations.DiscoveryDomains.Create(
 </dl>
 </details>
 
+<details><summary><code>client.Organizations.DiscoveryDomains.GetByName(ID, DiscoveryDomain) -> *management.GetOrganizationDiscoveryDomainByNameResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a single organization discovery domain specified by domain name.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DiscoveryDomains.GetByName(
+        context.TODO(),
+        "id",
+        "discovery_domain",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**discoveryDomain:** `string` — Domain name of the discovery domain.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Organizations.DiscoveryDomains.Get(ID, DiscoveryDomainID) -> *management.GetOrganizationDiscoveryDomainResponseContent</code></summary>
 <dl>
 <dd>
@@ -26343,6 +26479,14 @@ client.SelfServiceProfiles.SSOTicket.Create(
 <dd>
 
 **provisioningConfig:** `*management.SelfServiceProfileSSOTicketProvisioningConfig` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*bool` — Indicates whether a verified domain should be used for organization discovery during authentication.
     
 </dd>
 </dl>

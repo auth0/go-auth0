@@ -6,6 +6,7 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
@@ -96,4 +97,25 @@ func TestRefreshTokensDeleteWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "DELETE", "/refresh-tokens/id", nil, 1)
+}
+
+func TestRefreshTokensUpdateWithWireMock(
+	t *testing.T,
+) {
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
+	client := client.NewWithOptions(
+		option.WithBaseURL(
+			WireMockBaseURL,
+		),
+	)
+	request := &management.UpdateRefreshTokenRequestContent{}
+	_, invocationErr := client.RefreshTokens.Update(
+		context.TODO(),
+		"id",
+		request,
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "PATCH", "/refresh-tokens/id", nil, 1)
 }
