@@ -2,7 +2,6 @@ package management
 
 import (
 	"context"
-	"encoding/json"
 	"time"
 )
 
@@ -28,23 +27,6 @@ type TokenExchangeProfile struct {
 type TokenExchangeProfileList struct {
 	List
 	TokenExchangeProfiles []*TokenExchangeProfile `json:"token_exchange_profiles"`
-}
-
-// MarshalJSON implements the json.Marshaler interface for the TokenExchangeProfile type.
-func (t *TokenExchangeProfile) MarshalJSON() ([]byte, error) {
-	type TokenExchangeProfileSubset struct {
-		Name             *string `json:"name,omitempty"`
-		SubjectTokenType *string `json:"subject_token_type,omitempty"`
-		ActionID         *string `json:"action_id,omitempty"`
-		Type             *string `json:"type,omitempty"`
-	}
-
-	return json.Marshal(&TokenExchangeProfileSubset{
-		Name:             t.Name,
-		SubjectTokenType: t.SubjectTokenType,
-		ActionID:         t.ActionID,
-		Type:             t.Type,
-	})
 }
 
 func (t *TokenExchangeProfile) cleanForPatch() {
