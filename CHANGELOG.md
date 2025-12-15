@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.32.1](https://github.com/auth0/go-auth0/tree/v1.32.1) (2025-12-15)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.32.0...v1.32.1)
+
+**Added**
+- chore: Remove custom JSON marshaling for TokenExchangeProfile [\#670](https://github.com/auth0/go-auth0/pull/670) ([ramya18101](https://github.com/ramya18101))
+
 ## [v1.32.0](https://github.com/auth0/go-auth0/tree/v1.32.0) (2025-11-19)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.31.0...v1.32.0)
 
