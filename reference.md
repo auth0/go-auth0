@@ -1705,6 +1705,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dl>
 <dd>
 
+**tokenExchange:** `*management.ClientTokenExchangeConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **parRequestExpiry:** `*int` — Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
     
 </dd>
@@ -2349,6 +2357,14 @@ client.Clients.Update(
 Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tokenExchange:** `*management.ClientTokenExchangeConfigurationOrNull` 
     
 </dd>
 </dl>
@@ -3583,11 +3599,65 @@ Retrieve details on <a href="https://auth0.com/docs/custom-domains">custom domai
 <dd>
 
 ```go
+request := &management.ListCustomDomainsRequestParameters{
+        Q: management.String(
+            "q",
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+    }
 client.CustomDomains.List(
         context.TODO(),
+        request,
     )
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**q:** `*string` — Query in <a href ="http://www.lucenetutorial.com/lucene-query-syntax.html">Lucene query string syntax</a>.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `*string` — Field to sort by. Only <code>domain:1</code> (ascending order by domain) is supported at this time.
+    
 </dd>
 </dl>
 </dd>
@@ -3694,6 +3764,14 @@ client.CustomDomains.Create(
 <dd>
 
 **customClientIPHeader:** `*management.CustomDomainCustomClientIPHeader` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domainMetadata:** `*management.DomainMetadata` 
     
 </dd>
 </dl>
@@ -3909,6 +3987,14 @@ client.CustomDomains.Update(
 <dd>
 
 **customClientIPHeader:** `*management.CustomDomainCustomClientIPHeader` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domainMetadata:** `*management.DomainMetadata` 
     
 </dd>
 </dl>
@@ -8654,6 +8740,74 @@ client.RefreshTokens.Delete(
 </dl>
 </details>
 
+<details><summary><code>client.RefreshTokens.Update(ID, request) -> *management.UpdateRefreshTokenResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a refresh token by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateRefreshTokenRequestContent{}
+client.RefreshTokens.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the refresh token to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**refreshTokenMetadata:** `*management.RefreshTokenMetadata` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ResourceServers
 <details><summary><code>client.ResourceServers.List() -> *management.ListResourceServerOffsetPaginatedResponseContent</code></summary>
 <dl>
@@ -11311,6 +11465,14 @@ client.Tickets.ChangePassword(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**identity:** `*management.ChangePasswordTicketIdentity` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -11333,6 +11495,8 @@ client.Tickets.ChangePassword(
 <dd>
 
 Retrieve a list of all Token Exchange Profiles available in your tenant.
+
+By using this feature, you agree to the applicable Free Trial terms in <a href="https://www.okta.com/legal/">Okta’s Master Subscription Agreement</a>. It is your responsibility to securely validate the user’s subject_token. See <a href="https://auth0.com/docs/authenticate/custom-token-exchange">User Guide</a> for more details.
 
 This endpoint supports Checkpoint pagination. To search by checkpoint, use the following parameters:
 <ul>
@@ -11415,6 +11579,8 @@ client.TokenExchangeProfiles.List(
 <dd>
 
 Create a new Token Exchange Profile within your tenant.
+
+By using this feature, you agree to the applicable Free Trial terms in <a href="https://www.okta.com/legal/">Okta’s Master Subscription Agreement</a>. It is your responsibility to securely validate the user’s subject_token. See <a href="https://auth0.com/docs/authenticate/custom-token-exchange">User Guide</a> for more details.
 </dd>
 </dl>
 </dd>
@@ -11505,6 +11671,8 @@ client.TokenExchangeProfiles.Create(
 <dd>
 
 Retrieve details about a single Token Exchange Profile specified by ID.
+
+By using this feature, you agree to the applicable Free Trial terms in <a href="https://www.okta.com/legal/">Okta’s Master Subscription Agreement</a>. It is your responsibility to securely validate the user’s subject_token. See <a href="https://auth0.com/docs/authenticate/custom-token-exchange">User Guide</a> for more details.
 </dd>
 </dl>
 </dd>
@@ -11563,6 +11731,9 @@ client.TokenExchangeProfiles.Get(
 <dd>
 
 Delete a Token Exchange Profile within your tenant.
+
+By using this feature, you agree to the applicable Free Trial terms in <a href="https://www.okta.com/legal/">Okta's Master Subscription Agreement</a>. It is your responsibility to securely validate the user's subject_token. See <a href="https://auth0.com/docs/authenticate/custom-token-exchange">User Guide</a> for more details.
+
 </dd>
 </dl>
 </dd>
@@ -11621,6 +11792,9 @@ client.TokenExchangeProfiles.Delete(
 <dd>
 
 Update a Token Exchange Profile within your tenant.
+
+By using this feature, you agree to the applicable Free Trial terms in <a href="https://www.okta.com/legal/">Okta's Master Subscription Agreement</a>. It is your responsibility to securely validate the user's subject_token. See <a href="https://auth0.com/docs/authenticate/custom-token-exchange">User Guide</a> for more details.
+
 </dd>
 </dl>
 </dd>
@@ -16949,6 +17123,317 @@ client.Connections.Clients.Update(
 </dl>
 </details>
 
+## Connections DirectoryProvisioning
+<details><summary><code>client.Connections.DirectoryProvisioning.Get(ID) -> *management.GetDirectoryProvisioningResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the directory provisioning configuration of a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.DirectoryProvisioning.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to retrieve its directory provisioning configuration
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DirectoryProvisioning.Create(ID, request) -> *management.CreateDirectoryProvisioningResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a directory provisioning configuration for a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateDirectoryProvisioningRequestContent{}
+client.Connections.DirectoryProvisioning.Create(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to create its directory provisioning configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.CreateDirectoryProvisioningRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DirectoryProvisioning.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete the directory provisioning configuration of a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.DirectoryProvisioning.Delete(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to delete its directory provisioning configuration
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DirectoryProvisioning.Update(ID, request) -> *management.UpdateDirectoryProvisioningResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the directory provisioning configuration of a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateDirectoryProvisioningRequestContent{}
+client.Connections.DirectoryProvisioning.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to create its directory provisioning configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.UpdateDirectoryProvisioningRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DirectoryProvisioning.GetDefaultMapping(ID) -> *management.GetDirectoryProvisioningDefaultMappingResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the directory provisioning default attribute mapping of a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.DirectoryProvisioning.GetDefaultMapping(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to retrieve its directory provisioning configuration
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Connections Keys
 <details><summary><code>client.Connections.Keys.Get(ID) -> []*management.ConnectionKey</code></summary>
 <dl>
@@ -17460,6 +17945,65 @@ client.Connections.Users.DeleteByEmail(
 <dd>
 
 **email:** `string` — The email of the user to delete
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Connections DirectoryProvisioning Synchronizations
+<details><summary><code>client.Connections.DirectoryProvisioning.Synchronizations.Create(ID) -> *management.CreateDirectorySynchronizationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Request an on-demand synchronization of the directory.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.DirectoryProvisioning.Synchronizations.Create(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to trigger synchronization for
     
 </dd>
 </dl>
@@ -19768,7 +20312,7 @@ client.Guardian.Factors.PushNotification.GetApnsProvider(
 <dl>
 <dd>
 
-Modify configuration details of the multi-factor authentication APNS provider associated with your tenant.
+Overwrite all configuration details of the multi-factor authentication APNS provider associated with your tenant.
 </dd>
 </dl>
 </dd>
@@ -19803,7 +20347,98 @@ client.Guardian.Factors.PushNotification.SetApnsProvider(
 <dl>
 <dd>
 
-**request:** `*management.SetGuardianFactorsProviderPushNotificationApnsRequestContent` 
+**sandbox:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bundleID:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**p12:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.Factors.PushNotification.UpdateApnsProvider(request) -> *management.UpdateGuardianFactorsProviderPushNotificationApnsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify configuration details of the multi-factor authentication APNS provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent{}
+client.Guardian.Factors.PushNotification.UpdateApnsProvider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sandbox:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bundleID:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**p12:** `*string` 
     
 </dd>
 </dl>
@@ -19827,7 +20462,7 @@ client.Guardian.Factors.PushNotification.SetApnsProvider(
 <dl>
 <dd>
 
-Modify configuration details of the multi-factor authentication FCM provider associated with your tenant.
+Overwrite all configuration details of the multi-factor authentication FCM provider associated with your tenant.
 </dd>
 </dl>
 </dd>
@@ -19862,7 +20497,66 @@ client.Guardian.Factors.PushNotification.SetFcmProvider(
 <dl>
 <dd>
 
-**request:** `*management.SetGuardianFactorsProviderPushNotificationFcmRequestContent` 
+**serverKey:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.Factors.PushNotification.UpdateFcmProvider(request) -> management.UpdateGuardianFactorsProviderPushNotificationFcmResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify configuration details of the multi-factor authentication FCM provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent{}
+client.Guardian.Factors.PushNotification.UpdateFcmProvider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serverKey:** `*string` 
     
 </dd>
 </dl>
@@ -19886,7 +20580,7 @@ client.Guardian.Factors.PushNotification.SetFcmProvider(
 <dl>
 <dd>
 
-Modify configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
+Overwrite all configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
 </dd>
 </dl>
 </dd>
@@ -19921,7 +20615,66 @@ client.Guardian.Factors.PushNotification.SetFcmv1Provider(
 <dl>
 <dd>
 
-**request:** `*management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent` 
+**serverCredentials:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(request) -> management.UpdateGuardianFactorsProviderPushNotificationFcmv1ResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
+client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serverCredentials:** `*string` 
     
 </dd>
 </dl>
@@ -22442,7 +23195,7 @@ client.Organizations.DiscoveryDomains.List(
 <dl>
 <dd>
 
-Update the verification status for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>.
+Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>. The <code>use_for_organization_discovery</code> field can be <code>true</code> or <code>false</code> (default: <code>true</code>).
 </dd>
 </dl>
 </dd>
@@ -22497,6 +23250,82 @@ client.Organizations.DiscoveryDomains.Create(
 <dd>
 
 **status:** `*management.OrganizationDiscoveryDomainStatus` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*bool` — Indicates whether this discovery domain should be used for organization discovery.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DiscoveryDomains.GetByName(ID, DiscoveryDomain) -> *management.GetOrganizationDiscoveryDomainByNameResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a single organization discovery domain specified by domain name.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DiscoveryDomains.GetByName(
+        context.TODO(),
+        "id",
+        "discovery_domain",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**discoveryDomain:** `string` — Domain name of the discovery domain.
     
 </dd>
 </dl>
@@ -22654,7 +23483,7 @@ client.Organizations.DiscoveryDomains.Delete(
 <dl>
 <dd>
 
-Update the verification status for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>.
+Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>. The <code>use_for_organization_discovery</code> field can be <code>true</code> or <code>false</code> (default: <code>true</code>).
 </dd>
 </dl>
 </dd>
@@ -22708,6 +23537,14 @@ client.Organizations.DiscoveryDomains.Update(
 <dd>
 
 **status:** `*management.OrganizationDiscoveryDomainStatus` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*bool` — Indicates whether this discovery domain should be used for organization discovery.
     
 </dd>
 </dl>
@@ -24221,33 +25058,6 @@ client.Prompts.Rendering.List(
 <dd>
 
 Learn more about <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>configuring render settings</a> for advanced customization.
-
-<p>
-  Example <code>head_tags</code> array. See our <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>documentation</a> on using Liquid variables within head tags.
-</p>
-<pre>{
-  "head_tags": [
-    {
-      "tag": "script",
-      "attributes": {
-        "defer": true,
-        "src": "URL_TO_ASSET",
-        "async": true,
-        "integrity": [
-          "ASSET_SHA"
-        ]
-      }
-    },
-    {
-      "tag": "link",
-      "attributes": {
-        "href": "URL_TO_ASSET",
-        "rel": "stylesheet"
-      }
-    }
-  ]
-}
-</pre>
 </dd>
 </dl>
 </dd>
@@ -24381,33 +25191,6 @@ client.Prompts.Rendering.Get(
 <dd>
 
 Learn more about <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>configuring render settings</a> for advanced customization.
-
-<p>
-  Example <code>head_tags</code> array. See our <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>documentation</a> on using Liquid variables within head tags.
-</p>
-<pre>{
-  "head_tags": [
-    {
-      "tag": "script",
-      "attributes": {
-        "defer": true,
-        "src": "URL_TO_ASSET",
-        "async": true,
-        "integrity": [
-          "ASSET_SHA"
-        ]
-      }
-    },
-    {
-      "tag": "link",
-      "attributes": {
-        "href": "URL_TO_ASSET",
-        "rel": "stylesheet"
-      }
-    }
-  ]
-}
-</pre>
 </dd>
 </dl>
 </dd>
@@ -24468,7 +25251,7 @@ client.Prompts.Rendering.Update(
 <dl>
 <dd>
 
-**contextConfiguration:** `[]string` — Context values to make available
+**contextConfiguration:** `*management.AculContextConfiguration` 
     
 </dd>
 </dl>
@@ -24477,6 +25260,14 @@ client.Prompts.Rendering.Update(
 <dd>
 
 **defaultHeadTagsDisabled:** `*bool` — Override Universal Login default head tags
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**usePageTemplate:** `*bool` — Use page template with ACUL
     
 </dd>
 </dl>
@@ -24493,14 +25284,6 @@ client.Prompts.Rendering.Update(
 <dd>
 
 **filters:** `*management.AculFilters` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**usePageTemplate:** `*bool` — Use page template with ACUL
     
 </dd>
 </dl>
@@ -25696,6 +26479,14 @@ client.SelfServiceProfiles.SSOTicket.Create(
 <dd>
 
 **provisioningConfig:** `*management.SelfServiceProfileSSOTicketProvisioningConfig` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*bool` — Indicates whether a verified domain should be used for organization discovery during authentication.
     
 </dd>
 </dl>

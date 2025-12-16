@@ -78,6 +78,54 @@ func (r *RawClient) Create(
 	}, nil
 }
 
+func (r *RawClient) GetByName(
+	ctx context.Context,
+	// ID of the organization.
+	id string,
+	// Domain name of the discovery domain.
+	discoveryDomain string,
+	opts ...option.RequestOption,
+) (*core.Response[*management.GetOrganizationDiscoveryDomainByNameResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/organizations/%v/discovery-domains/name/%v",
+		id,
+		discoveryDomain,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.GetOrganizationDiscoveryDomainByNameResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.GetOrganizationDiscoveryDomainByNameResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
 func (r *RawClient) Get(
 	ctx context.Context,
 	// ID of the organization.

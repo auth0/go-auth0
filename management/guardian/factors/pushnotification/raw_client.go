@@ -86,7 +86,51 @@ func (r *RawClient) SetApnsProvider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *management.SetGuardianFactorsProviderPushNotificationApnsResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPut,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.SetGuardianFactorsProviderPushNotificationApnsResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) UpdateApnsProvider(
+	ctx context.Context,
+	request *management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent,
+	opts ...option.RequestOption,
+) (*core.Response[*management.UpdateGuardianFactorsProviderPushNotificationApnsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/guardian/factors/push-notification/providers/apns"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	var response *management.UpdateGuardianFactorsProviderPushNotificationApnsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -105,7 +149,7 @@ func (r *RawClient) SetApnsProvider(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.SetGuardianFactorsProviderPushNotificationApnsResponseContent]{
+	return &core.Response[*management.UpdateGuardianFactorsProviderPushNotificationApnsResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -128,7 +172,51 @@ func (r *RawClient) SetFcmProvider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response management.SetGuardianFactorsProviderPushNotificationFcmResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPut,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[management.SetGuardianFactorsProviderPushNotificationFcmResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) UpdateFcmProvider(
+	ctx context.Context,
+	request *management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent,
+	opts ...option.RequestOption,
+) (*core.Response[management.UpdateGuardianFactorsProviderPushNotificationFcmResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/guardian/factors/push-notification/providers/fcm"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	var response management.UpdateGuardianFactorsProviderPushNotificationFcmResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -147,7 +235,7 @@ func (r *RawClient) SetFcmProvider(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[management.SetGuardianFactorsProviderPushNotificationFcmResponseContent]{
+	return &core.Response[management.UpdateGuardianFactorsProviderPushNotificationFcmResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -170,7 +258,51 @@ func (r *RawClient) SetFcmv1Provider(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response management.SetGuardianFactorsProviderPushNotificationFcmv1ResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPut,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[management.SetGuardianFactorsProviderPushNotificationFcmv1ResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) UpdateFcmv1Provider(
+	ctx context.Context,
+	request *management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent,
+	opts ...option.RequestOption,
+) (*core.Response[management.UpdateGuardianFactorsProviderPushNotificationFcmv1ResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/guardian/factors/push-notification/providers/fcmv1"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	var response management.UpdateGuardianFactorsProviderPushNotificationFcmv1ResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -189,7 +321,7 @@ func (r *RawClient) SetFcmv1Provider(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[management.SetGuardianFactorsProviderPushNotificationFcmv1ResponseContent]{
+	return &core.Response[management.UpdateGuardianFactorsProviderPushNotificationFcmv1ResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

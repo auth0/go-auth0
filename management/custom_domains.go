@@ -18,7 +18,8 @@ var (
 	createCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 5)
 	createCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 6)
 	createCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 7)
-	createCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 8)
+	createCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 8)
+	createCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 9)
 )
 
 type CreateCustomDomainResponseContent struct {
@@ -34,8 +35,9 @@ type CreateCustomDomainResponseContent struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
-	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
+	TLSPolicy      *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	DomainMetadata *DomainMetadata    `json:"domain_metadata,omitempty" url:"domain_metadata,omitempty"`
+	Certificate    *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -98,6 +100,13 @@ func (c *CreateCustomDomainResponseContent) GetTLSPolicy() string {
 		return ""
 	}
 	return *c.TLSPolicy
+}
+
+func (c *CreateCustomDomainResponseContent) GetDomainMetadata() DomainMetadata {
+	if c == nil || c.DomainMetadata == nil {
+		return nil
+	}
+	return *c.DomainMetadata
 }
 
 func (c *CreateCustomDomainResponseContent) GetCertificate() DomainCertificate {
@@ -174,6 +183,13 @@ func (c *CreateCustomDomainResponseContent) SetTLSPolicy(tlsPolicy *string) {
 	c.require(createCustomDomainResponseContentFieldTLSPolicy)
 }
 
+// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetDomainMetadata(domainMetadata *DomainMetadata) {
+	c.DomainMetadata = domainMetadata
+	c.require(createCustomDomainResponseContentFieldDomainMetadata)
+}
+
 // SetCertificate sets the Certificate field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateCustomDomainResponseContent) SetCertificate(certificate *DomainCertificate) {
@@ -230,7 +246,8 @@ var (
 	customDomainFieldVerification         = big.NewInt(1 << 6)
 	customDomainFieldCustomClientIPHeader = big.NewInt(1 << 7)
 	customDomainFieldTLSPolicy            = big.NewInt(1 << 8)
-	customDomainFieldCertificate          = big.NewInt(1 << 9)
+	customDomainFieldDomainMetadata       = big.NewInt(1 << 9)
+	customDomainFieldCertificate          = big.NewInt(1 << 10)
 )
 
 type CustomDomain struct {
@@ -248,8 +265,9 @@ type CustomDomain struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
-	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
+	TLSPolicy      *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	DomainMetadata *DomainMetadata    `json:"domain_metadata,omitempty" url:"domain_metadata,omitempty"`
+	Certificate    *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -319,6 +337,13 @@ func (c *CustomDomain) GetTLSPolicy() string {
 		return ""
 	}
 	return *c.TLSPolicy
+}
+
+func (c *CustomDomain) GetDomainMetadata() DomainMetadata {
+	if c == nil || c.DomainMetadata == nil {
+		return nil
+	}
+	return *c.DomainMetadata
 }
 
 func (c *CustomDomain) GetCertificate() DomainCertificate {
@@ -400,6 +425,13 @@ func (c *CustomDomain) SetCustomClientIPHeader(customClientIPHeader *string) {
 func (c *CustomDomain) SetTLSPolicy(tlsPolicy *string) {
 	c.TLSPolicy = tlsPolicy
 	c.require(customDomainFieldTLSPolicy)
+}
+
+// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetDomainMetadata(domainMetadata *DomainMetadata) {
+	c.DomainMetadata = domainMetadata
+	c.require(customDomainFieldDomainMetadata)
 }
 
 // SetCertificate sets the Certificate field and marks it as non-optional;
@@ -741,6 +773,9 @@ func (d DomainCertificateStatusEnum) Ptr() *DomainCertificateStatusEnum {
 	return &d
 }
 
+// Domain metadata associated with the custom domain, in the form of an object with string values (max 255 chars). Maximum of 10 domain metadata properties allowed.
+type DomainMetadata = map[string]*string
+
 // Domain verification settings.
 var (
 	domainVerificationFieldMethods        = big.NewInt(1 << 0)
@@ -1042,7 +1077,8 @@ var (
 	getCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 6)
 	getCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 7)
 	getCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 8)
-	getCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 9)
+	getCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 9)
+	getCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 10)
 )
 
 type GetCustomDomainResponseContent struct {
@@ -1060,8 +1096,9 @@ type GetCustomDomainResponseContent struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
-	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
+	TLSPolicy      *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	DomainMetadata *DomainMetadata    `json:"domain_metadata,omitempty" url:"domain_metadata,omitempty"`
+	Certificate    *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1131,6 +1168,13 @@ func (g *GetCustomDomainResponseContent) GetTLSPolicy() string {
 		return ""
 	}
 	return *g.TLSPolicy
+}
+
+func (g *GetCustomDomainResponseContent) GetDomainMetadata() DomainMetadata {
+	if g == nil || g.DomainMetadata == nil {
+		return nil
+	}
+	return *g.DomainMetadata
 }
 
 func (g *GetCustomDomainResponseContent) GetCertificate() DomainCertificate {
@@ -1212,6 +1256,13 @@ func (g *GetCustomDomainResponseContent) SetCustomClientIPHeader(customClientIPH
 func (g *GetCustomDomainResponseContent) SetTLSPolicy(tlsPolicy *string) {
 	g.TLSPolicy = tlsPolicy
 	g.require(getCustomDomainResponseContentFieldTLSPolicy)
+}
+
+// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetDomainMetadata(domainMetadata *DomainMetadata) {
+	g.DomainMetadata = domainMetadata
+	g.require(getCustomDomainResponseContentFieldDomainMetadata)
 }
 
 // SetCertificate sets the Certificate field and marks it as non-optional;
@@ -1367,7 +1418,8 @@ var (
 	updateCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 5)
 	updateCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 6)
 	updateCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 7)
-	updateCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 8)
+	updateCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 8)
+	updateCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 9)
 )
 
 type UpdateCustomDomainResponseContent struct {
@@ -1383,8 +1435,9 @@ type UpdateCustomDomainResponseContent struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
-	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
+	TLSPolicy      *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	DomainMetadata *DomainMetadata    `json:"domain_metadata,omitempty" url:"domain_metadata,omitempty"`
+	Certificate    *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1447,6 +1500,13 @@ func (u *UpdateCustomDomainResponseContent) GetTLSPolicy() string {
 		return ""
 	}
 	return *u.TLSPolicy
+}
+
+func (u *UpdateCustomDomainResponseContent) GetDomainMetadata() DomainMetadata {
+	if u == nil || u.DomainMetadata == nil {
+		return nil
+	}
+	return *u.DomainMetadata
 }
 
 func (u *UpdateCustomDomainResponseContent) GetCertificate() DomainCertificate {
@@ -1523,6 +1583,13 @@ func (u *UpdateCustomDomainResponseContent) SetTLSPolicy(tlsPolicy *string) {
 	u.require(updateCustomDomainResponseContentFieldTLSPolicy)
 }
 
+// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetDomainMetadata(domainMetadata *DomainMetadata) {
+	u.DomainMetadata = domainMetadata
+	u.require(updateCustomDomainResponseContentFieldDomainMetadata)
+}
+
 // SetCertificate sets the Certificate field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateCustomDomainResponseContent) SetCertificate(certificate *DomainCertificate) {
@@ -1580,7 +1647,8 @@ var (
 	verifyCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 7)
 	verifyCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 8)
 	verifyCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 9)
-	verifyCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 10)
+	verifyCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 10)
+	verifyCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 11)
 )
 
 type VerifyCustomDomainResponseContent struct {
@@ -1600,8 +1668,9 @@ type VerifyCustomDomainResponseContent struct {
 	// The HTTP header to fetch the client's IP address
 	CustomClientIPHeader *string `json:"custom_client_ip_header,omitempty" url:"custom_client_ip_header,omitempty"`
 	// The TLS version policy
-	TLSPolicy   *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
-	Certificate *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
+	TLSPolicy      *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
+	DomainMetadata *DomainMetadata    `json:"domain_metadata,omitempty" url:"domain_metadata,omitempty"`
+	Certificate    *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1678,6 +1747,13 @@ func (v *VerifyCustomDomainResponseContent) GetTLSPolicy() string {
 		return ""
 	}
 	return *v.TLSPolicy
+}
+
+func (v *VerifyCustomDomainResponseContent) GetDomainMetadata() DomainMetadata {
+	if v == nil || v.DomainMetadata == nil {
+		return nil
+	}
+	return *v.DomainMetadata
 }
 
 func (v *VerifyCustomDomainResponseContent) GetCertificate() DomainCertificate {
@@ -1766,6 +1842,13 @@ func (v *VerifyCustomDomainResponseContent) SetCustomClientIPHeader(customClient
 func (v *VerifyCustomDomainResponseContent) SetTLSPolicy(tlsPolicy *string) {
 	v.TLSPolicy = tlsPolicy
 	v.require(verifyCustomDomainResponseContentFieldTLSPolicy)
+}
+
+// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VerifyCustomDomainResponseContent) SetDomainMetadata(domainMetadata *DomainMetadata) {
+	v.DomainMetadata = domainMetadata
+	v.require(verifyCustomDomainResponseContentFieldDomainMetadata)
 }
 
 // SetCertificate sets the Certificate field and marks it as non-optional;

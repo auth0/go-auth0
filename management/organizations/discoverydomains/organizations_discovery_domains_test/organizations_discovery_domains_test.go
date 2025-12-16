@@ -112,6 +112,26 @@ func TestOrganizationsDiscoveryDomainsCreateWithWireMock(
 	VerifyRequestCount(t, "POST", "/organizations/id/discovery-domains", nil, 1)
 }
 
+func TestOrganizationsDiscoveryDomainsGetByNameWithWireMock(
+	t *testing.T,
+) {
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
+	client := client.NewWithOptions(
+		option.WithBaseURL(
+			WireMockBaseURL,
+		),
+	)
+	_, invocationErr := client.Organizations.DiscoveryDomains.GetByName(
+		context.TODO(),
+		"id",
+		"discovery_domain",
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "GET", "/organizations/id/discovery-domains/name/discovery_domain", nil, 1)
+}
+
 func TestOrganizationsDiscoveryDomainsGetWithWireMock(
 	t *testing.T,
 ) {

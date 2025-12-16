@@ -10,17 +10,18 @@ import (
 )
 
 var (
-	getRefreshTokenResponseContentFieldID              = big.NewInt(1 << 0)
-	getRefreshTokenResponseContentFieldUserID          = big.NewInt(1 << 1)
-	getRefreshTokenResponseContentFieldCreatedAt       = big.NewInt(1 << 2)
-	getRefreshTokenResponseContentFieldIdleExpiresAt   = big.NewInt(1 << 3)
-	getRefreshTokenResponseContentFieldExpiresAt       = big.NewInt(1 << 4)
-	getRefreshTokenResponseContentFieldDevice          = big.NewInt(1 << 5)
-	getRefreshTokenResponseContentFieldClientID        = big.NewInt(1 << 6)
-	getRefreshTokenResponseContentFieldSessionID       = big.NewInt(1 << 7)
-	getRefreshTokenResponseContentFieldRotating        = big.NewInt(1 << 8)
-	getRefreshTokenResponseContentFieldResourceServers = big.NewInt(1 << 9)
-	getRefreshTokenResponseContentFieldLastExchangedAt = big.NewInt(1 << 10)
+	getRefreshTokenResponseContentFieldID                   = big.NewInt(1 << 0)
+	getRefreshTokenResponseContentFieldUserID               = big.NewInt(1 << 1)
+	getRefreshTokenResponseContentFieldCreatedAt            = big.NewInt(1 << 2)
+	getRefreshTokenResponseContentFieldIdleExpiresAt        = big.NewInt(1 << 3)
+	getRefreshTokenResponseContentFieldExpiresAt            = big.NewInt(1 << 4)
+	getRefreshTokenResponseContentFieldDevice               = big.NewInt(1 << 5)
+	getRefreshTokenResponseContentFieldClientID             = big.NewInt(1 << 6)
+	getRefreshTokenResponseContentFieldSessionID            = big.NewInt(1 << 7)
+	getRefreshTokenResponseContentFieldRotating             = big.NewInt(1 << 8)
+	getRefreshTokenResponseContentFieldResourceServers      = big.NewInt(1 << 9)
+	getRefreshTokenResponseContentFieldRefreshTokenMetadata = big.NewInt(1 << 10)
+	getRefreshTokenResponseContentFieldLastExchangedAt      = big.NewInt(1 << 11)
 )
 
 type GetRefreshTokenResponseContent struct {
@@ -38,8 +39,9 @@ type GetRefreshTokenResponseContent struct {
 	// True if the token is a rotating refresh token
 	Rotating *bool `json:"rotating,omitempty" url:"rotating,omitempty"`
 	// A list of the resource server IDs associated to this refresh-token and their granted scopes
-	ResourceServers []*RefreshTokenResourceServer `json:"resource_servers,omitempty" url:"resource_servers,omitempty"`
-	LastExchangedAt *RefreshTokenDate             `json:"last_exchanged_at,omitempty" url:"last_exchanged_at,omitempty"`
+	ResourceServers      []*RefreshTokenResourceServer `json:"resource_servers,omitempty" url:"resource_servers,omitempty"`
+	RefreshTokenMetadata *RefreshTokenMetadata         `json:"refresh_token_metadata,omitempty" url:"refresh_token_metadata,omitempty"`
+	LastExchangedAt      *RefreshTokenDate             `json:"last_exchanged_at,omitempty" url:"last_exchanged_at,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -117,6 +119,13 @@ func (g *GetRefreshTokenResponseContent) GetResourceServers() []*RefreshTokenRes
 		return nil
 	}
 	return g.ResourceServers
+}
+
+func (g *GetRefreshTokenResponseContent) GetRefreshTokenMetadata() RefreshTokenMetadata {
+	if g == nil || g.RefreshTokenMetadata == nil {
+		return nil
+	}
+	return *g.RefreshTokenMetadata
 }
 
 func (g *GetRefreshTokenResponseContent) GetLastExchangedAt() RefreshTokenDate {
@@ -207,6 +216,13 @@ func (g *GetRefreshTokenResponseContent) SetResourceServers(resourceServers []*R
 	g.require(getRefreshTokenResponseContentFieldResourceServers)
 }
 
+// SetRefreshTokenMetadata sets the RefreshTokenMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRefreshTokenResponseContent) SetRefreshTokenMetadata(refreshTokenMetadata *RefreshTokenMetadata) {
+	g.RefreshTokenMetadata = refreshTokenMetadata
+	g.require(getRefreshTokenResponseContentFieldRefreshTokenMetadata)
+}
+
 // SetLastExchangedAt sets the LastExchangedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetRefreshTokenResponseContent) SetLastExchangedAt(lastExchangedAt *RefreshTokenDate) {
@@ -255,4 +271,268 @@ func (g *GetRefreshTokenResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	updateRefreshTokenResponseContentFieldID                   = big.NewInt(1 << 0)
+	updateRefreshTokenResponseContentFieldUserID               = big.NewInt(1 << 1)
+	updateRefreshTokenResponseContentFieldCreatedAt            = big.NewInt(1 << 2)
+	updateRefreshTokenResponseContentFieldIdleExpiresAt        = big.NewInt(1 << 3)
+	updateRefreshTokenResponseContentFieldExpiresAt            = big.NewInt(1 << 4)
+	updateRefreshTokenResponseContentFieldDevice               = big.NewInt(1 << 5)
+	updateRefreshTokenResponseContentFieldClientID             = big.NewInt(1 << 6)
+	updateRefreshTokenResponseContentFieldSessionID            = big.NewInt(1 << 7)
+	updateRefreshTokenResponseContentFieldRotating             = big.NewInt(1 << 8)
+	updateRefreshTokenResponseContentFieldResourceServers      = big.NewInt(1 << 9)
+	updateRefreshTokenResponseContentFieldRefreshTokenMetadata = big.NewInt(1 << 10)
+	updateRefreshTokenResponseContentFieldLastExchangedAt      = big.NewInt(1 << 11)
+)
+
+type UpdateRefreshTokenResponseContent struct {
+	// The ID of the refresh token
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// ID of the user which can be used when interacting with other APIs.
+	UserID        *string             `json:"user_id,omitempty" url:"user_id,omitempty"`
+	CreatedAt     *RefreshTokenDate   `json:"created_at,omitempty" url:"created_at,omitempty"`
+	IdleExpiresAt *RefreshTokenDate   `json:"idle_expires_at,omitempty" url:"idle_expires_at,omitempty"`
+	ExpiresAt     *RefreshTokenDate   `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+	Device        *RefreshTokenDevice `json:"device,omitempty" url:"device,omitempty"`
+	// ID of the client application granted with this refresh token
+	ClientID  *string                `json:"client_id,omitempty" url:"client_id,omitempty"`
+	SessionID *RefreshTokenSessionID `json:"session_id,omitempty" url:"session_id,omitempty"`
+	// True if the token is a rotating refresh token
+	Rotating *bool `json:"rotating,omitempty" url:"rotating,omitempty"`
+	// A list of the resource server IDs associated to this refresh-token and their granted scopes
+	ResourceServers      []*RefreshTokenResourceServer `json:"resource_servers,omitempty" url:"resource_servers,omitempty"`
+	RefreshTokenMetadata *RefreshTokenMetadata         `json:"refresh_token_metadata,omitempty" url:"refresh_token_metadata,omitempty"`
+	LastExchangedAt      *RefreshTokenDate             `json:"last_exchanged_at,omitempty" url:"last_exchanged_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetUserID() string {
+	if u == nil || u.UserID == nil {
+		return ""
+	}
+	return *u.UserID
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetCreatedAt() RefreshTokenDate {
+	if u == nil || u.CreatedAt == nil {
+		return RefreshTokenDate{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetIdleExpiresAt() RefreshTokenDate {
+	if u == nil || u.IdleExpiresAt == nil {
+		return RefreshTokenDate{}
+	}
+	return *u.IdleExpiresAt
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetExpiresAt() RefreshTokenDate {
+	if u == nil || u.ExpiresAt == nil {
+		return RefreshTokenDate{}
+	}
+	return *u.ExpiresAt
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetDevice() RefreshTokenDevice {
+	if u == nil || u.Device == nil {
+		return RefreshTokenDevice{}
+	}
+	return *u.Device
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetClientID() string {
+	if u == nil || u.ClientID == nil {
+		return ""
+	}
+	return *u.ClientID
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetSessionID() RefreshTokenSessionID {
+	if u == nil || u.SessionID == nil {
+		return nil
+	}
+	return *u.SessionID
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetRotating() bool {
+	if u == nil || u.Rotating == nil {
+		return false
+	}
+	return *u.Rotating
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetResourceServers() []*RefreshTokenResourceServer {
+	if u == nil || u.ResourceServers == nil {
+		return nil
+	}
+	return u.ResourceServers
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetRefreshTokenMetadata() RefreshTokenMetadata {
+	if u == nil || u.RefreshTokenMetadata == nil {
+		return nil
+	}
+	return *u.RefreshTokenMetadata
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetLastExchangedAt() RefreshTokenDate {
+	if u == nil || u.LastExchangedAt == nil {
+		return RefreshTokenDate{}
+	}
+	return *u.LastExchangedAt
+}
+
+func (u *UpdateRefreshTokenResponseContent) GetExtraProperties() map[string]interface{} {
+	return u.ExtraProperties
+}
+
+func (u *UpdateRefreshTokenResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateRefreshTokenResponseContentFieldID)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetUserID(userID *string) {
+	u.UserID = userID
+	u.require(updateRefreshTokenResponseContentFieldUserID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetCreatedAt(createdAt *RefreshTokenDate) {
+	u.CreatedAt = createdAt
+	u.require(updateRefreshTokenResponseContentFieldCreatedAt)
+}
+
+// SetIdleExpiresAt sets the IdleExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetIdleExpiresAt(idleExpiresAt *RefreshTokenDate) {
+	u.IdleExpiresAt = idleExpiresAt
+	u.require(updateRefreshTokenResponseContentFieldIdleExpiresAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetExpiresAt(expiresAt *RefreshTokenDate) {
+	u.ExpiresAt = expiresAt
+	u.require(updateRefreshTokenResponseContentFieldExpiresAt)
+}
+
+// SetDevice sets the Device field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetDevice(device *RefreshTokenDevice) {
+	u.Device = device
+	u.require(updateRefreshTokenResponseContentFieldDevice)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetClientID(clientID *string) {
+	u.ClientID = clientID
+	u.require(updateRefreshTokenResponseContentFieldClientID)
+}
+
+// SetSessionID sets the SessionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetSessionID(sessionID *RefreshTokenSessionID) {
+	u.SessionID = sessionID
+	u.require(updateRefreshTokenResponseContentFieldSessionID)
+}
+
+// SetRotating sets the Rotating field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetRotating(rotating *bool) {
+	u.Rotating = rotating
+	u.require(updateRefreshTokenResponseContentFieldRotating)
+}
+
+// SetResourceServers sets the ResourceServers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetResourceServers(resourceServers []*RefreshTokenResourceServer) {
+	u.ResourceServers = resourceServers
+	u.require(updateRefreshTokenResponseContentFieldResourceServers)
+}
+
+// SetRefreshTokenMetadata sets the RefreshTokenMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetRefreshTokenMetadata(refreshTokenMetadata *RefreshTokenMetadata) {
+	u.RefreshTokenMetadata = refreshTokenMetadata
+	u.require(updateRefreshTokenResponseContentFieldRefreshTokenMetadata)
+}
+
+// SetLastExchangedAt sets the LastExchangedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRefreshTokenResponseContent) SetLastExchangedAt(lastExchangedAt *RefreshTokenDate) {
+	u.LastExchangedAt = lastExchangedAt
+	u.require(updateRefreshTokenResponseContentFieldLastExchangedAt)
+}
+
+func (u *UpdateRefreshTokenResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateRefreshTokenResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateRefreshTokenResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.ExtraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateRefreshTokenResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateRefreshTokenResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
+}
+
+func (u *UpdateRefreshTokenResponseContent) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
