@@ -837,6 +837,9 @@ func TestClient_CreateWithOIDCLogout(t *testing.T) {
 					"idp-logout",
 				},
 			},
+			BackChannelLogoutSessionMetadata: &BackChannelLogoutSessionMetadata{
+				Include: auth0.Bool(true),
+			},
 		},
 	}
 
@@ -848,6 +851,7 @@ func TestClient_CreateWithOIDCLogout(t *testing.T) {
 	assert.Equal(t, oidcLogout.GetBackChannelLogoutURLs(), []string{"https://example.com/logout"})
 	assert.Equal(t, oidcLogout.GetBackChannelLogoutInitiators().GetMode(), "custom")
 	assert.Equal(t, oidcLogout.GetBackChannelLogoutInitiators().GetSelectedInitiators(), []string{"rp-logout", "idp-logout"})
+	assert.Equal(t, oidcLogout.BackChannelLogoutSessionMetadata.Include, auth0.Bool(true))
 
 	t.Cleanup(func() {
 		cleanupClient(t, expectedClient.GetClientID())

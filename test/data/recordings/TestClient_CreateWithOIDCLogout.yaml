@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 229
+        content_length: 284
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test Client OIDC Logout (Apr 12 11:48:47.281)","oidc_logout":{"backchannel_logout_urls":["https://example.com/logout"],"backchannel_logout_initiators":{"mode":"custom","selected_initiators":["rp-logout","idp-logout"]}}}
+            {"name":"Test Client OIDC Logout (Jan  8 12:30:53.080)","oidc_logout":{"backchannel_logout_urls":["https://example.com/logout"],"backchannel_logout_initiators":{"mode":"custom","selected_initiators":["rp-logout","idp-logout"]},"backchannel_logout_session_metadata":{"include":true}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.4.1
+                - Go-Auth0/1.32.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/clients
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"name":"Test Client OIDC Logout (Apr 12 11:48:47.281)","client_id":"w83ftZO5tsue8g6q1vsmGKYxdQ9mstVF","client_secret":"[REDACTED]","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"oidc_backchannel_logout":{"backchannel_logout_urls":["https://example.com/logout"]},"oidc_logout":{"backchannel_logout_urls":["https://example.com/logout"],"backchannel_logout_initiators":{"mode":"custom","selected_initiators":["rp-logout","idp-logout"]}}}'
+        body: '{"name":"Test Client OIDC Logout (Jan  8 12:30:53.080)","client_id":"dOfun8jwWb2PO0xPKdOxAOXhkXicC0ym","client_secret":"[REDACTED]","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"oidc_backchannel_logout":{"backchannel_logout_urls":["https://example.com/logout"]},"oidc_logout":{"backchannel_logout_urls":["https://example.com/logout"],"backchannel_logout_initiators":{"mode":"custom","selected_initiators":["rp-logout","idp-logout"]},"backchannel_logout_session_metadata":{"include":true}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 829.976416ms
+        duration: 1.073954167s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -51,11 +51,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.4.1
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/w83ftZO5tsue8g6q1vsmGKYxdQ9mstVF
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/dOfun8jwWb2PO0xPKdOxAOXhkXicC0ym
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -71,4 +69,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 196.064625ms
+        duration: 409.506959ms
