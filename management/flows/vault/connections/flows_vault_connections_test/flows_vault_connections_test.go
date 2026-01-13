@@ -104,14 +104,10 @@ func TestFlowsVaultConnectionsCreateWithWireMock(
 	request := &management.CreateFlowsVaultConnectionRequestContent{
 		CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
 			CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
-				Name: "name",
-				AppID: management.FlowsVaultConnectionAppIDActivecampaignEnum(
-					"ACTIVECAMPAIGN",
-				),
+				Name:  "name",
+				AppID: management.FlowsVaultConnectionAppIDActivecampaignEnumActivecampaign,
 				Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
-					Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnum(
-						"API_KEY",
-					),
+					Type:    management.FlowsVaultConnectioSetupTypeAPIKeyEnumAPIKey,
 					APIKey:  "api_key",
 					BaseURL: "base_url",
 				},

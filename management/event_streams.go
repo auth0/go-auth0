@@ -391,6 +391,13 @@ func (c *CreateEventStreamTestEventResponseContent) GetEventStreamID() string {
 	return c.EventStreamID
 }
 
+func (c *CreateEventStreamTestEventResponseContent) GetStatus() EventStreamDeliveryStatusEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Status
+}
+
 func (c *CreateEventStreamTestEventResponseContent) GetEventType() EventStreamDeliveryEventTypeEnum {
 	if c == nil {
 		return ""
@@ -728,6 +735,13 @@ type EventStreamActionDestination struct {
 	rawJSON         json.RawMessage
 }
 
+func (e *EventStreamActionDestination) GetType() EventStreamActionDestinationTypeEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
 func (e *EventStreamActionDestination) GetConfiguration() *EventStreamActionConfiguration {
 	if e == nil {
 		return nil
@@ -799,7 +813,24 @@ func (e *EventStreamActionDestination) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-type EventStreamActionDestinationTypeEnum = string
+type EventStreamActionDestinationTypeEnum string
+
+const (
+	EventStreamActionDestinationTypeEnumAction EventStreamActionDestinationTypeEnum = "action"
+)
+
+func NewEventStreamActionDestinationTypeEnumFromString(s string) (EventStreamActionDestinationTypeEnum, error) {
+	switch s {
+	case "action":
+		return EventStreamActionDestinationTypeEnumAction, nil
+	}
+	var t EventStreamActionDestinationTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamActionDestinationTypeEnum) Ptr() *EventStreamActionDestinationTypeEnum {
+	return &e
+}
 
 var (
 	eventStreamActionResponseContentFieldID            = big.NewInt(1 << 0)
@@ -1308,6 +1339,13 @@ type EventStreamEventBridgeDestination struct {
 	rawJSON         json.RawMessage
 }
 
+func (e *EventStreamEventBridgeDestination) GetType() EventStreamEventBridgeDestinationTypeEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
 func (e *EventStreamEventBridgeDestination) GetConfiguration() *EventStreamEventBridgeConfiguration {
 	if e == nil {
 		return nil
@@ -1379,7 +1417,24 @@ func (e *EventStreamEventBridgeDestination) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-type EventStreamEventBridgeDestinationTypeEnum = string
+type EventStreamEventBridgeDestinationTypeEnum string
+
+const (
+	EventStreamEventBridgeDestinationTypeEnumEventbridge EventStreamEventBridgeDestinationTypeEnum = "eventbridge"
+)
+
+func NewEventStreamEventBridgeDestinationTypeEnumFromString(s string) (EventStreamEventBridgeDestinationTypeEnum, error) {
+	switch s {
+	case "eventbridge":
+		return EventStreamEventBridgeDestinationTypeEnumEventbridge, nil
+	}
+	var t EventStreamEventBridgeDestinationTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamEventBridgeDestinationTypeEnum) Ptr() *EventStreamEventBridgeDestinationTypeEnum {
+	return &e
+}
 
 var (
 	eventStreamEventBridgeResponseContentFieldID            = big.NewInt(1 << 0)
@@ -1908,6 +1963,13 @@ type EventStreamWebhookBasicAuth struct {
 	rawJSON         json.RawMessage
 }
 
+func (e *EventStreamWebhookBasicAuth) GetMethod() EventStreamWebhookBasicAuthMethodEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Method
+}
+
 func (e *EventStreamWebhookBasicAuth) GetUsername() string {
 	if e == nil {
 		return ""
@@ -1980,7 +2042,24 @@ func (e *EventStreamWebhookBasicAuth) String() string {
 }
 
 // Type of authorization.
-type EventStreamWebhookBasicAuthMethodEnum = string
+type EventStreamWebhookBasicAuthMethodEnum string
+
+const (
+	EventStreamWebhookBasicAuthMethodEnumBasic EventStreamWebhookBasicAuthMethodEnum = "basic"
+)
+
+func NewEventStreamWebhookBasicAuthMethodEnumFromString(s string) (EventStreamWebhookBasicAuthMethodEnum, error) {
+	switch s {
+	case "basic":
+		return EventStreamWebhookBasicAuthMethodEnumBasic, nil
+	}
+	var t EventStreamWebhookBasicAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookBasicAuthMethodEnum) Ptr() *EventStreamWebhookBasicAuthMethodEnum {
+	return &e
+}
 
 // Bearer Authorization for HTTP requests (e.g., 'Bearer token').
 var (
@@ -1995,6 +2074,13 @@ type EventStreamWebhookBearerAuth struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (e *EventStreamWebhookBearerAuth) GetMethod() EventStreamWebhookBearerAuthMethodEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Method
 }
 
 func (e *EventStreamWebhookBearerAuth) GetExtraProperties() map[string]interface{} {
@@ -2055,7 +2141,24 @@ func (e *EventStreamWebhookBearerAuth) String() string {
 }
 
 // Type of authorization.
-type EventStreamWebhookBearerAuthMethodEnum = string
+type EventStreamWebhookBearerAuthMethodEnum string
+
+const (
+	EventStreamWebhookBearerAuthMethodEnumBearer EventStreamWebhookBearerAuthMethodEnum = "bearer"
+)
+
+func NewEventStreamWebhookBearerAuthMethodEnumFromString(s string) (EventStreamWebhookBearerAuthMethodEnum, error) {
+	switch s {
+	case "bearer":
+		return EventStreamWebhookBearerAuthMethodEnumBearer, nil
+	}
+	var t EventStreamWebhookBearerAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookBearerAuthMethodEnum) Ptr() *EventStreamWebhookBearerAuthMethodEnum {
+	return &e
+}
 
 // Configuration specific to a webhook destination.
 var (
@@ -2169,6 +2272,13 @@ type EventStreamWebhookDestination struct {
 	rawJSON         json.RawMessage
 }
 
+func (e *EventStreamWebhookDestination) GetType() EventStreamWebhookDestinationTypeEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Type
+}
+
 func (e *EventStreamWebhookDestination) GetConfiguration() *EventStreamWebhookConfiguration {
 	if e == nil {
 		return nil
@@ -2240,7 +2350,24 @@ func (e *EventStreamWebhookDestination) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-type EventStreamWebhookDestinationTypeEnum = string
+type EventStreamWebhookDestinationTypeEnum string
+
+const (
+	EventStreamWebhookDestinationTypeEnumWebhook EventStreamWebhookDestinationTypeEnum = "webhook"
+)
+
+func NewEventStreamWebhookDestinationTypeEnumFromString(s string) (EventStreamWebhookDestinationTypeEnum, error) {
+	switch s {
+	case "webhook":
+		return EventStreamWebhookDestinationTypeEnumWebhook, nil
+	}
+	var t EventStreamWebhookDestinationTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookDestinationTypeEnum) Ptr() *EventStreamWebhookDestinationTypeEnum {
+	return &e
+}
 
 var (
 	eventStreamWebhookResponseContentFieldID            = big.NewInt(1 << 0)
@@ -2514,6 +2641,106 @@ func (g *GetEventStreamResponseContent) Accept(visitor GetEventStreamResponseCon
 		return visitor.VisitEventStreamActionResponseContent(g.EventStreamActionResponseContent)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", g)
+}
+
+var (
+	listEventStreamsResponseContentFieldEventStreams = big.NewInt(1 << 0)
+	listEventStreamsResponseContentFieldNext         = big.NewInt(1 << 1)
+)
+
+type ListEventStreamsResponseContent struct {
+	EventStreams []*EventStreamResponseContent `json:"eventStreams,omitempty" url:"eventStreams,omitempty"`
+	// Opaque identifier for use with the <i>from</i> query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (l *ListEventStreamsResponseContent) GetEventStreams() []*EventStreamResponseContent {
+	if l == nil || l.EventStreams == nil {
+		return nil
+	}
+	return l.EventStreams
+}
+
+func (l *ListEventStreamsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListEventStreamsResponseContent) GetExtraProperties() map[string]interface{} {
+	return l.ExtraProperties
+}
+
+func (l *ListEventStreamsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetEventStreams sets the EventStreams field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamsResponseContent) SetEventStreams(eventStreams []*EventStreamResponseContent) {
+	l.EventStreams = eventStreams
+	l.require(listEventStreamsResponseContentFieldEventStreams)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listEventStreamsResponseContentFieldNext)
+}
+
+func (l *ListEventStreamsResponseContent) UnmarshalJSON(data []byte) error {
+	type embed ListEventStreamsResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*l = ListEventStreamsResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.ExtraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListEventStreamsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListEventStreamsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
+}
+
+func (l *ListEventStreamsResponseContent) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 // The raw payload of the test event.

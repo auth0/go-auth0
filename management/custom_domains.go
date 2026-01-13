@@ -240,14 +240,15 @@ var (
 	customDomainFieldCustomDomainID       = big.NewInt(1 << 0)
 	customDomainFieldDomain               = big.NewInt(1 << 1)
 	customDomainFieldPrimary              = big.NewInt(1 << 2)
-	customDomainFieldStatus               = big.NewInt(1 << 3)
-	customDomainFieldType                 = big.NewInt(1 << 4)
-	customDomainFieldOriginDomainName     = big.NewInt(1 << 5)
-	customDomainFieldVerification         = big.NewInt(1 << 6)
-	customDomainFieldCustomClientIPHeader = big.NewInt(1 << 7)
-	customDomainFieldTLSPolicy            = big.NewInt(1 << 8)
-	customDomainFieldDomainMetadata       = big.NewInt(1 << 9)
-	customDomainFieldCertificate          = big.NewInt(1 << 10)
+	customDomainFieldIsDefault            = big.NewInt(1 << 3)
+	customDomainFieldStatus               = big.NewInt(1 << 4)
+	customDomainFieldType                 = big.NewInt(1 << 5)
+	customDomainFieldOriginDomainName     = big.NewInt(1 << 6)
+	customDomainFieldVerification         = big.NewInt(1 << 7)
+	customDomainFieldCustomClientIPHeader = big.NewInt(1 << 8)
+	customDomainFieldTLSPolicy            = big.NewInt(1 << 9)
+	customDomainFieldDomainMetadata       = big.NewInt(1 << 10)
+	customDomainFieldCertificate          = big.NewInt(1 << 11)
 )
 
 type CustomDomain struct {
@@ -256,9 +257,11 @@ type CustomDomain struct {
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
-	Primary bool                         `json:"primary" url:"primary"`
-	Status  CustomDomainStatusFilterEnum `json:"status" url:"status"`
-	Type    CustomDomainTypeEnum         `json:"type" url:"type"`
+	Primary bool `json:"primary" url:"primary"`
+	// Whether this is the default custom domain (true) or not (false).
+	IsDefault *bool                        `json:"is_default,omitempty" url:"is_default,omitempty"`
+	Status    CustomDomainStatusFilterEnum `json:"status" url:"status"`
+	Type      CustomDomainTypeEnum         `json:"type" url:"type"`
 	// Intermediate address.
 	OriginDomainName *string             `json:"origin_domain_name,omitempty" url:"origin_domain_name,omitempty"`
 	Verification     *DomainVerification `json:"verification,omitempty" url:"verification,omitempty"`
@@ -295,6 +298,13 @@ func (c *CustomDomain) GetPrimary() bool {
 		return false
 	}
 	return c.Primary
+}
+
+func (c *CustomDomain) GetIsDefault() bool {
+	if c == nil || c.IsDefault == nil {
+		return false
+	}
+	return *c.IsDefault
 }
 
 func (c *CustomDomain) GetStatus() CustomDomainStatusFilterEnum {
@@ -383,6 +393,13 @@ func (c *CustomDomain) SetDomain(domain string) {
 func (c *CustomDomain) SetPrimary(primary bool) {
 	c.Primary = primary
 	c.require(customDomainFieldPrimary)
+}
+
+// SetIsDefault sets the IsDefault field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetIsDefault(isDefault *bool) {
+	c.IsDefault = isDefault
+	c.require(customDomainFieldIsDefault)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -564,7 +581,24 @@ func (c CustomDomainStatusFilterEnum) Ptr() *CustomDomainStatusFilterEnum {
 }
 
 // Custom domain TLS policy. Must be `recommended`, includes TLS 1.2.
-type CustomDomainTLSPolicyEnum = string
+type CustomDomainTLSPolicyEnum string
+
+const (
+	CustomDomainTLSPolicyEnumRecommended CustomDomainTLSPolicyEnum = "recommended"
+)
+
+func NewCustomDomainTLSPolicyEnumFromString(s string) (CustomDomainTLSPolicyEnum, error) {
+	switch s {
+	case "recommended":
+		return CustomDomainTLSPolicyEnumRecommended, nil
+	}
+	var t CustomDomainTLSPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CustomDomainTLSPolicyEnum) Ptr() *CustomDomainTLSPolicyEnum {
+	return &c
+}
 
 // Custom domain provisioning type. Can be `auth0_managed_certs` or `self_managed_certs`.
 type CustomDomainTypeEnum string
@@ -590,7 +624,24 @@ func (c CustomDomainTypeEnum) Ptr() *CustomDomainTypeEnum {
 }
 
 // Custom domain verification method. Must be `txt`.
-type CustomDomainVerificationMethodEnum = string
+type CustomDomainVerificationMethodEnum string
+
+const (
+	CustomDomainVerificationMethodEnumTxt CustomDomainVerificationMethodEnum = "txt"
+)
+
+func NewCustomDomainVerificationMethodEnumFromString(s string) (CustomDomainVerificationMethodEnum, error) {
+	switch s {
+	case "txt":
+		return CustomDomainVerificationMethodEnumTxt, nil
+	}
+	var t CustomDomainVerificationMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CustomDomainVerificationMethodEnum) Ptr() *CustomDomainVerificationMethodEnum {
+	return &c
+}
 
 // Certificate information. This object is relevant only for Custom Domains with Auth0-Managed Certificates.
 var (
@@ -1071,14 +1122,15 @@ var (
 	getCustomDomainResponseContentFieldCustomDomainID       = big.NewInt(1 << 0)
 	getCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
 	getCustomDomainResponseContentFieldPrimary              = big.NewInt(1 << 2)
-	getCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 3)
-	getCustomDomainResponseContentFieldType                 = big.NewInt(1 << 4)
-	getCustomDomainResponseContentFieldOriginDomainName     = big.NewInt(1 << 5)
-	getCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 6)
-	getCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 7)
-	getCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 8)
-	getCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 9)
-	getCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 10)
+	getCustomDomainResponseContentFieldIsDefault            = big.NewInt(1 << 3)
+	getCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 4)
+	getCustomDomainResponseContentFieldType                 = big.NewInt(1 << 5)
+	getCustomDomainResponseContentFieldOriginDomainName     = big.NewInt(1 << 6)
+	getCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 7)
+	getCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 8)
+	getCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 9)
+	getCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 10)
+	getCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 11)
 )
 
 type GetCustomDomainResponseContent struct {
@@ -1087,9 +1139,11 @@ type GetCustomDomainResponseContent struct {
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
-	Primary bool                         `json:"primary" url:"primary"`
-	Status  CustomDomainStatusFilterEnum `json:"status" url:"status"`
-	Type    CustomDomainTypeEnum         `json:"type" url:"type"`
+	Primary bool `json:"primary" url:"primary"`
+	// Whether this is the default custom domain (true) or not (false).
+	IsDefault *bool                        `json:"is_default,omitempty" url:"is_default,omitempty"`
+	Status    CustomDomainStatusFilterEnum `json:"status" url:"status"`
+	Type      CustomDomainTypeEnum         `json:"type" url:"type"`
 	// Intermediate address.
 	OriginDomainName *string             `json:"origin_domain_name,omitempty" url:"origin_domain_name,omitempty"`
 	Verification     *DomainVerification `json:"verification,omitempty" url:"verification,omitempty"`
@@ -1126,6 +1180,13 @@ func (g *GetCustomDomainResponseContent) GetPrimary() bool {
 		return false
 	}
 	return g.Primary
+}
+
+func (g *GetCustomDomainResponseContent) GetIsDefault() bool {
+	if g == nil || g.IsDefault == nil {
+		return false
+	}
+	return *g.IsDefault
 }
 
 func (g *GetCustomDomainResponseContent) GetStatus() CustomDomainStatusFilterEnum {
@@ -1214,6 +1275,13 @@ func (g *GetCustomDomainResponseContent) SetDomain(domain string) {
 func (g *GetCustomDomainResponseContent) SetPrimary(primary bool) {
 	g.Primary = primary
 	g.require(getCustomDomainResponseContentFieldPrimary)
+}
+
+// SetIsDefault sets the IsDefault field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetIsDefault(isDefault *bool) {
+	g.IsDefault = isDefault
+	g.require(getCustomDomainResponseContentFieldIsDefault)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -1413,13 +1481,14 @@ var (
 	updateCustomDomainResponseContentFieldCustomDomainID       = big.NewInt(1 << 0)
 	updateCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
 	updateCustomDomainResponseContentFieldPrimary              = big.NewInt(1 << 2)
-	updateCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 3)
-	updateCustomDomainResponseContentFieldType                 = big.NewInt(1 << 4)
-	updateCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 5)
-	updateCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 6)
-	updateCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 7)
-	updateCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 8)
-	updateCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 9)
+	updateCustomDomainResponseContentFieldIsDefault            = big.NewInt(1 << 3)
+	updateCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 4)
+	updateCustomDomainResponseContentFieldType                 = big.NewInt(1 << 5)
+	updateCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 6)
+	updateCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 7)
+	updateCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 8)
+	updateCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 9)
+	updateCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 10)
 )
 
 type UpdateCustomDomainResponseContent struct {
@@ -1428,7 +1497,9 @@ type UpdateCustomDomainResponseContent struct {
 	// Domain name.
 	Domain string `json:"domain" url:"domain"`
 	// Whether this is a primary domain (true) or not (false).
-	Primary      bool                         `json:"primary" url:"primary"`
+	Primary bool `json:"primary" url:"primary"`
+	// Whether this is the default custom domain (true) or not (false).
+	IsDefault    *bool                        `json:"is_default,omitempty" url:"is_default,omitempty"`
 	Status       CustomDomainStatusFilterEnum `json:"status" url:"status"`
 	Type         CustomDomainTypeEnum         `json:"type" url:"type"`
 	Verification *DomainVerification          `json:"verification" url:"verification"`
@@ -1465,6 +1536,13 @@ func (u *UpdateCustomDomainResponseContent) GetPrimary() bool {
 		return false
 	}
 	return u.Primary
+}
+
+func (u *UpdateCustomDomainResponseContent) GetIsDefault() bool {
+	if u == nil || u.IsDefault == nil {
+		return false
+	}
+	return *u.IsDefault
 }
 
 func (u *UpdateCustomDomainResponseContent) GetStatus() CustomDomainStatusFilterEnum {
@@ -1546,6 +1624,13 @@ func (u *UpdateCustomDomainResponseContent) SetDomain(domain string) {
 func (u *UpdateCustomDomainResponseContent) SetPrimary(primary bool) {
 	u.Primary = primary
 	u.require(updateCustomDomainResponseContentFieldPrimary)
+}
+
+// SetIsDefault sets the IsDefault field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetIsDefault(isDefault *bool) {
+	u.IsDefault = isDefault
+	u.require(updateCustomDomainResponseContentFieldIsDefault)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;

@@ -35,9 +35,9 @@ func (r *RawClient) List(
 	// The id of the self-service profile.
 	id string,
 	// The language of the custom text.
-	language management.SelfServiceProfileCustomTextLanguageEnum,
+	language *management.SelfServiceProfileCustomTextLanguageEnum,
 	// The page where the custom text is shown.
-	page management.SelfServiceProfileCustomTextPageEnum,
+	page *management.SelfServiceProfileCustomTextPageEnum,
 	opts ...option.RequestOption,
 ) (*core.Response[management.ListSelfServiceProfileCustomTextResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -86,9 +86,9 @@ func (r *RawClient) Set(
 	// The id of the self-service profile.
 	id string,
 	// The language of the custom text.
-	language management.SelfServiceProfileCustomTextLanguageEnum,
+	language *management.SelfServiceProfileCustomTextLanguageEnum,
 	// The page where the custom text is shown.
-	page management.SelfServiceProfileCustomTextPageEnum,
+	page *management.SelfServiceProfileCustomTextPageEnum,
 	request management.SetSelfServiceProfileCustomTextRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[management.SetSelfServiceProfileCustomTextResponseContent], error) {

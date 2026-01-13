@@ -33,6 +33,154 @@ func (a AsyncApprovalNotificationsChannelsEnum) Ptr() *AsyncApprovalNotification
 }
 
 var (
+	certificateSubjectDnCredentialFieldCredentialType = big.NewInt(1 << 0)
+	certificateSubjectDnCredentialFieldName           = big.NewInt(1 << 1)
+	certificateSubjectDnCredentialFieldSubjectDn      = big.NewInt(1 << 2)
+	certificateSubjectDnCredentialFieldPem            = big.NewInt(1 << 3)
+)
+
+type CertificateSubjectDnCredential struct {
+	CredentialType CertificateSubjectDnCredentialTypeEnum `json:"credential_type" url:"credential_type"`
+	// Friendly name for a credential.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Subject Distinguished Name. Mutually exclusive with `pem` property. Applies to `cert_subject_dn` credential type.
+	SubjectDn *string `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
+	// PEM-formatted X509 certificate. Must be JSON escaped. Mutually exclusive with `subject_dn` property.
+	Pem *string `json:"pem,omitempty" url:"pem,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CertificateSubjectDnCredential) GetCredentialType() CertificateSubjectDnCredentialTypeEnum {
+	if c == nil {
+		return ""
+	}
+	return c.CredentialType
+}
+
+func (c *CertificateSubjectDnCredential) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+func (c *CertificateSubjectDnCredential) GetSubjectDn() string {
+	if c == nil || c.SubjectDn == nil {
+		return ""
+	}
+	return *c.SubjectDn
+}
+
+func (c *CertificateSubjectDnCredential) GetPem() string {
+	if c == nil || c.Pem == nil {
+		return ""
+	}
+	return *c.Pem
+}
+
+func (c *CertificateSubjectDnCredential) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CertificateSubjectDnCredential) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCredentialType sets the CredentialType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CertificateSubjectDnCredential) SetCredentialType(credentialType CertificateSubjectDnCredentialTypeEnum) {
+	c.CredentialType = credentialType
+	c.require(certificateSubjectDnCredentialFieldCredentialType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CertificateSubjectDnCredential) SetName(name *string) {
+	c.Name = name
+	c.require(certificateSubjectDnCredentialFieldName)
+}
+
+// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CertificateSubjectDnCredential) SetSubjectDn(subjectDn *string) {
+	c.SubjectDn = subjectDn
+	c.require(certificateSubjectDnCredentialFieldSubjectDn)
+}
+
+// SetPem sets the Pem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CertificateSubjectDnCredential) SetPem(pem *string) {
+	c.Pem = pem
+	c.require(certificateSubjectDnCredentialFieldPem)
+}
+
+func (c *CertificateSubjectDnCredential) UnmarshalJSON(data []byte) error {
+	type unmarshaler CertificateSubjectDnCredential
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CertificateSubjectDnCredential(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CertificateSubjectDnCredential) MarshalJSON() ([]byte, error) {
+	type embed CertificateSubjectDnCredential
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CertificateSubjectDnCredential) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CertificateSubjectDnCredentialTypeEnum string
+
+const (
+	CertificateSubjectDnCredentialTypeEnumCertSubjectDn CertificateSubjectDnCredentialTypeEnum = "cert_subject_dn"
+)
+
+func NewCertificateSubjectDnCredentialTypeEnumFromString(s string) (CertificateSubjectDnCredentialTypeEnum, error) {
+	switch s {
+	case "cert_subject_dn":
+		return CertificateSubjectDnCredentialTypeEnumCertSubjectDn, nil
+	}
+	var t CertificateSubjectDnCredentialTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CertificateSubjectDnCredentialTypeEnum) Ptr() *CertificateSubjectDnCredentialTypeEnum {
+	return &c
+}
+
+var (
 	clientFieldClientID                                       = big.NewInt(1 << 0)
 	clientFieldTenant                                         = big.NewInt(1 << 1)
 	clientFieldName                                           = big.NewInt(1 << 2)
@@ -4744,7 +4892,7 @@ var (
 )
 
 type ClientAuthenticationMethod struct {
-	PrivateKeyJwt           *PrivateKeyJwt                                     `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
+	PrivateKeyJwt           *ClientAuthenticationMethodPrivateKeyJwt           `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
 	TLSClientAuth           *ClientAuthenticationMethodTLSClientAuth           `json:"tls_client_auth,omitempty" url:"tls_client_auth,omitempty"`
 	SelfSignedTLSClientAuth *ClientAuthenticationMethodSelfSignedTLSClientAuth `json:"self_signed_tls_client_auth,omitempty" url:"self_signed_tls_client_auth,omitempty"`
 
@@ -4755,9 +4903,9 @@ type ClientAuthenticationMethod struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ClientAuthenticationMethod) GetPrivateKeyJwt() PrivateKeyJwt {
+func (c *ClientAuthenticationMethod) GetPrivateKeyJwt() ClientAuthenticationMethodPrivateKeyJwt {
 	if c == nil || c.PrivateKeyJwt == nil {
-		return PrivateKeyJwt{}
+		return ClientAuthenticationMethodPrivateKeyJwt{}
 	}
 	return *c.PrivateKeyJwt
 }
@@ -4789,7 +4937,7 @@ func (c *ClientAuthenticationMethod) require(field *big.Int) {
 
 // SetPrivateKeyJwt sets the PrivateKeyJwt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ClientAuthenticationMethod) SetPrivateKeyJwt(privateKeyJwt *PrivateKeyJwt) {
+func (c *ClientAuthenticationMethod) SetPrivateKeyJwt(privateKeyJwt *ClientAuthenticationMethodPrivateKeyJwt) {
 	c.PrivateKeyJwt = privateKeyJwt
 	c.require(clientAuthenticationMethodFieldPrivateKeyJwt)
 }
@@ -4847,14 +4995,13 @@ func (c *ClientAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
+// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
 var (
-	clientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
+	clientAuthenticationMethodPrivateKeyJwtFieldCredentials = big.NewInt(1 << 0)
 )
 
-type ClientAuthenticationMethodSelfSignedTLSClientAuth struct {
-	// A list of unique and previously created credential IDs enabled on the client for mTLS authentication utilizing self-signed certificate.
-	Credentials []*CredentialID `json:"credentials" url:"credentials"`
+type ClientAuthenticationMethodPrivateKeyJwt struct {
+	Credentials ClientAuthenticationMethodPrivateKeyJwtCredentials `json:"credentials" url:"credentials"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4863,7 +5010,89 @@ type ClientAuthenticationMethodSelfSignedTLSClientAuth struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) GetCredentials() []*CredentialID {
+func (c *ClientAuthenticationMethodPrivateKeyJwt) GetCredentials() ClientAuthenticationMethodPrivateKeyJwtCredentials {
+	if c == nil {
+		return nil
+	}
+	return c.Credentials
+}
+
+func (c *ClientAuthenticationMethodPrivateKeyJwt) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ClientAuthenticationMethodPrivateKeyJwt) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCredentials sets the Credentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientAuthenticationMethodPrivateKeyJwt) SetCredentials(credentials ClientAuthenticationMethodPrivateKeyJwtCredentials) {
+	c.Credentials = credentials
+	c.require(clientAuthenticationMethodPrivateKeyJwtFieldCredentials)
+}
+
+func (c *ClientAuthenticationMethodPrivateKeyJwt) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientAuthenticationMethodPrivateKeyJwt
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientAuthenticationMethodPrivateKeyJwt(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientAuthenticationMethodPrivateKeyJwt) MarshalJSON() ([]byte, error) {
+	type embed ClientAuthenticationMethodPrivateKeyJwt
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientAuthenticationMethodPrivateKeyJwt) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// A list of unique and previously created credential IDs enabled on the client for Private Key JWT authentication.
+type ClientAuthenticationMethodPrivateKeyJwtCredentials = []*CredentialID
+
+// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
+var (
+	clientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
+)
+
+type ClientAuthenticationMethodSelfSignedTLSClientAuth struct {
+	Credentials ClientAuthenticationMethodSelfSignedTLSClientAuthCredentials `json:"credentials" url:"credentials"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) GetCredentials() ClientAuthenticationMethodSelfSignedTLSClientAuthCredentials {
 	if c == nil {
 		return nil
 	}
@@ -4883,7 +5112,7 @@ func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) require(field *big.I
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) SetCredentials(credentials []*CredentialID) {
+func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) SetCredentials(credentials ClientAuthenticationMethodSelfSignedTLSClientAuthCredentials) {
 	c.Credentials = credentials
 	c.require(clientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials)
 }
@@ -4927,14 +5156,16 @@ func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// A list of unique and previously created credential IDs enabled on the client for mTLS authentication utilizing self-signed certificate.
+type ClientAuthenticationMethodSelfSignedTLSClientAuthCredentials = []*CredentialID
+
 // Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
 var (
 	clientAuthenticationMethodTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
 )
 
 type ClientAuthenticationMethodTLSClientAuth struct {
-	// A list of unique and previously created credential IDs enabled on the client for CA-based mTLS authentication.
-	Credentials []*CredentialID `json:"credentials" url:"credentials"`
+	Credentials ClientAuthenticationMethodTLSClientAuthCredentials `json:"credentials" url:"credentials"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4943,7 +5174,7 @@ type ClientAuthenticationMethodTLSClientAuth struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ClientAuthenticationMethodTLSClientAuth) GetCredentials() []*CredentialID {
+func (c *ClientAuthenticationMethodTLSClientAuth) GetCredentials() ClientAuthenticationMethodTLSClientAuthCredentials {
 	if c == nil {
 		return nil
 	}
@@ -4963,7 +5194,7 @@ func (c *ClientAuthenticationMethodTLSClientAuth) require(field *big.Int) {
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ClientAuthenticationMethodTLSClientAuth) SetCredentials(credentials []*CredentialID) {
+func (c *ClientAuthenticationMethodTLSClientAuth) SetCredentials(credentials ClientAuthenticationMethodTLSClientAuthCredentials) {
 	c.Credentials = credentials
 	c.require(clientAuthenticationMethodTLSClientAuthFieldCredentials)
 }
@@ -5007,6 +5238,9 @@ func (c *ClientAuthenticationMethodTLSClientAuth) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// A list of unique and previously created credential IDs enabled on the client for CA-based mTLS authentication.
+type ClientAuthenticationMethodTLSClientAuthCredentials = []*CredentialID
+
 // Defines the compliance level for this client, which may restrict it's capabilities
 type ClientComplianceLevelEnum string
 
@@ -5047,9 +5281,9 @@ var (
 )
 
 type ClientCreateAuthenticationMethod struct {
-	PrivateKeyJwt           *PrivateKeyJwt                                     `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
-	TLSClientAuth           *ClientAuthenticationMethodTLSClientAuth           `json:"tls_client_auth,omitempty" url:"tls_client_auth,omitempty"`
-	SelfSignedTLSClientAuth *ClientAuthenticationMethodSelfSignedTLSClientAuth `json:"self_signed_tls_client_auth,omitempty" url:"self_signed_tls_client_auth,omitempty"`
+	PrivateKeyJwt           *ClientCreateAuthenticationMethodPrivateKeyJwt           `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
+	TLSClientAuth           *ClientCreateAuthenticationMethodTLSClientAuth           `json:"tls_client_auth,omitempty" url:"tls_client_auth,omitempty"`
+	SelfSignedTLSClientAuth *CreateClientAuthenticationMethodSelfSignedTLSClientAuth `json:"self_signed_tls_client_auth,omitempty" url:"self_signed_tls_client_auth,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -5058,23 +5292,23 @@ type ClientCreateAuthenticationMethod struct {
 	rawJSON         json.RawMessage
 }
 
-func (c *ClientCreateAuthenticationMethod) GetPrivateKeyJwt() PrivateKeyJwt {
+func (c *ClientCreateAuthenticationMethod) GetPrivateKeyJwt() ClientCreateAuthenticationMethodPrivateKeyJwt {
 	if c == nil || c.PrivateKeyJwt == nil {
-		return PrivateKeyJwt{}
+		return ClientCreateAuthenticationMethodPrivateKeyJwt{}
 	}
 	return *c.PrivateKeyJwt
 }
 
-func (c *ClientCreateAuthenticationMethod) GetTLSClientAuth() ClientAuthenticationMethodTLSClientAuth {
+func (c *ClientCreateAuthenticationMethod) GetTLSClientAuth() ClientCreateAuthenticationMethodTLSClientAuth {
 	if c == nil || c.TLSClientAuth == nil {
-		return ClientAuthenticationMethodTLSClientAuth{}
+		return ClientCreateAuthenticationMethodTLSClientAuth{}
 	}
 	return *c.TLSClientAuth
 }
 
-func (c *ClientCreateAuthenticationMethod) GetSelfSignedTLSClientAuth() ClientAuthenticationMethodSelfSignedTLSClientAuth {
+func (c *ClientCreateAuthenticationMethod) GetSelfSignedTLSClientAuth() CreateClientAuthenticationMethodSelfSignedTLSClientAuth {
 	if c == nil || c.SelfSignedTLSClientAuth == nil {
-		return ClientAuthenticationMethodSelfSignedTLSClientAuth{}
+		return CreateClientAuthenticationMethodSelfSignedTLSClientAuth{}
 	}
 	return *c.SelfSignedTLSClientAuth
 }
@@ -5092,21 +5326,21 @@ func (c *ClientCreateAuthenticationMethod) require(field *big.Int) {
 
 // SetPrivateKeyJwt sets the PrivateKeyJwt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ClientCreateAuthenticationMethod) SetPrivateKeyJwt(privateKeyJwt *PrivateKeyJwt) {
+func (c *ClientCreateAuthenticationMethod) SetPrivateKeyJwt(privateKeyJwt *ClientCreateAuthenticationMethodPrivateKeyJwt) {
 	c.PrivateKeyJwt = privateKeyJwt
 	c.require(clientCreateAuthenticationMethodFieldPrivateKeyJwt)
 }
 
 // SetTLSClientAuth sets the TLSClientAuth field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ClientCreateAuthenticationMethod) SetTLSClientAuth(tlsClientAuth *ClientAuthenticationMethodTLSClientAuth) {
+func (c *ClientCreateAuthenticationMethod) SetTLSClientAuth(tlsClientAuth *ClientCreateAuthenticationMethodTLSClientAuth) {
 	c.TLSClientAuth = tlsClientAuth
 	c.require(clientCreateAuthenticationMethodFieldTLSClientAuth)
 }
 
 // SetSelfSignedTLSClientAuth sets the SelfSignedTLSClientAuth field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ClientCreateAuthenticationMethod) SetSelfSignedTLSClientAuth(selfSignedTLSClientAuth *ClientAuthenticationMethodSelfSignedTLSClientAuth) {
+func (c *ClientCreateAuthenticationMethod) SetSelfSignedTLSClientAuth(selfSignedTLSClientAuth *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) {
 	c.SelfSignedTLSClientAuth = selfSignedTLSClientAuth
 	c.require(clientCreateAuthenticationMethodFieldSelfSignedTLSClientAuth)
 }
@@ -5149,6 +5383,170 @@ func (c *ClientCreateAuthenticationMethod) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
+var (
+	clientCreateAuthenticationMethodPrivateKeyJwtFieldCredentials = big.NewInt(1 << 0)
+)
+
+type ClientCreateAuthenticationMethodPrivateKeyJwt struct {
+	Credentials ClientCreateAuthenticationMethodPrivateKeyJwtCredentials `json:"credentials" url:"credentials"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) GetCredentials() ClientCreateAuthenticationMethodPrivateKeyJwtCredentials {
+	if c == nil {
+		return nil
+	}
+	return c.Credentials
+}
+
+func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCredentials sets the Credentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) SetCredentials(credentials ClientCreateAuthenticationMethodPrivateKeyJwtCredentials) {
+	c.Credentials = credentials
+	c.require(clientCreateAuthenticationMethodPrivateKeyJwtFieldCredentials)
+}
+
+func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientCreateAuthenticationMethodPrivateKeyJwt
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientCreateAuthenticationMethodPrivateKeyJwt(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) MarshalJSON() ([]byte, error) {
+	type embed ClientCreateAuthenticationMethodPrivateKeyJwt
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Fully defined credentials that will be enabled on the client for Private Key JWT authentication.
+type ClientCreateAuthenticationMethodPrivateKeyJwtCredentials = []*PublicKeyCredential
+
+// Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
+var (
+	clientCreateAuthenticationMethodTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
+)
+
+type ClientCreateAuthenticationMethodTLSClientAuth struct {
+	Credentials ClientCreateAuthenticationMethodTLSClientAuthCredentials `json:"credentials" url:"credentials"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientCreateAuthenticationMethodTLSClientAuth) GetCredentials() ClientCreateAuthenticationMethodTLSClientAuthCredentials {
+	if c == nil {
+		return nil
+	}
+	return c.Credentials
+}
+
+func (c *ClientCreateAuthenticationMethodTLSClientAuth) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ClientCreateAuthenticationMethodTLSClientAuth) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCredentials sets the Credentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCreateAuthenticationMethodTLSClientAuth) SetCredentials(credentials ClientCreateAuthenticationMethodTLSClientAuthCredentials) {
+	c.Credentials = credentials
+	c.require(clientCreateAuthenticationMethodTLSClientAuthFieldCredentials)
+}
+
+func (c *ClientCreateAuthenticationMethodTLSClientAuth) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientCreateAuthenticationMethodTLSClientAuth
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientCreateAuthenticationMethodTLSClientAuth(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientCreateAuthenticationMethodTLSClientAuth) MarshalJSON() ([]byte, error) {
+	type embed ClientCreateAuthenticationMethodTLSClientAuth
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientCreateAuthenticationMethodTLSClientAuth) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Fully defined credentials that will be enabled on the client for CA-based mTLS authentication.
+type ClientCreateAuthenticationMethodTLSClientAuthCredentials = []*CertificateSubjectDnCredential
 
 // Defines the default Organization ID and flows
 var (
@@ -5247,7 +5645,24 @@ func (c *ClientDefaultOrganization) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-type ClientDefaultOrganizationFlowsEnum = string
+type ClientDefaultOrganizationFlowsEnum string
+
+const (
+	ClientDefaultOrganizationFlowsEnumClientCredentials ClientDefaultOrganizationFlowsEnum = "client_credentials"
+)
+
+func NewClientDefaultOrganizationFlowsEnumFromString(s string) (ClientDefaultOrganizationFlowsEnum, error) {
+	switch s {
+	case "client_credentials":
+		return ClientDefaultOrganizationFlowsEnumClientCredentials, nil
+	}
+	var t ClientDefaultOrganizationFlowsEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientDefaultOrganizationFlowsEnum) Ptr() *ClientDefaultOrganizationFlowsEnum {
+	return &c
+}
 
 // Encryption used for WsFed responses with this client.
 var (
@@ -6634,16 +7049,16 @@ var (
 )
 
 type ClientSessionTransferConfiguration struct {
-	// Indicates whether an app can issue a Session Transfer Token through Token Exchange. If set to 'false', the app will not be able to issue a Session Transfer Token. Usually configured in the native application.
+	// Indicates whether an app can issue a Session Transfer Token through Token Exchange. If set to 'false', the app will not be able to issue a Session Transfer Token. Usually configured in the native application. Default value is `false`.
 	CanCreateSessionTransferToken *bool `json:"can_create_session_transfer_token,omitempty" url:"can_create_session_transfer_token,omitempty"`
-	// Indicates whether revoking the parent Refresh Token that initiated a Native to Web flow and was used to issue a Session Transfer Token should trigger a cascade revocation affecting its dependent child entities. Usually configured in the native application.
+	// Indicates whether revoking the parent Refresh Token that initiated a Native to Web flow and was used to issue a Session Transfer Token should trigger a cascade revocation affecting its dependent child entities. Usually configured in the native application. Default value is `true`, applicable only in Native to Web SSO context.
 	EnforceCascadeRevocation *bool `json:"enforce_cascade_revocation,omitempty" url:"enforce_cascade_revocation,omitempty"`
-	// Indicates whether an app can create a session from a Session Transfer Token received via indicated methods. Can include `cookie` and/or `query`. Usually configured in the web application.
+	// Indicates whether an app can create a session from a Session Transfer Token received via indicated methods. Can include `cookie` and/or `query`. Usually configured in the web application. Default value is an empty array [].
 	AllowedAuthenticationMethods []ClientSessionTransferAllowedAuthenticationMethodsEnum `json:"allowed_authentication_methods,omitempty" url:"allowed_authentication_methods,omitempty"`
 	EnforceDeviceBinding         *ClientSessionTransferDeviceBindingEnum                 `json:"enforce_device_binding,omitempty" url:"enforce_device_binding,omitempty"`
-	// Indicates whether Refresh Tokens are allowed to be issued when authenticating with a Session Transfer Token. Usually configured in the web application.
+	// Indicates whether Refresh Tokens are allowed to be issued when authenticating with a Session Transfer Token. Usually configured in the web application. Default value is `false`.
 	AllowRefreshToken *bool `json:"allow_refresh_token,omitempty" url:"allow_refresh_token,omitempty"`
-	// Indicates whether Refresh Tokens created during a native-to-web session are tied to that session's lifetime. This determines if such refresh tokens should be automatically revoked when their corresponding sessions are. Usually configured in the web application.
+	// Indicates whether Refresh Tokens created during a Native to Web session are tied to that session's lifetime. This determines if such refresh tokens should be automatically revoked when their corresponding sessions are. Usually configured in the web application. Default value is `true`, applicable only in Native to Web SSO context.
 	EnforceOnlineRefreshTokens *bool `json:"enforce_online_refresh_tokens,omitempty" url:"enforce_online_refresh_tokens,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -6787,7 +7202,7 @@ func (c *ClientSessionTransferConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Indicates whether device binding security should be enforced for the app. If set to 'ip', the app will enforce device binding by IP, meaning that consumption of Session Transfer Token must be done from the same IP of the issuer. Likewise, if set to 'asn', device binding is enforced by ASN, meaning consumption of Session Transfer Token must be done from the same ASN as the issuer. If set to 'null', device binding is not enforced. Usually configured in the web application.
+// Indicates whether device binding security should be enforced for the app. If set to 'ip', the app will enforce device binding by IP, meaning that consumption of Session Transfer Token must be done from the same IP of the issuer. Likewise, if set to 'asn', device binding is enforced by ASN, meaning consumption of Session Transfer Token must be done from the same ASN as the issuer. If set to 'none', device binding is not enforced. Usually configured in the web application. Default value is `ip`.
 type ClientSessionTransferDeviceBindingEnum string
 
 const (
@@ -7338,7 +7753,106 @@ func (c *ClientTokenExchangeConfigurationOrNull) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-type ClientTokenExchangeTypeEnum = string
+type ClientTokenExchangeTypeEnum string
+
+const (
+	ClientTokenExchangeTypeEnumCustomAuthentication ClientTokenExchangeTypeEnum = "custom_authentication"
+)
+
+func NewClientTokenExchangeTypeEnumFromString(s string) (ClientTokenExchangeTypeEnum, error) {
+	switch s {
+	case "custom_authentication":
+		return ClientTokenExchangeTypeEnumCustomAuthentication, nil
+	}
+	var t ClientTokenExchangeTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientTokenExchangeTypeEnum) Ptr() *ClientTokenExchangeTypeEnum {
+	return &c
+}
+
+// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
+var (
+	createClientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
+)
+
+type CreateClientAuthenticationMethodSelfSignedTLSClientAuth struct {
+	Credentials CreateClientAuthenticationMethodSelfSignedTLSClientAuthCredentials `json:"credentials" url:"credentials"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) GetCredentials() CreateClientAuthenticationMethodSelfSignedTLSClientAuthCredentials {
+	if c == nil {
+		return nil
+	}
+	return c.Credentials
+}
+
+func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCredentials sets the Credentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) SetCredentials(credentials CreateClientAuthenticationMethodSelfSignedTLSClientAuthCredentials) {
+	c.Credentials = credentials
+	c.require(createClientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials)
+}
+
+func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateClientAuthenticationMethodSelfSignedTLSClientAuth
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateClientAuthenticationMethodSelfSignedTLSClientAuth(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) MarshalJSON() ([]byte, error) {
+	type embed CreateClientAuthenticationMethodSelfSignedTLSClientAuth
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Fully defined credentials that will be enabled on the client for mTLS authentication utilizing self-signed certificate.
+type CreateClientAuthenticationMethodSelfSignedTLSClientAuthCredentials = []*X509CertificateCredential
 
 var (
 	createClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
@@ -10306,88 +10820,6 @@ func (n *NativeSocialLoginGoogle) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
-var (
-	privateKeyJwtFieldCredentials = big.NewInt(1 << 0)
-)
-
-type PrivateKeyJwt struct {
-	Credentials PrivateKeyJwtCredentials `json:"credentials" url:"credentials"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (p *PrivateKeyJwt) GetCredentials() PrivateKeyJwtCredentials {
-	if p == nil {
-		return nil
-	}
-	return p.Credentials
-}
-
-func (p *PrivateKeyJwt) GetExtraProperties() map[string]interface{} {
-	return p.extraProperties
-}
-
-func (p *PrivateKeyJwt) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
-	}
-	p.explicitFields.Or(p.explicitFields, field)
-}
-
-// SetCredentials sets the Credentials field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PrivateKeyJwt) SetCredentials(credentials PrivateKeyJwtCredentials) {
-	p.Credentials = credentials
-	p.require(privateKeyJwtFieldCredentials)
-}
-
-func (p *PrivateKeyJwt) UnmarshalJSON(data []byte) error {
-	type unmarshaler PrivateKeyJwt
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*p = PrivateKeyJwt(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *p)
-	if err != nil {
-		return err
-	}
-	p.extraProperties = extraProperties
-	p.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (p *PrivateKeyJwt) MarshalJSON() ([]byte, error) {
-	type embed PrivateKeyJwt
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*p),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (p *PrivateKeyJwt) String() string {
-	if len(p.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
-// A list of unique and previously created credential IDs enabled on the client for Private Key JWT authentication.
-type PrivateKeyJwtCredentials = []*CredentialID
-
 var (
 	publicKeyCredentialFieldCredentialType      = big.NewInt(1 << 0)
 	publicKeyCredentialFieldName                = big.NewInt(1 << 1)
@@ -10414,6 +10846,13 @@ type PublicKeyCredential struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (p *PublicKeyCredential) GetCredentialType() PublicKeyCredentialTypeEnum {
+	if p == nil {
+		return ""
+	}
+	return p.CredentialType
 }
 
 func (p *PublicKeyCredential) GetName() string {
@@ -10552,7 +10991,24 @@ func (p *PublicKeyCredential) String() string {
 }
 
 // Credential type. Supported types: public_key.
-type PublicKeyCredentialTypeEnum = string
+type PublicKeyCredentialTypeEnum string
+
+const (
+	PublicKeyCredentialTypeEnumPublicKey PublicKeyCredentialTypeEnum = "public_key"
+)
+
+func NewPublicKeyCredentialTypeEnumFromString(s string) (PublicKeyCredentialTypeEnum, error) {
+	switch s {
+	case "public_key":
+		return PublicKeyCredentialTypeEnumPublicKey, nil
+	}
+	var t PublicKeyCredentialTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PublicKeyCredentialTypeEnum) Ptr() *PublicKeyCredentialTypeEnum {
+	return &p
+}
 
 // Refresh token expiration types, one of: expiring, non-expiring
 type RefreshTokenExpirationTypeEnum string
@@ -12496,4 +12952,135 @@ func (u *UpdateClientResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	x509CertificateCredentialFieldCredentialType = big.NewInt(1 << 0)
+	x509CertificateCredentialFieldName           = big.NewInt(1 << 1)
+	x509CertificateCredentialFieldPem            = big.NewInt(1 << 2)
+)
+
+type X509CertificateCredential struct {
+	CredentialType X509CertificateCredentialTypeEnum `json:"credential_type" url:"credential_type"`
+	// Friendly name for a credential.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// PEM-formatted X509 certificate. Must be JSON escaped.
+	Pem string `json:"pem" url:"pem"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (x *X509CertificateCredential) GetCredentialType() X509CertificateCredentialTypeEnum {
+	if x == nil {
+		return ""
+	}
+	return x.CredentialType
+}
+
+func (x *X509CertificateCredential) GetName() string {
+	if x == nil || x.Name == nil {
+		return ""
+	}
+	return *x.Name
+}
+
+func (x *X509CertificateCredential) GetPem() string {
+	if x == nil {
+		return ""
+	}
+	return x.Pem
+}
+
+func (x *X509CertificateCredential) GetExtraProperties() map[string]interface{} {
+	return x.extraProperties
+}
+
+func (x *X509CertificateCredential) require(field *big.Int) {
+	if x.explicitFields == nil {
+		x.explicitFields = big.NewInt(0)
+	}
+	x.explicitFields.Or(x.explicitFields, field)
+}
+
+// SetCredentialType sets the CredentialType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *X509CertificateCredential) SetCredentialType(credentialType X509CertificateCredentialTypeEnum) {
+	x.CredentialType = credentialType
+	x.require(x509CertificateCredentialFieldCredentialType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *X509CertificateCredential) SetName(name *string) {
+	x.Name = name
+	x.require(x509CertificateCredentialFieldName)
+}
+
+// SetPem sets the Pem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (x *X509CertificateCredential) SetPem(pem string) {
+	x.Pem = pem
+	x.require(x509CertificateCredentialFieldPem)
+}
+
+func (x *X509CertificateCredential) UnmarshalJSON(data []byte) error {
+	type unmarshaler X509CertificateCredential
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*x = X509CertificateCredential(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *x)
+	if err != nil {
+		return err
+	}
+	x.extraProperties = extraProperties
+	x.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (x *X509CertificateCredential) MarshalJSON() ([]byte, error) {
+	type embed X509CertificateCredential
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*x),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, x.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (x *X509CertificateCredential) String() string {
+	if len(x.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(x.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(x); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", x)
+}
+
+type X509CertificateCredentialTypeEnum string
+
+const (
+	X509CertificateCredentialTypeEnumX509Cert X509CertificateCredentialTypeEnum = "x509_cert"
+)
+
+func NewX509CertificateCredentialTypeEnumFromString(s string) (X509CertificateCredentialTypeEnum, error) {
+	switch s {
+	case "x509_cert":
+		return X509CertificateCredentialTypeEnumX509Cert, nil
+	}
+	var t X509CertificateCredentialTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (x X509CertificateCredentialTypeEnum) Ptr() *X509CertificateCredentialTypeEnum {
+	return &x
 }

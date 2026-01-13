@@ -102,9 +102,7 @@ func TestTokenExchangeProfilesCreateWithWireMock(
 		Name:             "name",
 		SubjectTokenType: "subject_token_type",
 		ActionID:         "action_id",
-		Type: management.TokenExchangeProfileTypeEnum(
-			"custom_authentication",
-		),
+		Type:             management.TokenExchangeProfileTypeEnumCustomAuthentication,
 	}
 	_, invocationErr := client.TokenExchangeProfiles.Create(
 		context.TODO(),

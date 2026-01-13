@@ -37,6 +37,13 @@ func (c *ChangePasswordTicketIdentity) GetUserID() string {
 	return c.UserID
 }
 
+func (c *ChangePasswordTicketIdentity) GetProvider() IdentityProviderOnlyAuth0Enum {
+	if c == nil {
+		return ""
+	}
+	return c.Provider
+}
+
 func (c *ChangePasswordTicketIdentity) GetConnectionID() string {
 	if c == nil || c.ConnectionID == nil {
 		return ""
@@ -200,7 +207,24 @@ func (c *ChangePasswordTicketResponseContent) String() string {
 }
 
 // Identity provider name of the identity. Only `auth0` is supported
-type IdentityProviderOnlyAuth0Enum = string
+type IdentityProviderOnlyAuth0Enum string
+
+const (
+	IdentityProviderOnlyAuth0EnumAuth0 IdentityProviderOnlyAuth0Enum = "auth0"
+)
+
+func NewIdentityProviderOnlyAuth0EnumFromString(s string) (IdentityProviderOnlyAuth0Enum, error) {
+	switch s {
+	case "auth0":
+		return IdentityProviderOnlyAuth0EnumAuth0, nil
+	}
+	var t IdentityProviderOnlyAuth0Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (i IdentityProviderOnlyAuth0Enum) Ptr() *IdentityProviderOnlyAuth0Enum {
+	return &i
+}
 
 var (
 	verifyEmailTicketResponseContentFieldTicket = big.NewInt(1 << 0)

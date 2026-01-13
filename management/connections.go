@@ -10,12 +10,14 @@ import (
 )
 
 var (
-	connectionAttributeIdentifierFieldActive = big.NewInt(1 << 0)
+	connectionAttributeIdentifierFieldActive        = big.NewInt(1 << 0)
+	connectionAttributeIdentifierFieldDefaultMethod = big.NewInt(1 << 1)
 )
 
 type ConnectionAttributeIdentifier struct {
 	// Determines if the attribute is used for identification
-	Active *bool `json:"active,omitempty" url:"active,omitempty"`
+	Active        *bool                             `json:"active,omitempty" url:"active,omitempty"`
+	DefaultMethod *DefaultMethodEmailIdentifierEnum `json:"default_method,omitempty" url:"default_method,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -29,6 +31,13 @@ func (c *ConnectionAttributeIdentifier) GetActive() bool {
 		return false
 	}
 	return *c.Active
+}
+
+func (c *ConnectionAttributeIdentifier) GetDefaultMethod() DefaultMethodEmailIdentifierEnum {
+	if c == nil || c.DefaultMethod == nil {
+		return ""
+	}
+	return *c.DefaultMethod
 }
 
 func (c *ConnectionAttributeIdentifier) GetExtraProperties() map[string]interface{} {
@@ -47,6 +56,13 @@ func (c *ConnectionAttributeIdentifier) require(field *big.Int) {
 func (c *ConnectionAttributeIdentifier) SetActive(active *bool) {
 	c.Active = active
 	c.require(connectionAttributeIdentifierFieldActive)
+}
+
+// SetDefaultMethod sets the DefaultMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionAttributeIdentifier) SetDefaultMethod(defaultMethod *DefaultMethodEmailIdentifierEnum) {
+	c.DefaultMethod = defaultMethod
+	c.require(connectionAttributeIdentifierFieldDefaultMethod)
 }
 
 func (c *ConnectionAttributeIdentifier) UnmarshalJSON(data []byte) error {
@@ -203,11 +219,15 @@ func (c *ConnectionAttributes) String() string {
 var (
 	connectionAuthenticationMethodsFieldPassword = big.NewInt(1 << 0)
 	connectionAuthenticationMethodsFieldPasskey  = big.NewInt(1 << 1)
+	connectionAuthenticationMethodsFieldEmailOtp = big.NewInt(1 << 2)
+	connectionAuthenticationMethodsFieldPhoneOtp = big.NewInt(1 << 3)
 )
 
 type ConnectionAuthenticationMethods struct {
 	Password *ConnectionPasswordAuthenticationMethod `json:"password,omitempty" url:"password,omitempty"`
 	Passkey  *ConnectionPasskeyAuthenticationMethod  `json:"passkey,omitempty" url:"passkey,omitempty"`
+	EmailOtp *ConnectionEmailOtpAuthenticationMethod `json:"email_otp,omitempty" url:"email_otp,omitempty"`
+	PhoneOtp *ConnectionPhoneOtpAuthenticationMethod `json:"phone_otp,omitempty" url:"phone_otp,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -228,6 +248,20 @@ func (c *ConnectionAuthenticationMethods) GetPasskey() ConnectionPasskeyAuthenti
 		return ConnectionPasskeyAuthenticationMethod{}
 	}
 	return *c.Passkey
+}
+
+func (c *ConnectionAuthenticationMethods) GetEmailOtp() ConnectionEmailOtpAuthenticationMethod {
+	if c == nil || c.EmailOtp == nil {
+		return ConnectionEmailOtpAuthenticationMethod{}
+	}
+	return *c.EmailOtp
+}
+
+func (c *ConnectionAuthenticationMethods) GetPhoneOtp() ConnectionPhoneOtpAuthenticationMethod {
+	if c == nil || c.PhoneOtp == nil {
+		return ConnectionPhoneOtpAuthenticationMethod{}
+	}
+	return *c.PhoneOtp
 }
 
 func (c *ConnectionAuthenticationMethods) GetExtraProperties() map[string]interface{} {
@@ -253,6 +287,20 @@ func (c *ConnectionAuthenticationMethods) SetPassword(password *ConnectionPasswo
 func (c *ConnectionAuthenticationMethods) SetPasskey(passkey *ConnectionPasskeyAuthenticationMethod) {
 	c.Passkey = passkey
 	c.require(connectionAuthenticationMethodsFieldPasskey)
+}
+
+// SetEmailOtp sets the EmailOtp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionAuthenticationMethods) SetEmailOtp(emailOtp *ConnectionEmailOtpAuthenticationMethod) {
+	c.EmailOtp = emailOtp
+	c.require(connectionAuthenticationMethodsFieldEmailOtp)
+}
+
+// SetPhoneOtp sets the PhoneOtp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionAuthenticationMethods) SetPhoneOtp(phoneOtp *ConnectionPhoneOtpAuthenticationMethod) {
+	c.PhoneOtp = phoneOtp
+	c.require(connectionAuthenticationMethodsFieldPhoneOtp)
 }
 
 func (c *ConnectionAuthenticationMethods) UnmarshalJSON(data []byte) error {
@@ -495,6 +543,86 @@ func (c *ConnectionCustomScripts) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionCustomScripts) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Email OTP authentication enablement
+var (
+	connectionEmailOtpAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
+)
+
+type ConnectionEmailOtpAuthenticationMethod struct {
+	// Determines whether email OTP is enabled
+	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionEmailOtpAuthenticationMethod) GetEnabled() bool {
+	if c == nil || c.Enabled == nil {
+		return false
+	}
+	return *c.Enabled
+}
+
+func (c *ConnectionEmailOtpAuthenticationMethod) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionEmailOtpAuthenticationMethod) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionEmailOtpAuthenticationMethod) SetEnabled(enabled *bool) {
+	c.Enabled = enabled
+	c.require(connectionEmailOtpAuthenticationMethodFieldEnabled)
+}
+
+func (c *ConnectionEmailOtpAuthenticationMethod) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionEmailOtpAuthenticationMethod
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionEmailOtpAuthenticationMethod(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionEmailOtpAuthenticationMethod) MarshalJSON() ([]byte, error) {
+	type embed ConnectionEmailOtpAuthenticationMethod
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionEmailOtpAuthenticationMethod) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1647,6 +1775,86 @@ func NewConnectionPasswordPolicyEnumFromString(s string) (ConnectionPasswordPoli
 
 func (c ConnectionPasswordPolicyEnum) Ptr() *ConnectionPasswordPolicyEnum {
 	return &c
+}
+
+// Phone OTP authentication enablement
+var (
+	connectionPhoneOtpAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
+)
+
+type ConnectionPhoneOtpAuthenticationMethod struct {
+	// Determines whether phone OTP is enabled
+	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionPhoneOtpAuthenticationMethod) GetEnabled() bool {
+	if c == nil || c.Enabled == nil {
+		return false
+	}
+	return *c.Enabled
+}
+
+func (c *ConnectionPhoneOtpAuthenticationMethod) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConnectionPhoneOtpAuthenticationMethod) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPhoneOtpAuthenticationMethod) SetEnabled(enabled *bool) {
+	c.Enabled = enabled
+	c.require(connectionPhoneOtpAuthenticationMethodFieldEnabled)
+}
+
+func (c *ConnectionPhoneOtpAuthenticationMethod) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionPhoneOtpAuthenticationMethod
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionPhoneOtpAuthenticationMethod(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionPhoneOtpAuthenticationMethod) MarshalJSON() ([]byte, error) {
+	type embed ConnectionPhoneOtpAuthenticationMethod
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionPhoneOtpAuthenticationMethod) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 // The connection's options (depend on the connection strategy)
@@ -2902,6 +3110,29 @@ func (c *CreateConnectionResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
+}
+
+// Default authentication method for email identifier
+type DefaultMethodEmailIdentifierEnum string
+
+const (
+	DefaultMethodEmailIdentifierEnumPassword DefaultMethodEmailIdentifierEnum = "password"
+	DefaultMethodEmailIdentifierEnumEmailOtp DefaultMethodEmailIdentifierEnum = "email_otp"
+)
+
+func NewDefaultMethodEmailIdentifierEnumFromString(s string) (DefaultMethodEmailIdentifierEnum, error) {
+	switch s {
+	case "password":
+		return DefaultMethodEmailIdentifierEnumPassword, nil
+	case "email_otp":
+		return DefaultMethodEmailIdentifierEnumEmailOtp, nil
+	}
+	var t DefaultMethodEmailIdentifierEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (d DefaultMethodEmailIdentifierEnum) Ptr() *DefaultMethodEmailIdentifierEnum {
+	return &d
 }
 
 // Configuration for the email attribute for users.
