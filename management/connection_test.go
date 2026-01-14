@@ -16,6 +16,24 @@ import (
 
 var connectionTestCases = []connectionTestCase{
 	{
+		name: "Line Connection",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Line-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("line"),
+		},
+		options: &ConnectionOptionsOAuth2{
+			ClientID:     auth0.String("line_client_id"),
+			ClientSecret: auth0.String("line_client_secret"),
+			Scope:        auth0.String("profile openid email"),
+			UpstreamParams: map[string]interface{}{
+				"screen_name": map[string]interface{}{
+					"alias": "login_hint",
+				},
+			},
+			Email: auth0.Bool(true),
+		},
+	},
+	{
 		name: "Auth0 Connection",
 		connection: Connection{
 			Name:     auth0.Stringf("Test-Auth0-Connection-%d", time.Now().Unix()),
