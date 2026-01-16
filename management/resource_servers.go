@@ -169,6 +169,13 @@ func (c *CreateResourceServerResponseContent) GetTokenEncryption() ResourceServe
 	return *c.TokenEncryption
 }
 
+func (c *CreateResourceServerResponseContent) GetConsentPolicy() ResourceServerConsentPolicyEnum {
+	if c == nil || c.ConsentPolicy == nil {
+		return ""
+	}
+	return *c.ConsentPolicy
+}
+
 func (c *CreateResourceServerResponseContent) GetAuthorizationDetails() []interface{} {
 	if c == nil || c.AuthorizationDetails == nil {
 		return nil
@@ -538,6 +545,13 @@ func (g *GetResourceServerResponseContent) GetTokenEncryption() ResourceServerTo
 		return ResourceServerTokenEncryption{}
 	}
 	return *g.TokenEncryption
+}
+
+func (g *GetResourceServerResponseContent) GetConsentPolicy() ResourceServerConsentPolicyEnum {
+	if g == nil || g.ConsentPolicy == nil {
+		return ""
+	}
+	return *g.ConsentPolicy
 }
 
 func (g *GetResourceServerResponseContent) GetAuthorizationDetails() []interface{} {
@@ -1037,6 +1051,13 @@ func (r *ResourceServer) GetTokenEncryption() ResourceServerTokenEncryption {
 	return *r.TokenEncryption
 }
 
+func (r *ResourceServer) GetConsentPolicy() ResourceServerConsentPolicyEnum {
+	if r == nil || r.ConsentPolicy == nil {
+		return ""
+	}
+	return *r.ConsentPolicy
+}
+
 func (r *ResourceServer) GetAuthorizationDetails() []interface{} {
 	if r == nil || r.AuthorizationDetails == nil {
 		return nil
@@ -1248,7 +1269,24 @@ func (r *ResourceServer) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-type ResourceServerConsentPolicyEnum = *string
+type ResourceServerConsentPolicyEnum string
+
+const (
+	ResourceServerConsentPolicyEnumTransactionalAuthorizationWithMfa ResourceServerConsentPolicyEnum = "transactional-authorization-with-mfa"
+)
+
+func NewResourceServerConsentPolicyEnumFromString(s string) (ResourceServerConsentPolicyEnum, error) {
+	switch s {
+	case "transactional-authorization-with-mfa":
+		return ResourceServerConsentPolicyEnumTransactionalAuthorizationWithMfa, nil
+	}
+	var t ResourceServerConsentPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerConsentPolicyEnum) Ptr() *ResourceServerConsentPolicyEnum {
+	return &r
+}
 
 // Proof-of-Possession configuration for access tokens
 var (
@@ -1851,6 +1889,13 @@ type ResourceServerTokenEncryption struct {
 	rawJSON         json.RawMessage
 }
 
+func (r *ResourceServerTokenEncryption) GetFormat() ResourceServerTokenEncryptionFormatEnum {
+	if r == nil {
+		return ""
+	}
+	return r.Format
+}
+
 func (r *ResourceServerTokenEncryption) GetEncryptionKey() *ResourceServerTokenEncryptionKey {
 	if r == nil {
 		return nil
@@ -1949,7 +1994,24 @@ func (r ResourceServerTokenEncryptionAlgorithmEnum) Ptr() *ResourceServerTokenEn
 }
 
 // Format of the encrypted JWT payload.
-type ResourceServerTokenEncryptionFormatEnum = string
+type ResourceServerTokenEncryptionFormatEnum string
+
+const (
+	ResourceServerTokenEncryptionFormatEnumCompactNestedJwe ResourceServerTokenEncryptionFormatEnum = "compact-nested-jwe"
+)
+
+func NewResourceServerTokenEncryptionFormatEnumFromString(s string) (ResourceServerTokenEncryptionFormatEnum, error) {
+	switch s {
+	case "compact-nested-jwe":
+		return ResourceServerTokenEncryptionFormatEnumCompactNestedJwe, nil
+	}
+	var t ResourceServerTokenEncryptionFormatEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerTokenEncryptionFormatEnum) Ptr() *ResourceServerTokenEncryptionFormatEnum {
+	return &r
+}
 
 var (
 	resourceServerTokenEncryptionKeyFieldName = big.NewInt(1 << 0)
@@ -2238,6 +2300,13 @@ func (u *UpdateResourceServerResponseContent) GetTokenEncryption() ResourceServe
 		return ResourceServerTokenEncryption{}
 	}
 	return *u.TokenEncryption
+}
+
+func (u *UpdateResourceServerResponseContent) GetConsentPolicy() ResourceServerConsentPolicyEnum {
+	if u == nil || u.ConsentPolicy == nil {
+		return ""
+	}
+	return *u.ConsentPolicy
 }
 
 func (u *UpdateResourceServerResponseContent) GetAuthorizationDetails() []interface{} {

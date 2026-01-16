@@ -74,12 +74,8 @@ func TestSelfServiceProfilesCustomTextListWithWireMock(
 	_, invocationErr := client.SelfServiceProfiles.CustomText.List(
 		context.TODO(),
 		"id",
-		management.SelfServiceProfileCustomTextLanguageEnum(
-			"en",
-		),
-		management.SelfServiceProfileCustomTextPageEnum(
-			"get-started",
-		),
+		management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+		management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
@@ -102,12 +98,8 @@ func TestSelfServiceProfilesCustomTextSetWithWireMock(
 	_, invocationErr := client.SelfServiceProfiles.CustomText.Set(
 		context.TODO(),
 		"id",
-		management.SelfServiceProfileCustomTextLanguageEnum(
-			"en",
-		),
-		management.SelfServiceProfileCustomTextPageEnum(
-			"get-started",
-		),
+		management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+		management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
 		request,
 	)
 

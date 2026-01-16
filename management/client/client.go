@@ -19,6 +19,7 @@ import (
 	eventstreamsclient "github.com/auth0/go-auth0/v2/management/eventstreams/client"
 	flowsclient "github.com/auth0/go-auth0/v2/management/flows/client"
 	forms "github.com/auth0/go-auth0/v2/management/forms"
+	groupsclient "github.com/auth0/go-auth0/v2/management/groups/client"
 	guardianclient "github.com/auth0/go-auth0/v2/management/guardian/client"
 	hooksclient "github.com/auth0/go-auth0/v2/management/hooks/client"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
@@ -64,6 +65,7 @@ type Management struct {
 	Flows                 *flowsclient.Client
 	Forms                 *forms.Client
 	UserGrants            *usergrants.Client
+	Groups                *groupsclient.Client
 	Hooks                 *hooksclient.Client
 	Jobs                  *jobsclient.Client
 	LogStreams            *logstreams.Client
@@ -115,6 +117,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Flows:                 flowsclient.NewClient(options),
 		Forms:                 forms.NewClient(options),
 		UserGrants:            usergrants.NewClient(options),
+		Groups:                groupsclient.NewClient(options),
 		Hooks:                 hooksclient.NewClient(options),
 		Jobs:                  jobsclient.NewClient(options),
 		LogStreams:            logstreams.NewClient(options),

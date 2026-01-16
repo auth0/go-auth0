@@ -27,6 +27,7 @@ var (
 	createActionResponseContentFieldStatus                 = big.NewInt(1 << 13)
 	createActionResponseContentFieldBuiltAt                = big.NewInt(1 << 14)
 	createActionResponseContentFieldDeploy                 = big.NewInt(1 << 15)
+	createActionResponseContentFieldModules                = big.NewInt(1 << 16)
 )
 
 type CreateActionResponseContent struct {
@@ -59,6 +60,8 @@ type CreateActionResponseContent struct {
 	BuiltAt *time.Time `json:"built_at,omitempty" url:"built_at,omitempty"`
 	// True if the action should be deployed after creation.
 	Deploy *bool `json:"deploy,omitempty" url:"deploy,omitempty"`
+	// The list of action modules and their versions used by this action.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"modules,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -177,6 +180,13 @@ func (c *CreateActionResponseContent) GetDeploy() bool {
 		return false
 	}
 	return *c.Deploy
+}
+
+func (c *CreateActionResponseContent) GetModules() []*ActionModuleReference {
+	if c == nil || c.Modules == nil {
+		return nil
+	}
+	return c.Modules
 }
 
 func (c *CreateActionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -302,6 +312,13 @@ func (c *CreateActionResponseContent) SetDeploy(deploy *bool) {
 	c.require(createActionResponseContentFieldDeploy)
 }
 
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionResponseContent) SetModules(modules []*ActionModuleReference) {
+	c.Modules = modules
+	c.require(createActionResponseContentFieldModules)
+}
+
 func (c *CreateActionResponseContent) UnmarshalJSON(data []byte) error {
 	type embed CreateActionResponseContent
 	var unmarshaler = struct {
@@ -373,6 +390,7 @@ var (
 	deployActionResponseContentFieldCreatedAt         = big.NewInt(1 << 12)
 	deployActionResponseContentFieldUpdatedAt         = big.NewInt(1 << 13)
 	deployActionResponseContentFieldSupportedTriggers = big.NewInt(1 << 14)
+	deployActionResponseContentFieldModules           = big.NewInt(1 << 15)
 )
 
 type DeployActionResponseContent struct {
@@ -404,6 +422,8 @@ type DeployActionResponseContent struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// The list of triggers that this version supports. At this time, a version can only target a single trigger at a time.
 	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"supported_triggers,omitempty"`
+	// The list of action modules and their versions used by this action version.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"modules,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -515,6 +535,13 @@ func (d *DeployActionResponseContent) GetSupportedTriggers() []*ActionTrigger {
 		return nil
 	}
 	return d.SupportedTriggers
+}
+
+func (d *DeployActionResponseContent) GetModules() []*ActionModuleReference {
+	if d == nil || d.Modules == nil {
+		return nil
+	}
+	return d.Modules
 }
 
 func (d *DeployActionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -633,6 +660,13 @@ func (d *DeployActionResponseContent) SetSupportedTriggers(supportedTriggers []*
 	d.require(deployActionResponseContentFieldSupportedTriggers)
 }
 
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionResponseContent) SetModules(modules []*ActionModuleReference) {
+	d.Modules = modules
+	d.require(deployActionResponseContentFieldModules)
+}
+
 func (d *DeployActionResponseContent) UnmarshalJSON(data []byte) error {
 	type embed DeployActionResponseContent
 	var unmarshaler = struct {
@@ -705,6 +739,7 @@ var (
 	getActionResponseContentFieldStatus                 = big.NewInt(1 << 13)
 	getActionResponseContentFieldBuiltAt                = big.NewInt(1 << 14)
 	getActionResponseContentFieldDeploy                 = big.NewInt(1 << 15)
+	getActionResponseContentFieldModules                = big.NewInt(1 << 16)
 )
 
 type GetActionResponseContent struct {
@@ -737,6 +772,8 @@ type GetActionResponseContent struct {
 	BuiltAt *time.Time `json:"built_at,omitempty" url:"built_at,omitempty"`
 	// True if the action should be deployed after creation.
 	Deploy *bool `json:"deploy,omitempty" url:"deploy,omitempty"`
+	// The list of action modules and their versions used by this action.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"modules,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -855,6 +892,13 @@ func (g *GetActionResponseContent) GetDeploy() bool {
 		return false
 	}
 	return *g.Deploy
+}
+
+func (g *GetActionResponseContent) GetModules() []*ActionModuleReference {
+	if g == nil || g.Modules == nil {
+		return nil
+	}
+	return g.Modules
 }
 
 func (g *GetActionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -978,6 +1022,13 @@ func (g *GetActionResponseContent) SetBuiltAt(builtAt *time.Time) {
 func (g *GetActionResponseContent) SetDeploy(deploy *bool) {
 	g.Deploy = deploy
 	g.require(getActionResponseContentFieldDeploy)
+}
+
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionResponseContent) SetModules(modules []*ActionModuleReference) {
+	g.Modules = modules
+	g.require(getActionResponseContentFieldModules)
 }
 
 func (g *GetActionResponseContent) UnmarshalJSON(data []byte) error {
@@ -1266,6 +1317,7 @@ var (
 	updateActionResponseContentFieldStatus                 = big.NewInt(1 << 13)
 	updateActionResponseContentFieldBuiltAt                = big.NewInt(1 << 14)
 	updateActionResponseContentFieldDeploy                 = big.NewInt(1 << 15)
+	updateActionResponseContentFieldModules                = big.NewInt(1 << 16)
 )
 
 type UpdateActionResponseContent struct {
@@ -1298,6 +1350,8 @@ type UpdateActionResponseContent struct {
 	BuiltAt *time.Time `json:"built_at,omitempty" url:"built_at,omitempty"`
 	// True if the action should be deployed after creation.
 	Deploy *bool `json:"deploy,omitempty" url:"deploy,omitempty"`
+	// The list of action modules and their versions used by this action.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"modules,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1416,6 +1470,13 @@ func (u *UpdateActionResponseContent) GetDeploy() bool {
 		return false
 	}
 	return *u.Deploy
+}
+
+func (u *UpdateActionResponseContent) GetModules() []*ActionModuleReference {
+	if u == nil || u.Modules == nil {
+		return nil
+	}
+	return u.Modules
 }
 
 func (u *UpdateActionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1539,6 +1600,13 @@ func (u *UpdateActionResponseContent) SetBuiltAt(builtAt *time.Time) {
 func (u *UpdateActionResponseContent) SetDeploy(deploy *bool) {
 	u.Deploy = deploy
 	u.require(updateActionResponseContentFieldDeploy)
+}
+
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionResponseContent) SetModules(modules []*ActionModuleReference) {
+	u.Modules = modules
+	u.require(updateActionResponseContentFieldModules)
 }
 
 func (u *UpdateActionResponseContent) UnmarshalJSON(data []byte) error {

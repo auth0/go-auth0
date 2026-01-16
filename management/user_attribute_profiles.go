@@ -1953,6 +1953,13 @@ type UserAttributeProfileUserID struct {
 	rawJSON         json.RawMessage
 }
 
+func (u *UserAttributeProfileUserID) GetOidcMapping() UserAttributeProfileUserIDOidcMappingEnum {
+	if u == nil || u.OidcMapping == nil {
+		return ""
+	}
+	return *u.OidcMapping
+}
+
 func (u *UserAttributeProfileUserID) GetSAMLMapping() UserAttributeProfileUserIdSamlMapping {
 	if u == nil || u.SAMLMapping == nil {
 		return nil
@@ -2053,7 +2060,24 @@ func (u *UserAttributeProfileUserID) String() string {
 }
 
 // OIDC mapping for user ID
-type UserAttributeProfileUserIDOidcMappingEnum = string
+type UserAttributeProfileUserIDOidcMappingEnum string
+
+const (
+	UserAttributeProfileUserIDOidcMappingEnumSub UserAttributeProfileUserIDOidcMappingEnum = "sub"
+)
+
+func NewUserAttributeProfileUserIDOidcMappingEnumFromString(s string) (UserAttributeProfileUserIDOidcMappingEnum, error) {
+	switch s {
+	case "sub":
+		return UserAttributeProfileUserIDOidcMappingEnumSub, nil
+	}
+	var t UserAttributeProfileUserIDOidcMappingEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserAttributeProfileUserIDOidcMappingEnum) Ptr() *UserAttributeProfileUserIDOidcMappingEnum {
+	return &u
+}
 
 // OIDC mapping override for this strategy
 type UserAttributeProfileUserIDOidcStrategyOverrideMapping string

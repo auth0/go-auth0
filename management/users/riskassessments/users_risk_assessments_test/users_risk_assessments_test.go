@@ -74,9 +74,7 @@ func TestUsersRiskAssessmentsClearWithWireMock(
 	request := &management.ClearAssessorsRequestContent{
 		Connection: "connection",
 		Assessors: []management.AssessorsTypeEnum{
-			management.AssessorsTypeEnum(
-				"new-device",
-			),
+			management.AssessorsTypeEnumNewDevice,
 		},
 	}
 	invocationErr := client.Users.RiskAssessments.Clear(

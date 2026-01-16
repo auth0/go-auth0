@@ -46,6 +46,13 @@ func (c *CreateLogStreamDatadogRequestBody) GetName() string {
 	return *c.Name
 }
 
+func (c *CreateLogStreamDatadogRequestBody) GetType() LogStreamDatadogEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
 func (c *CreateLogStreamDatadogRequestBody) GetIsPriority() bool {
 	if c == nil || c.IsPriority == nil {
 		return false
@@ -215,6 +222,13 @@ func (c *CreateLogStreamEventBridgeRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamEventBridgeRequestBody) GetType() LogStreamEventBridgeEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamEventBridgeRequestBody) GetIsPriority() bool {
@@ -388,6 +402,13 @@ func (c *CreateLogStreamEventGridRequestBody) GetName() string {
 	return *c.Name
 }
 
+func (c *CreateLogStreamEventGridRequestBody) GetType() LogStreamEventGridEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
 func (c *CreateLogStreamEventGridRequestBody) GetIsPriority() bool {
 	if c == nil || c.IsPriority == nil {
 		return false
@@ -559,6 +580,13 @@ func (c *CreateLogStreamHTTPRequestBody) GetName() string {
 	return *c.Name
 }
 
+func (c *CreateLogStreamHTTPRequestBody) GetType() LogStreamHTTPEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
 func (c *CreateLogStreamHTTPRequestBody) GetIsPriority() bool {
 	if c == nil || c.IsPriority == nil {
 		return false
@@ -728,6 +756,13 @@ func (c *CreateLogStreamMixpanelRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamMixpanelRequestBody) GetType() LogStreamMixpanelEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamMixpanelRequestBody) GetIsPriority() bool {
@@ -1277,6 +1312,13 @@ func (c *CreateLogStreamSegmentRequestBody) GetName() string {
 	return *c.Name
 }
 
+func (c *CreateLogStreamSegmentRequestBody) GetType() LogStreamSegmentEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
 func (c *CreateLogStreamSegmentRequestBody) GetIsPriority() bool {
 	if c == nil || c.IsPriority == nil {
 		return false
@@ -1448,6 +1490,13 @@ func (c *CreateLogStreamSplunkRequestBody) GetName() string {
 	return *c.Name
 }
 
+func (c *CreateLogStreamSplunkRequestBody) GetType() LogStreamSplunkEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
 func (c *CreateLogStreamSplunkRequestBody) GetIsPriority() bool {
 	if c == nil || c.IsPriority == nil {
 		return false
@@ -1617,6 +1666,13 @@ func (c *CreateLogStreamSumoRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamSumoRequestBody) GetType() LogStreamSumoEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamSumoRequestBody) GetIsPriority() bool {
@@ -2042,7 +2098,24 @@ func (h *HTTPCustomHeader) String() string {
 	return fmt.Sprintf("%#v", h)
 }
 
-type LogStreamDatadogEnum = string
+type LogStreamDatadogEnum string
+
+const (
+	LogStreamDatadogEnumDatadog LogStreamDatadogEnum = "datadog"
+)
+
+func NewLogStreamDatadogEnumFromString(s string) (LogStreamDatadogEnum, error) {
+	switch s {
+	case "datadog":
+		return LogStreamDatadogEnumDatadog, nil
+	}
+	var t LogStreamDatadogEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamDatadogEnum) Ptr() *LogStreamDatadogEnum {
+	return &l
+}
 
 // Datadog region
 type LogStreamDatadogRegionEnum string
@@ -2125,6 +2198,13 @@ func (l *LogStreamDatadogResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamDatadogResponseSchema) GetType() LogStreamDatadogEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamDatadogResponseSchema) GetIsPriority() bool {
@@ -2360,7 +2440,24 @@ func (l *LogStreamDatadogSink) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
-type LogStreamEventBridgeEnum = string
+type LogStreamEventBridgeEnum string
+
+const (
+	LogStreamEventBridgeEnumEventbridge LogStreamEventBridgeEnum = "eventbridge"
+)
+
+func NewLogStreamEventBridgeEnumFromString(s string) (LogStreamEventBridgeEnum, error) {
+	switch s {
+	case "eventbridge":
+		return LogStreamEventBridgeEnumEventbridge, nil
+	}
+	var t LogStreamEventBridgeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamEventBridgeEnum) Ptr() *LogStreamEventBridgeEnum {
+	return &l
+}
 
 var (
 	logStreamEventBridgeResponseSchemaFieldID         = big.NewInt(1 << 0)
@@ -2414,6 +2511,13 @@ func (l *LogStreamEventBridgeResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamEventBridgeResponseSchema) GetType() LogStreamEventBridgeEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamEventBridgeResponseSchema) GetIsPriority() bool {
@@ -2791,7 +2895,24 @@ func (l LogStreamEventBridgeSinkRegionEnum) Ptr() *LogStreamEventBridgeSinkRegio
 	return &l
 }
 
-type LogStreamEventGridEnum = string
+type LogStreamEventGridEnum string
+
+const (
+	LogStreamEventGridEnumEventgrid LogStreamEventGridEnum = "eventgrid"
+)
+
+func NewLogStreamEventGridEnumFromString(s string) (LogStreamEventGridEnum, error) {
+	switch s {
+	case "eventgrid":
+		return LogStreamEventGridEnumEventgrid, nil
+	}
+	var t LogStreamEventGridEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamEventGridEnum) Ptr() *LogStreamEventGridEnum {
+	return &l
+}
 
 // Azure Region Name
 type LogStreamEventGridRegionEnum string
@@ -2964,6 +3085,13 @@ func (l *LogStreamEventGridResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamEventGridResponseSchema) GetType() LogStreamEventGridEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamEventGridResponseSchema) GetIsPriority() bool {
@@ -3250,6 +3378,13 @@ type LogStreamFilter struct {
 	rawJSON json.RawMessage
 }
 
+func (l *LogStreamFilter) GetType() LogStreamFilterTypeEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
+}
+
 func (l *LogStreamFilter) GetName() LogStreamFilterGroupNameEnum {
 	if l == nil || l.Name == nil {
 		return ""
@@ -3403,7 +3538,24 @@ func (l LogStreamFilterGroupNameEnum) Ptr() *LogStreamFilterGroupNameEnum {
 }
 
 // Filter type. Currently `category` is the only valid type.
-type LogStreamFilterTypeEnum = string
+type LogStreamFilterTypeEnum string
+
+const (
+	LogStreamFilterTypeEnumCategory LogStreamFilterTypeEnum = "category"
+)
+
+func NewLogStreamFilterTypeEnumFromString(s string) (LogStreamFilterTypeEnum, error) {
+	switch s {
+	case "category":
+		return LogStreamFilterTypeEnumCategory, nil
+	}
+	var t LogStreamFilterTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamFilterTypeEnum) Ptr() *LogStreamFilterTypeEnum {
+	return &l
+}
 
 // HTTP JSON format
 type LogStreamHTTPContentFormatEnum string
@@ -3431,7 +3583,24 @@ func (l LogStreamHTTPContentFormatEnum) Ptr() *LogStreamHTTPContentFormatEnum {
 	return &l
 }
 
-type LogStreamHTTPEnum = string
+type LogStreamHTTPEnum string
+
+const (
+	LogStreamHTTPEnumHTTP LogStreamHTTPEnum = "http"
+)
+
+func NewLogStreamHTTPEnumFromString(s string) (LogStreamHTTPEnum, error) {
+	switch s {
+	case "http":
+		return LogStreamHTTPEnumHTTP, nil
+	}
+	var t LogStreamHTTPEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamHTTPEnum) Ptr() *LogStreamHTTPEnum {
+	return &l
+}
 
 var (
 	logStreamHTTPResponseSchemaFieldID         = big.NewInt(1 << 0)
@@ -3485,6 +3654,13 @@ func (l *LogStreamHTTPResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamHTTPResponseSchema) GetType() LogStreamHTTPEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamHTTPResponseSchema) GetIsPriority() bool {
@@ -3771,7 +3947,24 @@ func (l *LogStreamHTTPSink) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
-type LogStreamMixpanelEnum = string
+type LogStreamMixpanelEnum string
+
+const (
+	LogStreamMixpanelEnumMixpanel LogStreamMixpanelEnum = "mixpanel"
+)
+
+func NewLogStreamMixpanelEnumFromString(s string) (LogStreamMixpanelEnum, error) {
+	switch s {
+	case "mixpanel":
+		return LogStreamMixpanelEnumMixpanel, nil
+	}
+	var t LogStreamMixpanelEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamMixpanelEnum) Ptr() *LogStreamMixpanelEnum {
+	return &l
+}
 
 // Mixpanel Region
 type LogStreamMixpanelRegionEnum string
@@ -3848,6 +4041,13 @@ func (l *LogStreamMixpanelResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamMixpanelResponseSchema) GetType() LogStreamMixpanelEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamMixpanelResponseSchema) GetIsPriority() bool {
@@ -4246,7 +4446,24 @@ func (l *LogStreamMixpanelSinkPatch) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
-type LogStreamPiiAlgorithmEnum = string
+type LogStreamPiiAlgorithmEnum string
+
+const (
+	LogStreamPiiAlgorithmEnumXxhash LogStreamPiiAlgorithmEnum = "xxhash"
+)
+
+func NewLogStreamPiiAlgorithmEnumFromString(s string) (LogStreamPiiAlgorithmEnum, error) {
+	switch s {
+	case "xxhash":
+		return LogStreamPiiAlgorithmEnumXxhash, nil
+	}
+	var t LogStreamPiiAlgorithmEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamPiiAlgorithmEnum) Ptr() *LogStreamPiiAlgorithmEnum {
+	return &l
+}
 
 var (
 	logStreamPiiConfigFieldLogFields = big.NewInt(1 << 0)
@@ -4278,6 +4495,13 @@ func (l *LogStreamPiiConfig) GetMethod() LogStreamPiiMethodEnum {
 		return ""
 	}
 	return *l.Method
+}
+
+func (l *LogStreamPiiConfig) GetAlgorithm() LogStreamPiiAlgorithmEnum {
+	if l == nil || l.Algorithm == nil {
+		return ""
+	}
+	return *l.Algorithm
 }
 
 func (l *LogStreamPiiConfig) GetExtraProperties() map[string]interface{} {
@@ -4595,7 +4819,24 @@ func (l *LogStreamResponseSchema) Accept(visitor LogStreamResponseSchemaVisitor)
 	return fmt.Errorf("type %T does not include a non-empty union type", l)
 }
 
-type LogStreamSegmentEnum = string
+type LogStreamSegmentEnum string
+
+const (
+	LogStreamSegmentEnumSegment LogStreamSegmentEnum = "segment"
+)
+
+func NewLogStreamSegmentEnumFromString(s string) (LogStreamSegmentEnum, error) {
+	switch s {
+	case "segment":
+		return LogStreamSegmentEnumSegment, nil
+	}
+	var t LogStreamSegmentEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamSegmentEnum) Ptr() *LogStreamSegmentEnum {
+	return &l
+}
 
 var (
 	logStreamSegmentResponseSchemaFieldID         = big.NewInt(1 << 0)
@@ -4649,6 +4890,13 @@ func (l *LogStreamSegmentResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamSegmentResponseSchema) GetType() LogStreamSegmentEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamSegmentResponseSchema) GetIsPriority() bool {
@@ -5093,7 +5341,24 @@ func (l *LogStreamSinkPatch) Accept(visitor LogStreamSinkPatchVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", l)
 }
 
-type LogStreamSplunkEnum = string
+type LogStreamSplunkEnum string
+
+const (
+	LogStreamSplunkEnumSplunk LogStreamSplunkEnum = "splunk"
+)
+
+func NewLogStreamSplunkEnumFromString(s string) (LogStreamSplunkEnum, error) {
+	switch s {
+	case "splunk":
+		return LogStreamSplunkEnumSplunk, nil
+	}
+	var t LogStreamSplunkEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamSplunkEnum) Ptr() *LogStreamSplunkEnum {
+	return &l
+}
 
 var (
 	logStreamSplunkResponseSchemaFieldID         = big.NewInt(1 << 0)
@@ -5147,6 +5412,13 @@ func (l *LogStreamSplunkResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamSplunkResponseSchema) GetType() LogStreamSplunkEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamSplunkResponseSchema) GetIsPriority() bool {
@@ -5443,7 +5715,24 @@ func (l LogStreamStatusEnum) Ptr() *LogStreamStatusEnum {
 	return &l
 }
 
-type LogStreamSumoEnum = string
+type LogStreamSumoEnum string
+
+const (
+	LogStreamSumoEnumSumo LogStreamSumoEnum = "sumo"
+)
+
+func NewLogStreamSumoEnumFromString(s string) (LogStreamSumoEnum, error) {
+	switch s {
+	case "sumo":
+		return LogStreamSumoEnumSumo, nil
+	}
+	var t LogStreamSumoEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamSumoEnum) Ptr() *LogStreamSumoEnum {
+	return &l
+}
 
 var (
 	logStreamSumoResponseSchemaFieldID         = big.NewInt(1 << 0)
@@ -5497,6 +5786,13 @@ func (l *LogStreamSumoResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamSumoResponseSchema) GetType() LogStreamSumoEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamSumoResponseSchema) GetIsPriority() bool {

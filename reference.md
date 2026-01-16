@@ -220,6 +220,14 @@ client.Actions.Create(
 <dl>
 <dd>
 
+**modules:** `[]*management.ActionModuleReference` — The list of action modules and their versions used by this action.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **deploy:** `*bool` — True if the action should be deployed after creation.
     
 </dd>
@@ -459,6 +467,14 @@ client.Actions.Update(
 <dd>
 
 **secrets:** `[]*management.ActionSecretRequest` — The list of secrets that are included in an action or a version of an action.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**modules:** `[]*management.ActionModuleReference` — The list of action modules and their versions used by this action.
     
 </dd>
 </dl>
@@ -4299,9 +4315,7 @@ When refresh token rotation is enabled, the endpoint becomes consistent. For mor
 ```go
 request := &management.CreatePublicKeyDeviceCredentialRequestContent{
         DeviceName: "device_name",
-        Type: management.DeviceCredentialPublicKeyTypeEnum(
-            "public_key",
-        ),
+        Type: management.DeviceCredentialPublicKeyTypeEnumPublicKey,
         Value: "value",
         DeviceID: "device_id",
     }
@@ -4332,7 +4346,7 @@ client.DeviceCredentials.CreatePublicKey(
 <dl>
 <dd>
 
-**type_:** `management.DeviceCredentialPublicKeyTypeEnum` 
+**type_:** `*management.DeviceCredentialPublicKeyTypeEnum` 
     
 </dd>
 </dl>
@@ -4877,7 +4891,7 @@ client.EmailTemplates.Update(
 </details>
 
 ## EventStreams
-<details><summary><code>client.EventStreams.List() -> []*management.EventStreamResponseContent</code></summary>
+<details><summary><code>client.EventStreams.List() -> *management.ListEventStreamsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4953,16 +4967,12 @@ client.EventStreams.List(
 request := &management.EventStreamsCreateRequest{
         CreateEventStreamWebHookRequestContent: &management.CreateEventStreamWebHookRequestContent{
             Destination: &management.EventStreamWebhookDestination{
-                Type: management.EventStreamWebhookDestinationTypeEnum(
-                    "webhook",
-                ),
+                Type: management.EventStreamWebhookDestinationTypeEnumWebhook,
                 Configuration: &management.EventStreamWebhookConfiguration{
                     WebhookEndpoint: "webhook_endpoint",
                     WebhookAuthorization: &management.EventStreamWebhookAuthorizationResponse{
                         EventStreamWebhookBasicAuth: &management.EventStreamWebhookBasicAuth{
-                            Method: management.EventStreamWebhookBasicAuthMethodEnum(
-                                "basic",
-                            ),
+                            Method: management.EventStreamWebhookBasicAuthMethodEnumBasic,
                             Username: "username",
                         },
                     },
@@ -5302,7 +5312,7 @@ client.Flows.List(
 <dl>
 <dd>
 
-**hydrate:** `*string` — hydration param
+**hydrate:** `*management.FlowsListRequestHydrateItem` — hydration param
     
 </dd>
 </dl>
@@ -6166,6 +6176,194 @@ client.UserGrants.Delete(
 </dl>
 </details>
 
+## Groups
+<details><summary><code>client.Groups.List() -> *management.ListGroupsPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all groups in your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListGroupsRequestParameters{
+        ConnectionID: management.String(
+            "connection_id",
+        ),
+        Name: management.String(
+            "name",
+        ),
+        ExternalID: management.String(
+            "external_id",
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Groups.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**connectionID:** `*string` — Filter groups by connection ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — Filter groups by name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**externalID:** `*string` — Filter groups by external ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Groups.Get(ID) -> *management.GetGroupResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a group by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Groups.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the group (service-generated).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Hooks
 <details><summary><code>client.Hooks.List() -> *management.ListHooksOffsetPaginatedResponseContent</code></summary>
 <dl>
@@ -6921,9 +7119,7 @@ Response: <pre><code>{
 ```go
 request := &management.CreateLogStreamRequestContent{
         CreateLogStreamHTTPRequestBody: &management.CreateLogStreamHTTPRequestBody{
-            Type: management.LogStreamHTTPEnum(
-                "http",
-            ),
+            Type: management.LogStreamHTTPEnumHTTP,
             Sink: &management.LogStreamHTTPSink{
                 HTTPEndpoint: "httpEndpoint",
             },
@@ -11599,9 +11795,7 @@ request := &management.CreateTokenExchangeProfileRequestContent{
         Name: "name",
         SubjectTokenType: "subject_token_type",
         ActionID: "action_id",
-        Type: management.TokenExchangeProfileTypeEnum(
-            "custom_authentication",
-        ),
+        Type: management.TokenExchangeProfileTypeEnumCustomAuthentication,
     }
 client.TokenExchangeProfiles.Create(
         context.TODO(),
@@ -11646,7 +11840,7 @@ client.TokenExchangeProfiles.Create(
 <dl>
 <dd>
 
-**type_:** `management.TokenExchangeProfileTypeEnum` 
+**type_:** `*management.TokenExchangeProfileTypeEnum` 
     
 </dd>
 </dl>
@@ -18829,7 +19023,7 @@ client.EventStreams.Redeliveries.Create(
 <dl>
 <dd>
 
-**statuses:** `[]management.EventStreamDeliveryStatusEnum` — Filter by status
+**statuses:** `[]*management.EventStreamDeliveryStatusEnum` — Filter by status
     
 </dd>
 </dl>
@@ -19023,7 +19217,7 @@ client.Flows.Executions.Get(
 <dl>
 <dd>
 
-**hydrate:** `*string` — Hydration param
+**hydrate:** `*flows.ExecutionsGetRequestHydrateItem` — Hydration param
     
 </dd>
 </dl>
@@ -19177,13 +19371,9 @@ request := &management.CreateFlowsVaultConnectionRequestContent{
         CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
             CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
                 Name: "name",
-                AppID: management.FlowsVaultConnectionAppIDActivecampaignEnum(
-                    "ACTIVECAMPAIGN",
-                ),
+                AppID: management.FlowsVaultConnectionAppIDActivecampaignEnumActivecampaign,
                 Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
-                    Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnum(
-                        "API_KEY",
-                    ),
+                    Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnumAPIKey,
                     APIKey: "api_key",
                     BaseURL: "base_url",
                 },
@@ -19360,6 +19550,112 @@ client.Flows.Vault.Connections.Update(
 <dd>
 
 **setup:** `*management.UpdateFlowsVaultConnectionSetup` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Groups Members
+<details><summary><code>client.Groups.Members.Get(ID) -> *management.GetGroupMembersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all users that are a member of this group.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetGroupMembersRequestParameters{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Groups.Members.Get(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the group (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
     
 </dd>
 </dl>
@@ -26231,12 +26527,8 @@ Retrieves text customizations for a given self-service profile, language and Sel
 client.SelfServiceProfiles.CustomText.List(
         context.TODO(),
         "id",
-        management.SelfServiceProfileCustomTextLanguageEnum(
-            "en",
-        ),
-        management.SelfServiceProfileCustomTextPageEnum(
-            "get-started",
-        ),
+        management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+        management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
     )
 }
 ```
@@ -26261,7 +26553,7 @@ client.SelfServiceProfiles.CustomText.List(
 <dl>
 <dd>
 
-**language:** `management.SelfServiceProfileCustomTextLanguageEnum` — The language of the custom text.
+**language:** `*management.SelfServiceProfileCustomTextLanguageEnum` — The language of the custom text.
     
 </dd>
 </dl>
@@ -26269,7 +26561,7 @@ client.SelfServiceProfiles.CustomText.List(
 <dl>
 <dd>
 
-**page:** `management.SelfServiceProfileCustomTextPageEnum` — The page where the custom text is shown.
+**page:** `*management.SelfServiceProfileCustomTextPageEnum` — The page where the custom text is shown.
     
 </dd>
 </dl>
@@ -26314,12 +26606,8 @@ request := map[string]string{
 client.SelfServiceProfiles.CustomText.Set(
         context.TODO(),
         "id",
-        management.SelfServiceProfileCustomTextLanguageEnum(
-            "en",
-        ),
-        management.SelfServiceProfileCustomTextPageEnum(
-            "get-started",
-        ),
+        management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+        management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
         request,
     )
 }
@@ -26345,7 +26633,7 @@ client.SelfServiceProfiles.CustomText.Set(
 <dl>
 <dd>
 
-**language:** `management.SelfServiceProfileCustomTextLanguageEnum` — The language of the custom text.
+**language:** `*management.SelfServiceProfileCustomTextLanguageEnum` — The language of the custom text.
     
 </dd>
 </dl>
@@ -26353,7 +26641,7 @@ client.SelfServiceProfiles.CustomText.Set(
 <dl>
 <dd>
 
-**page:** `management.SelfServiceProfileCustomTextPageEnum` — The page where the custom text is shown.
+**page:** `*management.SelfServiceProfileCustomTextPageEnum` — The page where the custom text is shown.
     
 </dd>
 </dl>
@@ -26941,6 +27229,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **resourceParameterProfile:** `*management.TenantSettingsResourceParameterProfile` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enableAiGuide:** `*bool` — Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
     
 </dd>
 </dl>
@@ -27832,6 +28128,112 @@ client.Users.FederatedConnectionsTokensets.Delete(
 </dl>
 </details>
 
+## Users Groups
+<details><summary><code>client.Users.Groups.Get(ID) -> *management.GetUserGroupsPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all groups to which this user belongs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUserGroupsRequestParameters{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Users.Groups.Get(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to list groups for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Users Identities
 <details><summary><code>client.Users.Identities.Link(ID, request) -> []*management.UserIdentity</code></summary>
 <dl>
@@ -28639,9 +29041,7 @@ Clear risk assessment assessors for a specific user
 request := &management.ClearAssessorsRequestContent{
         Connection: "connection",
         Assessors: []management.AssessorsTypeEnum{
-            management.AssessorsTypeEnum(
-                "new-device",
-            ),
+            management.AssessorsTypeEnumNewDevice,
         },
     }
 client.Users.RiskAssessments.Clear(
@@ -28680,7 +29080,7 @@ client.Users.RiskAssessments.Clear(
 <dl>
 <dd>
 
-**assessors:** `[]management.AssessorsTypeEnum` — List of assessors to clear.
+**assessors:** `[]*management.AssessorsTypeEnum` — List of assessors to clear.
     
 </dd>
 </dl>

@@ -71,6 +71,13 @@ func (c *CreateTokenExchangeProfileResponseContent) GetActionID() string {
 	return *c.ActionID
 }
 
+func (c *CreateTokenExchangeProfileResponseContent) GetType() TokenExchangeProfileTypeEnum {
+	if c == nil || c.Type == nil {
+		return ""
+	}
+	return *c.Type
+}
+
 func (c *CreateTokenExchangeProfileResponseContent) GetCreatedAt() time.Time {
 	if c == nil || c.CreatedAt == nil {
 		return time.Time{}
@@ -255,6 +262,13 @@ func (g *GetTokenExchangeProfileResponseContent) GetActionID() string {
 		return ""
 	}
 	return *g.ActionID
+}
+
+func (g *GetTokenExchangeProfileResponseContent) GetType() TokenExchangeProfileTypeEnum {
+	if g == nil || g.Type == nil {
+		return ""
+	}
+	return *g.Type
 }
 
 func (g *GetTokenExchangeProfileResponseContent) GetCreatedAt() time.Time {
@@ -538,6 +552,13 @@ func (t *TokenExchangeProfileResponseContent) GetActionID() string {
 	return *t.ActionID
 }
 
+func (t *TokenExchangeProfileResponseContent) GetType() TokenExchangeProfileTypeEnum {
+	if t == nil || t.Type == nil {
+		return ""
+	}
+	return *t.Type
+}
+
 func (t *TokenExchangeProfileResponseContent) GetCreatedAt() time.Time {
 	if t == nil || t.CreatedAt == nil {
 		return time.Time{}
@@ -664,4 +685,21 @@ func (t *TokenExchangeProfileResponseContent) String() string {
 }
 
 // The type of the profile, which controls how the profile will be executed when receiving a token exchange request.
-type TokenExchangeProfileTypeEnum = string
+type TokenExchangeProfileTypeEnum string
+
+const (
+	TokenExchangeProfileTypeEnumCustomAuthentication TokenExchangeProfileTypeEnum = "custom_authentication"
+)
+
+func NewTokenExchangeProfileTypeEnumFromString(s string) (TokenExchangeProfileTypeEnum, error) {
+	switch s {
+	case "custom_authentication":
+		return TokenExchangeProfileTypeEnumCustomAuthentication, nil
+	}
+	var t TokenExchangeProfileTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (t TokenExchangeProfileTypeEnum) Ptr() *TokenExchangeProfileTypeEnum {
+	return &t
+}

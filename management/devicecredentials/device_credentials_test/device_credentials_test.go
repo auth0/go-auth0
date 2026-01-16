@@ -116,11 +116,9 @@ func TestDeviceCredentialsCreatePublicKeyWithWireMock(
 	)
 	request := &management.CreatePublicKeyDeviceCredentialRequestContent{
 		DeviceName: "device_name",
-		Type: management.DeviceCredentialPublicKeyTypeEnum(
-			"public_key",
-		),
-		Value:    "value",
-		DeviceID: "device_id",
+		Type:       management.DeviceCredentialPublicKeyTypeEnumPublicKey,
+		Value:      "value",
+		DeviceID:   "device_id",
 	}
 	_, invocationErr := client.DeviceCredentials.CreatePublicKey(
 		context.TODO(),

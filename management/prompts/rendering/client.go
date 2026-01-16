@@ -40,7 +40,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListAculsRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *management.AculResponseContent, *management.ListAculsOffsetPaginatedResponseContent], error) {
+) (*core.Page[*int, *management.ListAculsResponseContentItem, *management.ListAculsOffsetPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -91,10 +91,10 @@ func (c *Client) List(
 		}
 	}
 
-	readPageResponse := func(response *management.ListAculsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.AculResponseContent, *management.ListAculsOffsetPaginatedResponseContent] {
+	readPageResponse := func(response *management.ListAculsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.ListAculsResponseContentItem, *management.ListAculsOffsetPaginatedResponseContent] {
 		next += 1
 		results := response.Configs
-		return &core.PageResponse[*int, *management.AculResponseContent, *management.ListAculsOffsetPaginatedResponseContent]{
+		return &core.PageResponse[*int, *management.ListAculsResponseContentItem, *management.ListAculsOffsetPaginatedResponseContent]{
 			Results:  results,
 			Response: response,
 			Next:     &next,

@@ -507,6 +507,20 @@ func (f *FormBlockDivider) GetID() string {
 	return f.ID
 }
 
+func (f *FormBlockDivider) GetCategory() FormComponentCategoryBlockConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormBlockDivider) GetType() FormBlockTypeDividerConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormBlockDivider) GetConfig() FormBlockDividerConfig {
 	if f == nil || f.Config == nil {
 		return FormBlockDividerConfig{}
@@ -697,6 +711,20 @@ func (f *FormBlockHTML) GetID() string {
 	return f.ID
 }
 
+func (f *FormBlockHTML) GetCategory() FormComponentCategoryBlockConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormBlockHTML) GetType() FormBlockTypeHTMLConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormBlockHTML) GetConfig() FormBlockHTMLConfig {
 	if f == nil || f.Config == nil {
 		return FormBlockHTMLConfig{}
@@ -885,6 +913,20 @@ func (f *FormBlockImage) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormBlockImage) GetCategory() FormComponentCategoryBlockConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormBlockImage) GetType() FormBlockTypeImageConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormBlockImage) GetConfig() FormBlockImageConfig {
@@ -1132,6 +1174,20 @@ func (f *FormBlockJumpButton) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormBlockJumpButton) GetCategory() FormComponentCategoryBlockConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormBlockJumpButton) GetType() FormBlockTypeJumpButtonConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormBlockJumpButton) GetConfig() *FormBlockJumpButtonConfig {
@@ -1434,6 +1490,20 @@ func (f *FormBlockNextButton) GetID() string {
 	return f.ID
 }
 
+func (f *FormBlockNextButton) GetCategory() FormComponentCategoryBlockConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormBlockNextButton) GetType() FormBlockTypeNextButtonConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormBlockNextButton) GetConfig() *FormBlockNextButtonConfig {
 	if f == nil {
 		return nil
@@ -1624,6 +1694,20 @@ func (f *FormBlockPreviousButton) GetID() string {
 	return f.ID
 }
 
+func (f *FormBlockPreviousButton) GetCategory() FormComponentCategoryBlockConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormBlockPreviousButton) GetType() FormBlockTypePreviousButtonConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormBlockPreviousButton) GetConfig() *FormBlockPreviousButtonConfig {
 	if f == nil {
 		return nil
@@ -1812,6 +1896,20 @@ func (f *FormBlockResendButton) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormBlockResendButton) GetCategory() FormComponentCategoryBlockConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormBlockResendButton) GetType() FormBlockTypeResendButtonConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormBlockResendButton) GetConfig() *FormBlockResendButtonConfig {
@@ -2125,6 +2223,20 @@ func (f *FormBlockRichText) GetID() string {
 	return f.ID
 }
 
+func (f *FormBlockRichText) GetCategory() FormComponentCategoryBlockConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormBlockRichText) GetType() FormBlockTypeRichTextConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormBlockRichText) GetConfig() FormBlockRichTextConfig {
 	if f == nil || f.Config == nil {
 		return FormBlockRichTextConfig{}
@@ -2288,21 +2400,157 @@ func (f *FormBlockRichTextConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormBlockTypeDividerConst = string
+type FormBlockTypeDividerConst string
 
-type FormBlockTypeHTMLConst = string
+const (
+	FormBlockTypeDividerConstDivider FormBlockTypeDividerConst = "DIVIDER"
+)
 
-type FormBlockTypeImageConst = string
+func NewFormBlockTypeDividerConstFromString(s string) (FormBlockTypeDividerConst, error) {
+	switch s {
+	case "DIVIDER":
+		return FormBlockTypeDividerConstDivider, nil
+	}
+	var t FormBlockTypeDividerConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
 
-type FormBlockTypeJumpButtonConst = string
+func (f FormBlockTypeDividerConst) Ptr() *FormBlockTypeDividerConst {
+	return &f
+}
 
-type FormBlockTypeNextButtonConst = string
+type FormBlockTypeHTMLConst string
 
-type FormBlockTypePreviousButtonConst = string
+const (
+	FormBlockTypeHTMLConstHTML FormBlockTypeHTMLConst = "HTML"
+)
 
-type FormBlockTypeResendButtonConst = string
+func NewFormBlockTypeHTMLConstFromString(s string) (FormBlockTypeHTMLConst, error) {
+	switch s {
+	case "HTML":
+		return FormBlockTypeHTMLConstHTML, nil
+	}
+	var t FormBlockTypeHTMLConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
 
-type FormBlockTypeRichTextConst = string
+func (f FormBlockTypeHTMLConst) Ptr() *FormBlockTypeHTMLConst {
+	return &f
+}
+
+type FormBlockTypeImageConst string
+
+const (
+	FormBlockTypeImageConstImage FormBlockTypeImageConst = "IMAGE"
+)
+
+func NewFormBlockTypeImageConstFromString(s string) (FormBlockTypeImageConst, error) {
+	switch s {
+	case "IMAGE":
+		return FormBlockTypeImageConstImage, nil
+	}
+	var t FormBlockTypeImageConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeImageConst) Ptr() *FormBlockTypeImageConst {
+	return &f
+}
+
+type FormBlockTypeJumpButtonConst string
+
+const (
+	FormBlockTypeJumpButtonConstJumpButton FormBlockTypeJumpButtonConst = "JUMP_BUTTON"
+)
+
+func NewFormBlockTypeJumpButtonConstFromString(s string) (FormBlockTypeJumpButtonConst, error) {
+	switch s {
+	case "JUMP_BUTTON":
+		return FormBlockTypeJumpButtonConstJumpButton, nil
+	}
+	var t FormBlockTypeJumpButtonConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeJumpButtonConst) Ptr() *FormBlockTypeJumpButtonConst {
+	return &f
+}
+
+type FormBlockTypeNextButtonConst string
+
+const (
+	FormBlockTypeNextButtonConstNextButton FormBlockTypeNextButtonConst = "NEXT_BUTTON"
+)
+
+func NewFormBlockTypeNextButtonConstFromString(s string) (FormBlockTypeNextButtonConst, error) {
+	switch s {
+	case "NEXT_BUTTON":
+		return FormBlockTypeNextButtonConstNextButton, nil
+	}
+	var t FormBlockTypeNextButtonConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeNextButtonConst) Ptr() *FormBlockTypeNextButtonConst {
+	return &f
+}
+
+type FormBlockTypePreviousButtonConst string
+
+const (
+	FormBlockTypePreviousButtonConstPreviousButton FormBlockTypePreviousButtonConst = "PREVIOUS_BUTTON"
+)
+
+func NewFormBlockTypePreviousButtonConstFromString(s string) (FormBlockTypePreviousButtonConst, error) {
+	switch s {
+	case "PREVIOUS_BUTTON":
+		return FormBlockTypePreviousButtonConstPreviousButton, nil
+	}
+	var t FormBlockTypePreviousButtonConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypePreviousButtonConst) Ptr() *FormBlockTypePreviousButtonConst {
+	return &f
+}
+
+type FormBlockTypeResendButtonConst string
+
+const (
+	FormBlockTypeResendButtonConstResendButton FormBlockTypeResendButtonConst = "RESEND_BUTTON"
+)
+
+func NewFormBlockTypeResendButtonConstFromString(s string) (FormBlockTypeResendButtonConst, error) {
+	switch s {
+	case "RESEND_BUTTON":
+		return FormBlockTypeResendButtonConstResendButton, nil
+	}
+	var t FormBlockTypeResendButtonConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeResendButtonConst) Ptr() *FormBlockTypeResendButtonConst {
+	return &f
+}
+
+type FormBlockTypeRichTextConst string
+
+const (
+	FormBlockTypeRichTextConstRichText FormBlockTypeRichTextConst = "RICH_TEXT"
+)
+
+func NewFormBlockTypeRichTextConstFromString(s string) (FormBlockTypeRichTextConst, error) {
+	switch s {
+	case "RICH_TEXT":
+		return FormBlockTypeRichTextConstRichText, nil
+	}
+	var t FormBlockTypeRichTextConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeRichTextConst) Ptr() *FormBlockTypeRichTextConst {
+	return &f
+}
 
 type FormComponent struct {
 	FormBlock  *FormBlock
@@ -2387,11 +2635,62 @@ func (f *FormComponent) Accept(visitor FormComponentVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-type FormComponentCategoryBlockConst = string
+type FormComponentCategoryBlockConst string
 
-type FormComponentCategoryFieldConst = string
+const (
+	FormComponentCategoryBlockConstBlock FormComponentCategoryBlockConst = "BLOCK"
+)
 
-type FormComponentCategoryWidgetConst = string
+func NewFormComponentCategoryBlockConstFromString(s string) (FormComponentCategoryBlockConst, error) {
+	switch s {
+	case "BLOCK":
+		return FormComponentCategoryBlockConstBlock, nil
+	}
+	var t FormComponentCategoryBlockConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormComponentCategoryBlockConst) Ptr() *FormComponentCategoryBlockConst {
+	return &f
+}
+
+type FormComponentCategoryFieldConst string
+
+const (
+	FormComponentCategoryFieldConstField FormComponentCategoryFieldConst = "FIELD"
+)
+
+func NewFormComponentCategoryFieldConstFromString(s string) (FormComponentCategoryFieldConst, error) {
+	switch s {
+	case "FIELD":
+		return FormComponentCategoryFieldConstField, nil
+	}
+	var t FormComponentCategoryFieldConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormComponentCategoryFieldConst) Ptr() *FormComponentCategoryFieldConst {
+	return &f
+}
+
+type FormComponentCategoryWidgetConst string
+
+const (
+	FormComponentCategoryWidgetConstWidget FormComponentCategoryWidgetConst = "WIDGET"
+)
+
+func NewFormComponentCategoryWidgetConstFromString(s string) (FormComponentCategoryWidgetConst, error) {
+	switch s {
+	case "WIDGET":
+		return FormComponentCategoryWidgetConstWidget, nil
+	}
+	var t FormComponentCategoryWidgetConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormComponentCategoryWidgetConst) Ptr() *FormComponentCategoryWidgetConst {
+	return &f
+}
 
 var (
 	formEndingNodeFieldRedirection = big.NewInt(1 << 0)
@@ -2597,7 +2896,24 @@ func (f *FormEndingNodeAfterSubmit) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormEndingNodeID = string
+type FormEndingNodeID string
+
+const (
+	FormEndingNodeIDEnding FormEndingNodeID = "$ending"
+)
+
+func NewFormEndingNodeIDFromString(s string) (FormEndingNodeID, error) {
+	switch s {
+	case "$ending":
+		return FormEndingNodeIDEnding, nil
+	}
+	var t FormEndingNodeID
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormEndingNodeID) Ptr() *FormEndingNodeID {
+	return &f
+}
 
 type FormEndingNodeNullable = *FormEndingNode
 
@@ -3088,6 +3404,20 @@ func (f *FormFieldBoolean) GetID() string {
 	return f.ID
 }
 
+func (f *FormFieldBoolean) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldBoolean) GetType() FormFieldTypeBooleanConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormFieldBoolean) GetConfig() *FormFieldBooleanConfig {
 	if f == nil {
 		return nil
@@ -3450,6 +3780,20 @@ func (f *FormFieldCards) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFieldCards) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldCards) GetType() FormFieldTypeCardsConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldCards) GetConfig() FormFieldCardsConfig {
@@ -3846,6 +4190,20 @@ func (f *FormFieldChoice) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFieldChoice) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldChoice) GetType() FormFieldTypeChoiceConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldChoice) GetConfig() FormFieldChoiceConfig {
@@ -4340,6 +4698,20 @@ func (f *FormFieldCustom) GetID() string {
 	return f.ID
 }
 
+func (f *FormFieldCustom) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldCustom) GetType() FormFieldTypeCustomConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormFieldCustom) GetConfig() *FormFieldCustomConfig {
 	if f == nil {
 		return nil
@@ -4646,6 +5018,20 @@ func (f *FormFieldDate) GetID() string {
 	return f.ID
 }
 
+func (f *FormFieldDate) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldDate) GetType() FormFieldTypeDateConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormFieldDate) GetConfig() *FormFieldDateConfig {
 	if f == nil {
 		return nil
@@ -4936,6 +5322,20 @@ func (f *FormFieldDropdown) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFieldDropdown) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldDropdown) GetType() FormFieldTypeDropdownConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldDropdown) GetConfig() FormFieldDropdownConfig {
@@ -5318,6 +5718,20 @@ func (f *FormFieldEmail) GetID() string {
 	return f.ID
 }
 
+func (f *FormFieldEmail) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldEmail) GetType() FormFieldTypeEmailConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormFieldEmail) GetConfig() FormFieldEmailConfig {
 	if f == nil || f.Config == nil {
 		return FormFieldEmailConfig{}
@@ -5586,6 +6000,20 @@ func (f *FormFieldFile) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFieldFile) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldFile) GetType() FormFieldTypeFileConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldFile) GetConfig() FormFieldFileConfig {
@@ -6058,6 +6486,20 @@ func (f *FormFieldLegal) GetID() string {
 	return f.ID
 }
 
+func (f *FormFieldLegal) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldLegal) GetType() FormFieldTypeLegalConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormFieldLegal) GetConfig() FormFieldLegalConfig {
 	if f == nil || f.Config == nil {
 		return FormFieldLegalConfig{}
@@ -6310,6 +6752,20 @@ func (f *FormFieldNumber) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFieldNumber) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldNumber) GetType() FormFieldTypeNumberConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldNumber) GetConfig() FormFieldNumberConfig {
@@ -6612,6 +7068,20 @@ func (f *FormFieldPassword) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFieldPassword) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldPassword) GetType() FormFieldTypePasswordConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldPassword) GetConfig() *FormFieldPasswordConfig {
@@ -6995,6 +7465,20 @@ func (f *FormFieldPayment) GetID() string {
 	return f.ID
 }
 
+func (f *FormFieldPayment) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldPayment) GetType() FormFieldTypePaymentConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormFieldPayment) GetConfig() *FormFieldPaymentConfig {
 	if f == nil {
 		return nil
@@ -7156,6 +7640,13 @@ type FormFieldPaymentConfig struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (f *FormFieldPaymentConfig) GetProvider() FormFieldPaymentConfigProviderEnum {
+	if f == nil || f.Provider == nil {
+		return ""
+	}
+	return *f.Provider
 }
 
 func (f *FormFieldPaymentConfig) GetCharge() *FormFieldPaymentConfigCharge {
@@ -7347,6 +7838,13 @@ type FormFieldPaymentConfigChargeOneOff struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (f *FormFieldPaymentConfigChargeOneOff) GetType() FormFieldPaymentConfigChargeTypeOneOffConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldPaymentConfigChargeOneOff) GetOneOff() *FormFieldPaymentConfigChargeOneOffOneOff {
@@ -7640,6 +8138,13 @@ type FormFieldPaymentConfigChargeSubscription struct {
 	rawJSON         json.RawMessage
 }
 
+func (f *FormFieldPaymentConfigChargeSubscription) GetType() FormFieldPaymentConfigChargeTypeSubscriptionConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormFieldPaymentConfigChargeSubscription) GetSubscription() FormFieldPaymentConfigSubscription {
 	if f == nil {
 		return nil
@@ -7711,9 +8216,43 @@ func (f *FormFieldPaymentConfigChargeSubscription) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormFieldPaymentConfigChargeTypeOneOffConst = string
+type FormFieldPaymentConfigChargeTypeOneOffConst string
 
-type FormFieldPaymentConfigChargeTypeSubscriptionConst = string
+const (
+	FormFieldPaymentConfigChargeTypeOneOffConstOneOff FormFieldPaymentConfigChargeTypeOneOffConst = "ONE_OFF"
+)
+
+func NewFormFieldPaymentConfigChargeTypeOneOffConstFromString(s string) (FormFieldPaymentConfigChargeTypeOneOffConst, error) {
+	switch s {
+	case "ONE_OFF":
+		return FormFieldPaymentConfigChargeTypeOneOffConstOneOff, nil
+	}
+	var t FormFieldPaymentConfigChargeTypeOneOffConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldPaymentConfigChargeTypeOneOffConst) Ptr() *FormFieldPaymentConfigChargeTypeOneOffConst {
+	return &f
+}
+
+type FormFieldPaymentConfigChargeTypeSubscriptionConst string
+
+const (
+	FormFieldPaymentConfigChargeTypeSubscriptionConstSubscription FormFieldPaymentConfigChargeTypeSubscriptionConst = "SUBSCRIPTION"
+)
+
+func NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString(s string) (FormFieldPaymentConfigChargeTypeSubscriptionConst, error) {
+	switch s {
+	case "SUBSCRIPTION":
+		return FormFieldPaymentConfigChargeTypeSubscriptionConstSubscription, nil
+	}
+	var t FormFieldPaymentConfigChargeTypeSubscriptionConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldPaymentConfigChargeTypeSubscriptionConst) Ptr() *FormFieldPaymentConfigChargeTypeSubscriptionConst {
+	return &f
+}
 
 var (
 	formFieldPaymentConfigCredentialsFieldPublicKey  = big.NewInt(1 << 0)
@@ -8031,7 +8570,24 @@ func (f *FormFieldPaymentConfigFields) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormFieldPaymentConfigProviderEnum = string
+type FormFieldPaymentConfigProviderEnum string
+
+const (
+	FormFieldPaymentConfigProviderEnumStripe FormFieldPaymentConfigProviderEnum = "STRIPE"
+)
+
+func NewFormFieldPaymentConfigProviderEnumFromString(s string) (FormFieldPaymentConfigProviderEnum, error) {
+	switch s {
+	case "STRIPE":
+		return FormFieldPaymentConfigProviderEnumStripe, nil
+	}
+	var t FormFieldPaymentConfigProviderEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldPaymentConfigProviderEnum) Ptr() *FormFieldPaymentConfigProviderEnum {
+	return &f
+}
 
 type FormFieldPaymentConfigSubscription = map[string]interface{}
 
@@ -8068,6 +8624,20 @@ func (f *FormFieldSocial) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFieldSocial) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldSocial) GetType() FormFieldTypeSocialConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldSocial) GetConfig() FormFieldSocialConfig {
@@ -8303,6 +8873,20 @@ func (f *FormFieldTel) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFieldTel) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldTel) GetType() FormFieldTypeTelConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldTel) GetConfig() FormFieldTelConfig {
@@ -8717,6 +9301,20 @@ func (f *FormFieldText) GetID() string {
 	return f.ID
 }
 
+func (f *FormFieldText) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldText) GetType() FormFieldTypeTextConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormFieldText) GetConfig() FormFieldTextConfig {
 	if f == nil || f.Config == nil {
 		return FormFieldTextConfig{}
@@ -9000,37 +9598,309 @@ func (f *FormFieldTextConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormFieldTypeBooleanConst = string
+type FormFieldTypeBooleanConst string
 
-type FormFieldTypeCardsConst = string
+const (
+	FormFieldTypeBooleanConstBoolean FormFieldTypeBooleanConst = "BOOLEAN"
+)
 
-type FormFieldTypeChoiceConst = string
+func NewFormFieldTypeBooleanConstFromString(s string) (FormFieldTypeBooleanConst, error) {
+	switch s {
+	case "BOOLEAN":
+		return FormFieldTypeBooleanConstBoolean, nil
+	}
+	var t FormFieldTypeBooleanConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
 
-type FormFieldTypeCustomConst = string
+func (f FormFieldTypeBooleanConst) Ptr() *FormFieldTypeBooleanConst {
+	return &f
+}
 
-type FormFieldTypeDateConst = string
+type FormFieldTypeCardsConst string
 
-type FormFieldTypeDropdownConst = string
+const (
+	FormFieldTypeCardsConstCards FormFieldTypeCardsConst = "CARDS"
+)
 
-type FormFieldTypeEmailConst = string
+func NewFormFieldTypeCardsConstFromString(s string) (FormFieldTypeCardsConst, error) {
+	switch s {
+	case "CARDS":
+		return FormFieldTypeCardsConstCards, nil
+	}
+	var t FormFieldTypeCardsConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
 
-type FormFieldTypeFileConst = string
+func (f FormFieldTypeCardsConst) Ptr() *FormFieldTypeCardsConst {
+	return &f
+}
 
-type FormFieldTypeLegalConst = string
+type FormFieldTypeChoiceConst string
 
-type FormFieldTypeNumberConst = string
+const (
+	FormFieldTypeChoiceConstChoice FormFieldTypeChoiceConst = "CHOICE"
+)
 
-type FormFieldTypePasswordConst = string
+func NewFormFieldTypeChoiceConstFromString(s string) (FormFieldTypeChoiceConst, error) {
+	switch s {
+	case "CHOICE":
+		return FormFieldTypeChoiceConstChoice, nil
+	}
+	var t FormFieldTypeChoiceConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
 
-type FormFieldTypePaymentConst = string
+func (f FormFieldTypeChoiceConst) Ptr() *FormFieldTypeChoiceConst {
+	return &f
+}
 
-type FormFieldTypeSocialConst = string
+type FormFieldTypeCustomConst string
 
-type FormFieldTypeTelConst = string
+const (
+	FormFieldTypeCustomConstCustom FormFieldTypeCustomConst = "CUSTOM"
+)
 
-type FormFieldTypeTextConst = string
+func NewFormFieldTypeCustomConstFromString(s string) (FormFieldTypeCustomConst, error) {
+	switch s {
+	case "CUSTOM":
+		return FormFieldTypeCustomConstCustom, nil
+	}
+	var t FormFieldTypeCustomConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
 
-type FormFieldTypeURLConst = string
+func (f FormFieldTypeCustomConst) Ptr() *FormFieldTypeCustomConst {
+	return &f
+}
+
+type FormFieldTypeDateConst string
+
+const (
+	FormFieldTypeDateConstDate FormFieldTypeDateConst = "DATE"
+)
+
+func NewFormFieldTypeDateConstFromString(s string) (FormFieldTypeDateConst, error) {
+	switch s {
+	case "DATE":
+		return FormFieldTypeDateConstDate, nil
+	}
+	var t FormFieldTypeDateConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeDateConst) Ptr() *FormFieldTypeDateConst {
+	return &f
+}
+
+type FormFieldTypeDropdownConst string
+
+const (
+	FormFieldTypeDropdownConstDropdown FormFieldTypeDropdownConst = "DROPDOWN"
+)
+
+func NewFormFieldTypeDropdownConstFromString(s string) (FormFieldTypeDropdownConst, error) {
+	switch s {
+	case "DROPDOWN":
+		return FormFieldTypeDropdownConstDropdown, nil
+	}
+	var t FormFieldTypeDropdownConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeDropdownConst) Ptr() *FormFieldTypeDropdownConst {
+	return &f
+}
+
+type FormFieldTypeEmailConst string
+
+const (
+	FormFieldTypeEmailConstEmail FormFieldTypeEmailConst = "EMAIL"
+)
+
+func NewFormFieldTypeEmailConstFromString(s string) (FormFieldTypeEmailConst, error) {
+	switch s {
+	case "EMAIL":
+		return FormFieldTypeEmailConstEmail, nil
+	}
+	var t FormFieldTypeEmailConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeEmailConst) Ptr() *FormFieldTypeEmailConst {
+	return &f
+}
+
+type FormFieldTypeFileConst string
+
+const (
+	FormFieldTypeFileConstFile FormFieldTypeFileConst = "FILE"
+)
+
+func NewFormFieldTypeFileConstFromString(s string) (FormFieldTypeFileConst, error) {
+	switch s {
+	case "FILE":
+		return FormFieldTypeFileConstFile, nil
+	}
+	var t FormFieldTypeFileConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeFileConst) Ptr() *FormFieldTypeFileConst {
+	return &f
+}
+
+type FormFieldTypeLegalConst string
+
+const (
+	FormFieldTypeLegalConstLegal FormFieldTypeLegalConst = "LEGAL"
+)
+
+func NewFormFieldTypeLegalConstFromString(s string) (FormFieldTypeLegalConst, error) {
+	switch s {
+	case "LEGAL":
+		return FormFieldTypeLegalConstLegal, nil
+	}
+	var t FormFieldTypeLegalConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeLegalConst) Ptr() *FormFieldTypeLegalConst {
+	return &f
+}
+
+type FormFieldTypeNumberConst string
+
+const (
+	FormFieldTypeNumberConstNumber FormFieldTypeNumberConst = "NUMBER"
+)
+
+func NewFormFieldTypeNumberConstFromString(s string) (FormFieldTypeNumberConst, error) {
+	switch s {
+	case "NUMBER":
+		return FormFieldTypeNumberConstNumber, nil
+	}
+	var t FormFieldTypeNumberConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeNumberConst) Ptr() *FormFieldTypeNumberConst {
+	return &f
+}
+
+type FormFieldTypePasswordConst string
+
+const (
+	FormFieldTypePasswordConstPassword FormFieldTypePasswordConst = "PASSWORD"
+)
+
+func NewFormFieldTypePasswordConstFromString(s string) (FormFieldTypePasswordConst, error) {
+	switch s {
+	case "PASSWORD":
+		return FormFieldTypePasswordConstPassword, nil
+	}
+	var t FormFieldTypePasswordConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypePasswordConst) Ptr() *FormFieldTypePasswordConst {
+	return &f
+}
+
+type FormFieldTypePaymentConst string
+
+const (
+	FormFieldTypePaymentConstPayment FormFieldTypePaymentConst = "PAYMENT"
+)
+
+func NewFormFieldTypePaymentConstFromString(s string) (FormFieldTypePaymentConst, error) {
+	switch s {
+	case "PAYMENT":
+		return FormFieldTypePaymentConstPayment, nil
+	}
+	var t FormFieldTypePaymentConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypePaymentConst) Ptr() *FormFieldTypePaymentConst {
+	return &f
+}
+
+type FormFieldTypeSocialConst string
+
+const (
+	FormFieldTypeSocialConstSocial FormFieldTypeSocialConst = "SOCIAL"
+)
+
+func NewFormFieldTypeSocialConstFromString(s string) (FormFieldTypeSocialConst, error) {
+	switch s {
+	case "SOCIAL":
+		return FormFieldTypeSocialConstSocial, nil
+	}
+	var t FormFieldTypeSocialConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeSocialConst) Ptr() *FormFieldTypeSocialConst {
+	return &f
+}
+
+type FormFieldTypeTelConst string
+
+const (
+	FormFieldTypeTelConstTel FormFieldTypeTelConst = "TEL"
+)
+
+func NewFormFieldTypeTelConstFromString(s string) (FormFieldTypeTelConst, error) {
+	switch s {
+	case "TEL":
+		return FormFieldTypeTelConstTel, nil
+	}
+	var t FormFieldTypeTelConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeTelConst) Ptr() *FormFieldTypeTelConst {
+	return &f
+}
+
+type FormFieldTypeTextConst string
+
+const (
+	FormFieldTypeTextConstText FormFieldTypeTextConst = "TEXT"
+)
+
+func NewFormFieldTypeTextConstFromString(s string) (FormFieldTypeTextConst, error) {
+	switch s {
+	case "TEXT":
+		return FormFieldTypeTextConstText, nil
+	}
+	var t FormFieldTypeTextConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeTextConst) Ptr() *FormFieldTypeTextConst {
+	return &f
+}
+
+type FormFieldTypeURLConst string
+
+const (
+	FormFieldTypeURLConstURL FormFieldTypeURLConst = "URL"
+)
+
+func NewFormFieldTypeURLConstFromString(s string) (FormFieldTypeURLConst, error) {
+	switch s {
+	case "URL":
+		return FormFieldTypeURLConstURL, nil
+	}
+	var t FormFieldTypeURLConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeURLConst) Ptr() *FormFieldTypeURLConst {
+	return &f
+}
 
 var (
 	formFieldURLFieldID        = big.NewInt(1 << 0)
@@ -9065,6 +9935,20 @@ func (f *FormFieldURL) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFieldURL) GetCategory() FormComponentCategoryFieldConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormFieldURL) GetType() FormFieldTypeURLConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFieldURL) GetConfig() FormFieldURLConfig {
@@ -9329,6 +10213,13 @@ func (f *FormFlow) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormFlow) GetType() FormNodeTypeFlowConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormFlow) GetCoordinates() FormNodeCoordinates {
@@ -10009,15 +10900,18 @@ type FormNodePointer struct {
 	typ string
 }
 
-func NewFormNodePointerWithFormEndingNodeID() *FormNodePointer {
-	return &FormNodePointer{typ: "FormEndingNodeID", FormEndingNodeID: "$ending"}
-}
-
 func (f *FormNodePointer) GetString() string {
 	if f == nil {
 		return ""
 	}
 	return f.String
+}
+
+func (f *FormNodePointer) GetFormEndingNodeID() FormEndingNodeID {
+	if f == nil {
+		return ""
+	}
+	return f.FormEndingNodeID
 }
 
 func (f *FormNodePointer) UnmarshalJSON(data []byte) error {
@@ -10031,9 +10925,6 @@ func (f *FormNodePointer) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &valueFormEndingNodeID); err == nil {
 		f.typ = "FormEndingNodeID"
 		f.FormEndingNodeID = valueFormEndingNodeID
-		if f.FormEndingNodeID != "$ending" {
-			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "$ending", valueFormEndingNodeID)
-		}
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
@@ -10044,7 +10935,7 @@ func (f FormNodePointer) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.String)
 	}
 	if f.typ == "FormEndingNodeID" || f.FormEndingNodeID != "" {
-		return json.Marshal("$ending")
+		return json.Marshal(f.FormEndingNodeID)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
@@ -10064,11 +10955,62 @@ func (f *FormNodePointer) Accept(visitor FormNodePointerVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-type FormNodeTypeFlowConst = string
+type FormNodeTypeFlowConst string
 
-type FormNodeTypeRouterConst = string
+const (
+	FormNodeTypeFlowConstFlow FormNodeTypeFlowConst = "FLOW"
+)
 
-type FormNodeTypeStepConst = string
+func NewFormNodeTypeFlowConstFromString(s string) (FormNodeTypeFlowConst, error) {
+	switch s {
+	case "FLOW":
+		return FormNodeTypeFlowConstFlow, nil
+	}
+	var t FormNodeTypeFlowConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormNodeTypeFlowConst) Ptr() *FormNodeTypeFlowConst {
+	return &f
+}
+
+type FormNodeTypeRouterConst string
+
+const (
+	FormNodeTypeRouterConstRouter FormNodeTypeRouterConst = "ROUTER"
+)
+
+func NewFormNodeTypeRouterConstFromString(s string) (FormNodeTypeRouterConst, error) {
+	switch s {
+	case "ROUTER":
+		return FormNodeTypeRouterConstRouter, nil
+	}
+	var t FormNodeTypeRouterConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormNodeTypeRouterConst) Ptr() *FormNodeTypeRouterConst {
+	return &f
+}
+
+type FormNodeTypeStepConst string
+
+const (
+	FormNodeTypeStepConstStep FormNodeTypeStepConst = "STEP"
+)
+
+func NewFormNodeTypeStepConstFromString(s string) (FormNodeTypeStepConst, error) {
+	switch s {
+	case "STEP":
+		return FormNodeTypeStepConstStep, nil
+	}
+	var t FormNodeTypeStepConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormNodeTypeStepConst) Ptr() *FormNodeTypeStepConst {
+	return &f
+}
 
 var (
 	formRouterFieldID          = big.NewInt(1 << 0)
@@ -10097,6 +11039,13 @@ func (f *FormRouter) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormRouter) GetType() FormNodeTypeRouterConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormRouter) GetCoordinates() FormNodeCoordinates {
@@ -10548,6 +11497,13 @@ func (f *FormStep) GetID() string {
 		return ""
 	}
 	return f.ID
+}
+
+func (f *FormStep) GetType() FormNodeTypeStepConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
 }
 
 func (f *FormStep) GetCoordinates() FormNodeCoordinates {
@@ -11124,6 +12080,20 @@ func (f *FormWidgetAuth0VerifiableCredentials) GetID() string {
 	return f.ID
 }
 
+func (f *FormWidgetAuth0VerifiableCredentials) GetCategory() FormComponentCategoryWidgetConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormWidgetAuth0VerifiableCredentials) GetType() FormWidgetTypeAuth0VerifiableCredentialsConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormWidgetAuth0VerifiableCredentials) GetConfig() *FormWidgetAuth0VerifiableCredentialsConfig {
 	if f == nil {
 		return nil
@@ -11458,6 +12428,20 @@ func (f *FormWidgetGMapsAddress) GetID() string {
 	return f.ID
 }
 
+func (f *FormWidgetGMapsAddress) GetCategory() FormComponentCategoryWidgetConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormWidgetGMapsAddress) GetType() FormWidgetTypeGMapsAddressConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormWidgetGMapsAddress) GetConfig() *FormWidgetGMapsAddressConfig {
 	if f == nil {
 		return nil
@@ -11712,6 +12696,20 @@ func (f *FormWidgetRecaptcha) GetID() string {
 	return f.ID
 }
 
+func (f *FormWidgetRecaptcha) GetCategory() FormComponentCategoryWidgetConst {
+	if f == nil {
+		return ""
+	}
+	return f.Category
+}
+
+func (f *FormWidgetRecaptcha) GetType() FormWidgetTypeRecaptchaConst {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
 func (f *FormWidgetRecaptcha) GetConfig() *FormWidgetRecaptchaConfig {
 	if f == nil {
 		return nil
@@ -11947,11 +12945,62 @@ func (f *FormWidgetRecaptchaConfig) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormWidgetTypeAuth0VerifiableCredentialsConst = string
+type FormWidgetTypeAuth0VerifiableCredentialsConst string
 
-type FormWidgetTypeGMapsAddressConst = string
+const (
+	FormWidgetTypeAuth0VerifiableCredentialsConstAuth0VerifiableCredentials FormWidgetTypeAuth0VerifiableCredentialsConst = "AUTH0_VERIFIABLE_CREDENTIALS"
+)
 
-type FormWidgetTypeRecaptchaConst = string
+func NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString(s string) (FormWidgetTypeAuth0VerifiableCredentialsConst, error) {
+	switch s {
+	case "AUTH0_VERIFIABLE_CREDENTIALS":
+		return FormWidgetTypeAuth0VerifiableCredentialsConstAuth0VerifiableCredentials, nil
+	}
+	var t FormWidgetTypeAuth0VerifiableCredentialsConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormWidgetTypeAuth0VerifiableCredentialsConst) Ptr() *FormWidgetTypeAuth0VerifiableCredentialsConst {
+	return &f
+}
+
+type FormWidgetTypeGMapsAddressConst string
+
+const (
+	FormWidgetTypeGMapsAddressConstGmapsAddress FormWidgetTypeGMapsAddressConst = "GMAPS_ADDRESS"
+)
+
+func NewFormWidgetTypeGMapsAddressConstFromString(s string) (FormWidgetTypeGMapsAddressConst, error) {
+	switch s {
+	case "GMAPS_ADDRESS":
+		return FormWidgetTypeGMapsAddressConstGmapsAddress, nil
+	}
+	var t FormWidgetTypeGMapsAddressConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormWidgetTypeGMapsAddressConst) Ptr() *FormWidgetTypeGMapsAddressConst {
+	return &f
+}
+
+type FormWidgetTypeRecaptchaConst string
+
+const (
+	FormWidgetTypeRecaptchaConstRecaptcha FormWidgetTypeRecaptchaConst = "RECAPTCHA"
+)
+
+func NewFormWidgetTypeRecaptchaConstFromString(s string) (FormWidgetTypeRecaptchaConst, error) {
+	switch s {
+	case "RECAPTCHA":
+		return FormWidgetTypeRecaptchaConstRecaptcha, nil
+	}
+	var t FormWidgetTypeRecaptchaConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormWidgetTypeRecaptchaConst) Ptr() *FormWidgetTypeRecaptchaConst {
+	return &f
+}
 
 type FormsRequestParametersHydrateEnum string
 

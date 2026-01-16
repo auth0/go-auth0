@@ -257,7 +257,24 @@ func (d *DeviceCredential) String() string {
 }
 
 // Type of credential. Must be `public_key`.
-type DeviceCredentialPublicKeyTypeEnum = string
+type DeviceCredentialPublicKeyTypeEnum string
+
+const (
+	DeviceCredentialPublicKeyTypeEnumPublicKey DeviceCredentialPublicKeyTypeEnum = "public_key"
+)
+
+func NewDeviceCredentialPublicKeyTypeEnumFromString(s string) (DeviceCredentialPublicKeyTypeEnum, error) {
+	switch s {
+	case "public_key":
+		return DeviceCredentialPublicKeyTypeEnumPublicKey, nil
+	}
+	var t DeviceCredentialPublicKeyTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (d DeviceCredentialPublicKeyTypeEnum) Ptr() *DeviceCredentialPublicKeyTypeEnum {
+	return &d
+}
 
 // Type of credentials to retrieve. Must be `public_key`, `refresh_token` or `rotating_refresh_token`. The property will default to `refresh_token` when paging is requested
 type DeviceCredentialTypeEnum string
