@@ -118,6 +118,25 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Retrieve a single <a href="https://auth0.com/docs/get-started/applications/application-access-to-apis-client-grants">client grant</a>, including the
+// scopes associated with the application/API pair.
+func (c *Client) Get(
+	ctx context.Context,
+	// The ID of the client grant to retrieve.
+	id string,
+	opts ...option.RequestOption,
+) (*management.GetClientGrantResponseContent, error) {
+	response, err := c.WithRawResponse.Get(
+		ctx,
+		id,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Delete the <a href="https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">Client Credential Flow</a> from your machine-to-machine application.
 func (c *Client) Delete(
 	ctx context.Context,

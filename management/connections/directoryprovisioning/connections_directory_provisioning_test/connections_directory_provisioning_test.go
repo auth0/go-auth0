@@ -61,6 +61,33 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
+func TestConnectionsDirectoryProvisioningListWithWireMock(
+	t *testing.T,
+) {
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
+	client := client.NewWithOptions(
+		option.WithBaseURL(
+			WireMockBaseURL,
+		),
+	)
+	request := &management.ListDirectoryProvisioningsRequestParameters{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Connections.DirectoryProvisioning.List(
+		context.TODO(),
+		request,
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "GET", "/connections-directory-provisionings", map[string]string{"from": "from", "take": "1"}, 1)
+}
+
 func TestConnectionsDirectoryProvisioningGetWithWireMock(
 	t *testing.T,
 ) {

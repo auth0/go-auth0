@@ -74,6 +74,7 @@ var (
 	clientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
 	clientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
 	clientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
+	clientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 9)
 )
 
 type ClientGrantResponseContent struct {
@@ -93,6 +94,8 @@ type ClientGrantResponseContent struct {
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
 	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
+	// If enabled, all scopes configured on the resource server are allowed for this grant.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -162,6 +165,13 @@ func (c *ClientGrantResponseContent) GetAuthorizationDetailsTypes() []string {
 		return nil
 	}
 	return c.AuthorizationDetailsTypes
+}
+
+func (c *ClientGrantResponseContent) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
 }
 
 func (c *ClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
@@ -238,6 +248,13 @@ func (c *ClientGrantResponseContent) SetAuthorizationDetailsTypes(authorizationD
 	c.require(clientGrantResponseContentFieldAuthorizationDetailsTypes)
 }
 
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetAllowAllScopes(allowAllScopes *bool) {
+	c.AllowAllScopes = allowAllScopes
+	c.require(clientGrantResponseContentFieldAllowAllScopes)
+}
+
 func (c *ClientGrantResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler ClientGrantResponseContent
 	var value unmarshaler
@@ -310,6 +327,7 @@ var (
 	createClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
 	createClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
 	createClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
+	createClientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 9)
 )
 
 type CreateClientGrantResponseContent struct {
@@ -329,6 +347,8 @@ type CreateClientGrantResponseContent struct {
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
 	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
+	// If enabled, all scopes configured on the resource server are allowed for this grant.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -398,6 +418,13 @@ func (c *CreateClientGrantResponseContent) GetAuthorizationDetailsTypes() []stri
 		return nil
 	}
 	return c.AuthorizationDetailsTypes
+}
+
+func (c *CreateClientGrantResponseContent) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
 }
 
 func (c *CreateClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
@@ -474,6 +501,13 @@ func (c *CreateClientGrantResponseContent) SetAuthorizationDetailsTypes(authoriz
 	c.require(createClientGrantResponseContentFieldAuthorizationDetailsTypes)
 }
 
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetAllowAllScopes(allowAllScopes *bool) {
+	c.AllowAllScopes = allowAllScopes
+	c.require(createClientGrantResponseContentFieldAllowAllScopes)
+}
+
 func (c *CreateClientGrantResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateClientGrantResponseContent
 	var value unmarshaler
@@ -511,6 +545,236 @@ func (c *CreateClientGrantResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	getClientGrantResponseContentFieldID                        = big.NewInt(1 << 0)
+	getClientGrantResponseContentFieldClientID                  = big.NewInt(1 << 1)
+	getClientGrantResponseContentFieldAudience                  = big.NewInt(1 << 2)
+	getClientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
+	getClientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
+	getClientGrantResponseContentFieldAllowAnyOrganization      = big.NewInt(1 << 5)
+	getClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
+	getClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
+	getClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
+	getClientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 9)
+)
+
+type GetClientGrantResponseContent struct {
+	// ID of the client grant.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// ID of the client.
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The audience (API identifier) of this client grant.
+	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
+	// Scopes allowed for this client grant.
+	Scope             []string                          `json:"scope,omitempty" url:"scope,omitempty"`
+	OrganizationUsage *ClientGrantOrganizationUsageEnum `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
+	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
+	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
+	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
+	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
+	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
+	// If enabled, all scopes configured on the resource server are allowed for this grant.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetClientGrantResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GetClientGrantResponseContent) GetClientID() string {
+	if g == nil || g.ClientID == nil {
+		return ""
+	}
+	return *g.ClientID
+}
+
+func (g *GetClientGrantResponseContent) GetAudience() string {
+	if g == nil || g.Audience == nil {
+		return ""
+	}
+	return *g.Audience
+}
+
+func (g *GetClientGrantResponseContent) GetScope() []string {
+	if g == nil || g.Scope == nil {
+		return nil
+	}
+	return g.Scope
+}
+
+func (g *GetClientGrantResponseContent) GetOrganizationUsage() ClientGrantOrganizationUsageEnum {
+	if g == nil || g.OrganizationUsage == nil {
+		return ""
+	}
+	return *g.OrganizationUsage
+}
+
+func (g *GetClientGrantResponseContent) GetAllowAnyOrganization() bool {
+	if g == nil || g.AllowAnyOrganization == nil {
+		return false
+	}
+	return *g.AllowAnyOrganization
+}
+
+func (g *GetClientGrantResponseContent) GetIsSystem() bool {
+	if g == nil || g.IsSystem == nil {
+		return false
+	}
+	return *g.IsSystem
+}
+
+func (g *GetClientGrantResponseContent) GetSubjectType() ClientGrantSubjectTypeEnum {
+	if g == nil || g.SubjectType == nil {
+		return ""
+	}
+	return *g.SubjectType
+}
+
+func (g *GetClientGrantResponseContent) GetAuthorizationDetailsTypes() []string {
+	if g == nil || g.AuthorizationDetailsTypes == nil {
+		return nil
+	}
+	return g.AuthorizationDetailsTypes
+}
+
+func (g *GetClientGrantResponseContent) GetAllowAllScopes() bool {
+	if g == nil || g.AllowAllScopes == nil {
+		return false
+	}
+	return *g.AllowAllScopes
+}
+
+func (g *GetClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetClientGrantResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getClientGrantResponseContentFieldID)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetClientID(clientID *string) {
+	g.ClientID = clientID
+	g.require(getClientGrantResponseContentFieldClientID)
+}
+
+// SetAudience sets the Audience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetAudience(audience *string) {
+	g.Audience = audience
+	g.require(getClientGrantResponseContentFieldAudience)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetScope(scope []string) {
+	g.Scope = scope
+	g.require(getClientGrantResponseContentFieldScope)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetOrganizationUsage(organizationUsage *ClientGrantOrganizationUsageEnum) {
+	g.OrganizationUsage = organizationUsage
+	g.require(getClientGrantResponseContentFieldOrganizationUsage)
+}
+
+// SetAllowAnyOrganization sets the AllowAnyOrganization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetAllowAnyOrganization(allowAnyOrganization *bool) {
+	g.AllowAnyOrganization = allowAnyOrganization
+	g.require(getClientGrantResponseContentFieldAllowAnyOrganization)
+}
+
+// SetIsSystem sets the IsSystem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetIsSystem(isSystem *bool) {
+	g.IsSystem = isSystem
+	g.require(getClientGrantResponseContentFieldIsSystem)
+}
+
+// SetSubjectType sets the SubjectType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetSubjectType(subjectType *ClientGrantSubjectTypeEnum) {
+	g.SubjectType = subjectType
+	g.require(getClientGrantResponseContentFieldSubjectType)
+}
+
+// SetAuthorizationDetailsTypes sets the AuthorizationDetailsTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetAuthorizationDetailsTypes(authorizationDetailsTypes []string) {
+	g.AuthorizationDetailsTypes = authorizationDetailsTypes
+	g.require(getClientGrantResponseContentFieldAuthorizationDetailsTypes)
+}
+
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetAllowAllScopes(allowAllScopes *bool) {
+	g.AllowAllScopes = allowAllScopes
+	g.require(getClientGrantResponseContentFieldAllowAllScopes)
+}
+
+func (g *GetClientGrantResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetClientGrantResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetClientGrantResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetClientGrantResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetClientGrantResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetClientGrantResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 var (
@@ -618,6 +882,7 @@ var (
 	updateClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
 	updateClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
 	updateClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
+	updateClientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 9)
 )
 
 type UpdateClientGrantResponseContent struct {
@@ -637,6 +902,8 @@ type UpdateClientGrantResponseContent struct {
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
 	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
+	// If enabled, all scopes configured on the resource server are allowed for this grant.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -706,6 +973,13 @@ func (u *UpdateClientGrantResponseContent) GetAuthorizationDetailsTypes() []stri
 		return nil
 	}
 	return u.AuthorizationDetailsTypes
+}
+
+func (u *UpdateClientGrantResponseContent) GetAllowAllScopes() bool {
+	if u == nil || u.AllowAllScopes == nil {
+		return false
+	}
+	return *u.AllowAllScopes
 }
 
 func (u *UpdateClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
@@ -780,6 +1054,13 @@ func (u *UpdateClientGrantResponseContent) SetSubjectType(subjectType *ClientGra
 func (u *UpdateClientGrantResponseContent) SetAuthorizationDetailsTypes(authorizationDetailsTypes []string) {
 	u.AuthorizationDetailsTypes = authorizationDetailsTypes
 	u.require(updateClientGrantResponseContentFieldAuthorizationDetailsTypes)
+}
+
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetAllowAllScopes(allowAllScopes *bool) {
+	u.AllowAllScopes = allowAllScopes
+	u.require(updateClientGrantResponseContentFieldAllowAllScopes)
 }
 
 func (u *UpdateClientGrantResponseContent) UnmarshalJSON(data []byte) error {
