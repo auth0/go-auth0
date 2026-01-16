@@ -121,6 +121,25 @@ func TestClientGrantsCreateWithWireMock(
 	VerifyRequestCount(t, "POST", "/client-grants", nil, 1)
 }
 
+func TestClientGrantsGetWithWireMock(
+	t *testing.T,
+) {
+	ResetWireMockRequests(t)
+	WireMockBaseURL := "http://localhost:8080"
+	client := client.NewWithOptions(
+		option.WithBaseURL(
+			WireMockBaseURL,
+		),
+	)
+	_, invocationErr := client.ClientGrants.Get(
+		context.TODO(),
+		"id",
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "GET", "/client-grants/id", nil, 1)
+}
+
 func TestClientGrantsDeleteWithWireMock(
 	t *testing.T,
 ) {
