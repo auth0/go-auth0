@@ -673,6 +673,14 @@ func (a *AuthenticationMethodReference) String() string {
 	return Stringify(a)
 }
 
+// GetEmailOTP returns the EmailOTP field.
+func (a *AuthenticationMethods) GetEmailOTP() *EmailOTPAuthenticationMethod {
+	if a == nil {
+		return nil
+	}
+	return a.EmailOTP
+}
+
 // GetPasskey returns the Passkey field.
 func (a *AuthenticationMethods) GetPasskey() *PasskeyAuthenticationMethod {
 	if a == nil {
@@ -687,6 +695,14 @@ func (a *AuthenticationMethods) GetPassword() *PasswordAuthenticationMethod {
 		return nil
 	}
 	return a.Password
+}
+
+// GetPhoneOTP returns the PhoneOTP field.
+func (a *AuthenticationMethods) GetPhoneOTP() *PhoneOTPAuthenticationMethod {
+	if a == nil {
+		return nil
+	}
+	return a.PhoneOTP
 }
 
 // String returns a string representation of AuthenticationMethods.
@@ -3529,6 +3545,14 @@ func (c *ConnectionOptionsAttributeIdentifier) GetActive() bool {
 		return false
 	}
 	return *c.Active
+}
+
+// GetDefaultMethod returns the DefaultMethod field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAttributeIdentifier) GetDefaultMethod() string {
+	if c == nil || c.DefaultMethod == nil {
+		return ""
+	}
+	return *c.DefaultMethod
 }
 
 // String returns a string representation of ConnectionOptionsAttributeIdentifier.
@@ -7481,6 +7505,19 @@ func (e *EgnyteClientAddon) String() string {
 	return Stringify(e)
 }
 
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (e *EmailOTPAuthenticationMethod) GetEnabled() bool {
+	if e == nil || e.Enabled == nil {
+		return false
+	}
+	return *e.Enabled
+}
+
+// String returns a string representation of EmailOTPAuthenticationMethod.
+func (e *EmailOTPAuthenticationMethod) String() string {
+	return Stringify(e)
+}
+
 // GetDefaultFromAddress returns the DefaultFromAddress field if it's non-nil, zero value otherwise.
 func (e *EmailProvider) GetDefaultFromAddress() string {
 	if e == nil || e.DefaultFromAddress == nil {
@@ -10657,6 +10694,19 @@ func (p *PhoneMessageTypes) GetMessageTypes() []string {
 
 // String returns a string representation of PhoneMessageTypes.
 func (p *PhoneMessageTypes) String() string {
+	return Stringify(p)
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (p *PhoneOTPAuthenticationMethod) GetEnabled() bool {
+	if p == nil || p.Enabled == nil {
+		return false
+	}
+	return *p.Enabled
+}
+
+// String returns a string representation of PhoneOTPAuthenticationMethod.
+func (p *PhoneOTPAuthenticationMethod) String() string {
 	return Stringify(p)
 }
 
