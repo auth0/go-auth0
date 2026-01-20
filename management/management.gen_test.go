@@ -2763,6 +2763,16 @@ func TestClientDefaultOrganization_String(t *testing.T) {
 	}
 }
 
+func TestClientGrant_GetAllowAllScopes(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientGrant{AllowAllScopes: &zeroValue}
+	c.GetAllowAllScopes()
+	c = &ClientGrant{}
+	c.GetAllowAllScopes()
+	c = nil
+	c.GetAllowAllScopes()
+}
+
 func TestClientGrant_GetAllowAnyOrganization(tt *testing.T) {
 	var zeroValue bool
 	c := &ClientGrant{AllowAnyOrganization: &zeroValue}

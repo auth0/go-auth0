@@ -2284,6 +2284,14 @@ func (c *ClientDefaultOrganization) String() string {
 	return Stringify(c)
 }
 
+// GetAllowAllScopes returns the AllowAllScopes field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
+}
+
 // GetAllowAnyOrganization returns the AllowAnyOrganization field if it's non-nil, zero value otherwise.
 func (c *ClientGrant) GetAllowAnyOrganization() bool {
 	if c == nil || c.AllowAnyOrganization == nil {

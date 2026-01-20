@@ -18,6 +18,10 @@ type ClientGrant struct {
 	// The list of permissions (scopes) that are granted to the client.
 	Scope *[]string `json:"scope,omitempty"`
 
+	//When enabled, all scopes configured on the resource server are allowed for by this client grant.
+	//Scope param not accepted in request/returned in response when allow_all_scopes is true
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty"`
+
 	// If enabled, any organization can be used with this grant.
 	// If disabled (default), the grant must be explicitly assigned to the desired organizations.
 	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty"`
@@ -54,37 +58,9 @@ func (m *ClientGrantManager) Create(ctx context.Context, g *ClientGrant, opts ..
 }
 
 // Read a client grant by its ID.
-//
-// The Auth0 Management API does not offer a method to retrieve a client grant
-// by id, we fake this by listing all client grants and matching by id on the
-// client side. For this reason this method should be used with caution.
-func (m *ClientGrantManager) Read(ctx context.Context, id string, opts ...RequestOption) (*ClientGrant, error) {
-	var page int
-
-	for {
-		l, err := m.List(ctx, append(opts, Page(page))...)
-		if err != nil {
-			return nil, err
-		}
-
-		for _, g := range l.ClientGrants {
-			if g.GetID() == id {
-				return g, nil
-			}
-		}
-
-		if !l.HasNext() {
-			break
-		}
-
-		page++
-	}
-
-	return nil, &managementError{
-		StatusCode: 404,
-		Err:        "Not Found",
-		Message:    "Client grant not found",
-	}
+func (m *ClientGrantManager) Read(ctx context.Context, id string, opts ...RequestOption) (cg *ClientGrant, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("client-grants", id), &cg, opts...)
+	return
 }
 
 // Update a client grant.
