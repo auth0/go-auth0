@@ -19,7 +19,7 @@ type ClientGrant struct {
 	Scope *[]string `json:"scope,omitempty"`
 
 	// When enabled, all scopes configured on the resource server are allowed for by this client grant.
-	//Scope param not accepted in request/returned in response when allow_all_scopes is true
+	// Scope param not accepted in request/returned in response when allow_all_scopes is true
 	AllowAllScopes *bool `json:"allow_all_scopes,omitempty"`
 
 	// If enabled, any organization can be used with this grant.
