@@ -18,7 +18,7 @@ type ClientGrant struct {
 	// The list of permissions (scopes) that are granted to the client.
 	Scope *[]string `json:"scope,omitempty"`
 
-	//When enabled, all scopes configured on the resource server are allowed for by this client grant.
+	// When enabled, all scopes configured on the resource server are allowed for by this client grant.
 	//Scope param not accepted in request/returned in response when allow_all_scopes is true
 	AllowAllScopes *bool `json:"allow_all_scopes,omitempty"`
 
