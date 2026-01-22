@@ -10,16 +10,17 @@ import (
 )
 
 var (
-	createCustomDomainResponseContentFieldCustomDomainID       = big.NewInt(1 << 0)
-	createCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
-	createCustomDomainResponseContentFieldPrimary              = big.NewInt(1 << 2)
-	createCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 3)
-	createCustomDomainResponseContentFieldType                 = big.NewInt(1 << 4)
-	createCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 5)
-	createCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 6)
-	createCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 7)
-	createCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 8)
-	createCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 9)
+	createCustomDomainResponseContentFieldCustomDomainID         = big.NewInt(1 << 0)
+	createCustomDomainResponseContentFieldDomain                 = big.NewInt(1 << 1)
+	createCustomDomainResponseContentFieldPrimary                = big.NewInt(1 << 2)
+	createCustomDomainResponseContentFieldStatus                 = big.NewInt(1 << 3)
+	createCustomDomainResponseContentFieldType                   = big.NewInt(1 << 4)
+	createCustomDomainResponseContentFieldVerification           = big.NewInt(1 << 5)
+	createCustomDomainResponseContentFieldCustomClientIPHeader   = big.NewInt(1 << 6)
+	createCustomDomainResponseContentFieldTLSPolicy              = big.NewInt(1 << 7)
+	createCustomDomainResponseContentFieldDomainMetadata         = big.NewInt(1 << 8)
+	createCustomDomainResponseContentFieldCertificate            = big.NewInt(1 << 9)
+	createCustomDomainResponseContentFieldRelyingPartyIdentifier = big.NewInt(1 << 10)
 )
 
 type CreateCustomDomainResponseContent struct {
@@ -38,6 +39,8 @@ type CreateCustomDomainResponseContent struct {
 	TLSPolicy      *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
 	DomainMetadata *DomainMetadata    `json:"domain_metadata,omitempty" url:"domain_metadata,omitempty"`
 	Certificate    *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
+	// Relying Party ID (rpId) to be used for Passkeys on this custom domain. If not present, the full domain will be used.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"relying_party_identifier,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -114,6 +117,13 @@ func (c *CreateCustomDomainResponseContent) GetCertificate() DomainCertificate {
 		return DomainCertificate{}
 	}
 	return *c.Certificate
+}
+
+func (c *CreateCustomDomainResponseContent) GetRelyingPartyIdentifier() string {
+	if c == nil || c.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *c.RelyingPartyIdentifier
 }
 
 func (c *CreateCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
@@ -197,6 +207,13 @@ func (c *CreateCustomDomainResponseContent) SetCertificate(certificate *DomainCe
 	c.require(createCustomDomainResponseContentFieldCertificate)
 }
 
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainResponseContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	c.RelyingPartyIdentifier = relyingPartyIdentifier
+	c.require(createCustomDomainResponseContentFieldRelyingPartyIdentifier)
+}
+
 func (c *CreateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateCustomDomainResponseContent
 	var value unmarshaler
@@ -237,18 +254,19 @@ func (c *CreateCustomDomainResponseContent) String() string {
 }
 
 var (
-	customDomainFieldCustomDomainID       = big.NewInt(1 << 0)
-	customDomainFieldDomain               = big.NewInt(1 << 1)
-	customDomainFieldPrimary              = big.NewInt(1 << 2)
-	customDomainFieldIsDefault            = big.NewInt(1 << 3)
-	customDomainFieldStatus               = big.NewInt(1 << 4)
-	customDomainFieldType                 = big.NewInt(1 << 5)
-	customDomainFieldOriginDomainName     = big.NewInt(1 << 6)
-	customDomainFieldVerification         = big.NewInt(1 << 7)
-	customDomainFieldCustomClientIPHeader = big.NewInt(1 << 8)
-	customDomainFieldTLSPolicy            = big.NewInt(1 << 9)
-	customDomainFieldDomainMetadata       = big.NewInt(1 << 10)
-	customDomainFieldCertificate          = big.NewInt(1 << 11)
+	customDomainFieldCustomDomainID         = big.NewInt(1 << 0)
+	customDomainFieldDomain                 = big.NewInt(1 << 1)
+	customDomainFieldPrimary                = big.NewInt(1 << 2)
+	customDomainFieldIsDefault              = big.NewInt(1 << 3)
+	customDomainFieldStatus                 = big.NewInt(1 << 4)
+	customDomainFieldType                   = big.NewInt(1 << 5)
+	customDomainFieldOriginDomainName       = big.NewInt(1 << 6)
+	customDomainFieldVerification           = big.NewInt(1 << 7)
+	customDomainFieldCustomClientIPHeader   = big.NewInt(1 << 8)
+	customDomainFieldTLSPolicy              = big.NewInt(1 << 9)
+	customDomainFieldDomainMetadata         = big.NewInt(1 << 10)
+	customDomainFieldCertificate            = big.NewInt(1 << 11)
+	customDomainFieldRelyingPartyIdentifier = big.NewInt(1 << 12)
 )
 
 type CustomDomain struct {
@@ -271,6 +289,8 @@ type CustomDomain struct {
 	TLSPolicy      *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
 	DomainMetadata *DomainMetadata    `json:"domain_metadata,omitempty" url:"domain_metadata,omitempty"`
 	Certificate    *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
+	// Relying Party ID (rpId) to be used for Passkeys on this custom domain. If not present, the full domain will be used.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"relying_party_identifier,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -361,6 +381,13 @@ func (c *CustomDomain) GetCertificate() DomainCertificate {
 		return DomainCertificate{}
 	}
 	return *c.Certificate
+}
+
+func (c *CustomDomain) GetRelyingPartyIdentifier() string {
+	if c == nil || c.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *c.RelyingPartyIdentifier
 }
 
 func (c *CustomDomain) GetExtraProperties() map[string]interface{} {
@@ -456,6 +483,13 @@ func (c *CustomDomain) SetDomainMetadata(domainMetadata *DomainMetadata) {
 func (c *CustomDomain) SetCertificate(certificate *DomainCertificate) {
 	c.Certificate = certificate
 	c.require(customDomainFieldCertificate)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomDomain) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	c.RelyingPartyIdentifier = relyingPartyIdentifier
+	c.require(customDomainFieldRelyingPartyIdentifier)
 }
 
 func (c *CustomDomain) UnmarshalJSON(data []byte) error {
@@ -1119,18 +1153,19 @@ func (d DomainVerificationStatusEnum) Ptr() *DomainVerificationStatusEnum {
 }
 
 var (
-	getCustomDomainResponseContentFieldCustomDomainID       = big.NewInt(1 << 0)
-	getCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
-	getCustomDomainResponseContentFieldPrimary              = big.NewInt(1 << 2)
-	getCustomDomainResponseContentFieldIsDefault            = big.NewInt(1 << 3)
-	getCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 4)
-	getCustomDomainResponseContentFieldType                 = big.NewInt(1 << 5)
-	getCustomDomainResponseContentFieldOriginDomainName     = big.NewInt(1 << 6)
-	getCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 7)
-	getCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 8)
-	getCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 9)
-	getCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 10)
-	getCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 11)
+	getCustomDomainResponseContentFieldCustomDomainID         = big.NewInt(1 << 0)
+	getCustomDomainResponseContentFieldDomain                 = big.NewInt(1 << 1)
+	getCustomDomainResponseContentFieldPrimary                = big.NewInt(1 << 2)
+	getCustomDomainResponseContentFieldIsDefault              = big.NewInt(1 << 3)
+	getCustomDomainResponseContentFieldStatus                 = big.NewInt(1 << 4)
+	getCustomDomainResponseContentFieldType                   = big.NewInt(1 << 5)
+	getCustomDomainResponseContentFieldOriginDomainName       = big.NewInt(1 << 6)
+	getCustomDomainResponseContentFieldVerification           = big.NewInt(1 << 7)
+	getCustomDomainResponseContentFieldCustomClientIPHeader   = big.NewInt(1 << 8)
+	getCustomDomainResponseContentFieldTLSPolicy              = big.NewInt(1 << 9)
+	getCustomDomainResponseContentFieldDomainMetadata         = big.NewInt(1 << 10)
+	getCustomDomainResponseContentFieldCertificate            = big.NewInt(1 << 11)
+	getCustomDomainResponseContentFieldRelyingPartyIdentifier = big.NewInt(1 << 12)
 )
 
 type GetCustomDomainResponseContent struct {
@@ -1153,6 +1188,8 @@ type GetCustomDomainResponseContent struct {
 	TLSPolicy      *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
 	DomainMetadata *DomainMetadata    `json:"domain_metadata,omitempty" url:"domain_metadata,omitempty"`
 	Certificate    *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
+	// Relying Party ID (rpId) to be used for Passkeys on this custom domain. If not present, the full domain will be used.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"relying_party_identifier,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1243,6 +1280,13 @@ func (g *GetCustomDomainResponseContent) GetCertificate() DomainCertificate {
 		return DomainCertificate{}
 	}
 	return *g.Certificate
+}
+
+func (g *GetCustomDomainResponseContent) GetRelyingPartyIdentifier() string {
+	if g == nil || g.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *g.RelyingPartyIdentifier
 }
 
 func (g *GetCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1338,6 +1382,13 @@ func (g *GetCustomDomainResponseContent) SetDomainMetadata(domainMetadata *Domai
 func (g *GetCustomDomainResponseContent) SetCertificate(certificate *DomainCertificate) {
 	g.Certificate = certificate
 	g.require(getCustomDomainResponseContentFieldCertificate)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetCustomDomainResponseContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	g.RelyingPartyIdentifier = relyingPartyIdentifier
+	g.require(getCustomDomainResponseContentFieldRelyingPartyIdentifier)
 }
 
 func (g *GetCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
@@ -1478,17 +1529,18 @@ func (t *TestCustomDomainResponseContent) String() string {
 }
 
 var (
-	updateCustomDomainResponseContentFieldCustomDomainID       = big.NewInt(1 << 0)
-	updateCustomDomainResponseContentFieldDomain               = big.NewInt(1 << 1)
-	updateCustomDomainResponseContentFieldPrimary              = big.NewInt(1 << 2)
-	updateCustomDomainResponseContentFieldIsDefault            = big.NewInt(1 << 3)
-	updateCustomDomainResponseContentFieldStatus               = big.NewInt(1 << 4)
-	updateCustomDomainResponseContentFieldType                 = big.NewInt(1 << 5)
-	updateCustomDomainResponseContentFieldVerification         = big.NewInt(1 << 6)
-	updateCustomDomainResponseContentFieldCustomClientIPHeader = big.NewInt(1 << 7)
-	updateCustomDomainResponseContentFieldTLSPolicy            = big.NewInt(1 << 8)
-	updateCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 9)
-	updateCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 10)
+	updateCustomDomainResponseContentFieldCustomDomainID         = big.NewInt(1 << 0)
+	updateCustomDomainResponseContentFieldDomain                 = big.NewInt(1 << 1)
+	updateCustomDomainResponseContentFieldPrimary                = big.NewInt(1 << 2)
+	updateCustomDomainResponseContentFieldIsDefault              = big.NewInt(1 << 3)
+	updateCustomDomainResponseContentFieldStatus                 = big.NewInt(1 << 4)
+	updateCustomDomainResponseContentFieldType                   = big.NewInt(1 << 5)
+	updateCustomDomainResponseContentFieldVerification           = big.NewInt(1 << 6)
+	updateCustomDomainResponseContentFieldCustomClientIPHeader   = big.NewInt(1 << 7)
+	updateCustomDomainResponseContentFieldTLSPolicy              = big.NewInt(1 << 8)
+	updateCustomDomainResponseContentFieldDomainMetadata         = big.NewInt(1 << 9)
+	updateCustomDomainResponseContentFieldCertificate            = big.NewInt(1 << 10)
+	updateCustomDomainResponseContentFieldRelyingPartyIdentifier = big.NewInt(1 << 11)
 )
 
 type UpdateCustomDomainResponseContent struct {
@@ -1509,6 +1561,8 @@ type UpdateCustomDomainResponseContent struct {
 	TLSPolicy      *string            `json:"tls_policy,omitempty" url:"tls_policy,omitempty"`
 	DomainMetadata *DomainMetadata    `json:"domain_metadata,omitempty" url:"domain_metadata,omitempty"`
 	Certificate    *DomainCertificate `json:"certificate,omitempty" url:"certificate,omitempty"`
+	// Relying Party ID (rpId) to be used for Passkeys on this custom domain. If not present, the full domain will be used.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"relying_party_identifier,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1592,6 +1646,13 @@ func (u *UpdateCustomDomainResponseContent) GetCertificate() DomainCertificate {
 		return DomainCertificate{}
 	}
 	return *u.Certificate
+}
+
+func (u *UpdateCustomDomainResponseContent) GetRelyingPartyIdentifier() string {
+	if u == nil || u.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *u.RelyingPartyIdentifier
 }
 
 func (u *UpdateCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1680,6 +1741,13 @@ func (u *UpdateCustomDomainResponseContent) SetDomainMetadata(domainMetadata *Do
 func (u *UpdateCustomDomainResponseContent) SetCertificate(certificate *DomainCertificate) {
 	u.Certificate = certificate
 	u.require(updateCustomDomainResponseContentFieldCertificate)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainResponseContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	u.RelyingPartyIdentifier = relyingPartyIdentifier
+	u.require(updateCustomDomainResponseContentFieldRelyingPartyIdentifier)
 }
 
 func (u *UpdateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
