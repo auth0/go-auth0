@@ -1503,7 +1503,7 @@ func (r *ResourceServerScope) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-// Defines application access permission for a resource server. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href="https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+// Defines application access permission for a resource server
 var (
 	resourceServerSubjectTypeAuthorizationFieldUser   = big.NewInt(1 << 0)
 	resourceServerSubjectTypeAuthorizationFieldClient = big.NewInt(1 << 1)

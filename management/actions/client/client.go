@@ -7,7 +7,8 @@ import (
 	fmt "fmt"
 	management "github.com/auth0/go-auth0/v2/management"
 	executions "github.com/auth0/go-auth0/v2/management/actions/executions"
-	client "github.com/auth0/go-auth0/v2/management/actions/triggers/client"
+	client "github.com/auth0/go-auth0/v2/management/actions/modules/client"
+	triggersclient "github.com/auth0/go-auth0/v2/management/actions/triggers/client"
 	versions "github.com/auth0/go-auth0/v2/management/actions/versions"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
@@ -20,7 +21,8 @@ type Client struct {
 	WithRawResponse *RawClient
 	Versions        *versions.Client
 	Executions      *executions.Client
-	Triggers        *client.Client
+	Modules         *client.Client
+	Triggers        *triggersclient.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -31,7 +33,8 @@ func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		Versions:        versions.NewClient(options),
 		Executions:      executions.NewClient(options),
-		Triggers:        client.NewClient(options),
+		Modules:         client.NewClient(options),
+		Triggers:        triggersclient.NewClient(options),
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,

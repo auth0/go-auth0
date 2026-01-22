@@ -847,7 +847,7 @@ client.ClientGrants.List(
 <dl>
 <dd>
 
-**subjectType:** `*management.ClientGrantSubjectTypeEnum` — The type of application access the client grant allows. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href="https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+**subjectType:** `*management.ClientGrantSubjectTypeEnum` — The type of application access the client grant allows.
     
 </dd>
 </dl>
@@ -957,7 +957,7 @@ client.ClientGrants.Create(
 <dl>
 <dd>
 
-**authorizationDetailsTypes:** `[]string` — Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+**authorizationDetailsTypes:** `[]string` — Types of authorization_details allowed for this client grant.
     
 </dd>
 </dl>
@@ -1174,7 +1174,7 @@ client.ClientGrants.Update(
 <dl>
 <dd>
 
-**authorizationDetailsTypes:** `[]string` — Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+**authorizationDetailsTypes:** `[]string` — Types of authorization_details allowed for this client grant.
     
 </dd>
 </dl>
@@ -3199,7 +3199,9 @@ client.Connections.List(
 <dl>
 <dd>
 
-Creates a new connection according to the JSON object received in <code>body</code>.<br/>
+Creates a new connection according to the JSON object received in <code>body</code>.
+
+<b>Note:</b> If a connection with the same name was recently deleted and had a large number of associated users, the deletion may still be processing. Creating a new connection with that name before the deletion completes may fail or produce unexpected results. 
 </dd>
 </dl>
 </dd>
@@ -3425,6 +3427,8 @@ client.Connections.Get(
 <dd>
 
 Removes a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> from your tenant. This action cannot be undone. Once removed, users can no longer use this connection to authenticate.
+
+<b>Note:</b> If your connection has a large amount of users associated with it, please be aware that this operation can be long running after the response is returned and may impact concurrent <a href="https://auth0.com/docs/api/management/v2/connections/post-connections">create connection</a> requests, if they use an identical connection name. 
 </dd>
 </dl>
 </dd>
@@ -14168,6 +14172,536 @@ client.Actions.Executions.Get(
 </dl>
 </details>
 
+## Actions Modules
+<details><summary><code>client.Actions.Modules.List() -> *management.GetActionModulesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a paginated list of all Actions Modules with optional filtering and totals.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetActionModulesRequestParameters{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
+client.Actions.Modules.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Paging is disabled if parameter not sent.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.Modules.Create(request) -> *management.CreateActionModuleResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new Actions Module for reusable code across actions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateActionModuleRequestContent{
+        Name: "name",
+        Code: "code",
+    }
+client.Actions.Modules.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — The name of the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**code:** `string` — The source code of the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**secrets:** `[]*management.ActionModuleSecretRequest` — The secrets to associate with the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dependencies:** `[]*management.ActionModuleDependencyRequest` — The npm dependencies of the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apiVersion:** `*string` — The API version of the module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**publish:** `*bool` — Whether to publish the module immediately after creation.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.Modules.Get(ID) -> *management.GetActionModuleResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of a specific Actions Module by its unique identifier.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.Modules.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the action module to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.Modules.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently delete an Actions Module. This will fail if the module is still in use by any actions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.Modules.Delete(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the Actions Module to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.Modules.Update(ID, request) -> *management.UpdateActionModuleResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update properties of an existing Actions Module, such as code, dependencies, or secrets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateActionModuleRequestContent{}
+client.Actions.Modules.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the action module to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**code:** `*string` — The source code of the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**secrets:** `[]*management.ActionModuleSecretRequest` — The secrets to associate with the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dependencies:** `[]*management.ActionModuleDependencyRequest` — The npm dependencies of the action module.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.Modules.ListActions(ID) -> *management.GetActionModuleActionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists all actions that are using a specific Actions Module, showing which deployed action versions reference this Actions Module.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetActionModuleActionsRequestParameters{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
+client.Actions.Modules.ListActions(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The unique ID of the module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.Modules.Rollback(ID, request) -> *management.RollbackActionModuleResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rolls back an Actions Module's draft to a previously created version. This action copies the code, dependencies, and secrets from the specified version into the current draft.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.RollbackActionModuleRequestParameters{
+        ModuleVersionID: "module_version_id",
+    }
+client.Actions.Modules.Rollback(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The unique ID of the module to roll back.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moduleVersionID:** `string` — The unique ID of the module version to roll back to.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Actions Triggers
 <details><summary><code>client.Actions.Triggers.List() -> *management.ListActionTriggersResponseContent</code></summary>
 <dl>
@@ -14201,6 +14735,190 @@ client.Actions.Triggers.List(
     )
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Actions Modules Versions
+<details><summary><code>client.Actions.Modules.Versions.List(ID) -> *management.GetActionModuleVersionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all published versions of a specific Actions Module.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.Modules.Versions.List(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The unique ID of the module.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.Modules.Versions.Create(ID) -> *management.CreateActionModuleVersionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new immutable version of an Actions Module from the current draft version. This publishes the draft as a new version that can be referenced by actions, while maintaining the existing draft for continued development.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.Modules.Versions.Create(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the action module to create a version for.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.Modules.Versions.Get(ID, VersionID) -> *management.GetActionModuleVersionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the details of a specific, immutable version of an Actions Module.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.Modules.Versions.Get(
+        context.TODO(),
+        "id",
+        "versionId",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The unique ID of the module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**versionID:** `string` — The unique ID of the module version to retrieve.
+    
 </dd>
 </dl>
 </dd>
@@ -23656,7 +24374,7 @@ client.Organizations.DiscoveryDomains.List(
 <dl>
 <dd>
 
-Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>. The <code>use_for_organization_discovery</code> field can be <code>true</code> or <code>false</code> (default: <code>true</code>).
+Create a new discovery domain for an organization.
 </dd>
 </dl>
 </dd>
@@ -23718,7 +24436,7 @@ client.Organizations.DiscoveryDomains.Create(
 <dl>
 <dd>
 
-**useForOrganizationDiscovery:** `*bool` — Indicates whether this discovery domain should be used for organization discovery.
+**useForOrganizationDiscovery:** `*bool` — Indicates whether this domain should be used for organization discovery.
     
 </dd>
 </dl>
@@ -24005,7 +24723,7 @@ client.Organizations.DiscoveryDomains.Update(
 <dl>
 <dd>
 
-**useForOrganizationDiscovery:** `*bool` — Indicates whether this discovery domain should be used for organization discovery.
+**useForOrganizationDiscovery:** `*bool` — Indicates whether this domain should be used for organization discovery.
     
 </dd>
 </dl>
