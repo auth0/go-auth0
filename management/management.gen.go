@@ -914,6 +914,19 @@ func (b *BackChannelLogoutInitiators) String() string {
 	return Stringify(b)
 }
 
+// GetInclude returns the Include field if it's non-nil, zero value otherwise.
+func (b *BackChannelLogoutSessionMetadata) GetInclude() bool {
+	if b == nil || b.Include == nil {
+		return false
+	}
+	return *b.Include
+}
+
+// String returns a string representation of BackChannelLogoutSessionMetadata.
+func (b *BackChannelLogoutSessionMetadata) String() string {
+	return Stringify(b)
+}
+
 // String returns a string representation of BlacklistToken.
 func (b *BlacklistToken) String() string {
 	return Stringify(b)
@@ -10140,6 +10153,14 @@ func (o *OIDCLogout) GetBackChannelLogoutInitiators() *BackChannelLogoutInitiato
 		return nil
 	}
 	return o.BackChannelLogoutInitiators
+}
+
+// GetBackChannelLogoutSessionMetadata returns the BackChannelLogoutSessionMetadata field.
+func (o *OIDCLogout) GetBackChannelLogoutSessionMetadata() *BackChannelLogoutSessionMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.BackChannelLogoutSessionMetadata
 }
 
 // GetBackChannelLogoutURLs returns the BackChannelLogoutURLs field if it's non-nil, zero value otherwise.

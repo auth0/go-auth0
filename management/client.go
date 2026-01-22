@@ -476,8 +476,14 @@ type OIDCBackchannelLogout struct {
 
 // OIDCLogout defines the `oidc_logout` settings for the client.
 type OIDCLogout struct {
-	BackChannelLogoutURLs       *[]string                    `json:"backchannel_logout_urls,omitempty"`
-	BackChannelLogoutInitiators *BackChannelLogoutInitiators `json:"backchannel_logout_initiators,omitempty"`
+	BackChannelLogoutURLs            *[]string                         `json:"backchannel_logout_urls,omitempty"`
+	BackChannelLogoutInitiators      *BackChannelLogoutInitiators      `json:"backchannel_logout_initiators,omitempty"`
+	BackChannelLogoutSessionMetadata *BackChannelLogoutSessionMetadata `json:"backchannel_logout_session_metadata,omitempty"`
+}
+
+// BackChannelLogoutSessionMetadata defines the setting for OIDC logout session metadata for a Client.
+type BackChannelLogoutSessionMetadata struct {
+	Include *bool `json:"include,omitempty"`
 }
 
 // BackChannelLogoutInitiators defines the setting for OIDC logout initiators for a Client.

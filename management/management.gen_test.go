@@ -1159,6 +1159,24 @@ func TestBackChannelLogoutInitiators_String(t *testing.T) {
 	}
 }
 
+func TestBackChannelLogoutSessionMetadata_GetInclude(tt *testing.T) {
+	var zeroValue bool
+	b := &BackChannelLogoutSessionMetadata{Include: &zeroValue}
+	b.GetInclude()
+	b = &BackChannelLogoutSessionMetadata{}
+	b.GetInclude()
+	b = nil
+	b.GetInclude()
+}
+
+func TestBackChannelLogoutSessionMetadata_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BackChannelLogoutSessionMetadata{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBlacklistToken_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BlacklistToken{}
@@ -12688,6 +12706,13 @@ func TestOIDCLogout_GetBackChannelLogoutInitiators(tt *testing.T) {
 	o.GetBackChannelLogoutInitiators()
 	o = nil
 	o.GetBackChannelLogoutInitiators()
+}
+
+func TestOIDCLogout_GetBackChannelLogoutSessionMetadata(tt *testing.T) {
+	o := &OIDCLogout{}
+	o.GetBackChannelLogoutSessionMetadata()
+	o = nil
+	o.GetBackChannelLogoutSessionMetadata()
 }
 
 func TestOIDCLogout_GetBackChannelLogoutURLs(tt *testing.T) {
