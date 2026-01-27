@@ -1,5 +1,15 @@
 # Change Log
 
+## [v2.4.0](https://github.com/auth0/go-auth0/tree/v2.4.0) (2026-01-27)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.3.0...v2.4.0)
+
+**Added**
+- feat: Add HTTP Basic Auth vault connections and phone consolidated experience support [\#687](https://github.com/auth0/go-auth0/pull/687) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: Add Actions Modules API and Custom Domains Enhancements [\#684](https://github.com/auth0/go-auth0/pull/684) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Add Client Grants retrieval, Custom Domains Passkey support, Flows SMS/Call actions, and Directory Provisioning list endpoint [\#682](https://github.com/auth0/go-auth0/pull/682) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: Add Groups API, Enhanced Client Authentication, and Connection Authentication Methods [\#679](https://github.com/auth0/go-auth0/pull/679) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: Add Refresh Token Update API, Organization Discovery Domain GetByName, and Refresh Token Metadata Support [\#669](https://github.com/auth0/go-auth0/pull/669) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.3.0](https://github.com/auth0/go-auth0/tree/v2.3.0) (2025-12-11)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.2.0...v2.3.0)
 
