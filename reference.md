@@ -28123,6 +28123,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**phoneConsolidatedExperience:** `*bool` — Whether Phone Consolidated Experience is enabled for this tenant.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
