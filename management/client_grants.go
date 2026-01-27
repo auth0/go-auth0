@@ -92,7 +92,7 @@ type ClientGrantResponseContent struct {
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
 	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
-	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	// Types of authorization_details allowed for this client grant.
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 	// If enabled, all scopes configured on the resource server are allowed for this grant.
 	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
@@ -294,7 +294,7 @@ func (c *ClientGrantResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// The type of application access the client grant allows. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href="https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+// The type of application access the client grant allows.
 type ClientGrantSubjectTypeEnum string
 
 const (
@@ -345,7 +345,7 @@ type CreateClientGrantResponseContent struct {
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
 	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
-	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	// Types of authorization_details allowed for this client grant.
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 	// If enabled, all scopes configured on the resource server are allowed for this grant.
 	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
@@ -575,7 +575,7 @@ type GetClientGrantResponseContent struct {
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
 	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
-	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	// Types of authorization_details allowed for this client grant.
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 	// If enabled, all scopes configured on the resource server are allowed for this grant.
 	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
@@ -900,7 +900,7 @@ type UpdateClientGrantResponseContent struct {
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
 	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
-	// Types of authorization_details allowed for this client grant. Use of this field is subject to the applicable Free Trial terms in Okta’s <a href= "https://www.okta.com/legal/"> Master Subscription Agreement.</a>
+	// Types of authorization_details allowed for this client grant.
 	AuthorizationDetailsTypes []string `json:"authorization_details_types,omitempty" url:"authorization_details_types,omitempty"`
 	// If enabled, all scopes configured on the resource server are allowed for this grant.
 	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`

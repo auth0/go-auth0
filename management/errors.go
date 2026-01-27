@@ -31,7 +31,7 @@ func (b *BadRequestError) Unwrap() error {
 	return b.APIError
 }
 
-// Custom phone provider conflict.
+// An action module with the same name already exists.
 type ConflictError struct {
 	*core.APIError
 	Body interface{}
@@ -172,6 +172,30 @@ func (p *PaymentRequiredError) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaymentRequiredError) Unwrap() error {
+	return p.APIError
+}
+
+// The Actions Module cannot be deleted because it is in use by one or more actions.
+type PreconditionFailedError struct {
+	*core.APIError
+	Body interface{}
+}
+
+func (p *PreconditionFailedError) UnmarshalJSON(data []byte) error {
+	var body interface{}
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	p.StatusCode = 412
+	p.Body = body
+	return nil
+}
+
+func (p *PreconditionFailedError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(p.Body)
+}
+
+func (p *PreconditionFailedError) Unwrap() error {
 	return p.APIError
 }
 
