@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 129
+        content_length: 173
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"1746693332.tempdomain.com","type":"auth0_managed_certs","tls_policy":"recommended","domain_metadata":{"key":"value"}}
+            {"domain":"1769586906.tempdomain.com","type":"auth0_managed_certs","tls_policy":"recommended","domain_metadata":{"key":"value"},"relying_party_identifier":"tempdomain.com"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.20.0
+                - Go-Auth0/1.32.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
         method: POST
       response:
@@ -28,15 +28,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 367
+        content_length: 480
         uncompressed: false
-        body: '{"custom_domain_id":"cd_NsUEfElDSOJ8gu0r","domain":"1746693332.tempdomain.com","primary":false,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-nsuefeldsoj8gu0r.edge.tenants.us.auth0.com","domain":"1746693332.tempdomain.com"}]},"tls_policy":"recommended","domain_metadata":{"key":"value"}}'
+        body: '{"custom_domain_id":"cd_FSaA14h9TtkgyFOz","domain":"1769586906.tempdomain.com","primary":true,"is_default":false,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-fsaa14h9ttkgyfoz.edge.tenants.us.auth0.com","domain":"1769586906.tempdomain.com"}]},"tls_policy":"recommended","domain_metadata":{"key":"value"},"created_at":"2026-01-28T07:55:07.376Z","relying_party_identifier":"tempdomain.com"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 996.770667ms
+        duration: 984.016625ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -51,11 +51,9 @@ interactions:
         body: ""
         form: {}
         headers:
-            Content-Type:
-                - application/json
             User-Agent:
-                - Go-Auth0/1.20.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_NsUEfElDSOJ8gu0r
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_FSaA14h9TtkgyFOz
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -71,4 +69,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 403.018333ms
+        duration: 426.837125ms

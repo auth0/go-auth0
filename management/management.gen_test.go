@@ -8834,6 +8834,16 @@ func TestCustomDomain_GetPrimary(tt *testing.T) {
 	c.GetPrimary()
 }
 
+func TestCustomDomain_GetRelyingPartyIdentifier(tt *testing.T) {
+	var zeroValue string
+	c := &CustomDomain{RelyingPartyIdentifier: &zeroValue}
+	c.GetRelyingPartyIdentifier()
+	c = &CustomDomain{}
+	c.GetRelyingPartyIdentifier()
+	c = nil
+	c.GetRelyingPartyIdentifier()
+}
+
 func TestCustomDomain_GetStatus(tt *testing.T) {
 	var zeroValue string
 	c := &CustomDomain{Status: &zeroValue}
