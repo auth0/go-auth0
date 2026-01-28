@@ -177,7 +177,8 @@ func TestSelfServiceProfileManager_CreateAndRevokeTicket(t *testing.T) {
 						},
 					},
 				},
-				EnabledClients: &[]string{client.GetClientID()},
+				UseForOrganizationDiscovery: auth0.Bool(true),
+				EnabledClients:              &[]string{client.GetClientID()},
 				EnabledOrganizations: []*SelfServiceProfileTicketEnabledOrganizations{
 					{
 						AssignMembershipOnLogin: auth0.Bool(true),

@@ -514,6 +514,14 @@ type ConnectionOptions struct {
 
 	// Set to true to consume feature only when connections_realm_fallback flag is enabled for tenant
 	RealmFallback *bool `json:"realm_fallback,omitempty"`
+
+	// The action to be triggered for Universal Custom Password
+	CustomPasswordHash *CustomPasswordHash `json:"custom_password_hash,omitempty"`
+}
+
+// CustomPasswordHash defines the structure of custom password hash options.
+type CustomPasswordHash struct {
+	ActionID *string `json:"action_id,omitempty"`
 }
 
 // ConnectionOptionsAttributes defines the structure for attribute configurations.

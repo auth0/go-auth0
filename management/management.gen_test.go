@@ -3670,6 +3670,13 @@ func TestConnectionOptions_GetConfiguration(tt *testing.T) {
 	c.GetConfiguration()
 }
 
+func TestConnectionOptions_GetCustomPasswordHash(tt *testing.T) {
+	c := &ConnectionOptions{}
+	c.GetCustomPasswordHash()
+	c = nil
+	c.GetCustomPasswordHash()
+}
+
 func TestConnectionOptions_GetCustomScripts(tt *testing.T) {
 	var zeroValue map[string]string
 	c := &ConnectionOptions{CustomScripts: &zeroValue}
@@ -8976,6 +8983,24 @@ func TestCustomDomainVerification_String(t *testing.T) {
 	}
 }
 
+func TestCustomPasswordHash_GetActionID(tt *testing.T) {
+	var zeroValue string
+	c := &CustomPasswordHash{ActionID: &zeroValue}
+	c.GetActionID()
+	c = &CustomPasswordHash{}
+	c.GetActionID()
+	c = nil
+	c.GetActionID()
+}
+
+func TestCustomPasswordHash_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CustomPasswordHash{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestDailyStat_GetCreatedAt(tt *testing.T) {
 	var zeroValue time.Time
 	d := &DailyStat{CreatedAt: &zeroValue}
@@ -12944,6 +12969,16 @@ func TestOrganizationDiscoveryDomain_GetStatus(tt *testing.T) {
 	o.GetStatus()
 }
 
+func TestOrganizationDiscoveryDomain_GetUseForOrganizationDiscovery(tt *testing.T) {
+	var zeroValue bool
+	o := &OrganizationDiscoveryDomain{UseForOrganizationDiscovery: &zeroValue}
+	o.GetUseForOrganizationDiscovery()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetUseForOrganizationDiscovery()
+	o = nil
+	o.GetUseForOrganizationDiscovery()
+}
+
 func TestOrganizationDiscoveryDomain_GetVerificationHost(tt *testing.T) {
 	var zeroValue string
 	o := &OrganizationDiscoveryDomain{VerificationHost: &zeroValue}
@@ -15362,6 +15397,16 @@ func TestSelfServiceProfileTicket_GetTicket(tt *testing.T) {
 	s.GetTicket()
 	s = nil
 	s.GetTicket()
+}
+
+func TestSelfServiceProfileTicket_GetUseForOrganizationDiscovery(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicket{UseForOrganizationDiscovery: &zeroValue}
+	s.GetUseForOrganizationDiscovery()
+	s = &SelfServiceProfileTicket{}
+	s.GetUseForOrganizationDiscovery()
+	s = nil
+	s.GetUseForOrganizationDiscovery()
 }
 
 func TestSelfServiceProfileTicket_String(t *testing.T) {

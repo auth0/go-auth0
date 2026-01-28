@@ -2999,6 +2999,14 @@ func (c *ConnectionOptions) GetConfiguration() map[string]string {
 	return *c.Configuration
 }
 
+// GetCustomPasswordHash returns the CustomPasswordHash field.
+func (c *ConnectionOptions) GetCustomPasswordHash() *CustomPasswordHash {
+	if c == nil {
+		return nil
+	}
+	return c.CustomPasswordHash
+}
+
 // GetCustomScripts returns the CustomScripts field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptions) GetCustomScripts() map[string]string {
 	if c == nil || c.CustomScripts == nil {
@@ -7257,6 +7265,19 @@ func (c *CustomDomainVerification) String() string {
 	return Stringify(c)
 }
 
+// GetActionID returns the ActionID field if it's non-nil, zero value otherwise.
+func (c *CustomPasswordHash) GetActionID() string {
+	if c == nil || c.ActionID == nil {
+		return ""
+	}
+	return *c.ActionID
+}
+
+// String returns a string representation of CustomPasswordHash.
+func (c *CustomPasswordHash) String() string {
+	return Stringify(c)
+}
+
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
 func (d *DailyStat) GetCreatedAt() time.Time {
 	if d == nil || d.CreatedAt == nil {
@@ -10345,6 +10366,14 @@ func (o *OrganizationDiscoveryDomain) GetStatus() string {
 	return *o.Status
 }
 
+// GetUseForOrganizationDiscovery returns the UseForOrganizationDiscovery field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetUseForOrganizationDiscovery() bool {
+	if o == nil || o.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *o.UseForOrganizationDiscovery
+}
+
 // GetVerificationHost returns the VerificationHost field if it's non-nil, zero value otherwise.
 func (o *OrganizationDiscoveryDomain) GetVerificationHost() string {
 	if o == nil || o.VerificationHost == nil {
@@ -12234,6 +12263,14 @@ func (s *SelfServiceProfileTicket) GetTicket() string {
 		return ""
 	}
 	return *s.Ticket
+}
+
+// GetUseForOrganizationDiscovery returns the UseForOrganizationDiscovery field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicket) GetUseForOrganizationDiscovery() bool {
+	if s == nil || s.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *s.UseForOrganizationDiscovery
 }
 
 // String returns a string representation of SelfServiceProfileTicket.
