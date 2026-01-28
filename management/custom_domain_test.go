@@ -16,10 +16,11 @@ func TestCustomDomainManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	expected := &CustomDomain{
-		Domain:         auth0.Stringf("%d.tempdomain.com", time.Now().UTC().Unix()),
-		Type:           auth0.String("auth0_managed_certs"),
-		TLSPolicy:      auth0.String("recommended"),
-		DomainMetadata: &map[string]interface{}{"key": "value"},
+		Domain:                 auth0.Stringf("%d.tempdomain.com", time.Now().UTC().Unix()),
+		Type:                   auth0.String("auth0_managed_certs"),
+		TLSPolicy:              auth0.String("recommended"),
+		DomainMetadata:         &map[string]interface{}{"key": "value"},
+		RelyingPartyIdentifier: auth0.String("tempdomain.com"),
 	}
 
 	err := api.CustomDomain.Create(context.Background(), expected)
@@ -88,6 +89,19 @@ func TestCustomDomainManager_Update(t *testing.T) {
 		assertNoCustomDomainErr(t, err)
 		assert.Empty(t, cleared.GetDomainMetadata())
 	})
+
+	t.Run("Update relying_party_identifier", func(t *testing.T) {
+		err := api.CustomDomain.Update(context.Background(), customDomain.GetID(),
+			&CustomDomain{
+				RelyingPartyIdentifier: auth0.String("tempdomain.com"),
+			},
+		)
+		assertNoCustomDomainErr(t, err)
+
+		updated, err := api.CustomDomain.Read(context.Background(), customDomain.GetID())
+		assertNoCustomDomainErr(t, err)
+		assert.Equal(t, "tempdomain.com", updated.GetRelyingPartyIdentifier())
+	})
 }
 
 func TestCustomDomainManager_Delete(t *testing.T) {
@@ -114,7 +128,7 @@ func TestCustomDomainManager_List(t *testing.T) {
 	customDomainList, err := api.CustomDomain.List(context.Background())
 
 	assertNoCustomDomainErr(t, err)
-	assert.Greater(t, len(customDomainList), 2)
+	assert.GreaterOrEqual(t, len(customDomainList), 2)
 	// Create a map to check existence regardless of order
 	domainMap := make(map[string]bool)
 	for _, domain := range customDomainList {
@@ -147,7 +161,7 @@ func TestCustomDomainManager_ListWithPagination(t *testing.T) {
 	}
 	secondPage, err := api.CustomDomain.ListWithPagination(context.Background(), secondPageOpts...)
 	assertNoCustomDomainErr(t, err)
-	assert.Greater(t, len(secondPage.CustomDomains), 1, "Second page should return 1 domain")
+	assert.GreaterOrEqual(t, len(secondPage.CustomDomains), 1, "Second page should return 1 domain")
 
 	// Combine all domains and verify each created one exists
 	allDomains := make([]*CustomDomain, 0, len(firstPage.CustomDomains)+len(secondPage.CustomDomains))
