@@ -239,8 +239,10 @@ type OrganizationDiscoveryDomain struct {
 // cleanForPatch removes fields that are not allowed to be updated via PATCH.
 func (o *OrganizationDiscoveryDomain) cleanForPatch() *OrganizationDiscoveryDomain {
 	return &OrganizationDiscoveryDomain{
-		Status: o.Status,
+		Status:                      o.Status,
+		UseForOrganizationDiscovery: o.UseForOrganizationDiscovery,
 	}
+
 }
 
 // DiscoveryDomainList is a list of OrganizationDiscoveryDomains.
