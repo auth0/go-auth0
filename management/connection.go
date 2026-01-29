@@ -514,6 +514,14 @@ type ConnectionOptions struct {
 
 	// Set to true to consume feature only when connections_realm_fallback flag is enabled for tenant
 	RealmFallback *bool `json:"realm_fallback,omitempty"`
+
+	// The action to be triggered for Universal Custom Password
+	CustomPasswordHash *CustomPasswordHash `json:"custom_password_hash,omitempty"`
+}
+
+// CustomPasswordHash defines the structure of custom password hash options.
+type CustomPasswordHash struct {
+	ActionID *string `json:"action_id,omitempty"`
 }
 
 // ConnectionOptionsAttributes defines the structure for attribute configurations.
@@ -525,7 +533,8 @@ type ConnectionOptionsAttributes struct {
 
 // ConnectionOptionsAttributeIdentifier defines whether an attribute is active as an identifier.
 type ConnectionOptionsAttributeIdentifier struct {
-	Active *bool `json:"active,omitempty"`
+	Active        *bool   `json:"active,omitempty"`
+	DefaultMethod *string `json:"default_method,omitempty"`
 }
 
 // ConnectionOptionsAttributeSignup defines signup settings for an attribute.
@@ -610,6 +619,8 @@ type ConnectionOptionsPhoneNumberAttribute struct {
 type AuthenticationMethods struct {
 	Password *PasswordAuthenticationMethod `json:"password,omitempty"`
 	Passkey  *PasskeyAuthenticationMethod  `json:"passkey,omitempty"`
+	EmailOTP *EmailOTPAuthenticationMethod `json:"email_otp,omitempty"`
+	PhoneOTP *PhoneOTPAuthenticationMethod `json:"phone_otp,omitempty"`
 }
 
 // PasswordAuthenticationMethod represents password authentication enablement for the connection.
@@ -621,6 +632,18 @@ type PasswordAuthenticationMethod struct {
 // PasskeyAuthenticationMethod represents passkey authentication enablement for the connection.
 type PasskeyAuthenticationMethod struct {
 	// Determines whether passkeys are enabled.
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
+// EmailOTPAuthenticationMethod represents Email OTP authentication enablement for the connection.
+type EmailOTPAuthenticationMethod struct {
+	// Determines whether email_otp are enabled.
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
+// PhoneOTPAuthenticationMethod represents Phone OTP authentication enablement for the connection.
+type PhoneOTPAuthenticationMethod struct {
+	// Determines whether phone_otp are enabled.
 	Enabled *bool `json:"enabled,omitempty"`
 }
 

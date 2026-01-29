@@ -1665,3 +1665,44 @@ func getEnabledClientIDs(t *testing.T, connectionID string) []string {
 
 	return clientIDs
 }
+
+func TestCustomPasswordHashOption(t *testing.T) {
+	t.Helper()
+	configureHTTPTestRecordings(t)
+
+	action := &Action{
+		Name: auth0.Stringf("Test Action (%s)", time.Now().Format(time.StampMilli)),
+		Code: auth0.String("exports.onExecutePostLogin = async (event, api) =\u003e {}"),
+		SupportedTriggers: []ActionTrigger{
+			{
+				ID:      auth0.String(ActionTriggerPasswordHashMigration),
+				Version: auth0.String("v1"),
+			},
+		},
+		Deploy:  auth0.Bool(true),
+		Runtime: auth0.String("node22"),
+	}
+
+	err := api.Action.Create(context.Background(), action)
+	require.NoError(t, err)
+
+	conn := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			CustomPasswordHash: &CustomPasswordHash{
+				ActionID: auth0.String(action.GetID()),
+			},
+		},
+	})
+
+	t.Cleanup(func() {
+		cleanupAction(t, action.GetID())
+	})
+
+	t.Cleanup(func() {
+		cleanupConnection(t, conn.GetID())
+	})
+}

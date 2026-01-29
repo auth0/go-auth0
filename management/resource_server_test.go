@@ -271,6 +271,14 @@ func givenAResourceServer(t *testing.T) *ResourceServer {
 				Description: auth0.String("Create Org Client Grants"),
 			},
 		},
+		AuthorizationDetails: &[]ResourceServerAuthorizationDetails{
+			{
+				Type: auth0.String("payment"),
+			},
+			{
+				Type: auth0.String("shipping"),
+			},
+		},
 		SubjectTypeAuthorization: &ResourceServerSubjectTypeAuthorization{
 			User: &ResourceServerSubjectTypeAuthorizationUser{
 				Policy: auth0.String("allow_all"),

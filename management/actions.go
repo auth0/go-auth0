@@ -29,6 +29,8 @@ const (
 	ActionTriggerPasswordResetPostChallenge string = "password-reset-post-challenge"
 	// ActionTriggerCustomTokenExchange constant.
 	ActionTriggerCustomTokenExchange string = "custom-token-exchange" // #nosec
+	// ActionTriggerPasswordHashMigration constant.
+	ActionTriggerPasswordHashMigration = "password-hash-migration" // #nosec
 )
 
 // ActionTrigger is part of a Flow.
