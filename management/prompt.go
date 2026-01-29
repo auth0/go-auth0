@@ -373,6 +373,9 @@ const (
 	// ScreenOrganizationPicker represents the organization-picker screen.
 	ScreenOrganizationPicker ScreenName = "organization-picker"
 
+	// ScreenPreLoginOrganizationPicker represents the pre-login-organization-picker screen.
+	ScreenPreLoginOrganizationPicker ScreenName = "pre-login-organization-picker"
+
 	// ScreenAcceptInvitation represents the accept-invitation screen.
 	ScreenAcceptInvitation ScreenName = "accept-invitation"
 
