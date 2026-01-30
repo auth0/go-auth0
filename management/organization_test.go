@@ -519,7 +519,7 @@ func TestOrganizationManager_ClientGrantsWithOrg(t *testing.T) {
 	require.NoError(t, err)
 
 	// List all clients associated with a ClientGrant given an organizationID as query param
-	clients, err := api.Client.List(context.Background(), Parameter("q", fmt.Sprintf("client_grant.organization_id:%s", org.GetID())))
+	clients, err := api.Client.ListWithCheckpointPagination(context.Background(), Parameter("q", fmt.Sprintf("client_grant.organization_id:%s", org.GetID())))
 	require.NoError(t, err)
 
 	for _, c := range clients.Clients {
@@ -725,6 +725,11 @@ func TestOrganizationManager_DiscoveryDomain(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, domain.GetID(), actualDomain.GetID())
 	assert.Equal(t, domain.GetDomain(), actualDomain.GetDomain())
+
+	actualDomainByName, err := api.Organization.DiscoveryDomainByName(context.Background(), org.GetID(), domain.GetDomain())
+	assert.NoError(t, err)
+	assert.Equal(t, domain.GetID(), actualDomainByName.GetID())
+	assert.Equal(t, domain.GetDomain(), actualDomainByName.GetDomain())
 }
 
 func TestOrganizationManager_UpdateDiscoveryDomain(t *testing.T) {

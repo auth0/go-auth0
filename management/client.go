@@ -888,6 +888,16 @@ func (m *ClientManager) List(ctx context.Context, opts ...RequestOption) (c *Cli
 	return
 }
 
+// ListWithCheckpointPagination client applications using checkpoint pagination.
+// Checkpoint pagination is only supported with the `q` parameter.
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Checkpoint_Pagination
+//
+// See: https://auth0.com/docs/api/management/v2#!/Clients/get_clients
+func (m *ClientManager) ListWithCheckpointPagination(ctx context.Context, opts ...RequestOption) (c *ClientList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("clients"), &c, applyListCheckpointDefaults(opts))
+	return
+}
+
 // Update a client.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Clients/patch_clients_by_id

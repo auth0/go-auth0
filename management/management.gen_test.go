@@ -861,6 +861,13 @@ func TestAuthenticationMethodReference_String(t *testing.T) {
 	}
 }
 
+func TestAuthenticationMethods_GetEmailOTP(tt *testing.T) {
+	a := &AuthenticationMethods{}
+	a.GetEmailOTP()
+	a = nil
+	a.GetEmailOTP()
+}
+
 func TestAuthenticationMethods_GetPasskey(tt *testing.T) {
 	a := &AuthenticationMethods{}
 	a.GetPasskey()
@@ -873,6 +880,13 @@ func TestAuthenticationMethods_GetPassword(tt *testing.T) {
 	a.GetPassword()
 	a = nil
 	a.GetPassword()
+}
+
+func TestAuthenticationMethods_GetPhoneOTP(tt *testing.T) {
+	a := &AuthenticationMethods{}
+	a.GetPhoneOTP()
+	a = nil
+	a.GetPhoneOTP()
 }
 
 func TestAuthenticationMethods_String(t *testing.T) {
@@ -2767,6 +2781,16 @@ func TestClientDefaultOrganization_String(t *testing.T) {
 	}
 }
 
+func TestClientGrant_GetAllowAllScopes(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientGrant{AllowAllScopes: &zeroValue}
+	c.GetAllowAllScopes()
+	c = &ClientGrant{}
+	c.GetAllowAllScopes()
+	c = nil
+	c.GetAllowAllScopes()
+}
+
 func TestClientGrant_GetAllowAnyOrganization(tt *testing.T) {
 	var zeroValue bool
 	c := &ClientGrant{AllowAnyOrganization: &zeroValue}
@@ -3646,6 +3670,13 @@ func TestConnectionOptions_GetConfiguration(tt *testing.T) {
 	c.GetConfiguration()
 }
 
+func TestConnectionOptions_GetCustomPasswordHash(tt *testing.T) {
+	c := &ConnectionOptions{}
+	c.GetCustomPasswordHash()
+	c = nil
+	c.GetCustomPasswordHash()
+}
+
 func TestConnectionOptions_GetCustomScripts(tt *testing.T) {
 	var zeroValue map[string]string
 	c := &ConnectionOptions{CustomScripts: &zeroValue}
@@ -4361,6 +4392,16 @@ func TestConnectionOptionsAttributeIdentifier_GetActive(tt *testing.T) {
 	c.GetActive()
 	c = nil
 	c.GetActive()
+}
+
+func TestConnectionOptionsAttributeIdentifier_GetDefaultMethod(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsAttributeIdentifier{DefaultMethod: &zeroValue}
+	c.GetDefaultMethod()
+	c = &ConnectionOptionsAttributeIdentifier{}
+	c.GetDefaultMethod()
+	c = nil
+	c.GetDefaultMethod()
 }
 
 func TestConnectionOptionsAttributeIdentifier_String(t *testing.T) {
@@ -8962,6 +9003,24 @@ func TestCustomDomainVerification_String(t *testing.T) {
 	}
 }
 
+func TestCustomPasswordHash_GetActionID(tt *testing.T) {
+	var zeroValue string
+	c := &CustomPasswordHash{ActionID: &zeroValue}
+	c.GetActionID()
+	c = &CustomPasswordHash{}
+	c.GetActionID()
+	c = nil
+	c.GetActionID()
+}
+
+func TestCustomPasswordHash_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CustomPasswordHash{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestDailyStat_GetCreatedAt(tt *testing.T) {
 	var zeroValue time.Time
 	d := &DailyStat{CreatedAt: &zeroValue}
@@ -9309,6 +9368,24 @@ func TestEgnyteClientAddon_GetDomain(tt *testing.T) {
 func TestEgnyteClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &EgnyteClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEmailOTPAuthenticationMethod_GetEnabled(tt *testing.T) {
+	var zeroValue bool
+	e := &EmailOTPAuthenticationMethod{Enabled: &zeroValue}
+	e.GetEnabled()
+	e = &EmailOTPAuthenticationMethod{}
+	e.GetEnabled()
+	e = nil
+	e.GetEnabled()
+}
+
+func TestEmailOTPAuthenticationMethod_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailOTPAuthenticationMethod{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -12912,6 +12989,16 @@ func TestOrganizationDiscoveryDomain_GetStatus(tt *testing.T) {
 	o.GetStatus()
 }
 
+func TestOrganizationDiscoveryDomain_GetUseForOrganizationDiscovery(tt *testing.T) {
+	var zeroValue bool
+	o := &OrganizationDiscoveryDomain{UseForOrganizationDiscovery: &zeroValue}
+	o.GetUseForOrganizationDiscovery()
+	o = &OrganizationDiscoveryDomain{}
+	o.GetUseForOrganizationDiscovery()
+	o = nil
+	o.GetUseForOrganizationDiscovery()
+}
+
 func TestOrganizationDiscoveryDomain_GetVerificationHost(tt *testing.T) {
 	var zeroValue string
 	o := &OrganizationDiscoveryDomain{VerificationHost: &zeroValue}
@@ -13407,6 +13494,24 @@ func TestPhoneMessageTypes_GetMessageTypes(tt *testing.T) {
 func TestPhoneMessageTypes_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &PhoneMessageTypes{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPhoneOTPAuthenticationMethod_GetEnabled(tt *testing.T) {
+	var zeroValue bool
+	p := &PhoneOTPAuthenticationMethod{Enabled: &zeroValue}
+	p.GetEnabled()
+	p = &PhoneOTPAuthenticationMethod{}
+	p.GetEnabled()
+	p = nil
+	p.GetEnabled()
+}
+
+func TestPhoneOTPAuthenticationMethod_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PhoneOTPAuthenticationMethod{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -15312,6 +15417,16 @@ func TestSelfServiceProfileTicket_GetTicket(tt *testing.T) {
 	s.GetTicket()
 	s = nil
 	s.GetTicket()
+}
+
+func TestSelfServiceProfileTicket_GetUseForOrganizationDiscovery(tt *testing.T) {
+	var zeroValue bool
+	s := &SelfServiceProfileTicket{UseForOrganizationDiscovery: &zeroValue}
+	s.GetUseForOrganizationDiscovery()
+	s = &SelfServiceProfileTicket{}
+	s.GetUseForOrganizationDiscovery()
+	s = nil
+	s.GetUseForOrganizationDiscovery()
 }
 
 func TestSelfServiceProfileTicket_String(t *testing.T) {

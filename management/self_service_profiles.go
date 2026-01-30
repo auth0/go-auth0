@@ -83,6 +83,9 @@ type SelfServiceProfileTicket struct {
 
 	// Configuration for the setup of Provisioning in the self-service flow.
 	ProvisioningConfig *SelfServiceProfileTicketProvisioningConfig `json:"provisioning_config,omitempty"`
+
+	// Indicates whether this domain should be used for organization discovery during login.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty"`
 }
 
 // SelfServiceProfileTicketDomainAliasesConfig is the configuration for domain aliases.

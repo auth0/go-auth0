@@ -673,6 +673,14 @@ func (a *AuthenticationMethodReference) String() string {
 	return Stringify(a)
 }
 
+// GetEmailOTP returns the EmailOTP field.
+func (a *AuthenticationMethods) GetEmailOTP() *EmailOTPAuthenticationMethod {
+	if a == nil {
+		return nil
+	}
+	return a.EmailOTP
+}
+
 // GetPasskey returns the Passkey field.
 func (a *AuthenticationMethods) GetPasskey() *PasskeyAuthenticationMethod {
 	if a == nil {
@@ -687,6 +695,14 @@ func (a *AuthenticationMethods) GetPassword() *PasswordAuthenticationMethod {
 		return nil
 	}
 	return a.Password
+}
+
+// GetPhoneOTP returns the PhoneOTP field.
+func (a *AuthenticationMethods) GetPhoneOTP() *PhoneOTPAuthenticationMethod {
+	if a == nil {
+		return nil
+	}
+	return a.PhoneOTP
 }
 
 // String returns a string representation of AuthenticationMethods.
@@ -2281,6 +2297,14 @@ func (c *ClientDefaultOrganization) String() string {
 	return Stringify(c)
 }
 
+// GetAllowAllScopes returns the AllowAllScopes field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
+}
+
 // GetAllowAnyOrganization returns the AllowAnyOrganization field if it's non-nil, zero value otherwise.
 func (c *ClientGrant) GetAllowAnyOrganization() bool {
 	if c == nil || c.AllowAnyOrganization == nil {
@@ -2975,6 +2999,14 @@ func (c *ConnectionOptions) GetConfiguration() map[string]string {
 	return *c.Configuration
 }
 
+// GetCustomPasswordHash returns the CustomPasswordHash field.
+func (c *ConnectionOptions) GetCustomPasswordHash() *CustomPasswordHash {
+	if c == nil {
+		return nil
+	}
+	return c.CustomPasswordHash
+}
+
 // GetCustomScripts returns the CustomScripts field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptions) GetCustomScripts() map[string]string {
 	if c == nil || c.CustomScripts == nil {
@@ -3542,6 +3574,14 @@ func (c *ConnectionOptionsAttributeIdentifier) GetActive() bool {
 		return false
 	}
 	return *c.Active
+}
+
+// GetDefaultMethod returns the DefaultMethod field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsAttributeIdentifier) GetDefaultMethod() string {
+	if c == nil || c.DefaultMethod == nil {
+		return ""
+	}
+	return *c.DefaultMethod
 }
 
 // String returns a string representation of ConnectionOptionsAttributeIdentifier.
@@ -7241,6 +7281,19 @@ func (c *CustomDomainVerification) String() string {
 	return Stringify(c)
 }
 
+// GetActionID returns the ActionID field if it's non-nil, zero value otherwise.
+func (c *CustomPasswordHash) GetActionID() string {
+	if c == nil || c.ActionID == nil {
+		return ""
+	}
+	return *c.ActionID
+}
+
+// String returns a string representation of CustomPasswordHash.
+func (c *CustomPasswordHash) String() string {
+	return Stringify(c)
+}
+
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
 func (d *DailyStat) GetCreatedAt() time.Time {
 	if d == nil || d.CreatedAt == nil {
@@ -7507,6 +7560,19 @@ func (e *EgnyteClientAddon) GetDomain() string {
 
 // String returns a string representation of EgnyteClientAddon.
 func (e *EgnyteClientAddon) String() string {
+	return Stringify(e)
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (e *EmailOTPAuthenticationMethod) GetEnabled() bool {
+	if e == nil || e.Enabled == nil {
+		return false
+	}
+	return *e.Enabled
+}
+
+// String returns a string representation of EmailOTPAuthenticationMethod.
+func (e *EmailOTPAuthenticationMethod) String() string {
 	return Stringify(e)
 }
 
@@ -10316,6 +10382,14 @@ func (o *OrganizationDiscoveryDomain) GetStatus() string {
 	return *o.Status
 }
 
+// GetUseForOrganizationDiscovery returns the UseForOrganizationDiscovery field if it's non-nil, zero value otherwise.
+func (o *OrganizationDiscoveryDomain) GetUseForOrganizationDiscovery() bool {
+	if o == nil || o.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *o.UseForOrganizationDiscovery
+}
+
 // GetVerificationHost returns the VerificationHost field if it's non-nil, zero value otherwise.
 func (o *OrganizationDiscoveryDomain) GetVerificationHost() string {
 	if o == nil || o.VerificationHost == nil {
@@ -10694,6 +10768,19 @@ func (p *PhoneMessageTypes) GetMessageTypes() []string {
 
 // String returns a string representation of PhoneMessageTypes.
 func (p *PhoneMessageTypes) String() string {
+	return Stringify(p)
+}
+
+// GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
+func (p *PhoneOTPAuthenticationMethod) GetEnabled() bool {
+	if p == nil || p.Enabled == nil {
+		return false
+	}
+	return *p.Enabled
+}
+
+// String returns a string representation of PhoneOTPAuthenticationMethod.
+func (p *PhoneOTPAuthenticationMethod) String() string {
 	return Stringify(p)
 }
 
@@ -12192,6 +12279,14 @@ func (s *SelfServiceProfileTicket) GetTicket() string {
 		return ""
 	}
 	return *s.Ticket
+}
+
+// GetUseForOrganizationDiscovery returns the UseForOrganizationDiscovery field if it's non-nil, zero value otherwise.
+func (s *SelfServiceProfileTicket) GetUseForOrganizationDiscovery() bool {
+	if s == nil || s.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *s.UseForOrganizationDiscovery
 }
 
 // String returns a string representation of SelfServiceProfileTicket.

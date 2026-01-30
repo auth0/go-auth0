@@ -232,12 +232,15 @@ type OrganizationDiscoveryDomain struct {
 	VerificationTXT *string `json:"verification_txt,omitempty"`
 	// The full domain where the TXT record should be added.
 	VerificationHost *string `json:"verification_host,omitempty"`
+	// Indicates whether this domain should be used for organization discovery during login.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty"`
 }
 
 // cleanForPatch removes fields that are not allowed to be updated via PATCH.
 func (o *OrganizationDiscoveryDomain) cleanForPatch() *OrganizationDiscoveryDomain {
 	return &OrganizationDiscoveryDomain{
-		Status: o.Status,
+		Status:                      o.Status,
+		UseForOrganizationDiscovery: o.UseForOrganizationDiscovery,
 	}
 }
 
@@ -497,6 +500,12 @@ func (m *OrganizationManager) CreateDiscoveryDomain(ctx context.Context, id stri
 // DiscoveryDomain retrieves a specific discovery domain for an organization.
 func (m *OrganizationManager) DiscoveryDomain(ctx context.Context, id string, domainID string, opts ...RequestOption) (d *OrganizationDiscoveryDomain, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "discovery-domains", domainID), &d, opts...)
+	return
+}
+
+// DiscoveryDomainByName retrieves a specific discovery domain for an organization.
+func (m *OrganizationManager) DiscoveryDomainByName(ctx context.Context, id string, domainName string, opts ...RequestOption) (d *OrganizationDiscoveryDomain, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "discovery-domains", "name", domainName), &d, opts...)
 	return
 }
 
