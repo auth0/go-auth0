@@ -5339,6 +5339,14 @@ func (c *ConnectionOptionsOAuth2) GetCustomHeaders() map[string]string {
 	return *c.CustomHeaders
 }
 
+// GetEmail returns the Email field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth2) GetEmail() bool {
+	if c == nil || c.Email == nil {
+		return false
+	}
+	return *c.Email
+}
+
 // GetLogoURL returns the LogoURL field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOAuth2) GetLogoURL() string {
 	if c == nil || c.LogoURL == nil {

@@ -1276,6 +1276,10 @@ type ConnectionOptionsOAuth2 struct {
 
 	// CustomHeaders specifies custom headers.
 	CustomHeaders *map[string]string `json:"customHeaders,omitempty"`
+
+	// Email specifies whether to request the email scope.
+	// This field is used by some OAuth2 connections (e.g., Line), but not all.
+	Email *bool `json:"email,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for ConnectionOptionsOAuth2.
