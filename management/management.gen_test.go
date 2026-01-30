@@ -6553,6 +6553,16 @@ func TestConnectionOptionsOAuth2_GetCustomHeaders(tt *testing.T) {
 	c.GetCustomHeaders()
 }
 
+func TestConnectionOptionsOAuth2_GetEmail(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOAuth2{Email: &zeroValue}
+	c.GetEmail()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetEmail()
+	c = nil
+	c.GetEmail()
+}
+
 func TestConnectionOptionsOAuth2_GetLogoURL(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOAuth2{LogoURL: &zeroValue}
