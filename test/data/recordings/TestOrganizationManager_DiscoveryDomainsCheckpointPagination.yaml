@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"test-organization540","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
+            {"name":"test-organization505","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.28.0
+                - Go-Auth0/1.32.1
         url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 149
         uncompressed: false
-        body: '{"id":"org_HqjNbitbdJ7fWOWJ","display_name":"Test Organization","name":"test-organization540","branding":{"logo_url":"https://example.com/logo.gif"}}'
+        body: '{"id":"org_ojhUvSQckUPThKWJ","display_name":"Test Organization","name":"test-organization505","branding":{"logo_url":"https://example.com/logo.gif"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 278.781ms
+        duration: 341.131875ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -49,14 +49,14 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"test-domain-780.com"}
+            {"domain":"test-domain-525.com"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_HqjNbitbdJ7fWOWJ/discovery-domains
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ojhUvSQckUPThKWJ/discovery-domains
         method: POST
       response:
         proto: HTTP/2.0
@@ -64,35 +64,35 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 219
+        content_length: 257
         uncompressed: false
-        body: '{"id":"ord_1csvSJpJm55C4ztRjDFRgo","domain":"test-domain-780.com","status":"pending","verification_host":"_ss-verification.org_HqjNbitbdJ7fWOWJ.test-domain-780.com","verification_txt":"862f236ad132d8458294dd6fb65bb475"}'
+        body: '{"id":"ord_1cwC3vwfGUR5QGJbBF1Dzp","domain":"test-domain-525.com","status":"pending","verification_host":"_ss-verification.org_ojhUvSQckUPThKWJ.test-domain-525.com","verification_txt":"acbcba26894b2b11dbfffbc109bcbdf7","use_for_organization_discovery":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 290.292417ms
+        duration: 316.667417ms
     - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 32
+        content_length: 33
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"test-domain-20.com"}
+            {"domain":"test-domain-401.com"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_HqjNbitbdJ7fWOWJ/discovery-domains
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ojhUvSQckUPThKWJ/discovery-domains
         method: POST
       response:
         proto: HTTP/2.0
@@ -100,15 +100,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 217
+        content_length: 257
         uncompressed: false
-        body: '{"id":"ord_1csvSJr2J5ouWnBmHUbbVe","domain":"test-domain-20.com","status":"pending","verification_host":"_ss-verification.org_HqjNbitbdJ7fWOWJ.test-domain-20.com","verification_txt":"ee9f85532e7924e4c89e2f542a92ea19"}'
+        body: '{"id":"ord_1cwC3vxB4Xx5r7WitLVCbr","domain":"test-domain-401.com","status":"pending","verification_host":"_ss-verification.org_ojhUvSQckUPThKWJ.test-domain-401.com","verification_txt":"4ad3e07c92b94d35076da87f8333aeb6","use_for_organization_discovery":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 307.8335ms
+        duration: 318.422916ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -121,14 +121,14 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"domain":"test-domain-414.com"}
+            {"domain":"test-domain-685.com"}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_HqjNbitbdJ7fWOWJ/discovery-domains
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ojhUvSQckUPThKWJ/discovery-domains
         method: POST
       response:
         proto: HTTP/2.0
@@ -136,15 +136,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 219
+        content_length: 257
         uncompressed: false
-        body: '{"id":"ord_1csvSJsMp1pwrSWKk44qgP","domain":"test-domain-414.com","status":"pending","verification_host":"_ss-verification.org_HqjNbitbdJ7fWOWJ.test-domain-414.com","verification_txt":"e63570c5bfeb044cf42026b29154711f"}'
+        body: '{"id":"ord_1cwC3vz2p6EWjRvU9w8ZXf","domain":"test-domain-685.com","status":"pending","verification_host":"_ss-verification.org_ojhUvSQckUPThKWJ.test-domain-685.com","verification_txt":"0b13b49be96332ff1d0a95de5a5cac78","use_for_organization_discovery":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 389.82775ms
+        duration: 328.154ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -160,8 +160,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_HqjNbitbdJ7fWOWJ/discovery-domains?take=2
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ojhUvSQckUPThKWJ/discovery-domains?take=2
         method: GET
       response:
         proto: HTTP/2.0
@@ -171,13 +171,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"next":"b3JkXzFjc3ZTSnNNcDFwd3JTV0trNDRxZ1A","domains":[{"id":"ord_1csvSJpJm55C4ztRjDFRgo","domain":"test-domain-780.com","status":"pending","verification_host":"_ss-verification.org_HqjNbitbdJ7fWOWJ.test-domain-780.com","verification_txt":"862f236ad132d8458294dd6fb65bb475"},{"id":"ord_1csvSJr2J5ouWnBmHUbbVe","domain":"test-domain-20.com","status":"pending","verification_host":"_ss-verification.org_HqjNbitbdJ7fWOWJ.test-domain-20.com","verification_txt":"ee9f85532e7924e4c89e2f542a92ea19"}]}'
+        body: '{"next":"b3JkXzFjd0MzdnoycDZFV2pSdlU5dzhaWGY","domains":[{"id":"ord_1cwC3vwfGUR5QGJbBF1Dzp","domain":"test-domain-525.com","status":"pending","verification_host":"_ss-verification.org_ojhUvSQckUPThKWJ.test-domain-525.com","verification_txt":"acbcba26894b2b11dbfffbc109bcbdf7","use_for_organization_discovery":true},{"id":"ord_1cwC3vxB4Xx5r7WitLVCbr","domain":"test-domain-401.com","status":"pending","verification_host":"_ss-verification.org_ojhUvSQckUPThKWJ.test-domain-401.com","verification_txt":"4ad3e07c92b94d35076da87f8333aeb6","use_for_organization_discovery":true}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 245.532209ms
+        duration: 316.608292ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -193,8 +193,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_HqjNbitbdJ7fWOWJ/discovery-domains?from=b3JkXzFjc3ZTSnNNcDFwd3JTV0trNDRxZ1A&take=2
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ojhUvSQckUPThKWJ/discovery-domains?from=b3JkXzFjd0MzdnoycDZFV2pSdlU5dzhaWGY&take=2
         method: GET
       response:
         proto: HTTP/2.0
@@ -204,13 +204,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"domains":[{"id":"ord_1csvSJsMp1pwrSWKk44qgP","domain":"test-domain-414.com","status":"pending","verification_host":"_ss-verification.org_HqjNbitbdJ7fWOWJ.test-domain-414.com","verification_txt":"e63570c5bfeb044cf42026b29154711f"}]}'
+        body: '{"domains":[{"id":"ord_1cwC3vz2p6EWjRvU9w8ZXf","domain":"test-domain-685.com","status":"pending","verification_host":"_ss-verification.org_ojhUvSQckUPThKWJ.test-domain-685.com","verification_txt":"0b13b49be96332ff1d0a95de5a5cac78","use_for_organization_discovery":true}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 242.531ms
+        duration: 306.708667ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -226,8 +226,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_HqjNbitbdJ7fWOWJ/discovery-domains/ord_1csvSJsMp1pwrSWKk44qgP
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ojhUvSQckUPThKWJ/discovery-domains/ord_1cwC3vz2p6EWjRvU9w8ZXf
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -243,7 +243,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 229.524625ms
+        duration: 318.210375ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -259,8 +259,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_HqjNbitbdJ7fWOWJ/discovery-domains/ord_1csvSJr2J5ouWnBmHUbbVe
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ojhUvSQckUPThKWJ/discovery-domains/ord_1cwC3vxB4Xx5r7WitLVCbr
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -276,7 +276,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 296.119292ms
+        duration: 306.928417ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -292,8 +292,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_HqjNbitbdJ7fWOWJ/discovery-domains/ord_1csvSJpJm55C4ztRjDFRgo
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ojhUvSQckUPThKWJ/discovery-domains/ord_1cwC3vwfGUR5QGJbBF1Dzp
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -309,7 +309,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 247.003041ms
+        duration: 304.328125ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -325,8 +325,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_HqjNbitbdJ7fWOWJ
+                - Go-Auth0/1.32.1
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_ojhUvSQckUPThKWJ
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -342,4 +342,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 265.706625ms
+        duration: 317.13275ms

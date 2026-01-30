@@ -725,6 +725,11 @@ func TestOrganizationManager_DiscoveryDomain(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, domain.GetID(), actualDomain.GetID())
 	assert.Equal(t, domain.GetDomain(), actualDomain.GetDomain())
+
+	actualDomainByName, err := api.Organization.DiscoveryDomainByName(context.Background(), org.GetID(), domain.GetDomain())
+	assert.NoError(t, err)
+	assert.Equal(t, domain.GetID(), actualDomainByName.GetID())
+	assert.Equal(t, domain.GetDomain(), actualDomainByName.GetDomain())
 }
 
 func TestOrganizationManager_UpdateDiscoveryDomain(t *testing.T) {
