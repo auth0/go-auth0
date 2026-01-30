@@ -7117,6 +7117,14 @@ func (c *CustomDomain) GetPrimary() bool {
 	return *c.Primary
 }
 
+// GetRelyingPartyIdentifier returns the RelyingPartyIdentifier field if it's non-nil, zero value otherwise.
+func (c *CustomDomain) GetRelyingPartyIdentifier() string {
+	if c == nil || c.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *c.RelyingPartyIdentifier
+}
+
 // GetStatus returns the Status field if it's non-nil, zero value otherwise.
 func (c *CustomDomain) GetStatus() string {
 	if c == nil || c.Status == nil {

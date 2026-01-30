@@ -51,6 +51,10 @@ type CustomDomain struct {
 	// To remove metadata, set each key's value to nil.
 	DomainMetadata *map[string]interface{} `json:"domain_metadata,omitempty"`
 
+	// RelyingPartyIdentifier is the Relying Party ID (rpId) to be used for Passkeys on this custom domain.
+	// If not provided or set to nil, the full domain will be used.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty"`
+
 	// The custom domain certificate.
 	Certificate *CustomDomainCertificate `json:"certificate,omitempty"`
 }
