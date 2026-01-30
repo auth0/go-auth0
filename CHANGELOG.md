@@ -1,5 +1,14 @@
 # Change Log
 
+## [v1.33.0](https://github.com/auth0/go-auth0/tree/v1.33.0) (2026-01-30)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.32.1...v1.33.0)
+
+**Added**
+- feat: Passwordless on Db Connections, AllowAllScopes for App Access Permissions, Action Modules, Universal Password Hash, and Self Service Org Domain Discovery [\#683](https://github.com/auth0/go-auth0/pull/683) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: add RelyingPartyIdentifier field to CustomDomain [\#686](https://github.com/auth0/go-auth0/pull/686) ([ramya18101](https://github.com/ramya18101))
+- feat: Add Email field support for Line connections [\#680](https://github.com/auth0/go-auth0/pull/680) ([developerkunal](https://github.com/developerkunal))
+- feat: add session metadata support for OIDC logout in clients [\#677](https://github.com/auth0/go-auth0/pull/677) ([ramya18101](https://github.com/ramya18101))
+
 ## [v1.32.1](https://github.com/auth0/go-auth0/tree/v1.32.1) (2025-12-15)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.32.0...v1.32.1)
 
