@@ -242,7 +242,6 @@ func (o *OrganizationDiscoveryDomain) cleanForPatch() *OrganizationDiscoveryDoma
 		Status:                      o.Status,
 		UseForOrganizationDiscovery: o.UseForOrganizationDiscovery,
 	}
-
 }
 
 // DiscoveryDomainList is a list of OrganizationDiscoveryDomains.
