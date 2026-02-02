@@ -63,6 +63,14 @@ func (a *Action) GetID() string {
 	return *a.ID
 }
 
+// GetModules returns the Modules field.
+func (a *Action) GetModules() *ActionModules {
+	if a == nil {
+		return nil
+	}
+	return a.Modules
+}
+
 // GetName returns the Name field if it's non-nil, zero value otherwise.
 func (a *Action) GetName() string {
 	if a == nil || a.Name == nil {
@@ -308,6 +316,43 @@ func (a *ActionExecutionResult) String() string {
 
 // String returns a string representation of ActionList.
 func (a *ActionList) String() string {
+	return Stringify(a)
+}
+
+// GetModuleID returns the ModuleID field if it's non-nil, zero value otherwise.
+func (a *ActionModules) GetModuleID() string {
+	if a == nil || a.ModuleID == nil {
+		return ""
+	}
+	return *a.ModuleID
+}
+
+// GetModuleName returns the ModuleName field if it's non-nil, zero value otherwise.
+func (a *ActionModules) GetModuleName() string {
+	if a == nil || a.ModuleName == nil {
+		return ""
+	}
+	return *a.ModuleName
+}
+
+// GetModuleVersionID returns the ModuleVersionID field if it's non-nil, zero value otherwise.
+func (a *ActionModules) GetModuleVersionID() string {
+	if a == nil || a.ModuleVersionID == nil {
+		return ""
+	}
+	return *a.ModuleVersionID
+}
+
+// GetModuleVersionNumber returns the ModuleVersionNumber field if it's non-nil, zero value otherwise.
+func (a *ActionModules) GetModuleVersionNumber() int {
+	if a == nil || a.ModuleVersionNumber == nil {
+		return 0
+	}
+	return *a.ModuleVersionNumber
+}
+
+// String returns a string representation of ActionModules.
+func (a *ActionModules) String() string {
 	return Stringify(a)
 }
 
