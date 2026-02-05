@@ -6,7 +6,6 @@ management/core/request_option.go
 management/core/request_option_test.go
 management/option/request_option.go
 # preserve manual fix to broken test (caused by optional request body being an alias of an optional type)
-management/actions/versions/actions_versions_test/actions_versions_test.go
 auth0.go
 auth0_test.go
 meta.go
