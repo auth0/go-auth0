@@ -5350,7 +5350,7 @@ client.EventStreams.Test(
 <dd>
 
 ```go
-request := &management.FlowsListRequest{
+request := &management.ListFlowsRequestParameters{
         Page: management.Int(
             1,
         ),
@@ -5407,7 +5407,7 @@ client.Flows.List(
 <dl>
 <dd>
 
-**hydrate:** `*management.FlowsListRequestHydrateItem` — hydration param
+**hydrate:** `*management.ListFlowsRequestParametersHydrateEnum` — hydration param
     
 </dd>
 </dl>
@@ -14063,7 +14063,7 @@ Performs the equivalent of a roll-back of an action to an earlier, specified ver
 <dd>
 
 ```go
-request := &management.DeployActionVersionRequestBodyParams{}
+request := &management.DeployActionVersionRequestContent{}
 client.Actions.Versions.Deploy(
         context.TODO(),
         "actionId",
@@ -15578,7 +15578,7 @@ client.AttackProtection.BruteForceProtection.Update(
 <dl>
 <dd>
 
-**shields:** `[]*attackprotection.UpdateBruteForceSettingsRequestContentShieldsItem` 
+**shields:** `[]*management.BruteForceProtectionShieldsEnum` 
 
 Action to take when a brute force protection threshold is violated.
         Possible values: <code>block</code>, <code>user_notification</code>.
@@ -15597,10 +15597,7 @@ Action to take when a brute force protection threshold is violated.
 <dl>
 <dd>
 
-**mode:** `*attackprotection.UpdateBruteForceSettingsRequestContentMode` 
-
-Account Lockout: Determines whether or not IP address is used when counting failed attempts.
-          Possible values: <code>count_per_identifier_and_ip</code>, <code>count_per_identifier</code>.
+**mode:** `*management.BruteForceProtectionModeEnum` 
     
 </dd>
 </dl>
@@ -19993,7 +19990,7 @@ client.EventStreams.Redeliveries.CreateByID(
 <dd>
 
 ```go
-request := &management.ExecutionsListRequest{
+request := &management.ListFlowExecutionsRequestParameters{
         From: management.String(
             "from",
         ),
@@ -20062,7 +20059,7 @@ client.Flows.Executions.List(
 <dd>
 
 ```go
-request := &management.ExecutionsGetRequest{}
+request := &management.GetFlowExecutionRequestParameters{}
 client.Flows.Executions.Get(
         context.TODO(),
         "flow_id",
@@ -20100,7 +20097,7 @@ client.Flows.Executions.Get(
 <dl>
 <dd>
 
-**hydrate:** `*flows.ExecutionsGetRequestHydrateItem` — Hydration param
+**hydrate:** `*management.GetFlowExecutionRequestParametersHydrateEnum` — Hydration param
     
 </dd>
 </dl>
@@ -28019,7 +28016,7 @@ client.Tenants.Settings.Update(
 <dl>
 <dd>
 
-**enabledLocales:** `[]*tenants.UpdateTenantSettingsRequestContentEnabledLocalesItem` — Supported locales for the user interface
+**enabledLocales:** `[]*management.TenantSettingsSupportedLocalesEnum` — Supported locales for the user interface
     
 </dd>
 </dl>

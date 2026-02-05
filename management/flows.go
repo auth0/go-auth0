@@ -25495,6 +25495,25 @@ func (l *ListFlowsOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type ListFlowsRequestParametersHydrateEnum string
+
+const (
+	ListFlowsRequestParametersHydrateEnumFormCount ListFlowsRequestParametersHydrateEnum = "form_count"
+)
+
+func NewListFlowsRequestParametersHydrateEnumFromString(s string) (ListFlowsRequestParametersHydrateEnum, error) {
+	switch s {
+	case "form_count":
+		return ListFlowsRequestParametersHydrateEnumFormCount, nil
+	}
+	var t ListFlowsRequestParametersHydrateEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l ListFlowsRequestParametersHydrateEnum) Ptr() *ListFlowsRequestParametersHydrateEnum {
+	return &l
+}
+
 var (
 	updateFlowResponseContentFieldID         = big.NewInt(1 << 0)
 	updateFlowResponseContentFieldName       = big.NewInt(1 << 1)
@@ -25663,23 +25682,4 @@ func (u *UpdateFlowResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", u)
-}
-
-type FlowsListRequestHydrateItem string
-
-const (
-	FlowsListRequestHydrateItemFormCount FlowsListRequestHydrateItem = "form_count"
-)
-
-func NewFlowsListRequestHydrateItemFromString(s string) (FlowsListRequestHydrateItem, error) {
-	switch s {
-	case "form_count":
-		return FlowsListRequestHydrateItemFormCount, nil
-	}
-	var t FlowsListRequestHydrateItem
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowsListRequestHydrateItem) Ptr() *FlowsListRequestHydrateItem {
-	return &f
 }

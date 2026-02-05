@@ -37,7 +37,7 @@ func (c *Client) List(
 	ctx context.Context,
 	// Flow id
 	flowID string,
-	request *management.ExecutionsListRequest,
+	request *management.ListFlowExecutionsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*string, *management.FlowExecutionSummary, *management.ListFlowExecutionsPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -108,7 +108,7 @@ func (c *Client) Get(
 	flowID string,
 	// Flow execution id
 	executionID string,
-	request *management.ExecutionsGetRequest,
+	request *management.GetFlowExecutionRequestParameters,
 	opts ...option.RequestOption,
 ) (*management.GetFlowExecutionResponseContent, error) {
 	response, err := c.WithRawResponse.Get(

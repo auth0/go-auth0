@@ -71,7 +71,7 @@ func TestFlowsListWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.FlowsListRequest{
+	request := &management.ListFlowsRequestParameters{
 		Page: management.Int(
 			1,
 		),

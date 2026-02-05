@@ -20,6 +20,7 @@ var (
 	getJobResponseContentFieldTimeLeftSeconds = big.NewInt(1 << 7)
 	getJobResponseContentFieldFormat          = big.NewInt(1 << 8)
 	getJobResponseContentFieldStatusDetails   = big.NewInt(1 << 9)
+	getJobResponseContentFieldSummary         = big.NewInt(1 << 10)
 )
 
 type GetJobResponseContent struct {
@@ -41,7 +42,8 @@ type GetJobResponseContent struct {
 	TimeLeftSeconds *int               `json:"time_left_seconds,omitempty" url:"time_left_seconds,omitempty"`
 	Format          *JobFileFormatEnum `json:"format,omitempty" url:"format,omitempty"`
 	// Status details.
-	StatusDetails *string `json:"status_details,omitempty" url:"status_details,omitempty"`
+	StatusDetails *string        `json:"status_details,omitempty" url:"status_details,omitempty"`
+	Summary       *GetJobSummary `json:"summary,omitempty" url:"summary,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -119,6 +121,13 @@ func (g *GetJobResponseContent) GetStatusDetails() string {
 		return ""
 	}
 	return *g.StatusDetails
+}
+
+func (g *GetJobResponseContent) GetSummary() GetJobSummary {
+	if g == nil || g.Summary == nil {
+		return GetJobSummary{}
+	}
+	return *g.Summary
 }
 
 func (g *GetJobResponseContent) GetExtraProperties() map[string]interface{} {
@@ -202,6 +211,13 @@ func (g *GetJobResponseContent) SetStatusDetails(statusDetails *string) {
 	g.require(getJobResponseContentFieldStatusDetails)
 }
 
+// SetSummary sets the Summary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobResponseContent) SetSummary(summary *GetJobSummary) {
+	g.Summary = summary
+	g.require(getJobResponseContentFieldSummary)
+}
+
 func (g *GetJobResponseContent) UnmarshalJSON(data []byte) error {
 	type embed GetJobResponseContent
 	var unmarshaler = struct {
@@ -234,6 +250,142 @@ func (g *GetJobResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetJobResponseContent) String() string {
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+// Job execution summary.
+var (
+	getJobSummaryFieldFailed   = big.NewInt(1 << 0)
+	getJobSummaryFieldUpdated  = big.NewInt(1 << 1)
+	getJobSummaryFieldInserted = big.NewInt(1 << 2)
+	getJobSummaryFieldTotal    = big.NewInt(1 << 3)
+)
+
+type GetJobSummary struct {
+	// Number of failed operations.
+	Failed *int `json:"failed,omitempty" url:"failed,omitempty"`
+	// Number of updated records.
+	Updated *int `json:"updated,omitempty" url:"updated,omitempty"`
+	// Number of inserted records.
+	Inserted *int `json:"inserted,omitempty" url:"inserted,omitempty"`
+	// Total number of operations.
+	Total *int `json:"total,omitempty" url:"total,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetJobSummary) GetFailed() int {
+	if g == nil || g.Failed == nil {
+		return 0
+	}
+	return *g.Failed
+}
+
+func (g *GetJobSummary) GetUpdated() int {
+	if g == nil || g.Updated == nil {
+		return 0
+	}
+	return *g.Updated
+}
+
+func (g *GetJobSummary) GetInserted() int {
+	if g == nil || g.Inserted == nil {
+		return 0
+	}
+	return *g.Inserted
+}
+
+func (g *GetJobSummary) GetTotal() int {
+	if g == nil || g.Total == nil {
+		return 0
+	}
+	return *g.Total
+}
+
+func (g *GetJobSummary) GetExtraProperties() map[string]interface{} {
+	return g.ExtraProperties
+}
+
+func (g *GetJobSummary) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetFailed sets the Failed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobSummary) SetFailed(failed *int) {
+	g.Failed = failed
+	g.require(getJobSummaryFieldFailed)
+}
+
+// SetUpdated sets the Updated field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobSummary) SetUpdated(updated *int) {
+	g.Updated = updated
+	g.require(getJobSummaryFieldUpdated)
+}
+
+// SetInserted sets the Inserted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobSummary) SetInserted(inserted *int) {
+	g.Inserted = inserted
+	g.require(getJobSummaryFieldInserted)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobSummary) SetTotal(total *int) {
+	g.Total = total
+	g.require(getJobSummaryFieldTotal)
+}
+
+func (g *GetJobSummary) UnmarshalJSON(data []byte) error {
+	type embed GetJobSummary
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetJobSummary(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetJobSummary) MarshalJSON() ([]byte, error) {
+	type embed GetJobSummary
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetJobSummary) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value

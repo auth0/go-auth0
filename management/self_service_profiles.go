@@ -823,6 +823,8 @@ const (
 	SelfServiceProfileAllowedStrategyEnumGoogleApps    SelfServiceProfileAllowedStrategyEnum = "google-apps"
 	SelfServiceProfileAllowedStrategyEnumAdfs          SelfServiceProfileAllowedStrategyEnum = "adfs"
 	SelfServiceProfileAllowedStrategyEnumOkta          SelfServiceProfileAllowedStrategyEnum = "okta"
+	SelfServiceProfileAllowedStrategyEnumAuth0Samlp    SelfServiceProfileAllowedStrategyEnum = "auth0-samlp"
+	SelfServiceProfileAllowedStrategyEnumOktaSamlp     SelfServiceProfileAllowedStrategyEnum = "okta-samlp"
 	SelfServiceProfileAllowedStrategyEnumKeycloakSamlp SelfServiceProfileAllowedStrategyEnum = "keycloak-samlp"
 	SelfServiceProfileAllowedStrategyEnumPingfederate  SelfServiceProfileAllowedStrategyEnum = "pingfederate"
 )
@@ -841,6 +843,10 @@ func NewSelfServiceProfileAllowedStrategyEnumFromString(s string) (SelfServicePr
 		return SelfServiceProfileAllowedStrategyEnumAdfs, nil
 	case "okta":
 		return SelfServiceProfileAllowedStrategyEnumOkta, nil
+	case "auth0-samlp":
+		return SelfServiceProfileAllowedStrategyEnumAuth0Samlp, nil
+	case "okta-samlp":
+		return SelfServiceProfileAllowedStrategyEnumOktaSamlp, nil
 	case "keycloak-samlp":
 		return SelfServiceProfileAllowedStrategyEnumKeycloakSamlp, nil
 	case "pingfederate":
