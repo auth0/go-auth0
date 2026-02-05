@@ -71,7 +71,7 @@ func TestFlowsExecutionsListWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.ExecutionsListRequest{
+	request := &management.ListFlowExecutionsRequestParameters{
 		From: management.String(
 			"from",
 		),
@@ -99,7 +99,7 @@ func TestFlowsExecutionsGetWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &management.ExecutionsGetRequest{}
+	request := &management.GetFlowExecutionRequestParameters{}
 	_, invocationErr := client.Flows.Executions.Get(
 		context.TODO(),
 		"flow_id",

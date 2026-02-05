@@ -1290,14 +1290,16 @@ func (r ResourceServerConsentPolicyEnum) Ptr() *ResourceServerConsentPolicyEnum 
 
 // Proof-of-Possession configuration for access tokens
 var (
-	resourceServerProofOfPossessionFieldMechanism = big.NewInt(1 << 0)
-	resourceServerProofOfPossessionFieldRequired  = big.NewInt(1 << 1)
+	resourceServerProofOfPossessionFieldMechanism   = big.NewInt(1 << 0)
+	resourceServerProofOfPossessionFieldRequired    = big.NewInt(1 << 1)
+	resourceServerProofOfPossessionFieldRequiredFor = big.NewInt(1 << 2)
 )
 
 type ResourceServerProofOfPossession struct {
 	Mechanism ResourceServerProofOfPossessionMechanismEnum `json:"mechanism" url:"mechanism"`
 	// Whether the use of Proof-of-Possession is required for the resource server
-	Required bool `json:"required" url:"required"`
+	Required    bool                                            `json:"required" url:"required"`
+	RequiredFor *ResourceServerProofOfPossessionRequiredForEnum `json:"required_for,omitempty" url:"required_for,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1318,6 +1320,13 @@ func (r *ResourceServerProofOfPossession) GetRequired() bool {
 		return false
 	}
 	return r.Required
+}
+
+func (r *ResourceServerProofOfPossession) GetRequiredFor() ResourceServerProofOfPossessionRequiredForEnum {
+	if r == nil || r.RequiredFor == nil {
+		return ""
+	}
+	return *r.RequiredFor
 }
 
 func (r *ResourceServerProofOfPossession) GetExtraProperties() map[string]interface{} {
@@ -1343,6 +1352,13 @@ func (r *ResourceServerProofOfPossession) SetMechanism(mechanism ResourceServerP
 func (r *ResourceServerProofOfPossession) SetRequired(required bool) {
 	r.Required = required
 	r.require(resourceServerProofOfPossessionFieldRequired)
+}
+
+// SetRequiredFor sets the RequiredFor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerProofOfPossession) SetRequiredFor(requiredFor *ResourceServerProofOfPossessionRequiredForEnum) {
+	r.RequiredFor = requiredFor
+	r.require(resourceServerProofOfPossessionFieldRequiredFor)
 }
 
 func (r *ResourceServerProofOfPossession) UnmarshalJSON(data []byte) error {
@@ -1404,6 +1420,32 @@ func NewResourceServerProofOfPossessionMechanismEnumFromString(s string) (Resour
 }
 
 func (r ResourceServerProofOfPossessionMechanismEnum) Ptr() *ResourceServerProofOfPossessionMechanismEnum {
+	return &r
+}
+
+// Specifies which client types require Proof-of-Possession
+type ResourceServerProofOfPossessionRequiredForEnum string
+
+const (
+	ResourceServerProofOfPossessionRequiredForEnumPublicClients       ResourceServerProofOfPossessionRequiredForEnum = "public_clients"
+	ResourceServerProofOfPossessionRequiredForEnumConfidentialClients ResourceServerProofOfPossessionRequiredForEnum = "confidential_clients"
+	ResourceServerProofOfPossessionRequiredForEnumAllClients          ResourceServerProofOfPossessionRequiredForEnum = "all_clients"
+)
+
+func NewResourceServerProofOfPossessionRequiredForEnumFromString(s string) (ResourceServerProofOfPossessionRequiredForEnum, error) {
+	switch s {
+	case "public_clients":
+		return ResourceServerProofOfPossessionRequiredForEnumPublicClients, nil
+	case "confidential_clients":
+		return ResourceServerProofOfPossessionRequiredForEnumConfidentialClients, nil
+	case "all_clients":
+		return ResourceServerProofOfPossessionRequiredForEnumAllClients, nil
+	}
+	var t ResourceServerProofOfPossessionRequiredForEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerProofOfPossessionRequiredForEnum) Ptr() *ResourceServerProofOfPossessionRequiredForEnum {
 	return &r
 }
 

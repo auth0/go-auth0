@@ -36,7 +36,7 @@ func (r *RawClient) Get(
 	flowID string,
 	// Flow execution id
 	executionID string,
-	request *management.ExecutionsGetRequest,
+	request *management.GetFlowExecutionRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetFlowExecutionResponseContent], error) {
 	options := core.NewRequestOptions(opts...)

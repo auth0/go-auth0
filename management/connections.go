@@ -9,6 +9,29 @@ import (
 	big "math/big"
 )
 
+// Specifies the API behavior for password authentication
+type ConnectionAPIBehaviorEnum string
+
+const (
+	ConnectionAPIBehaviorEnumRequired ConnectionAPIBehaviorEnum = "required"
+	ConnectionAPIBehaviorEnumOptional ConnectionAPIBehaviorEnum = "optional"
+)
+
+func NewConnectionAPIBehaviorEnumFromString(s string) (ConnectionAPIBehaviorEnum, error) {
+	switch s {
+	case "required":
+		return ConnectionAPIBehaviorEnumRequired, nil
+	case "optional":
+		return ConnectionAPIBehaviorEnumOptional, nil
+	}
+	var t ConnectionAPIBehaviorEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionAPIBehaviorEnum) Ptr() *ConnectionAPIBehaviorEnum {
+	return &c
+}
+
 var (
 	connectionAttributeIdentifierFieldActive        = big.NewInt(1 << 0)
 	connectionAttributeIdentifierFieldDefaultMethod = big.NewInt(1 << 1)
@@ -1317,12 +1340,16 @@ func (c *ConnectionPasskeyOptions) String() string {
 
 // Password authentication enablement
 var (
-	connectionPasswordAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
+	connectionPasswordAuthenticationMethodFieldEnabled        = big.NewInt(1 << 0)
+	connectionPasswordAuthenticationMethodFieldAPIBehavior    = big.NewInt(1 << 1)
+	connectionPasswordAuthenticationMethodFieldSignupBehavior = big.NewInt(1 << 2)
 )
 
 type ConnectionPasswordAuthenticationMethod struct {
 	// Determines whether passwords are enabled
-	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+	Enabled        *bool                         `json:"enabled,omitempty" url:"enabled,omitempty"`
+	APIBehavior    *ConnectionAPIBehaviorEnum    `json:"api_behavior,omitempty" url:"api_behavior,omitempty"`
+	SignupBehavior *ConnectionSignupBehaviorEnum `json:"signup_behavior,omitempty" url:"signup_behavior,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1336,6 +1363,20 @@ func (c *ConnectionPasswordAuthenticationMethod) GetEnabled() bool {
 		return false
 	}
 	return *c.Enabled
+}
+
+func (c *ConnectionPasswordAuthenticationMethod) GetAPIBehavior() ConnectionAPIBehaviorEnum {
+	if c == nil || c.APIBehavior == nil {
+		return ""
+	}
+	return *c.APIBehavior
+}
+
+func (c *ConnectionPasswordAuthenticationMethod) GetSignupBehavior() ConnectionSignupBehaviorEnum {
+	if c == nil || c.SignupBehavior == nil {
+		return ""
+	}
+	return *c.SignupBehavior
 }
 
 func (c *ConnectionPasswordAuthenticationMethod) GetExtraProperties() map[string]interface{} {
@@ -1354,6 +1395,20 @@ func (c *ConnectionPasswordAuthenticationMethod) require(field *big.Int) {
 func (c *ConnectionPasswordAuthenticationMethod) SetEnabled(enabled *bool) {
 	c.Enabled = enabled
 	c.require(connectionPasswordAuthenticationMethodFieldEnabled)
+}
+
+// SetAPIBehavior sets the APIBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordAuthenticationMethod) SetAPIBehavior(apiBehavior *ConnectionAPIBehaviorEnum) {
+	c.APIBehavior = apiBehavior
+	c.require(connectionPasswordAuthenticationMethodFieldAPIBehavior)
+}
+
+// SetSignupBehavior sets the SignupBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordAuthenticationMethod) SetSignupBehavior(signupBehavior *ConnectionSignupBehaviorEnum) {
+	c.SignupBehavior = signupBehavior
+	c.require(connectionPasswordAuthenticationMethodFieldSignupBehavior)
 }
 
 func (c *ConnectionPasswordAuthenticationMethod) UnmarshalJSON(data []byte) error {
@@ -2401,6 +2456,29 @@ func NewConnectionSetUserRootAttributesEnumFromString(s string) (ConnectionSetUs
 }
 
 func (c ConnectionSetUserRootAttributesEnum) Ptr() *ConnectionSetUserRootAttributesEnum {
+	return &c
+}
+
+// Specifies the signup behavior for password authentication
+type ConnectionSignupBehaviorEnum string
+
+const (
+	ConnectionSignupBehaviorEnumAllow ConnectionSignupBehaviorEnum = "allow"
+	ConnectionSignupBehaviorEnumBlock ConnectionSignupBehaviorEnum = "block"
+)
+
+func NewConnectionSignupBehaviorEnumFromString(s string) (ConnectionSignupBehaviorEnum, error) {
+	switch s {
+	case "allow":
+		return ConnectionSignupBehaviorEnumAllow, nil
+	case "block":
+		return ConnectionSignupBehaviorEnumBlock, nil
+	}
+	var t ConnectionSignupBehaviorEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionSignupBehaviorEnum) Ptr() *ConnectionSignupBehaviorEnum {
 	return &c
 }
 

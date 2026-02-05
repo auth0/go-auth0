@@ -43,7 +43,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) List(
 	ctx context.Context,
-	request *management.FlowsListRequest,
+	request *management.ListFlowsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*int, *management.FlowSummary, *management.ListFlowsOffsetPaginatedResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
