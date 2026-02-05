@@ -4,7 +4,6 @@ package errors
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	jobs "github.com/auth0/go-auth0/v2/management/jobs"
@@ -63,7 +62,7 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(jobs.ErrorCodes),
 		},
 	)
 	if err != nil {

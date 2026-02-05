@@ -8,6 +8,7 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
+	roles "github.com/auth0/go-auth0/v2/management/roles"
 	http "net/http"
 )
 
@@ -63,7 +64,7 @@ func (r *RawClient) Assign(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(roles.ErrorCodes),
 		},
 	)
 	if err != nil {

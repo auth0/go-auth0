@@ -6,6 +6,7 @@ import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
+	factors "github.com/auth0/go-auth0/v2/management/guardian/factors"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	http "net/http"
@@ -57,7 +58,7 @@ func (r *RawClient) GetTwilioProvider(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(factors.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -100,7 +101,7 @@ func (r *RawClient) SetTwilioProvider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(factors.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -140,7 +141,7 @@ func (r *RawClient) GetSelectedProvider(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(factors.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -183,7 +184,7 @@ func (r *RawClient) SetProvider(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(factors.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -223,7 +224,7 @@ func (r *RawClient) GetTemplates(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(factors.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -266,7 +267,7 @@ func (r *RawClient) SetTemplates(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(factors.ErrorCodes),
 		},
 	)
 	if err != nil {

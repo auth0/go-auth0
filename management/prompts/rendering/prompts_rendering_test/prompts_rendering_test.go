@@ -11,31 +11,31 @@ import (
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
 	http "net/http"
+	os "os"
 	testing "testing"
 )
 
-func ResetWireMockRequests(
-	t *testing.T,
-) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
-	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
-	require.NoError(t, err)
-}
-
 func VerifyRequestCount(
 	t *testing.T,
+	testId string,
 	method string,
 	urlPath string,
 	queryParams map[string]string,
 	expected int,
 ) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
 	reqBody.WriteString(`","urlPath":"`)
 	reqBody.WriteString(urlPath)
-	reqBody.WriteString(`"}`)
+	reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
+	reqBody.WriteString(testId)
+	reqBody.WriteString(`"}}`)
 	if len(queryParams) > 0 {
 		reqBody.WriteString(`,"queryParameters":{`)
 		first := true
@@ -52,6 +52,7 @@ func VerifyRequestCount(
 		}
 		reqBody.WriteString("}")
 	}
+	reqBody.WriteString("}")
 	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
 	require.NoError(t, err)
 	var result struct {
@@ -64,12 +65,13 @@ func VerifyRequestCount(
 func TestPromptsRenderingListWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.ListAculsRequestParameters{
 		Fields: management.String(
@@ -98,21 +100,25 @@ func TestPromptsRenderingListWithWireMock(
 	_, invocationErr := client.Prompts.Rendering.List(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsRenderingListWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/prompts/rendering", map[string]string{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "prompt": "prompt", "screen": "screen", "rendering_mode": "advanced"}, 1)
+	VerifyRequestCount(t, "TestPromptsRenderingListWithWireMock", "GET", "/prompts/rendering", map[string]string{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "prompt": "prompt", "screen": "screen", "rendering_mode": "advanced"}, 1)
 }
 
 func TestPromptsRenderingBulkUpdateWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.BulkUpdateAculRequestContent{
 		Configs: []*management.AculConfigsItem{
@@ -125,41 +131,49 @@ func TestPromptsRenderingBulkUpdateWithWireMock(
 	_, invocationErr := client.Prompts.Rendering.BulkUpdate(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsRenderingBulkUpdateWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PATCH", "/prompts/rendering", nil, 1)
+	VerifyRequestCount(t, "TestPromptsRenderingBulkUpdateWithWireMock", "PATCH", "/prompts/rendering", nil, 1)
 }
 
 func TestPromptsRenderingGetWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Prompts.Rendering.Get(
 		context.TODO(),
 		management.PromptGroupNameEnumLogin.Ptr(),
 		management.ScreenGroupNameEnumLogin.Ptr(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsRenderingGetWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/prompts/login/screen/login/rendering", nil, 1)
+	VerifyRequestCount(t, "TestPromptsRenderingGetWithWireMock", "GET", "/prompts/login/screen/login/rendering", nil, 1)
 }
 
 func TestPromptsRenderingUpdateWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.UpdateAculRequestContent{}
 	_, invocationErr := client.Prompts.Rendering.Update(
@@ -167,8 +181,11 @@ func TestPromptsRenderingUpdateWithWireMock(
 		management.PromptGroupNameEnumLogin.Ptr(),
 		management.ScreenGroupNameEnumLogin.Ptr(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsRenderingUpdateWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PATCH", "/prompts/login/screen/login/rendering", nil, 1)
+	VerifyRequestCount(t, "TestPromptsRenderingUpdateWithWireMock", "PATCH", "/prompts/login/screen/login/rendering", nil, 1)
 }
