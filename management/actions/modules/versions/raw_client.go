@@ -5,6 +5,7 @@ package versions
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
+	modules "github.com/auth0/go-auth0/v2/management/actions/modules"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -62,7 +63,7 @@ func (r *RawClient) List(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(modules.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -107,7 +108,7 @@ func (r *RawClient) Create(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(modules.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -155,7 +156,7 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(modules.ErrorCodes),
 		},
 	)
 	if err != nil {

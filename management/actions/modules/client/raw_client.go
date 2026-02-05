@@ -5,6 +5,7 @@ package client
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
+	actions "github.com/auth0/go-auth0/v2/management/actions"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -60,7 +61,7 @@ func (r *RawClient) Create(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(actions.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -105,7 +106,7 @@ func (r *RawClient) Get(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(actions.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -148,7 +149,7 @@ func (r *RawClient) Delete(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(actions.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -196,7 +197,7 @@ func (r *RawClient) Update(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(actions.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -244,7 +245,7 @@ func (r *RawClient) Rollback(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(actions.ErrorCodes),
 		},
 	)
 	if err != nil {

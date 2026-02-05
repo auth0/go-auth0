@@ -11,31 +11,31 @@ import (
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
 	http "net/http"
+	os "os"
 	testing "testing"
 )
 
-func ResetWireMockRequests(
-	t *testing.T,
-) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
-	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
-	require.NoError(t, err)
-}
-
 func VerifyRequestCount(
 	t *testing.T,
+	testId string,
 	method string,
 	urlPath string,
 	queryParams map[string]string,
 	expected int,
 ) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
 	reqBody.WriteString(`","urlPath":"`)
 	reqBody.WriteString(urlPath)
-	reqBody.WriteString(`"}`)
+	reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
+	reqBody.WriteString(testId)
+	reqBody.WriteString(`"}}`)
 	if len(queryParams) > 0 {
 		reqBody.WriteString(`,"queryParameters":{`)
 		first := true
@@ -52,6 +52,7 @@ func VerifyRequestCount(
 		}
 		reqBody.WriteString("}")
 	}
+	reqBody.WriteString("}")
 	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
 	require.NoError(t, err)
 	var result struct {
@@ -64,12 +65,13 @@ func VerifyRequestCount(
 func TestConnectionProfilesListWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.ListConnectionProfileRequestParameters{
 		From: management.String(
@@ -82,21 +84,25 @@ func TestConnectionProfilesListWithWireMock(
 	_, invocationErr := client.ConnectionProfiles.List(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesListWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/connection-profiles", map[string]string{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesListWithWireMock", "GET", "/connection-profiles", map[string]string{"from": "from", "take": "1"}, 1)
 }
 
 func TestConnectionProfilesCreateWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.CreateConnectionProfileRequestContent{
 		Name: "name",
@@ -104,104 +110,127 @@ func TestConnectionProfilesCreateWithWireMock(
 	_, invocationErr := client.ConnectionProfiles.Create(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesCreateWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "POST", "/connection-profiles", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesCreateWithWireMock", "POST", "/connection-profiles", nil, 1)
 }
 
 func TestConnectionProfilesListTemplatesWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.ConnectionProfiles.ListTemplates(
 		context.TODO(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesListTemplatesWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/connection-profiles/templates", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesListTemplatesWithWireMock", "GET", "/connection-profiles/templates", nil, 1)
 }
 
 func TestConnectionProfilesGetTemplateWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.ConnectionProfiles.GetTemplate(
 		context.TODO(),
 		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesGetTemplateWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/connection-profiles/templates/id", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesGetTemplateWithWireMock", "GET", "/connection-profiles/templates/id", nil, 1)
 }
 
 func TestConnectionProfilesGetWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.ConnectionProfiles.Get(
 		context.TODO(),
 		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesGetWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/connection-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesGetWithWireMock", "GET", "/connection-profiles/id", nil, 1)
 }
 
 func TestConnectionProfilesDeleteWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	invocationErr := client.ConnectionProfiles.Delete(
 		context.TODO(),
 		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesDeleteWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "DELETE", "/connection-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesDeleteWithWireMock", "DELETE", "/connection-profiles/id", nil, 1)
 }
 
 func TestConnectionProfilesUpdateWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.UpdateConnectionProfileRequestContent{}
 	_, invocationErr := client.ConnectionProfiles.Update(
 		context.TODO(),
 		"id",
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesUpdateWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PATCH", "/connection-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesUpdateWithWireMock", "PATCH", "/connection-profiles/id", nil, 1)
 }

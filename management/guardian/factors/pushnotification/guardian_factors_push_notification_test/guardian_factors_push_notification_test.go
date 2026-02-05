@@ -11,31 +11,31 @@ import (
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
 	http "net/http"
+	os "os"
 	testing "testing"
 )
 
-func ResetWireMockRequests(
-	t *testing.T,
-) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
-	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
-	require.NoError(t, err)
-}
-
 func VerifyRequestCount(
 	t *testing.T,
+	testId string,
 	method string,
 	urlPath string,
 	queryParams map[string]string,
 	expected int,
 ) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
 	reqBody.WriteString(`","urlPath":"`)
 	reqBody.WriteString(urlPath)
-	reqBody.WriteString(`"}`)
+	reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
+	reqBody.WriteString(testId)
+	reqBody.WriteString(`"}}`)
 	if len(queryParams) > 0 {
 		reqBody.WriteString(`,"queryParameters":{`)
 		first := true
@@ -52,6 +52,7 @@ func VerifyRequestCount(
 		}
 		reqBody.WriteString("}")
 	}
+	reqBody.WriteString("}")
 	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
 	require.NoError(t, err)
 	var result struct {
@@ -64,226 +65,271 @@ func VerifyRequestCount(
 func TestGuardianFactorsPushNotificationGetApnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Guardian.Factors.PushNotification.GetApnsProvider(
 		context.TODO(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationGetApnsProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/guardian/factors/push-notification/providers/apns", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationGetApnsProviderWithWireMock", "GET", "/guardian/factors/push-notification/providers/apns", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationSetApnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationApnsRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetApnsProvider(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationSetApnsProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PUT", "/guardian/factors/push-notification/providers/apns", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationSetApnsProviderWithWireMock", "PUT", "/guardian/factors/push-notification/providers/apns", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationUpdateApnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateApnsProvider(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationUpdateApnsProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PATCH", "/guardian/factors/push-notification/providers/apns", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationUpdateApnsProviderWithWireMock", "PATCH", "/guardian/factors/push-notification/providers/apns", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationSetFcmProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationFcmRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetFcmProvider(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationSetFcmProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PUT", "/guardian/factors/push-notification/providers/fcm", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationSetFcmProviderWithWireMock", "PUT", "/guardian/factors/push-notification/providers/fcm", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationUpdateFcmProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateFcmProvider(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationUpdateFcmProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PATCH", "/guardian/factors/push-notification/providers/fcm", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationUpdateFcmProviderWithWireMock", "PATCH", "/guardian/factors/push-notification/providers/fcm", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationSetFcmv1ProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetFcmv1Provider(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationSetFcmv1ProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PUT", "/guardian/factors/push-notification/providers/fcmv1", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationSetFcmv1ProviderWithWireMock", "PUT", "/guardian/factors/push-notification/providers/fcmv1", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationUpdateFcmv1ProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationUpdateFcmv1ProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PATCH", "/guardian/factors/push-notification/providers/fcmv1", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationUpdateFcmv1ProviderWithWireMock", "PATCH", "/guardian/factors/push-notification/providers/fcmv1", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationGetSnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Guardian.Factors.PushNotification.GetSnsProvider(
 		context.TODO(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationGetSnsProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/guardian/factors/push-notification/providers/sns", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationGetSnsProviderWithWireMock", "GET", "/guardian/factors/push-notification/providers/sns", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationSetSnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationSnsRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetSnsProvider(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationSetSnsProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PUT", "/guardian/factors/push-notification/providers/sns", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationSetSnsProviderWithWireMock", "PUT", "/guardian/factors/push-notification/providers/sns", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationUpdateSnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateSnsProvider(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationUpdateSnsProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PATCH", "/guardian/factors/push-notification/providers/sns", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationUpdateSnsProviderWithWireMock", "PATCH", "/guardian/factors/push-notification/providers/sns", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationGetSelectedProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Guardian.Factors.PushNotification.GetSelectedProvider(
 		context.TODO(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationGetSelectedProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/guardian/factors/push-notification/selected-provider", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationGetSelectedProviderWithWireMock", "GET", "/guardian/factors/push-notification/selected-provider", nil, 1)
 }
 
 func TestGuardianFactorsPushNotificationSetProviderWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationRequestContent{
 		Provider: management.GuardianFactorsProviderPushNotificationProviderDataEnumGuardian,
@@ -291,8 +337,11 @@ func TestGuardianFactorsPushNotificationSetProviderWithWireMock(
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetProvider(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGuardianFactorsPushNotificationSetProviderWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PUT", "/guardian/factors/push-notification/selected-provider", nil, 1)
+	VerifyRequestCount(t, "TestGuardianFactorsPushNotificationSetProviderWithWireMock", "PUT", "/guardian/factors/push-notification/selected-provider", nil, 1)
 }

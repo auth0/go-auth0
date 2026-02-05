@@ -11,31 +11,31 @@ import (
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
 	http "net/http"
+	os "os"
 	testing "testing"
 )
 
-func ResetWireMockRequests(
-	t *testing.T,
-) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
-	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
-	require.NoError(t, err)
-}
-
 func VerifyRequestCount(
 	t *testing.T,
+	testId string,
 	method string,
 	urlPath string,
 	queryParams map[string]string,
 	expected int,
 ) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
 	reqBody.WriteString(`","urlPath":"`)
 	reqBody.WriteString(urlPath)
-	reqBody.WriteString(`"}`)
+	reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
+	reqBody.WriteString(testId)
+	reqBody.WriteString(`"}}`)
 	if len(queryParams) > 0 {
 		reqBody.WriteString(`,"queryParameters":{`)
 		first := true
@@ -52,6 +52,7 @@ func VerifyRequestCount(
 		}
 		reqBody.WriteString("}")
 	}
+	reqBody.WriteString("}")
 	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
 	require.NoError(t, err)
 	var result struct {
@@ -64,12 +65,13 @@ func VerifyRequestCount(
 func TestActionsTriggersBindingsListWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.ListActionTriggerBindingsRequestParameters{
 		Page: management.Int(
@@ -83,29 +85,36 @@ func TestActionsTriggersBindingsListWithWireMock(
 		context.TODO(),
 		"triggerId",
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestActionsTriggersBindingsListWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/actions/triggers/triggerId/bindings", map[string]string{"page": "1", "per_page": "1"}, 1)
+	VerifyRequestCount(t, "TestActionsTriggersBindingsListWithWireMock", "GET", "/actions/triggers/triggerId/bindings", map[string]string{"page": "1", "per_page": "1"}, 1)
 }
 
 func TestActionsTriggersBindingsUpdateManyWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.UpdateActionBindingsRequestContent{}
 	_, invocationErr := client.Actions.Triggers.Bindings.UpdateMany(
 		context.TODO(),
 		"triggerId",
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestActionsTriggersBindingsUpdateManyWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PATCH", "/actions/triggers/triggerId/bindings", nil, 1)
+	VerifyRequestCount(t, "TestActionsTriggersBindingsUpdateManyWithWireMock", "PATCH", "/actions/triggers/triggerId/bindings", nil, 1)
 }

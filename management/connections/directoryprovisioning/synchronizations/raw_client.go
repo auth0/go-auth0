@@ -5,6 +5,7 @@ package synchronizations
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
+	directoryprovisioning "github.com/auth0/go-auth0/v2/management/connections/directoryprovisioning"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -62,7 +63,7 @@ func (r *RawClient) Create(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(directoryprovisioning.ErrorCodes),
 		},
 	)
 	if err != nil {
