@@ -14773,9 +14773,18 @@ List all published versions of a specific Actions Module.
 <dd>
 
 ```go
+request := &management.GetActionModuleVersionsRequestParameters{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
 client.Actions.Modules.Versions.List(
         context.TODO(),
         "id",
+        request,
     )
 }
 ```
@@ -14793,6 +14802,22 @@ client.Actions.Modules.Versions.List(
 <dd>
 
 **id:** `string` — The unique ID of the module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Use this field to request a specific page of the list results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — The maximum number of results to be returned by the server in a single response. 20 by default.
     
 </dd>
 </dl>

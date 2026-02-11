@@ -4,10 +4,13 @@ package versions
 
 import (
 	context "context"
+	fmt "fmt"
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
+	http "net/http"
+	strconv "strconv"
 )
 
 type Client struct {
@@ -37,17 +40,76 @@ func (c *Client) List(
 	ctx context.Context,
 	// The unique ID of the module.
 	id string,
+	request *management.GetActionModuleVersionsRequestParameters,
 	opts ...option.RequestOption,
-) (*management.GetActionModuleVersionsResponseContent, error) {
-	response, err := c.WithRawResponse.List(
-		ctx,
+) (*core.Page[*int, *management.ActionModuleVersion, *management.GetActionModuleVersionsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/actions/modules/%v/versions",
 		id,
-		opts...,
+	)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"page":     0,
+			"per_page": 50,
+		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return response.Body, nil
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		}
+	}
+	next := 1
+	if queryParams.Has("page") {
+		var err error
+		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
+			return nil, err
+		}
+	}
+
+	readPageResponse := func(response *management.GetActionModuleVersionsResponseContent) *core.PageResponse[*int, *management.ActionModuleVersion, *management.GetActionModuleVersionsResponseContent] {
+		next += 1
+		results := response.Versions
+		return &core.PageResponse[*int, *management.ActionModuleVersion, *management.GetActionModuleVersionsResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+		}
+	}
+	pager := internal.NewOffsetPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, &next)
 }
 
 // Creates a new immutable version of an Actions Module from the current draft version. This publishes the draft as a new version that can be referenced by actions, while maintaining the existing draft for continued development.

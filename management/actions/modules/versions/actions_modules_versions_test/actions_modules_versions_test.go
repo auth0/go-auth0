@@ -6,6 +6,7 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
@@ -72,16 +73,25 @@ func TestActionsModulesVersionsListWithWireMock(
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
+	request := &management.GetActionModuleVersionsRequestParameters{
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+	}
 	_, invocationErr := client.Actions.Modules.Versions.List(
 		context.TODO(),
 		"id",
+		request,
 		option.WithHTTPHeader(
 			http.Header{"X-Test-Id": []string{"TestActionsModulesVersionsListWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestActionsModulesVersionsListWithWireMock", "GET", "/actions/modules/id/versions", nil, 1)
+	VerifyRequestCount(t, "TestActionsModulesVersionsListWithWireMock", "GET", "/actions/modules/id/versions", map[string]string{"page": "1", "per_page": "1"}, 1)
 }
 
 func TestActionsModulesVersionsCreateWithWireMock(
