@@ -1,5 +1,16 @@
 # Change Log
 
+## [v2.5.0](https://github.com/auth0/go-auth0/tree/v2.5.0) (2026-02-11)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.4.0...v2.5.0)
+
+**Changed**
+- feat!: Consolidate types to root package with consistent naming [\#692](https://github.com/auth0/go-auth0/pull/692) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Fixed**
+- chore: Add MarshalJSON/UnmarshalJSON to all request content types for correct explicit-field serialization [\#696](https://github.com/auth0/go-auth0/pull/696) ([fern-api[bot]](https://github.com/apps/fern-api))
+- chore: Add pagination for Action Module Versions, enhance social connection options, and fix session signal serialization [\#695](https://github.com/auth0/go-auth0/pull/695) ([fern-api[bot]](https://github.com/apps/fern-api))
+- chore: Improve WireMock test infrastructure and add package-level error codes [\#693](https://github.com/auth0/go-auth0/pull/693) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.4.0](https://github.com/auth0/go-auth0/tree/v2.4.0) (2026-01-27)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.3.0...v2.4.0)
 
