@@ -48,23 +48,34 @@ check-vuln: $(GO_BIN)/govulncheck ## Check for vulnerabilities
 .PHONY: test test-record test-e2e
 
 WIREMOCK_COMPOSE_FILE := wiremock/docker-compose.test.yml
-WIREMOCK_URL ?= http://localhost:8080
 
 test: ## Run tests. To run a specific test pass the FILTER var. Usage `make test FILTER="TestResourceServer_Read"`
-	@if curl -s $(WIREMOCK_URL)/__admin/mappings > /dev/null 2>&1; then \
-		echo "==> WireMock is running at $(WIREMOCK_URL)"; \
+	@WIREMOCK_STARTED_BY_MAKE=false; \
+	if [ -n "$$WIREMOCK_PORT" ]; then \
+		WIREMOCK_URL="http://localhost:$$WIREMOCK_PORT"; \
+		if curl -s "$$WIREMOCK_URL/__admin/mappings" > /dev/null 2>&1; then \
+			echo "==> WireMock is already running at $$WIREMOCK_URL"; \
+		else \
+			echo "==> WIREMOCK_PORT=$$WIREMOCK_PORT set but WireMock is not reachable"; \
+			exit 1; \
+		fi; \
 	else \
 		echo "==> Starting WireMock container..."; \
 		docker compose -f $(WIREMOCK_COMPOSE_FILE) up -d; \
-		until curl -s $(WIREMOCK_URL)/__admin/mappings > /dev/null 2>&1; do \
-			echo "Waiting for WireMock..."; \
-			sleep 1; \
+		WIREMOCK_STARTED_BY_MAKE=true; \
+		WIREMOCK_PORT=$$(docker compose -f $(WIREMOCK_COMPOSE_FILE) port wiremock 8080 | cut -d: -f2); \
+		WIREMOCK_URL="http://localhost:$$WIREMOCK_PORT"; \
+		echo "==> WireMock assigned port: $$WIREMOCK_PORT"; \
+		until curl -sf "$$WIREMOCK_URL/__admin/mappings" > /dev/null 2>&1; do \
+			sleep 0.2; \
 		done; \
-		echo "==> WireMock is ready at $(WIREMOCK_URL)"; \
-	fi
-	@echo "==> Running tests with http recordings..."
-	@AUTH0_HTTP_RECORDINGS=on \
+		echo "==> WireMock is ready at $$WIREMOCK_URL"; \
+	fi; \
+	echo "==> Running tests with http recordings..."; \
+	AUTH0_HTTP_RECORDINGS=on \
 		AUTH0_DOMAIN=go-auth0-dev.eu.auth0.com \
+		WIREMOCK_PORT=$$WIREMOCK_PORT \
+		WIREMOCK_URL=$$WIREMOCK_URL \
 		go test \
 		-run "$(FILTER)" \
 		-cover \
@@ -72,10 +83,12 @@ test: ## Run tests. To run a specific test pass the FILTER var. Usage `make test
 		-covermode=atomic \
 		-coverprofile=coverage.out \
 		./... ; \
-		EXIT_CODE=$$?; \
+	EXIT_CODE=$$?; \
+	if [ "$$WIREMOCK_STARTED_BY_MAKE" = "true" ]; then \
 		echo "==> Stopping WireMock container..."; \
 		docker compose -f $(WIREMOCK_COMPOSE_FILE) down -v; \
-		exit $$EXIT_CODE
+	fi; \
+	exit $$EXIT_CODE
 
 test-record: ## Run authentication tests and record http interactions. To run a specific test pass the FILTER var. Usage `make test-record FILTER="TestResourceServer_Read"`
 	@echo "==> Running authentication tests and recording http interactions..."
