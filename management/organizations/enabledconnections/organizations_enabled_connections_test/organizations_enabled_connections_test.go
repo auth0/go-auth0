@@ -11,31 +11,31 @@ import (
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
 	http "net/http"
+	os "os"
 	testing "testing"
 )
 
-func ResetWireMockRequests(
-	t *testing.T,
-) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
-	_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)
-	require.NoError(t, err)
-}
-
 func VerifyRequestCount(
 	t *testing.T,
+	testId string,
 	method string,
 	urlPath string,
 	queryParams map[string]string,
 	expected int,
 ) {
-	WiremockAdminURL := "http://localhost:8080/__admin"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
 	reqBody.WriteString(`","urlPath":"`)
 	reqBody.WriteString(urlPath)
-	reqBody.WriteString(`"}`)
+	reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
+	reqBody.WriteString(testId)
+	reqBody.WriteString(`"}}`)
 	if len(queryParams) > 0 {
 		reqBody.WriteString(`,"queryParameters":{`)
 		first := true
@@ -52,6 +52,7 @@ func VerifyRequestCount(
 		}
 		reqBody.WriteString("}")
 	}
+	reqBody.WriteString("}")
 	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
 	require.NoError(t, err)
 	var result struct {
@@ -64,12 +65,13 @@ func VerifyRequestCount(
 func TestOrganizationsEnabledConnectionsListWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.ListOrganizationConnectionsRequestParameters{
 		Page: management.Int(
@@ -86,21 +88,25 @@ func TestOrganizationsEnabledConnectionsListWithWireMock(
 		context.TODO(),
 		"id",
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsEnabledConnectionsListWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/organizations/id/enabled_connections", map[string]string{"page": "1", "per_page": "1", "include_totals": "true"}, 1)
+	VerifyRequestCount(t, "TestOrganizationsEnabledConnectionsListWithWireMock", "GET", "/organizations/id/enabled_connections", map[string]string{"page": "1", "per_page": "1", "include_totals": "true"}, 1)
 }
 
 func TestOrganizationsEnabledConnectionsAddWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.AddOrganizationConnectionRequestContent{
 		ConnectionID: "connection_id",
@@ -109,61 +115,73 @@ func TestOrganizationsEnabledConnectionsAddWithWireMock(
 		context.TODO(),
 		"id",
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsEnabledConnectionsAddWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "POST", "/organizations/id/enabled_connections", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationsEnabledConnectionsAddWithWireMock", "POST", "/organizations/id/enabled_connections", nil, 1)
 }
 
 func TestOrganizationsEnabledConnectionsGetWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	_, invocationErr := client.Organizations.EnabledConnections.Get(
 		context.TODO(),
 		"id",
 		"connectionId",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsEnabledConnectionsGetWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "GET", "/organizations/id/enabled_connections/connectionId", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationsEnabledConnectionsGetWithWireMock", "GET", "/organizations/id/enabled_connections/connectionId", nil, 1)
 }
 
 func TestOrganizationsEnabledConnectionsDeleteWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	invocationErr := client.Organizations.EnabledConnections.Delete(
 		context.TODO(),
 		"id",
 		"connectionId",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsEnabledConnectionsDeleteWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "DELETE", "/organizations/id/enabled_connections/connectionId", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationsEnabledConnectionsDeleteWithWireMock", "DELETE", "/organizations/id/enabled_connections/connectionId", nil, 1)
 }
 
 func TestOrganizationsEnabledConnectionsUpdateWithWireMock(
 	t *testing.T,
 ) {
-	ResetWireMockRequests(t)
-	WireMockBaseURL := "http://localhost:8080"
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
-		option.WithBaseURL(
-			WireMockBaseURL,
-		),
+		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.UpdateOrganizationConnectionRequestContent{}
 	_, invocationErr := client.Organizations.EnabledConnections.Update(
@@ -171,8 +189,11 @@ func TestOrganizationsEnabledConnectionsUpdateWithWireMock(
 		"id",
 		"connectionId",
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsEnabledConnectionsUpdateWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "PATCH", "/organizations/id/enabled_connections/connectionId", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationsEnabledConnectionsUpdateWithWireMock", "PATCH", "/organizations/id/enabled_connections/connectionId", nil, 1)
 }

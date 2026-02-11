@@ -4,10 +4,10 @@ package refreshtoken
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
+	users "github.com/auth0/go-auth0/v2/management/users"
 	http "net/http"
 )
 
@@ -60,7 +60,7 @@ func (r *RawClient) Delete(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(users.ErrorCodes),
 		},
 	)
 	if err != nil {

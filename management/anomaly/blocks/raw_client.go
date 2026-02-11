@@ -5,6 +5,7 @@ package blocks
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
+	anomaly "github.com/auth0/go-auth0/v2/management/anomaly"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -60,7 +61,7 @@ func (r *RawClient) CheckIP(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(anomaly.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -103,7 +104,7 @@ func (r *RawClient) UnblockIP(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(anomaly.ErrorCodes),
 		},
 	)
 	if err != nil {

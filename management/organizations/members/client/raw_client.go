@@ -8,6 +8,7 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
+	organizations "github.com/auth0/go-auth0/v2/management/organizations"
 	http "net/http"
 )
 
@@ -63,7 +64,7 @@ func (r *RawClient) Create(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(organizations.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -109,7 +110,7 @@ func (r *RawClient) Delete(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(organizations.ErrorCodes),
 		},
 	)
 	if err != nil {

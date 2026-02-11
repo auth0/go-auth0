@@ -5,6 +5,7 @@ package users
 import (
 	context "context"
 	management "github.com/auth0/go-auth0/v2/management"
+	connections "github.com/auth0/go-auth0/v2/management/connections"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
@@ -68,7 +69,7 @@ func (r *RawClient) DeleteByEmail(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(connections.ErrorCodes),
 		},
 	)
 	if err != nil {
