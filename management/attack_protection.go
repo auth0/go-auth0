@@ -223,10 +223,7 @@ type BotDetection struct {
 // Required scope: `read:attack_protection`
 //
 // See: https://auth0.com/docs/api/management/v2#!/attack-protection/get-bot-detection
-func (m *AttackProtectionManager) GetBotDetection(
-	ctx context.Context,
-	opts ...RequestOption,
-) (*BotDetection, error) {
+func (m *AttackProtectionManager) GetBotDetection(ctx context.Context, opts ...RequestOption) (*BotDetection, error) {
 	var botDetection BotDetection
 	err := m.management.Request(
 		ctx,
@@ -244,11 +241,7 @@ func (m *AttackProtectionManager) GetBotDetection(
 // Required scope: `update:attack_protection`
 //
 // See: https://auth0.com/docs/api/management/v2#!/attack-protection/patch-bot-detection
-func (m *AttackProtectionManager) UpdateBotDetection(
-	ctx context.Context,
-	botDetection *BotDetection,
-	opts ...RequestOption,
-) error {
+func (m *AttackProtectionManager) UpdateBotDetection(ctx context.Context, botDetection *BotDetection, opts ...RequestOption) error {
 	return m.management.Request(
 		ctx,
 		http.MethodPatch,
