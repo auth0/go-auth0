@@ -1185,6 +1185,74 @@ func TestBlacklistToken_String(t *testing.T) {
 	}
 }
 
+func TestBotDetection_GetAllowList(tt *testing.T) {
+	var zeroValue []string
+	b := &BotDetection{AllowList: &zeroValue}
+	b.GetAllowList()
+	b = &BotDetection{}
+	b.GetAllowList()
+	b = nil
+	b.GetAllowList()
+}
+
+func TestBotDetection_GetBotDetectionLevel(tt *testing.T) {
+	var zeroValue string
+	b := &BotDetection{BotDetectionLevel: &zeroValue}
+	b.GetBotDetectionLevel()
+	b = &BotDetection{}
+	b.GetBotDetectionLevel()
+	b = nil
+	b.GetBotDetectionLevel()
+}
+
+func TestBotDetection_GetChallengePasswordlessPolicy(tt *testing.T) {
+	var zeroValue string
+	b := &BotDetection{ChallengePasswordlessPolicy: &zeroValue}
+	b.GetChallengePasswordlessPolicy()
+	b = &BotDetection{}
+	b.GetChallengePasswordlessPolicy()
+	b = nil
+	b.GetChallengePasswordlessPolicy()
+}
+
+func TestBotDetection_GetChallengePasswordPolicy(tt *testing.T) {
+	var zeroValue string
+	b := &BotDetection{ChallengePasswordPolicy: &zeroValue}
+	b.GetChallengePasswordPolicy()
+	b = &BotDetection{}
+	b.GetChallengePasswordPolicy()
+	b = nil
+	b.GetChallengePasswordPolicy()
+}
+
+func TestBotDetection_GetChallengePasswordResetPolicy(tt *testing.T) {
+	var zeroValue string
+	b := &BotDetection{ChallengePasswordResetPolicy: &zeroValue}
+	b.GetChallengePasswordResetPolicy()
+	b = &BotDetection{}
+	b.GetChallengePasswordResetPolicy()
+	b = nil
+	b.GetChallengePasswordResetPolicy()
+}
+
+func TestBotDetection_GetMonitoringModeEnabled(tt *testing.T) {
+	var zeroValue bool
+	b := &BotDetection{MonitoringModeEnabled: &zeroValue}
+	b.GetMonitoringModeEnabled()
+	b = &BotDetection{}
+	b.GetMonitoringModeEnabled()
+	b = nil
+	b.GetMonitoringModeEnabled()
+}
+
+func TestBotDetection_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BotDetection{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBoxClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BoxClientAddon{}

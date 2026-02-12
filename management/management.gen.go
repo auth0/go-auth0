@@ -932,6 +932,59 @@ func (b *BlacklistToken) String() string {
 	return Stringify(b)
 }
 
+// GetAllowList returns the AllowList field if it's non-nil, zero value otherwise.
+func (b *BotDetection) GetAllowList() []string {
+	if b == nil || b.AllowList == nil {
+		return nil
+	}
+	return *b.AllowList
+}
+
+// GetBotDetectionLevel returns the BotDetectionLevel field if it's non-nil, zero value otherwise.
+func (b *BotDetection) GetBotDetectionLevel() string {
+	if b == nil || b.BotDetectionLevel == nil {
+		return ""
+	}
+	return *b.BotDetectionLevel
+}
+
+// GetChallengePasswordlessPolicy returns the ChallengePasswordlessPolicy field if it's non-nil, zero value otherwise.
+func (b *BotDetection) GetChallengePasswordlessPolicy() string {
+	if b == nil || b.ChallengePasswordlessPolicy == nil {
+		return ""
+	}
+	return *b.ChallengePasswordlessPolicy
+}
+
+// GetChallengePasswordPolicy returns the ChallengePasswordPolicy field if it's non-nil, zero value otherwise.
+func (b *BotDetection) GetChallengePasswordPolicy() string {
+	if b == nil || b.ChallengePasswordPolicy == nil {
+		return ""
+	}
+	return *b.ChallengePasswordPolicy
+}
+
+// GetChallengePasswordResetPolicy returns the ChallengePasswordResetPolicy field if it's non-nil, zero value otherwise.
+func (b *BotDetection) GetChallengePasswordResetPolicy() string {
+	if b == nil || b.ChallengePasswordResetPolicy == nil {
+		return ""
+	}
+	return *b.ChallengePasswordResetPolicy
+}
+
+// GetMonitoringModeEnabled returns the MonitoringModeEnabled field if it's non-nil, zero value otherwise.
+func (b *BotDetection) GetMonitoringModeEnabled() bool {
+	if b == nil || b.MonitoringModeEnabled == nil {
+		return false
+	}
+	return *b.MonitoringModeEnabled
+}
+
+// String returns a string representation of BotDetection.
+func (b *BotDetection) String() string {
+	return Stringify(b)
+}
+
 // String returns a string representation of BoxClientAddon.
 func (b *BoxClientAddon) String() string {
 	return Stringify(b)

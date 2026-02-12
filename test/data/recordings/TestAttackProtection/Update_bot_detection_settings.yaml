@@ -17,7 +17,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.33.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/breached-password-detection
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/bot-detection
         method: GET
       response:
         proto: HTTP/2.0
@@ -27,33 +27,33 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block"],"admin_notification_frequency":["daily","monthly","immediately","weekly"],"method":"standard","stage":{"pre-user-registration":{"shields":["admin_notification","block"]},"pre-change-password":{"shields":["admin_notification","block"]}}}'
+        body: '{"challenge_password_policy":"when_risky","challenge_passwordless_policy":"when_risky","challenge_password_reset_policy":"when_risky","allowlist":["192.168.10.2/32","196.138.8.25"],"bot_detection_level":"medium","monitoring_mode_enabled":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 370.831542ms
+        duration: 310.570792ms
     - id: 1
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 137
+        content_length: 207
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"enabled":true,"method":"standard","stage":{"pre-change-password":{"shields":["block"]},"pre-user-registration":{"shields":["block"]}}}
+            {"bot_detection_level":"low","challenge_password_policy":"never","challenge_passwordless_policy":"never","challenge_password_reset_policy":"never","allowlist":["192.168.1.1"],"monitoring_mode_enabled":true}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.33.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/breached-password-detection
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/bot-detection
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -63,13 +63,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block"],"admin_notification_frequency":[],"method":"standard","stage":{"pre-user-registration":{"shields":["block"]},"pre-change-password":{"shields":["block"]}}}'
+        body: '{"challenge_password_policy":"never","challenge_passwordless_policy":"never","challenge_password_reset_policy":"never","allowlist":["192.168.1.1"],"bot_detection_level":"low","monitoring_mode_enabled":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 471.73725ms
+        duration: 323.050708ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -86,7 +86,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.33.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/breached-password-detection
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/bot-detection
         method: GET
       response:
         proto: HTTP/2.0
@@ -96,33 +96,33 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block"],"admin_notification_frequency":[],"method":"standard","stage":{"pre-user-registration":{"shields":["block"]},"pre-change-password":{"shields":["block"]}}}'
+        body: '{"challenge_password_policy":"never","challenge_passwordless_policy":"never","challenge_password_reset_policy":"never","allowlist":["192.168.1.1"],"bot_detection_level":"low","monitoring_mode_enabled":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 310.14125ms
+        duration: 310.522583ms
     - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 273
+        content_length: 244
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"enabled":true,"shields":["block"],"admin_notification_frequency":["daily","monthly","immediately","weekly"],"method":"standard","stage":{"pre-change-password":{"shields":["admin_notification","block"]},"pre-user-registration":{"shields":["admin_notification","block"]}}}
+            {"bot_detection_level":"medium","challenge_password_policy":"when_risky","challenge_passwordless_policy":"when_risky","challenge_password_reset_policy":"when_risky","allowlist":["192.168.10.2/32","196.138.8.25"],"monitoring_mode_enabled":true}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.33.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/breached-password-detection
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/bot-detection
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -132,10 +132,10 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block"],"admin_notification_frequency":["daily","monthly","immediately","weekly"],"method":"standard","stage":{"pre-user-registration":{"shields":["block","admin_notification"]},"pre-change-password":{"shields":["block","admin_notification"]}}}'
+        body: '{"challenge_password_policy":"when_risky","challenge_passwordless_policy":"when_risky","challenge_password_reset_policy":"when_risky","allowlist":["192.168.10.2/32","196.138.8.25"],"bot_detection_level":"medium","monitoring_mode_enabled":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 411.912292ms
+        duration: 305.126542ms
