@@ -5464,6 +5464,14 @@ func (c *ConnectionOptionsOAuth2) GetUpstreamParams() map[string]interface{} {
 	return c.UpstreamParams
 }
 
+// GetUseOauthSpecScope returns the UseOauthSpecScope field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOAuth2) GetUseOauthSpecScope() bool {
+	if c == nil || c.UseOauthSpecScope == nil {
+		return false
+	}
+	return *c.UseOauthSpecScope
+}
+
 // String returns a string representation of ConnectionOptionsOAuth2.
 func (c *ConnectionOptionsOAuth2) String() string {
 	return Stringify(c)

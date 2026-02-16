@@ -6752,6 +6752,16 @@ func TestConnectionOptionsOAuth2_GetUpstreamParams(tt *testing.T) {
 	c.GetUpstreamParams()
 }
 
+func TestConnectionOptionsOAuth2_GetUseOauthSpecScope(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOAuth2{UseOauthSpecScope: &zeroValue}
+	c.GetUseOauthSpecScope()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetUseOauthSpecScope()
+	c = nil
+	c.GetUseOauthSpecScope()
+}
+
 func TestConnectionOptionsOAuth2_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsOAuth2{}
