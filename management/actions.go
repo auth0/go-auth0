@@ -126,6 +126,7 @@ type Action struct {
 	Modules *[]ActionModules `json:"modules,omitempty"`
 }
 
+// ActionModules represents a single Action Module which can be associated with an Action.
 type ActionModules struct {
 	// The unique ID of the module.
 	ModuleID *string `json:"module_id,omitempty" url:"module_id,omitempty"`
