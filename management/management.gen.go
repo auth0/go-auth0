@@ -63,12 +63,12 @@ func (a *Action) GetID() string {
 	return *a.ID
 }
 
-// GetModules returns the Modules field.
-func (a *Action) GetModules() *ActionModules {
-	if a == nil {
+// GetModules returns the Modules field if it's non-nil, zero value otherwise.
+func (a *Action) GetModules() []ActionModules {
+	if a == nil || a.Modules == nil {
 		return nil
 	}
-	return a.Modules
+	return *a.Modules
 }
 
 // GetName returns the Name field if it's non-nil, zero value otherwise.

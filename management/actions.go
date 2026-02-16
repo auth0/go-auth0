@@ -123,7 +123,7 @@ type Action struct {
 	// Deploy indicates if the action should be deployed while creating it.
 	Deploy *bool `json:"deploy,omitempty"`
 	// The list of action modules and their versions used by this action version.
-	Modules *ActionModules `json:"action_modules,omitempty"`
+	Modules *[]ActionModules `json:"action_modules,omitempty"`
 }
 
 type ActionModules struct {

@@ -77,7 +77,10 @@ func TestAction_GetID(tt *testing.T) {
 }
 
 func TestAction_GetModules(tt *testing.T) {
-	a := &Action{}
+	var zeroValue []ActionModules
+	a := &Action{Modules: &zeroValue}
+	a.GetModules()
+	a = &Action{}
 	a.GetModules()
 	a = nil
 	a.GetModules()
