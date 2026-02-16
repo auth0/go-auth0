@@ -1280,6 +1280,9 @@ type ConnectionOptionsOAuth2 struct {
 	// Email specifies whether to request the email scope.
 	// This field is used by some OAuth2 connections (e.g., Line), but not all.
 	Email *bool `json:"email,omitempty"`
+
+	// UseOauthSpecScope specifies whether to use the scope field as defined in the OAuth2 specification (space separated string) or as an array of strings.
+	UseOauthSpecScope *bool `json:"useOauthSpecScope,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface for ConnectionOptionsOAuth2.
