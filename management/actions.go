@@ -122,6 +122,20 @@ type Action struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// Deploy indicates if the action should be deployed while creating it.
 	Deploy *bool `json:"deploy,omitempty"`
+	// The list of action modules and their versions used by this action version.
+	Modules *[]ActionModules `json:"modules,omitempty"`
+}
+
+// ActionModules represents a single Action Module which can be associated with an Action.
+type ActionModules struct {
+	// The unique ID of the module.
+	ModuleID *string `json:"module_id,omitempty" url:"module_id,omitempty"`
+	// The name of the module.
+	ModuleName *string `json:"module_name,omitempty" url:"module_name,omitempty"`
+	// The ID of the specific module version.
+	ModuleVersionID *string `json:"module_version_id,omitempty" url:"module_version_id,omitempty"`
+	// The version number of the module.
+	ModuleVersionNumber *int `json:"module_version_number,omitempty" url:"module_version_number,omitempty"`
 }
 
 // ActionList is a list of Actions.
