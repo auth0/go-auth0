@@ -10,18 +10,16 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0/v2"
+	"github.com/auth0/go-auth0/v3"
 
-	"github.com/auth0/go-auth0/v2/authentication/database"
-	"github.com/auth0/go-auth0/v2/management"
+	"github.com/auth0/go-auth0/v3/authentication/database"
+	"github.com/auth0/go-auth0/v3/management"
 )
 
 // TestDatabaseSignUp_RequiresUsername tests the Database.Signup method with a connection that requires a username.
 func TestDatabaseSignUp_RequiresUsername(t *testing.T) {
-	connectionOptions := &management.ConnectionPropertiesOptions{
-		ExtraProperties: map[string]interface{}{
-			"requires_username": true,
-		},
+	connectionOptions := &management.ConnectionOptionsAuth0{
+		RequiresUsername: auth0.Bool(true),
 	}
 
 	configureHTTPTestRecordings(t, authAPI)
@@ -44,10 +42,10 @@ func TestDatabaseSignUp_RequiresUsername(t *testing.T) {
 
 // TestDatabaseSignUp_WithEmailIdentifier tests the Database.Signup method with a connection that requires an email.
 func TestDatabaseSignUp_WithEmailIdentifier(t *testing.T) {
-	connectionOptions := &management.ConnectionPropertiesOptions{
+	connectionOptions := &management.ConnectionOptionsAuth0{
 		Attributes: &management.ConnectionAttributes{
 			Email: &management.EmailAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionEmailAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -80,10 +78,10 @@ func TestDatabaseSignUp_WithEmailIdentifier(t *testing.T) {
 
 // TestDatabaseSignUp_WithUsernameIdentifier tests the Database.Signup method with a connection that requires a username.
 func TestDatabaseSignUp_WithUsernameIdentifier(t *testing.T) {
-	connectionOptions := &management.ConnectionPropertiesOptions{
+	connectionOptions := &management.ConnectionOptionsAuth0{
 		Attributes: &management.ConnectionAttributes{
 			Username: &management.UsernameAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionUsernameAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -113,10 +111,10 @@ func TestDatabaseSignUp_WithUsernameIdentifier(t *testing.T) {
 
 // TestDatabaseSignUp_WithUsernameAndEmailIdentifiers tests the Database.Signup method with a connection that requires both username and email.
 func TestDatabaseSignUp_WithUsernameAndEmailIdentifiers(t *testing.T) {
-	connectionOptions := &management.ConnectionPropertiesOptions{
+	connectionOptions := &management.ConnectionOptionsAuth0{
 		Attributes: &management.ConnectionAttributes{
 			Username: &management.UsernameAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionUsernameAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -125,7 +123,7 @@ func TestDatabaseSignUp_WithUsernameAndEmailIdentifiers(t *testing.T) {
 				},
 			},
 			Email: &management.EmailAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionEmailAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -160,10 +158,10 @@ func TestDatabaseSignUp_WithUsernameAndEmailIdentifiers(t *testing.T) {
 
 // TestDatabaseSignUp_WithPhoneNumberIdentifier tests the Database.Signup method with a connection that requires a phone number.
 func TestDatabaseSignUp_WithPhoneNumberIdentifier(t *testing.T) {
-	connectionOptions := &management.ConnectionPropertiesOptions{
+	connectionOptions := &management.ConnectionOptionsAuth0{
 		Attributes: &management.ConnectionAttributes{
 			PhoneNumber: &management.PhoneAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionPhoneAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -196,10 +194,10 @@ func TestDatabaseSignUp_WithPhoneNumberIdentifier(t *testing.T) {
 
 // TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers tests the Database.Signup method with a connection that requires both username and phone number.
 func TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers(t *testing.T) {
-	connectionOptions := &management.ConnectionPropertiesOptions{
+	connectionOptions := &management.ConnectionOptionsAuth0{
 		Attributes: &management.ConnectionAttributes{
 			Username: &management.UsernameAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionUsernameAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -208,7 +206,7 @@ func TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers(t *testing.T) {
 				},
 			},
 			PhoneNumber: &management.PhoneAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionPhoneAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -243,10 +241,10 @@ func TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers(t *testing.T) {
 
 // TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers tests the Database.Signup method with a connection that requires username, email, and phone number.
 func TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers(t *testing.T) {
-	connectionOptions := &management.ConnectionPropertiesOptions{
+	connectionOptions := &management.ConnectionOptionsAuth0{
 		Attributes: &management.ConnectionAttributes{
 			Username: &management.UsernameAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionUsernameAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -255,7 +253,7 @@ func TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers(t *testing.T)
 				},
 			},
 			Email: &management.EmailAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionEmailAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -267,7 +265,7 @@ func TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers(t *testing.T)
 				},
 			},
 			PhoneNumber: &management.PhoneAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.ConnectionPhoneAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -323,7 +321,7 @@ type userDetails struct {
 	phoneNumber string
 }
 
-func givenSignUpDetails(t *testing.T, options *management.ConnectionPropertiesOptions) *userDetails {
+func givenSignUpDetails(t *testing.T, options *management.ConnectionOptionsAuth0) *userDetails {
 	t.Helper()
 	// If we're running from recordings then we want to return the default
 	if usingRecordingResponses(t) {
@@ -347,21 +345,25 @@ func givenSignUpDetails(t *testing.T, options *management.ConnectionPropertiesOp
 	}
 }
 
-func givenAConnection(t *testing.T, options *management.ConnectionPropertiesOptions) *management.CreateConnectionResponseContent {
+func givenAConnection(t *testing.T, options *management.ConnectionOptionsAuth0) *management.ConnectionResponseContentAuth0 {
+	enabledClients := management.ConnectionEnabledClients{clientID, mgmtClientID}
 	conn := &management.CreateConnectionRequestContent{
-		Name:           fmt.Sprintf("Test-Connection-%d", time.Now().Unix()),
-		Strategy:       "auth0",
-		EnabledClients: []string{clientID, mgmtClientID},
+		CreateConnectionRequestContentAuth0: &management.CreateConnectionRequestContentAuth0{
+			Name:           auth0.String(fmt.Sprintf("Test-Connection-%d", time.Now().Unix())),
+			EnabledClients: &enabledClients,
+			Options:        options,
+		},
 	}
-	conn.Options = options
 
 	connectionCreated, err := mgmtAPI.Connections.Create(context.Background(), conn)
 	require.NoError(t, err)
 
+	auth0Conn := connectionCreated.GetConnectionResponseContentAuth0()
+
 	t.Cleanup(func() {
-		err := mgmtAPI.Connections.Delete(context.Background(), connectionCreated.GetID())
+		err := mgmtAPI.Connections.Delete(context.Background(), auth0Conn.GetID())
 		require.NoError(t, err)
 	})
 
-	return connectionCreated
+	return auth0Conn
 }

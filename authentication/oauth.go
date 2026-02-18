@@ -6,8 +6,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/auth0/go-auth0/v2/authentication/oauth"
-	"github.com/auth0/go-auth0/v2/internal/idtokenvalidator"
+	"github.com/auth0/go-auth0/v3/authentication/oauth"
+	"github.com/auth0/go-auth0/v3/internal/idtokenvalidator"
 )
 
 // OAuth exposes logging in using OAuth based APIs.

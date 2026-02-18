@@ -6,9 +6,9 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	management "github.com/auth0/go-auth0/v2/management"
-	client "github.com/auth0/go-auth0/v2/management/client"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v3/management"
+	client "github.com/auth0/go-auth0/v3/management/client"
+	option "github.com/auth0/go-auth0/v3/management/option"
 	require "github.com/stretchr/testify/require"
 	http "net/http"
 	os "os"
@@ -114,8 +114,7 @@ func TestConnectionsCreateWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.CreateConnectionRequestContent{
-		Name:     "name",
-		Strategy: management.ConnectionIdentityProviderEnumAd,
+		CreateConnectionRequestContentAd: &management.CreateConnectionRequestContentAd{},
 	}
 	_, invocationErr := client.Connections.Create(
 		context.TODO(),
@@ -195,7 +194,9 @@ func TestConnectionsUpdateWithWireMock(
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &management.UpdateConnectionRequestContent{}
+	request := &management.UpdateConnectionRequestContent{
+		UpdateConnectionRequestContentAd: &management.UpdateConnectionRequestContentAd{},
+	}
 	_, invocationErr := client.Connections.Update(
 		context.TODO(),
 		"id",

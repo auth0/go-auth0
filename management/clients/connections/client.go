@@ -4,10 +4,10 @@ package connections
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v3/management"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
 	http "net/http"
 )
 
@@ -50,7 +50,7 @@ func (c *Client) Get(
 	id string,
 	request *management.ConnectionsGetRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *management.ConnectionForList, *management.ListClientConnectionsResponseContent], error) {
+) (*core.Page[*string, *management.ConnectionResponseContent, *management.ListClientConnectionsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -64,7 +64,8 @@ func (c *Client) Get(
 	queryParams, err := internal.QueryValuesWithDefaults(
 		request,
 		map[string]any{
-			"take": 50,
+			"take":           50,
+			"include_fields": true,
 		},
 	)
 	if err != nil {
@@ -94,11 +95,11 @@ func (c *Client) Get(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListClientConnectionsResponseContent) *core.PageResponse[*string, *management.ConnectionForList, *management.ListClientConnectionsResponseContent] {
+	readPageResponse := func(response *management.ListClientConnectionsResponseContent) *core.PageResponse[*string, *management.ConnectionResponseContent, *management.ListClientConnectionsResponseContent] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Connections
-		return &core.PageResponse[*string, *management.ConnectionForList, *management.ListClientConnectionsResponseContent]{
+		return &core.PageResponse[*string, *management.ConnectionResponseContent, *management.ListClientConnectionsResponseContent]{
 			Results:  results,
 			Response: response,
 			Next:     next,

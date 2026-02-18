@@ -4,11 +4,11 @@ package client
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	guardian "github.com/auth0/go-auth0/v2/management/guardian"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v3/management"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	guardian "github.com/auth0/go-auth0/v3/management/guardian"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
 	http "net/http"
 )
 

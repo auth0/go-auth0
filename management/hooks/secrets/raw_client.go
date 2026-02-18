@@ -4,11 +4,11 @@ package secrets
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	hooks "github.com/auth0/go-auth0/v2/management/hooks"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v3/management"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	hooks "github.com/auth0/go-auth0/v3/management/hooks"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
 	http "net/http"
 )
 

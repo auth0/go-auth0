@@ -5,7 +5,7 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
 )
 
@@ -33,6 +33,9 @@ func (r *RulesConfig) GetKey() string {
 }
 
 func (r *RulesConfig) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.ExtraProperties
 }
 
@@ -82,6 +85,9 @@ func (r *RulesConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RulesConfig) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -127,6 +133,9 @@ func (s *SetRulesConfigResponseContent) GetValue() string {
 }
 
 func (s *SetRulesConfigResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.ExtraProperties
 }
 
@@ -183,6 +192,9 @@ func (s *SetRulesConfigResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SetRulesConfigResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value

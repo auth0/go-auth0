@@ -3,10 +3,10 @@
 package client
 
 import (
-	providers "github.com/auth0/go-auth0/v2/management/branding/phone/providers"
-	templates "github.com/auth0/go-auth0/v2/management/branding/phone/templates"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	providers "github.com/auth0/go-auth0/v3/management/branding/phone/providers"
+	templates "github.com/auth0/go-auth0/v3/management/branding/phone/templates"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 )
 
 type Client struct {

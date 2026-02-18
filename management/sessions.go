@@ -5,7 +5,7 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
 )
 
@@ -143,6 +143,9 @@ func (g *GetSessionResponseContent) GetSessionMetadata() SessionMetadata {
 }
 
 func (g *GetSessionResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -276,6 +279,9 @@ func (g *GetSessionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetSessionResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -421,6 +427,9 @@ func (u *UpdateSessionResponseContent) GetSessionMetadata() SessionMetadata {
 }
 
 func (u *UpdateSessionResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
@@ -554,6 +563,9 @@ func (u *UpdateSessionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateSessionResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

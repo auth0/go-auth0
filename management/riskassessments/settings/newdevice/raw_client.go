@@ -4,11 +4,11 @@ package newdevice
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
-	settings "github.com/auth0/go-auth0/v2/management/riskassessments/settings"
+	management "github.com/auth0/go-auth0/v3/management"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
+	settings "github.com/auth0/go-auth0/v3/management/riskassessments/settings"
 	http "net/http"
 )
 

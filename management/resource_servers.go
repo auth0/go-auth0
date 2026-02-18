@@ -5,7 +5,7 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
 )
 
@@ -205,6 +205,9 @@ func (c *CreateResourceServerResponseContent) GetClientID() string {
 }
 
 func (c *CreateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -376,6 +379,9 @@ func (c *CreateResourceServerResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateResourceServerResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -583,6 +589,9 @@ func (g *GetResourceServerResponseContent) GetClientID() string {
 }
 
 func (g *GetResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -754,6 +763,9 @@ func (g *GetResourceServerResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetResourceServerResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -814,6 +826,9 @@ func (l *ListResourceServerOffsetPaginatedResponseContent) GetResourceServers() 
 }
 
 func (l *ListResourceServerOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -880,6 +895,9 @@ func (l *ListResourceServerOffsetPaginatedResponseContent) MarshalJSON() ([]byte
 }
 
 func (l *ListResourceServerOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -1087,6 +1105,9 @@ func (r *ResourceServer) GetClientID() string {
 }
 
 func (r *ResourceServer) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -1258,6 +1279,9 @@ func (r *ResourceServer) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ResourceServer) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -1330,6 +1354,9 @@ func (r *ResourceServerProofOfPossession) GetRequiredFor() ResourceServerProofOf
 }
 
 func (r *ResourceServerProofOfPossession) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -1389,6 +1416,9 @@ func (r *ResourceServerProofOfPossession) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ResourceServerProofOfPossession) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -1482,6 +1512,9 @@ func (r *ResourceServerScope) GetDescription() string {
 }
 
 func (r *ResourceServerScope) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -1534,6 +1567,9 @@ func (r *ResourceServerScope) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ResourceServerScope) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -1577,6 +1613,9 @@ func (r *ResourceServerSubjectTypeAuthorization) GetClient() ResourceServerSubje
 }
 
 func (r *ResourceServerSubjectTypeAuthorization) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -1629,6 +1668,9 @@ func (r *ResourceServerSubjectTypeAuthorization) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ResourceServerSubjectTypeAuthorization) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -1664,6 +1706,9 @@ func (r *ResourceServerSubjectTypeAuthorizationClient) GetPolicy() ResourceServe
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationClient) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.ExtraProperties
 }
 
@@ -1713,6 +1758,9 @@ func (r *ResourceServerSubjectTypeAuthorizationClient) MarshalJSON() ([]byte, er
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationClient) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -1771,6 +1819,9 @@ func (r *ResourceServerSubjectTypeAuthorizationUser) GetPolicy() ResourceServerS
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationUser) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.ExtraProperties
 }
 
@@ -1820,6 +1871,9 @@ func (r *ResourceServerSubjectTypeAuthorizationUser) MarshalJSON() ([]byte, erro
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationUser) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -1946,6 +2000,9 @@ func (r *ResourceServerTokenEncryption) GetEncryptionKey() *ResourceServerTokenE
 }
 
 func (r *ResourceServerTokenEncryption) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -1998,6 +2055,9 @@ func (r *ResourceServerTokenEncryption) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ResourceServerTokenEncryption) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -2107,6 +2167,9 @@ func (r *ResourceServerTokenEncryptionKey) GetPem() string {
 }
 
 func (r *ResourceServerTokenEncryptionKey) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -2173,6 +2236,9 @@ func (r *ResourceServerTokenEncryptionKey) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ResourceServerTokenEncryptionKey) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -2380,6 +2446,9 @@ func (u *UpdateResourceServerResponseContent) GetClientID() string {
 }
 
 func (u *UpdateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2551,6 +2620,9 @@ func (u *UpdateResourceServerResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateResourceServerResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

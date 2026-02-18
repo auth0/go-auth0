@@ -2187,7 +2187,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**allowedLogoutURLs:** `[]string` — URLs that are valid to redirect to after logout from Auth0.
+**allowedLogoutURLs:** `[]string` — URLs that are valid to redirect to after logout from Auth0
     
 </dd>
 </dl>
@@ -3054,7 +3054,7 @@ client.ConnectionProfiles.Update(
 </details>
 
 ## Connections
-<details><summary><code>client.Connections.List() -> *management.ListConnectionsCheckpointPaginatedResponseContent</code></summary>
+<details><summary><code>client.Connections.List() -> management.ListConnectionsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3187,7 +3187,7 @@ client.Connections.List(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Create(request) -> *management.CreateConnectionResponseContent</code></summary>
+<details><summary><code>client.Connections.Create(request) -> *management.ConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3199,9 +3199,7 @@ client.Connections.List(
 <dl>
 <dd>
 
-Creates a new connection according to the JSON object received in <code>body</code>.
-
-<b>Note:</b> If a connection with the same name was recently deleted and had a large number of associated users, the deletion may still be processing. Creating a new connection with that name before the deletion completes may fail or produce unexpected results. 
+Creates a new connection according to the JSON object received in <code>body</code>.<br/>
 </dd>
 </dl>
 </dd>
@@ -3217,8 +3215,7 @@ Creates a new connection according to the JSON object received in <code>body</co
 
 ```go
 request := &management.CreateConnectionRequestContent{
-        Name: "name",
-        Strategy: management.ConnectionIdentityProviderEnumAd,
+        CreateConnectionRequestContentAd: &management.CreateConnectionRequestContentAd{},
     }
 client.Connections.Create(
         context.TODO(),
@@ -3239,87 +3236,7 @@ client.Connections.Create(
 <dl>
 <dd>
 
-**name:** `string` — The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**displayName:** `*string` — Connection name used in the new universal login experience
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**strategy:** `*management.ConnectionIdentityProviderEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**options:** `*management.ConnectionPropertiesOptions` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enabledClients:** `[]string` — DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**isDomainConnection:** `*bool` — <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**showAsButton:** `*bool` — Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**realms:** `[]string` — Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metadata:** `*management.ConnectionsMetadata` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**authentication:** `*management.ConnectionAuthenticationPurpose` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectedAccounts:** `*management.ConnectionConnectedAccountsPurpose` 
+**request:** `*management.CreateConnectionRequestContent` 
     
 </dd>
 </dl>
@@ -3331,7 +3248,7 @@ client.Connections.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Get(ID) -> *management.GetConnectionResponseContent</code></summary>
+<details><summary><code>client.Connections.Get(ID) -> *management.ConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3386,7 +3303,7 @@ client.Connections.Get(
 <dl>
 <dd>
 
-**id:** `string` — The id of the connection to retrieve
+**id:** `string` — The id of the connection
     
 </dd>
 </dl>
@@ -3427,8 +3344,6 @@ client.Connections.Get(
 <dd>
 
 Removes a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> from your tenant. This action cannot be undone. Once removed, users can no longer use this connection to authenticate.
-
-<b>Note:</b> If your connection has a large amount of users associated with it, please be aware that this operation can be long running after the response is returned and may impact concurrent <a href="https://auth0.com/docs/api/management/v2/connections/post-connections">create connection</a> requests, if they use an identical connection name. 
 </dd>
 </dl>
 </dd>
@@ -3462,7 +3377,7 @@ client.Connections.Delete(
 <dl>
 <dd>
 
-**id:** `string` — The id of the connection to delete
+**id:** `string` — The id of the connection
     
 </dd>
 </dl>
@@ -3474,7 +3389,7 @@ client.Connections.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Update(ID, request) -> *management.UpdateConnectionResponseContent</code></summary>
+<details><summary><code>client.Connections.Update(ID, request) -> *management.ConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3503,7 +3418,9 @@ Update details for a specific <a href="https://auth0.com/docs/authenticate/ident
 <dd>
 
 ```go
-request := &management.UpdateConnectionRequestContent{}
+request := &management.UpdateConnectionRequestContent{
+        UpdateConnectionRequestContentAd: &management.UpdateConnectionRequestContentAd{},
+    }
 client.Connections.Update(
         context.TODO(),
         "id",
@@ -3524,7 +3441,7 @@ client.Connections.Update(
 <dl>
 <dd>
 
-**id:** `string` — The id of the connection to update
+**id:** `string` — The id of the connection
     
 </dd>
 </dl>
@@ -3532,71 +3449,7 @@ client.Connections.Update(
 <dl>
 <dd>
 
-**displayName:** `*string` — The connection name used in the new universal login experience. If display_name is not included in the request, the field will be overwritten with the name value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**options:** `*management.UpdateConnectionOptions` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enabledClients:** `[]string` — DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable or disable the connection for any clients.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**isDomainConnection:** `*bool` — <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**showAsButton:** `*bool` — Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**realms:** `[]string` — Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metadata:** `*management.ConnectionsMetadata` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**authentication:** `*management.ConnectionAuthenticationPurpose` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectedAccounts:** `*management.ConnectionConnectedAccountsPurpose` 
+**request:** `*management.UpdateConnectionRequestContent` 
     
 </dd>
 </dl>
@@ -10813,7 +10666,7 @@ client.SelfServiceProfiles.Create(
 <dl>
 <dd>
 
-**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
+**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
     
 </dd>
 </dl>
@@ -11037,7 +10890,7 @@ client.SelfServiceProfiles.Update(
 <dl>
 <dd>
 
-**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
+**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
     
 </dd>
 </dl>

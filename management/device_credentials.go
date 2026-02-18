@@ -5,7 +5,7 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
 )
 
@@ -33,6 +33,9 @@ func (c *CreatePublicKeyDeviceCredentialResponseContent) GetID() string {
 }
 
 func (c *CreatePublicKeyDeviceCredentialResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -82,6 +85,9 @@ func (c *CreatePublicKeyDeviceCredentialResponseContent) MarshalJSON() ([]byte, 
 }
 
 func (c *CreatePublicKeyDeviceCredentialResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -165,6 +171,9 @@ func (d *DeviceCredential) GetClientID() string {
 }
 
 func (d *DeviceCredential) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -245,6 +254,9 @@ func (d *DeviceCredential) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DeviceCredential) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -351,6 +363,9 @@ func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetDeviceCredentia
 }
 
 func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -417,6 +432,9 @@ func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) MarshalJSON() ([]b
 }
 
 func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value

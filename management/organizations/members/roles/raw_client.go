@@ -4,11 +4,11 @@ package roles
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
-	members "github.com/auth0/go-auth0/v2/management/organizations/members"
+	management "github.com/auth0/go-auth0/v3/management"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
+	members "github.com/auth0/go-auth0/v3/management/organizations/members"
 	http "net/http"
 )
 

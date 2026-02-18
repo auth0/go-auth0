@@ -4,15 +4,15 @@ package client
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
-	clients "github.com/auth0/go-auth0/v2/management/connections/clients"
-	client "github.com/auth0/go-auth0/v2/management/connections/directoryprovisioning/client"
-	keys "github.com/auth0/go-auth0/v2/management/connections/keys"
-	scimconfigurationclient "github.com/auth0/go-auth0/v2/management/connections/scimconfiguration/client"
-	users "github.com/auth0/go-auth0/v2/management/connections/users"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v3/management"
+	clients "github.com/auth0/go-auth0/v3/management/connections/clients"
+	client "github.com/auth0/go-auth0/v3/management/connections/directoryprovisioning/client"
+	keys "github.com/auth0/go-auth0/v3/management/connections/keys"
+	scimconfigurationclient "github.com/auth0/go-auth0/v3/management/connections/scimconfiguration/client"
+	users "github.com/auth0/go-auth0/v3/management/connections/users"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
 	http "net/http"
 )
 
@@ -71,7 +71,7 @@ func (c *Client) List(
 	ctx context.Context,
 	request *management.ListConnectionsQueryParameters,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *management.ConnectionForList, *management.ListConnectionsCheckpointPaginatedResponseContent], error) {
+) (*core.Page[*string, *management.ConnectionResponseContent, management.ListConnectionsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -82,7 +82,8 @@ func (c *Client) List(
 	queryParams, err := internal.QueryValuesWithDefaults(
 		request,
 		map[string]any{
-			"take": 50,
+			"take":           50,
+			"include_fields": true,
 		},
 	)
 	if err != nil {
@@ -112,11 +113,11 @@ func (c *Client) List(
 			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
 		}
 	}
-	readPageResponse := func(response *management.ListConnectionsCheckpointPaginatedResponseContent) *core.PageResponse[*string, *management.ConnectionForList, *management.ListConnectionsCheckpointPaginatedResponseContent] {
+	readPageResponse := func(response management.ListConnectionsResponseContent) *core.PageResponse[*string, *management.ConnectionResponseContent, management.ListConnectionsResponseContent] {
 		var zeroValue *string
 		next := response.Next
 		results := response.Connections
-		return &core.PageResponse[*string, *management.ConnectionForList, *management.ListConnectionsCheckpointPaginatedResponseContent]{
+		return &core.PageResponse[*string, *management.ConnectionResponseContent, management.ListConnectionsResponseContent]{
 			Results:  results,
 			Response: response,
 			Next:     next,
@@ -131,14 +132,12 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
-// Creates a new connection according to the JSON object received in <code>body</code>.
-//
-// <b>Note:</b> If a connection with the same name was recently deleted and had a large number of associated users, the deletion may still be processing. Creating a new connection with that name before the deletion completes may fail or produce unexpected results.
+// Creates a new connection according to the JSON object received in <code>body</code>.<br/>
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateConnectionRequestContent,
 	opts ...option.RequestOption,
-) (*management.CreateConnectionResponseContent, error) {
+) (*management.ConnectionResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
 		request,
@@ -153,11 +152,11 @@ func (c *Client) Create(
 // Retrieve details for a specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> along with options that can be used for identity provider configuration.
 func (c *Client) Get(
 	ctx context.Context,
-	// The id of the connection to retrieve
+	// The id of the connection
 	id string,
 	request *management.GetConnectionRequestParameters,
 	opts ...option.RequestOption,
-) (*management.GetConnectionResponseContent, error) {
+) (*management.ConnectionResponseContent, error) {
 	response, err := c.WithRawResponse.Get(
 		ctx,
 		id,
@@ -171,11 +170,9 @@ func (c *Client) Get(
 }
 
 // Removes a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> from your tenant. This action cannot be undone. Once removed, users can no longer use this connection to authenticate.
-//
-// <b>Note:</b> If your connection has a large amount of users associated with it, please be aware that this operation can be long running after the response is returned and may impact concurrent <a href="https://auth0.com/docs/api/management/v2/connections/post-connections">create connection</a> requests, if they use an identical connection name.
 func (c *Client) Delete(
 	ctx context.Context,
-	// The id of the connection to delete
+	// The id of the connection
 	id string,
 	opts ...option.RequestOption,
 ) error {
@@ -195,11 +192,11 @@ func (c *Client) Delete(
 // <b>Note</b>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overriden. To avoid partial data or other issues, ensure all parameters are present when using this option.
 func (c *Client) Update(
 	ctx context.Context,
-	// The id of the connection to update
+	// The id of the connection
 	id string,
 	request *management.UpdateConnectionRequestContent,
 	opts ...option.RequestOption,
-) (*management.UpdateConnectionResponseContent, error) {
+) (*management.ConnectionResponseContent, error) {
 	response, err := c.WithRawResponse.Update(
 		ctx,
 		id,

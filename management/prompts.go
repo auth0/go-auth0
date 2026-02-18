@@ -5,7 +5,7 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
 )
 
@@ -52,6 +52,9 @@ func (g *GetSettingsResponseContent) GetWebauthnPlatformFirstFactor() bool {
 }
 
 func (g *GetSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -115,6 +118,9 @@ func (g *GetSettingsResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetSettingsResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -192,6 +198,9 @@ func (u *UpdateSettingsResponseContent) GetWebauthnPlatformFirstFactor() bool {
 }
 
 func (u *UpdateSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
@@ -255,6 +264,9 @@ func (u *UpdateSettingsResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateSettingsResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

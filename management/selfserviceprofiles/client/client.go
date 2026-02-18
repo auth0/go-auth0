@@ -5,12 +5,12 @@ package client
 import (
 	context "context"
 	fmt "fmt"
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
-	customtext "github.com/auth0/go-auth0/v2/management/selfserviceprofiles/customtext"
-	ssoticket "github.com/auth0/go-auth0/v2/management/selfserviceprofiles/ssoticket"
+	management "github.com/auth0/go-auth0/v3/management"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
+	customtext "github.com/auth0/go-auth0/v3/management/selfserviceprofiles/customtext"
+	ssoticket "github.com/auth0/go-auth0/v3/management/selfserviceprofiles/ssoticket"
 	http "net/http"
 	strconv "strconv"
 )

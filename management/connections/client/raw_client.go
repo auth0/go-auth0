@@ -4,10 +4,10 @@ package client
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v3/management"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
 	http "net/http"
 )
 
@@ -34,7 +34,7 @@ func (r *RawClient) Create(
 	ctx context.Context,
 	request *management.CreateConnectionRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.CreateConnectionResponseContent], error) {
+) (*core.Response[*management.ConnectionResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,8 +46,7 @@ func (r *RawClient) Create(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
-	var response *management.CreateConnectionResponseContent
+	var response *management.ConnectionResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -66,7 +65,7 @@ func (r *RawClient) Create(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.CreateConnectionResponseContent]{
+	return &core.Response[*management.ConnectionResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -75,11 +74,11 @@ func (r *RawClient) Create(
 
 func (r *RawClient) Get(
 	ctx context.Context,
-	// The id of the connection to retrieve
+	// The id of the connection
 	id string,
 	request *management.GetConnectionRequestParameters,
 	opts ...option.RequestOption,
-) (*core.Response[*management.GetConnectionResponseContent], error) {
+) (*core.Response[*management.ConnectionResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -90,7 +89,12 @@ func (r *RawClient) Get(
 		baseURL+"/connections/%v",
 		id,
 	)
-	queryParams, err := internal.QueryValues(request)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"include_fields": true,
+		},
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +105,7 @@ func (r *RawClient) Get(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *management.GetConnectionResponseContent
+	var response *management.ConnectionResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -119,7 +123,7 @@ func (r *RawClient) Get(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.GetConnectionResponseContent]{
+	return &core.Response[*management.ConnectionResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -128,7 +132,7 @@ func (r *RawClient) Get(
 
 func (r *RawClient) Delete(
 	ctx context.Context,
-	// The id of the connection to delete
+	// The id of the connection
 	id string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
@@ -171,11 +175,11 @@ func (r *RawClient) Delete(
 
 func (r *RawClient) Update(
 	ctx context.Context,
-	// The id of the connection to update
+	// The id of the connection
 	id string,
 	request *management.UpdateConnectionRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.UpdateConnectionResponseContent], error) {
+) (*core.Response[*management.ConnectionResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -190,8 +194,7 @@ func (r *RawClient) Update(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
-	var response *management.UpdateConnectionResponseContent
+	var response *management.ConnectionResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -210,7 +213,7 @@ func (r *RawClient) Update(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.UpdateConnectionResponseContent]{
+	return &core.Response[*management.ConnectionResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

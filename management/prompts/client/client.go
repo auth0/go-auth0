@@ -4,13 +4,13 @@ package client
 
 import (
 	context "context"
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
-	customtext "github.com/auth0/go-auth0/v2/management/prompts/customtext"
-	partials "github.com/auth0/go-auth0/v2/management/prompts/partials"
-	rendering "github.com/auth0/go-auth0/v2/management/prompts/rendering"
+	management "github.com/auth0/go-auth0/v3/management"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
+	customtext "github.com/auth0/go-auth0/v3/management/prompts/customtext"
+	partials "github.com/auth0/go-auth0/v3/management/prompts/partials"
+	rendering "github.com/auth0/go-auth0/v3/management/prompts/rendering"
 )
 
 type Client struct {

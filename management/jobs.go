@@ -5,7 +5,7 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
 )
 
@@ -131,6 +131,9 @@ func (g *GetJobResponseContent) GetSummary() GetJobSummary {
 }
 
 func (g *GetJobResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -250,6 +253,9 @@ func (g *GetJobResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetJobResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -316,6 +322,9 @@ func (g *GetJobSummary) GetTotal() int {
 }
 
 func (g *GetJobSummary) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -386,6 +395,9 @@ func (g *GetJobSummary) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetJobSummary) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value

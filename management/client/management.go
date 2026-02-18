@@ -6,9 +6,9 @@ import (
 	"net/url"
 	"strings"
 
-	internal "github.com/auth0/go-auth0/v2/internal/client"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	internal "github.com/auth0/go-auth0/v3/internal/client"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	option "github.com/auth0/go-auth0/v3/management/option"
 )
 
 // New creates a new Auth0 Management client by authenticating using the

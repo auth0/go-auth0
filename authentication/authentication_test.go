@@ -21,14 +21,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0/v2/management"
+	"github.com/auth0/go-auth0/v3/management"
 
-	"github.com/auth0/go-auth0/v2"
-	"github.com/auth0/go-auth0/v2/authentication/database"
-	"github.com/auth0/go-auth0/v2/authentication/oauth"
-	"github.com/auth0/go-auth0/v2/internal/client"
-	managementClient "github.com/auth0/go-auth0/v2/management/client"
-	"github.com/auth0/go-auth0/v2/management/option"
+	"github.com/auth0/go-auth0/v3"
+	"github.com/auth0/go-auth0/v3/authentication/database"
+	"github.com/auth0/go-auth0/v3/authentication/oauth"
+	"github.com/auth0/go-auth0/v3/internal/client"
+	managementClient "github.com/auth0/go-auth0/v3/management/client"
+	"github.com/auth0/go-auth0/v3/management/option"
 )
 
 var (

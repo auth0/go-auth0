@@ -2,8 +2,8 @@
 
 <div align="center">
 
-[![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0/v2.svg)](https://pkg.go.dev/github.com/auth0/go-auth0/v2)
-[![Go Report Card](https://goreportcard.com/badge/github.com/auth0/go-auth0/v2?style=flat-square)](https://goreportcard.com/report/github.com/auth0/go-auth0/v2)
+[![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0/v3.svg)](https://pkg.go.dev/github.com/auth0/go-auth0/v3)
+[![Go Report Card](https://goreportcard.com/badge/github.com/auth0/go-auth0/v3?style=flat-square)](https://goreportcard.com/report/github.com/auth0/go-auth0/v3)
 [![Release](https://img.shields.io/github/v/release/auth0/go-auth0?include_prereleases&style=flat-square)](https://github.com/auth0/go-auth0/releases)
 [![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/v2/LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=v2&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Av2)
@@ -19,7 +19,7 @@
 
 ## Documentation
 
-- [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0/v2) - explore the Go SDK documentation.
+- [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0/v3) - explore the Go SDK documentation.
 - [Docs site](https://www.auth0.com/docs) — explore our docs site and learn more about Auth0.
 - [Examples](./EXAMPLES.md) - Further examples around usage of the SDK.
 - [API Reference](./reference.md) - Complete API reference documentation.
@@ -35,7 +35,7 @@ This library follows the [same support policy as Go](https://go.dev/doc/devel/re
 ### Installation
 
 ```shell
-go get github.com/auth0/go-auth0/v2
+go get github.com/auth0/go-auth0/v3
 ```
 
 ### Usage
@@ -51,9 +51,9 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0/v2/authentication"
-	"github.com/auth0/go-auth0/v2/authentication/database"
-	"github.com/auth0/go-auth0/v2/authentication/oauth"
+	"github.com/auth0/go-auth0/v3/authentication"
+	"github.com/auth0/go-auth0/v3/authentication/database"
+	"github.com/auth0/go-auth0/v3/authentication/oauth"
 )
 
 func main() {
@@ -114,8 +114,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0/v2/management/option"
-	management "github.com/auth0/go-auth0/v2/management/client"
+	"github.com/auth0/go-auth0/v3/management/option"
+	management "github.com/auth0/go-auth0/v3/management/client"
 )
 
 func main() {
@@ -135,8 +135,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0/v2/management/option"
-	management "github.com/auth0/go-auth0/v2/management/client"
+	"github.com/auth0/go-auth0/v3/management/option"
+	management "github.com/auth0/go-auth0/v3/management/client"
 )
 
 func main() {

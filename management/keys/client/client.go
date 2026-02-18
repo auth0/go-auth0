@@ -3,11 +3,11 @@
 package client
 
 import (
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	customsigning "github.com/auth0/go-auth0/v2/management/keys/customsigning"
-	encryption "github.com/auth0/go-auth0/v2/management/keys/encryption"
-	signing "github.com/auth0/go-auth0/v2/management/keys/signing"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	customsigning "github.com/auth0/go-auth0/v3/management/keys/customsigning"
+	encryption "github.com/auth0/go-auth0/v3/management/keys/encryption"
+	signing "github.com/auth0/go-auth0/v3/management/keys/signing"
 )
 
 type Client struct {
