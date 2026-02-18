@@ -5581,6 +5581,14 @@ func (c *ConnectionOptionsOIDC) GetScope() string {
 	return *c.Scope
 }
 
+// GetSendBackChannelNonce returns the SendBackChannelNonce field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDC) GetSendBackChannelNonce() bool {
+	if c == nil || c.SendBackChannelNonce == nil {
+		return false
+	}
+	return *c.SendBackChannelNonce
+}
+
 // GetSetUserAttributes returns the SetUserAttributes field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOIDC) GetSetUserAttributes() string {
 	if c == nil || c.SetUserAttributes == nil {

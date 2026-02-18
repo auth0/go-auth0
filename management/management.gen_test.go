@@ -6894,6 +6894,16 @@ func TestConnectionOptionsOIDC_GetScope(tt *testing.T) {
 	c.GetScope()
 }
 
+func TestConnectionOptionsOIDC_GetSendBackChannelNonce(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOIDC{SendBackChannelNonce: &zeroValue}
+	c.GetSendBackChannelNonce()
+	c = &ConnectionOptionsOIDC{}
+	c.GetSendBackChannelNonce()
+	c = nil
+	c.GetSendBackChannelNonce()
+}
+
 func TestConnectionOptionsOIDC_GetSetUserAttributes(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOIDC{SetUserAttributes: &zeroValue}
