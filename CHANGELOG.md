@@ -1,5 +1,14 @@
 # Change Log
 
+## [v1.34.0](https://github.com/auth0/go-auth0/tree/v1.34.0) (2026-02-19)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.33.0...v1.34.0)
+
+**Added**
+- feat: Add support for ActionModules  [\#690](https://github.com/auth0/go-auth0/pull/690) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: add support for setting UseOauthSpecScope on Connection Options [\#699](https://github.com/auth0/go-auth0/pull/699) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add support for setting SendBackChannelNonce on Connection Options [\#700](https://github.com/auth0/go-auth0/pull/700) ([bkiran6398](https://github.com/bkiran6398))
+
+
 ## [v1.33.0](https://github.com/auth0/go-auth0/tree/v1.33.0) (2026-01-30)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.32.1...v1.33.0)
 
