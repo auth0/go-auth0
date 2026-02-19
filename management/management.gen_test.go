@@ -76,6 +76,16 @@ func TestAction_GetID(tt *testing.T) {
 	a.GetID()
 }
 
+func TestAction_GetModules(tt *testing.T) {
+	var zeroValue []ActionModules
+	a := &Action{Modules: &zeroValue}
+	a.GetModules()
+	a = &Action{}
+	a.GetModules()
+	a = nil
+	a.GetModules()
+}
+
 func TestAction_GetName(tt *testing.T) {
 	var zeroValue string
 	a := &Action{Name: &zeroValue}
@@ -389,6 +399,54 @@ func TestActionExecutionResult_String(t *testing.T) {
 func TestActionList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ActionList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestActionModules_GetModuleID(tt *testing.T) {
+	var zeroValue string
+	a := &ActionModules{ModuleID: &zeroValue}
+	a.GetModuleID()
+	a = &ActionModules{}
+	a.GetModuleID()
+	a = nil
+	a.GetModuleID()
+}
+
+func TestActionModules_GetModuleName(tt *testing.T) {
+	var zeroValue string
+	a := &ActionModules{ModuleName: &zeroValue}
+	a.GetModuleName()
+	a = &ActionModules{}
+	a.GetModuleName()
+	a = nil
+	a.GetModuleName()
+}
+
+func TestActionModules_GetModuleVersionID(tt *testing.T) {
+	var zeroValue string
+	a := &ActionModules{ModuleVersionID: &zeroValue}
+	a.GetModuleVersionID()
+	a = &ActionModules{}
+	a.GetModuleVersionID()
+	a = nil
+	a.GetModuleVersionID()
+}
+
+func TestActionModules_GetModuleVersionNumber(tt *testing.T) {
+	var zeroValue int
+	a := &ActionModules{ModuleVersionNumber: &zeroValue}
+	a.GetModuleVersionNumber()
+	a = &ActionModules{}
+	a.GetModuleVersionNumber()
+	a = nil
+	a.GetModuleVersionNumber()
+}
+
+func TestActionModules_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ActionModules{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -6762,6 +6820,16 @@ func TestConnectionOptionsOAuth2_GetUpstreamParams(tt *testing.T) {
 	c.GetUpstreamParams()
 }
 
+func TestConnectionOptionsOAuth2_GetUseOauthSpecScope(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOAuth2{UseOauthSpecScope: &zeroValue}
+	c.GetUseOauthSpecScope()
+	c = &ConnectionOptionsOAuth2{}
+	c.GetUseOauthSpecScope()
+	c = nil
+	c.GetUseOauthSpecScope()
+}
+
 func TestConnectionOptionsOAuth2_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsOAuth2{}
@@ -6892,6 +6960,16 @@ func TestConnectionOptionsOIDC_GetScope(tt *testing.T) {
 	c.GetScope()
 	c = nil
 	c.GetScope()
+}
+
+func TestConnectionOptionsOIDC_GetSendBackChannelNonce(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOIDC{SendBackChannelNonce: &zeroValue}
+	c.GetSendBackChannelNonce()
+	c = &ConnectionOptionsOIDC{}
+	c.GetSendBackChannelNonce()
+	c = nil
+	c.GetSendBackChannelNonce()
 }
 
 func TestConnectionOptionsOIDC_GetSetUserAttributes(tt *testing.T) {
