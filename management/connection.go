@@ -1176,6 +1176,11 @@ type ConnectionOptionsOIDC struct {
 	//      "jwks_uri":               "https://example.com/.well-known/jwks.json",
 	//  }
 	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
+
+	// When true and type is 'back_channel',
+	// includes a cryptographic nonce in authorization requests to prevent replay attacks.
+	// The identity provider must include this nonce in the ID token for validation.
+	SendBackChannelNonce *bool `json:"send_back_channel_nonce,omitempty"`
 }
 
 // ConnectionOptionsOIDCConnectionSettings contains PKCE configuration for the connection.
