@@ -490,7 +490,8 @@ func WrapWithTokenSource(base *http.Client, tokenSource oauth2.TokenSource, opti
 // Wrap the base client with just the internal transports.
 func Wrap(base *http.Client, options ...Option) *http.Client {
 	if base == nil {
-		base = http.DefaultClient
+		cloned := *http.DefaultClient
+		base = &cloned
 	}
 
 	for _, option := range options {
