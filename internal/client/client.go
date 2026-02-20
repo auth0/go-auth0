@@ -353,7 +353,7 @@ func dumpRequest(r *http.Request) {
 	// Restore original headers
 	r.Header = originalHeaders
 
-	log.Printf("\n%s\n", b)
+	log.Printf("\n%s\n", b) //nolint:gosec // Debug logging of HTTP requests, not user-controlled log injection.
 }
 
 func dumpResponse(r *http.Response) {
@@ -372,7 +372,7 @@ func dumpResponse(r *http.Response) {
 	// Restore original headers
 	r.Header = originalHeaders
 
-	log.Printf("\n%s\n\n", b)
+	log.Printf("\n%s\n\n", b) //nolint:gosec // Debug logging of HTTP responses, not user-controlled log injection.
 }
 
 // redactSensitiveHeaders redacts sensitive header values to prevent token leakage in logs.

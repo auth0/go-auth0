@@ -8,7 +8,7 @@ type ClientAuthentication struct {
 	ClientID string `json:"client_id,omitempty"`
 	// ClientSecret to use for the specific request. Required when Client Secret Basic or Client
 	// Secret Post is the application authentication method.
-	ClientSecret string `json:"client_secret,omitempty"`
+	ClientSecret string `json:"client_secret,omitempty"` //nolint:gosec // This is a request field, not a hardcoded secret.
 	// ClientAssertion to use for the specific request. Required if `Private Key JWT` is the
 	// authentication method.
 	ClientAssertion string `json:"client_assertion,omitempty"`
@@ -20,13 +20,13 @@ type ClientAuthentication struct {
 // TokenSet defines the response of the OAuth endpoints.
 type TokenSet struct {
 	// The access token.
-	AccessToken string `json:"access_token,omitempty"`
+	AccessToken string `json:"access_token,omitempty"` //nolint:gosec // This is a response field, not a hardcoded secret.
 	// The duration in seconds that the access token is valid for.
 	ExpiresIn int64 `json:"expires_in,omitempty"`
 	// The user's ID token.
 	IDToken string `json:"id_token,omitempty"`
 	// The refresh token, only available if `offline_access` scope was provided.
-	RefreshToken string `json:"refresh_token,omitempty"`
+	RefreshToken string `json:"refresh_token,omitempty"` //nolint:gosec // This is a response field, not a hardcoded secret.
 	// String value of the different scopes the application is asking for.
 	// Multiple scopes are separated with whitespace.
 	Scope string `json:"scope,omitempty"`
@@ -40,7 +40,7 @@ type LoginWithPasswordRequest struct {
 	// The user's username.
 	Username string
 	// The user's password.
-	Password string
+	Password string //nolint:gosec // This is a request field, not a hardcoded secret.
 	// String value of the different scopes the application is asking for. Multiple scopes are separated with whitespace.
 	Scope string
 	// The unique identifier of the target API you want to access.
@@ -91,7 +91,7 @@ type LoginWithClientCredentialsRequest struct {
 type RefreshTokenRequest struct {
 	ClientAuthentication
 	// The refresh token to use.
-	RefreshToken string
+	RefreshToken string //nolint:gosec // This is a request field, not a hardcoded secret.
 	// 	A space-delimited list of requested scope permissions. If not sent, the original scopes will be used;
 	// otherwise you can request a reduced set of scopes. Note that this must be URL encoded.
 	Scope string

@@ -86,7 +86,7 @@ func (a *Authentication) NewFormRequest(
 func (a *Authentication) Do(req *http.Request) (*http.Response, error) {
 	ctx := req.Context()
 
-	response, err := a.http.Do(req)
+	response, err := a.http.Do(req) //nolint:gosec // URL is constructed from user-configured domain, not arbitrary input.
 	if err != nil {
 		select {
 		case <-ctx.Done():

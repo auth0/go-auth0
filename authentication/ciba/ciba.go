@@ -5,7 +5,7 @@ type Request struct {
 	// The client_id of your client.
 	ClientID string `json:"client_id,omitempty"`
 	// The client_secret of your client.
-	ClientSecret string `json:"client_secret,omitempty"`
+	ClientSecret string `json:"client_secret,omitempty"` //nolint:gosec // This is a request field, not a hardcoded secret.
 	// This is a required field containing format, iss and sub
 	LoginHint map[string]string `json:"login_hint,omitempty"`
 	// The scope for the flow
