@@ -120,7 +120,7 @@ import (
 
 func main() {
 	mgmt, err := management.New(
-		"{YOUR_TENANT_AND REGION}.auth0.com",
+		"{YOUR_TENANT_AND_REGION}.auth0.com",
 		option.WithToken("{YOUR_API_V2_TOKEN}"),  // Replace with a Context that better suits your usage
 	)
 }
@@ -141,7 +141,7 @@ import (
 
 func main() {
 	mgmt, err := management.New(
-		"{YOUR_TENANT_AND REGION}.auth0.com",
+		"{YOUR_TENANT_AND_REGION}.auth0.com",
 		option.WithClientCredentials(context.TODO(), clientID, clientSecret),  // Replace with a Context that better suits your usage
 	)
 }
@@ -160,7 +160,7 @@ import (
 
 func main() {
 	mgmt, err := management.New(
-		"{YOUR_TENANT_AND REGION}.auth0.com",
+		"{YOUR_TENANT_AND_REGION}.auth0.com",
 		option.WithTokenSource(oauth2.ReuseTokenSource(nil, myCustomTokenSource)),
 	)
 }
