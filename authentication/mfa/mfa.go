@@ -85,7 +85,7 @@ type AddAuthenticatorResponse struct {
 	// The URI to generate a QR code for the authenticator.
 	BarcodeURI string `json:"barcode_uri,omitempty"`
 	// The secret to use for the OTP.
-	Secret string `json:"secret,omitempty"`
+	Secret string `json:"secret,omitempty"` //nolint:gosec // This is a response field, not a hardcoded secret.
 	// The type of authenticator added.
 	AuthenticatorType string `json:"authenticator_type,omitempty"`
 	// Deprecated: Use OOBChannel instead.

@@ -156,11 +156,13 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 		return nil, err
 	}
 
+	httpClient := *http.DefaultClient // Clone to avoid modifying the global http.DefaultClient.
+
 	a := &Authentication{
 		url:               u,
 		basePath:          "",
 		debug:             false,
-		http:              http.DefaultClient,
+		http:              &httpClient,
 		auth0ClientInfo:   client.DefaultAuth0ClientInfo,
 		idTokenSigningAlg: "RS256",
 		retryStrategy:     client.DefaultRetryOptions,
@@ -185,10 +187,8 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 	a.Passwordless = (*Passwordless)(&a.common)
 	a.CIBA = (*CIBA)(&a.common)
 
-	validatorOpts := []idtokenvalidator.Option{}
-
-	if a.http != http.DefaultClient {
-		validatorOpts = append(validatorOpts, idtokenvalidator.WithHTTPClient(a.http))
+	validatorOpts := []idtokenvalidator.Option{
+		idtokenvalidator.WithHTTPClient(a.http),
 	}
 
 	if a.idTokenClockTolerance.Seconds() != 0 {
