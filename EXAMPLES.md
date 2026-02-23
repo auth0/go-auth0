@@ -25,6 +25,7 @@ import (
     "github.com/auth0/go-auth0/v2/management"
     "github.com/auth0/go-auth0/v2/management/client"
     "github.com/auth0/go-auth0/v2/management/option"
+    "golang.org/x/oauth2"
 )
 
 // Standard client credentials with client secret
@@ -76,7 +77,23 @@ mgmt, err := client.New(
     "your-tenant.auth0.com",
     option.WithToken("YOUR_ACCESS_TOKEN"),
 )
+
+// Using a custom token source for advanced token management
+// This is useful when you want to share cached tokens across multiple
+// services, integrate with an external token provider, or implement
+// custom refresh logic to reduce M2M token usage.
+mgmt, err := client.New(
+    "your-tenant.auth0.com",
+    option.WithTokenSource(oauth2.ReuseTokenSource(nil, myCustomTokenSource)),
+)
 ```
+
+> **Note**
+> The authentication options (`WithClientCredentials`, `WithClientCredentialsAndAudience`,
+> `WithClientCredentialsPrivateKeyJwt`, `WithClientCredentialsPrivateKeyJwtAndAudience`,
+> and `WithTokenSource`) are mutually exclusive. They all configure the underlying token
+> source, so if multiple are provided, the last one applied takes effect. Similarly,
+> `WithToken` sets a static token, but any token source option takes priority over it.
 
 ### Authentication API Initialization
 

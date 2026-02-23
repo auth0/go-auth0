@@ -286,6 +286,15 @@ func (c *ClientCredentialsPrivateKeyJwtAndAudienceOption) applyRequestOptions(op
 	options.TokenSource = c.tokenSource
 }
 
+// TokenSourceOption implements the RequestOption interface.
+type TokenSourceOption struct {
+	TokenSource oauth2.TokenSource
+}
+
+func (t *TokenSourceOption) applyRequestOptions(opts *RequestOptions) {
+	opts.TokenSource = t.TokenSource
+}
+
 // DebugOption implements the RequestOption interface.
 type DebugOption struct {
 	Debug bool

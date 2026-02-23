@@ -8,6 +8,7 @@ import (
 	url "net/url"
 
 	core "github.com/auth0/go-auth0/v2/management/core"
+	"golang.org/x/oauth2"
 )
 
 // RequestOption adapts the behavior of an individual request.
@@ -65,15 +66,26 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 	}
 }
 
-// WithToken sets the 'Authorization: Bearer <token>' request header.
+// WithToken sets the 'Authorization: Bearer <token>' request header with a static token.
+//
+// Note: If a TokenSource is also configured (via WithClientCredentials,
+// WithClientCredentialsPrivateKeyJwt, or WithTokenSource), the TokenSource
+// takes priority and this static token will be ignored.
 func WithToken(token string) *core.TokenOption {
 	return &core.TokenOption{
 		Token: token,
 	}
 }
 
+// WithClientCredentials configures OAuth2 client credentials authentication
+// using a client ID and secret. The SDK will automatically fetch and refresh
+// tokens from the Auth0 token endpoint.
+//
+// This option is mutually exclusive with other token source options
+// (WithClientCredentialsAndAudience, WithClientCredentialsPrivateKeyJwt,
+// WithClientCredentialsPrivateKeyJwtAndAudience, and WithTokenSource).
+// If multiple are provided, the last one applied takes effect.
 func WithClientCredentials(ctx context.Context, clientID, clientSecret string) *core.ClientCredentialsOption {
-	// ctx is currently unused, but included for future extensibility.
 	return &core.ClientCredentialsOption{
 		Ctx:          &ctx,
 		ClientID:     clientID,
@@ -81,6 +93,13 @@ func WithClientCredentials(ctx context.Context, clientID, clientSecret string) *
 	}
 }
 
+// WithClientCredentialsAndAudience configures OAuth2 client credentials authentication
+// using a client ID, secret, and a custom audience.
+//
+// This option is mutually exclusive with other token source options
+// (WithClientCredentials, WithClientCredentialsPrivateKeyJwt,
+// WithClientCredentialsPrivateKeyJwtAndAudience, and WithTokenSource).
+// If multiple are provided, the last one applied takes effect.
 func WithClientCredentialsAndAudience(ctx context.Context, clientID, clientSecret, audience string) *core.ClientCredentialsAndAudienceOption {
 	return &core.ClientCredentialsAndAudienceOption{
 		Ctx:          &ctx,
@@ -90,6 +109,13 @@ func WithClientCredentialsAndAudience(ctx context.Context, clientID, clientSecre
 	}
 }
 
+// WithClientCredentialsPrivateKeyJwtAndAudience configures OAuth2 client credentials
+// authentication using private key JWT assertion with a custom audience.
+//
+// This option is mutually exclusive with other token source options
+// (WithClientCredentials, WithClientCredentialsAndAudience,
+// WithClientCredentialsPrivateKeyJwt, and WithTokenSource).
+// If multiple are provided, the last one applied takes effect.
 func WithClientCredentialsPrivateKeyJwtAndAudience(ctx context.Context, clientID string, privateKey string, algorithm, audience string) *core.ClientCredentialsPrivateKeyJwtAndAudienceOption {
 	return &core.ClientCredentialsPrivateKeyJwtAndAudienceOption{
 		Ctx:        &ctx,
@@ -100,13 +126,41 @@ func WithClientCredentialsPrivateKeyJwtAndAudience(ctx context.Context, clientID
 	}
 }
 
-// WithClientCredentialsPrivateKeyJwt sets client credentials using private key JWT.
+// WithClientCredentialsPrivateKeyJwt configures OAuth2 client credentials
+// authentication using private key JWT assertion.
+//
+// This option is mutually exclusive with other token source options
+// (WithClientCredentials, WithClientCredentialsAndAudience,
+// WithClientCredentialsPrivateKeyJwtAndAudience, and WithTokenSource).
+// If multiple are provided, the last one applied takes effect.
 func WithClientCredentialsPrivateKeyJwt(ctx context.Context, clientID string, privateKey string, algorithm string) *core.ClientCredentialsPrivateKeyJwtOption {
 	return &core.ClientCredentialsPrivateKeyJwtOption{
 		Ctx:        &ctx,
 		ClientID:   clientID,
 		PrivateKey: privateKey,
 		Algorithm:  algorithm,
+	}
+}
+
+// WithTokenSource sets a custom oauth2.TokenSource for acquiring access tokens.
+// This allows users to provide their own token management strategy, such as
+// caching tokens across multiple services or using a custom token provider.
+//
+// The SDK calls TokenSource.Token() on every request to obtain the access token.
+// If token caching is desired, wrap the source with oauth2.ReuseTokenSource:
+//
+//	option.WithTokenSource(oauth2.ReuseTokenSource(nil, myTokenSource))
+//
+// This option is mutually exclusive with other token source options
+// (WithClientCredentials, WithClientCredentialsAndAudience,
+// WithClientCredentialsPrivateKeyJwt, and WithClientCredentialsPrivateKeyJwtAndAudience).
+// If multiple are provided, the last one applied takes effect.
+//
+// Note: When a TokenSource is configured, it takes priority over any static
+// token set via WithToken.
+func WithTokenSource(tokenSource oauth2.TokenSource) *core.TokenSourceOption {
+	return &core.TokenSourceOption{
+		TokenSource: tokenSource,
 	}
 }
 

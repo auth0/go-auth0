@@ -147,6 +147,25 @@ func main() {
 }
 ```
 
+Or use a custom token source for advanced token management (e.g., shared caching across services):
+
+```go
+package main
+
+import (
+	"github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v2/management/client"
+	"golang.org/x/oauth2"
+)
+
+func main() {
+	mgmt, err := management.New(
+		"{YOUR_TENANT_AND REGION}.auth0.com",
+		option.WithTokenSource(oauth2.ReuseTokenSource(nil, myCustomTokenSource)),
+	)
+}
+```
+
 ## Feedback
 
 ### Contributing

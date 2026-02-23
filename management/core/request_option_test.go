@@ -14,6 +14,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"golang.org/x/oauth2"
 )
 
 // WireMock configuration - expects WireMock to be running via docker compose
@@ -87,6 +88,66 @@ func generateTestRSAPrivateKey(t *testing.T) string {
 	})
 
 	return string(privateKeyPEM)
+}
+
+// staticTokenSource is a test helper that always returns the same token.
+type staticTokenSource struct {
+	token *oauth2.Token
+}
+
+func (s *staticTokenSource) Token() (*oauth2.Token, error) {
+	return s.token, nil
+}
+
+func TestTokenSourceOption(t *testing.T) {
+	expectedToken := "custom-cached-token"
+	ts := &staticTokenSource{
+		token: &oauth2.Token{
+			AccessToken: expectedToken,
+			TokenType:   "Bearer",
+		},
+	}
+
+	option := &TokenSourceOption{
+		TokenSource: ts,
+	}
+
+	options := &RequestOptions{
+		HTTPHeader:      make(http.Header),
+		BodyProperties:  make(map[string]interface{}),
+		QueryParameters: make(map[string][]string),
+	}
+
+	option.applyRequestOptions(options)
+
+	require.NotNil(t, options.TokenSource, "TokenSource should be set")
+
+	// Verify token source returns expected token
+	token, err := options.TokenSource.Token()
+	require.NoError(t, err)
+	assert.Equal(t, expectedToken, token.AccessToken)
+
+	// Verify ToHeader uses the token source
+	header := options.ToHeader()
+	assert.Equal(t, "Bearer "+expectedToken, header.Get("Authorization"))
+}
+
+func TestTokenSourceOption_OverridesStaticToken(t *testing.T) {
+	ts := &staticTokenSource{
+		token: &oauth2.Token{
+			AccessToken: "from-token-source",
+			TokenType:   "Bearer",
+		},
+	}
+
+	options := NewRequestOptions(
+		&TokenOption{Token: "static-token"},
+		&TokenSourceOption{TokenSource: ts},
+	)
+
+	// TokenSource takes priority over static Token in ToHeader
+	header := options.ToHeader()
+	assert.Equal(t, "Bearer from-token-source", header.Get("Authorization"))
 }
 
 func TestClientCredentialsAndAudienceOption_TokenURL(t *testing.T) {
