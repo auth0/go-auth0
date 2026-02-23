@@ -159,6 +159,9 @@ func WithClientCredentialsPrivateKeyJwt(ctx context.Context, clientID string, pr
 // Note: When a TokenSource is configured, it takes priority over any static
 // token set via WithToken.
 func WithTokenSource(tokenSource oauth2.TokenSource) *core.TokenSourceOption {
+	if tokenSource == nil {
+		panic("management: WithTokenSource called with nil TokenSource")
+	}
 	return &core.TokenSourceOption{
 		TokenSource: tokenSource,
 	}
