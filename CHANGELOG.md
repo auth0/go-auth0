@@ -1,5 +1,15 @@
 # Change Log
 
+## [v2.6.0](https://github.com/auth0/go-auth0/tree/v2.6.0) (2026-02-25)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.5.0...v2.6.0)
+
+**Added**
+- feat: add connection keys provisioning, SCIM config list, DPoP signing, and on-behalf-of token exchange support [\#706](https://github.com/auth0/go-auth0/pull/706) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add WithTokenSource option for custom token management [\#705](https://github.com/auth0/go-auth0/pull/705) ([developerkunal](https://github.com/developerkunal))
+
+**Fixed**
+- fix: clone http.DefaultClient in authentication.New to avoid mutating global state [\#704](https://github.com/auth0/go-auth0/pull/704) ([developerkunal](https://github.com/developerkunal))
+
 ## [v2.5.0](https://github.com/auth0/go-auth0/tree/v2.5.0) (2026-02-11)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.4.0...v2.5.0)
 
