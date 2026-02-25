@@ -6834,6 +6834,16 @@ func TestConnectionOptionsOIDC_GetDomainAliases(tt *testing.T) {
 	c.GetDomainAliases()
 }
 
+func TestConnectionOptionsOIDC_GetIDTokenSignedResponseAlgs(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsOIDC{IDTokenSignedResponseAlgs: &zeroValue}
+	c.GetIDTokenSignedResponseAlgs()
+	c = &ConnectionOptionsOIDC{}
+	c.GetIDTokenSignedResponseAlgs()
+	c = nil
+	c.GetIDTokenSignedResponseAlgs()
+}
+
 func TestConnectionOptionsOIDC_GetIssuer(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOIDC{Issuer: &zeroValue}
@@ -7112,6 +7122,16 @@ func TestConnectionOptionsOkta_GetDomainAliases(tt *testing.T) {
 	c.GetDomainAliases()
 }
 
+func TestConnectionOptionsOkta_GetIDTokenSignedResponseAlgs(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsOkta{IDTokenSignedResponseAlgs: &zeroValue}
+	c.GetIDTokenSignedResponseAlgs()
+	c = &ConnectionOptionsOkta{}
+	c.GetIDTokenSignedResponseAlgs()
+	c = nil
+	c.GetIDTokenSignedResponseAlgs()
+}
+
 func TestConnectionOptionsOkta_GetIssuer(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOkta{Issuer: &zeroValue}
@@ -7150,6 +7170,16 @@ func TestConnectionOptionsOkta_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 	c = nil
 	c.GetNonPersistentAttrs()
+}
+
+func TestConnectionOptionsOkta_GetOIDCMetadata(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsOkta{OIDCMetadata: zeroValue}
+	c.GetOIDCMetadata()
+	c = &ConnectionOptionsOkta{}
+	c.GetOIDCMetadata()
+	c = nil
+	c.GetOIDCMetadata()
 }
 
 func TestConnectionOptionsOkta_GetScope(tt *testing.T) {
