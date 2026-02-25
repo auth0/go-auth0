@@ -50,6 +50,26 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Provision initial connection keys for Okta or OIDC connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
+func (c *Client) Create(
+	ctx context.Context,
+	// ID of the connection
+	id string,
+	request *management.PostConnectionKeysRequestContent,
+	opts ...option.RequestOption,
+) (management.PostConnectionsKeysResponseContent, error) {
+	response, err := c.WithRawResponse.Create(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Rotates the connection keys for the Okta or OIDC connection strategies.
 func (c *Client) Rotate(
 	ctx context.Context,

@@ -36,7 +36,7 @@ type CreateSelfServiceProfileResponseContent struct {
 	// The time when this self-service Profile was updated.
 	UpdatedAt *time.Time                            `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	Branding  *SelfServiceProfileBrandingProperties `json:"branding,omitempty" url:"branding,omitempty"`
-	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
+	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
@@ -262,7 +262,7 @@ type GetSelfServiceProfileResponseContent struct {
 	// The time when this self-service Profile was updated.
 	UpdatedAt *time.Time                            `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	Branding  *SelfServiceProfileBrandingProperties `json:"branding,omitempty" url:"branding,omitempty"`
-	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
+	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
@@ -614,7 +614,7 @@ type SelfServiceProfile struct {
 	// The time when this self-service Profile was updated.
 	UpdatedAt *time.Time                            `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	Branding  *SelfServiceProfileBrandingProperties `json:"branding,omitempty" url:"branding,omitempty"`
-	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
+	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
@@ -1189,7 +1189,7 @@ type UpdateSelfServiceProfileResponseContent struct {
 	// The time when this self-service Profile was updated.
 	UpdatedAt *time.Time                            `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	Branding  *SelfServiceProfileBrandingProperties `json:"branding,omitempty" url:"branding,omitempty"`
-	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
+	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`

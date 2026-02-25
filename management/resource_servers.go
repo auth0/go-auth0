@@ -1427,17 +1427,14 @@ func (r ResourceServerProofOfPossessionMechanismEnum) Ptr() *ResourceServerProof
 type ResourceServerProofOfPossessionRequiredForEnum string
 
 const (
-	ResourceServerProofOfPossessionRequiredForEnumPublicClients       ResourceServerProofOfPossessionRequiredForEnum = "public_clients"
-	ResourceServerProofOfPossessionRequiredForEnumConfidentialClients ResourceServerProofOfPossessionRequiredForEnum = "confidential_clients"
-	ResourceServerProofOfPossessionRequiredForEnumAllClients          ResourceServerProofOfPossessionRequiredForEnum = "all_clients"
+	ResourceServerProofOfPossessionRequiredForEnumPublicClients ResourceServerProofOfPossessionRequiredForEnum = "public_clients"
+	ResourceServerProofOfPossessionRequiredForEnumAllClients    ResourceServerProofOfPossessionRequiredForEnum = "all_clients"
 )
 
 func NewResourceServerProofOfPossessionRequiredForEnumFromString(s string) (ResourceServerProofOfPossessionRequiredForEnum, error) {
 	switch s {
 	case "public_clients":
 		return ResourceServerProofOfPossessionRequiredForEnumPublicClients, nil
-	case "confidential_clients":
-		return ResourceServerProofOfPossessionRequiredForEnumConfidentialClients, nil
 	case "all_clients":
 		return ResourceServerProofOfPossessionRequiredForEnumAllClients, nil
 	}

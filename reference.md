@@ -2187,7 +2187,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**allowedLogoutURLs:** `[]string` — URLs that are valid to redirect to after logout from Auth0.
+**allowedLogoutURLs:** `[]string` — URLs that are valid to redirect to after logout from Auth0
     
 </dd>
 </dl>
@@ -10813,7 +10813,7 @@ client.SelfServiceProfiles.Create(
 <dl>
 <dd>
 
-**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
+**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
     
 </dd>
 </dl>
@@ -11037,7 +11037,7 @@ client.SelfServiceProfiles.Update(
 <dl>
 <dd>
 
-**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `keycloak-samlp`, `pingfederate`]
+**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
     
 </dd>
 </dl>
@@ -18388,8 +18388,8 @@ client.Connections.DirectoryProvisioning.GetDefaultMapping(
 </dl>
 </details>
 
-## Connections Clients
-<details><summary><code>client.Connections.Clients.Get(ID) -> *management.GetConnectionEnabledClientsResponseContent</code></summary>
+## Connections SCIMConfiguration
+<details><summary><code>client.Connections.SCIMConfiguration.List() -> *management.ListSCIMConfigurationsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -18401,9 +18401,7 @@ client.Connections.DirectoryProvisioning.GetDefaultMapping(
 <dl>
 <dd>
 
-Retrieve all clients that have the specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> enabled.
-
-<b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+Retrieve a list of SCIM configurations of a tenant.
 </dd>
 </dl>
 </dd>
@@ -18418,17 +18416,16 @@ Retrieve all clients that have the specified <a href="https://auth0.com/docs/aut
 <dd>
 
 ```go
-request := &management.GetConnectionEnabledClientsRequestParameters{
-        Take: management.Int(
-            1,
-        ),
+request := &management.ListSCIMConfigurationsRequestParameters{
         From: management.String(
             "from",
         ),
+        Take: management.Int(
+            1,
+        ),
     }
-client.Connections.Clients.Get(
+client.Connections.SCIMConfiguration.List(
         context.TODO(),
-        "id",
         request,
     )
 }
@@ -18446,7 +18443,7 @@ client.Connections.Clients.Get(
 <dl>
 <dd>
 
-**id:** `string` — The id of the connection for which enabled clients are to be retrieved
+**from:** `*string` — Optional Id from which to start selection.
     
 </dd>
 </dl>
@@ -18458,14 +18455,6 @@ client.Connections.Clients.Get(
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
 </dd>
 </dl>
 
@@ -18474,193 +18463,6 @@ client.Connections.Clients.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Clients.Update(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := []*management.UpdateEnabledClientConnectionsRequestContentItem{
-        &management.UpdateEnabledClientConnectionsRequestContentItem{
-            ClientID: "client_id",
-            Status: true,
-        },
-    }
-client.Connections.Clients.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to modify
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `management.UpdateEnabledClientConnectionsRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Connections Keys
-<details><summary><code>client.Connections.Keys.Get(ID) -> []*management.ConnectionKey</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets the connection keys for the Okta or OIDC connection strategy.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.Keys.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the connection
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.Keys.Rotate(ID, request) -> *management.RotateConnectionsKeysResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Rotates the connection keys for the Okta or OIDC connection strategies.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.RotateConnectionKeysRequestContent{}
-client.Connections.Keys.Rotate(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the connection
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*management.RotateConnectionKeysRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Connections SCIMConfiguration
 <details><summary><code>client.Connections.SCIMConfiguration.Get(ID) -> *management.GetSCIMConfigurationResponseContent</code></summary>
 <dl>
 <dd>
@@ -18973,6 +18775,346 @@ client.Connections.SCIMConfiguration.GetDefaultMapping(
 <dd>
 
 **id:** `string` — The id of the connection to retrieve its default SCIM mapping
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Connections Clients
+<details><summary><code>client.Connections.Clients.Get(ID) -> *management.GetConnectionEnabledClientsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all clients that have the specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> enabled.
+
+<b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetConnectionEnabledClientsRequestParameters{
+        Take: management.Int(
+            1,
+        ),
+        From: management.String(
+            "from",
+        ),
+    }
+client.Connections.Clients.Get(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection for which enabled clients are to be retrieved
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.Clients.Update(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := []*management.UpdateEnabledClientConnectionsRequestContentItem{
+        &management.UpdateEnabledClientConnectionsRequestContentItem{
+            ClientID: "client_id",
+            Status: true,
+        },
+    }
+client.Connections.Clients.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to modify
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `management.UpdateEnabledClientConnectionsRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Connections Keys
+<details><summary><code>client.Connections.Keys.Get(ID) -> []*management.ConnectionKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the connection keys for the Okta or OIDC connection strategy.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.Keys.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the connection
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.Keys.Create(ID, request) -> management.PostConnectionsKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Provision initial connection keys for Okta or OIDC connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.PostConnectionKeysRequestContent{}
+client.Connections.Keys.Create(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the connection
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.PostConnectionKeysRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.Keys.Rotate(ID, request) -> *management.RotateConnectionsKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rotates the connection keys for the Okta or OIDC connection strategies.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.RotateConnectionKeysRequestContent{}
+client.Connections.Keys.Rotate(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the connection
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.RotateConnectionKeysRequestContent` 
     
 </dd>
 </dl>

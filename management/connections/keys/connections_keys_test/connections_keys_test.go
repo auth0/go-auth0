@@ -85,6 +85,31 @@ func TestConnectionsKeysGetWithWireMock(
 	VerifyRequestCount(t, "TestConnectionsKeysGetWithWireMock", "GET", "/connections/id/keys", nil, 1)
 }
 
+func TestConnectionsKeysCreateWithWireMock(
+	t *testing.T,
+) {
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &management.PostConnectionKeysRequestContent{}
+	_, invocationErr := client.Connections.Keys.Create(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsKeysCreateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsKeysCreateWithWireMock", "POST", "/connections/id/keys", nil, 1)
+}
+
 func TestConnectionsKeysRotateWithWireMock(
 	t *testing.T,
 ) {

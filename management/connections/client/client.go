@@ -19,9 +19,9 @@ import (
 type Client struct {
 	WithRawResponse       *RawClient
 	DirectoryProvisioning *client.Client
+	SCIMConfiguration     *scimconfigurationclient.Client
 	Clients               *clients.Client
 	Keys                  *keys.Client
-	SCIMConfiguration     *scimconfigurationclient.Client
 	Users                 *users.Client
 
 	options *core.RequestOptions
@@ -32,9 +32,9 @@ type Client struct {
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		DirectoryProvisioning: client.NewClient(options),
+		SCIMConfiguration:     scimconfigurationclient.NewClient(options),
 		Clients:               clients.NewClient(options),
 		Keys:                  keys.NewClient(options),
-		SCIMConfiguration:     scimconfigurationclient.NewClient(options),
 		Users:                 users.NewClient(options),
 		WithRawResponse:       NewRawClient(options),
 		options:               options,

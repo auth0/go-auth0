@@ -62,6 +62,37 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
+func TestConnectionsSCIMConfigurationListWithWireMock(
+	t *testing.T,
+) {
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &management.ListSCIMConfigurationsRequestParameters{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Connections.SCIMConfiguration.List(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsSCIMConfigurationListWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsSCIMConfigurationListWithWireMock", "GET", "/connections-scim-configurations", map[string]string{"from": "from", "take": "1"}, 1)
+}
+
 func TestConnectionsSCIMConfigurationGetWithWireMock(
 	t *testing.T,
 ) {

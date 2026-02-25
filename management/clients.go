@@ -7756,13 +7756,16 @@ func (c *ClientTokenExchangeConfigurationOrNull) String() string {
 type ClientTokenExchangeTypeEnum string
 
 const (
-	ClientTokenExchangeTypeEnumCustomAuthentication ClientTokenExchangeTypeEnum = "custom_authentication"
+	ClientTokenExchangeTypeEnumCustomAuthentication    ClientTokenExchangeTypeEnum = "custom_authentication"
+	ClientTokenExchangeTypeEnumOnBehalfOfTokenExchange ClientTokenExchangeTypeEnum = "on_behalf_of_token_exchange"
 )
 
 func NewClientTokenExchangeTypeEnumFromString(s string) (ClientTokenExchangeTypeEnum, error) {
 	switch s {
 	case "custom_authentication":
 		return ClientTokenExchangeTypeEnumCustomAuthentication, nil
+	case "on_behalf_of_token_exchange":
+		return ClientTokenExchangeTypeEnumOnBehalfOfTokenExchange, nil
 	}
 	var t ClientTokenExchangeTypeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
