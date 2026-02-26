@@ -11434,6 +11434,14 @@ func (r *ResourceServerProofOfPossession) GetRequired() bool {
 	return *r.Required
 }
 
+// GetRequiredFor returns the RequiredFor field if it's non-nil, zero value otherwise.
+func (r *ResourceServerProofOfPossession) GetRequiredFor() string {
+	if r == nil || r.RequiredFor == nil {
+		return ""
+	}
+	return *r.RequiredFor
+}
+
 // String returns a string representation of ResourceServerProofOfPossession.
 func (r *ResourceServerProofOfPossession) String() string {
 	return Stringify(r)

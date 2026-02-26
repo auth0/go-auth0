@@ -14337,6 +14337,16 @@ func TestResourceServerProofOfPossession_GetRequired(tt *testing.T) {
 	r.GetRequired()
 }
 
+func TestResourceServerProofOfPossession_GetRequiredFor(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerProofOfPossession{RequiredFor: &zeroValue}
+	r.GetRequiredFor()
+	r = &ResourceServerProofOfPossession{}
+	r.GetRequiredFor()
+	r = nil
+	r.GetRequiredFor()
+}
+
 func TestResourceServerProofOfPossession_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ResourceServerProofOfPossession{}
