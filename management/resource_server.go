@@ -172,6 +172,12 @@ type ResourceServerProofOfPossession struct {
 
 	// Whether the use of Proof-of-Possession is required for the resource server.
 	Required *bool `json:"required,omitempty"`
+
+	// Specifies which client types require Proof-of-Possession.
+	// Available options:
+	//   - "all_clients"
+	//   - "public_clients"
+	RequiredFor *string `json:"required_for,omitempty"`
 }
 
 // ResourceServerTokenEncryption specifies the token encryption for the resource server.
