@@ -682,6 +682,23 @@ type ConnectionOptionsOkta struct {
 
 	// TokenEndpointAuthSigningAlg specifies the signing algorithm for the token endpoint.
 	TokenEndpointAuthSigningAlg *string `json:"token_endpoint_auth_signing_alg,omitempty"`
+
+	// IDTokenSignedResponseAlgs specifies the allowed signing algorithms for the ID token.
+	IDTokenSignedResponseAlgs *[]string `json:"id_token_signed_response_algs,omitempty"`
+
+	// OIDCMetadata holds additional OIDC provider metadata as defined by the
+	// OpenID Connect Discovery specification. This field is free-form and allows
+	// specifying any valid metadata keys, such as "issuer", "authorization_endpoint",
+	// "token_endpoint", or "jwks_uri". See the OIDC Discovery spec for the complete list:
+	// https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
+	//
+	// Example:
+	//  conn.Options.OIDCMetadata = map[string]interface{}{
+	//      "issuer":                 "https://example.com/",
+	//      "authorization_endpoint": "https://example.com/authorize",
+	//      "jwks_uri":               "https://example.com/.well-known/jwks.json",
+	//  }
+	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOkta.
@@ -1162,6 +1179,9 @@ type ConnectionOptionsOIDC struct {
 
 	// TokenEndpointAuthSigningAlg specifies the signing algorithm for the token endpoint.
 	TokenEndpointAuthSigningAlg *string `json:"token_endpoint_auth_signing_alg,omitempty"`
+
+	// IDTokenSignedResponseAlgs specifies the allowed signing algorithms for the ID token.
+	IDTokenSignedResponseAlgs *[]string `json:"id_token_signed_response_algs,omitempty"`
 
 	// OIDCMetadata holds additional OIDC provider metadata as defined by the
 	// OpenID Connect Discovery specification. This field is free-form and allows
