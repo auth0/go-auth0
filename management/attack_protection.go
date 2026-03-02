@@ -205,3 +205,48 @@ func (m *AttackProtectionManager) UpdateSuspiciousIPThrottling(
 		opts...,
 	)
 }
+
+// BotDetection protects applications from bot attacks.
+//
+// See: https://auth0.com/docs/secure/attack-protection/bot-detection
+type BotDetection struct {
+	BotDetectionLevel            *string   `json:"bot_detection_level,omitempty"`
+	ChallengePasswordPolicy      *string   `json:"challenge_password_policy,omitempty"`
+	ChallengePasswordlessPolicy  *string   `json:"challenge_passwordless_policy,omitempty"`
+	ChallengePasswordResetPolicy *string   `json:"challenge_password_reset_policy,omitempty"`
+	AllowList                    *[]string `json:"allowlist,omitempty"`
+	MonitoringModeEnabled        *bool     `json:"monitoring_mode_enabled,omitempty"`
+}
+
+// GetBotDetection retrieves bot detection settings.
+//
+// Required scope: `read:attack_protection`
+//
+// See: https://auth0.com/docs/api/management/v2#!/attack-protection/get-bot-detection
+func (m *AttackProtectionManager) GetBotDetection(ctx context.Context, opts ...RequestOption) (*BotDetection, error) {
+	var botDetection BotDetection
+	err := m.management.Request(
+		ctx,
+		http.MethodGet,
+		m.management.URI("attack-protection", "bot-detection"),
+		&botDetection,
+		opts...,
+	)
+
+	return &botDetection, err
+}
+
+// UpdateBotDetection updates the bot detection settings.
+//
+// Required scope: `update:attack_protection`
+//
+// See: https://auth0.com/docs/api/management/v2#!/attack-protection/patch-bot-detection
+func (m *AttackProtectionManager) UpdateBotDetection(ctx context.Context, botDetection *BotDetection, opts ...RequestOption) error {
+	return m.management.Request(
+		ctx,
+		http.MethodPatch,
+		m.management.URI("attack-protection", "bot-detection"),
+		botDetection,
+		opts...,
+	)
+}

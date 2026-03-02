@@ -17,7 +17,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.33.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/breached-password-detection
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/bot-detection
         method: GET
       response:
         proto: HTTP/2.0
@@ -27,10 +27,10 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"enabled":true,"shields":["block"],"admin_notification_frequency":["daily","monthly","immediately","weekly"],"method":"standard","stage":{"pre-user-registration":{"shields":["admin_notification","block"]},"pre-change-password":{"shields":["admin_notification","block"]}}}'
+        body: '{"challenge_password_policy":"when_risky","challenge_passwordless_policy":"when_risky","challenge_password_reset_policy":"when_risky","allowlist":["192.168.10.2/32","196.138.8.25"],"bot_detection_level":"medium","monitoring_mode_enabled":true}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 930.171375ms
+        duration: 411.56975ms

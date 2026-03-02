@@ -129,4 +129,47 @@ func TestAttackProtection(t *testing.T) {
 		err = api.AttackProtection.UpdateSuspiciousIPThrottling(context.Background(), preTestSIPSettings)
 		assert.NoError(t, err)
 	})
+
+	t.Run("Get bot detection settings", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		botDetection, err := api.AttackProtection.GetBotDetection(t.Context())
+		assert.NoError(t, err)
+		assert.IsType(t, &BotDetection{}, botDetection)
+	})
+
+	t.Run("Update bot detection settings", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		// Save initial settings.
+		preTestBDSettings, err := api.AttackProtection.GetBotDetection(t.Context())
+		assert.NoError(t, err)
+
+		defer func() {
+			// Restore initial settings.
+			err = api.AttackProtection.UpdateBotDetection(t.Context(), preTestBDSettings)
+			assert.NoError(t, err)
+		}()
+
+		expected := &BotDetection{
+			BotDetectionLevel:            auth0.String("low"),
+			ChallengePasswordPolicy:      auth0.String("never"),
+			ChallengePasswordlessPolicy:  auth0.String("never"),
+			ChallengePasswordResetPolicy: auth0.String("never"),
+			AllowList:                    &[]string{"192.168.1.1"},
+			MonitoringModeEnabled:        auth0.Bool(true),
+		}
+
+		err = api.AttackProtection.UpdateBotDetection(t.Context(), expected)
+		assert.NoError(t, err)
+
+		actual, err := api.AttackProtection.GetBotDetection(t.Context())
+		assert.NoError(t, err)
+		assert.Equal(t, expected.GetBotDetectionLevel(), actual.GetBotDetectionLevel())
+		assert.Equal(t, expected.GetChallengePasswordPolicy(), actual.GetChallengePasswordPolicy())
+		assert.Equal(t, expected.GetChallengePasswordlessPolicy(), actual.GetChallengePasswordlessPolicy())
+		assert.Equal(t, expected.GetChallengePasswordResetPolicy(), actual.GetChallengePasswordResetPolicy())
+		assert.Equal(t, expected.GetAllowList(), actual.GetAllowList())
+		assert.Equal(t, expected.GetMonitoringModeEnabled(), actual.GetMonitoringModeEnabled())
+	})
 }
