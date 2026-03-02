@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.35.0](https://github.com/auth0/go-auth0/tree/v1.35.0) (2026-03-02)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.34.0...v1.35.0)
+
+**Added**
+- feat: Add bot detection APIs [\#698](https://github.com/auth0/go-auth0/pull/698) ([bkiran6398](https://github.com/bkiran6398))
+- feat: support IDTokenSignedResponseAlgs for okta, oidc connections, OIDCMetadata for okta [\#707](https://github.com/auth0/go-auth0/pull/707) ([shane-tomlinson](https://github.com/shane-tomlinson))
+- feat: Allow configuration of required_for param in Resource Servers [\#709](https://github.com/auth0/go-auth0/pull/709) ([duedares-rvj](https://github.com/duedares-rvj))
+
 ## [v1.34.0](https://github.com/auth0/go-auth0/tree/v1.34.0) (2026-02-19)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.33.0...v1.34.0)
 
