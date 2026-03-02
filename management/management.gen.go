@@ -5586,6 +5586,14 @@ func (c *ConnectionOptionsOIDC) GetDomainAliases() []string {
 	return *c.DomainAliases
 }
 
+// GetIDTokenSignedResponseAlgs returns the IDTokenSignedResponseAlgs field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDC) GetIDTokenSignedResponseAlgs() []string {
+	if c == nil || c.IDTokenSignedResponseAlgs == nil {
+		return nil
+	}
+	return *c.IDTokenSignedResponseAlgs
+}
+
 // GetIssuer returns the Issuer field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOIDC) GetIssuer() string {
 	if c == nil || c.Issuer == nil {
@@ -5809,6 +5817,14 @@ func (c *ConnectionOptionsOkta) GetDomainAliases() []string {
 	return *c.DomainAliases
 }
 
+// GetIDTokenSignedResponseAlgs returns the IDTokenSignedResponseAlgs field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetIDTokenSignedResponseAlgs() []string {
+	if c == nil || c.IDTokenSignedResponseAlgs == nil {
+		return nil
+	}
+	return *c.IDTokenSignedResponseAlgs
+}
+
 // GetIssuer returns the Issuer field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOkta) GetIssuer() string {
 	if c == nil || c.Issuer == nil {
@@ -5839,6 +5855,14 @@ func (c *ConnectionOptionsOkta) GetNonPersistentAttrs() []string {
 		return nil
 	}
 	return *c.NonPersistentAttrs
+}
+
+// GetOIDCMetadata returns the OIDCMetadata map if it's non-nil, an empty map otherwise.
+func (c *ConnectionOptionsOkta) GetOIDCMetadata() map[string]interface{} {
+	if c == nil || c.OIDCMetadata == nil {
+		return map[string]interface{}{}
+	}
+	return c.OIDCMetadata
 }
 
 // GetScope returns the Scope field if it's non-nil, zero value otherwise.
@@ -11485,6 +11509,14 @@ func (r *ResourceServerProofOfPossession) GetRequired() bool {
 		return false
 	}
 	return *r.Required
+}
+
+// GetRequiredFor returns the RequiredFor field if it's non-nil, zero value otherwise.
+func (r *ResourceServerProofOfPossession) GetRequiredFor() string {
+	if r == nil || r.RequiredFor == nil {
+		return ""
+	}
+	return *r.RequiredFor
 }
 
 // String returns a string representation of ResourceServerProofOfPossession.
