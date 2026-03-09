@@ -157,12 +157,6 @@ type Tenant struct {
 
 	// When enabled, the tenant-level Phone Provider is used for Multi-Factor Authentication (MFA) and Passwordless phone notifications.
 	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty"`
-
-	// When enabled, the legacy Phone Provider is used for Multi-Factor Authentication
-	LegacyMFAPhoneProvider *bool `json:"legacy_mfa_phone_provider,omitempty"`
-
-	// When enabled, the legacy Phone Provider is used for Passwordless phone notifications
-	LegacyPasswordlessPhoneProvider *bool `json:"legacy_passwordless_phone_provider,omitempty"`
 }
 
 // TenantDefaultTokenQuota holds settings for the default token quota.

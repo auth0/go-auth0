@@ -16801,26 +16801,6 @@ func TestTenant_GetIdleSessionLifetime(tt *testing.T) {
 	t.GetIdleSessionLifetime()
 }
 
-func TestTenant_GetLegacyMFAPhoneProvider(tt *testing.T) {
-	var zeroValue bool
-	t := &Tenant{LegacyMFAPhoneProvider: &zeroValue}
-	t.GetLegacyMFAPhoneProvider()
-	t = &Tenant{}
-	t.GetLegacyMFAPhoneProvider()
-	t = nil
-	t.GetLegacyMFAPhoneProvider()
-}
-
-func TestTenant_GetLegacyPasswordlessPhoneProvider(tt *testing.T) {
-	var zeroValue bool
-	t := &Tenant{LegacyPasswordlessPhoneProvider: &zeroValue}
-	t.GetLegacyPasswordlessPhoneProvider()
-	t = &Tenant{}
-	t.GetLegacyPasswordlessPhoneProvider()
-	t = nil
-	t.GetLegacyPasswordlessPhoneProvider()
-}
-
 func TestTenant_GetMTLS(tt *testing.T) {
 	t := &Tenant{}
 	t.GetMTLS()

@@ -13381,22 +13381,6 @@ func (t *Tenant) GetIdleSessionLifetime() float64 {
 	return *t.IdleSessionLifetime
 }
 
-// GetLegacyMFAPhoneProvider returns the LegacyMFAPhoneProvider field if it's non-nil, zero value otherwise.
-func (t *Tenant) GetLegacyMFAPhoneProvider() bool {
-	if t == nil || t.LegacyMFAPhoneProvider == nil {
-		return false
-	}
-	return *t.LegacyMFAPhoneProvider
-}
-
-// GetLegacyPasswordlessPhoneProvider returns the LegacyPasswordlessPhoneProvider field if it's non-nil, zero value otherwise.
-func (t *Tenant) GetLegacyPasswordlessPhoneProvider() bool {
-	if t == nil || t.LegacyPasswordlessPhoneProvider == nil {
-		return false
-	}
-	return *t.LegacyPasswordlessPhoneProvider
-}
-
 // GetMTLS returns the MTLS field.
 func (t *Tenant) GetMTLS() *TenantMTLSConfiguration {
 	if t == nil {
