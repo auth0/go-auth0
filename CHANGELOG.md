@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.36.0](https://github.com/auth0/go-auth0/tree/v1.36.0) (2026-03-09)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.35.0...v1.36.0)
+
+**Added**
+- feat: Add support for password authentication method options (EA) [\#711](https://github.com/auth0/go-auth0/pull/711) ([ramya18101](https://github.com/ramya18101))
+- feat: Add support for Passkeys prompt patials (EA) [\#713](https://github.com/auth0/go-auth0/pull/713) ([ramya18101](https://github.com/ramya18101))
+- feat: Added support to manage UnifiedPhoneExperience [\#715](https://github.com/auth0/go-auth0/pull/715) ([duedares-rvj](https://github.com/duedares-rvj))
+
 ## [v1.35.0](https://github.com/auth0/go-auth0/tree/v1.35.0) (2026-03-02)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.34.0...v1.35.0)
 
