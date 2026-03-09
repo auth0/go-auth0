@@ -17250,6 +17250,26 @@ func TestTenantFlags_GetEnableSSO(tt *testing.T) {
 	t.GetEnableSSO()
 }
 
+func TestTenantFlags_GetLegacyMFAPhoneProvider(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{LegacyMFAPhoneProvider: &zeroValue}
+	t.GetLegacyMFAPhoneProvider()
+	t = &TenantFlags{}
+	t.GetLegacyMFAPhoneProvider()
+	t = nil
+	t.GetLegacyMFAPhoneProvider()
+}
+
+func TestTenantFlags_GetLegacyPasswordlessPhoneProvider(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{LegacyPasswordlessPhoneProvider: &zeroValue}
+	t.GetLegacyPasswordlessPhoneProvider()
+	t = &TenantFlags{}
+	t.GetLegacyPasswordlessPhoneProvider()
+	t = nil
+	t.GetLegacyPasswordlessPhoneProvider()
+}
+
 func TestTenantFlags_GetMFAShowFactorListOnEnrollment(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{MFAShowFactorListOnEnrollment: &zeroValue}
@@ -17268,6 +17288,16 @@ func TestTenantFlags_GetNoDisclosureEnterpriseConnections(tt *testing.T) {
 	t.GetNoDisclosureEnterpriseConnections()
 	t = nil
 	t.GetNoDisclosureEnterpriseConnections()
+}
+
+func TestTenantFlags_GetPhoneConsolidatedExperience(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{PhoneConsolidatedExperience: &zeroValue}
+	t.GetPhoneConsolidatedExperience()
+	t = &TenantFlags{}
+	t.GetPhoneConsolidatedExperience()
+	t = nil
+	t.GetPhoneConsolidatedExperience()
 }
 
 func TestTenantFlags_GetRemoveAlgFromJWKS(tt *testing.T) {
