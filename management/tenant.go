@@ -154,6 +154,15 @@ type Tenant struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+
+	// When enabled, the tenant-level Phone Provider is used for Multi-Factor Authentication (MFA) and Passwordless phone notifications.
+	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty"`
+
+	// When enabled, the legacy Phone Provider is used for Multi-Factor Authentication
+	LegacyMFAPhoneProvider *bool `json:"legacy_mfa_phone_provider,omitempty"`
+
+	// When enabled, the legacy Phone Provider is used for Passwordless phone notifications
+	LegacyPasswordlessPhoneProvider *bool `json:"legacy_passwordless_phone_provider,omitempty"`
 }
 
 // TenantDefaultTokenQuota holds settings for the default token quota.
@@ -386,15 +395,6 @@ type TenantFlags struct {
 
 	// Removes alg property from jwks .well-known endpoint
 	RemoveAlgFromJWKS *bool `json:"remove_alg_from_jwks,omitempty"`
-
-	// When enabled, the tenant-level Phone Provider is used for Multi-Factor Authentication (MFA) and Passwordless phone notifications.
-	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty"`
-
-	// When enabled, the legacy Phone Provider is used for Multi-Factor Authentication
-	LegacyMFAPhoneProvider *bool `json:"legacy_mfa_phone_provider,omitempty"`
-
-	// When enabled, the legacy Phone Provider is used for Passwordless phone notifications
-	LegacyPasswordlessPhoneProvider *bool `json:"legacy_passwordless_phone_provider,omitempty"`
 }
 
 // TenantUniversalLogin holds universal login settings.
