@@ -627,6 +627,12 @@ type AuthenticationMethods struct {
 type PasswordAuthenticationMethod struct {
 	// Determines whether passwords are enabled.
 	Enabled *bool `json:"enabled,omitempty"`
+	// Specifies whether password is required or optional when creating users via API. Possible values: "required", "optional".
+	// This feature currently must be enabled for your tenant.
+	APIBehavior *string `json:"api_behavior,omitempty"`
+	// Specifies whether password is allowed or blocked during signup flows. Possible values: "allow", "block".
+	// This feature currently must be enabled for your tenant.
+	SignupBehavior *string `json:"signup_behavior,omitempty"`
 }
 
 // PasskeyAuthenticationMethod represents passkey authentication enablement for the connection.

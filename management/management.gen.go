@@ -10841,12 +10841,28 @@ func (p *PasskeyOptions) String() string {
 	return Stringify(p)
 }
 
+// GetAPIBehavior returns the APIBehavior field if it's non-nil, zero value otherwise.
+func (p *PasswordAuthenticationMethod) GetAPIBehavior() string {
+	if p == nil || p.APIBehavior == nil {
+		return ""
+	}
+	return *p.APIBehavior
+}
+
 // GetEnabled returns the Enabled field if it's non-nil, zero value otherwise.
 func (p *PasswordAuthenticationMethod) GetEnabled() bool {
 	if p == nil || p.Enabled == nil {
 		return false
 	}
 	return *p.Enabled
+}
+
+// GetSignupBehavior returns the SignupBehavior field if it's non-nil, zero value otherwise.
+func (p *PasswordAuthenticationMethod) GetSignupBehavior() string {
+	if p == nil || p.SignupBehavior == nil {
+		return ""
+	}
+	return *p.SignupBehavior
 }
 
 // String returns a string representation of PasswordAuthenticationMethod.
