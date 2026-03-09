@@ -108,8 +108,9 @@ type DeviceCredential struct {
 	// User agent for this device
 	DeviceName *string `json:"device_name,omitempty" url:"device_name,omitempty"`
 	// Unique identifier for the device. NOTE: This field is generally not populated for refresh_tokens and rotating_refresh_tokens
-	DeviceID *string                   `json:"device_id,omitempty" url:"device_id,omitempty"`
-	Type     *DeviceCredentialTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	DeviceID *string `json:"device_id,omitempty" url:"device_id,omitempty"`
+	// Type of credential. Can be `public_key`, `refresh_token`, or `rotating_refresh_token`.
+	Type *DeviceCredentialTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 	// user_id this credential is associated with.
 	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
 	// client_id of the client (application) this credential is for.

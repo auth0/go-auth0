@@ -1104,6 +1104,7 @@ var (
 )
 
 type UserAttributeProfileStrategyOverridesMapping struct {
+	// OIDC mapping override for this strategy
 	OidcMapping *UserAttributeProfileOidcMapping `json:"oidc_mapping,omitempty" url:"oidc_mapping,omitempty"`
 	SAMLMapping *UserAttributeProfileSAMLMapping `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
 	// SCIM mapping override for this strategy
@@ -1754,7 +1755,8 @@ type UserAttributeProfileUserAttributeAdditionalProperties struct {
 	// Auth0 mapping for this attribute
 	Auth0Mapping string                           `json:"auth0_mapping" url:"auth0_mapping"`
 	OidcMapping  *UserAttributeProfileOidcMapping `json:"oidc_mapping,omitempty" url:"oidc_mapping,omitempty"`
-	SAMLMapping  *UserAttributeProfileSAMLMapping `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
+	// SAML mapping for this attribute
+	SAMLMapping *UserAttributeProfileSAMLMapping `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
 	// SCIM mapping for this attribute
 	SCIMMapping       *string                                `json:"scim_mapping,omitempty" url:"scim_mapping,omitempty"`
 	StrategyOverrides *UserAttributeProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`

@@ -1480,7 +1480,7 @@ client.Clients.Create(
 <dl>
 <dd>
 
-**oidcBackchannelLogout:** `*management.ClientOidcBackchannelLogoutSettings` 
+**oidcBackchannelLogout:** `*management.ClientOidcBackchannelLogoutSettings` — Configuration for OIDC backchannel logout (deprecated, in favor of oidc_logout)
     
 </dd>
 </dl>
@@ -2131,7 +2131,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**oidcBackchannelLogout:** `*management.ClientOidcBackchannelLogoutSettings` 
+**oidcBackchannelLogout:** `*management.ClientOidcBackchannelLogoutSettings` — Configuration for OIDC backchannel logout (deprecated, in favor of oidc_logout)
     
 </dd>
 </dl>
@@ -2195,7 +2195,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**jwtConfiguration:** `*management.ClientJwtConfiguration` 
+**jwtConfiguration:** `*management.ClientJwtConfiguration` — An object that holds settings related to how JWTs are created
     
 </dd>
 </dl>
@@ -2203,7 +2203,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**encryptionKey:** `*management.ClientEncryptionKey` 
+**encryptionKey:** `*management.ClientEncryptionKey` — The client's encryption key
     
 </dd>
 </dl>
@@ -2339,7 +2339,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**mobile:** `*management.ClientMobile` 
+**mobile:** `*management.ClientMobile` — Configuration related to native mobile apps
     
 </dd>
 </dl>
@@ -4081,7 +4081,7 @@ client.CustomDomains.Update(
 <dl>
 <dd>
 
-**tlsPolicy:** `*management.CustomDomainTLSPolicyEnum` 
+**tlsPolicy:** `*management.CustomDomainTLSPolicyEnum` — recommended includes TLS 1.2
     
 </dd>
 </dl>
@@ -6659,7 +6659,7 @@ client.Hooks.Create(
 <dl>
 <dd>
 
-**triggerID:** `*management.HookTriggerIDEnum` 
+**triggerID:** `*management.HookTriggerIDEnum` — Execution stage of this rule. Can be `credentials-exchange`, `pre-user-registration`, `post-user-registration`, `post-change-password`, or `send-phone-message`.
     
 </dd>
 </dl>
@@ -9087,7 +9087,7 @@ client.RefreshTokens.Update(
 <dl>
 <dd>
 
-**refreshTokenMetadata:** `*management.RefreshTokenMetadata` 
+**refreshTokenMetadata:** `*management.RefreshTokenMetadata` — Metadata associated with the refresh token. Pass null or {} to remove all metadata.
     
 </dd>
 </dl>
@@ -11238,7 +11238,7 @@ client.Sessions.Update(
 <dl>
 <dd>
 
-**sessionMetadata:** `*management.SessionMetadata` 
+**sessionMetadata:** `*management.SessionMetadata` — Metadata associated with the session. Pass null or {} to remove all session_metadata.
     
 </dd>
 </dl>
@@ -13643,7 +13643,7 @@ client.Users.Update(
 <dl>
 <dd>
 
-**userMetadata:** `*management.UserMetadata` 
+**userMetadata:** `*management.UserMetadata` — User metadata to which this user has read/write access.
     
 </dd>
 </dl>
@@ -13651,7 +13651,7 @@ client.Users.Update(
 <dl>
 <dd>
 
-**appMetadata:** `*management.AppMetadata` 
+**appMetadata:** `*management.AppMetadata` — User metadata to which this user has read-only access.
     
 </dd>
 </dl>
@@ -17375,7 +17375,7 @@ client.Branding.Phone.Templates.Test(
 <dl>
 <dd>
 
-**deliveryMethod:** `*management.PhoneProviderDeliveryMethodEnum` 
+**deliveryMethod:** `*management.PhoneProviderDeliveryMethodEnum` — Medium to use to send the notification
     
 </dd>
 </dl>
@@ -26586,7 +26586,7 @@ client.Prompts.Rendering.Update(
 <dl>
 <dd>
 
-**renderingMode:** `*management.AculRenderingModeEnum` 
+**renderingMode:** `*management.AculRenderingModeEnum` — Rendering mode
     
 </dd>
 </dl>
@@ -28031,7 +28031,7 @@ client.Tenants.Settings.Update(
 <dl>
 <dd>
 
-**deviceFlow:** `*management.TenantSettingsDeviceFlow` 
+**deviceFlow:** `*management.TenantSettingsDeviceFlow` — Device Flow configuration.
     
 </dd>
 </dl>
@@ -28857,7 +28857,7 @@ client.Users.AuthenticationMethods.Update(
 <dl>
 <dd>
 
-**preferredAuthenticationMethod:** `*management.PreferredAuthenticationMethodEnum` 
+**preferredAuthenticationMethod:** `*management.PreferredAuthenticationMethodEnum` — Preferred phone authentication method
     
 </dd>
 </dl>
@@ -29373,7 +29373,7 @@ client.Users.Identities.Link(
 <dl>
 <dd>
 
-**provider:** `*management.UserIdentityProviderEnum` 
+**provider:** `*management.UserIdentityProviderEnum` — Identity provider of the secondary user account being linked.
     
 </dd>
 </dl>
