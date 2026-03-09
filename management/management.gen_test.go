@@ -13583,6 +13583,16 @@ func TestPasskeyOptions_String(t *testing.T) {
 	}
 }
 
+func TestPasswordAuthenticationMethod_GetAPIBehavior(tt *testing.T) {
+	var zeroValue string
+	p := &PasswordAuthenticationMethod{APIBehavior: &zeroValue}
+	p.GetAPIBehavior()
+	p = &PasswordAuthenticationMethod{}
+	p.GetAPIBehavior()
+	p = nil
+	p.GetAPIBehavior()
+}
+
 func TestPasswordAuthenticationMethod_GetEnabled(tt *testing.T) {
 	var zeroValue bool
 	p := &PasswordAuthenticationMethod{Enabled: &zeroValue}
@@ -13591,6 +13601,16 @@ func TestPasswordAuthenticationMethod_GetEnabled(tt *testing.T) {
 	p.GetEnabled()
 	p = nil
 	p.GetEnabled()
+}
+
+func TestPasswordAuthenticationMethod_GetSignupBehavior(tt *testing.T) {
+	var zeroValue string
+	p := &PasswordAuthenticationMethod{SignupBehavior: &zeroValue}
+	p.GetSignupBehavior()
+	p = &PasswordAuthenticationMethod{}
+	p.GetSignupBehavior()
+	p = nil
+	p.GetSignupBehavior()
 }
 
 func TestPasswordAuthenticationMethod_String(t *testing.T) {
