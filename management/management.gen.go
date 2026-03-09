@@ -13750,6 +13750,22 @@ func (t *TenantFlags) GetEnableSSO() bool {
 	return *t.EnableSSO
 }
 
+// GetLegacyMFAPhoneProvider returns the LegacyMFAPhoneProvider field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetLegacyMFAPhoneProvider() bool {
+	if t == nil || t.LegacyMFAPhoneProvider == nil {
+		return false
+	}
+	return *t.LegacyMFAPhoneProvider
+}
+
+// GetLegacyPasswordlessPhoneProvider returns the LegacyPasswordlessPhoneProvider field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetLegacyPasswordlessPhoneProvider() bool {
+	if t == nil || t.LegacyPasswordlessPhoneProvider == nil {
+		return false
+	}
+	return *t.LegacyPasswordlessPhoneProvider
+}
+
 // GetMFAShowFactorListOnEnrollment returns the MFAShowFactorListOnEnrollment field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetMFAShowFactorListOnEnrollment() bool {
 	if t == nil || t.MFAShowFactorListOnEnrollment == nil {
@@ -13764,6 +13780,14 @@ func (t *TenantFlags) GetNoDisclosureEnterpriseConnections() bool {
 		return false
 	}
 	return *t.NoDisclosureEnterpriseConnections
+}
+
+// GetPhoneConsolidatedExperience returns the PhoneConsolidatedExperience field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetPhoneConsolidatedExperience() bool {
+	if t == nil || t.PhoneConsolidatedExperience == nil {
+		return false
+	}
+	return *t.PhoneConsolidatedExperience
 }
 
 // GetRemoveAlgFromJWKS returns the RemoveAlgFromJWKS field if it's non-nil, zero value otherwise.

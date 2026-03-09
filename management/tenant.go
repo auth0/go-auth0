@@ -386,6 +386,15 @@ type TenantFlags struct {
 
 	// Removes alg property from jwks .well-known endpoint
 	RemoveAlgFromJWKS *bool `json:"remove_alg_from_jwks,omitempty"`
+
+	// When enabled, the tenant-level Phone Provider is used for Multi-Factor Authentication (MFA) and Passwordless phone notifications.
+	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty"`
+
+	// When enabled, the legacy Phone Provider is used for Multi-Factor Authentication
+	LegacyMFAPhoneProvider *bool `json:"legacy_mfa_phone_provider,omitempty"`
+
+	// When enabled, the legacy Phone Provider is used for Passwordless phone notifications
+	LegacyPasswordlessPhoneProvider *bool `json:"legacy_passwordless_phone_provider,omitempty"`
 }
 
 // TenantUniversalLogin holds universal login settings.
