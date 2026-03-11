@@ -36,7 +36,6 @@ func (d *Database) ChangePassword(ctx context.Context, params database.ChangePas
 	}
 
 	request, err := d.authentication.NewRequest(ctx, "POST", d.authentication.URI("dbconnections", "change_password"), params, opts...)
-
 	if err != nil {
 		return "", fmt.Errorf("failed to create a new request: %w", err)
 	}
@@ -45,7 +44,8 @@ func (d *Database) ChangePassword(ctx context.Context, params database.ChangePas
 	if err != nil {
 		return "", fmt.Errorf("failed to send the request: %w", err)
 	}
-	defer response.Body.Close()
+
+	defer func() { _ = response.Body.Close() }()
 
 	// If the response contains a client or a server error then return the error.
 	if response.StatusCode >= http.StatusBadRequest {

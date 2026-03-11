@@ -1,3 +1,4 @@
+// Package mfa provides types for the Auth0 multi-factor authentication endpoints.
 package mfa
 
 import (

@@ -28,13 +28,11 @@ func (m *MFA) Challenge(ctx context.Context, body mfa.ChallengeRequest, opts ...
 	}
 
 	err = m.authentication.addClientAuthenticationToClientAuthStruct(&body.ClientAuthentication, false)
-
 	if err != nil {
 		return nil, err
 	}
 
 	err = m.authentication.Request(ctx, "POST", m.authentication.URI("mfa", "challenge"), body, &c, opts...)
-
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +61,6 @@ func (m *MFA) VerifyWithOTP(ctx context.Context, body mfa.VerifyWithOTPRequest, 
 	}
 
 	err = m.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
-
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +96,6 @@ func (m *MFA) VerifyWithOOB(ctx context.Context, body mfa.VerifyWithOOBRequest, 
 	}
 
 	err = m.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
-
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +126,6 @@ func (m *MFA) VerifyWithRecoveryCode(ctx context.Context, body mfa.VerifyWithRec
 	}
 
 	err = m.authentication.addClientAuthenticationToURLValues(body.ClientAuthentication, data, true)
-
 	if err != nil {
 		return nil, err
 	}

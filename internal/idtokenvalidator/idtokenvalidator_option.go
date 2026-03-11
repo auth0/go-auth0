@@ -1,3 +1,4 @@
+// Package idtokenvalidator provides ID token validation for the Auth0 SDK.
 package idtokenvalidator
 
 import (

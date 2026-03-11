@@ -103,6 +103,7 @@ func Test_newError(t *testing.T) {
 			err := newError(&testCase.givenResponse)
 
 			var actualError *Error
+
 			ok := errors.As(err, &actualError)
 			assert.True(t, ok, "newError should return an *Error")
 			assert.Equal(t, testCase.expectedError, *actualError)

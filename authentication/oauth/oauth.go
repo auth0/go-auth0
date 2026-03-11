@@ -1,3 +1,4 @@
+// Package oauth provides types for the Auth0 OAuth authentication endpoints.
 package oauth
 
 import "time"

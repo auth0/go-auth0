@@ -1,3 +1,4 @@
+// Package auth0 provides Go client libraries for the Auth0 platform.
 package auth0
 
 import (

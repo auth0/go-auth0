@@ -1,3 +1,4 @@
+// Package database provides types for the Auth0 database connection authentication endpoints.
 package database
 
 import (

@@ -586,7 +586,6 @@ func withIDToken(t *testing.T, extras map[string]interface{}) (*Authentication, 
 	}
 
 	token, err := builder.Build()
-
 	if err != nil {
 		return nil, err
 	}

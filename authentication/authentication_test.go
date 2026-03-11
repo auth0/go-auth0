@@ -126,7 +126,6 @@ func initializeTestClient() {
 		domain,
 		option.WithClientCredentials(context.Background(), mgmtClientID, mgmtClientSecret),
 	)
-
 	if err != nil {
 		log.Fatal("failed to initialize the management api client")
 	}
@@ -232,6 +231,7 @@ func TestAuth0Client(t *testing.T) {
 			assert.NoError(t, err)
 
 			var auth0Client client.Auth0ClientInfo
+
 			err = json.Unmarshal(auth0ClientDecoded, &auth0Client)
 
 			assert.NoError(t, err)
@@ -289,6 +289,7 @@ func TestAuth0Client(t *testing.T) {
 			assert.NoError(t, err)
 
 			var auth0Client client.Auth0ClientInfo
+
 			err = json.Unmarshal(auth0ClientDecoded, &auth0Client)
 
 			assert.NoError(t, err)
