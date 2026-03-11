@@ -175,6 +175,9 @@ func (c *ClientGrantResponseContent) GetAllowAllScopes() bool {
 }
 
 func (c *ClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -283,6 +286,9 @@ func (c *ClientGrantResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientGrantResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -428,6 +434,9 @@ func (c *CreateClientGrantResponseContent) GetAllowAllScopes() bool {
 }
 
 func (c *CreateClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -536,6 +545,9 @@ func (c *CreateClientGrantResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateClientGrantResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -658,6 +670,9 @@ func (g *GetClientGrantResponseContent) GetAllowAllScopes() bool {
 }
 
 func (g *GetClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -766,6 +781,9 @@ func (g *GetClientGrantResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetClientGrantResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -809,6 +827,9 @@ func (l *ListClientGrantPaginatedResponseContent) GetClientGrants() []*ClientGra
 }
 
 func (l *ListClientGrantPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -861,6 +882,9 @@ func (l *ListClientGrantPaginatedResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (l *ListClientGrantPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -983,6 +1007,9 @@ func (u *UpdateClientGrantResponseContent) GetAllowAllScopes() bool {
 }
 
 func (u *UpdateClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1091,6 +1118,9 @@ func (u *UpdateClientGrantResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateClientGrantResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

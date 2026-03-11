@@ -33,6 +33,9 @@ func (g *GetSupplementalSignalsResponseContent) GetAkamaiEnabled() bool {
 }
 
 func (g *GetSupplementalSignalsResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -82,6 +85,9 @@ func (g *GetSupplementalSignalsResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetSupplementalSignalsResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -117,6 +123,9 @@ func (p *PatchSupplementalSignalsResponseContent) GetAkamaiEnabled() bool {
 }
 
 func (p *PatchSupplementalSignalsResponseContent) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.ExtraProperties
 }
 
@@ -166,6 +175,9 @@ func (p *PatchSupplementalSignalsResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (p *PatchSupplementalSignalsResponseContent) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value

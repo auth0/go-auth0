@@ -88,6 +88,9 @@ func (c *ConnectionProfile) GetStrategyOverrides() ConnectionProfileStrategyOver
 }
 
 func (c *ConnectionProfile) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -175,6 +178,9 @@ func (c *ConnectionProfile) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionProfile) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -197,6 +203,9 @@ type ConnectionProfileConfig struct {
 }
 
 func (c *ConnectionProfileConfig) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -235,6 +244,9 @@ func (c *ConnectionProfileConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionProfileConfig) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -287,6 +299,9 @@ func (c *ConnectionProfileOrganization) GetAssignMembershipOnLogin() ConnectionP
 }
 
 func (c *ConnectionProfileOrganization) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -339,6 +354,9 @@ func (c *ConnectionProfileOrganization) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionProfileOrganization) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -434,6 +452,9 @@ func (c *ConnectionProfileStrategyOverride) GetConnectionConfig() ConnectionProf
 }
 
 func (c *ConnectionProfileStrategyOverride) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -486,6 +507,9 @@ func (c *ConnectionProfileStrategyOverride) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionProfileStrategyOverride) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -583,6 +607,9 @@ func (c *ConnectionProfileStrategyOverrides) GetSamlp() ConnectionProfileStrateg
 }
 
 func (c *ConnectionProfileStrategyOverrides) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -677,6 +704,9 @@ func (c *ConnectionProfileStrategyOverrides) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionProfileStrategyOverrides) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -699,6 +729,9 @@ type ConnectionProfileStrategyOverridesConnectionConfig struct {
 }
 
 func (c *ConnectionProfileStrategyOverridesConnectionConfig) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -737,6 +770,9 @@ func (c *ConnectionProfileStrategyOverridesConnectionConfig) MarshalJSON() ([]by
 }
 
 func (c *ConnectionProfileStrategyOverridesConnectionConfig) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -819,6 +855,9 @@ func (c *ConnectionProfileTemplate) GetStrategyOverrides() ConnectionProfileStra
 }
 
 func (c *ConnectionProfileTemplate) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -899,6 +938,9 @@ func (c *ConnectionProfileTemplate) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionProfileTemplate) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -952,6 +994,9 @@ func (c *ConnectionProfileTemplateItem) GetTemplate() ConnectionProfileTemplate 
 }
 
 func (c *ConnectionProfileTemplateItem) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1011,6 +1056,9 @@ func (c *ConnectionProfileTemplateItem) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionProfileTemplateItem) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1098,6 +1146,9 @@ func (c *CreateConnectionProfileResponseContent) GetStrategyOverrides() Connecti
 }
 
 func (c *CreateConnectionProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1185,6 +1236,9 @@ func (c *CreateConnectionProfileResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateConnectionProfileResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1295,6 +1349,9 @@ func (g *GetConnectionProfileResponseContent) GetStrategyOverrides() ConnectionP
 }
 
 func (g *GetConnectionProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -1382,6 +1439,9 @@ func (g *GetConnectionProfileResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetConnectionProfileResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -1435,6 +1495,9 @@ func (g *GetConnectionProfileTemplateResponseContent) GetTemplate() ConnectionPr
 }
 
 func (g *GetConnectionProfileTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -1494,6 +1557,9 @@ func (g *GetConnectionProfileTemplateResponseContent) MarshalJSON() ([]byte, err
 }
 
 func (g *GetConnectionProfileTemplateResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -1527,6 +1593,9 @@ func (l *ListConnectionProfileTemplateResponseContent) GetConnectionProfileTempl
 }
 
 func (l *ListConnectionProfileTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -1572,6 +1641,9 @@ func (l *ListConnectionProfileTemplateResponseContent) MarshalJSON() ([]byte, er
 }
 
 func (l *ListConnectionProfileTemplateResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -1615,6 +1687,9 @@ func (l *ListConnectionProfilesPaginatedResponseContent) GetConnectionProfiles()
 }
 
 func (l *ListConnectionProfilesPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -1667,6 +1742,9 @@ func (l *ListConnectionProfilesPaginatedResponseContent) MarshalJSON() ([]byte, 
 }
 
 func (l *ListConnectionProfilesPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -1754,6 +1832,9 @@ func (u *UpdateConnectionProfileResponseContent) GetStrategyOverrides() Connecti
 }
 
 func (u *UpdateConnectionProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1841,6 +1922,9 @@ func (u *UpdateConnectionProfileResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateConnectionProfileResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

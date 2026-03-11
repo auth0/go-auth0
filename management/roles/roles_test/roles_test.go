@@ -23,11 +23,11 @@ func VerifyRequestCount(
 	queryParams map[string]string,
 	expected int,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	wiremockURL := os.Getenv("WIREMOCK_URL")
+	if wiremockURL == "" {
+		wiremockURL = "http://localhost:8080"
 	}
-	WiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"
+	WiremockAdminURL := wiremockURL + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
@@ -65,11 +65,10 @@ func VerifyRequestCount(
 func TestRolesListWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -102,11 +101,10 @@ func TestRolesListWithWireMock(
 func TestRolesCreateWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -128,11 +126,10 @@ func TestRolesCreateWithWireMock(
 func TestRolesGetWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -151,11 +148,10 @@ func TestRolesGetWithWireMock(
 func TestRolesDeleteWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -174,11 +170,10 @@ func TestRolesDeleteWithWireMock(
 func TestRolesUpdateWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)

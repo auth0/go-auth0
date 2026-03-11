@@ -42,6 +42,9 @@ func (b *BrandingColors) GetPageBackground() BrandingPageBackground {
 }
 
 func (b *BrandingColors) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
@@ -94,6 +97,9 @@ func (b *BrandingColors) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BrandingColors) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
@@ -129,6 +135,9 @@ func (b *BrandingFont) GetURL() string {
 }
 
 func (b *BrandingFont) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
@@ -174,6 +183,9 @@ func (b *BrandingFont) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BrandingFont) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
@@ -312,6 +324,9 @@ func (g *GetBrandingResponseContent) GetFont() BrandingFont {
 }
 
 func (g *GetBrandingResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -382,6 +397,9 @@ func (g *GetBrandingResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetBrandingResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -426,6 +444,9 @@ func (u *UpdateBrandingColors) GetPageBackground() UpdateBrandingPageBackground 
 }
 
 func (u *UpdateBrandingColors) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -478,6 +499,9 @@ func (u *UpdateBrandingColors) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateBrandingColors) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -513,6 +537,9 @@ func (u *UpdateBrandingFont) GetURL() string {
 }
 
 func (u *UpdateBrandingFont) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -558,6 +585,9 @@ func (u *UpdateBrandingFont) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateBrandingFont) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -696,6 +726,9 @@ func (u *UpdateBrandingResponseContent) GetFont() BrandingFont {
 }
 
 func (u *UpdateBrandingResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
@@ -766,6 +799,9 @@ func (u *UpdateBrandingResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateBrandingResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

@@ -23,11 +23,11 @@ func VerifyRequestCount(
 	queryParams map[string]string,
 	expected int,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	wiremockURL := os.Getenv("WIREMOCK_URL")
+	if wiremockURL == "" {
+		wiremockURL = "http://localhost:8080"
 	}
-	WiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"
+	WiremockAdminURL := wiremockURL + "/__admin"
 	var reqBody bytes.Buffer
 	reqBody.WriteString(`{"method":"`)
 	reqBody.WriteString(method)
@@ -65,11 +65,10 @@ func VerifyRequestCount(
 func TestGuardianFactorsPushNotificationGetApnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -87,11 +86,10 @@ func TestGuardianFactorsPushNotificationGetApnsProviderWithWireMock(
 func TestGuardianFactorsPushNotificationSetApnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -111,11 +109,10 @@ func TestGuardianFactorsPushNotificationSetApnsProviderWithWireMock(
 func TestGuardianFactorsPushNotificationUpdateApnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -135,11 +132,10 @@ func TestGuardianFactorsPushNotificationUpdateApnsProviderWithWireMock(
 func TestGuardianFactorsPushNotificationSetFcmProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -159,11 +155,10 @@ func TestGuardianFactorsPushNotificationSetFcmProviderWithWireMock(
 func TestGuardianFactorsPushNotificationUpdateFcmProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -183,11 +178,10 @@ func TestGuardianFactorsPushNotificationUpdateFcmProviderWithWireMock(
 func TestGuardianFactorsPushNotificationSetFcmv1ProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -207,11 +201,10 @@ func TestGuardianFactorsPushNotificationSetFcmv1ProviderWithWireMock(
 func TestGuardianFactorsPushNotificationUpdateFcmv1ProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -231,11 +224,10 @@ func TestGuardianFactorsPushNotificationUpdateFcmv1ProviderWithWireMock(
 func TestGuardianFactorsPushNotificationGetSnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -253,11 +245,10 @@ func TestGuardianFactorsPushNotificationGetSnsProviderWithWireMock(
 func TestGuardianFactorsPushNotificationSetSnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -277,11 +268,10 @@ func TestGuardianFactorsPushNotificationSetSnsProviderWithWireMock(
 func TestGuardianFactorsPushNotificationUpdateSnsProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -301,11 +291,10 @@ func TestGuardianFactorsPushNotificationUpdateSnsProviderWithWireMock(
 func TestGuardianFactorsPushNotificationGetSelectedProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)
@@ -323,11 +312,10 @@ func TestGuardianFactorsPushNotificationGetSelectedProviderWithWireMock(
 func TestGuardianFactorsPushNotificationSetProviderWithWireMock(
 	t *testing.T,
 ) {
-	wiremockPort := os.Getenv("WIREMOCK_PORT")
-	if wiremockPort == "" {
-		wiremockPort = "8080"
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
 	}
-	WireMockBaseURL := "http://localhost:" + wiremockPort
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
 	)

@@ -52,6 +52,9 @@ func (c *ChangePasswordTicketIdentity) GetConnectionID() string {
 }
 
 func (c *ChangePasswordTicketIdentity) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -111,6 +114,9 @@ func (c *ChangePasswordTicketIdentity) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ChangePasswordTicketIdentity) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -146,6 +152,9 @@ func (c *ChangePasswordTicketResponseContent) GetTicket() string {
 }
 
 func (c *ChangePasswordTicketResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -195,6 +204,9 @@ func (c *ChangePasswordTicketResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ChangePasswordTicketResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -250,6 +262,9 @@ func (v *VerifyEmailTicketResponseContent) GetTicket() string {
 }
 
 func (v *VerifyEmailTicketResponseContent) GetExtraProperties() map[string]interface{} {
+	if v == nil {
+		return nil
+	}
 	return v.ExtraProperties
 }
 
@@ -299,6 +314,9 @@ func (v *VerifyEmailTicketResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (v *VerifyEmailTicketResponseContent) String() string {
+	if v == nil {
+		return "<nil>"
+	}
 	if len(v.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
 			return value

@@ -89,6 +89,9 @@ func (c *CreateLogStreamDatadogRequestBody) GetStartFrom() string {
 }
 
 func (c *CreateLogStreamDatadogRequestBody) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -176,6 +179,9 @@ func (c *CreateLogStreamDatadogRequestBody) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateLogStreamDatadogRequestBody) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -267,6 +273,9 @@ func (c *CreateLogStreamEventBridgeRequestBody) GetStartFrom() string {
 }
 
 func (c *CreateLogStreamEventBridgeRequestBody) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -354,6 +363,9 @@ func (c *CreateLogStreamEventBridgeRequestBody) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateLogStreamEventBridgeRequestBody) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -445,6 +457,9 @@ func (c *CreateLogStreamEventGridRequestBody) GetStartFrom() string {
 }
 
 func (c *CreateLogStreamEventGridRequestBody) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -532,6 +547,9 @@ func (c *CreateLogStreamEventGridRequestBody) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateLogStreamEventGridRequestBody) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -623,6 +641,9 @@ func (c *CreateLogStreamHTTPRequestBody) GetStartFrom() string {
 }
 
 func (c *CreateLogStreamHTTPRequestBody) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -710,6 +731,9 @@ func (c *CreateLogStreamHTTPRequestBody) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateLogStreamHTTPRequestBody) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -801,6 +825,9 @@ func (c *CreateLogStreamMixpanelRequestBody) GetStartFrom() string {
 }
 
 func (c *CreateLogStreamMixpanelRequestBody) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -888,6 +915,9 @@ func (c *CreateLogStreamMixpanelRequestBody) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateLogStreamMixpanelRequestBody) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1355,6 +1385,9 @@ func (c *CreateLogStreamSegmentRequestBody) GetStartFrom() string {
 }
 
 func (c *CreateLogStreamSegmentRequestBody) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1442,6 +1475,9 @@ func (c *CreateLogStreamSegmentRequestBody) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateLogStreamSegmentRequestBody) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1533,6 +1569,9 @@ func (c *CreateLogStreamSplunkRequestBody) GetStartFrom() string {
 }
 
 func (c *CreateLogStreamSplunkRequestBody) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1620,6 +1659,9 @@ func (c *CreateLogStreamSplunkRequestBody) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateLogStreamSplunkRequestBody) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1711,6 +1753,9 @@ func (c *CreateLogStreamSumoRequestBody) GetStartFrom() string {
 }
 
 func (c *CreateLogStreamSumoRequestBody) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1798,6 +1843,9 @@ func (c *CreateLogStreamSumoRequestBody) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateLogStreamSumoRequestBody) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2031,6 +2079,9 @@ func (h *HTTPCustomHeader) GetValue() string {
 }
 
 func (h *HTTPCustomHeader) GetExtraProperties() map[string]interface{} {
+	if h == nil {
+		return nil
+	}
 	return h.ExtraProperties
 }
 
@@ -2087,6 +2138,9 @@ func (h *HTTPCustomHeader) MarshalJSON() ([]byte, error) {
 }
 
 func (h *HTTPCustomHeader) String() string {
+	if h == nil {
+		return "<nil>"
+	}
 	if len(h.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
 			return value
@@ -2236,6 +2290,9 @@ func (l *LogStreamDatadogResponseSchema) GetSink() LogStreamDatadogSink {
 }
 
 func (l *LogStreamDatadogResponseSchema) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -2334,6 +2391,9 @@ func (l *LogStreamDatadogResponseSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamDatadogResponseSchema) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -2377,6 +2437,9 @@ func (l *LogStreamDatadogSink) GetDatadogRegion() LogStreamDatadogRegionEnum {
 }
 
 func (l *LogStreamDatadogSink) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -2429,6 +2492,9 @@ func (l *LogStreamDatadogSink) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamDatadogSink) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -2549,6 +2615,9 @@ func (l *LogStreamEventBridgeResponseSchema) GetSink() LogStreamEventBridgeSink 
 }
 
 func (l *LogStreamEventBridgeResponseSchema) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -2647,6 +2716,9 @@ func (l *LogStreamEventBridgeResponseSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamEventBridgeResponseSchema) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -2700,6 +2772,9 @@ func (l *LogStreamEventBridgeSink) GetAwsPartnerEventSource() string {
 }
 
 func (l *LogStreamEventBridgeSink) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -2759,6 +2834,9 @@ func (l *LogStreamEventBridgeSink) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamEventBridgeSink) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -3123,6 +3201,9 @@ func (l *LogStreamEventGridResponseSchema) GetSink() LogStreamEventGridSink {
 }
 
 func (l *LogStreamEventGridResponseSchema) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -3221,6 +3302,9 @@ func (l *LogStreamEventGridResponseSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamEventGridResponseSchema) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -3284,6 +3368,9 @@ func (l *LogStreamEventGridSink) GetAzurePartnerTopic() string {
 }
 
 func (l *LogStreamEventGridSink) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -3350,6 +3437,9 @@ func (l *LogStreamEventGridSink) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamEventGridSink) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -3393,6 +3483,9 @@ func (l *LogStreamFilter) GetName() LogStreamFilterGroupNameEnum {
 }
 
 func (l *LogStreamFilter) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -3449,6 +3542,9 @@ func (l *LogStreamFilter) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamFilter) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -3692,6 +3788,9 @@ func (l *LogStreamHTTPResponseSchema) GetSink() LogStreamHTTPSink {
 }
 
 func (l *LogStreamHTTPResponseSchema) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -3790,6 +3889,9 @@ func (l *LogStreamHTTPResponseSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamHTTPResponseSchema) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -3863,6 +3965,9 @@ func (l *LogStreamHTTPSink) GetHTTPCustomHeaders() []*HTTPCustomHeader {
 }
 
 func (l *LogStreamHTTPSink) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -3936,6 +4041,9 @@ func (l *LogStreamHTTPSink) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamHTTPSink) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -4079,6 +4187,9 @@ func (l *LogStreamMixpanelResponseSchema) GetSink() LogStreamMixpanelSink {
 }
 
 func (l *LogStreamMixpanelResponseSchema) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -4177,6 +4288,9 @@ func (l *LogStreamMixpanelResponseSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamMixpanelResponseSchema) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -4240,6 +4354,9 @@ func (l *LogStreamMixpanelSink) GetMixpanelServiceAccountPassword() string {
 }
 
 func (l *LogStreamMixpanelSink) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -4306,6 +4423,9 @@ func (l *LogStreamMixpanelSink) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamMixpanelSink) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -4369,6 +4489,9 @@ func (l *LogStreamMixpanelSinkPatch) GetMixpanelServiceAccountPassword() string 
 }
 
 func (l *LogStreamMixpanelSinkPatch) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -4435,6 +4558,9 @@ func (l *LogStreamMixpanelSinkPatch) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamMixpanelSinkPatch) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -4505,6 +4631,9 @@ func (l *LogStreamPiiConfig) GetAlgorithm() LogStreamPiiAlgorithmEnum {
 }
 
 func (l *LogStreamPiiConfig) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -4564,6 +4693,9 @@ func (l *LogStreamPiiConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamPiiConfig) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -4928,6 +5060,9 @@ func (l *LogStreamSegmentResponseSchema) GetSink() LogStreamSegmentSinkWriteKey 
 }
 
 func (l *LogStreamSegmentResponseSchema) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -5026,6 +5161,9 @@ func (l *LogStreamSegmentResponseSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamSegmentResponseSchema) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -5060,6 +5198,9 @@ func (l *LogStreamSegmentSink) GetSegmentWriteKey() string {
 }
 
 func (l *LogStreamSegmentSink) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -5105,6 +5246,9 @@ func (l *LogStreamSegmentSink) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamSegmentSink) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -5139,6 +5283,9 @@ func (l *LogStreamSegmentSinkWriteKey) GetSegmentWriteKey() string {
 }
 
 func (l *LogStreamSegmentSinkWriteKey) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -5184,6 +5331,9 @@ func (l *LogStreamSegmentSinkWriteKey) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamSegmentSinkWriteKey) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -5450,6 +5600,9 @@ func (l *LogStreamSplunkResponseSchema) GetSink() LogStreamSplunkSink {
 }
 
 func (l *LogStreamSplunkResponseSchema) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -5548,6 +5701,9 @@ func (l *LogStreamSplunkResponseSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamSplunkResponseSchema) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -5612,6 +5768,9 @@ func (l *LogStreamSplunkSink) GetSplunkSecure() bool {
 }
 
 func (l *LogStreamSplunkSink) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -5678,6 +5837,9 @@ func (l *LogStreamSplunkSink) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamSplunkSink) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -5824,6 +5986,9 @@ func (l *LogStreamSumoResponseSchema) GetSink() LogStreamSumoSink {
 }
 
 func (l *LogStreamSumoResponseSchema) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -5922,6 +6087,9 @@ func (l *LogStreamSumoResponseSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamSumoResponseSchema) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -5956,6 +6124,9 @@ func (l *LogStreamSumoSink) GetSumoSourceAddress() string {
 }
 
 func (l *LogStreamSumoSink) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -6001,6 +6172,9 @@ func (l *LogStreamSumoSink) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LogStreamSumoSink) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value

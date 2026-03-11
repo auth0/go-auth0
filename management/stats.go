@@ -83,6 +83,9 @@ func (d *DailyStats) GetCreatedAt() string {
 }
 
 func (d *DailyStats) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.ExtraProperties
 }
 
@@ -167,6 +170,9 @@ func (d *DailyStats) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DailyStats) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value

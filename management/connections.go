@@ -64,6 +64,9 @@ func (c *ConnectionAttributeIdentifier) GetDefaultMethod() DefaultMethodEmailIde
 }
 
 func (c *ConnectionAttributeIdentifier) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -116,6 +119,9 @@ func (c *ConnectionAttributeIdentifier) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionAttributeIdentifier) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -168,6 +174,9 @@ func (c *ConnectionAttributes) GetUsername() UsernameAttribute {
 }
 
 func (c *ConnectionAttributes) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -227,6 +236,9 @@ func (c *ConnectionAttributes) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionAttributes) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -288,6 +300,9 @@ func (c *ConnectionAuthenticationMethods) GetPhoneOtp() ConnectionPhoneOtpAuthen
 }
 
 func (c *ConnectionAuthenticationMethods) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -354,6 +369,9 @@ func (c *ConnectionAuthenticationMethods) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionAuthenticationMethods) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -461,6 +479,9 @@ func (c *ConnectionCustomScripts) GetChangePhoneNumber() string {
 }
 
 func (c *ConnectionCustomScripts) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -566,6 +587,9 @@ func (c *ConnectionCustomScripts) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionCustomScripts) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -601,6 +625,9 @@ func (c *ConnectionEmailOtpAuthenticationMethod) GetEnabled() bool {
 }
 
 func (c *ConnectionEmailOtpAuthenticationMethod) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -646,6 +673,9 @@ func (c *ConnectionEmailOtpAuthenticationMethod) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionEmailOtpAuthenticationMethod) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -681,6 +711,9 @@ func (c *ConnectionFederatedConnectionsAccessTokens) GetActive() bool {
 }
 
 func (c *ConnectionFederatedConnectionsAccessTokens) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -726,6 +759,9 @@ func (c *ConnectionFederatedConnectionsAccessTokens) MarshalJSON() ([]byte, erro
 }
 
 func (c *ConnectionFederatedConnectionsAccessTokens) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -802,6 +838,9 @@ func (c *ConnectionGatewayAuthentication) GetSecretBase64Encoded() bool {
 }
 
 func (c *ConnectionGatewayAuthentication) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -879,6 +918,9 @@ func (c *ConnectionGatewayAuthentication) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionGatewayAuthentication) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1143,6 +1185,9 @@ func (c *ConnectionPasskeyAuthenticationMethod) GetEnabled() bool {
 }
 
 func (c *ConnectionPasskeyAuthenticationMethod) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1188,6 +1233,9 @@ func (c *ConnectionPasskeyAuthenticationMethod) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionPasskeyAuthenticationMethod) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1268,6 +1316,9 @@ func (c *ConnectionPasskeyOptions) GetLocalEnrollmentEnabled() bool {
 }
 
 func (c *ConnectionPasskeyOptions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1327,6 +1378,9 @@ func (c *ConnectionPasskeyOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionPasskeyOptions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1380,6 +1434,9 @@ func (c *ConnectionPasswordAuthenticationMethod) GetSignupBehavior() ConnectionS
 }
 
 func (c *ConnectionPasswordAuthenticationMethod) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1439,6 +1496,9 @@ func (c *ConnectionPasswordAuthenticationMethod) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionPasswordAuthenticationMethod) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1474,6 +1534,9 @@ func (c *ConnectionPasswordComplexityOptions) GetMinLength() int {
 }
 
 func (c *ConnectionPasswordComplexityOptions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1519,6 +1582,9 @@ func (c *ConnectionPasswordComplexityOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionPasswordComplexityOptions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1563,6 +1629,9 @@ func (c *ConnectionPasswordDictionaryOptions) GetDictionary() []string {
 }
 
 func (c *ConnectionPasswordDictionaryOptions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1615,6 +1684,9 @@ func (c *ConnectionPasswordDictionaryOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionPasswordDictionaryOptions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1658,6 +1730,9 @@ func (c *ConnectionPasswordHistoryOptions) GetSize() int {
 }
 
 func (c *ConnectionPasswordHistoryOptions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1710,6 +1785,9 @@ func (c *ConnectionPasswordHistoryOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionPasswordHistoryOptions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1744,6 +1822,9 @@ func (c *ConnectionPasswordNoPersonalInfoOptions) GetEnable() bool {
 }
 
 func (c *ConnectionPasswordNoPersonalInfoOptions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1789,6 +1870,9 @@ func (c *ConnectionPasswordNoPersonalInfoOptions) MarshalJSON() ([]byte, error) 
 }
 
 func (c *ConnectionPasswordNoPersonalInfoOptions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1856,6 +1940,9 @@ func (c *ConnectionPhoneOtpAuthenticationMethod) GetEnabled() bool {
 }
 
 func (c *ConnectionPhoneOtpAuthenticationMethod) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -1901,6 +1988,9 @@ func (c *ConnectionPhoneOtpAuthenticationMethod) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionPhoneOtpAuthenticationMethod) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2184,6 +2274,9 @@ func (c *ConnectionPropertiesOptions) GetFederatedConnectionsAccessTokens() Conn
 }
 
 func (c *ConnectionPropertiesOptions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2422,6 +2515,9 @@ func (c *ConnectionPropertiesOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionPropertiesOptions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2566,6 +2662,9 @@ func (c *ConnectionUpstreamAlias) GetAlias() ConnectionUpstreamAliasEnum {
 }
 
 func (c *ConnectionUpstreamAlias) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -2611,6 +2710,9 @@ func (c *ConnectionUpstreamAlias) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionUpstreamAlias) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2699,6 +2801,9 @@ func (c *ConnectionUpstreamValue) GetValue() string {
 }
 
 func (c *ConnectionUpstreamValue) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -2744,6 +2849,9 @@ func (c *ConnectionUpstreamValue) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionUpstreamValue) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2786,6 +2894,9 @@ func (c *ConnectionUsernameValidationOptions) GetMax() int {
 }
 
 func (c *ConnectionUsernameValidationOptions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -2838,6 +2949,9 @@ func (c *ConnectionUsernameValidationOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionUsernameValidationOptions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2872,6 +2986,9 @@ func (c *ConnectionValidationOptions) GetUsername() ConnectionUsernameValidation
 }
 
 func (c *ConnectionValidationOptions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -2917,6 +3034,9 @@ func (c *ConnectionValidationOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionValidationOptions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -3057,6 +3177,9 @@ func (c *CreateConnectionResponseContent) GetConnectedAccounts() ConnectionConne
 }
 
 func (c *CreateConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -3179,6 +3302,9 @@ func (c *CreateConnectionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateConnectionResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -3274,6 +3400,9 @@ func (e *EmailAttribute) GetSignup() SignupVerified {
 }
 
 func (e *EmailAttribute) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -3347,6 +3476,9 @@ func (e *EmailAttribute) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EmailAttribute) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -3487,6 +3619,9 @@ func (g *GetConnectionResponseContent) GetConnectedAccounts() ConnectionConnecte
 }
 
 func (g *GetConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -3609,6 +3744,9 @@ func (g *GetConnectionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetConnectionResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -3652,6 +3790,9 @@ func (l *ListConnectionsCheckpointPaginatedResponseContent) GetConnections() []*
 }
 
 func (l *ListConnectionsCheckpointPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -3704,6 +3845,9 @@ func (l *ListConnectionsCheckpointPaginatedResponseContent) MarshalJSON() ([]byt
 }
 
 func (l *ListConnectionsCheckpointPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -3757,6 +3901,9 @@ func (p *PhoneAttribute) GetSignup() SignupVerified {
 }
 
 func (p *PhoneAttribute) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -3816,6 +3963,9 @@ func (p *PhoneAttribute) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PhoneAttribute) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
@@ -3849,6 +3999,9 @@ func (s *SignupSchema) GetStatus() SignupStatusEnum {
 }
 
 func (s *SignupSchema) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -3894,6 +4047,9 @@ func (s *SignupSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SignupSchema) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -3952,6 +4108,9 @@ func (s *SignupVerification) GetActive() bool {
 }
 
 func (s *SignupVerification) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -3997,6 +4156,9 @@ func (s *SignupVerification) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SignupVerification) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -4039,6 +4201,9 @@ func (s *SignupVerified) GetVerification() SignupVerification {
 }
 
 func (s *SignupVerified) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -4091,6 +4256,9 @@ func (s *SignupVerified) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SignupVerified) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -4374,6 +4542,9 @@ func (u *UpdateConnectionOptions) GetFederatedConnectionsAccessTokens() Connecti
 }
 
 func (u *UpdateConnectionOptions) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
@@ -4612,6 +4783,9 @@ func (u *UpdateConnectionOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateConnectionOptions) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -4752,6 +4926,9 @@ func (u *UpdateConnectionResponseContent) GetConnectedAccounts() ConnectionConne
 }
 
 func (u *UpdateConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -4874,6 +5051,9 @@ func (u *UpdateConnectionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateConnectionResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -4916,6 +5096,9 @@ func (u *UsernameAllowedTypes) GetPhoneNumber() bool {
 }
 
 func (u *UsernameAllowedTypes) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -4968,6 +5151,9 @@ func (u *UsernameAllowedTypes) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UsernameAllowedTypes) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -5030,6 +5216,9 @@ func (u *UsernameAttribute) GetValidation() UsernameValidation {
 }
 
 func (u *UsernameAttribute) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -5096,6 +5285,9 @@ func (u *UsernameAttribute) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UsernameAttribute) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -5149,6 +5341,9 @@ func (u *UsernameValidation) GetAllowedTypes() UsernameAllowedTypes {
 }
 
 func (u *UsernameValidation) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -5208,6 +5403,9 @@ func (u *UsernameValidation) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UsernameValidation) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

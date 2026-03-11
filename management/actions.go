@@ -190,6 +190,9 @@ func (c *CreateActionResponseContent) GetModules() []*ActionModuleReference {
 }
 
 func (c *CreateActionResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -363,6 +366,9 @@ func (c *CreateActionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateActionResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -545,6 +551,9 @@ func (d *DeployActionResponseContent) GetModules() []*ActionModuleReference {
 }
 
 func (d *DeployActionResponseContent) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -711,6 +720,9 @@ func (d *DeployActionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DeployActionResponseContent) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -902,6 +914,9 @@ func (g *GetActionResponseContent) GetModules() []*ActionModuleReference {
 }
 
 func (g *GetActionResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -1075,6 +1090,9 @@ func (g *GetActionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetActionResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -1139,6 +1157,9 @@ func (l *ListActionsPaginatedResponseContent) GetActions() []*Action {
 }
 
 func (l *ListActionsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -1205,6 +1226,9 @@ func (l *ListActionsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListActionsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -1241,6 +1265,9 @@ func (t *TestActionResponseContent) GetPayload() TestActionResultPayload {
 }
 
 func (t *TestActionResponseContent) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -1286,6 +1313,9 @@ func (t *TestActionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TestActionResponseContent) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
@@ -1480,6 +1510,9 @@ func (u *UpdateActionResponseContent) GetModules() []*ActionModuleReference {
 }
 
 func (u *UpdateActionResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1653,6 +1686,9 @@ func (u *UpdateActionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateActionResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

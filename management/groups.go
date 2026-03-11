@@ -114,6 +114,9 @@ func (g *GetGroupResponseContent) GetUpdatedAt() time.Time {
 }
 
 func (g *GetGroupResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -227,6 +230,9 @@ func (g *GetGroupResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetGroupResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -297,6 +303,9 @@ func (l *ListGroupsPaginatedResponseContent) GetTotal() float64 {
 }
 
 func (l *ListGroupsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -370,6 +379,9 @@ func (l *ListGroupsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListGroupsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value

@@ -84,6 +84,9 @@ func (c *CertificateSubjectDnCredential) GetPem() string {
 }
 
 func (c *CertificateSubjectDnCredential) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -150,6 +153,9 @@ func (c *CertificateSubjectDnCredential) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CertificateSubjectDnCredential) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -705,6 +711,9 @@ func (c *Client) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotif
 }
 
 func (c *Client) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -1118,6 +1127,9 @@ func (c *Client) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Client) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1174,6 +1186,9 @@ func (c *ClientAddonAws) GetLifetimeInSeconds() int {
 }
 
 func (c *ClientAddonAws) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -1237,6 +1252,9 @@ func (c *ClientAddonAws) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonAws) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1393,6 +1411,9 @@ func (c *ClientAddonAzureBlob) GetContainerList() bool {
 }
 
 func (c *ClientAddonAzureBlob) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -1526,6 +1547,9 @@ func (c *ClientAddonAzureBlob) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonAzureBlob) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1602,6 +1626,9 @@ func (c *ClientAddonAzureSb) GetExpiration() int {
 }
 
 func (c *ClientAddonAzureSb) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -1679,6 +1706,9 @@ func (c *ClientAddonAzureSb) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonAzureSb) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1727,6 +1757,9 @@ func (c *ClientAddonEchoSign) GetDomain() string {
 }
 
 func (c *ClientAddonEchoSign) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -1776,6 +1809,9 @@ func (c *ClientAddonEchoSign) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonEchoSign) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1812,6 +1848,9 @@ func (c *ClientAddonEgnyte) GetDomain() string {
 }
 
 func (c *ClientAddonEgnyte) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -1861,6 +1900,9 @@ func (c *ClientAddonEgnyte) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonEgnyte) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -1937,6 +1979,9 @@ func (c *ClientAddonFirebase) GetLifetimeInSeconds() int {
 }
 
 func (c *ClientAddonFirebase) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2014,6 +2059,9 @@ func (c *ClientAddonFirebase) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonFirebase) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2090,6 +2138,9 @@ func (c *ClientAddonLayer) GetExpiration() int {
 }
 
 func (c *ClientAddonLayer) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2167,6 +2218,9 @@ func (c *ClientAddonLayer) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonLayer) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2203,6 +2257,9 @@ func (c *ClientAddonMscrm) GetURL() string {
 }
 
 func (c *ClientAddonMscrm) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2252,6 +2309,9 @@ func (c *ClientAddonMscrm) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonMscrm) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2288,6 +2348,9 @@ func (c *ClientAddonNewRelic) GetAccount() string {
 }
 
 func (c *ClientAddonNewRelic) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2337,6 +2400,9 @@ func (c *ClientAddonNewRelic) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonNewRelic) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2359,6 +2425,9 @@ type ClientAddonOag struct {
 }
 
 func (c *ClientAddonOag) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -2397,6 +2466,9 @@ func (c *ClientAddonOag) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonOag) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2443,6 +2515,9 @@ func (c *ClientAddonOffice365) GetConnection() string {
 }
 
 func (c *ClientAddonOffice365) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2499,6 +2574,9 @@ func (c *ClientAddonOffice365) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonOffice365) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2535,6 +2613,9 @@ func (c *ClientAddonRms) GetURL() string {
 }
 
 func (c *ClientAddonRms) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2584,6 +2665,9 @@ func (c *ClientAddonRms) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonRms) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2620,6 +2704,9 @@ func (c *ClientAddonSalesforce) GetEntityID() string {
 }
 
 func (c *ClientAddonSalesforce) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2669,6 +2756,9 @@ func (c *ClientAddonSalesforce) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSalesforce) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2735,6 +2825,9 @@ func (c *ClientAddonSalesforceAPI) GetCommunityURLSection() string {
 }
 
 func (c *ClientAddonSalesforceAPI) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2805,6 +2898,9 @@ func (c *ClientAddonSalesforceAPI) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSalesforceAPI) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -2871,6 +2967,9 @@ func (c *ClientAddonSalesforceSandboxAPI) GetCommunityURLSection() string {
 }
 
 func (c *ClientAddonSalesforceSandboxAPI) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -2941,6 +3040,9 @@ func (c *ClientAddonSalesforceSandboxAPI) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSalesforceSandboxAPI) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -3111,6 +3213,9 @@ func (c *ClientAddonSAML) GetAuthnContextClassRef() string {
 }
 
 func (c *ClientAddonSAML) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -3265,6 +3370,9 @@ func (c *ClientAddonSAML) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSAML) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -3353,6 +3461,9 @@ func (c *ClientAddonSapapi) GetNameIdentifierFormat() string {
 }
 
 func (c *ClientAddonSapapi) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -3437,6 +3548,9 @@ func (c *ClientAddonSapapi) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSapapi) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -3483,6 +3597,9 @@ func (c *ClientAddonSentry) GetBaseURL() string {
 }
 
 func (c *ClientAddonSentry) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -3539,6 +3656,9 @@ func (c *ClientAddonSentry) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSentry) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -3584,6 +3704,9 @@ func (c *ClientAddonSharePoint) GetExternalURL() ClientAddonSharePointExternalUR
 }
 
 func (c *ClientAddonSharePoint) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -3640,6 +3763,9 @@ func (c *ClientAddonSharePoint) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSharePoint) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -3739,6 +3865,9 @@ func (c *ClientAddonSlack) GetTeam() string {
 }
 
 func (c *ClientAddonSlack) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -3788,6 +3917,9 @@ func (c *ClientAddonSlack) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSlack) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -3824,6 +3956,9 @@ func (c *ClientAddonSpringCm) GetAcsurl() string {
 }
 
 func (c *ClientAddonSpringCm) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -3873,6 +4008,9 @@ func (c *ClientAddonSpringCm) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSpringCm) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -3918,6 +4056,9 @@ func (c *ClientAddonSSOIntegration) GetVersion() string {
 }
 
 func (c *ClientAddonSSOIntegration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -3974,6 +4115,9 @@ func (c *ClientAddonSSOIntegration) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonSSOIntegration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -4010,6 +4154,9 @@ func (c *ClientAddonWams) GetMasterkey() string {
 }
 
 func (c *ClientAddonWams) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -4059,6 +4206,9 @@ func (c *ClientAddonWams) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonWams) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -4098,6 +4248,9 @@ func (c *ClientAddonZendesk) GetAccountName() string {
 }
 
 func (c *ClientAddonZendesk) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -4147,6 +4300,9 @@ func (c *ClientAddonZendesk) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonZendesk) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -4183,6 +4339,9 @@ func (c *ClientAddonZoom) GetAccount() string {
 }
 
 func (c *ClientAddonZoom) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -4232,6 +4391,9 @@ func (c *ClientAddonZoom) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddonZoom) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -4527,6 +4689,9 @@ func (c *ClientAddons) GetOag() ClientAddonOag {
 }
 
 func (c *ClientAddons) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -4775,6 +4940,9 @@ func (c *ClientAddons) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAddons) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -4925,6 +5093,9 @@ func (c *ClientAuthenticationMethod) GetSelfSignedTLSClientAuth() ClientAuthenti
 }
 
 func (c *ClientAuthenticationMethod) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -4984,6 +5155,9 @@ func (c *ClientAuthenticationMethod) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientAuthenticationMethod) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5018,6 +5192,9 @@ func (c *ClientAuthenticationMethodPrivateKeyJwt) GetCredentials() ClientAuthent
 }
 
 func (c *ClientAuthenticationMethodPrivateKeyJwt) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -5063,6 +5240,9 @@ func (c *ClientAuthenticationMethodPrivateKeyJwt) MarshalJSON() ([]byte, error) 
 }
 
 func (c *ClientAuthenticationMethodPrivateKeyJwt) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5100,6 +5280,9 @@ func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) GetCredentials() Cli
 }
 
 func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -5145,6 +5328,9 @@ func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) MarshalJSON() ([]byt
 }
 
 func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5182,6 +5368,9 @@ func (c *ClientAuthenticationMethodTLSClientAuth) GetCredentials() ClientAuthent
 }
 
 func (c *ClientAuthenticationMethodTLSClientAuth) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -5227,6 +5416,9 @@ func (c *ClientAuthenticationMethodTLSClientAuth) MarshalJSON() ([]byte, error) 
 }
 
 func (c *ClientAuthenticationMethodTLSClientAuth) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5314,6 +5506,9 @@ func (c *ClientCreateAuthenticationMethod) GetSelfSignedTLSClientAuth() CreateCl
 }
 
 func (c *ClientCreateAuthenticationMethod) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -5373,6 +5568,9 @@ func (c *ClientCreateAuthenticationMethod) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientCreateAuthenticationMethod) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5407,6 +5605,9 @@ func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) GetCredentials() ClientC
 }
 
 func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -5452,6 +5653,9 @@ func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) MarshalJSON() ([]byte, e
 }
 
 func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5489,6 +5693,9 @@ func (c *ClientCreateAuthenticationMethodTLSClientAuth) GetCredentials() ClientC
 }
 
 func (c *ClientCreateAuthenticationMethodTLSClientAuth) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -5534,6 +5741,9 @@ func (c *ClientCreateAuthenticationMethodTLSClientAuth) MarshalJSON() ([]byte, e
 }
 
 func (c *ClientCreateAuthenticationMethodTLSClientAuth) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5582,6 +5792,9 @@ func (c *ClientDefaultOrganization) GetFlows() []ClientDefaultOrganizationFlowsE
 }
 
 func (c *ClientDefaultOrganization) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -5634,6 +5847,9 @@ func (c *ClientDefaultOrganization) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientDefaultOrganization) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5709,6 +5925,9 @@ func (c *ClientEncryptionKey) GetSubject() string {
 }
 
 func (c *ClientEncryptionKey) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -5772,6 +5991,9 @@ func (c *ClientEncryptionKey) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientEncryptionKey) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5836,6 +6058,9 @@ func (c *ClientJwtConfiguration) GetAlg() SigningAlgorithmEnum {
 }
 
 func (c *ClientJwtConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -5906,6 +6131,9 @@ func (c *ClientJwtConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientJwtConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -5956,6 +6184,9 @@ func (c *ClientMobile) GetIos() ClientMobileiOs {
 }
 
 func (c *ClientMobile) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -6012,6 +6243,9 @@ func (c *ClientMobile) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientMobile) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -6058,6 +6292,9 @@ func (c *ClientMobileAndroid) GetSha256CertFingerprints() []string {
 }
 
 func (c *ClientMobileAndroid) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -6114,6 +6351,9 @@ func (c *ClientMobileAndroid) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientMobileAndroid) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -6160,6 +6400,9 @@ func (c *ClientMobileiOs) GetAppBundleIdentifier() string {
 }
 
 func (c *ClientMobileiOs) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -6216,6 +6459,9 @@ func (c *ClientMobileiOs) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientMobileiOs) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -6260,6 +6506,9 @@ func (c *ClientOidcBackchannelLogoutInitiators) GetSelectedInitiators() []Client
 }
 
 func (c *ClientOidcBackchannelLogoutInitiators) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -6316,6 +6565,9 @@ func (c *ClientOidcBackchannelLogoutInitiators) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientOidcBackchannelLogoutInitiators) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -6419,6 +6671,9 @@ func (c *ClientOidcBackchannelLogoutSessionMetadata) GetInclude() bool {
 }
 
 func (c *ClientOidcBackchannelLogoutSessionMetadata) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -6468,6 +6723,9 @@ func (c *ClientOidcBackchannelLogoutSessionMetadata) MarshalJSON() ([]byte, erro
 }
 
 func (c *ClientOidcBackchannelLogoutSessionMetadata) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -6522,6 +6780,9 @@ func (c *ClientOidcBackchannelLogoutSettings) GetBackchannelLogoutSessionMetadat
 }
 
 func (c *ClientOidcBackchannelLogoutSettings) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -6585,6 +6846,9 @@ func (c *ClientOidcBackchannelLogoutSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientOidcBackchannelLogoutSettings) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -6815,6 +7079,9 @@ func (c *ClientRefreshTokenConfiguration) GetPolicies() []*ClientRefreshTokenPol
 }
 
 func (c *ClientRefreshTokenConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -6909,6 +7176,9 @@ func (c *ClientRefreshTokenConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientRefreshTokenConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -6953,6 +7223,9 @@ func (c *ClientRefreshTokenPolicy) GetScope() []string {
 }
 
 func (c *ClientRefreshTokenPolicy) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -7005,6 +7278,9 @@ func (c *ClientRefreshTokenPolicy) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientRefreshTokenPolicy) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -7111,6 +7387,9 @@ func (c *ClientSessionTransferConfiguration) GetEnforceOnlineRefreshTokens() boo
 }
 
 func (c *ClientSessionTransferConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -7191,6 +7470,9 @@ func (c *ClientSessionTransferConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientSessionTransferConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -7261,6 +7543,9 @@ func (c *ClientSignedRequestObjectWithCredentialID) GetCredentials() []*Credenti
 }
 
 func (c *ClientSignedRequestObjectWithCredentialID) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -7313,6 +7598,9 @@ func (c *ClientSignedRequestObjectWithCredentialID) MarshalJSON() ([]byte, error
 }
 
 func (c *ClientSignedRequestObjectWithCredentialID) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -7357,6 +7645,9 @@ func (c *ClientSignedRequestObjectWithPublicKey) GetCredentials() []*PublicKeyCr
 }
 
 func (c *ClientSignedRequestObjectWithPublicKey) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -7409,6 +7700,9 @@ func (c *ClientSignedRequestObjectWithPublicKey) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientSignedRequestObjectWithPublicKey) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -7464,6 +7758,9 @@ func (c *ClientSigningKey) GetSubject() string {
 }
 
 func (c *ClientSigningKey) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -7527,6 +7824,9 @@ func (c *ClientSigningKey) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientSigningKey) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -7617,6 +7917,9 @@ func (c *ClientTokenExchangeConfiguration) GetAllowAnyProfileOfType() []ClientTo
 }
 
 func (c *ClientTokenExchangeConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -7662,6 +7965,9 @@ func (c *ClientTokenExchangeConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientTokenExchangeConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -7697,6 +8003,9 @@ func (c *ClientTokenExchangeConfigurationOrNull) GetAllowAnyProfileOfType() []Cl
 }
 
 func (c *ClientTokenExchangeConfigurationOrNull) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -7742,6 +8051,9 @@ func (c *ClientTokenExchangeConfigurationOrNull) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientTokenExchangeConfigurationOrNull) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -7798,6 +8110,9 @@ func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) GetCredentials
 }
 
 func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -7843,6 +8158,9 @@ func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) MarshalJSON() 
 }
 
 func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -8382,6 +8700,9 @@ func (c *CreateClientResponseContent) GetAsyncApprovalNotificationChannels() Cli
 }
 
 func (c *CreateClientResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -8795,6 +9116,9 @@ func (c *CreateClientResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateClientResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -8829,6 +9153,9 @@ func (c *CredentialID) GetID() string {
 }
 
 func (c *CredentialID) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -8874,6 +9201,9 @@ func (c *CredentialID) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CredentialID) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -8989,6 +9319,9 @@ func (e *ExpressConfiguration) GetOinSubmissionID() string {
 }
 
 func (e *ExpressConfiguration) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -9090,6 +9423,9 @@ func (e *ExpressConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ExpressConfiguration) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -9205,6 +9541,9 @@ func (e *ExpressConfigurationOrNull) GetOinSubmissionID() string {
 }
 
 func (e *ExpressConfigurationOrNull) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -9306,6 +9645,9 @@ func (e *ExpressConfigurationOrNull) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ExpressConfigurationOrNull) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -9842,6 +10184,9 @@ func (g *GetClientResponseContent) GetAsyncApprovalNotificationChannels() Client
 }
 
 func (g *GetClientResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -10255,6 +10600,9 @@ func (g *GetClientResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetClientResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -10290,6 +10638,9 @@ func (l *LinkedClientConfiguration) GetClientID() string {
 }
 
 func (l *LinkedClientConfiguration) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -10335,6 +10686,9 @@ func (l *LinkedClientConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LinkedClientConfiguration) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -10395,6 +10749,9 @@ func (l *ListClientsOffsetPaginatedResponseContent) GetClients() []*Client {
 }
 
 func (l *ListClientsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -10461,6 +10818,9 @@ func (l *ListClientsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error
 }
 
 func (l *ListClientsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -10513,6 +10873,9 @@ func (n *NativeSocialLogin) GetGoogle() NativeSocialLoginGoogle {
 }
 
 func (n *NativeSocialLogin) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -10572,6 +10935,9 @@ func (n *NativeSocialLogin) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NativeSocialLogin) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -10607,6 +10973,9 @@ func (n *NativeSocialLoginApple) GetEnabled() bool {
 }
 
 func (n *NativeSocialLoginApple) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -10652,6 +11021,9 @@ func (n *NativeSocialLoginApple) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NativeSocialLoginApple) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -10687,6 +11059,9 @@ func (n *NativeSocialLoginFacebook) GetEnabled() bool {
 }
 
 func (n *NativeSocialLoginFacebook) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -10732,6 +11107,9 @@ func (n *NativeSocialLoginFacebook) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NativeSocialLoginFacebook) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -10767,6 +11145,9 @@ func (n *NativeSocialLoginGoogle) GetEnabled() bool {
 }
 
 func (n *NativeSocialLoginGoogle) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -10812,6 +11193,9 @@ func (n *NativeSocialLoginGoogle) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NativeSocialLoginGoogle) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -10894,6 +11278,9 @@ func (p *PublicKeyCredential) GetExpiresAt() time.Time {
 }
 
 func (p *PublicKeyCredential) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -10982,6 +11369,9 @@ func (p *PublicKeyCredential) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PublicKeyCredential) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
@@ -11584,6 +11974,9 @@ func (r *RotateClientSecretResponseContent) GetAsyncApprovalNotificationChannels
 }
 
 func (r *RotateClientSecretResponseContent) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.ExtraProperties
 }
 
@@ -11997,6 +12390,9 @@ func (r *RotateClientSecretResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RotateClientSecretResponseContent) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -12533,6 +12929,9 @@ func (u *UpdateClientResponseContent) GetAsyncApprovalNotificationChannels() Cli
 }
 
 func (u *UpdateClientResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
@@ -12946,6 +13345,9 @@ func (u *UpdateClientResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateClientResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -12999,6 +13401,9 @@ func (x *X509CertificateCredential) GetPem() string {
 }
 
 func (x *X509CertificateCredential) GetExtraProperties() map[string]interface{} {
+	if x == nil {
+		return nil
+	}
 	return x.extraProperties
 }
 
@@ -13058,6 +13463,9 @@ func (x *X509CertificateCredential) MarshalJSON() ([]byte, error) {
 }
 
 func (x *X509CertificateCredential) String() string {
+	if x == nil {
+		return "<nil>"
+	}
 	if len(x.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(x.rawJSON); err == nil {
 			return value
