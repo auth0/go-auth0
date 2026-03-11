@@ -1,5 +1,15 @@
 # Change Log
 
+## [v2.7.0](https://github.com/auth0/go-auth0/tree/v2.7.0) (2026-03-11)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.6.0...v2.7.0)
+
+**Added**
+- feat: improve DateTime parsing with multi-format support [\#723](https://github.com/auth0/go-auth0/pull/723) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add Auth0Managed network ACL field, additional signing algorithms, and SCIM group provisioning scopes [\#717](https://github.com/auth0/go-auth0/pull/717) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Fixed**
+- fix: remove redundant WithContext call in HTTP request builder [\#724](https://github.com/auth0/go-auth0/pull/724) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.6.0](https://github.com/auth0/go-auth0/tree/v2.6.0) (2026-02-25)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.5.0...v2.6.0)
 
