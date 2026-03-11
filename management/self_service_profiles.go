@@ -112,6 +112,9 @@ func (c *CreateSelfServiceProfileResponseContent) GetUserAttributeProfileID() st
 }
 
 func (c *CreateSelfServiceProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -225,6 +228,9 @@ func (c *CreateSelfServiceProfileResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (c *CreateSelfServiceProfileResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -338,6 +344,9 @@ func (g *GetSelfServiceProfileResponseContent) GetUserAttributeProfileID() strin
 }
 
 func (g *GetSelfServiceProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -451,6 +460,9 @@ func (g *GetSelfServiceProfileResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetSelfServiceProfileResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -511,6 +523,9 @@ func (l *ListSelfServiceProfilesPaginatedResponseContent) GetSelfServiceProfiles
 }
 
 func (l *ListSelfServiceProfilesPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -577,6 +592,9 @@ func (l *ListSelfServiceProfilesPaginatedResponseContent) MarshalJSON() ([]byte,
 }
 
 func (l *ListSelfServiceProfilesPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -690,6 +708,9 @@ func (s *SelfServiceProfile) GetUserAttributeProfileID() string {
 }
 
 func (s *SelfServiceProfile) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -803,6 +824,9 @@ func (s *SelfServiceProfile) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SelfServiceProfile) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -885,6 +909,9 @@ func (s *SelfServiceProfileBrandingColors) GetPrimary() string {
 }
 
 func (s *SelfServiceProfileBrandingColors) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.ExtraProperties
 }
 
@@ -934,6 +961,9 @@ func (s *SelfServiceProfileBrandingColors) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SelfServiceProfileBrandingColors) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -977,6 +1007,9 @@ func (s *SelfServiceProfileBrandingProperties) GetColors() SelfServiceProfileBra
 }
 
 func (s *SelfServiceProfileBrandingProperties) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.ExtraProperties
 }
 
@@ -1033,6 +1066,9 @@ func (s *SelfServiceProfileBrandingProperties) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SelfServiceProfileBrandingProperties) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -1090,6 +1126,9 @@ func (s *SelfServiceProfileUserAttribute) GetIsOptional() bool {
 }
 
 func (s *SelfServiceProfileUserAttribute) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -1149,6 +1188,9 @@ func (s *SelfServiceProfileUserAttribute) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SelfServiceProfileUserAttribute) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -1265,6 +1307,9 @@ func (u *UpdateSelfServiceProfileResponseContent) GetUserAttributeProfileID() st
 }
 
 func (u *UpdateSelfServiceProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1378,6 +1423,9 @@ func (u *UpdateSelfServiceProfileResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (u *UpdateSelfServiceProfileResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

@@ -81,6 +81,9 @@ func (c *CreateHookResponseContent) GetDependencies() HookDependencies {
 }
 
 func (c *CreateHookResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -161,6 +164,9 @@ func (c *CreateHookResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateHookResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -244,6 +250,9 @@ func (g *GetHookResponseContent) GetDependencies() HookDependencies {
 }
 
 func (g *GetHookResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -324,6 +333,9 @@ func (g *GetHookResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetHookResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -407,6 +419,9 @@ func (h *Hook) GetDependencies() HookDependencies {
 }
 
 func (h *Hook) GetExtraProperties() map[string]interface{} {
+	if h == nil {
+		return nil
+	}
 	return h.extraProperties
 }
 
@@ -487,6 +502,9 @@ func (h *Hook) MarshalJSON() ([]byte, error) {
 }
 
 func (h *Hook) String() string {
+	if h == nil {
+		return "<nil>"
+	}
 	if len(h.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
 			return value
@@ -582,6 +600,9 @@ func (l *ListHooksOffsetPaginatedResponseContent) GetHooks() []*Hook {
 }
 
 func (l *ListHooksOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -648,6 +669,9 @@ func (l *ListHooksOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (l *ListHooksOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -731,6 +755,9 @@ func (u *UpdateHookResponseContent) GetDependencies() HookDependencies {
 }
 
 func (u *UpdateHookResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -811,6 +838,9 @@ func (u *UpdateHookResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateHookResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

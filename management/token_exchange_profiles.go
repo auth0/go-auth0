@@ -93,6 +93,9 @@ func (c *CreateTokenExchangeProfileResponseContent) GetUpdatedAt() time.Time {
 }
 
 func (c *CreateTokenExchangeProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -192,6 +195,9 @@ func (c *CreateTokenExchangeProfileResponseContent) MarshalJSON() ([]byte, error
 }
 
 func (c *CreateTokenExchangeProfileResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -286,6 +292,9 @@ func (g *GetTokenExchangeProfileResponseContent) GetUpdatedAt() time.Time {
 }
 
 func (g *GetTokenExchangeProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -385,6 +394,9 @@ func (g *GetTokenExchangeProfileResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetTokenExchangeProfileResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -428,6 +440,9 @@ func (l *ListTokenExchangeProfileResponseContent) GetTokenExchangeProfiles() []*
 }
 
 func (l *ListTokenExchangeProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -480,6 +495,9 @@ func (l *ListTokenExchangeProfileResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (l *ListTokenExchangeProfileResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -574,6 +592,9 @@ func (t *TokenExchangeProfileResponseContent) GetUpdatedAt() time.Time {
 }
 
 func (t *TokenExchangeProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.ExtraProperties
 }
 
@@ -673,6 +694,9 @@ func (t *TokenExchangeProfileResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TokenExchangeProfileResponseContent) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

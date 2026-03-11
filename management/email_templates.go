@@ -111,6 +111,9 @@ func (c *CreateEmailTemplateResponseContent) GetEnabled() bool {
 }
 
 func (c *CreateEmailTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -212,6 +215,9 @@ func (c *CreateEmailTemplateResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateEmailTemplateResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -381,6 +387,9 @@ func (g *GetEmailTemplateResponseContent) GetEnabled() bool {
 }
 
 func (g *GetEmailTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -482,6 +491,9 @@ func (g *GetEmailTemplateResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetEmailTemplateResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -595,6 +607,9 @@ func (s *SetEmailTemplateResponseContent) GetEnabled() bool {
 }
 
 func (s *SetEmailTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -696,6 +711,9 @@ func (s *SetEmailTemplateResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SetEmailTemplateResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -809,6 +827,9 @@ func (u *UpdateEmailTemplateResponseContent) GetEnabled() bool {
 }
 
 func (u *UpdateEmailTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -910,6 +931,9 @@ func (u *UpdateEmailTemplateResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateEmailTemplateResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

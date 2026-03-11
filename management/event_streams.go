@@ -61,6 +61,9 @@ func (c *CreateEventStreamActionRequestContent) GetStatus() EventStreamStatusEnu
 }
 
 func (c *CreateEventStreamActionRequestContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -127,6 +130,9 @@ func (c *CreateEventStreamActionRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateEventStreamActionRequestContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -189,6 +195,9 @@ func (c *CreateEventStreamEventBridgeRequestContent) GetStatus() EventStreamStat
 }
 
 func (c *CreateEventStreamEventBridgeRequestContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -255,6 +264,9 @@ func (c *CreateEventStreamEventBridgeRequestContent) MarshalJSON() ([]byte, erro
 }
 
 func (c *CreateEventStreamEventBridgeRequestContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -420,6 +432,9 @@ func (c *CreateEventStreamTestEventResponseContent) GetEvent() EventStreamCloudE
 }
 
 func (c *CreateEventStreamTestEventResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -500,6 +515,9 @@ func (c *CreateEventStreamTestEventResponseContent) MarshalJSON() ([]byte, error
 }
 
 func (c *CreateEventStreamTestEventResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -562,6 +580,9 @@ func (c *CreateEventStreamWebHookRequestContent) GetStatus() EventStreamStatusEn
 }
 
 func (c *CreateEventStreamWebHookRequestContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -628,6 +649,9 @@ func (c *CreateEventStreamWebHookRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateEventStreamWebHookRequestContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -663,6 +687,9 @@ func (e *EventStreamActionConfiguration) GetActionID() string {
 }
 
 func (e *EventStreamActionConfiguration) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -708,6 +735,9 @@ func (e *EventStreamActionConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamActionConfiguration) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -750,6 +780,9 @@ func (e *EventStreamActionDestination) GetConfiguration() *EventStreamActionConf
 }
 
 func (e *EventStreamActionDestination) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -802,6 +835,9 @@ func (e *EventStreamActionDestination) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamActionDestination) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -913,6 +949,9 @@ func (e *EventStreamActionResponseContent) GetUpdatedAt() time.Time {
 }
 
 func (e *EventStreamActionResponseContent) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1012,6 +1051,9 @@ func (e *EventStreamActionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamActionResponseContent) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1253,6 +1295,9 @@ func (e *EventStreamEventBridgeConfiguration) GetAwsPartnerEventSource() string 
 }
 
 func (e *EventStreamEventBridgeConfiguration) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1312,6 +1357,9 @@ func (e *EventStreamEventBridgeConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamEventBridgeConfiguration) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1354,6 +1402,9 @@ func (e *EventStreamEventBridgeDestination) GetConfiguration() *EventStreamEvent
 }
 
 func (e *EventStreamEventBridgeDestination) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1406,6 +1457,9 @@ func (e *EventStreamEventBridgeDestination) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamEventBridgeDestination) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1517,6 +1571,9 @@ func (e *EventStreamEventBridgeResponseContent) GetUpdatedAt() time.Time {
 }
 
 func (e *EventStreamEventBridgeResponseContent) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1616,6 +1673,9 @@ func (e *EventStreamEventBridgeResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamEventBridgeResponseContent) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1756,6 +1816,9 @@ func (e *EventStreamSubscription) GetEventType() string {
 }
 
 func (e *EventStreamSubscription) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1801,6 +1864,9 @@ func (e *EventStreamSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamSubscription) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1978,6 +2044,9 @@ func (e *EventStreamWebhookBasicAuth) GetUsername() string {
 }
 
 func (e *EventStreamWebhookBasicAuth) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -2030,6 +2099,9 @@ func (e *EventStreamWebhookBasicAuth) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamWebhookBasicAuth) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -2084,6 +2156,9 @@ func (e *EventStreamWebhookBearerAuth) GetMethod() EventStreamWebhookBearerAuthM
 }
 
 func (e *EventStreamWebhookBearerAuth) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -2129,6 +2204,9 @@ func (e *EventStreamWebhookBearerAuth) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamWebhookBearerAuth) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -2193,6 +2271,9 @@ func (e *EventStreamWebhookConfiguration) GetWebhookAuthorization() *EventStream
 }
 
 func (e *EventStreamWebhookConfiguration) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -2245,6 +2326,9 @@ func (e *EventStreamWebhookConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamWebhookConfiguration) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -2287,6 +2371,9 @@ func (e *EventStreamWebhookDestination) GetConfiguration() *EventStreamWebhookCo
 }
 
 func (e *EventStreamWebhookDestination) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -2339,6 +2426,9 @@ func (e *EventStreamWebhookDestination) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamWebhookDestination) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -2450,6 +2540,9 @@ func (e *EventStreamWebhookResponseContent) GetUpdatedAt() time.Time {
 }
 
 func (e *EventStreamWebhookResponseContent) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -2549,6 +2642,9 @@ func (e *EventStreamWebhookResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventStreamWebhookResponseContent) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -2676,6 +2772,9 @@ func (l *ListEventStreamsResponseContent) GetNext() string {
 }
 
 func (l *ListEventStreamsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.ExtraProperties
 }
 
@@ -2732,6 +2831,9 @@ func (l *ListEventStreamsResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListEventStreamsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value

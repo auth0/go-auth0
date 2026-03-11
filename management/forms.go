@@ -140,6 +140,9 @@ func (c *CreateFormResponseContent) GetSubmittedAt() string {
 }
 
 func (c *CreateFormResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -281,6 +284,9 @@ func (c *CreateFormResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateFormResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -529,6 +535,9 @@ func (f *FormBlockDivider) GetConfig() FormBlockDividerConfig {
 }
 
 func (f *FormBlockDivider) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -595,6 +604,9 @@ func (f *FormBlockDivider) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockDivider) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -628,6 +640,9 @@ func (f *FormBlockDividerConfig) GetText() string {
 }
 
 func (f *FormBlockDividerConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -673,6 +688,9 @@ func (f *FormBlockDividerConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockDividerConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -733,6 +751,9 @@ func (f *FormBlockHTML) GetConfig() FormBlockHTMLConfig {
 }
 
 func (f *FormBlockHTML) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -799,6 +820,9 @@ func (f *FormBlockHTML) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockHTML) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -832,6 +856,9 @@ func (f *FormBlockHTMLConfig) GetContent() string {
 }
 
 func (f *FormBlockHTMLConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -877,6 +904,9 @@ func (f *FormBlockHTMLConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockHTMLConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -937,6 +967,9 @@ func (f *FormBlockImage) GetConfig() FormBlockImageConfig {
 }
 
 func (f *FormBlockImage) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1003,6 +1036,9 @@ func (f *FormBlockImage) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockImage) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1054,6 +1090,9 @@ func (f *FormBlockImageConfig) GetHeight() float64 {
 }
 
 func (f *FormBlockImageConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1113,6 +1152,9 @@ func (f *FormBlockImageConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockImageConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1198,6 +1240,9 @@ func (f *FormBlockJumpButton) GetConfig() *FormBlockJumpButtonConfig {
 }
 
 func (f *FormBlockJumpButton) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1264,6 +1309,9 @@ func (f *FormBlockJumpButton) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockJumpButton) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1315,6 +1363,9 @@ func (f *FormBlockJumpButtonConfig) GetStyle() FormBlockJumpButtonConfigStyle {
 }
 
 func (f *FormBlockJumpButtonConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1374,6 +1425,9 @@ func (f *FormBlockJumpButtonConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockJumpButtonConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1407,6 +1461,9 @@ func (f *FormBlockJumpButtonConfigStyle) GetBackgroundColor() string {
 }
 
 func (f *FormBlockJumpButtonConfigStyle) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1452,6 +1509,9 @@ func (f *FormBlockJumpButtonConfigStyle) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockJumpButtonConfigStyle) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1512,6 +1572,9 @@ func (f *FormBlockNextButton) GetConfig() *FormBlockNextButtonConfig {
 }
 
 func (f *FormBlockNextButton) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1578,6 +1641,9 @@ func (f *FormBlockNextButton) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockNextButton) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1611,6 +1677,9 @@ func (f *FormBlockNextButtonConfig) GetText() string {
 }
 
 func (f *FormBlockNextButtonConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1656,6 +1725,9 @@ func (f *FormBlockNextButtonConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockNextButtonConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1716,6 +1788,9 @@ func (f *FormBlockPreviousButton) GetConfig() *FormBlockPreviousButtonConfig {
 }
 
 func (f *FormBlockPreviousButton) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1782,6 +1857,9 @@ func (f *FormBlockPreviousButton) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockPreviousButton) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1815,6 +1893,9 @@ func (f *FormBlockPreviousButtonConfig) GetText() string {
 }
 
 func (f *FormBlockPreviousButtonConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1860,6 +1941,9 @@ func (f *FormBlockPreviousButtonConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockPreviousButtonConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1920,6 +2004,9 @@ func (f *FormBlockResendButton) GetConfig() *FormBlockResendButtonConfig {
 }
 
 func (f *FormBlockResendButton) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1986,6 +2073,9 @@ func (f *FormBlockResendButton) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockResendButton) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2073,6 +2163,9 @@ func (f *FormBlockResendButtonConfig) GetWaitingTime() float64 {
 }
 
 func (f *FormBlockResendButtonConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2160,6 +2253,9 @@ func (f *FormBlockResendButtonConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockResendButtonConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2245,6 +2341,9 @@ func (f *FormBlockRichText) GetConfig() FormBlockRichTextConfig {
 }
 
 func (f *FormBlockRichText) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2311,6 +2410,9 @@ func (f *FormBlockRichText) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockRichText) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2344,6 +2446,9 @@ func (f *FormBlockRichTextConfig) GetContent() string {
 }
 
 func (f *FormBlockRichTextConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2389,6 +2494,9 @@ func (f *FormBlockRichTextConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormBlockRichTextConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2741,6 +2849,9 @@ func (f *FormEndingNode) GetResumeFlow() FormEndingNodeResumeFlowTrueConst {
 }
 
 func (f *FormEndingNode) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2807,6 +2918,9 @@ func (f *FormEndingNode) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormEndingNode) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2840,6 +2954,9 @@ func (f *FormEndingNodeAfterSubmit) GetFlowID() string {
 }
 
 func (f *FormEndingNodeAfterSubmit) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2885,6 +3002,9 @@ func (f *FormEndingNodeAfterSubmit) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormEndingNodeAfterSubmit) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2948,6 +3068,9 @@ func (f *FormEndingNodeRedirection) GetTarget() string {
 }
 
 func (f *FormEndingNodeRedirection) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3000,6 +3123,9 @@ func (f *FormEndingNodeRedirection) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormEndingNodeRedirection) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3454,6 +3580,9 @@ func (f *FormFieldBoolean) GetSensitive() bool {
 }
 
 func (f *FormFieldBoolean) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3548,6 +3677,9 @@ func (f *FormFieldBoolean) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldBoolean) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3590,6 +3722,9 @@ func (f *FormFieldBooleanConfig) GetOptions() FormFieldBooleanConfigOptions {
 }
 
 func (f *FormFieldBooleanConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3642,6 +3777,9 @@ func (f *FormFieldBooleanConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldBooleanConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3684,6 +3822,9 @@ func (f *FormFieldBooleanConfigOptions) GetFalse() string {
 }
 
 func (f *FormFieldBooleanConfigOptions) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3736,6 +3877,9 @@ func (f *FormFieldBooleanConfigOptions) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldBooleanConfigOptions) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3832,6 +3976,9 @@ func (f *FormFieldCards) GetSensitive() bool {
 }
 
 func (f *FormFieldCards) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3926,6 +4073,9 @@ func (f *FormFieldCards) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldCards) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3977,6 +4127,9 @@ func (f *FormFieldCardsConfig) GetOptions() []*FormFieldCardsConfigOption {
 }
 
 func (f *FormFieldCardsConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4036,6 +4189,9 @@ func (f *FormFieldCardsConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldCardsConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4087,6 +4243,9 @@ func (f *FormFieldCardsConfigOption) GetImageURL() string {
 }
 
 func (f *FormFieldCardsConfigOption) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4146,6 +4305,9 @@ func (f *FormFieldCardsConfigOption) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldCardsConfigOption) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4242,6 +4404,9 @@ func (f *FormFieldChoice) GetSensitive() bool {
 }
 
 func (f *FormFieldChoice) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4336,6 +4501,9 @@ func (f *FormFieldChoice) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldChoice) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4387,6 +4555,9 @@ func (f *FormFieldChoiceConfig) GetAllowOther() FormFieldChoiceConfigAllowOther 
 }
 
 func (f *FormFieldChoiceConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4446,6 +4617,9 @@ func (f *FormFieldChoiceConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldChoiceConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4497,6 +4671,9 @@ func (f *FormFieldChoiceConfigAllowOther) GetPlaceholder() string {
 }
 
 func (f *FormFieldChoiceConfigAllowOther) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4556,6 +4733,9 @@ func (f *FormFieldChoiceConfigAllowOther) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldChoiceConfigAllowOther) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4600,6 +4780,9 @@ func (f *FormFieldChoiceConfigOption) GetLabel() string {
 }
 
 func (f *FormFieldChoiceConfigOption) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4652,6 +4835,9 @@ func (f *FormFieldChoiceConfigOption) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldChoiceConfigOption) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4748,6 +4934,9 @@ func (f *FormFieldCustom) GetSensitive() bool {
 }
 
 func (f *FormFieldCustom) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4842,6 +5031,9 @@ func (f *FormFieldCustom) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldCustom) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4902,6 +5094,9 @@ func (f *FormFieldCustomConfig) GetParams() FormFieldCustomConfigParams {
 }
 
 func (f *FormFieldCustomConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4968,6 +5163,9 @@ func (f *FormFieldCustomConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldCustomConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5068,6 +5266,9 @@ func (f *FormFieldDate) GetSensitive() bool {
 }
 
 func (f *FormFieldDate) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5162,6 +5363,9 @@ func (f *FormFieldDate) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldDate) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5204,6 +5408,9 @@ func (f *FormFieldDateConfig) GetDefaultValue() string {
 }
 
 func (f *FormFieldDateConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5256,6 +5463,9 @@ func (f *FormFieldDateConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldDateConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5374,6 +5584,9 @@ func (f *FormFieldDropdown) GetSensitive() bool {
 }
 
 func (f *FormFieldDropdown) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5468,6 +5681,9 @@ func (f *FormFieldDropdown) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldDropdown) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5519,6 +5735,9 @@ func (f *FormFieldDropdownConfig) GetPlaceholder() string {
 }
 
 func (f *FormFieldDropdownConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5578,6 +5797,9 @@ func (f *FormFieldDropdownConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldDropdownConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5620,6 +5842,9 @@ func (f *FormFieldDropdownConfigOption) GetLabel() string {
 }
 
 func (f *FormFieldDropdownConfigOption) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5672,6 +5897,9 @@ func (f *FormFieldDropdownConfigOption) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldDropdownConfigOption) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5768,6 +5996,9 @@ func (f *FormFieldEmail) GetSensitive() bool {
 }
 
 func (f *FormFieldEmail) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5862,6 +6093,9 @@ func (f *FormFieldEmail) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldEmail) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5904,6 +6138,9 @@ func (f *FormFieldEmailConfig) GetPlaceholder() string {
 }
 
 func (f *FormFieldEmailConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5956,6 +6193,9 @@ func (f *FormFieldEmailConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldEmailConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6052,6 +6292,9 @@ func (f *FormFieldFile) GetSensitive() bool {
 }
 
 func (f *FormFieldFile) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6146,6 +6389,9 @@ func (f *FormFieldFile) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldFile) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6224,6 +6470,9 @@ func (f *FormFieldFileConfig) GetMaxFiles() int {
 }
 
 func (f *FormFieldFileConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6304,6 +6553,9 @@ func (f *FormFieldFileConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldFileConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6369,6 +6621,9 @@ func (f *FormFieldFileConfigStorage) GetType() FormFieldFileConfigStorageTypeEnu
 }
 
 func (f *FormFieldFileConfigStorage) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.ExtraProperties
 }
 
@@ -6418,6 +6673,9 @@ func (f *FormFieldFileConfigStorage) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldFileConfigStorage) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6536,6 +6794,9 @@ func (f *FormFieldLegal) GetSensitive() bool {
 }
 
 func (f *FormFieldLegal) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6630,6 +6891,9 @@ func (f *FormFieldLegal) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldLegal) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6663,6 +6927,9 @@ func (f *FormFieldLegalConfig) GetText() string {
 }
 
 func (f *FormFieldLegalConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6708,6 +6975,9 @@ func (f *FormFieldLegalConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldLegalConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6804,6 +7074,9 @@ func (f *FormFieldNumber) GetSensitive() bool {
 }
 
 func (f *FormFieldNumber) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6898,6 +7171,9 @@ func (f *FormFieldNumber) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldNumber) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6958,6 +7234,9 @@ func (f *FormFieldNumberConfig) GetMaxValue() float64 {
 }
 
 func (f *FormFieldNumberConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7024,6 +7303,9 @@ func (f *FormFieldNumberConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldNumberConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7120,6 +7402,9 @@ func (f *FormFieldPassword) GetSensitive() bool {
 }
 
 func (f *FormFieldPassword) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7214,6 +7499,9 @@ func (f *FormFieldPassword) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldPassword) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7301,6 +7589,9 @@ func (f *FormFieldPasswordConfig) GetStrengthMeter() bool {
 }
 
 func (f *FormFieldPasswordConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7388,6 +7679,9 @@ func (f *FormFieldPasswordConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldPasswordConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7515,6 +7809,9 @@ func (f *FormFieldPayment) GetSensitive() bool {
 }
 
 func (f *FormFieldPayment) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7609,6 +7906,9 @@ func (f *FormFieldPayment) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldPayment) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7678,6 +7978,9 @@ func (f *FormFieldPaymentConfig) GetFields() FormFieldPaymentConfigFields {
 }
 
 func (f *FormFieldPaymentConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7751,6 +8054,9 @@ func (f *FormFieldPaymentConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldPaymentConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7855,6 +8161,9 @@ func (f *FormFieldPaymentConfigChargeOneOff) GetOneOff() *FormFieldPaymentConfig
 }
 
 func (f *FormFieldPaymentConfigChargeOneOff) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7907,6 +8216,9 @@ func (f *FormFieldPaymentConfigChargeOneOff) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldPaymentConfigChargeOneOff) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7993,6 +8305,9 @@ func (f *FormFieldPaymentConfigChargeOneOffOneOff) GetCurrency() FormFieldPaymen
 }
 
 func (f *FormFieldPaymentConfigChargeOneOffOneOff) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.ExtraProperties
 }
 
@@ -8049,6 +8364,9 @@ func (f *FormFieldPaymentConfigChargeOneOffOneOff) MarshalJSON() ([]byte, error)
 }
 
 func (f *FormFieldPaymentConfigChargeOneOffOneOff) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8153,6 +8471,9 @@ func (f *FormFieldPaymentConfigChargeSubscription) GetSubscription() FormFieldPa
 }
 
 func (f *FormFieldPaymentConfigChargeSubscription) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8205,6 +8526,9 @@ func (f *FormFieldPaymentConfigChargeSubscription) MarshalJSON() ([]byte, error)
 }
 
 func (f *FormFieldPaymentConfigChargeSubscription) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8285,6 +8609,9 @@ func (f *FormFieldPaymentConfigCredentials) GetPrivateKey() string {
 }
 
 func (f *FormFieldPaymentConfigCredentials) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8337,6 +8664,9 @@ func (f *FormFieldPaymentConfigCredentials) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldPaymentConfigCredentials) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8381,6 +8711,9 @@ func (f *FormFieldPaymentConfigFieldProperties) GetPlaceholder() string {
 }
 
 func (f *FormFieldPaymentConfigFieldProperties) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8433,6 +8766,9 @@ func (f *FormFieldPaymentConfigFieldProperties) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldPaymentConfigFieldProperties) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8493,6 +8829,9 @@ func (f *FormFieldPaymentConfigFields) GetTrustmarks() bool {
 }
 
 func (f *FormFieldPaymentConfigFields) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8559,6 +8898,9 @@ func (f *FormFieldPaymentConfigFields) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldPaymentConfigFields) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8676,6 +9018,9 @@ func (f *FormFieldSocial) GetSensitive() bool {
 }
 
 func (f *FormFieldSocial) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8770,6 +9115,9 @@ func (f *FormFieldSocial) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldSocial) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8791,6 +9139,9 @@ type FormFieldSocialConfig struct {
 }
 
 func (f *FormFieldSocialConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8829,6 +9180,9 @@ func (f *FormFieldSocialConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldSocialConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8925,6 +9279,9 @@ func (f *FormFieldTel) GetSensitive() bool {
 }
 
 func (f *FormFieldTel) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9019,6 +9376,9 @@ func (f *FormFieldTel) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldTel) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9097,6 +9457,9 @@ func (f *FormFieldTelConfig) GetStrings() FormFieldTelConfigStrings {
 }
 
 func (f *FormFieldTelConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9177,6 +9540,9 @@ func (f *FormFieldTelConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldTelConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9210,6 +9576,9 @@ func (f *FormFieldTelConfigStrings) GetFilterPlaceholder() string {
 }
 
 func (f *FormFieldTelConfigStrings) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9255,6 +9624,9 @@ func (f *FormFieldTelConfigStrings) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldTelConfigStrings) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9351,6 +9723,9 @@ func (f *FormFieldText) GetSensitive() bool {
 }
 
 func (f *FormFieldText) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9445,6 +9820,9 @@ func (f *FormFieldText) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldText) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9514,6 +9892,9 @@ func (f *FormFieldTextConfig) GetMaxLength() int {
 }
 
 func (f *FormFieldTextConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9587,6 +9968,9 @@ func (f *FormFieldTextConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldTextConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9987,6 +10371,9 @@ func (f *FormFieldURL) GetSensitive() bool {
 }
 
 func (f *FormFieldURL) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10081,6 +10468,9 @@ func (f *FormFieldURL) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldURL) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10123,6 +10513,9 @@ func (f *FormFieldURLConfig) GetPlaceholder() string {
 }
 
 func (f *FormFieldURLConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10175,6 +10568,9 @@ func (f *FormFieldURLConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFieldURLConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10244,6 +10640,9 @@ func (f *FormFlow) GetConfig() *FormFlowConfig {
 }
 
 func (f *FormFlow) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10317,6 +10716,9 @@ func (f *FormFlow) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFlow) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10359,6 +10761,9 @@ func (f *FormFlowConfig) GetNextNode() FormNodePointer {
 }
 
 func (f *FormFlowConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10411,6 +10816,9 @@ func (f *FormFlowConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormFlowConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10453,6 +10861,9 @@ func (f *FormHiddenField) GetValue() string {
 }
 
 func (f *FormHiddenField) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10505,6 +10916,9 @@ func (f *FormHiddenField) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormHiddenField) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10547,6 +10961,9 @@ func (f *FormLanguages) GetDefault() string {
 }
 
 func (f *FormLanguages) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10599,6 +11016,9 @@ func (f *FormLanguages) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormLanguages) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10643,6 +11063,9 @@ func (f *FormMessages) GetCustom() FormMessagesCustom {
 }
 
 func (f *FormMessages) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10695,6 +11118,9 @@ func (f *FormMessages) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormMessages) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10826,6 +11252,9 @@ func (f *FormNodeCoordinates) GetY() int {
 }
 
 func (f *FormNodeCoordinates) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10878,6 +11307,9 @@ func (f *FormNodeCoordinates) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormNodeCoordinates) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11070,6 +11502,9 @@ func (f *FormRouter) GetConfig() FormRouterConfig {
 }
 
 func (f *FormRouter) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11143,6 +11578,9 @@ func (f *FormRouter) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormRouter) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11185,6 +11623,9 @@ func (f *FormRouterConfig) GetFallback() FormNodePointer {
 }
 
 func (f *FormRouterConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11237,6 +11678,9 @@ func (f *FormRouterConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormRouterConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11288,6 +11732,9 @@ func (f *FormRouterRule) GetNextNode() FormNodePointer {
 }
 
 func (f *FormRouterRule) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11347,6 +11794,9 @@ func (f *FormRouterRule) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormRouterRule) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11398,6 +11848,9 @@ func (f *FormStartNode) GetCoordinates() FormNodeCoordinates {
 }
 
 func (f *FormStartNode) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11457,6 +11910,9 @@ func (f *FormStartNode) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormStartNode) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11528,6 +11984,9 @@ func (f *FormStep) GetConfig() FormStepConfig {
 }
 
 func (f *FormStep) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11601,6 +12060,9 @@ func (f *FormStep) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormStep) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11645,6 +12107,9 @@ func (f *FormStepConfig) GetNextNode() FormNodePointer {
 }
 
 func (f *FormStepConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11697,6 +12162,9 @@ func (f *FormStepConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormStepConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11730,6 +12198,9 @@ func (f *FormStyle) GetCSS() string {
 }
 
 func (f *FormStyle) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11775,6 +12246,9 @@ func (f *FormStyle) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormStyle) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11855,6 +12329,9 @@ func (f *FormSummary) GetSubmittedAt() string {
 }
 
 func (f *FormSummary) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11947,6 +12424,9 @@ func (f *FormSummary) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormSummary) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12130,6 +12610,9 @@ func (f *FormWidgetAuth0VerifiableCredentials) GetSensitive() bool {
 }
 
 func (f *FormWidgetAuth0VerifiableCredentials) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12224,6 +12707,9 @@ func (f *FormWidgetAuth0VerifiableCredentials) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormWidgetAuth0VerifiableCredentials) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12302,6 +12788,9 @@ func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetMaxWait() float64 {
 }
 
 func (f *FormWidgetAuth0VerifiableCredentialsConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12382,6 +12871,9 @@ func (f *FormWidgetAuth0VerifiableCredentialsConfig) MarshalJSON() ([]byte, erro
 }
 
 func (f *FormWidgetAuth0VerifiableCredentialsConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12478,6 +12970,9 @@ func (f *FormWidgetGMapsAddress) GetSensitive() bool {
 }
 
 func (f *FormWidgetGMapsAddress) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12572,6 +13067,9 @@ func (f *FormWidgetGMapsAddress) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormWidgetGMapsAddress) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12605,6 +13103,9 @@ func (f *FormWidgetGMapsAddressConfig) GetAPIKey() string {
 }
 
 func (f *FormWidgetGMapsAddressConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12650,6 +13151,9 @@ func (f *FormWidgetGMapsAddressConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormWidgetGMapsAddressConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12746,6 +13250,9 @@ func (f *FormWidgetRecaptcha) GetSensitive() bool {
 }
 
 func (f *FormWidgetRecaptcha) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12840,6 +13347,9 @@ func (f *FormWidgetRecaptcha) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormWidgetRecaptcha) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12882,6 +13392,9 @@ func (f *FormWidgetRecaptchaConfig) GetSecretKey() string {
 }
 
 func (f *FormWidgetRecaptchaConfig) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12934,6 +13447,9 @@ func (f *FormWidgetRecaptchaConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormWidgetRecaptchaConfig) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -13154,6 +13670,9 @@ func (g *GetFormResponseContent) GetSubmittedAt() string {
 }
 
 func (g *GetFormResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -13295,6 +13814,9 @@ func (g *GetFormResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetFormResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -13355,6 +13877,9 @@ func (l *ListFormsOffsetPaginatedResponseContent) GetForms() []*FormSummary {
 }
 
 func (l *ListFormsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -13421,6 +13946,9 @@ func (l *ListFormsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (l *ListFormsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -13562,6 +14090,9 @@ func (u *UpdateFormResponseContent) GetSubmittedAt() string {
 }
 
 func (u *UpdateFormResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -13703,6 +14234,9 @@ func (u *UpdateFormResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateFormResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

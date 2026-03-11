@@ -58,6 +58,9 @@ func (c *CreateUserAttributeProfileResponseContent) GetUserAttributes() UserAttr
 }
 
 func (c *CreateUserAttributeProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -124,6 +127,9 @@ func (c *CreateUserAttributeProfileResponseContent) MarshalJSON() ([]byte, error
 }
 
 func (c *CreateUserAttributeProfileResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -184,6 +190,9 @@ func (g *GetUserAttributeProfileResponseContent) GetUserAttributes() UserAttribu
 }
 
 func (g *GetUserAttributeProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -250,6 +259,9 @@ func (g *GetUserAttributeProfileResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetUserAttributeProfileResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -303,6 +315,9 @@ func (g *GetUserAttributeProfileTemplateResponseContent) GetTemplate() UserAttri
 }
 
 func (g *GetUserAttributeProfileTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -362,6 +377,9 @@ func (g *GetUserAttributeProfileTemplateResponseContent) MarshalJSON() ([]byte, 
 }
 
 func (g *GetUserAttributeProfileTemplateResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -395,6 +413,9 @@ func (l *ListUserAttributeProfileTemplateResponseContent) GetUserAttributeProfil
 }
 
 func (l *ListUserAttributeProfileTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -440,6 +461,9 @@ func (l *ListUserAttributeProfileTemplateResponseContent) MarshalJSON() ([]byte,
 }
 
 func (l *ListUserAttributeProfileTemplateResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -483,6 +507,9 @@ func (l *ListUserAttributeProfilesPaginatedResponseContent) GetUserAttributeProf
 }
 
 func (l *ListUserAttributeProfilesPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -535,6 +562,9 @@ func (l *ListUserAttributeProfilesPaginatedResponseContent) MarshalJSON() ([]byt
 }
 
 func (l *ListUserAttributeProfilesPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -595,6 +625,9 @@ func (u *UpdateUserAttributeProfileResponseContent) GetUserAttributes() UserAttr
 }
 
 func (u *UpdateUserAttributeProfileResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -661,6 +694,9 @@ func (u *UpdateUserAttributeProfileResponseContent) MarshalJSON() ([]byte, error
 }
 
 func (u *UpdateUserAttributeProfileResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -721,6 +757,9 @@ func (u *UserAttributeProfile) GetUserAttributes() UserAttributeProfileUserAttri
 }
 
 func (u *UserAttributeProfile) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -787,6 +826,9 @@ func (u *UserAttributeProfile) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserAttributeProfile) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -838,6 +880,9 @@ func (u *UserAttributeProfileOidcMapping) GetDisplayName() string {
 }
 
 func (u *UserAttributeProfileOidcMapping) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -890,6 +935,9 @@ func (u *UserAttributeProfileOidcMapping) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserAttributeProfileOidcMapping) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -992,6 +1040,9 @@ func (u *UserAttributeProfileStrategyOverrides) GetSamlp() UserAttributeProfileS
 }
 
 func (u *UserAttributeProfileStrategyOverrides) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1086,6 +1137,9 @@ func (u *UserAttributeProfileStrategyOverrides) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserAttributeProfileStrategyOverrides) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1139,6 +1193,9 @@ func (u *UserAttributeProfileStrategyOverridesMapping) GetSCIMMapping() string {
 }
 
 func (u *UserAttributeProfileStrategyOverridesMapping) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1198,6 +1255,9 @@ func (u *UserAttributeProfileStrategyOverridesMapping) MarshalJSON() ([]byte, er
 }
 
 func (u *UserAttributeProfileStrategyOverridesMapping) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1295,6 +1355,9 @@ func (u *UserAttributeProfileStrategyOverridesUserID) GetSamlp() UserAttributePr
 }
 
 func (u *UserAttributeProfileStrategyOverridesUserID) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1389,6 +1452,9 @@ func (u *UserAttributeProfileStrategyOverridesUserID) MarshalJSON() ([]byte, err
 }
 
 func (u *UserAttributeProfileStrategyOverridesUserID) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1441,6 +1507,9 @@ func (u *UserAttributeProfileStrategyOverridesUserIDMapping) GetSCIMMapping() st
 }
 
 func (u *UserAttributeProfileStrategyOverridesUserIDMapping) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1500,6 +1569,9 @@ func (u *UserAttributeProfileStrategyOverridesUserIDMapping) MarshalJSON() ([]by
 }
 
 func (u *UserAttributeProfileStrategyOverridesUserIDMapping) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1552,6 +1624,9 @@ func (u *UserAttributeProfileTemplate) GetUserAttributes() UserAttributeProfileU
 }
 
 func (u *UserAttributeProfileTemplate) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1611,6 +1686,9 @@ func (u *UserAttributeProfileTemplate) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserAttributeProfileTemplate) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1664,6 +1742,9 @@ func (u *UserAttributeProfileTemplateItem) GetTemplate() UserAttributeProfileTem
 }
 
 func (u *UserAttributeProfileTemplateItem) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1723,6 +1804,9 @@ func (u *UserAttributeProfileTemplateItem) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserAttributeProfileTemplateItem) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1825,6 +1909,9 @@ func (u *UserAttributeProfileUserAttributeAdditionalProperties) GetStrategyOverr
 }
 
 func (u *UserAttributeProfileUserAttributeAdditionalProperties) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1919,6 +2006,9 @@ func (u *UserAttributeProfileUserAttributeAdditionalProperties) MarshalJSON() ([
 }
 
 func (u *UserAttributeProfileUserAttributeAdditionalProperties) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1984,6 +2074,9 @@ func (u *UserAttributeProfileUserID) GetStrategyOverrides() UserAttributeProfile
 }
 
 func (u *UserAttributeProfileUserID) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -2050,6 +2143,9 @@ func (u *UserAttributeProfileUserID) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserAttributeProfileUserID) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

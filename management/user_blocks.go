@@ -32,6 +32,9 @@ func (l *ListUserBlocksByIdentifierResponseContent) GetBlockedFor() []*UserBlock
 }
 
 func (l *ListUserBlocksByIdentifierResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -77,6 +80,9 @@ func (l *ListUserBlocksByIdentifierResponseContent) MarshalJSON() ([]byte, error
 }
 
 func (l *ListUserBlocksByIdentifierResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -111,6 +117,9 @@ func (l *ListUserBlocksResponseContent) GetBlockedFor() []*UserBlockIdentifier {
 }
 
 func (l *ListUserBlocksResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -156,6 +165,9 @@ func (l *ListUserBlocksResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUserBlocksResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -211,6 +223,9 @@ func (u *UserBlockIdentifier) GetConnection() string {
 }
 
 func (u *UserBlockIdentifier) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
@@ -274,6 +289,9 @@ func (u *UserBlockIdentifier) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserBlockIdentifier) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

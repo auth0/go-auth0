@@ -52,6 +52,9 @@ func (c *CreateRoleResponseContent) GetDescription() string {
 }
 
 func (c *CreateRoleResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -111,6 +114,9 @@ func (c *CreateRoleResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateRoleResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -165,6 +171,9 @@ func (g *GetRoleResponseContent) GetDescription() string {
 }
 
 func (g *GetRoleResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -224,6 +233,9 @@ func (g *GetRoleResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetRoleResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -284,6 +296,9 @@ func (l *ListRolesOffsetPaginatedResponseContent) GetRoles() []*Role {
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -350,6 +365,9 @@ func (l *ListRolesOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -404,6 +422,9 @@ func (u *UpdateRoleResponseContent) GetDescription() string {
 }
 
 func (u *UpdateRoleResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -463,6 +484,9 @@ func (u *UpdateRoleResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateRoleResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

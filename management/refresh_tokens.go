@@ -136,6 +136,9 @@ func (g *GetRefreshTokenResponseContent) GetLastExchangedAt() RefreshTokenDate {
 }
 
 func (g *GetRefreshTokenResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -262,6 +265,9 @@ func (g *GetRefreshTokenResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetRefreshTokenResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -400,6 +406,9 @@ func (u *UpdateRefreshTokenResponseContent) GetLastExchangedAt() RefreshTokenDat
 }
 
 func (u *UpdateRefreshTokenResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
@@ -526,6 +535,9 @@ func (u *UpdateRefreshTokenResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateRefreshTokenResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

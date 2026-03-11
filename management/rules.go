@@ -82,6 +82,9 @@ func (c *CreateRuleResponseContent) GetStage() string {
 }
 
 func (c *CreateRuleResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -162,6 +165,9 @@ func (c *CreateRuleResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateRuleResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -246,6 +252,9 @@ func (g *GetRuleResponseContent) GetStage() string {
 }
 
 func (g *GetRuleResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -326,6 +335,9 @@ func (g *GetRuleResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetRuleResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -386,6 +398,9 @@ func (l *ListRulesOffsetPaginatedResponseContent) GetRules() []*Rule {
 }
 
 func (l *ListRulesOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -452,6 +467,9 @@ func (l *ListRulesOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (l *ListRulesOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -536,6 +554,9 @@ func (r *Rule) GetStage() string {
 }
 
 func (r *Rule) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -616,6 +637,9 @@ func (r *Rule) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Rule) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -700,6 +724,9 @@ func (u *UpdateRuleResponseContent) GetStage() string {
 }
 
 func (u *UpdateRuleResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -780,6 +807,9 @@ func (u *UpdateRuleResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateRuleResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

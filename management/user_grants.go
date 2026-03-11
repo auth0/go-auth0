@@ -58,6 +58,9 @@ func (l *ListUserGrantsOffsetPaginatedResponseContent) GetGrants() []*UserGrant 
 }
 
 func (l *ListUserGrantsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -124,6 +127,9 @@ func (l *ListUserGrantsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, er
 }
 
 func (l *ListUserGrantsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -198,6 +204,9 @@ func (u *UserGrant) GetScope() []string {
 }
 
 func (u *UserGrant) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -271,6 +280,9 @@ func (u *UserGrant) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserGrant) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

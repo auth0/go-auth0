@@ -88,6 +88,9 @@ func (g *GetNetworkACLsResponseContent) GetUpdatedAt() string {
 }
 
 func (g *GetNetworkACLsResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -179,6 +182,9 @@ func (g *GetNetworkACLsResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetNetworkACLsResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -239,6 +245,9 @@ func (l *ListNetworkACLsOffsetPaginatedResponseContent) GetTotal() float64 {
 }
 
 func (l *ListNetworkACLsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -305,6 +314,9 @@ func (l *ListNetworkACLsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, e
 }
 
 func (l *ListNetworkACLsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -375,6 +387,9 @@ func (n *NetworkACLAction) GetRedirectURI() string {
 }
 
 func (n *NetworkACLAction) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -448,6 +463,9 @@ func (n *NetworkACLAction) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NetworkACLAction) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -565,6 +583,9 @@ func (n *NetworkACLMatch) GetUserAgents() []string {
 }
 
 func (n *NetworkACLMatch) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -666,6 +687,9 @@ func (n *NetworkACLMatch) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NetworkACLMatch) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -730,6 +754,9 @@ func (n *NetworkACLRule) GetScope() NetworkACLRuleScopeEnum {
 }
 
 func (n *NetworkACLRule) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -796,6 +823,9 @@ func (n *NetworkACLRule) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NetworkACLRule) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -915,6 +945,9 @@ func (n *NetworkACLsResponseContent) GetUpdatedAt() string {
 }
 
 func (n *NetworkACLsResponseContent) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.ExtraProperties
 }
 
@@ -1006,6 +1039,9 @@ func (n *NetworkACLsResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NetworkACLsResponseContent) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -1096,6 +1132,9 @@ func (s *SetNetworkACLsResponseContent) GetUpdatedAt() string {
 }
 
 func (s *SetNetworkACLsResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.ExtraProperties
 }
 
@@ -1187,6 +1226,9 @@ func (s *SetNetworkACLsResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SetNetworkACLsResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -1277,6 +1319,9 @@ func (u *UpdateNetworkACLResponseContent) GetUpdatedAt() string {
 }
 
 func (u *UpdateNetworkACLResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
@@ -1368,6 +1413,9 @@ func (u *UpdateNetworkACLResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateNetworkACLResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

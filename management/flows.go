@@ -77,6 +77,9 @@ func (c *CreateFlowResponseContent) GetExecutedAt() string {
 }
 
 func (c *CreateFlowResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -169,6 +172,9 @@ func (c *CreateFlowResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateFlowResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -863,6 +869,9 @@ func (f *FlowActionActivecampaignListContacts) GetParams() *FlowActionActivecamp
 }
 
 func (f *FlowActionActivecampaignListContacts) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -950,6 +959,9 @@ func (f *FlowActionActivecampaignListContacts) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionActivecampaignListContacts) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1011,6 +1023,9 @@ func (f *FlowActionActivecampaignListContactsParams) GetEmail() string {
 }
 
 func (f *FlowActionActivecampaignListContactsParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1063,6 +1078,9 @@ func (f *FlowActionActivecampaignListContactsParams) MarshalJSON() ([]byte, erro
 }
 
 func (f *FlowActionActivecampaignListContactsParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1169,6 +1187,9 @@ func (f *FlowActionActivecampaignUpsertContact) GetParams() *FlowActionActivecam
 }
 
 func (f *FlowActionActivecampaignUpsertContact) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1256,6 +1277,9 @@ func (f *FlowActionActivecampaignUpsertContact) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionActivecampaignUpsertContact) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1353,6 +1377,9 @@ func (f *FlowActionActivecampaignUpsertContactParams) GetCustomFields() FlowActi
 }
 
 func (f *FlowActionActivecampaignUpsertContactParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1433,6 +1460,9 @@ func (f *FlowActionActivecampaignUpsertContactParams) MarshalJSON() ([]byte, err
 }
 
 func (f *FlowActionActivecampaignUpsertContactParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1624,6 +1654,9 @@ func (f *FlowActionAirtableCreateRecord) GetParams() *FlowActionAirtableCreateRe
 }
 
 func (f *FlowActionAirtableCreateRecord) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1711,6 +1744,9 @@ func (f *FlowActionAirtableCreateRecord) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAirtableCreateRecord) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1790,6 +1826,9 @@ func (f *FlowActionAirtableCreateRecordParams) GetFields() FlowActionAirtableCre
 }
 
 func (f *FlowActionAirtableCreateRecordParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1856,6 +1895,9 @@ func (f *FlowActionAirtableCreateRecordParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAirtableCreateRecordParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1964,6 +2006,9 @@ func (f *FlowActionAirtableListRecords) GetParams() *FlowActionAirtableListRecor
 }
 
 func (f *FlowActionAirtableListRecords) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2051,6 +2096,9 @@ func (f *FlowActionAirtableListRecords) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAirtableListRecords) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2139,6 +2187,9 @@ func (f *FlowActionAirtableListRecordsParams) GetView() string {
 }
 
 func (f *FlowActionAirtableListRecordsParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2212,6 +2263,9 @@ func (f *FlowActionAirtableListRecordsParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAirtableListRecordsParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2318,6 +2372,9 @@ func (f *FlowActionAirtableUpdateRecord) GetParams() *FlowActionAirtableUpdateRe
 }
 
 func (f *FlowActionAirtableUpdateRecord) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2405,6 +2462,9 @@ func (f *FlowActionAirtableUpdateRecord) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAirtableUpdateRecord) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2493,6 +2553,9 @@ func (f *FlowActionAirtableUpdateRecordParams) GetFields() FlowActionAirtableUpd
 }
 
 func (f *FlowActionAirtableUpdateRecordParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2566,6 +2629,9 @@ func (f *FlowActionAirtableUpdateRecordParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAirtableUpdateRecordParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2841,6 +2907,9 @@ func (f *FlowActionAuth0CreateUser) GetParams() *FlowActionAuth0CreateUserParams
 }
 
 func (f *FlowActionAuth0CreateUser) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -2928,6 +2997,9 @@ func (f *FlowActionAuth0CreateUser) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0CreateUser) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -2989,6 +3061,9 @@ func (f *FlowActionAuth0CreateUserParams) GetPayload() FlowActionAuth0CreateUser
 }
 
 func (f *FlowActionAuth0CreateUserParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3041,6 +3116,9 @@ func (f *FlowActionAuth0CreateUserParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0CreateUserParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3149,6 +3227,9 @@ func (f *FlowActionAuth0GetUser) GetParams() *FlowActionAuth0GetUserParams {
 }
 
 func (f *FlowActionAuth0GetUser) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3236,6 +3317,9 @@ func (f *FlowActionAuth0GetUser) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0GetUser) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3297,6 +3381,9 @@ func (f *FlowActionAuth0GetUserParams) GetUserID() string {
 }
 
 func (f *FlowActionAuth0GetUserParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3349,6 +3436,9 @@ func (f *FlowActionAuth0GetUserParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0GetUserParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3455,6 +3545,9 @@ func (f *FlowActionAuth0MakeCall) GetParams() *FlowActionAuth0MakeCallParams {
 }
 
 func (f *FlowActionAuth0MakeCall) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3542,6 +3635,9 @@ func (f *FlowActionAuth0MakeCall) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0MakeCall) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3621,6 +3717,9 @@ func (f *FlowActionAuth0MakeCallParams) GetCustomVars() FlowActionAuth0MakeCallP
 }
 
 func (f *FlowActionAuth0MakeCallParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3687,6 +3786,9 @@ func (f *FlowActionAuth0MakeCallParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0MakeCallParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3795,6 +3897,9 @@ func (f *FlowActionAuth0SendEmail) GetParams() *FlowActionAuth0SendEmailParams {
 }
 
 func (f *FlowActionAuth0SendEmail) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -3882,6 +3987,9 @@ func (f *FlowActionAuth0SendEmail) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0SendEmail) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -3970,6 +4078,9 @@ func (f *FlowActionAuth0SendEmailParams) GetCustomVars() FlowActionAuth0SendRequ
 }
 
 func (f *FlowActionAuth0SendEmailParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4043,6 +4154,9 @@ func (f *FlowActionAuth0SendEmailParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0SendEmailParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4085,6 +4199,9 @@ func (f *FlowActionAuth0SendEmailParamsFrom) GetEmail() FlowActionAuth0SendEmail
 }
 
 func (f *FlowActionAuth0SendEmailParamsFrom) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4137,6 +4254,9 @@ func (f *FlowActionAuth0SendEmailParamsFrom) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0SendEmailParamsFrom) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4247,6 +4367,9 @@ func (f *FlowActionAuth0SendRequest) GetParams() *FlowActionAuth0SendRequestPara
 }
 
 func (f *FlowActionAuth0SendRequest) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4334,6 +4457,9 @@ func (f *FlowActionAuth0SendRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0SendRequest) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4431,6 +4557,9 @@ func (f *FlowActionAuth0SendRequestParams) GetPayload() FlowActionAuth0SendReque
 }
 
 func (f *FlowActionAuth0SendRequestParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4511,6 +4640,9 @@ func (f *FlowActionAuth0SendRequestParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0SendRequestParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4801,6 +4933,9 @@ func (f *FlowActionAuth0SendSms) GetParams() *FlowActionAuth0SendSmsParams {
 }
 
 func (f *FlowActionAuth0SendSms) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -4888,6 +5023,9 @@ func (f *FlowActionAuth0SendSms) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0SendSms) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -4967,6 +5105,9 @@ func (f *FlowActionAuth0SendSmsParams) GetCustomVars() FlowActionAuth0SendSmsPar
 }
 
 func (f *FlowActionAuth0SendSmsParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5033,6 +5174,9 @@ func (f *FlowActionAuth0SendSmsParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0SendSmsParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5141,6 +5285,9 @@ func (f *FlowActionAuth0UpdateUser) GetParams() *FlowActionAuth0UpdateUserParams
 }
 
 func (f *FlowActionAuth0UpdateUser) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5228,6 +5375,9 @@ func (f *FlowActionAuth0UpdateUser) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0UpdateUser) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5298,6 +5448,9 @@ func (f *FlowActionAuth0UpdateUserParams) GetChanges() FlowActionAuth0UpdateUser
 }
 
 func (f *FlowActionAuth0UpdateUserParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5357,6 +5510,9 @@ func (f *FlowActionAuth0UpdateUserParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionAuth0UpdateUserParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5467,6 +5623,9 @@ func (f *FlowActionBigqueryInsertRows) GetParams() *FlowActionBigqueryInsertRows
 }
 
 func (f *FlowActionBigqueryInsertRows) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5554,6 +5713,9 @@ func (f *FlowActionBigqueryInsertRows) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionBigqueryInsertRows) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5633,6 +5795,9 @@ func (f *FlowActionBigqueryInsertRowsParams) GetData() FlowActionBigqueryInsertR
 }
 
 func (f *FlowActionBigqueryInsertRowsParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5699,6 +5864,9 @@ func (f *FlowActionBigqueryInsertRowsParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionBigqueryInsertRowsParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -5869,6 +6037,9 @@ func (f *FlowActionClearbitFindCompany) GetParams() *FlowActionClearbitFindCompa
 }
 
 func (f *FlowActionClearbitFindCompany) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -5956,6 +6127,9 @@ func (f *FlowActionClearbitFindCompany) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionClearbitFindCompany) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6017,6 +6191,9 @@ func (f *FlowActionClearbitFindCompanyParams) GetDomain() string {
 }
 
 func (f *FlowActionClearbitFindCompanyParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6069,6 +6246,9 @@ func (f *FlowActionClearbitFindCompanyParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionClearbitFindCompanyParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6175,6 +6355,9 @@ func (f *FlowActionClearbitFindPerson) GetParams() *FlowActionClearbitFindPerson
 }
 
 func (f *FlowActionClearbitFindPerson) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6262,6 +6445,9 @@ func (f *FlowActionClearbitFindPerson) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionClearbitFindPerson) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6323,6 +6509,9 @@ func (f *FlowActionClearbitFindPersonParams) GetEmail() string {
 }
 
 func (f *FlowActionClearbitFindPersonParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6375,6 +6564,9 @@ func (f *FlowActionClearbitFindPersonParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionClearbitFindPersonParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6483,6 +6675,9 @@ func (f *FlowActionEmailVerifyEmail) GetParams() *FlowActionEmailVerifyEmailPara
 }
 
 func (f *FlowActionEmailVerifyEmail) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6570,6 +6765,9 @@ func (f *FlowActionEmailVerifyEmail) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionEmailVerifyEmail) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6631,6 +6829,9 @@ func (f *FlowActionEmailVerifyEmailParams) GetRules() FlowActionEmailVerifyEmail
 }
 
 func (f *FlowActionEmailVerifyEmailParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6683,6 +6884,9 @@ func (f *FlowActionEmailVerifyEmailParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionEmailVerifyEmailParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -6761,6 +6965,9 @@ func (f *FlowActionEmailVerifyEmailParamsRules) GetAllowlist() []string {
 }
 
 func (f *FlowActionEmailVerifyEmailParamsRules) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -6841,6 +7048,9 @@ func (f *FlowActionEmailVerifyEmailParamsRules) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionEmailVerifyEmailParamsRules) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7114,6 +7324,9 @@ func (f *FlowActionFlowBooleanCondition) GetParams() *FlowActionFlowBooleanCondi
 }
 
 func (f *FlowActionFlowBooleanCondition) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7201,6 +7414,9 @@ func (f *FlowActionFlowBooleanCondition) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowBooleanCondition) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7262,6 +7478,9 @@ func (f *FlowActionFlowBooleanConditionParams) GetElse() []*FlowAction {
 }
 
 func (f *FlowActionFlowBooleanConditionParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7314,6 +7533,9 @@ func (f *FlowActionFlowBooleanConditionParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowBooleanConditionParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7420,6 +7642,9 @@ func (f *FlowActionFlowDelayFlow) GetParams() *FlowActionFlowDelayFlowParams {
 }
 
 func (f *FlowActionFlowDelayFlow) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7507,6 +7732,9 @@ func (f *FlowActionFlowDelayFlow) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowDelayFlow) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7568,6 +7796,9 @@ func (f *FlowActionFlowDelayFlowParams) GetUnits() FlowActionFlowDelayFlowParams
 }
 
 func (f *FlowActionFlowDelayFlowParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7620,6 +7851,9 @@ func (f *FlowActionFlowDelayFlowParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowDelayFlowParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7816,6 +8050,9 @@ func (f *FlowActionFlowDoNothing) GetParams() FlowActionFlowDoNothingParams {
 }
 
 func (f *FlowActionFlowDoNothing) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7903,6 +8140,9 @@ func (f *FlowActionFlowDoNothing) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowDoNothing) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -7943,6 +8183,9 @@ type FlowActionFlowDoNothingParams struct {
 }
 
 func (f *FlowActionFlowDoNothingParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -7981,6 +8224,9 @@ func (f *FlowActionFlowDoNothingParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowDoNothingParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8087,6 +8333,9 @@ func (f *FlowActionFlowErrorMessage) GetParams() *FlowActionFlowErrorMessagePara
 }
 
 func (f *FlowActionFlowErrorMessage) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8174,6 +8423,9 @@ func (f *FlowActionFlowErrorMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowErrorMessage) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8226,6 +8478,9 @@ func (f *FlowActionFlowErrorMessageParams) GetMessage() string {
 }
 
 func (f *FlowActionFlowErrorMessageParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8271,6 +8526,9 @@ func (f *FlowActionFlowErrorMessageParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowErrorMessageParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8377,6 +8635,9 @@ func (f *FlowActionFlowMapValue) GetParams() *FlowActionFlowMapValueParams {
 }
 
 func (f *FlowActionFlowMapValue) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8464,6 +8725,9 @@ func (f *FlowActionFlowMapValue) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowMapValue) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8534,6 +8798,9 @@ func (f *FlowActionFlowMapValueParams) GetFallback() FlowActionFlowMapValueParam
 }
 
 func (f *FlowActionFlowMapValueParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8593,6 +8860,9 @@ func (f *FlowActionFlowMapValueParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowMapValueParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -8869,6 +9139,9 @@ func (f *FlowActionFlowReturnJSON) GetParams() *FlowActionFlowReturnJSONParams {
 }
 
 func (f *FlowActionFlowReturnJSON) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -8956,6 +9229,9 @@ func (f *FlowActionFlowReturnJSON) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowReturnJSON) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9008,6 +9284,9 @@ func (f *FlowActionFlowReturnJSONParams) GetPayload() *FlowActionFlowReturnJSONP
 }
 
 func (f *FlowActionFlowReturnJSONParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9053,6 +9332,9 @@ func (f *FlowActionFlowReturnJSONParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowReturnJSONParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9223,6 +9505,9 @@ func (f *FlowActionFlowStoreVars) GetParams() *FlowActionFlowStoreVarsParams {
 }
 
 func (f *FlowActionFlowStoreVars) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9310,6 +9595,9 @@ func (f *FlowActionFlowStoreVars) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowStoreVars) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9362,6 +9650,9 @@ func (f *FlowActionFlowStoreVarsParams) GetVars() FlowActionFlowStoreVarsParamsV
 }
 
 func (f *FlowActionFlowStoreVarsParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9407,6 +9698,9 @@ func (f *FlowActionFlowStoreVarsParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionFlowStoreVarsParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9517,6 +9811,9 @@ func (f *FlowActionGoogleSheetsAddRow) GetParams() *FlowActionGoogleSheetsAddRow
 }
 
 func (f *FlowActionGoogleSheetsAddRow) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9604,6 +9901,9 @@ func (f *FlowActionGoogleSheetsAddRow) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionGoogleSheetsAddRow) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9683,6 +9983,9 @@ func (f *FlowActionGoogleSheetsAddRowParams) GetValues() FlowActionGoogleSheetsA
 }
 
 func (f *FlowActionGoogleSheetsAddRowParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -9749,6 +10052,9 @@ func (f *FlowActionGoogleSheetsAddRowParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionGoogleSheetsAddRowParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -9921,6 +10227,9 @@ func (f *FlowActionHTTPSendRequest) GetParams() *FlowActionHTTPSendRequestParams
 }
 
 func (f *FlowActionHTTPSendRequest) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10008,6 +10317,9 @@ func (f *FlowActionHTTPSendRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionHTTPSendRequest) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10123,6 +10435,9 @@ func (f *FlowActionHTTPSendRequestParams) GetContentType() FlowActionHTTPSendReq
 }
 
 func (f *FlowActionHTTPSendRequestParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10217,6 +10532,9 @@ func (f *FlowActionHTTPSendRequestParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionHTTPSendRequestParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10259,6 +10577,9 @@ func (f *FlowActionHTTPSendRequestParamsBasicAuth) GetPassword() string {
 }
 
 func (f *FlowActionHTTPSendRequestParamsBasicAuth) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10311,6 +10632,9 @@ func (f *FlowActionHTTPSendRequestParamsBasicAuth) MarshalJSON() ([]byte, error)
 }
 
 func (f *FlowActionHTTPSendRequestParamsBasicAuth) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10707,6 +11031,9 @@ func (f *FlowActionHubspotEnrollContact) GetParams() *FlowActionHubspotEnrollCon
 }
 
 func (f *FlowActionHubspotEnrollContact) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10794,6 +11121,9 @@ func (f *FlowActionHubspotEnrollContact) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionHubspotEnrollContact) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -10864,6 +11194,9 @@ func (f *FlowActionHubspotEnrollContactParams) GetWorkflowID() *FlowActionHubspo
 }
 
 func (f *FlowActionHubspotEnrollContactParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -10923,6 +11256,9 @@ func (f *FlowActionHubspotEnrollContactParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionHubspotEnrollContactParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11091,6 +11427,9 @@ func (f *FlowActionHubspotGetContact) GetParams() *FlowActionHubspotGetContactPa
 }
 
 func (f *FlowActionHubspotGetContact) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11178,6 +11517,9 @@ func (f *FlowActionHubspotGetContact) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionHubspotGetContact) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11239,6 +11581,9 @@ func (f *FlowActionHubspotGetContactParams) GetEmail() string {
 }
 
 func (f *FlowActionHubspotGetContactParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11291,6 +11636,9 @@ func (f *FlowActionHubspotGetContactParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionHubspotGetContactParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11397,6 +11745,9 @@ func (f *FlowActionHubspotUpsertContact) GetParams() *FlowActionHubspotUpsertCon
 }
 
 func (f *FlowActionHubspotUpsertContact) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11484,6 +11835,9 @@ func (f *FlowActionHubspotUpsertContact) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionHubspotUpsertContact) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11555,6 +11909,9 @@ func (f *FlowActionHubspotUpsertContactParams) GetProperties() []*FlowActionHubs
 }
 
 func (f *FlowActionHubspotUpsertContactParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.ExtraProperties
 }
 
@@ -11618,6 +11975,9 @@ func (f *FlowActionHubspotUpsertContactParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionHubspotUpsertContactParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11651,6 +12011,9 @@ func (f *FlowActionHubspotUpsertContactParamsProperty) GetProperty() string {
 }
 
 func (f *FlowActionHubspotUpsertContactParamsProperty) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11696,6 +12059,9 @@ func (f *FlowActionHubspotUpsertContactParamsProperty) MarshalJSON() ([]byte, er
 }
 
 func (f *FlowActionHubspotUpsertContactParamsProperty) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -11885,6 +12251,9 @@ func (f *FlowActionJSONCreateJSON) GetParams() *FlowActionJSONCreateJSONParams {
 }
 
 func (f *FlowActionJSONCreateJSON) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -11972,6 +12341,9 @@ func (f *FlowActionJSONCreateJSON) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJSONCreateJSON) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12024,6 +12396,9 @@ func (f *FlowActionJSONCreateJSONParams) GetObject() FlowActionJSONCreateJSONPar
 }
 
 func (f *FlowActionJSONCreateJSONParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12069,6 +12444,9 @@ func (f *FlowActionJSONCreateJSONParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJSONCreateJSONParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12177,6 +12555,9 @@ func (f *FlowActionJSONParseJSON) GetParams() *FlowActionJSONParseJSONParams {
 }
 
 func (f *FlowActionJSONParseJSON) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12264,6 +12645,9 @@ func (f *FlowActionJSONParseJSON) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJSONParseJSON) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12316,6 +12700,9 @@ func (f *FlowActionJSONParseJSONParams) GetJSON() string {
 }
 
 func (f *FlowActionJSONParseJSONParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12361,6 +12748,9 @@ func (f *FlowActionJSONParseJSONParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJSONParseJSONParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12467,6 +12857,9 @@ func (f *FlowActionJSONSerializeJSON) GetParams() *FlowActionJSONSerializeJSONPa
 }
 
 func (f *FlowActionJSONSerializeJSON) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12554,6 +12947,9 @@ func (f *FlowActionJSONSerializeJSON) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJSONSerializeJSON) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12606,6 +13002,9 @@ func (f *FlowActionJSONSerializeJSONParams) GetObject() *FlowActionJSONSerialize
 }
 
 func (f *FlowActionJSONSerializeJSONParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12651,6 +13050,9 @@ func (f *FlowActionJSONSerializeJSONParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJSONSerializeJSONParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -12904,6 +13306,9 @@ func (f *FlowActionJwtDecodeJwt) GetParams() *FlowActionJwtDecodeJwtParams {
 }
 
 func (f *FlowActionJwtDecodeJwt) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -12991,6 +13396,9 @@ func (f *FlowActionJwtDecodeJwt) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJwtDecodeJwt) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -13043,6 +13451,9 @@ func (f *FlowActionJwtDecodeJwtParams) GetToken() string {
 }
 
 func (f *FlowActionJwtDecodeJwtParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -13088,6 +13499,9 @@ func (f *FlowActionJwtDecodeJwtParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJwtDecodeJwtParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -13194,6 +13608,9 @@ func (f *FlowActionJwtSignJwt) GetParams() *FlowActionJwtSignJwtParams {
 }
 
 func (f *FlowActionJwtSignJwt) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -13281,6 +13698,9 @@ func (f *FlowActionJwtSignJwt) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJwtSignJwt) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -13378,6 +13798,9 @@ func (f *FlowActionJwtSignJwtParams) GetExpiresIn() string {
 }
 
 func (f *FlowActionJwtSignJwtParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -13458,6 +13881,9 @@ func (f *FlowActionJwtSignJwtParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJwtSignJwtParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -13566,6 +13992,9 @@ func (f *FlowActionJwtVerifyJwt) GetParams() *FlowActionJwtVerifyJwtParams {
 }
 
 func (f *FlowActionJwtVerifyJwt) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -13653,6 +14082,9 @@ func (f *FlowActionJwtVerifyJwt) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJwtVerifyJwt) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -13732,6 +14164,9 @@ func (f *FlowActionJwtVerifyJwtParams) GetIssuer() string {
 }
 
 func (f *FlowActionJwtVerifyJwtParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -13798,6 +14233,9 @@ func (f *FlowActionJwtVerifyJwtParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionJwtVerifyJwtParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -13906,6 +14344,9 @@ func (f *FlowActionMailchimpUpsertMember) GetParams() *FlowActionMailchimpUpsert
 }
 
 func (f *FlowActionMailchimpUpsertMember) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -13993,6 +14434,9 @@ func (f *FlowActionMailchimpUpsertMember) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionMailchimpUpsertMember) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -14063,6 +14507,9 @@ func (f *FlowActionMailchimpUpsertMemberParams) GetMember() *FlowActionMailchimp
 }
 
 func (f *FlowActionMailchimpUpsertMemberParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -14122,6 +14569,9 @@ func (f *FlowActionMailchimpUpsertMemberParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionMailchimpUpsertMemberParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -14173,6 +14623,9 @@ func (f *FlowActionMailchimpUpsertMemberParamsMember) GetMergeFields() FlowActio
 }
 
 func (f *FlowActionMailchimpUpsertMemberParamsMember) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -14232,6 +14685,9 @@ func (f *FlowActionMailchimpUpsertMemberParamsMember) MarshalJSON() ([]byte, err
 }
 
 func (f *FlowActionMailchimpUpsertMemberParamsMember) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -14342,6 +14798,9 @@ func (f *FlowActionMailjetSendEmail) GetParams() *FlowActionMailjetSendEmailPara
 }
 
 func (f *FlowActionMailjetSendEmail) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -14429,6 +14888,9 @@ func (f *FlowActionMailjetSendEmail) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionMailjetSendEmail) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -14544,6 +15006,9 @@ func (f *FlowActionMailjetSendEmailParamsContent) GetContent() string {
 }
 
 func (f *FlowActionMailjetSendEmailParamsContent) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.ExtraProperties
 }
 
@@ -14593,6 +15058,9 @@ func (f *FlowActionMailjetSendEmailParamsContent) MarshalJSON() ([]byte, error) 
 }
 
 func (f *FlowActionMailjetSendEmailParamsContent) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -14636,6 +15104,9 @@ func (f *FlowActionMailjetSendEmailParamsTemplateID) GetVariables() map[string]i
 }
 
 func (f *FlowActionMailjetSendEmailParamsTemplateID) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.ExtraProperties
 }
 
@@ -14692,6 +15163,9 @@ func (f *FlowActionMailjetSendEmailParamsTemplateID) MarshalJSON() ([]byte, erro
 }
 
 func (f *FlowActionMailjetSendEmailParamsTemplateID) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -14860,6 +15334,9 @@ func (f *FlowActionOtpGenerateCode) GetParams() *FlowActionOtpGenerateCodeParams
 }
 
 func (f *FlowActionOtpGenerateCode) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -14947,6 +15424,9 @@ func (f *FlowActionOtpGenerateCode) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionOtpGenerateCode) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -15008,6 +15488,9 @@ func (f *FlowActionOtpGenerateCodeParams) GetLength() int {
 }
 
 func (f *FlowActionOtpGenerateCodeParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -15060,6 +15543,9 @@ func (f *FlowActionOtpGenerateCodeParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionOtpGenerateCodeParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -15166,6 +15652,9 @@ func (f *FlowActionOtpVerifyCode) GetParams() *FlowActionOtpVerifyCodeParams {
 }
 
 func (f *FlowActionOtpVerifyCode) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -15253,6 +15742,9 @@ func (f *FlowActionOtpVerifyCode) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionOtpVerifyCode) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -15314,6 +15806,9 @@ func (f *FlowActionOtpVerifyCodeParams) GetCode() *FlowActionOtpVerifyCodeParams
 }
 
 func (f *FlowActionOtpVerifyCodeParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -15366,6 +15861,9 @@ func (f *FlowActionOtpVerifyCodeParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionOtpVerifyCodeParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -15617,6 +16115,9 @@ func (f *FlowActionPipedriveAddDeal) GetParams() *FlowActionPipedriveAddDealPara
 }
 
 func (f *FlowActionPipedriveAddDeal) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -15704,6 +16205,9 @@ func (f *FlowActionPipedriveAddDeal) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionPipedriveAddDeal) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -15819,6 +16323,9 @@ func (f *FlowActionPipedriveAddDealParams) GetFields() FlowActionPipedriveAddDea
 }
 
 func (f *FlowActionPipedriveAddDealParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -15913,6 +16420,9 @@ func (f *FlowActionPipedriveAddDealParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionPipedriveAddDealParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -16269,6 +16779,9 @@ func (f *FlowActionPipedriveAddOrganization) GetParams() *FlowActionPipedriveAdd
 }
 
 func (f *FlowActionPipedriveAddOrganization) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -16356,6 +16869,9 @@ func (f *FlowActionPipedriveAddOrganization) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionPipedriveAddOrganization) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -16435,6 +16951,9 @@ func (f *FlowActionPipedriveAddOrganizationParams) GetFields() FlowActionPipedri
 }
 
 func (f *FlowActionPipedriveAddOrganizationParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -16501,6 +17020,9 @@ func (f *FlowActionPipedriveAddOrganizationParams) MarshalJSON() ([]byte, error)
 }
 
 func (f *FlowActionPipedriveAddOrganizationParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -16671,6 +17193,9 @@ func (f *FlowActionPipedriveAddPerson) GetParams() *FlowActionPipedriveAddPerson
 }
 
 func (f *FlowActionPipedriveAddPerson) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -16758,6 +17283,9 @@ func (f *FlowActionPipedriveAddPerson) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionPipedriveAddPerson) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -16864,6 +17392,9 @@ func (f *FlowActionPipedriveAddPersonParams) GetFields() FlowActionPipedriveAddP
 }
 
 func (f *FlowActionPipedriveAddPersonParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -16951,6 +17482,9 @@ func (f *FlowActionPipedriveAddPersonParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionPipedriveAddPersonParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -17287,6 +17821,9 @@ func (f *FlowActionSalesforceCreateLead) GetParams() *FlowActionSalesforceCreate
 }
 
 func (f *FlowActionSalesforceCreateLead) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -17374,6 +17911,9 @@ func (f *FlowActionSalesforceCreateLead) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSalesforceCreateLead) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -17480,6 +18020,9 @@ func (f *FlowActionSalesforceCreateLeadParams) GetPayload() FlowActionSalesforce
 }
 
 func (f *FlowActionSalesforceCreateLeadParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -17567,6 +18110,9 @@ func (f *FlowActionSalesforceCreateLeadParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSalesforceCreateLeadParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -17675,6 +18221,9 @@ func (f *FlowActionSalesforceGetLead) GetParams() *FlowActionSalesforceGetLeadPa
 }
 
 func (f *FlowActionSalesforceGetLead) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -17762,6 +18311,9 @@ func (f *FlowActionSalesforceGetLead) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSalesforceGetLead) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -17823,6 +18375,9 @@ func (f *FlowActionSalesforceGetLeadParams) GetLeadID() string {
 }
 
 func (f *FlowActionSalesforceGetLeadParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -17875,6 +18430,9 @@ func (f *FlowActionSalesforceGetLeadParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSalesforceGetLeadParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -17981,6 +18539,9 @@ func (f *FlowActionSalesforceSearchLeads) GetParams() *FlowActionSalesforceSearc
 }
 
 func (f *FlowActionSalesforceSearchLeads) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -18068,6 +18629,9 @@ func (f *FlowActionSalesforceSearchLeads) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSalesforceSearchLeads) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -18147,6 +18711,9 @@ func (f *FlowActionSalesforceSearchLeadsParams) GetLeadFields() []string {
 }
 
 func (f *FlowActionSalesforceSearchLeadsParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -18213,6 +18780,9 @@ func (f *FlowActionSalesforceSearchLeadsParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSalesforceSearchLeadsParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -18347,6 +18917,9 @@ func (f *FlowActionSalesforceUpdateLead) GetParams() *FlowActionSalesforceUpdate
 }
 
 func (f *FlowActionSalesforceUpdateLead) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -18434,6 +19007,9 @@ func (f *FlowActionSalesforceUpdateLead) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSalesforceUpdateLead) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -18504,6 +19080,9 @@ func (f *FlowActionSalesforceUpdateLeadParams) GetPayload() FlowActionSalesforce
 }
 
 func (f *FlowActionSalesforceUpdateLeadParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -18563,6 +19142,9 @@ func (f *FlowActionSalesforceUpdateLeadParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSalesforceUpdateLeadParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -18673,6 +19255,9 @@ func (f *FlowActionSendgridSendEmail) GetParams() *FlowActionSendgridSendEmailPa
 }
 
 func (f *FlowActionSendgridSendEmail) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -18760,6 +19345,9 @@ func (f *FlowActionSendgridSendEmail) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSendgridSendEmail) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -18831,6 +19419,9 @@ func (f *FlowActionSendgridSendEmailParams) GetPersonalizations() []interface{} 
 }
 
 func (f *FlowActionSendgridSendEmailParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.ExtraProperties
 }
 
@@ -18894,6 +19485,9 @@ func (f *FlowActionSendgridSendEmailParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSendgridSendEmailParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -18936,6 +19530,9 @@ func (f *FlowActionSendgridSendEmailParamsPerson) GetEmail() string {
 }
 
 func (f *FlowActionSendgridSendEmailParamsPerson) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -18988,6 +19585,9 @@ func (f *FlowActionSendgridSendEmailParamsPerson) MarshalJSON() ([]byte, error) 
 }
 
 func (f *FlowActionSendgridSendEmailParamsPerson) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -19096,6 +19696,9 @@ func (f *FlowActionSlackPostMessage) GetParams() *FlowActionSlackPostMessagePara
 }
 
 func (f *FlowActionSlackPostMessage) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -19183,6 +19786,9 @@ func (f *FlowActionSlackPostMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSlackPostMessage) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -19253,6 +19859,9 @@ func (f *FlowActionSlackPostMessageParams) GetAttachments() []*FlowActionSlackPo
 }
 
 func (f *FlowActionSlackPostMessageParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -19312,6 +19921,9 @@ func (f *FlowActionSlackPostMessageParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionSlackPostMessageParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -19372,6 +19984,9 @@ func (f *FlowActionSlackPostMessageParamsAttachment) GetFields() []*FlowActionSl
 }
 
 func (f *FlowActionSlackPostMessageParamsAttachment) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -19438,6 +20053,9 @@ func (f *FlowActionSlackPostMessageParamsAttachment) MarshalJSON() ([]byte, erro
 }
 
 func (f *FlowActionSlackPostMessageParamsAttachment) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -19514,6 +20132,9 @@ func (f *FlowActionSlackPostMessageParamsAttachmentField) GetShort() bool {
 }
 
 func (f *FlowActionSlackPostMessageParamsAttachmentField) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -19573,6 +20194,9 @@ func (f *FlowActionSlackPostMessageParamsAttachmentField) MarshalJSON() ([]byte,
 }
 
 func (f *FlowActionSlackPostMessageParamsAttachmentField) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -19846,6 +20470,9 @@ func (f *FlowActionStripeAddTaxID) GetParams() *FlowActionStripeAddTaxIDParams {
 }
 
 func (f *FlowActionStripeAddTaxID) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -19933,6 +20560,9 @@ func (f *FlowActionStripeAddTaxID) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeAddTaxID) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -20012,6 +20642,9 @@ func (f *FlowActionStripeAddTaxIDParams) GetValue() string {
 }
 
 func (f *FlowActionStripeAddTaxIDParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -20078,6 +20711,9 @@ func (f *FlowActionStripeAddTaxIDParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeAddTaxIDParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -20175,6 +20811,9 @@ func (f *FlowActionStripeAddress) GetCountry() string {
 }
 
 func (f *FlowActionStripeAddress) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -20255,6 +20894,9 @@ func (f *FlowActionStripeAddress) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeAddress) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -20342,6 +20984,9 @@ func (f *FlowActionStripeCreateCustomer) GetParams() *FlowActionStripeCreateCust
 }
 
 func (f *FlowActionStripeCreateCustomer) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -20429,6 +21074,9 @@ func (f *FlowActionStripeCreateCustomer) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeCreateCustomer) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -20553,6 +21201,9 @@ func (f *FlowActionStripeCreateCustomerParams) GetMetadata() FlowActionStripeMet
 }
 
 func (f *FlowActionStripeCreateCustomerParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -20654,6 +21305,9 @@ func (f *FlowActionStripeCreateCustomerParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeCreateCustomerParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -20760,6 +21414,9 @@ func (f *FlowActionStripeCreatePortalSession) GetParams() *FlowActionStripeCreat
 }
 
 func (f *FlowActionStripeCreatePortalSession) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -20847,6 +21504,9 @@ func (f *FlowActionStripeCreatePortalSession) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeCreatePortalSession) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -20917,6 +21577,9 @@ func (f *FlowActionStripeCreatePortalSessionParams) GetReturnURL() string {
 }
 
 func (f *FlowActionStripeCreatePortalSessionParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -20976,6 +21639,9 @@ func (f *FlowActionStripeCreatePortalSessionParams) MarshalJSON() ([]byte, error
 }
 
 func (f *FlowActionStripeCreatePortalSessionParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -21082,6 +21748,9 @@ func (f *FlowActionStripeDeleteTaxID) GetParams() *FlowActionStripeDeleteTaxIDPa
 }
 
 func (f *FlowActionStripeDeleteTaxID) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -21169,6 +21838,9 @@ func (f *FlowActionStripeDeleteTaxID) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeDeleteTaxID) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -21239,6 +21911,9 @@ func (f *FlowActionStripeDeleteTaxIDParams) GetID() string {
 }
 
 func (f *FlowActionStripeDeleteTaxIDParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -21298,6 +21973,9 @@ func (f *FlowActionStripeDeleteTaxIDParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeDeleteTaxIDParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -21404,6 +22082,9 @@ func (f *FlowActionStripeFindCustomers) GetParams() *FlowActionStripeFindCustome
 }
 
 func (f *FlowActionStripeFindCustomers) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -21491,6 +22172,9 @@ func (f *FlowActionStripeFindCustomers) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeFindCustomers) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -21552,6 +22236,9 @@ func (f *FlowActionStripeFindCustomersParams) GetEmail() string {
 }
 
 func (f *FlowActionStripeFindCustomersParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -21604,6 +22291,9 @@ func (f *FlowActionStripeFindCustomersParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeFindCustomersParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -21710,6 +22400,9 @@ func (f *FlowActionStripeGetCustomer) GetParams() *FlowActionStripeGetCustomerPa
 }
 
 func (f *FlowActionStripeGetCustomer) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -21797,6 +22490,9 @@ func (f *FlowActionStripeGetCustomer) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeGetCustomer) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -21858,6 +22554,9 @@ func (f *FlowActionStripeGetCustomerParams) GetID() string {
 }
 
 func (f *FlowActionStripeGetCustomerParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -21910,6 +22609,9 @@ func (f *FlowActionStripeGetCustomerParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeGetCustomerParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -21973,6 +22675,9 @@ func (f *FlowActionStripeTaxID) GetValue() string {
 }
 
 func (f *FlowActionStripeTaxID) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -22025,6 +22730,9 @@ func (f *FlowActionStripeTaxID) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeTaxID) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -22112,6 +22820,9 @@ func (f *FlowActionStripeUpdateCustomer) GetParams() *FlowActionStripeUpdateCust
 }
 
 func (f *FlowActionStripeUpdateCustomer) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -22199,6 +22910,9 @@ func (f *FlowActionStripeUpdateCustomer) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeUpdateCustomer) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -22323,6 +23037,9 @@ func (f *FlowActionStripeUpdateCustomerParams) GetMetadata() FlowActionStripeMet
 }
 
 func (f *FlowActionStripeUpdateCustomerParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -22424,6 +23141,9 @@ func (f *FlowActionStripeUpdateCustomerParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionStripeUpdateCustomerParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -22532,6 +23252,9 @@ func (f *FlowActionTelegramSendMessage) GetParams() *FlowActionTelegramSendMessa
 }
 
 func (f *FlowActionTelegramSendMessage) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -22619,6 +23342,9 @@ func (f *FlowActionTelegramSendMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionTelegramSendMessage) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -22689,6 +23415,9 @@ func (f *FlowActionTelegramSendMessageParams) GetText() string {
 }
 
 func (f *FlowActionTelegramSendMessageParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -22748,6 +23477,9 @@ func (f *FlowActionTelegramSendMessageParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionTelegramSendMessageParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -22916,6 +23648,9 @@ func (f *FlowActionTwilioMakeCall) GetParams() *FlowActionTwilioMakeCallParams {
 }
 
 func (f *FlowActionTwilioMakeCall) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -23003,6 +23738,9 @@ func (f *FlowActionTwilioMakeCall) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionTwilioMakeCall) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -23082,6 +23820,9 @@ func (f *FlowActionTwilioMakeCallParams) GetPayload() string {
 }
 
 func (f *FlowActionTwilioMakeCallParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -23148,6 +23889,9 @@ func (f *FlowActionTwilioMakeCallParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionTwilioMakeCallParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -23254,6 +23998,9 @@ func (f *FlowActionTwilioSendSms) GetParams() *FlowActionTwilioSendSmsParams {
 }
 
 func (f *FlowActionTwilioSendSms) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -23341,6 +24088,9 @@ func (f *FlowActionTwilioSendSms) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionTwilioSendSms) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -23420,6 +24170,9 @@ func (f *FlowActionTwilioSendSmsParams) GetMessage() string {
 }
 
 func (f *FlowActionTwilioSendSmsParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -23486,6 +24239,9 @@ func (f *FlowActionTwilioSendSmsParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionTwilioSendSmsParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -23594,6 +24350,9 @@ func (f *FlowActionWhatsappSendMessage) GetParams() *FlowActionWhatsappSendMessa
 }
 
 func (f *FlowActionWhatsappSendMessage) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -23681,6 +24440,9 @@ func (f *FlowActionWhatsappSendMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionWhatsappSendMessage) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -23769,6 +24531,9 @@ func (f *FlowActionWhatsappSendMessageParams) GetPayload() *FlowActionWhatsappSe
 }
 
 func (f *FlowActionWhatsappSendMessageParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -23842,6 +24607,9 @@ func (f *FlowActionWhatsappSendMessageParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionWhatsappSendMessageParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -24117,6 +24885,9 @@ func (f *FlowActionXMLParseXML) GetParams() *FlowActionXMLParseXMLParams {
 }
 
 func (f *FlowActionXMLParseXML) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -24204,6 +24975,9 @@ func (f *FlowActionXMLParseXML) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionXMLParseXML) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -24256,6 +25030,9 @@ func (f *FlowActionXMLParseXMLParams) GetXML() string {
 }
 
 func (f *FlowActionXMLParseXMLParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -24301,6 +25078,9 @@ func (f *FlowActionXMLParseXMLParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionXMLParseXMLParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -24407,6 +25187,9 @@ func (f *FlowActionXMLSerializeXML) GetParams() *FlowActionXMLSerializeXMLParams
 }
 
 func (f *FlowActionXMLSerializeXML) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -24494,6 +25277,9 @@ func (f *FlowActionXMLSerializeXML) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionXMLSerializeXML) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -24546,6 +25332,9 @@ func (f *FlowActionXMLSerializeXMLParams) GetObject() *FlowActionXMLSerializeXML
 }
 
 func (f *FlowActionXMLSerializeXMLParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -24591,6 +25380,9 @@ func (f *FlowActionXMLSerializeXMLParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionXMLSerializeXMLParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -24763,6 +25555,9 @@ func (f *FlowActionZapierTriggerWebhook) GetParams() *FlowActionZapierTriggerWeb
 }
 
 func (f *FlowActionZapierTriggerWebhook) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -24850,6 +25645,9 @@ func (f *FlowActionZapierTriggerWebhook) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionZapierTriggerWebhook) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -24912,6 +25710,9 @@ func (f *FlowActionZapierTriggerWebhookParams) GetMethod() FlowActionZapierTrigg
 }
 
 func (f *FlowActionZapierTriggerWebhookParams) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.ExtraProperties
 }
 
@@ -24968,6 +25769,9 @@ func (f *FlowActionZapierTriggerWebhookParams) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowActionZapierTriggerWebhookParams) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -25081,6 +25885,9 @@ func (f *FlowSummary) GetExecutedAt() string {
 }
 
 func (f *FlowSummary) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -25166,6 +25973,9 @@ func (f *FlowSummary) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FlowSummary) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -25266,6 +26076,9 @@ func (g *GetFlowResponseContent) GetExecutedAt() string {
 }
 
 func (g *GetFlowResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -25358,6 +26171,9 @@ func (g *GetFlowResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetFlowResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -25418,6 +26234,9 @@ func (l *ListFlowsOffsetPaginatedResponseContent) GetFlows() []*FlowSummary {
 }
 
 func (l *ListFlowsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -25484,6 +26303,9 @@ func (l *ListFlowsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) 
 }
 
 func (l *ListFlowsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -25581,6 +26403,9 @@ func (u *UpdateFlowResponseContent) GetExecutedAt() string {
 }
 
 func (u *UpdateFlowResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -25673,6 +26498,9 @@ func (u *UpdateFlowResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateFlowResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

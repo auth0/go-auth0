@@ -137,6 +137,9 @@ func (c *CreateCustomDomainResponseContent) GetRelyingPartyIdentifier() string {
 }
 
 func (c *CreateCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -259,6 +262,9 @@ func (c *CreateCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateCustomDomainResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -408,6 +414,9 @@ func (c *CustomDomain) GetRelyingPartyIdentifier() string {
 }
 
 func (c *CustomDomain) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -537,6 +546,9 @@ func (c *CustomDomain) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomDomain) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -746,6 +758,9 @@ func (d *DomainCertificate) GetRenewsBefore() string {
 }
 
 func (d *DomainCertificate) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -812,6 +827,9 @@ func (d *DomainCertificate) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DomainCertificate) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -931,6 +949,9 @@ func (d *DomainVerification) GetLastVerifiedAt() string {
 }
 
 func (d *DomainVerification) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -997,6 +1018,9 @@ func (d *DomainVerification) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DomainVerification) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -1050,6 +1074,9 @@ func (d *DomainVerificationMethod) GetDomain() string {
 }
 
 func (d *DomainVerificationMethod) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -1109,6 +1136,9 @@ func (d *DomainVerificationMethod) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DomainVerificationMethod) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -1307,6 +1337,9 @@ func (g *GetCustomDomainResponseContent) GetRelyingPartyIdentifier() string {
 }
 
 func (g *GetCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -1436,6 +1469,9 @@ func (g *GetCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetCustomDomainResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -1482,6 +1518,9 @@ func (t *TestCustomDomainResponseContent) GetMessage() string {
 }
 
 func (t *TestCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -1534,6 +1573,9 @@ func (t *TestCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TestCustomDomainResponseContent) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
@@ -1673,6 +1715,9 @@ func (u *UpdateCustomDomainResponseContent) GetRelyingPartyIdentifier() string {
 }
 
 func (u *UpdateCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -1795,6 +1840,9 @@ func (u *UpdateCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateCustomDomainResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -1934,6 +1982,9 @@ func (v *VerifyCustomDomainResponseContent) GetCertificate() DomainCertificate {
 }
 
 func (v *VerifyCustomDomainResponseContent) GetExtraProperties() map[string]interface{} {
+	if v == nil {
+		return nil
+	}
 	return v.extraProperties
 }
 
@@ -2056,6 +2107,9 @@ func (v *VerifyCustomDomainResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (v *VerifyCustomDomainResponseContent) String() string {
+	if v == nil {
+		return "<nil>"
+	}
 	if len(v.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
 			return value

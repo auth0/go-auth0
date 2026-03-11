@@ -63,6 +63,9 @@ func (c *ConnectionForOrganization) GetIsSignupEnabled() bool {
 }
 
 func (c *ConnectionForOrganization) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -129,6 +132,9 @@ func (c *ConnectionForOrganization) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionForOrganization) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -220,6 +226,9 @@ func (c *CreateOrganizationResponseContent) GetEnabledConnections() []*Organizat
 }
 
 func (c *CreateOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.ExtraProperties
 }
 
@@ -311,6 +320,9 @@ func (c *CreateOrganizationResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateOrganizationResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -393,6 +405,9 @@ func (g *GetOrganizationByNameResponseContent) GetTokenQuota() TokenQuota {
 }
 
 func (g *GetOrganizationByNameResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -477,6 +492,9 @@ func (g *GetOrganizationByNameResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetOrganizationByNameResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -559,6 +577,9 @@ func (g *GetOrganizationResponseContent) GetTokenQuota() TokenQuota {
 }
 
 func (g *GetOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.ExtraProperties
 }
 
@@ -643,6 +664,9 @@ func (g *GetOrganizationResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetOrganizationResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -685,6 +709,9 @@ func (l *ListOrganizationsPaginatedResponseContent) GetOrganizations() []*Organi
 }
 
 func (l *ListOrganizationsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
 	return l.extraProperties
 }
 
@@ -737,6 +764,9 @@ func (l *ListOrganizationsPaginatedResponseContent) MarshalJSON() ([]byte, error
 }
 
 func (l *ListOrganizationsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value
@@ -811,6 +841,9 @@ func (o *OrganizationEnabledConnection) GetConnection() OrganizationConnectionIn
 }
 
 func (o *OrganizationEnabledConnection) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
 	return o.ExtraProperties
 }
 
@@ -888,6 +921,9 @@ func (o *OrganizationEnabledConnection) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrganizationEnabledConnection) String() string {
+	if o == nil {
+		return "<nil>"
+	}
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
 			return value
@@ -970,6 +1006,9 @@ func (u *UpdateOrganizationResponseContent) GetTokenQuota() TokenQuota {
 }
 
 func (u *UpdateOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.ExtraProperties
 }
 
@@ -1054,6 +1093,9 @@ func (u *UpdateOrganizationResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateOrganizationResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
