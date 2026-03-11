@@ -18,7 +18,7 @@ linters:
     - fatcontext
     - govet
     - misspell
-    - wsl
+    - wsl_v5
   settings:
     godot:
       scope: declarations
@@ -26,25 +26,16 @@ linters:
     staticcheck:
       checks:
         - all
+    wsl_v5:
+      allow-first-in-block: true
+      allow-whole-block: false
+      branch-max-lines: 2
   exclusions:
     generated: lax
     rules:
       - linters:
           - gosec
         path: (.+)_test.go
-      - path: (.+)\.go$
-        text: Error return value of `response.Body.Close` is not checked
-      - path: (.+)\.go$
-        text: Error return value of `w.Write` is not checked
-      - path: (.+)\.go$
-        text: 'G307: Deferring unsafe method "Close" on type "io.ReadCloser"'
-      - path: (.+)\.go$
-        text: should have a package comment
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
-      - management/ #Remove after Beta
 formatters:
   enable:
     - gofmt
@@ -57,8 +48,3 @@ formatters:
         - github.com/auth0/go-auth0
   exclusions:
     generated: lax
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
-      - management/ #Remove after Beta

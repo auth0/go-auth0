@@ -611,7 +611,6 @@ func givenAJWT(t *testing.T, args jwtArgs) (string, *httptest.Server, error) {
 	}
 
 	token, err := builder.Build()
-
 	if err != nil {
 		return "", nil, err
 	}

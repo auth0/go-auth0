@@ -1,3 +1,4 @@
+// Package mfa provides types for multi-factor authentication requests.
 package mfa
 
 import (

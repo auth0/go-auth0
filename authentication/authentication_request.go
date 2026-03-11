@@ -106,6 +106,7 @@ func (a *Authentication) Request(ctx context.Context, method, uri string, payloa
 	var request *http.Request
 
 	var err error
+
 	switch p := payload.(type) {
 	case url.Values:
 		request, err = a.NewFormRequest(ctx, method, uri, p, opts...)
@@ -121,7 +122,8 @@ func (a *Authentication) Request(ctx context.Context, method, uri string, payloa
 	if err != nil {
 		return fmt.Errorf("failed to send the request: %w", err)
 	}
-	defer response.Body.Close()
+
+	defer func() { _ = response.Body.Close() }()
 
 	// If the response contains a client or a server error then return the error.
 	if response.StatusCode >= http.StatusBadRequest {

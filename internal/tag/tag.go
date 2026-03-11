@@ -1,3 +1,4 @@
+// Package tag provides struct tag parsing utilities.
 package tag
 
 import (

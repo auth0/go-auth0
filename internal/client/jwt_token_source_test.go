@@ -196,6 +196,7 @@ func TestECClientAssertion(t *testing.T) {
 
 	// Parse the header as JSON
 	var header map[string]interface{}
+
 	err = json.Unmarshal(headerBytes, &header)
 	require.NoError(t, err)
 
@@ -287,11 +288,12 @@ func TestPrivateKeyJwtTokenSource(t *testing.T) {
 
 		// Return a mock token
 		w.Header().Set("Content-Type", "application/json")
-		w.Write([]byte(`{
+		_, err = w.Write([]byte(`{
 			"access_token": "mock-access-token",
 			"token_type": "Bearer",
 			"expires_in": 3600
 		}`))
+		assert.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -332,11 +334,12 @@ func TestPrivateKeyJwtTokenSourceRefresh(t *testing.T) {
 
 		// Return a token with short expiration
 		w.Header().Set("Content-Type", "application/json")
-		w.Write(fmt.Appendf(nil, `{
+		_, err := w.Write(fmt.Appendf(nil, `{
             "access_token": "mock-token-%d",
             "token_type": "Bearer",
             "expires_in": 2
         }`, requestCount))
+		assert.NoError(t, err)
 	}))
 	defer server.Close()
 
@@ -428,7 +431,7 @@ func TestPrivateKeyJwtTokenSourceErrors(t *testing.T) {
 		// Create a server that returns an error
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(`{"error": "server_error"}`))
+			_, _ = w.Write([]byte(`{"error": "server_error"}`))
 		}))
 		defer server.Close()
 

@@ -822,6 +822,7 @@ func TestWrapAuth0ClientInfo(t *testing.T) {
 			assert.NoError(t, err)
 
 			var auth0Client Auth0ClientInfo
+
 			err = json.Unmarshal(auth0ClientDecoded, &auth0Client)
 			assert.NoError(t, err)
 

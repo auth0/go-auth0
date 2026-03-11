@@ -1,3 +1,4 @@
+// Package ciba provides types for Client-Initiated Backchannel Authentication (CIBA) requests.
 package ciba
 
 // Request defines the request body for calling the bc-authorize endpoint.

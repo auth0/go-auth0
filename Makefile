@@ -36,7 +36,7 @@ $(GO_BIN)/govulncheck:
 
 lint: $(GO_BIN)/golangci-lint ## Run linting on the go files
 	@echo "==> Running linting on the library with golangci-lint..."
-	@golangci-lint run -v --fix -c .golangci.yml ./...
+	@golangci-lint run -v --fix -c .golangci.yml . ./authentication/... ./internal/...
 
 check-vuln: $(GO_BIN)/govulncheck ## Check for vulnerabilities
 	@echo "==> Checking for vulnerabilities..."

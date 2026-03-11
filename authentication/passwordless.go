@@ -50,7 +50,6 @@ func (p *Passwordless) LoginWithEmail(ctx context.Context, params passwordless.L
 			Nonce:        validationOptions.Nonce,
 			Organization: validationOptions.Organization,
 		})
-
 		if err != nil {
 			return nil, err
 		}
@@ -83,7 +82,6 @@ func (p *Passwordless) SendSMS(ctx context.Context, params passwordless.SendSMSR
 // See: https://auth0.com/docs/api/authentication?http#authenticate-user
 func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.LoginWithSMSRequest, validationOptions oauth.IDTokenValidationOptions, opts ...RequestOption) (t *oauth.TokenSet, err error) {
 	err = p.authentication.addClientAuthenticationToClientAuthStruct(&params.ClientAuthentication, false)
-
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +97,6 @@ func (p *Passwordless) LoginWithSMS(ctx context.Context, params passwordless.Log
 			Nonce:        validationOptions.Nonce,
 			Organization: validationOptions.Organization,
 		})
-
 		if err != nil {
 			return nil, err
 		}

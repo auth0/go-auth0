@@ -1,3 +1,4 @@
+// Package database provides types for database authentication requests.
 package database
 
 import (

@@ -1,3 +1,4 @@
+// Package passwordless provides types for passwordless authentication requests.
 package passwordless
 
 import "github.com/auth0/go-auth0/v2/authentication/oauth"

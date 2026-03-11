@@ -1,3 +1,4 @@
+// Package client provides the internal HTTP client used for Auth0 API requests.
 package client
 
 import (

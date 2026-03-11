@@ -203,7 +203,6 @@ func New(ctx context.Context, domain string, options ...Option) (*Authentication
 		a.idTokenSigningAlg,
 		validatorOpts...,
 	)
-
 	if err != nil {
 		return nil, err
 	}
