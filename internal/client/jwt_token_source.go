@@ -139,6 +139,10 @@ func CreateClientAssertion(alg jwa.SignatureAlgorithm, signingKey, clientID, aud
 		return "", fmt.Errorf("failed to build JWT: %w", err)
 	}
 
+	// Serialize "aud" as a string instead of a single-element array,
+	// as required by some authorization servers for client assertions.
+	token.Options().Enable(jwt.FlattenAudience)
+
 	signedToken, err := jwt.Sign(token, jwt.WithKey(alg, key))
 	if err != nil {
 		return "", fmt.Errorf("failed to sign JWT: %w", err)

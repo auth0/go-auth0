@@ -112,6 +112,24 @@ func TestClientAssertion(t *testing.T) {
 	require.Len(t, audiences, 1)
 	assert.Equal(t, ts.audience, audiences[0])
 
+	// Verify that the "aud" claim is serialized as a string, not an array.
+	parts := strings.Split(assertion, ".")
+	require.Len(t, parts, 3, "JWT should have 3 parts")
+
+	payloadBytes, err := base64.RawURLEncoding.DecodeString(parts[1])
+	require.NoError(t, err)
+
+	var claims map[string]interface{}
+
+	err = json.Unmarshal(payloadBytes, &claims)
+	require.NoError(t, err)
+
+	audValue, ok := claims["aud"]
+	require.True(t, ok, "aud claim should be present")
+
+	_, isString := audValue.(string)
+	assert.True(t, isString, "aud claim should be a string, not an array")
+
 	// Check expiration
 	now := time.Now()
 	assert.True(t, parsedToken.IssuedAt().Before(now) || parsedToken.IssuedAt().Equal(now))
