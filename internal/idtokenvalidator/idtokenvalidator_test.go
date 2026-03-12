@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lestrrat-go/jwx/v2/jwa"
-	"github.com/lestrrat-go/jwx/v2/jwk"
-	"github.com/lestrrat-go/jwx/v2/jwt"
+	"github.com/lestrrat-go/jwx/v3/jwa"
+	"github.com/lestrrat-go/jwx/v3/jwk"
+	"github.com/lestrrat-go/jwx/v3/jwt"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -134,7 +134,7 @@ func TestIDTokenValidation(t *testing.T) {
 		token, err := builder.Build()
 		assert.NoError(t, err)
 
-		jwtPayload, err := jwt.Sign(token, jwt.WithKey(jwa.HS512, []byte(jwtClientSecret)))
+		jwtPayload, err := jwt.Sign(token, jwt.WithKey(jwa.HS512(), []byte(jwtClientSecret)))
 		assert.NoError(t, err)
 
 		validator, err := New(context.Background(), jwtDomain, jwtClientSecret, jwtClientID, "HS256")
@@ -249,7 +249,7 @@ func TestIDTokenValidation(t *testing.T) {
 
 		// Minimal JWT with no time based values and is missing iss. This can't be achieved by building using jwx
 		err = validator.Validate("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYXVkIjoidGVzdC1jbGllbnQtaWQifQ.52jn1t1Jh_HS2rg1xbyvO1HdNXXVF22e7D1g9TGeWJI", ValidationOptions{})
-		assert.ErrorContains(t, err, "\"iss\" not satisfied: required claim not found")
+		assert.ErrorContains(t, err, "required claim \"iss\" is missing")
 	})
 
 	t.Run("verifies iss is valid", func(t *testing.T) {
@@ -281,7 +281,7 @@ func TestIDTokenValidation(t *testing.T) {
 
 		// Minimal JWT with no time based values and is missing iss. This can't be achieved by building using jwx
 		err = validator.Validate("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJhdWQiOiJ0ZXN0LWNsaWVudC1pZCIsImlzcyI6Imh0dHBzOi8vbm90LWEtdGVuYW50LmNvbS8ifQ.LrVdUAUzsADeOz2TBt4rsiQW93knty1SVEp9eYG48SE", ValidationOptions{})
-		assert.ErrorContains(t, err, "\"sub\" not satisfied: required claim not found")
+		assert.ErrorContains(t, err, "required claim \"sub\" is missing")
 	})
 
 	t.Run("verifies sub is valid", func(t *testing.T) {
@@ -313,7 +313,7 @@ func TestIDTokenValidation(t *testing.T) {
 		assert.NoError(t, err)
 
 		err = validator.Validate(token, ValidationOptions{})
-		assert.ErrorContains(t, err, "\"aud\" not satisfied: required claim not found")
+		assert.ErrorContains(t, err, "required claim \"aud\" is missing")
 	})
 
 	t.Run("verifies aud is valid", func(t *testing.T) {
@@ -627,23 +627,23 @@ func configureSigning(t *testing.T, args jwtArgs) (jwa.SignatureAlgorithm, jwk.K
 	t.Helper()
 
 	if args.clientSecret != "" {
-		raw, err := jwk.FromRaw([]byte(args.clientSecret))
-		return jwa.HS256, raw, nil, err
+		raw, err := jwk.Import([]byte(args.clientSecret))
+		return jwa.HS256(), raw, nil, err
 	}
 
 	publicKey, err := jwk.ParseKey([]byte(args.publicKey), jwk.WithPEM(true))
 	if err != nil {
-		return jwa.RS256, nil, nil, err
+		return jwa.RS256(), nil, nil, err
 	}
 
 	err = publicKey.Set(jwk.KeyIDKey, "1")
 	if err != nil {
-		return jwa.RS256, nil, nil, err
+		return jwa.RS256(), nil, nil, err
 	}
 
-	err = publicKey.Set(jwk.AlgorithmKey, jwa.RS256)
+	err = publicKey.Set(jwk.AlgorithmKey, jwa.RS256())
 	if err != nil {
-		return jwa.RS256, nil, nil, err
+		return jwa.RS256(), nil, nil, err
 	}
 
 	h := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
@@ -667,15 +667,15 @@ func configureSigning(t *testing.T, args jwtArgs) (jwa.SignatureAlgorithm, jwk.K
 
 	privateKey, err := jwk.ParseKey([]byte(args.privateKey), jwk.WithPEM(true))
 	if err != nil {
-		return jwa.RS256, nil, nil, err
+		return jwa.RS256(), nil, nil, err
 	}
 
 	err = privateKey.Set(jwk.KeyIDKey, "1")
 	if err != nil {
-		return jwa.RS256, nil, nil, err
+		return jwa.RS256(), nil, nil, err
 	}
 
-	err = privateKey.Set(jwk.AlgorithmKey, jwa.RS256)
+	err = privateKey.Set(jwk.AlgorithmKey, jwa.RS256())
 
-	return jwa.RS256, privateKey, s, err
+	return jwa.RS256(), privateKey, s, err
 }

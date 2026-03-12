@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/lestrrat-go/jwx/v2/jwa"
-	"github.com/lestrrat-go/jwx/v2/jwk"
-	"github.com/lestrrat-go/jwx/v2/jwt"
+	"github.com/lestrrat-go/jwx/v3/jwa"
+	"github.com/lestrrat-go/jwx/v3/jwk"
+	"github.com/lestrrat-go/jwx/v3/jwt"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
 )
@@ -67,8 +67,10 @@ func (p privateKeyJwtTokenSource) Token() (*oauth2.Token, error) {
 		return nil, fmt.Errorf("failed to create client assertion: %w", err)
 	}
 
+	tokenURL := p.uri + "/oauth/token"
+
 	cfg := &clientcredentials.Config{
-		TokenURL:  p.uri + "/oauth/token",
+		TokenURL:  tokenURL,
 		AuthStyle: oauth2.AuthStyleInParams,
 		EndpointParams: url.Values{
 			"audience":              []string{p.audience},
@@ -90,25 +92,26 @@ func (p privateKeyJwtTokenSource) Token() (*oauth2.Token, error) {
 func DetermineSigningAlgorithm(alg string) (jwa.SignatureAlgorithm, error) {
 	switch alg {
 	case "RS256":
-		return jwa.RS256, nil
+		return jwa.RS256(), nil
 	case "RS384":
-		return jwa.RS384, nil
+		return jwa.RS384(), nil
 	case "RS512":
-		return jwa.RS512, nil
+		return jwa.RS512(), nil
 	case "PS256":
-		return jwa.PS256, nil
+		return jwa.PS256(), nil
 	case "PS384":
-		return jwa.PS384, nil
+		return jwa.PS384(), nil
 	case "PS512":
-		return jwa.PS512, nil
+		return jwa.PS512(), nil
 	case "ES256":
-		return jwa.ES256, nil
+		return jwa.ES256(), nil
 	case "ES384":
-		return jwa.ES384, nil
+		return jwa.ES384(), nil
 	case "ES512":
-		return jwa.ES512, nil
+		return jwa.ES512(), nil
 	default:
-		return "", fmt.Errorf("unsupported client assertion algorithm %q", alg)
+		var zero jwa.SignatureAlgorithm
+		return zero, fmt.Errorf("unsupported client assertion algorithm %q", alg)
 	}
 }
 
@@ -132,7 +135,7 @@ func CreateClientAssertion(alg jwa.SignatureAlgorithm, signingKey, clientID, aud
 		Subject(clientID).
 		JwtID(uuid.NewString()).
 		Issuer(clientID).
-		Audience([]string{audience}).
+		Claim("aud", audience).
 		Expiration(now.Add(2 * time.Minute)).
 		Build()
 	if err != nil {
@@ -153,12 +156,12 @@ func verifyKeyCompatibility(alg jwa.SignatureAlgorithm, key jwk.Key) error {
 
 	// Check key compatibility with algorithm
 	switch alg {
-	case jwa.RS256, jwa.RS384, jwa.RS512, jwa.PS256, jwa.PS384, jwa.PS512:
-		if keyType != "RSA" {
+	case jwa.RS256(), jwa.RS384(), jwa.RS512(), jwa.PS256(), jwa.PS384(), jwa.PS512():
+		if keyType != jwa.RSA() {
 			return fmt.Errorf("%s algorithm requires an RSA key, but got %s", alg, keyType)
 		}
-	case jwa.ES256, jwa.ES384, jwa.ES512:
-		if keyType != "EC" {
+	case jwa.ES256(), jwa.ES384(), jwa.ES512():
+		if keyType != jwa.EC() {
 			return fmt.Errorf("%s algorithm requires an EC key, but got %s", alg, keyType)
 		}
 	default:

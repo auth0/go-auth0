@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lestrrat-go/jwx/v2/jwa"
-	"github.com/lestrrat-go/jwx/v2/jwk"
-	"github.com/lestrrat-go/jwx/v2/jws"
+	"github.com/lestrrat-go/jwx/v3/jwa"
+	"github.com/lestrrat-go/jwx/v3/jwk"
+	"github.com/lestrrat-go/jwx/v3/jws"
 
 	"github.com/auth0/go-auth0/v2/authentication/mfa"
 
@@ -234,7 +234,7 @@ func verifyClientAssertion(t *testing.T, clientAssertion string) {
 	key, err := jwk.ParseKey([]byte(jwtPublicKey), jwk.WithPEM(true))
 	require.NoError(t, err)
 
-	_, err = jws.Verify([]byte(clientAssertion), jws.WithKey(jwa.RS256, key))
+	_, err = jws.Verify([]byte(clientAssertion), jws.WithKey(jwa.RS256(), key))
 
 	require.NoError(t, err)
 }

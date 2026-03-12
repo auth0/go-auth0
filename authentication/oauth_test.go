@@ -13,8 +13,8 @@ import (
 	"github.com/auth0/go-auth0/v2/authentication/ciba"
 	"github.com/auth0/go-auth0/v2/internal/client"
 
-	"github.com/lestrrat-go/jwx/v2/jwa"
-	"github.com/lestrrat-go/jwx/v2/jwt"
+	"github.com/lestrrat-go/jwx/v3/jwa"
+	"github.com/lestrrat-go/jwx/v3/jwt"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -287,7 +287,7 @@ func TestLoginWithClientCredentials(t *testing.T) {
 		skipE2E(t)
 		configureHTTPTestRecordings(t, authAPI)
 
-		auth, err := client.CreateClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
+		auth, err := client.CreateClientAssertion(jwa.RS256(), jwtPrivateKey, clientID, "https://"+domain+"/")
 		require.NoError(t, err)
 
 		tokenSet, err := authAPI.OAuth.LoginWithClientCredentials(context.Background(), oauth.LoginWithClientCredentialsRequest{
@@ -590,7 +590,7 @@ func withIDToken(t *testing.T, extras map[string]interface{}) (*Authentication, 
 		return nil, err
 	}
 
-	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256, []byte(idTokenClientSecret)))
+	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256(), []byte(idTokenClientSecret)))
 	if err != nil {
 		return nil, err
 	}

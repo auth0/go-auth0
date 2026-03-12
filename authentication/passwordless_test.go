@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/lestrrat-go/jwx/v3/jwa"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -187,7 +188,7 @@ func TestPasswordlessWithClientAssertion(t *testing.T) {
 		require.NoError(t, err)
 		configureHTTPTestRecordings(t, api)
 
-		auth, err := client.CreateClientAssertion("RS256", jwtPrivateKey, clientID, "https://"+domain+"/")
+		auth, err := client.CreateClientAssertion(jwa.RS256(), jwtPrivateKey, clientID, "https://"+domain+"/")
 		require.NoError(t, err)
 
 		r, err := api.Passwordless.SendSMS(context.Background(), passwordless.SendSMSRequest{

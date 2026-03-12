@@ -18,9 +18,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lestrrat-go/jwx/v2/jwa"
-	"github.com/lestrrat-go/jwx/v2/jwk"
-	"github.com/lestrrat-go/jwx/v2/jwt"
+	"github.com/lestrrat-go/jwx/v3/jwa"
+	"github.com/lestrrat-go/jwx/v3/jwk"
+	"github.com/lestrrat-go/jwx/v3/jwt"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -32,16 +32,16 @@ func TestDetermineAlg(t *testing.T) {
 		expectedAlg   jwa.SignatureAlgorithm
 		expectedError bool
 	}{
-		{"RS256", "RS256", jwa.RS256, false},
-		{"RS384", "RS384", jwa.RS384, false},
-		{"RS512", "RS512", jwa.RS512, false},
-		{"PS256", "PS256", jwa.PS256, false},
-		{"PS384", "PS384", jwa.PS384, false},
-		{"PS512", "PS512", jwa.PS512, false},
-		{"ES256", "ES256", jwa.ES256, false},
-		{"ES384", "ES384", jwa.ES384, false},
-		{"ES512", "ES512", jwa.ES512, false},
-		{"Invalid", "INVALID", "", true},
+		{"RS256", "RS256", jwa.RS256(), false},
+		{"RS384", "RS384", jwa.RS384(), false},
+		{"RS512", "RS512", jwa.RS512(), false},
+		{"PS256", "PS256", jwa.PS256(), false},
+		{"PS384", "PS384", jwa.PS384(), false},
+		{"PS512", "PS512", jwa.PS512(), false},
+		{"ES256", "ES256", jwa.ES256(), false},
+		{"ES384", "ES384", jwa.ES384(), false},
+		{"ES512", "ES512", jwa.ES512(), false},
+		{"Invalid", "INVALID", jwa.SignatureAlgorithm{}, true},
 	}
 
 	for _, tc := range testCases {
@@ -101,24 +101,28 @@ func TestClientAssertion(t *testing.T) {
 	assert.NotEmpty(t, assertion)
 
 	// Parse and validate the token
-	parsedToken, err := jwt.Parse([]byte(assertion), jwt.WithVerify(false))
+	parsedToken, err := jwt.Parse([]byte(assertion), jwt.WithVerify(false), jwt.WithValidate(false))
 	require.NoError(t, err)
 
 	// Validate claims
-	assert.Equal(t, clientID, parsedToken.Subject())
-	assert.Equal(t, clientID, parsedToken.Issuer())
+	sub, _ := parsedToken.Subject()
+	assert.Equal(t, clientID, sub)
+	iss, _ := parsedToken.Issuer()
+	assert.Equal(t, clientID, iss)
 
-	audiences := parsedToken.Audience()
+	audiences, _ := parsedToken.Audience()
 	require.Len(t, audiences, 1)
 	assert.Equal(t, ts.audience, audiences[0])
 
 	// Check expiration
 	now := time.Now()
-	assert.True(t, parsedToken.IssuedAt().Before(now) || parsedToken.IssuedAt().Equal(now))
-	assert.True(t, parsedToken.Expiration().After(now))
+	iat, _ := parsedToken.IssuedAt()
+	exp, _ := parsedToken.Expiration()
+	assert.True(t, iat.Before(now) || iat.Equal(now))
+	assert.True(t, exp.After(now))
 
 	// Check that the expiration is roughly lifetime away from now
-	assert.WithinDuration(t, now.Add(lifetime), parsedToken.Expiration(), 5*time.Second)
+	assert.WithinDuration(t, now.Add(lifetime), exp, 5*time.Second)
 }
 
 func TestECClientAssertion(t *testing.T) {
@@ -166,24 +170,28 @@ func TestECClientAssertion(t *testing.T) {
 	assert.NotEmpty(t, assertion)
 
 	// Parse and validate the token
-	parsedToken, err := jwt.Parse([]byte(assertion), jwt.WithVerify(false))
+	parsedToken, err := jwt.Parse([]byte(assertion), jwt.WithVerify(false), jwt.WithValidate(false))
 	require.NoError(t, err)
 
 	// Validate claims
-	assert.Equal(t, clientID, parsedToken.Subject())
-	assert.Equal(t, clientID, parsedToken.Issuer())
+	sub, _ := parsedToken.Subject()
+	assert.Equal(t, clientID, sub)
+	iss, _ := parsedToken.Issuer()
+	assert.Equal(t, clientID, iss)
 
-	audiences := parsedToken.Audience()
+	audiences, _ := parsedToken.Audience()
 	require.Len(t, audiences, 1)
 	assert.Equal(t, ts.audience, audiences[0])
 
 	// Check expiration
 	now := time.Now()
-	assert.True(t, parsedToken.IssuedAt().Before(now) || parsedToken.IssuedAt().Equal(now))
-	assert.True(t, parsedToken.Expiration().After(now))
+	iat, _ := parsedToken.IssuedAt()
+	exp, _ := parsedToken.Expiration()
+	assert.True(t, iat.Before(now) || iat.Equal(now))
+	assert.True(t, exp.After(now))
 
 	// Check that the expiration is roughly lifetime away from now
-	assert.WithinDuration(t, now.Add(lifetime), parsedToken.Expiration(), 5*time.Second)
+	assert.WithinDuration(t, now.Add(lifetime), exp, 5*time.Second)
 
 	// Verify the algorithm header from the JWT directly
 	// Split the JWT into its parts
@@ -257,11 +265,11 @@ func TestVerifyKeyCompatibility(t *testing.T) {
 	require.NoError(t, err)
 
 	// Test compatible combinations
-	assert.NoError(t, verifyKeyCompatibility(jwa.RS256, rsaJWK))
-	assert.NoError(t, verifyKeyCompatibility(jwa.PS256, rsaJWK))
+	assert.NoError(t, verifyKeyCompatibility(jwa.RS256(), rsaJWK))
+	assert.NoError(t, verifyKeyCompatibility(jwa.PS256(), rsaJWK))
 
 	// Test incompatible combinations
-	assert.Error(t, verifyKeyCompatibility(jwa.ES256, rsaJWK))
+	assert.Error(t, verifyKeyCompatibility(jwa.ES256(), rsaJWK))
 }
 
 func TestPrivateKeyJwtTokenSource(t *testing.T) {
@@ -472,7 +480,7 @@ func TestCreateClientAssertionErrors(t *testing.T) {
 	// Test with invalid key
 	t.Run("invalid key", func(t *testing.T) {
 		_, err := CreateClientAssertion(
-			jwa.RS256,
+			jwa.RS256(),
 			"not-a-valid-key",
 			"client-id",
 			"https://example.com/",
@@ -497,7 +505,7 @@ func TestCreateClientAssertionErrors(t *testing.T) {
 
 		// Try to use EC key with RS256
 		_, err = CreateClientAssertion(
-			jwa.RS256,
+			jwa.RS256(),
 			string(ecKeyPEM),
 			"client-id",
 			"https://example.com/",
@@ -520,8 +528,8 @@ func TestCreateClientAssertionErrors(t *testing.T) {
 		key, err := jwk.ParseKey(privateKeyPEM, jwk.WithPEM(true))
 		require.NoError(t, err)
 
-		// Using an unsupported algorithm
-		err = verifyKeyCompatibility("unsupported" /* using string instead of jwa.SignatureAlgorithm */, key)
+		// Using an unsupported algorithm (HS256 is not handled by verifyKeyCompatibility)
+		err = verifyKeyCompatibility(jwa.HS256(), key)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "unsupported algorithm")
 	})

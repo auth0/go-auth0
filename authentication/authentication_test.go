@@ -16,8 +16,8 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
-	"github.com/lestrrat-go/jwx/v2/jwa"
-	"github.com/lestrrat-go/jwx/v2/jwt"
+	"github.com/lestrrat-go/jwx/v3/jwa"
+	"github.com/lestrrat-go/jwx/v3/jwt"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -599,7 +599,7 @@ func TestWithClockTolerance(t *testing.T) {
 	token, err := builder.Build()
 	require.NoError(t, err)
 
-	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256, []byte(idTokenClientSecret)))
+	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256(), []byte(idTokenClientSecret)))
 	require.NoError(t, err)
 
 	idToken = string(b)
