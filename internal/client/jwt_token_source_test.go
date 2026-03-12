@@ -121,6 +121,44 @@ func TestClientAssertion(t *testing.T) {
 	assert.WithinDuration(t, now.Add(lifetime), parsedToken.Expiration(), 5*time.Second)
 }
 
+func TestClientAssertionAudienceIsString(t *testing.T) {
+	// Generate a test RSA key
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	require.NoError(t, err)
+
+	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
+	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: privateKeyBytes,
+	})
+
+	assertion, err := CreateClientAssertion(
+		jwa.RS256,
+		string(privateKeyPEM),
+		"test-client-id",
+		"https://example.com/",
+	)
+	require.NoError(t, err)
+
+	// Decode the JWT payload to verify the audience is a string, not an array.
+	parts := strings.Split(assertion, ".")
+	require.Len(t, parts, 3, "JWT should have 3 parts")
+
+	payloadBytes, err := base64.RawURLEncoding.DecodeString(parts[1])
+	require.NoError(t, err)
+
+	var payload map[string]interface{}
+	err = json.Unmarshal(payloadBytes, &payload)
+	require.NoError(t, err)
+
+	// The "aud" claim should be a string, not an array.
+	aud, ok := payload["aud"]
+	require.True(t, ok, "aud claim should be present")
+	_, isString := aud.(string)
+	assert.True(t, isString, "aud claim should be a string, got %T: %v", aud, aud)
+	assert.Equal(t, "https://example.com/", aud)
+}
+
 func TestECClientAssertion(t *testing.T) {
 	// Generate a test EC key
 	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)

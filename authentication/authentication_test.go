@@ -595,6 +595,8 @@ func TestWithClockTolerance(t *testing.T) {
 	token, err := builder.Build()
 	require.NoError(t, err)
 
+	token.Options().Enable(jwt.FlattenAudience)
+
 	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256, []byte(idTokenClientSecret)))
 	require.NoError(t, err)
 

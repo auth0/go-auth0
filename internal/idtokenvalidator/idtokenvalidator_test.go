@@ -616,6 +616,8 @@ func givenAJWT(t *testing.T, args jwtArgs) (string, *httptest.Server, error) {
 		return "", nil, err
 	}
 
+	token.Options().Enable(jwt.FlattenAudience)
+
 	b, err := jwt.Sign(token, jwt.WithKey(alg, key))
 	if err != nil {
 		return "", nil, err

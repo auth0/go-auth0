@@ -591,6 +591,8 @@ func withIDToken(t *testing.T, extras map[string]interface{}) (*Authentication, 
 		return nil, err
 	}
 
+	token.Options().Enable(jwt.FlattenAudience)
+
 	b, err := jwt.Sign(token, jwt.WithKey(jwa.HS256, []byte(idTokenClientSecret)))
 	if err != nil {
 		return nil, err
