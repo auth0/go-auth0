@@ -25,6 +25,20 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func generateRSAKeyPEM(t *testing.T) string {
+	t.Helper()
+
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	require.NoError(t, err)
+
+	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
+
+	return string(pem.EncodeToMemory(&pem.Block{
+		Type:  "RSA PRIVATE KEY",
+		Bytes: privateKeyBytes,
+	}))
+}
+
 func TestDetermineAlg(t *testing.T) {
 	testCases := []struct {
 		name          string
@@ -59,16 +73,7 @@ func TestDetermineAlg(t *testing.T) {
 }
 
 func TestClientAssertion(t *testing.T) {
-	// Generate a test RSA key
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	require.NoError(t, err)
-
-	// Convert private key to PEM
-	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
-	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: privateKeyBytes,
-	})
+	privateKeyPEM := generateRSAKeyPEM(t)
 
 	clientID := "test-client-id"
 	audience := "https://example.com/"
@@ -79,7 +84,7 @@ func TestClientAssertion(t *testing.T) {
 		uri:                       "https://example.com",
 		clientID:                  clientID,
 		clientAssertionSigningAlg: "RS256",
-		clientAssertionSigningKey: string(privateKeyPEM),
+		clientAssertionSigningKey: privateKeyPEM,
 		audience:                  audience,
 	}
 
@@ -122,19 +127,11 @@ func TestClientAssertion(t *testing.T) {
 }
 
 func TestClientAssertionAudienceIsString(t *testing.T) {
-	// Generate a test RSA key
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	require.NoError(t, err)
-
-	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
-	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: privateKeyBytes,
-	})
+	privateKeyPEM := generateRSAKeyPEM(t)
 
 	assertion, err := CreateClientAssertion(
 		jwa.RS256,
-		string(privateKeyPEM),
+		privateKeyPEM,
 		"test-client-id",
 		"https://example.com/",
 	)
@@ -148,14 +145,14 @@ func TestClientAssertionAudienceIsString(t *testing.T) {
 	require.NoError(t, err)
 
 	var payload map[string]interface{}
+
 	err = json.Unmarshal(payloadBytes, &payload)
 	require.NoError(t, err)
 
 	// The "aud" claim should be a string, not an array.
 	aud, ok := payload["aud"]
 	require.True(t, ok, "aud claim should be present")
-	_, isString := aud.(string)
-	assert.True(t, isString, "aud claim should be a string, got %T: %v", aud, aud)
+	assert.IsType(t, "", aud, "aud claim should be a string, got %T: %v", aud, aud)
 	assert.Equal(t, "https://example.com/", aud)
 }
 
@@ -244,21 +241,13 @@ func TestECClientAssertion(t *testing.T) {
 }
 
 func TestIncompatibleKeyTypeForAlgorithm(t *testing.T) {
-	// Generate an RSA key
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	require.NoError(t, err)
-
-	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
-	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: privateKeyBytes,
-	})
+	privateKeyPEM := generateRSAKeyPEM(t)
 
 	ts := &privateKeyJwtTokenSource{
 		uri:                       "https://example.com",
 		clientID:                  "client-id",
 		clientAssertionSigningAlg: "ES256", // Incompatible with RSA key
-		clientAssertionSigningKey: string(privateKeyPEM),
+		clientAssertionSigningKey: privateKeyPEM,
 	}
 
 	// Get the signed assertion
@@ -280,17 +269,9 @@ func TestIncompatibleKeyTypeForAlgorithm(t *testing.T) {
 }
 
 func TestVerifyKeyCompatibility(t *testing.T) {
-	// Generate an RSA key
-	rsaKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	require.NoError(t, err)
+	rsaKeyPEM := generateRSAKeyPEM(t)
 
-	rsaKeyBytes := x509.MarshalPKCS1PrivateKey(rsaKey)
-	rsaKeyPEM := pem.EncodeToMemory(&pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: rsaKeyBytes,
-	})
-
-	rsaJWK, err := jwk.ParseKey(rsaKeyPEM, jwk.WithPEM(true))
+	rsaJWK, err := jwk.ParseKey([]byte(rsaKeyPEM), jwk.WithPEM(true))
 	require.NoError(t, err)
 
 	// Test compatible combinations
@@ -302,16 +283,7 @@ func TestVerifyKeyCompatibility(t *testing.T) {
 }
 
 func TestPrivateKeyJwtTokenSource(t *testing.T) {
-	// Generate a test RSA key
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	require.NoError(t, err)
-
-	// Convert private key to PEM
-	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
-	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: privateKeyBytes,
-	})
+	privateKeyPEM := generateRSAKeyPEM(t)
 
 	// Create a test server
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -338,7 +310,7 @@ func TestPrivateKeyJwtTokenSource(t *testing.T) {
 		context.Background(),
 		server.URL,
 		"RS256",
-		string(privateKeyPEM),
+		privateKeyPEM,
 		"test-client-id",
 		"test-audience",
 	)
@@ -351,15 +323,7 @@ func TestPrivateKeyJwtTokenSource(t *testing.T) {
 }
 
 func TestPrivateKeyJwtTokenSourceRefresh(t *testing.T) {
-	// Generate a test RSA key
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	require.NoError(t, err)
-
-	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
-	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: privateKeyBytes,
-	})
+	privateKeyPEM := generateRSAKeyPEM(t)
 
 	// Track token request count
 	requestCount := 0
@@ -383,7 +347,7 @@ func TestPrivateKeyJwtTokenSourceRefresh(t *testing.T) {
 		context.Background(),
 		server.URL,
 		"RS256",
-		string(privateKeyPEM),
+		privateKeyPEM,
 		"test-client-id",
 		"test-audience",
 	)
@@ -407,15 +371,7 @@ func TestPrivateKeyJwtTokenSourceRefresh(t *testing.T) {
 }
 
 func TestPrivateKeyJwtTokenSourceErrors(t *testing.T) {
-	// Generate a test RSA key for valid cases
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	require.NoError(t, err)
-
-	privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
-	privateKeyPEM := pem.EncodeToMemory(&pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: privateKeyBytes,
-	})
+	privateKeyPEM := generateRSAKeyPEM(t)
 
 	t.Run("invalid algorithm", func(t *testing.T) {
 		ts := &privateKeyJwtTokenSource{
@@ -423,7 +379,7 @@ func TestPrivateKeyJwtTokenSourceErrors(t *testing.T) {
 			uri:                       "https://example.com",
 			clientID:                  "client-id",
 			clientAssertionSigningAlg: "INVALID_ALG", // Invalid algorithm
-			clientAssertionSigningKey: string(privateKeyPEM),
+			clientAssertionSigningKey: privateKeyPEM,
 			audience:                  "audience",
 		}
 
@@ -438,7 +394,7 @@ func TestPrivateKeyJwtTokenSourceErrors(t *testing.T) {
 			uri:                       "://invalid-uri", // Invalid URI format
 			clientID:                  "client-id",
 			clientAssertionSigningAlg: "RS256",
-			clientAssertionSigningKey: string(privateKeyPEM),
+			clientAssertionSigningKey: privateKeyPEM,
 			audience:                  "audience",
 		}
 
@@ -475,7 +431,7 @@ func TestPrivateKeyJwtTokenSourceErrors(t *testing.T) {
 			uri:                       server.URL,
 			clientID:                  "client-id",
 			clientAssertionSigningAlg: "RS256",
-			clientAssertionSigningKey: string(privateKeyPEM),
+			clientAssertionSigningKey: privateKeyPEM,
 			audience:                  "audience",
 		}
 
@@ -495,7 +451,7 @@ func TestPrivateKeyJwtTokenSourceErrors(t *testing.T) {
 			uri:                       serverURL,
 			clientID:                  "client-id",
 			clientAssertionSigningAlg: "RS256",
-			clientAssertionSigningKey: string(privateKeyPEM),
+			clientAssertionSigningKey: privateKeyPEM,
 			audience:                  "audience",
 		}
 
@@ -545,16 +501,9 @@ func TestCreateClientAssertionErrors(t *testing.T) {
 
 	// Test unsupported algorithm
 	t.Run("unsupported algorithm", func(t *testing.T) {
-		privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-		require.NoError(t, err)
+		rsaKeyPEM := generateRSAKeyPEM(t)
 
-		privateKeyBytes := x509.MarshalPKCS1PrivateKey(privateKey)
-		privateKeyPEM := pem.EncodeToMemory(&pem.Block{
-			Type:  "RSA PRIVATE KEY",
-			Bytes: privateKeyBytes,
-		})
-
-		key, err := jwk.ParseKey(privateKeyPEM, jwk.WithPEM(true))
+		key, err := jwk.ParseKey([]byte(rsaKeyPEM), jwk.WithPEM(true))
 		require.NoError(t, err)
 
 		// Using an unsupported algorithm
