@@ -139,6 +139,11 @@ func CreateClientAssertion(alg jwa.SignatureAlgorithm, signingKey, clientID, aud
 		return "", fmt.Errorf("failed to build JWT: %w", err)
 	}
 
+	// Flatten the audience claim to a string instead of an array
+	// when there is only one audience value. This is required by
+	// some authorization servers that expect "aud" to be a string.
+	token.Options().Enable(jwt.FlattenAudience)
+
 	signedToken, err := jwt.Sign(token, jwt.WithKey(alg, key))
 	if err != nil {
 		return "", fmt.Errorf("failed to sign JWT: %w", err)
