@@ -9000,6 +9000,16 @@ func TestCustomDomain_GetID(tt *testing.T) {
 	c.GetID()
 }
 
+func TestCustomDomain_GetIsDefault(tt *testing.T) {
+	var zeroValue bool
+	c := &CustomDomain{IsDefault: &zeroValue}
+	c.GetIsDefault()
+	c = &CustomDomain{}
+	c.GetIsDefault()
+	c = nil
+	c.GetIsDefault()
+}
+
 func TestCustomDomain_GetOriginDomainName(tt *testing.T) {
 	var zeroValue string
 	c := &CustomDomain{OriginDomainName: &zeroValue}
@@ -9128,6 +9138,24 @@ func TestCustomDomainCertificate_GetStatus(tt *testing.T) {
 func TestCustomDomainCertificate_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &CustomDomainCertificate{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestCustomDomainDefault_GetDomain(tt *testing.T) {
+	var zeroValue string
+	c := &CustomDomainDefault{Domain: &zeroValue}
+	c.GetDomain()
+	c = &CustomDomainDefault{}
+	c.GetDomain()
+	c = nil
+	c.GetDomain()
+}
+
+func TestCustomDomainDefault_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CustomDomainDefault{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

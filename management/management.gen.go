@@ -7279,6 +7279,14 @@ func (c *CustomDomain) GetID() string {
 	return *c.ID
 }
 
+// GetIsDefault returns the IsDefault field if it's non-nil, zero value otherwise.
+func (c *CustomDomain) GetIsDefault() bool {
+	if c == nil || c.IsDefault == nil {
+		return false
+	}
+	return *c.IsDefault
+}
+
 // GetOriginDomainName returns the OriginDomainName field if it's non-nil, zero value otherwise.
 func (c *CustomDomain) GetOriginDomainName() string {
 	if c == nil || c.OriginDomainName == nil {
@@ -7382,6 +7390,19 @@ func (c *CustomDomainCertificate) GetStatus() string {
 
 // String returns a string representation of CustomDomainCertificate.
 func (c *CustomDomainCertificate) String() string {
+	return Stringify(c)
+}
+
+// GetDomain returns the Domain field if it's non-nil, zero value otherwise.
+func (c *CustomDomainDefault) GetDomain() string {
+	if c == nil || c.Domain == nil {
+		return ""
+	}
+	return *c.Domain
+}
+
+// String returns a string representation of CustomDomainDefault.
+func (c *CustomDomainDefault) String() string {
 	return Stringify(c)
 }
 

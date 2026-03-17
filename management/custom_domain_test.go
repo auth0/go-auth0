@@ -40,6 +40,7 @@ func TestCustomDomainManager_Read(t *testing.T) {
 
 	assertNoCustomDomainErr(t, err)
 	assert.Equal(t, expected.GetDomain(), actual.GetDomain())
+	assert.NotNil(t, actual.IsDefault, "expected is_default field to be present in the response")
 }
 
 func TestCustomDomainManager_Update(t *testing.T) {
@@ -129,6 +130,9 @@ func TestCustomDomainManager_List(t *testing.T) {
 
 	assertNoCustomDomainErr(t, err)
 	assert.GreaterOrEqual(t, len(customDomainList), 2)
+	for _, domain := range customDomainList {
+		assert.NotNil(t, domain.IsDefault, "expected is_default field to be present in the response")
+	}
 	// Create a map to check existence regardless of order
 	domainMap := make(map[string]bool)
 	for _, domain := range customDomainList {
@@ -153,6 +157,9 @@ func TestCustomDomainManager_ListWithPagination(t *testing.T) {
 	firstPage, err := api.CustomDomain.ListWithPagination(context.Background(), firstPageOpts...)
 	assertNoCustomDomainErr(t, err)
 	assert.Len(t, firstPage.CustomDomains, 2, "First page should return 2 domains")
+	for _, domain := range firstPage.CustomDomains {
+		assert.NotNil(t, domain.IsDefault, "expected is_default field to be present in the response")
+	}
 
 	// Request the second page using the checkpoint token
 	secondPageOpts := []RequestOption{
@@ -162,6 +169,9 @@ func TestCustomDomainManager_ListWithPagination(t *testing.T) {
 	secondPage, err := api.CustomDomain.ListWithPagination(context.Background(), secondPageOpts...)
 	assertNoCustomDomainErr(t, err)
 	assert.GreaterOrEqual(t, len(secondPage.CustomDomains), 1, "Second page should return 1 domain")
+	for _, domain := range secondPage.CustomDomains {
+		assert.NotNil(t, domain.IsDefault, "expected is_default field to be present in the response")
+	}
 
 	// Combine all domains and verify each created one exists
 	allDomains := make([]*CustomDomain, 0, len(firstPage.CustomDomains)+len(secondPage.CustomDomains))
@@ -187,6 +197,34 @@ func TestCustomDomainManager_Verify(t *testing.T) {
 
 	assertNoCustomDomainErr(t, err)
 	assert.Equal(t, "pending_verification", actualDomain.GetStatus())
+}
+
+func TestCustomDomainManager_ReadDefault(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	defaultDomain, err := api.CustomDomain.ReadDefault(context.Background())
+	assertNoCustomDomainErr(t, err)
+	assert.NotEmpty(t, defaultDomain.GetDomain())
+}
+
+func TestCustomDomainManager_UpdateDefault(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	// Read the current default domain first (canonical tenant domain).
+	currentDefault, err := api.CustomDomain.ReadDefault(context.Background())
+	assertNoCustomDomainErr(t, err)
+	assert.NotEmpty(t, currentDefault.GetDomain())
+
+	// Update the default using the canonical domain (which is already verified).
+	err = api.CustomDomain.UpdateDefault(context.Background(), &CustomDomainDefault{
+		Domain: currentDefault.Domain,
+	})
+	assertNoCustomDomainErr(t, err)
+
+	// Verify the default domain remains the same.
+	defaultDomain, err := api.CustomDomain.ReadDefault(context.Background())
+	assertNoCustomDomainErr(t, err)
+	assert.Equal(t, currentDefault.GetDomain(), defaultDomain.GetDomain())
 }
 
 func givenACustomDomain(t *testing.T) *CustomDomain {
