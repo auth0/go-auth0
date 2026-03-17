@@ -130,6 +130,7 @@ func TestCustomDomainManager_List(t *testing.T) {
 
 	assertNoCustomDomainErr(t, err)
 	assert.GreaterOrEqual(t, len(customDomainList), 2)
+
 	for _, domain := range customDomainList {
 		assert.NotNil(t, domain.IsDefault, "expected is_default field to be present in the response")
 	}
@@ -157,6 +158,7 @@ func TestCustomDomainManager_ListWithPagination(t *testing.T) {
 	firstPage, err := api.CustomDomain.ListWithPagination(context.Background(), firstPageOpts...)
 	assertNoCustomDomainErr(t, err)
 	assert.Len(t, firstPage.CustomDomains, 2, "First page should return 2 domains")
+
 	for _, domain := range firstPage.CustomDomains {
 		assert.NotNil(t, domain.IsDefault, "expected is_default field to be present in the response")
 	}
@@ -169,6 +171,7 @@ func TestCustomDomainManager_ListWithPagination(t *testing.T) {
 	secondPage, err := api.CustomDomain.ListWithPagination(context.Background(), secondPageOpts...)
 	assertNoCustomDomainErr(t, err)
 	assert.GreaterOrEqual(t, len(secondPage.CustomDomains), 1, "Second page should return 1 domain")
+
 	for _, domain := range secondPage.CustomDomains {
 		assert.NotNil(t, domain.IsDefault, "expected is_default field to be present in the response")
 	}
