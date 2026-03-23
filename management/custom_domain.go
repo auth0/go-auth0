@@ -215,5 +215,6 @@ func (m *CustomDomainManager) UpdateDefault(ctx context.Context, c *CustomDomain
 	}
 
 	err = m.management.Request(ctx, "PATCH", m.management.URI("custom-domains", "default"), c, opts...)
+
 	return
 }
