@@ -7393,19 +7393,6 @@ func (c *CustomDomainCertificate) String() string {
 	return Stringify(c)
 }
 
-// GetDomain returns the Domain field if it's non-nil, zero value otherwise.
-func (c *CustomDomainDefault) GetDomain() string {
-	if c == nil || c.Domain == nil {
-		return ""
-	}
-	return *c.Domain
-}
-
-// String returns a string representation of CustomDomainDefault.
-func (c *CustomDomainDefault) String() string {
-	return Stringify(c)
-}
-
 // String returns a string representation of CustomDomainList.
 func (c *CustomDomainList) String() string {
 	return Stringify(c)

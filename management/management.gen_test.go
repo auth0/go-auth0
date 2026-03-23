@@ -9143,24 +9143,6 @@ func TestCustomDomainCertificate_String(t *testing.T) {
 	}
 }
 
-func TestCustomDomainDefault_GetDomain(tt *testing.T) {
-	var zeroValue string
-	c := &CustomDomainDefault{Domain: &zeroValue}
-	c.GetDomain()
-	c = &CustomDomainDefault{}
-	c.GetDomain()
-	c = nil
-	c.GetDomain()
-}
-
-func TestCustomDomainDefault_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &CustomDomainDefault{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestCustomDomainList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &CustomDomainList{}

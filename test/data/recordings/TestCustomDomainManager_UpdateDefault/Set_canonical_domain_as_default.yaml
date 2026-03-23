@@ -25,7 +25,7 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 35
+        content_length: 51
         uncompressed: false
         body: '{"domain":"go-auth0-dev.eu.auth0.com.us.auth0.com"}'
         headers:
@@ -39,7 +39,7 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 36
+        content_length: 53
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
@@ -61,7 +61,7 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 35
+        content_length: 51
         uncompressed: false
         body: '{"domain":"go-auth0-dev.eu.auth0.com.us.auth0.com"}'
         headers:
@@ -94,7 +94,7 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 35
+        content_length: 51
         uncompressed: false
         body: '{"domain":"go-auth0-dev.eu.auth0.com.us.auth0.com"}'
         headers:

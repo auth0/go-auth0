@@ -62,12 +62,6 @@ type CustomDomain struct {
 	Certificate *CustomDomainCertificate `json:"certificate,omitempty"`
 }
 
-// CustomDomainDefault represents the default domain configuration for a tenant.
-type CustomDomainDefault struct {
-	// Domain is the custom domain name or canonical domain name.
-	Domain *string `json:"domain,omitempty"`
-}
-
 // cleanForPatch strips read-only fields (ID, IsDefault) so they are not
 // sent in create or update requests.
 func (c *CustomDomain) cleanForPatch() *CustomDomain {
@@ -75,6 +69,14 @@ func (c *CustomDomain) cleanForPatch() *CustomDomain {
 	c.IsDefault = nil
 
 	return c
+}
+
+// cleanForPatchDefault returns a copy containing only the Domain field,
+// which is the only field accepted by the update-default endpoint.
+func (c *CustomDomain) cleanForPatchDefault() *CustomDomain {
+	return &CustomDomain{
+		Domain: c.Domain,
+	}
 }
 
 // CustomDomainCertificate represents the certificate details for a custom domain.
@@ -187,15 +189,31 @@ func (m *CustomDomainManager) ListWithPagination(ctx context.Context, opts ...Re
 
 // ReadDefault retrieves the default domain configuration for the tenant.
 //
+// When the default is a custom domain, the full CustomDomain object is returned
+// with all fields populated (ID, Status, TLSPolicy, etc.).
+// When the default is the tenant's canonical domain, only the Domain field is
+// populated and ID will be empty.
+//
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/get_custom_domains_default
-func (m *CustomDomainManager) ReadDefault(ctx context.Context, opts ...RequestOption) (c *CustomDomainDefault, err error) {
+func (m *CustomDomainManager) ReadDefault(ctx context.Context, opts ...RequestOption) (c *CustomDomain, err error) {
 	err = m.management.Request(ctx, "GET", m.management.URI("custom-domains", "default"), &c, opts...)
 	return
 }
 
 // UpdateDefault updates the default domain for the tenant.
+// Only the Domain field from the provided CustomDomain is sent to the API.
+//
+// When the update sets a custom domain as default, the full CustomDomain object
+// is returned with all fields populated (ID, Status, TLSPolicy, etc.).
+// When the update sets the tenant's canonical domain as default, only the Domain
+// field is populated and ID will be empty.
 //
 // See: https://auth0.com/docs/api/management/v2#!/Custom_Domains/patch_custom_domains_default
-func (m *CustomDomainManager) UpdateDefault(ctx context.Context, c *CustomDomainDefault, opts ...RequestOption) error {
-	return m.management.Request(ctx, "PATCH", m.management.URI("custom-domains", "default"), c, opts...)
+func (m *CustomDomainManager) UpdateDefault(ctx context.Context, c *CustomDomain, opts ...RequestOption) (err error) {
+	if c != nil {
+		c = c.cleanForPatchDefault()
+	}
+
+	err = m.management.Request(ctx, "PATCH", m.management.URI("custom-domains", "default"), c, opts...)
+	return
 }

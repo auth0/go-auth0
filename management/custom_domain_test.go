@@ -203,31 +203,71 @@ func TestCustomDomainManager_Verify(t *testing.T) {
 }
 
 func TestCustomDomainManager_ReadDefault(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	t.Run("Canonical domain", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
 
-	defaultDomain, err := api.CustomDomain.ReadDefault(context.Background())
-	assertNoCustomDomainErr(t, err)
-	assert.NotEmpty(t, defaultDomain.GetDomain())
+		defaultDomain, err := api.CustomDomain.ReadDefault(context.Background())
+		assertNoCustomDomainErr(t, err)
+		assert.NotEmpty(t, defaultDomain.GetDomain())
+		assert.Empty(t, defaultDomain.GetID(), "canonical domain should not have an ID")
+	})
+
+	t.Run("Custom domain", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		defaultDomain, err := api.CustomDomain.ReadDefault(context.Background())
+		assertNoCustomDomainErr(t, err)
+		assert.NotEmpty(t, defaultDomain.GetDomain())
+		assert.NotEmpty(t, defaultDomain.GetID(), "custom domain should have an ID")
+		assert.NotEmpty(t, defaultDomain.GetStatus())
+	})
 }
 
 func TestCustomDomainManager_UpdateDefault(t *testing.T) {
-	configureHTTPTestRecordings(t)
+	t.Run("Set canonical domain as default", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
 
-	// Read the current default domain first (canonical tenant domain).
-	currentDefault, err := api.CustomDomain.ReadDefault(context.Background())
-	assertNoCustomDomainErr(t, err)
-	assert.NotEmpty(t, currentDefault.GetDomain())
+		// Read the current default domain first.
+		currentDefault, err := api.CustomDomain.ReadDefault(context.Background())
+		assertNoCustomDomainErr(t, err)
+		assert.NotEmpty(t, currentDefault.GetDomain())
 
-	// Update the default using the canonical domain (which is already verified).
-	err = api.CustomDomain.UpdateDefault(context.Background(), &CustomDomainDefault{
-		Domain: currentDefault.Domain,
+		// Update the default using the canonical domain.
+		err = api.CustomDomain.UpdateDefault(context.Background(), &CustomDomain{
+			Domain: currentDefault.Domain,
+		})
+		assertNoCustomDomainErr(t, err)
+
+		// Verify the default domain remains the same.
+		defaultDomain, err := api.CustomDomain.ReadDefault(context.Background())
+		assertNoCustomDomainErr(t, err)
+		assert.Equal(t, currentDefault.GetDomain(), defaultDomain.GetDomain())
+		assert.Empty(t, defaultDomain.GetID(), "canonical domain should not have an ID")
 	})
-	assertNoCustomDomainErr(t, err)
 
-	// Verify the default domain remains the same.
-	defaultDomain, err := api.CustomDomain.ReadDefault(context.Background())
-	assertNoCustomDomainErr(t, err)
-	assert.Equal(t, currentDefault.GetDomain(), defaultDomain.GetDomain())
+	t.Run("Set custom domain as default", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		customDomain := givenACustomDomain(t)
+
+		// Update the default to the custom domain.
+		err := api.CustomDomain.UpdateDefault(context.Background(), &CustomDomain{
+			Domain: customDomain.Domain,
+		})
+		assertNoCustomDomainErr(t, err)
+
+		// Verify the default is now the custom domain.
+		defaultDomain, err := api.CustomDomain.ReadDefault(context.Background())
+		assertNoCustomDomainErr(t, err)
+		assert.Equal(t, customDomain.GetDomain(), defaultDomain.GetDomain())
+		assert.NotEmpty(t, defaultDomain.GetID(), "custom domain default should have an ID")
+
+		// Reset back to canonical domain to not affect other tests.
+		err = api.CustomDomain.UpdateDefault(context.Background(), &CustomDomain{
+			Domain: auth0.String("go-auth0-dev.eu.auth0.com.us.auth0.com"),
+		})
+		assertNoCustomDomainErr(t, err)
+	})
 }
 
 func givenACustomDomain(t *testing.T) *CustomDomain {
