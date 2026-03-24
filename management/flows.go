@@ -1474,7 +1474,7 @@ func (f *FlowActionActivecampaignUpsertContactParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionActivecampaignUpsertContactParamsCustomFields = map[string]interface{}
+type FlowActionActivecampaignUpsertContactParamsCustomFields = map[string]any
 
 type FlowActionActivecampaignUpsertContactType string
 
@@ -1909,7 +1909,7 @@ func (f *FlowActionAirtableCreateRecordParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAirtableCreateRecordParamsFields = map[string]interface{}
+type FlowActionAirtableCreateRecordParamsFields = map[string]any
 
 type FlowActionAirtableCreateRecordType string
 
@@ -2643,7 +2643,7 @@ func (f *FlowActionAirtableUpdateRecordParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAirtableUpdateRecordParamsFields = map[string]interface{}
+type FlowActionAirtableUpdateRecordParamsFields = map[string]any
 
 type FlowActionAirtableUpdateRecordType string
 
@@ -3130,7 +3130,7 @@ func (f *FlowActionAuth0CreateUserParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0CreateUserParamsPayload = map[string]interface{}
+type FlowActionAuth0CreateUserParamsPayload = map[string]any
 
 type FlowActionAuth0CreateUserType string
 
@@ -3800,7 +3800,7 @@ func (f *FlowActionAuth0MakeCallParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0MakeCallParamsCustomVars = map[string]interface{}
+type FlowActionAuth0MakeCallParamsCustomVars = map[string]any
 
 type FlowActionAuth0MakeCallType string
 
@@ -4654,9 +4654,9 @@ func (f *FlowActionAuth0SendRequestParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0SendRequestParamsCustomVars = map[string]interface{}
+type FlowActionAuth0SendRequestParamsCustomVars = map[string]any
 
-type FlowActionAuth0SendRequestParamsHeaders = map[string]interface{}
+type FlowActionAuth0SendRequestParamsHeaders = map[string]any
 
 type FlowActionAuth0SendRequestParamsMethod string
 
@@ -4691,7 +4691,7 @@ func (f FlowActionAuth0SendRequestParamsMethod) Ptr() *FlowActionAuth0SendReques
 
 type FlowActionAuth0SendRequestParamsPayload struct {
 	String                                        string
-	UnknownList                                   []interface{}
+	UnknownList                                   []any
 	FlowActionAuth0SendRequestParamsPayloadObject FlowActionAuth0SendRequestParamsPayloadObject
 
 	typ string
@@ -4704,7 +4704,7 @@ func (f *FlowActionAuth0SendRequestParamsPayload) GetString() string {
 	return f.String
 }
 
-func (f *FlowActionAuth0SendRequestParamsPayload) GetUnknownList() []interface{} {
+func (f *FlowActionAuth0SendRequestParamsPayload) GetUnknownList() []any {
 	if f == nil {
 		return nil
 	}
@@ -4725,7 +4725,7 @@ func (f *FlowActionAuth0SendRequestParamsPayload) UnmarshalJSON(data []byte) err
 		f.String = valueString
 		return nil
 	}
-	var valueUnknownList []interface{}
+	var valueUnknownList []any
 	if err := json.Unmarshal(data, &valueUnknownList); err == nil {
 		f.typ = "UnknownList"
 		f.UnknownList = valueUnknownList
@@ -4755,7 +4755,7 @@ func (f FlowActionAuth0SendRequestParamsPayload) MarshalJSON() ([]byte, error) {
 
 type FlowActionAuth0SendRequestParamsPayloadVisitor interface {
 	VisitString(string) error
-	VisitUnknownList([]interface{}) error
+	VisitUnknownList([]any) error
 	VisitFlowActionAuth0SendRequestParamsPayloadObject(FlowActionAuth0SendRequestParamsPayloadObject) error
 }
 
@@ -4772,7 +4772,7 @@ func (f *FlowActionAuth0SendRequestParamsPayload) Accept(visitor FlowActionAuth0
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-type FlowActionAuth0SendRequestParamsPayloadObject = map[string]interface{}
+type FlowActionAuth0SendRequestParamsPayloadObject = map[string]any
 
 type FlowActionAuth0SendRequestParamsQueryParams = map[string]*FlowActionAuth0SendRequestParamsQueryParamsValue
 
@@ -5188,7 +5188,7 @@ func (f *FlowActionAuth0SendSmsParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0SendSmsParamsCustomVars = map[string]interface{}
+type FlowActionAuth0SendSmsParamsCustomVars = map[string]any
 
 type FlowActionAuth0SendSmsType string
 
@@ -5524,7 +5524,7 @@ func (f *FlowActionAuth0UpdateUserParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0UpdateUserParamsChanges = map[string]interface{}
+type FlowActionAuth0UpdateUserParamsChanges = map[string]any
 
 type FlowActionAuth0UpdateUserType string
 
@@ -5878,7 +5878,7 @@ func (f *FlowActionBigqueryInsertRowsParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionBigqueryInsertRowsParamsData = map[string]interface{}
+type FlowActionBigqueryInsertRowsParamsData = map[string]any
 
 type FlowActionBigqueryInsertRowsType string
 
@@ -8874,13 +8874,13 @@ func (f *FlowActionFlowMapValueParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionFlowMapValueParamsCases = map[string]interface{}
+type FlowActionFlowMapValueParamsCases = map[string]any
 
 type FlowActionFlowMapValueParamsFallback struct {
 	String                                     string
 	Double                                     float64
 	FlowActionFlowMapValueParamsFallbackObject FlowActionFlowMapValueParamsFallbackObject
-	UnknownList                                []interface{}
+	UnknownList                                []any
 
 	typ string
 }
@@ -8906,7 +8906,7 @@ func (f *FlowActionFlowMapValueParamsFallback) GetFlowActionFlowMapValueParamsFa
 	return f.FlowActionFlowMapValueParamsFallbackObject
 }
 
-func (f *FlowActionFlowMapValueParamsFallback) GetUnknownList() []interface{} {
+func (f *FlowActionFlowMapValueParamsFallback) GetUnknownList() []any {
 	if f == nil {
 		return nil
 	}
@@ -8932,7 +8932,7 @@ func (f *FlowActionFlowMapValueParamsFallback) UnmarshalJSON(data []byte) error 
 		f.FlowActionFlowMapValueParamsFallbackObject = valueFlowActionFlowMapValueParamsFallbackObject
 		return nil
 	}
-	var valueUnknownList []interface{}
+	var valueUnknownList []any
 	if err := json.Unmarshal(data, &valueUnknownList); err == nil {
 		f.typ = "UnknownList"
 		f.UnknownList = valueUnknownList
@@ -8961,7 +8961,7 @@ type FlowActionFlowMapValueParamsFallbackVisitor interface {
 	VisitString(string) error
 	VisitDouble(float64) error
 	VisitFlowActionFlowMapValueParamsFallbackObject(FlowActionFlowMapValueParamsFallbackObject) error
-	VisitUnknownList([]interface{}) error
+	VisitUnknownList([]any) error
 }
 
 func (f *FlowActionFlowMapValueParamsFallback) Accept(visitor FlowActionFlowMapValueParamsFallbackVisitor) error {
@@ -8980,7 +8980,7 @@ func (f *FlowActionFlowMapValueParamsFallback) Accept(visitor FlowActionFlowMapV
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-type FlowActionFlowMapValueParamsFallbackObject = map[string]interface{}
+type FlowActionFlowMapValueParamsFallbackObject = map[string]any
 
 type FlowActionFlowMapValueParamsInput struct {
 	String string
@@ -9408,7 +9408,7 @@ func (f *FlowActionFlowReturnJSONParamsPayload) Accept(visitor FlowActionFlowRet
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-type FlowActionFlowReturnJSONParamsPayloadObject = map[string]interface{}
+type FlowActionFlowReturnJSONParamsPayloadObject = map[string]any
 
 type FlowActionFlowReturnJSONType string
 
@@ -9712,7 +9712,7 @@ func (f *FlowActionFlowStoreVarsParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionFlowStoreVarsParamsVars = map[string]interface{}
+type FlowActionFlowStoreVarsParamsVars = map[string]any
 
 type FlowActionFlowStoreVarsType string
 
@@ -10671,7 +10671,7 @@ func (f FlowActionHTTPSendRequestParamsContentType) Ptr() *FlowActionHTTPSendReq
 	return &f
 }
 
-type FlowActionHTTPSendRequestParamsHeaders = map[string]interface{}
+type FlowActionHTTPSendRequestParamsHeaders = map[string]any
 
 type FlowActionHTTPSendRequestParamsMethod string
 
@@ -10706,7 +10706,7 @@ func (f FlowActionHTTPSendRequestParamsMethod) Ptr() *FlowActionHTTPSendRequestP
 
 type FlowActionHTTPSendRequestParamsPayload struct {
 	String                                       string
-	UnknownList                                  []interface{}
+	UnknownList                                  []any
 	FlowActionHTTPSendRequestParamsPayloadObject FlowActionHTTPSendRequestParamsPayloadObject
 
 	typ string
@@ -10719,7 +10719,7 @@ func (f *FlowActionHTTPSendRequestParamsPayload) GetString() string {
 	return f.String
 }
 
-func (f *FlowActionHTTPSendRequestParamsPayload) GetUnknownList() []interface{} {
+func (f *FlowActionHTTPSendRequestParamsPayload) GetUnknownList() []any {
 	if f == nil {
 		return nil
 	}
@@ -10740,7 +10740,7 @@ func (f *FlowActionHTTPSendRequestParamsPayload) UnmarshalJSON(data []byte) erro
 		f.String = valueString
 		return nil
 	}
-	var valueUnknownList []interface{}
+	var valueUnknownList []any
 	if err := json.Unmarshal(data, &valueUnknownList); err == nil {
 		f.typ = "UnknownList"
 		f.UnknownList = valueUnknownList
@@ -10770,7 +10770,7 @@ func (f FlowActionHTTPSendRequestParamsPayload) MarshalJSON() ([]byte, error) {
 
 type FlowActionHTTPSendRequestParamsPayloadVisitor interface {
 	VisitString(string) error
-	VisitUnknownList([]interface{}) error
+	VisitUnknownList([]any) error
 	VisitFlowActionHTTPSendRequestParamsPayloadObject(FlowActionHTTPSendRequestParamsPayloadObject) error
 }
 
@@ -10787,7 +10787,7 @@ func (f *FlowActionHTTPSendRequestParamsPayload) Accept(visitor FlowActionHTTPSe
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-type FlowActionHTTPSendRequestParamsPayloadObject = map[string]interface{}
+type FlowActionHTTPSendRequestParamsPayloadObject = map[string]any
 
 type FlowActionHTTPSendRequestParamsQueryParams = map[string]*FlowActionHTTPSendRequestParamsQueryParamsValue
 
@@ -12458,7 +12458,7 @@ func (f *FlowActionJSONCreateJSONParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionJSONCreateJSONParamsObject = map[string]interface{}
+type FlowActionJSONCreateJSONParamsObject = map[string]any
 
 type FlowActionJSONCreateJSONType string
 
@@ -13126,7 +13126,7 @@ func (f *FlowActionJSONSerializeJSONParamsObject) Accept(visitor FlowActionJSONS
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-type FlowActionJSONSerializeJSONParamsObjectObject = map[string]interface{}
+type FlowActionJSONSerializeJSONParamsObjectObject = map[string]any
 
 type FlowActionJSONSerializeJSONType string
 
@@ -13895,7 +13895,7 @@ func (f *FlowActionJwtSignJwtParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionJwtSignJwtParamsPayload = map[string]interface{}
+type FlowActionJwtSignJwtParamsPayload = map[string]any
 
 type FlowActionJwtSignJwtType string
 
@@ -14699,7 +14699,7 @@ func (f *FlowActionMailchimpUpsertMemberParamsMember) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionMailchimpUpsertMemberParamsMemberMergeFields = map[string]interface{}
+type FlowActionMailchimpUpsertMemberParamsMemberMergeFields = map[string]any
 
 type FlowActionMailchimpUpsertMemberType string
 
@@ -15078,8 +15078,8 @@ var (
 )
 
 type FlowActionMailjetSendEmailParamsTemplateID struct {
-	TemplateID int                    `json:"template_id" url:"template_id"`
-	Variables  map[string]interface{} `json:"variables,omitempty" url:"variables,omitempty"`
+	TemplateID int            `json:"template_id" url:"template_id"`
+	Variables  map[string]any `json:"variables,omitempty" url:"variables,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -15096,7 +15096,7 @@ func (f *FlowActionMailjetSendEmailParamsTemplateID) GetTemplateID() int {
 	return f.TemplateID
 }
 
-func (f *FlowActionMailjetSendEmailParamsTemplateID) GetVariables() map[string]interface{} {
+func (f *FlowActionMailjetSendEmailParamsTemplateID) GetVariables() map[string]any {
 	if f == nil || f.Variables == nil {
 		return nil
 	}
@@ -15126,7 +15126,7 @@ func (f *FlowActionMailjetSendEmailParamsTemplateID) SetTemplateID(templateID in
 
 // SetVariables sets the Variables field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionMailjetSendEmailParamsTemplateID) SetVariables(variables map[string]interface{}) {
+func (f *FlowActionMailjetSendEmailParamsTemplateID) SetVariables(variables map[string]any) {
 	f.Variables = variables
 	f.require(flowActionMailjetSendEmailParamsTemplateIDFieldVariables)
 }
@@ -16434,7 +16434,7 @@ func (f *FlowActionPipedriveAddDealParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionPipedriveAddDealParamsFields = map[string]interface{}
+type FlowActionPipedriveAddDealParamsFields = map[string]any
 
 type FlowActionPipedriveAddDealParamsOrganizationID struct {
 	String string
@@ -17034,7 +17034,7 @@ func (f *FlowActionPipedriveAddOrganizationParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionPipedriveAddOrganizationParamsFields = map[string]interface{}
+type FlowActionPipedriveAddOrganizationParamsFields = map[string]any
 
 type FlowActionPipedriveAddOrganizationParamsOwnerID struct {
 	String string
@@ -17496,7 +17496,7 @@ func (f *FlowActionPipedriveAddPersonParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionPipedriveAddPersonParamsFields = map[string]interface{}
+type FlowActionPipedriveAddPersonParamsFields = map[string]any
 
 type FlowActionPipedriveAddPersonParamsOrganizationID struct {
 	String string
@@ -18124,7 +18124,7 @@ func (f *FlowActionSalesforceCreateLeadParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionSalesforceCreateLeadParamsPayload = map[string]interface{}
+type FlowActionSalesforceCreateLeadParamsPayload = map[string]any
 
 type FlowActionSalesforceCreateLeadType string
 
@@ -19156,7 +19156,7 @@ func (f *FlowActionSalesforceUpdateLeadParams) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionSalesforceUpdateLeadParamsPayload = map[string]interface{}
+type FlowActionSalesforceUpdateLeadParamsPayload = map[string]any
 
 type FlowActionSalesforceUpdateLeadType string
 
@@ -19387,7 +19387,7 @@ var (
 type FlowActionSendgridSendEmailParams struct {
 	ConnectionID     string                                   `json:"connection_id" url:"connection_id"`
 	From             *FlowActionSendgridSendEmailParamsPerson `json:"from" url:"from"`
-	Personalizations []interface{}                            `json:"personalizations" url:"personalizations"`
+	Personalizations []any                                    `json:"personalizations" url:"personalizations"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -19411,7 +19411,7 @@ func (f *FlowActionSendgridSendEmailParams) GetFrom() *FlowActionSendgridSendEma
 	return f.From
 }
 
-func (f *FlowActionSendgridSendEmailParams) GetPersonalizations() []interface{} {
+func (f *FlowActionSendgridSendEmailParams) GetPersonalizations() []any {
 	if f == nil {
 		return nil
 	}
@@ -19448,7 +19448,7 @@ func (f *FlowActionSendgridSendEmailParams) SetFrom(from *FlowActionSendgridSend
 
 // SetPersonalizations sets the Personalizations field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionSendgridSendEmailParams) SetPersonalizations(personalizations []interface{}) {
+func (f *FlowActionSendgridSendEmailParams) SetPersonalizations(personalizations []any) {
 	f.Personalizations = personalizations
 	f.require(flowActionSendgridSendEmailParamsFieldPersonalizations)
 }
@@ -24683,7 +24683,7 @@ func (f *FlowActionWhatsappSendMessageParamsPayload) Accept(visitor FlowActionWh
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-type FlowActionWhatsappSendMessageParamsPayloadObject = map[string]interface{}
+type FlowActionWhatsappSendMessageParamsPayloadObject = map[string]any
 
 type FlowActionWhatsappSendMessageParamsType string
 
@@ -25456,7 +25456,7 @@ func (f *FlowActionXMLSerializeXMLParamsObject) Accept(visitor FlowActionXMLSeri
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-type FlowActionXMLSerializeXMLParamsObjectObject = map[string]interface{}
+type FlowActionXMLSerializeXMLParamsObjectObject = map[string]any
 
 type FlowActionXMLSerializeXMLType string
 

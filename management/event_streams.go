@@ -2846,7 +2846,7 @@ func (l *ListEventStreamsResponseContent) String() string {
 }
 
 // The raw payload of the test event.
-type TestEventDataContent = map[string]interface{}
+type TestEventDataContent = map[string]any
 
 type UpdateEventStreamResponseContent struct {
 	EventStreamWebhookResponseContent     *EventStreamWebhookResponseContent

@@ -132,7 +132,7 @@ func TestSettersCreateResourceServerResponseContent(t *testing.T) {
 
 	t.Run("SetAuthorizationDetails", func(t *testing.T) {
 		obj := &CreateResourceServerResponseContent{}
-		var fernTestValueAuthorizationDetails []interface{}
+		var fernTestValueAuthorizationDetails []any
 		obj.SetAuthorizationDetails(fernTestValueAuthorizationDetails)
 		assert.Equal(t, fernTestValueAuthorizationDetails, obj.AuthorizationDetails)
 		assert.NotNil(t, obj.explicitFields)
@@ -678,7 +678,7 @@ func TestGettersCreateResourceServerResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateResourceServerResponseContent{}
-		var expected []interface{}
+		var expected []any
 		obj.AuthorizationDetails = expected
 
 		// Act & Assert
@@ -1281,7 +1281,7 @@ func TestSettersMarkExplicitCreateResourceServerResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateResourceServerResponseContent{}
-		var fernTestValueAuthorizationDetails []interface{}
+		var fernTestValueAuthorizationDetails []any
 
 		// Act
 		obj.SetAuthorizationDetails(fernTestValueAuthorizationDetails)
@@ -1526,7 +1526,7 @@ func TestSettersGetResourceServerResponseContent(t *testing.T) {
 
 	t.Run("SetAuthorizationDetails", func(t *testing.T) {
 		obj := &GetResourceServerResponseContent{}
-		var fernTestValueAuthorizationDetails []interface{}
+		var fernTestValueAuthorizationDetails []any
 		obj.SetAuthorizationDetails(fernTestValueAuthorizationDetails)
 		assert.Equal(t, fernTestValueAuthorizationDetails, obj.AuthorizationDetails)
 		assert.NotNil(t, obj.explicitFields)
@@ -2072,7 +2072,7 @@ func TestGettersGetResourceServerResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetResourceServerResponseContent{}
-		var expected []interface{}
+		var expected []any
 		obj.AuthorizationDetails = expected
 
 		// Act & Assert
@@ -2675,7 +2675,7 @@ func TestSettersMarkExplicitGetResourceServerResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetResourceServerResponseContent{}
-		var fernTestValueAuthorizationDetails []interface{}
+		var fernTestValueAuthorizationDetails []any
 
 		// Act
 		obj.SetAuthorizationDetails(fernTestValueAuthorizationDetails)
@@ -3220,7 +3220,7 @@ func TestSettersResourceServer(t *testing.T) {
 
 	t.Run("SetAuthorizationDetails", func(t *testing.T) {
 		obj := &ResourceServer{}
-		var fernTestValueAuthorizationDetails []interface{}
+		var fernTestValueAuthorizationDetails []any
 		obj.SetAuthorizationDetails(fernTestValueAuthorizationDetails)
 		assert.Equal(t, fernTestValueAuthorizationDetails, obj.AuthorizationDetails)
 		assert.NotNil(t, obj.explicitFields)
@@ -3766,7 +3766,7 @@ func TestGettersResourceServer(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ResourceServer{}
-		var expected []interface{}
+		var expected []any
 		obj.AuthorizationDetails = expected
 
 		// Act & Assert
@@ -4369,7 +4369,7 @@ func TestSettersMarkExplicitResourceServer(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ResourceServer{}
-		var fernTestValueAuthorizationDetails []interface{}
+		var fernTestValueAuthorizationDetails []any
 
 		// Act
 		obj.SetAuthorizationDetails(fernTestValueAuthorizationDetails)
@@ -5705,7 +5705,7 @@ func TestSettersUpdateResourceServerResponseContent(t *testing.T) {
 
 	t.Run("SetAuthorizationDetails", func(t *testing.T) {
 		obj := &UpdateResourceServerResponseContent{}
-		var fernTestValueAuthorizationDetails []interface{}
+		var fernTestValueAuthorizationDetails []any
 		obj.SetAuthorizationDetails(fernTestValueAuthorizationDetails)
 		assert.Equal(t, fernTestValueAuthorizationDetails, obj.AuthorizationDetails)
 		assert.NotNil(t, obj.explicitFields)
@@ -6251,7 +6251,7 @@ func TestGettersUpdateResourceServerResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateResourceServerResponseContent{}
-		var expected []interface{}
+		var expected []any
 		obj.AuthorizationDetails = expected
 
 		// Act & Assert
@@ -6854,7 +6854,7 @@ func TestSettersMarkExplicitUpdateResourceServerResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateResourceServerResponseContent{}
-		var fernTestValueAuthorizationDetails []interface{}
+		var fernTestValueAuthorizationDetails []any
 
 		// Act
 		obj.SetAuthorizationDetails(fernTestValueAuthorizationDetails)

@@ -10,11 +10,11 @@ import (
 // Invalid request URI. The message will vary depending on the cause.
 type BadRequestError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (b *BadRequestError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -34,11 +34,11 @@ func (b *BadRequestError) Unwrap() error {
 // An action module with the same name already exists.
 type ConflictError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (c *ConflictError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -58,11 +58,11 @@ func (c *ConflictError) Unwrap() error {
 // Payload content length greater than maximum allowed: 512000.
 type ContentTooLargeError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (c *ContentTooLargeError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -82,11 +82,11 @@ func (c *ContentTooLargeError) Unwrap() error {
 // Insufficient scope, expected: read:actions.
 type ForbiddenError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (f *ForbiddenError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -106,11 +106,11 @@ func (f *ForbiddenError) Unwrap() error {
 // Internal error.
 type InternalServerError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (i *InternalServerError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -130,11 +130,11 @@ func (i *InternalServerError) Unwrap() error {
 // The action version does not exist.
 type NotFoundError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (n *NotFoundError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -154,11 +154,11 @@ func (n *NotFoundError) Unwrap() error {
 // A paid subscription is required for this feature.
 type PaymentRequiredError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (p *PaymentRequiredError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -178,11 +178,11 @@ func (p *PaymentRequiredError) Unwrap() error {
 // The Actions Module cannot be deleted because it is in use by one or more actions.
 type PreconditionFailedError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (p *PreconditionFailedError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -202,11 +202,11 @@ func (p *PreconditionFailedError) Unwrap() error {
 // The query exceeded the timeout. Please try refining your search criteria. See https://auth0.com/docs/best-practices/search-best-practices.
 type ServiceUnavailableError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (s *ServiceUnavailableError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -226,11 +226,11 @@ func (s *ServiceUnavailableError) Unwrap() error {
 // Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers.
 type TooManyRequestsError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (t *TooManyRequestsError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
@@ -250,11 +250,11 @@ func (t *TooManyRequestsError) Unwrap() error {
 // Invalid token.
 type UnauthorizedError struct {
 	*core.APIError
-	Body interface{}
+	Body any
 }
 
 func (u *UnauthorizedError) UnmarshalJSON(data []byte) error {
-	var body interface{}
+	var body any
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}

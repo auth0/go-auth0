@@ -5179,7 +5179,7 @@ func (f *FormFieldCustomConfig) String() string {
 
 type FormFieldCustomConfigParams = map[string]string
 
-type FormFieldCustomConfigSchema = map[string]interface{}
+type FormFieldCustomConfigSchema = map[string]any
 
 var (
 	formFieldDateFieldID        = big.NewInt(1 << 0)
@@ -8678,7 +8678,7 @@ func (f *FormFieldPaymentConfigCredentials) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormFieldPaymentConfigCustomer = map[string]interface{}
+type FormFieldPaymentConfigCustomer = map[string]any
 
 var (
 	formFieldPaymentConfigFieldPropertiesFieldLabel       = big.NewInt(1 << 0)
@@ -8931,7 +8931,7 @@ func (f FormFieldPaymentConfigProviderEnum) Ptr() *FormFieldPaymentConfigProvide
 	return &f
 }
 
-type FormFieldPaymentConfigSubscription = map[string]interface{}
+type FormFieldPaymentConfigSubscription = map[string]any
 
 var (
 	formFieldSocialFieldID        = big.NewInt(1 << 0)
@@ -12438,7 +12438,7 @@ func (f *FormSummary) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FormTranslations = map[string]map[string]interface{}
+type FormTranslations = map[string]map[string]any
 
 type FormTranslationsNullable = *FormTranslations
 

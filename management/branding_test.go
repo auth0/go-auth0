@@ -285,7 +285,7 @@ func TestGettersBrandingPageBackground(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &BrandingPageBackground{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.StringUnknownMapOptional = expected
 
 		// Act & Assert
@@ -893,7 +893,7 @@ func TestGettersUpdateBrandingPageBackground(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateBrandingPageBackground{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.StringUnknownMapOptional = expected
 
 		// Act & Assert

@@ -58,7 +58,7 @@ type CreateResourceServerResponseContent struct {
 	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
 	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	// The client ID of the client that this resource server is linked to
@@ -176,7 +176,7 @@ func (c *CreateResourceServerResponseContent) GetConsentPolicy() ResourceServerC
 	return *c.ConsentPolicy
 }
 
-func (c *CreateResourceServerResponseContent) GetAuthorizationDetails() []interface{} {
+func (c *CreateResourceServerResponseContent) GetAuthorizationDetails() []any {
 	if c == nil || c.AuthorizationDetails == nil {
 		return nil
 	}
@@ -325,7 +325,7 @@ func (c *CreateResourceServerResponseContent) SetConsentPolicy(consentPolicy *Re
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []interface{}) {
+func (c *CreateResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []any) {
 	c.AuthorizationDetails = authorizationDetails
 	c.require(createResourceServerResponseContentFieldAuthorizationDetails)
 }
@@ -442,7 +442,7 @@ type GetResourceServerResponseContent struct {
 	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
 	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	// The client ID of the client that this resource server is linked to
@@ -560,7 +560,7 @@ func (g *GetResourceServerResponseContent) GetConsentPolicy() ResourceServerCons
 	return *g.ConsentPolicy
 }
 
-func (g *GetResourceServerResponseContent) GetAuthorizationDetails() []interface{} {
+func (g *GetResourceServerResponseContent) GetAuthorizationDetails() []any {
 	if g == nil || g.AuthorizationDetails == nil {
 		return nil
 	}
@@ -709,7 +709,7 @@ func (g *GetResourceServerResponseContent) SetConsentPolicy(consentPolicy *Resou
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []interface{}) {
+func (g *GetResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []any) {
 	g.AuthorizationDetails = authorizationDetails
 	g.require(getResourceServerResponseContentFieldAuthorizationDetails)
 }
@@ -958,7 +958,7 @@ type ResourceServer struct {
 	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
 	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	// The client ID of the client that this resource server is linked to
@@ -1076,7 +1076,7 @@ func (r *ResourceServer) GetConsentPolicy() ResourceServerConsentPolicyEnum {
 	return *r.ConsentPolicy
 }
 
-func (r *ResourceServer) GetAuthorizationDetails() []interface{} {
+func (r *ResourceServer) GetAuthorizationDetails() []any {
 	if r == nil || r.AuthorizationDetails == nil {
 		return nil
 	}
@@ -1225,7 +1225,7 @@ func (r *ResourceServer) SetConsentPolicy(consentPolicy *ResourceServerConsentPo
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *ResourceServer) SetAuthorizationDetails(authorizationDetails []interface{}) {
+func (r *ResourceServer) SetAuthorizationDetails(authorizationDetails []any) {
 	r.AuthorizationDetails = authorizationDetails
 	r.require(resourceServerFieldAuthorizationDetails)
 }
@@ -2296,7 +2296,7 @@ type UpdateResourceServerResponseContent struct {
 	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
 	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails     []interface{}                           `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	// The client ID of the client that this resource server is linked to
@@ -2414,7 +2414,7 @@ func (u *UpdateResourceServerResponseContent) GetConsentPolicy() ResourceServerC
 	return *u.ConsentPolicy
 }
 
-func (u *UpdateResourceServerResponseContent) GetAuthorizationDetails() []interface{} {
+func (u *UpdateResourceServerResponseContent) GetAuthorizationDetails() []any {
 	if u == nil || u.AuthorizationDetails == nil {
 		return nil
 	}
@@ -2563,7 +2563,7 @@ func (u *UpdateResourceServerResponseContent) SetConsentPolicy(consentPolicy *Re
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []interface{}) {
+func (u *UpdateResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []any) {
 	u.AuthorizationDetails = authorizationDetails
 	u.require(updateResourceServerResponseContentFieldAuthorizationDetails)
 }

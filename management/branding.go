@@ -212,7 +212,7 @@ func (b *BrandingFont) String() string {
 // </code></pre>
 type BrandingPageBackground struct {
 	StringOptional           *string
-	StringUnknownMapOptional map[string]interface{}
+	StringUnknownMapOptional map[string]any
 
 	typ string
 }
@@ -224,7 +224,7 @@ func (b *BrandingPageBackground) GetStringOptional() string {
 	return *b.StringOptional
 }
 
-func (b *BrandingPageBackground) GetStringUnknownMapOptional() map[string]interface{} {
+func (b *BrandingPageBackground) GetStringUnknownMapOptional() map[string]any {
 	if b == nil || b.StringUnknownMapOptional == nil {
 		return nil
 	}
@@ -238,7 +238,7 @@ func (b *BrandingPageBackground) UnmarshalJSON(data []byte) error {
 		b.StringOptional = valueStringOptional
 		return nil
 	}
-	var valueStringUnknownMapOptional map[string]interface{}
+	var valueStringUnknownMapOptional map[string]any
 	if err := json.Unmarshal(data, &valueStringUnknownMapOptional); err == nil {
 		b.typ = "StringUnknownMapOptional"
 		b.StringUnknownMapOptional = valueStringUnknownMapOptional
@@ -259,7 +259,7 @@ func (b BrandingPageBackground) MarshalJSON() ([]byte, error) {
 
 type BrandingPageBackgroundVisitor interface {
 	VisitStringOptional(*string) error
-	VisitStringUnknownMapOptional(map[string]interface{}) error
+	VisitStringUnknownMapOptional(map[string]any) error
 }
 
 func (b *BrandingPageBackground) Accept(visitor BrandingPageBackgroundVisitor) error {
@@ -614,7 +614,7 @@ func (u *UpdateBrandingFont) String() string {
 // </code></pre>
 type UpdateBrandingPageBackground struct {
 	StringOptional           *string
-	StringUnknownMapOptional map[string]interface{}
+	StringUnknownMapOptional map[string]any
 
 	typ string
 }
@@ -626,7 +626,7 @@ func (u *UpdateBrandingPageBackground) GetStringOptional() string {
 	return *u.StringOptional
 }
 
-func (u *UpdateBrandingPageBackground) GetStringUnknownMapOptional() map[string]interface{} {
+func (u *UpdateBrandingPageBackground) GetStringUnknownMapOptional() map[string]any {
 	if u == nil || u.StringUnknownMapOptional == nil {
 		return nil
 	}
@@ -640,7 +640,7 @@ func (u *UpdateBrandingPageBackground) UnmarshalJSON(data []byte) error {
 		u.StringOptional = valueStringOptional
 		return nil
 	}
-	var valueStringUnknownMapOptional map[string]interface{}
+	var valueStringUnknownMapOptional map[string]any
 	if err := json.Unmarshal(data, &valueStringUnknownMapOptional); err == nil {
 		u.typ = "StringUnknownMapOptional"
 		u.StringUnknownMapOptional = valueStringUnknownMapOptional
@@ -661,7 +661,7 @@ func (u UpdateBrandingPageBackground) MarshalJSON() ([]byte, error) {
 
 type UpdateBrandingPageBackgroundVisitor interface {
 	VisitStringOptional(*string) error
-	VisitStringUnknownMapOptional(map[string]interface{}) error
+	VisitStringUnknownMapOptional(map[string]any) error
 }
 
 func (u *UpdateBrandingPageBackground) Accept(visitor UpdateBrandingPageBackgroundVisitor) error {

@@ -1549,13 +1549,13 @@ func (u *UpdateUserResponseContent) String() string {
 }
 
 // User metadata to which this user has read-only access.
-type UserAppMetadataSchema = map[string]interface{}
+type UserAppMetadataSchema = map[string]any
 
 type UserDateSchema struct {
 	// Date and time when this user was created (ISO_8601 format).
 	String string
 	// Date and time when this user was created (ISO_8601 format).
-	StringUnknownMap map[string]interface{}
+	StringUnknownMap map[string]any
 
 	typ string
 }
@@ -1567,7 +1567,7 @@ func (u *UserDateSchema) GetString() string {
 	return u.String
 }
 
-func (u *UserDateSchema) GetStringUnknownMap() map[string]interface{} {
+func (u *UserDateSchema) GetStringUnknownMap() map[string]any {
 	if u == nil {
 		return nil
 	}
@@ -1581,7 +1581,7 @@ func (u *UserDateSchema) UnmarshalJSON(data []byte) error {
 		u.String = valueString
 		return nil
 	}
-	var valueStringUnknownMap map[string]interface{}
+	var valueStringUnknownMap map[string]any
 	if err := json.Unmarshal(data, &valueStringUnknownMap); err == nil {
 		u.typ = "StringUnknownMap"
 		u.StringUnknownMap = valueStringUnknownMap
@@ -1602,7 +1602,7 @@ func (u UserDateSchema) MarshalJSON() ([]byte, error) {
 
 type UserDateSchemaVisitor interface {
 	VisitString(string) error
-	VisitStringUnknownMap(map[string]interface{}) error
+	VisitStringUnknownMap(map[string]any) error
 }
 
 func (u *UserDateSchema) Accept(visitor UserDateSchemaVisitor) error {
@@ -1818,7 +1818,7 @@ func (u *UserIdentitySchema) String() string {
 }
 
 // User metadata to which this user has read/write access.
-type UserMetadataSchema = map[string]interface{}
+type UserMetadataSchema = map[string]any
 
 var (
 	userResponseSchemaFieldUserID        = big.NewInt(1 << 0)

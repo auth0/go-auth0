@@ -9375,7 +9375,7 @@ func TestGettersFlowActionAuth0SendRequestParamsPayload(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0SendRequestParamsPayload{}
-		var expected []interface{}
+		var expected []any
 		obj.UnknownList = expected
 
 		// Act & Assert
@@ -17453,7 +17453,7 @@ func TestGettersFlowActionFlowMapValueParamsFallback(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlowMapValueParamsFallback{}
-		var expected []interface{}
+		var expected []any
 		obj.UnknownList = expected
 
 		// Act & Assert
@@ -20771,7 +20771,7 @@ func TestGettersFlowActionHTTPSendRequestParamsPayload(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionHTTPSendRequestParamsPayload{}
-		var expected []interface{}
+		var expected []any
 		obj.UnknownList = expected
 
 		// Act & Assert
@@ -28809,7 +28809,7 @@ func TestSettersFlowActionMailjetSendEmailParamsTemplateID(t *testing.T) {
 
 	t.Run("SetVariables", func(t *testing.T) {
 		obj := &FlowActionMailjetSendEmailParamsTemplateID{}
-		var fernTestValueVariables map[string]interface{}
+		var fernTestValueVariables map[string]any
 		obj.SetVariables(fernTestValueVariables)
 		assert.Equal(t, fernTestValueVariables, obj.Variables)
 		assert.NotNil(t, obj.explicitFields)
@@ -28845,7 +28845,7 @@ func TestGettersFlowActionMailjetSendEmailParamsTemplateID(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionMailjetSendEmailParamsTemplateID{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.Variables = expected
 
 		// Act & Assert
@@ -28912,7 +28912,7 @@ func TestSettersMarkExplicitFlowActionMailjetSendEmailParamsTemplateID(t *testin
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionMailjetSendEmailParamsTemplateID{}
-		var fernTestValueVariables map[string]interface{}
+		var fernTestValueVariables map[string]any
 
 		// Act
 		obj.SetVariables(fernTestValueVariables)
@@ -37235,7 +37235,7 @@ func TestSettersFlowActionSendgridSendEmailParams(t *testing.T) {
 
 	t.Run("SetPersonalizations", func(t *testing.T) {
 		obj := &FlowActionSendgridSendEmailParams{}
-		var fernTestValuePersonalizations []interface{}
+		var fernTestValuePersonalizations []any
 		obj.SetPersonalizations(fernTestValuePersonalizations)
 		assert.Equal(t, fernTestValuePersonalizations, obj.Personalizations)
 		assert.NotNil(t, obj.explicitFields)
@@ -37304,7 +37304,7 @@ func TestGettersFlowActionSendgridSendEmailParams(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSendgridSendEmailParams{}
-		var expected []interface{}
+		var expected []any
 		obj.Personalizations = expected
 
 		// Act & Assert
@@ -37402,7 +37402,7 @@ func TestSettersMarkExplicitFlowActionSendgridSendEmailParams(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSendgridSendEmailParams{}
-		var fernTestValuePersonalizations []interface{}
+		var fernTestValuePersonalizations []any
 
 		// Act
 		obj.SetPersonalizations(fernTestValuePersonalizations)

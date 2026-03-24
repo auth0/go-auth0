@@ -1721,16 +1721,16 @@ func (c *ClientAddonAzureSb) String() string {
 }
 
 // Box SSO indicator (no configuration settings needed for Box SSO).
-type ClientAddonBox = map[string]interface{}
+type ClientAddonBox = map[string]any
 
 // CloudBees SSO indicator (no configuration settings needed for CloudBees SSO).
-type ClientAddonCloudBees = map[string]interface{}
+type ClientAddonCloudBees = map[string]any
 
 // Concur SSO indicator (no configuration settings needed for Concur SSO).
-type ClientAddonConcur = map[string]interface{}
+type ClientAddonConcur = map[string]any
 
 // Dropbox SSO indicator (no configuration settings needed for Dropbox SSO).
-type ClientAddonDropbox = map[string]interface{}
+type ClientAddonDropbox = map[string]any
 
 // Adobe EchoSign SSO configuration.
 var (
@@ -3384,7 +3384,7 @@ func (c *ClientAddonSAML) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-type ClientAddonSAMLMapping = map[string]interface{}
+type ClientAddonSAMLMapping = map[string]any
 
 // SAP API addon configuration.
 var (
@@ -4221,7 +4221,7 @@ func (c *ClientAddonWams) String() string {
 }
 
 // WS-Fed (WIF) addon indicator. Actual configuration is stored in `callback` and `client_aliases` properties on the client.
-type ClientAddonWsFed = map[string]interface{}
+type ClientAddonWsFed = map[string]any
 
 // Zendesk SSO configuration.
 var (
@@ -6146,10 +6146,10 @@ func (c *ClientJwtConfiguration) String() string {
 }
 
 // Configuration related to id token claims for the client.
-type ClientJwtConfigurationScopes = map[string]interface{}
+type ClientJwtConfigurationScopes = map[string]any
 
 // Metadata associated with the client, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.  Field names (max 255 chars) are alphanumeric and may only include the following special characters:  :,-+=_*?"/\()<>@	[Tab] [Space]
-type ClientMetadata = map[string]interface{}
+type ClientMetadata = map[string]any
 
 // Additional configuration for native mobile apps.
 var (

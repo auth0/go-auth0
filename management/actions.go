@@ -1241,7 +1241,7 @@ func (l *ListActionsPaginatedResponseContent) String() string {
 }
 
 // The payload for the action.
-type TestActionPayload = map[string]interface{}
+type TestActionPayload = map[string]any
 
 var (
 	testActionResponseContentFieldPayload = big.NewInt(1 << 0)
@@ -1328,7 +1328,7 @@ func (t *TestActionResponseContent) String() string {
 }
 
 // The resulting payload after an action was executed.
-type TestActionResultPayload = map[string]interface{}
+type TestActionResultPayload = map[string]any
 
 var (
 	updateActionResponseContentFieldID                     = big.NewInt(1 << 0)

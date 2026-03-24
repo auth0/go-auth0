@@ -5112,7 +5112,7 @@ func TestGettersUserDateSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserDateSchema{}
-		var expected map[string]interface{}
+		var expected map[string]any
 		obj.StringUnknownMap = expected
 
 		// Act & Assert
