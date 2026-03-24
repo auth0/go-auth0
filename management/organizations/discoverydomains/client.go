@@ -34,6 +34,7 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve list of all organization discovery domains associated with the specified organization.
+// This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the organization.
@@ -124,6 +125,7 @@ func (c *Client) Create(
 }
 
 // Retrieve details about a single organization discovery domain specified by domain name.
+// This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
 func (c *Client) GetByName(
 	ctx context.Context,
 	// ID of the organization.
@@ -145,6 +147,7 @@ func (c *Client) GetByName(
 }
 
 // Retrieve details about a single organization discovery domain specified by ID.
+// This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the organization.

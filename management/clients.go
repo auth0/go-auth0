@@ -11214,6 +11214,7 @@ var (
 	publicKeyCredentialFieldAlg                 = big.NewInt(1 << 3)
 	publicKeyCredentialFieldParseExpiryFromCert = big.NewInt(1 << 4)
 	publicKeyCredentialFieldExpiresAt           = big.NewInt(1 << 5)
+	publicKeyCredentialFieldKid                 = big.NewInt(1 << 6)
 )
 
 type PublicKeyCredential struct {
@@ -11227,6 +11228,8 @@ type PublicKeyCredential struct {
 	ParseExpiryFromCert *bool `json:"parse_expiry_from_cert,omitempty" url:"parse_expiry_from_cert,omitempty"`
 	// The ISO 8601 formatted date representing the expiration of the credential. If not specified (not recommended), the credential never expires. Applies to `public_key` credential type.
 	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+	// Optional kid (Key ID), used to uniquely identify the credential. If not specified, a kid value will be auto-generated. The kid header parameter in JWTs sent by your client should match this value. Valid format is [0-9a-zA-Z-_]{10,64}
+	Kid *string `json:"kid,omitempty" url:"kid,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11275,6 +11278,13 @@ func (p *PublicKeyCredential) GetExpiresAt() time.Time {
 		return time.Time{}
 	}
 	return *p.ExpiresAt
+}
+
+func (p *PublicKeyCredential) GetKid() string {
+	if p == nil || p.Kid == nil {
+		return ""
+	}
+	return *p.Kid
 }
 
 func (p *PublicKeyCredential) GetExtraProperties() map[string]interface{} {
@@ -11331,6 +11341,13 @@ func (p *PublicKeyCredential) SetParseExpiryFromCert(parseExpiryFromCert *bool) 
 func (p *PublicKeyCredential) SetExpiresAt(expiresAt *time.Time) {
 	p.ExpiresAt = expiresAt
 	p.require(publicKeyCredentialFieldExpiresAt)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PublicKeyCredential) SetKid(kid *string) {
+	p.Kid = kid
+	p.require(publicKeyCredentialFieldKid)
 }
 
 func (p *PublicKeyCredential) UnmarshalJSON(data []byte) error {

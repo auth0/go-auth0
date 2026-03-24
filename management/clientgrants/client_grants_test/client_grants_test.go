@@ -113,7 +113,6 @@ func TestClientGrantsCreateWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.CreateClientGrantRequestContent{
-		ClientID: "client_id",
 		Audience: "audience",
 	}
 	_, invocationErr := client.ClientGrants.Create(

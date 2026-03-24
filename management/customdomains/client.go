@@ -78,6 +78,38 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Retrieve the tenant's default domain.
+func (c *Client) GetDefault(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (*management.GetDefaultDomainResponseContent, error) {
+	response, err := c.WithRawResponse.GetDefault(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Set the default custom domain for the tenant.
+func (c *Client) SetDefault(
+	ctx context.Context,
+	request *management.SetDefaultCustomDomainRequestContent,
+	opts ...option.RequestOption,
+) (*management.UpdateDefaultDomainResponseContent, error) {
+	response, err := c.WithRawResponse.SetDefault(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Retrieve a custom domain configuration and status.
 func (c *Client) Get(
 	ctx context.Context,

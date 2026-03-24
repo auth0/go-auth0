@@ -12,31 +12,26 @@ import (
 
 // Represents the metadata of a group. Member lists are retrieved via a separate endpoint.
 var (
-	getGroupResponseContentFieldID             = big.NewInt(1 << 0)
-	getGroupResponseContentFieldName           = big.NewInt(1 << 1)
-	getGroupResponseContentFieldExternalID     = big.NewInt(1 << 2)
-	getGroupResponseContentFieldConnectionID   = big.NewInt(1 << 3)
-	getGroupResponseContentFieldOrganizationID = big.NewInt(1 << 4)
-	getGroupResponseContentFieldTenantName     = big.NewInt(1 << 5)
-	getGroupResponseContentFieldDescription    = big.NewInt(1 << 6)
-	getGroupResponseContentFieldCreatedAt      = big.NewInt(1 << 7)
-	getGroupResponseContentFieldUpdatedAt      = big.NewInt(1 << 8)
+	getGroupResponseContentFieldID           = big.NewInt(1 << 0)
+	getGroupResponseContentFieldName         = big.NewInt(1 << 1)
+	getGroupResponseContentFieldExternalID   = big.NewInt(1 << 2)
+	getGroupResponseContentFieldConnectionID = big.NewInt(1 << 3)
+	getGroupResponseContentFieldTenantName   = big.NewInt(1 << 4)
+	getGroupResponseContentFieldCreatedAt    = big.NewInt(1 << 5)
+	getGroupResponseContentFieldUpdatedAt    = big.NewInt(1 << 6)
 )
 
 type GetGroupResponseContent struct {
 	// Unique identifier for the group (service-generated).
 	ID string `json:"id" url:"id"`
-	// Name of the group. Must be unique within its scope (connection, organization, or tenant). Must contain between 1 and 128 printable ASCII characters.
+	// Name of the group. Must be unique within its connection. Must contain between 1 and 128 printable ASCII characters.
 	Name string `json:"name" url:"name"`
 	// External identifier for the group, often used for SCIM synchronization. Max length of 256 characters.
 	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
 	// Identifier for the connection this group belongs to (if a connection group).
 	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
-	// Identifier for the organization this group belongs to (if an organization group).
-	OrganizationID *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
 	// Identifier for the tenant this group belongs to.
-	TenantName  string  `json:"tenant_name" url:"tenant_name"`
-	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	TenantName string `json:"tenant_name" url:"tenant_name"`
 	// Timestamp of when the group was created.
 	CreatedAt time.Time `json:"created_at" url:"created_at"`
 	// Timestamp of when the group was last updated.
@@ -78,25 +73,11 @@ func (g *GetGroupResponseContent) GetConnectionID() string {
 	return *g.ConnectionID
 }
 
-func (g *GetGroupResponseContent) GetOrganizationID() string {
-	if g == nil || g.OrganizationID == nil {
-		return ""
-	}
-	return *g.OrganizationID
-}
-
 func (g *GetGroupResponseContent) GetTenantName() string {
 	if g == nil {
 		return ""
 	}
 	return g.TenantName
-}
-
-func (g *GetGroupResponseContent) GetDescription() string {
-	if g == nil || g.Description == nil {
-		return ""
-	}
-	return *g.Description
 }
 
 func (g *GetGroupResponseContent) GetCreatedAt() time.Time {
@@ -155,25 +136,11 @@ func (g *GetGroupResponseContent) SetConnectionID(connectionID *string) {
 	g.require(getGroupResponseContentFieldConnectionID)
 }
 
-// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetGroupResponseContent) SetOrganizationID(organizationID *string) {
-	g.OrganizationID = organizationID
-	g.require(getGroupResponseContentFieldOrganizationID)
-}
-
 // SetTenantName sets the TenantName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetGroupResponseContent) SetTenantName(tenantName string) {
 	g.TenantName = tenantName
 	g.require(getGroupResponseContentFieldTenantName)
-}
-
-// SetDescription sets the Description field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetGroupResponseContent) SetDescription(description *string) {
-	g.Description = description
-	g.require(getGroupResponseContentFieldDescription)
 }
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
