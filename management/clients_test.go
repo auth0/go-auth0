@@ -26636,6 +26636,14 @@ func TestSettersPublicKeyCredential(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetKid", func(t *testing.T) {
+		obj := &PublicKeyCredential{}
+		var fernTestValueKid *string
+		obj.SetKid(fernTestValueKid)
+		assert.Equal(t, fernTestValueKid, obj.Kid)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersPublicKeyCredential(t *testing.T) {
@@ -26821,6 +26829,40 @@ func TestGettersPublicKeyCredential(t *testing.T) {
 		_ = obj.GetExpiresAt() // Should return zero value
 	})
 
+	t.Run("GetKid", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PublicKeyCredential{}
+		var value string
+		obj.Kid = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetKid(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetKid_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PublicKeyCredential{}
+		obj.Kid = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetKid(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetKid_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *PublicKeyCredential
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetKid() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitPublicKeyCredential(t *testing.T) {
@@ -26987,6 +27029,37 @@ func TestSettersMarkExplicitPublicKeyCredential(t *testing.T) {
 
 		// Act
 		obj.SetExpiresAt(fernTestValueExpiresAt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetKid_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PublicKeyCredential{}
+		var fernTestValueKid *string
+
+		// Act
+		obj.SetKid(fernTestValueKid)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

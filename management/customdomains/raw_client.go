@@ -121,6 +121,89 @@ func (r *RawClient) Create(
 	}, nil
 }
 
+func (r *RawClient) GetDefault(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (*core.Response[*management.GetDefaultDomainResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/custom-domains/default"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.GetDefaultDomainResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.GetDefaultDomainResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) SetDefault(
+	ctx context.Context,
+	request *management.SetDefaultCustomDomainRequestContent,
+	opts ...option.RequestOption,
+) (*core.Response[*management.UpdateDefaultDomainResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/custom-domains/default"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	var response *management.UpdateDefaultDomainResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPatch,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.UpdateDefaultDomainResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
 func (r *RawClient) Get(
 	ctx context.Context,
 	// ID of the custom domain to retrieve.

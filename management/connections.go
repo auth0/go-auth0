@@ -2011,27 +2011,28 @@ var (
 	connectionPropertiesOptionsFieldEnableScriptContext              = big.NewInt(1 << 4)
 	connectionPropertiesOptionsFieldEnabledDatabaseCustomization     = big.NewInt(1 << 5)
 	connectionPropertiesOptionsFieldImportMode                       = big.NewInt(1 << 6)
-	connectionPropertiesOptionsFieldCustomScripts                    = big.NewInt(1 << 7)
-	connectionPropertiesOptionsFieldAuthenticationMethods            = big.NewInt(1 << 8)
-	connectionPropertiesOptionsFieldPasskeyOptions                   = big.NewInt(1 << 9)
-	connectionPropertiesOptionsFieldPasswordPolicy                   = big.NewInt(1 << 10)
-	connectionPropertiesOptionsFieldPasswordComplexityOptions        = big.NewInt(1 << 11)
-	connectionPropertiesOptionsFieldPasswordHistory                  = big.NewInt(1 << 12)
-	connectionPropertiesOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 13)
-	connectionPropertiesOptionsFieldPasswordDictionary               = big.NewInt(1 << 14)
-	connectionPropertiesOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 15)
-	connectionPropertiesOptionsFieldBasicProfile                     = big.NewInt(1 << 16)
-	connectionPropertiesOptionsFieldExtAdmin                         = big.NewInt(1 << 17)
-	connectionPropertiesOptionsFieldExtIsSuspended                   = big.NewInt(1 << 18)
-	connectionPropertiesOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 19)
-	connectionPropertiesOptionsFieldExtGroups                        = big.NewInt(1 << 20)
-	connectionPropertiesOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 21)
-	connectionPropertiesOptionsFieldExtProfile                       = big.NewInt(1 << 22)
-	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 23)
-	connectionPropertiesOptionsFieldUpstreamParams                   = big.NewInt(1 << 24)
-	connectionPropertiesOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 25)
-	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 26)
-	connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 27)
+	connectionPropertiesOptionsFieldConfiguration                    = big.NewInt(1 << 7)
+	connectionPropertiesOptionsFieldCustomScripts                    = big.NewInt(1 << 8)
+	connectionPropertiesOptionsFieldAuthenticationMethods            = big.NewInt(1 << 9)
+	connectionPropertiesOptionsFieldPasskeyOptions                   = big.NewInt(1 << 10)
+	connectionPropertiesOptionsFieldPasswordPolicy                   = big.NewInt(1 << 11)
+	connectionPropertiesOptionsFieldPasswordComplexityOptions        = big.NewInt(1 << 12)
+	connectionPropertiesOptionsFieldPasswordHistory                  = big.NewInt(1 << 13)
+	connectionPropertiesOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 14)
+	connectionPropertiesOptionsFieldPasswordDictionary               = big.NewInt(1 << 15)
+	connectionPropertiesOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 16)
+	connectionPropertiesOptionsFieldBasicProfile                     = big.NewInt(1 << 17)
+	connectionPropertiesOptionsFieldExtAdmin                         = big.NewInt(1 << 18)
+	connectionPropertiesOptionsFieldExtIsSuspended                   = big.NewInt(1 << 19)
+	connectionPropertiesOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 20)
+	connectionPropertiesOptionsFieldExtGroups                        = big.NewInt(1 << 21)
+	connectionPropertiesOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 22)
+	connectionPropertiesOptionsFieldExtProfile                       = big.NewInt(1 << 23)
+	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 24)
+	connectionPropertiesOptionsFieldUpstreamParams                   = big.NewInt(1 << 25)
+	connectionPropertiesOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 26)
+	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 27)
+	connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 28)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2046,7 +2047,9 @@ type ConnectionPropertiesOptions struct {
 	// Set to true to use a legacy user store
 	EnabledDatabaseCustomization *bool `json:"enabledDatabaseCustomization,omitempty" url:"enabledDatabaseCustomization,omitempty"`
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
-	ImportMode                       *bool                                       `json:"import_mode,omitempty" url:"import_mode,omitempty"`
+	ImportMode *bool `json:"import_mode,omitempty" url:"import_mode,omitempty"`
+	// Stores encrypted string only configurations for connections
+	Configuration                    map[string]*string                          `json:"configuration,omitempty" url:"configuration,omitempty"`
 	CustomScripts                    *ConnectionCustomScripts                    `json:"customScripts,omitempty" url:"customScripts,omitempty"`
 	AuthenticationMethods            *ConnectionAuthenticationMethods            `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
 	PasskeyOptions                   *ConnectionPasskeyOptions                   `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
@@ -2124,6 +2127,13 @@ func (c *ConnectionPropertiesOptions) GetImportMode() bool {
 		return false
 	}
 	return *c.ImportMode
+}
+
+func (c *ConnectionPropertiesOptions) GetConfiguration() map[string]*string {
+	if c == nil || c.Configuration == nil {
+		return nil
+	}
+	return c.Configuration
 }
 
 func (c *ConnectionPropertiesOptions) GetCustomScripts() ConnectionCustomScripts {
@@ -2334,6 +2344,13 @@ func (c *ConnectionPropertiesOptions) SetEnabledDatabaseCustomization(enabledDat
 func (c *ConnectionPropertiesOptions) SetImportMode(importMode *bool) {
 	c.ImportMode = importMode
 	c.require(connectionPropertiesOptionsFieldImportMode)
+}
+
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetConfiguration(configuration map[string]*string) {
+	c.Configuration = configuration
+	c.require(connectionPropertiesOptionsFieldConfiguration)
 }
 
 // SetCustomScripts sets the CustomScripts field and marks it as non-optional;
@@ -4279,27 +4296,28 @@ var (
 	updateConnectionOptionsFieldEnableScriptContext              = big.NewInt(1 << 4)
 	updateConnectionOptionsFieldEnabledDatabaseCustomization     = big.NewInt(1 << 5)
 	updateConnectionOptionsFieldImportMode                       = big.NewInt(1 << 6)
-	updateConnectionOptionsFieldCustomScripts                    = big.NewInt(1 << 7)
-	updateConnectionOptionsFieldAuthenticationMethods            = big.NewInt(1 << 8)
-	updateConnectionOptionsFieldPasskeyOptions                   = big.NewInt(1 << 9)
-	updateConnectionOptionsFieldPasswordPolicy                   = big.NewInt(1 << 10)
-	updateConnectionOptionsFieldPasswordComplexityOptions        = big.NewInt(1 << 11)
-	updateConnectionOptionsFieldPasswordHistory                  = big.NewInt(1 << 12)
-	updateConnectionOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 13)
-	updateConnectionOptionsFieldPasswordDictionary               = big.NewInt(1 << 14)
-	updateConnectionOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 15)
-	updateConnectionOptionsFieldBasicProfile                     = big.NewInt(1 << 16)
-	updateConnectionOptionsFieldExtAdmin                         = big.NewInt(1 << 17)
-	updateConnectionOptionsFieldExtIsSuspended                   = big.NewInt(1 << 18)
-	updateConnectionOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 19)
-	updateConnectionOptionsFieldExtGroups                        = big.NewInt(1 << 20)
-	updateConnectionOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 21)
-	updateConnectionOptionsFieldExtProfile                       = big.NewInt(1 << 22)
-	updateConnectionOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 23)
-	updateConnectionOptionsFieldUpstreamParams                   = big.NewInt(1 << 24)
-	updateConnectionOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 25)
-	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 26)
-	updateConnectionOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 27)
+	updateConnectionOptionsFieldConfiguration                    = big.NewInt(1 << 7)
+	updateConnectionOptionsFieldCustomScripts                    = big.NewInt(1 << 8)
+	updateConnectionOptionsFieldAuthenticationMethods            = big.NewInt(1 << 9)
+	updateConnectionOptionsFieldPasskeyOptions                   = big.NewInt(1 << 10)
+	updateConnectionOptionsFieldPasswordPolicy                   = big.NewInt(1 << 11)
+	updateConnectionOptionsFieldPasswordComplexityOptions        = big.NewInt(1 << 12)
+	updateConnectionOptionsFieldPasswordHistory                  = big.NewInt(1 << 13)
+	updateConnectionOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 14)
+	updateConnectionOptionsFieldPasswordDictionary               = big.NewInt(1 << 15)
+	updateConnectionOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 16)
+	updateConnectionOptionsFieldBasicProfile                     = big.NewInt(1 << 17)
+	updateConnectionOptionsFieldExtAdmin                         = big.NewInt(1 << 18)
+	updateConnectionOptionsFieldExtIsSuspended                   = big.NewInt(1 << 19)
+	updateConnectionOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 20)
+	updateConnectionOptionsFieldExtGroups                        = big.NewInt(1 << 21)
+	updateConnectionOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 22)
+	updateConnectionOptionsFieldExtProfile                       = big.NewInt(1 << 23)
+	updateConnectionOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 24)
+	updateConnectionOptionsFieldUpstreamParams                   = big.NewInt(1 << 25)
+	updateConnectionOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 26)
+	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 27)
+	updateConnectionOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 28)
 )
 
 type UpdateConnectionOptions struct {
@@ -4314,7 +4332,9 @@ type UpdateConnectionOptions struct {
 	// Set to true to use a legacy user store
 	EnabledDatabaseCustomization *bool `json:"enabledDatabaseCustomization,omitempty" url:"enabledDatabaseCustomization,omitempty"`
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
-	ImportMode                       *bool                                       `json:"import_mode,omitempty" url:"import_mode,omitempty"`
+	ImportMode *bool `json:"import_mode,omitempty" url:"import_mode,omitempty"`
+	// Stores encrypted string only configurations for connections
+	Configuration                    map[string]*string                          `json:"configuration,omitempty" url:"configuration,omitempty"`
 	CustomScripts                    *ConnectionCustomScripts                    `json:"customScripts,omitempty" url:"customScripts,omitempty"`
 	AuthenticationMethods            *ConnectionAuthenticationMethods            `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
 	PasskeyOptions                   *ConnectionPasskeyOptions                   `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
@@ -4392,6 +4412,13 @@ func (u *UpdateConnectionOptions) GetImportMode() bool {
 		return false
 	}
 	return *u.ImportMode
+}
+
+func (u *UpdateConnectionOptions) GetConfiguration() map[string]*string {
+	if u == nil || u.Configuration == nil {
+		return nil
+	}
+	return u.Configuration
 }
 
 func (u *UpdateConnectionOptions) GetCustomScripts() ConnectionCustomScripts {
@@ -4602,6 +4629,13 @@ func (u *UpdateConnectionOptions) SetEnabledDatabaseCustomization(enabledDatabas
 func (u *UpdateConnectionOptions) SetImportMode(importMode *bool) {
 	u.ImportMode = importMode
 	u.require(updateConnectionOptionsFieldImportMode)
+}
+
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetConfiguration(configuration map[string]*string) {
+	u.Configuration = configuration
+	u.require(updateConnectionOptionsFieldConfiguration)
 }
 
 // SetCustomScripts sets the CustomScripts field and marks it as non-optional;
