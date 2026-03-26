@@ -10236,6 +10236,84 @@ func TestEnrollmentTicket_String(t *testing.T) {
 	}
 }
 
+func TestEvent_GetA0Tenant(tt *testing.T) {
+	var zeroValue string
+	e := &Event{A0Tenant: &zeroValue}
+	e.GetA0Tenant()
+	e = &Event{}
+	e.GetA0Tenant()
+	e = nil
+	e.GetA0Tenant()
+}
+
+func TestEvent_GetData(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	e := &Event{Data: zeroValue}
+	e.GetData()
+	e = &Event{}
+	e.GetData()
+	e = nil
+	e.GetData()
+}
+
+func TestEvent_GetID(tt *testing.T) {
+	var zeroValue string
+	e := &Event{ID: &zeroValue}
+	e.GetID()
+	e = &Event{}
+	e.GetID()
+	e = nil
+	e.GetID()
+}
+
+func TestEvent_GetSource(tt *testing.T) {
+	var zeroValue string
+	e := &Event{Source: &zeroValue}
+	e.GetSource()
+	e = &Event{}
+	e.GetSource()
+	e = nil
+	e.GetSource()
+}
+
+func TestEvent_GetSpecVersion(tt *testing.T) {
+	var zeroValue string
+	e := &Event{SpecVersion: &zeroValue}
+	e.GetSpecVersion()
+	e = &Event{}
+	e.GetSpecVersion()
+	e = nil
+	e.GetSpecVersion()
+}
+
+func TestEvent_GetTime(tt *testing.T) {
+	var zeroValue time.Time
+	e := &Event{Time: &zeroValue}
+	e.GetTime()
+	e = &Event{}
+	e.GetTime()
+	e = nil
+	e.GetTime()
+}
+
+func TestEvent_GetType(tt *testing.T) {
+	var zeroValue string
+	e := &Event{Type: &zeroValue}
+	e.GetType()
+	e = &Event{}
+	e.GetType()
+	e = nil
+	e.GetType()
+}
+
+func TestEvent_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &Event{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestEventDelivery_GetEvent(tt *testing.T) {
 	e := &EventDelivery{}
 	e.GetEvent()
@@ -10463,6 +10541,14 @@ func TestEventStreamDestination_String(t *testing.T) {
 func TestEventStreamList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &EventStreamList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestEventStreamReader_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EventStreamReader{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -16448,6 +16534,31 @@ func TestSpringCMClientAddon_GetACSURL(tt *testing.T) {
 func TestSpringCMClientAddon_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SpringCMClientAddon{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSSEMessage_GetEvent(tt *testing.T) {
+	s := &SSEMessage{}
+	s.GetEvent()
+	s = nil
+	s.GetEvent()
+}
+
+func TestSSEMessage_GetOffset(tt *testing.T) {
+	var zeroValue string
+	s := &SSEMessage{Offset: &zeroValue}
+	s.GetOffset()
+	s = &SSEMessage{}
+	s.GetOffset()
+	s = nil
+	s.GetOffset()
+}
+
+func TestSSEMessage_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SSEMessage{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

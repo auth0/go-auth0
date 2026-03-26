@@ -118,7 +118,10 @@ type Management struct {
 	// EncryptionKey manages Auth0 Encryption Keys.
 	EncryptionKey *EncryptionKeyManager
 
-	// EventStream manages Auth0 Encryption Keys.
+	// Event manages Auth0 Event resources for streaming events.
+	Event *EventManager
+
+	// EventStream manages Auth0 Event Stream resources.
 	EventStream *EventStreamManager
 
 	// TokenExchangeProfile manages Auth0 Token Exchange Profiles.
@@ -237,6 +240,7 @@ func New(domain string, options ...Option) (*Management, error) {
 	m.RuleConfig = (*RuleConfigManager)(&m.common)
 	m.SigningKey = (*SigningKeyManager)(&m.common)
 	m.EncryptionKey = (*EncryptionKeyManager)(&m.common)
+	m.Event = (*EventManager)(&m.common)
 	m.EventStream = (*EventStreamManager)(&m.common)
 	m.Stat = (*StatManager)(&m.common)
 	m.Tenant = (*TenantManager)(&m.common)

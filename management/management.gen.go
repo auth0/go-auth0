@@ -8227,6 +8227,67 @@ func (e *EnrollmentTicket) String() string {
 	return Stringify(e)
 }
 
+// GetA0Tenant returns the A0Tenant field if it's non-nil, zero value otherwise.
+func (e *Event) GetA0Tenant() string {
+	if e == nil || e.A0Tenant == nil {
+		return ""
+	}
+	return *e.A0Tenant
+}
+
+// GetData returns the Data map if it's non-nil, an empty map otherwise.
+func (e *Event) GetData() map[string]interface{} {
+	if e == nil || e.Data == nil {
+		return map[string]interface{}{}
+	}
+	return e.Data
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (e *Event) GetID() string {
+	if e == nil || e.ID == nil {
+		return ""
+	}
+	return *e.ID
+}
+
+// GetSource returns the Source field if it's non-nil, zero value otherwise.
+func (e *Event) GetSource() string {
+	if e == nil || e.Source == nil {
+		return ""
+	}
+	return *e.Source
+}
+
+// GetSpecVersion returns the SpecVersion field if it's non-nil, zero value otherwise.
+func (e *Event) GetSpecVersion() string {
+	if e == nil || e.SpecVersion == nil {
+		return ""
+	}
+	return *e.SpecVersion
+}
+
+// GetTime returns the Time field if it's non-nil, zero value otherwise.
+func (e *Event) GetTime() time.Time {
+	if e == nil || e.Time == nil {
+		return time.Time{}
+	}
+	return *e.Time
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (e *Event) GetType() string {
+	if e == nil || e.Type == nil {
+		return ""
+	}
+	return *e.Type
+}
+
+// String returns a string representation of Event.
+func (e *Event) String() string {
+	return Stringify(e)
+}
+
 // GetEvent returns the Event field.
 func (e *EventDelivery) GetEvent() *DeliveryEvent {
 	if e == nil {
@@ -8406,6 +8467,11 @@ func (e *EventStreamDestination) String() string {
 
 // String returns a string representation of EventStreamList.
 func (e *EventStreamList) String() string {
+	return Stringify(e)
+}
+
+// String returns a string representation of EventStreamReader.
+func (e *EventStreamReader) String() string {
 	return Stringify(e)
 }
 
@@ -13084,6 +13150,27 @@ func (s *SpringCMClientAddon) GetACSURL() string {
 
 // String returns a string representation of SpringCMClientAddon.
 func (s *SpringCMClientAddon) String() string {
+	return Stringify(s)
+}
+
+// GetEvent returns the Event field.
+func (s *SSEMessage) GetEvent() *Event {
+	if s == nil {
+		return nil
+	}
+	return s.Event
+}
+
+// GetOffset returns the Offset field if it's non-nil, zero value otherwise.
+func (s *SSEMessage) GetOffset() string {
+	if s == nil || s.Offset == nil {
+		return ""
+	}
+	return *s.Offset
+}
+
+// String returns a string representation of SSEMessage.
+func (s *SSEMessage) String() string {
 	return Stringify(s)
 }
 
