@@ -6902,6 +6902,16 @@ func TestConnectionOptionsOIDC_GetDomainAliases(tt *testing.T) {
 	c.GetDomainAliases()
 }
 
+func TestConnectionOptionsOIDC_GetDPoPSigningAlg(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOIDC{DPoPSigningAlg: &zeroValue}
+	c.GetDPoPSigningAlg()
+	c = &ConnectionOptionsOIDC{}
+	c.GetDPoPSigningAlg()
+	c = nil
+	c.GetDPoPSigningAlg()
+}
+
 func TestConnectionOptionsOIDC_GetIDTokenSignedResponseAlgs(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptionsOIDC{IDTokenSignedResponseAlgs: &zeroValue}
@@ -7188,6 +7198,16 @@ func TestConnectionOptionsOkta_GetDomainAliases(tt *testing.T) {
 	c.GetDomainAliases()
 	c = nil
 	c.GetDomainAliases()
+}
+
+func TestConnectionOptionsOkta_GetDPoPSigningAlg(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{DPoPSigningAlg: &zeroValue}
+	c.GetDPoPSigningAlg()
+	c = &ConnectionOptionsOkta{}
+	c.GetDPoPSigningAlg()
+	c = nil
+	c.GetDPoPSigningAlg()
 }
 
 func TestConnectionOptionsOkta_GetIDTokenSignedResponseAlgs(tt *testing.T) {

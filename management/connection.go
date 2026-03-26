@@ -705,6 +705,9 @@ type ConnectionOptionsOkta struct {
 	//      "jwks_uri":               "https://example.com/.well-known/jwks.json",
 	//  }
 	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
+
+	// DPoPSigningAlg is the algorithm used to sign the DPoP proof. Currently allowed values: ES256, Ed25519.
+	DPoPSigningAlg *string `json:"dpop_signing_alg,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOkta.
@@ -1207,6 +1210,9 @@ type ConnectionOptionsOIDC struct {
 	// includes a cryptographic nonce in authorization requests to prevent replay attacks.
 	// The identity provider must include this nonce in the ID token for validation.
 	SendBackChannelNonce *bool `json:"send_back_channel_nonce,omitempty"`
+
+	// DPoPSigningAlg is the algorithm used to sign the DPoP proof. Currently allowed values: ES256, Ed25519.
+	DPoPSigningAlg *string `json:"dpop_signing_alg,omitempty"`
 }
 
 // ConnectionOptionsOIDCConnectionSettings contains PKCE configuration for the connection.
