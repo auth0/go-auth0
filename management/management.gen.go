@@ -5586,6 +5586,14 @@ func (c *ConnectionOptionsOIDC) GetDomainAliases() []string {
 	return *c.DomainAliases
 }
 
+// GetDPoPSigningAlg returns the DPoPSigningAlg field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDC) GetDPoPSigningAlg() string {
+	if c == nil || c.DPoPSigningAlg == nil {
+		return ""
+	}
+	return *c.DPoPSigningAlg
+}
+
 // GetIDTokenSignedResponseAlgs returns the IDTokenSignedResponseAlgs field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOIDC) GetIDTokenSignedResponseAlgs() []string {
 	if c == nil || c.IDTokenSignedResponseAlgs == nil {
@@ -5815,6 +5823,14 @@ func (c *ConnectionOptionsOkta) GetDomainAliases() []string {
 		return nil
 	}
 	return *c.DomainAliases
+}
+
+// GetDPoPSigningAlg returns the DPoPSigningAlg field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetDPoPSigningAlg() string {
+	if c == nil || c.DPoPSigningAlg == nil {
+		return ""
+	}
+	return *c.DPoPSigningAlg
 }
 
 // GetIDTokenSignedResponseAlgs returns the IDTokenSignedResponseAlgs field if it's non-nil, zero value otherwise.

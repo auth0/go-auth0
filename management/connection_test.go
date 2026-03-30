@@ -1583,6 +1583,7 @@ func givenAOktaConnection(t *testing.T) *Connection {
 					"alias": "login_hint",
 				},
 			},
+			DPoPSigningAlg: auth0.String("ES256"),
 		},
 	})
 }
@@ -1738,5 +1739,44 @@ func TestCustomPasswordHashOption(t *testing.T) {
 
 	t.Cleanup(func() {
 		cleanupConnection(t, conn.GetID())
+	})
+}
+
+func givenAOIDCConnection(t *testing.T) *Connection {
+	t.Helper()
+
+	return givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:     auth0.Stringf("Test-OIDC-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("oidc"),
+		},
+		options: &ConnectionOptionsOkta{
+			ClientID:              auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+			ClientSecret:          auth0.String("mySecret"),
+			Scope:                 auth0.String("openid"),
+			Domain:                auth0.String("domain.okta.com"),
+			Issuer:                auth0.String("https://example.com"),
+			AuthorizationEndpoint: auth0.String("https://example.com"),
+			JWKSURI:               auth0.String("https://example.com/jwks"),
+			DPoPSigningAlg:        auth0.String("Ed25519"),
+		},
+	})
+}
+
+func TestConnectionManager_DpopForOktaAndOIDC(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedOktaConnection := givenAOktaConnection(t)
+	expectedOIDCConnection := givenAOIDCConnection(t)
+
+	oktaOpts := expectedOktaConnection.Options.(*ConnectionOptionsOkta)
+	oidcOpts := expectedOIDCConnection.Options.(*ConnectionOptionsOIDC)
+
+	assert.Equal(t, "ES256", oktaOpts.GetDPoPSigningAlg())
+	assert.Equal(t, "Ed25519", oidcOpts.GetDPoPSigningAlg())
+
+	t.Cleanup(func() {
+		cleanupConnection(t, expectedOktaConnection.GetID())
+		cleanupConnection(t, expectedOIDCConnection.GetID())
 	})
 }
