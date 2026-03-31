@@ -1304,6 +1304,78 @@ func TestClient_OrganizationDiscoveryMethods(t *testing.T) {
 			cleanupClient(t, client.GetClientID())
 		})
 	})
+
+	t.Run("Full lifecycle of organization discovery methods", func(t *testing.T) {
+		ctx := context.Background()
+
+		// Step 1: Create a client with organization_usage "require",
+		// organization_require_behavior "pre_login_prompt", and
+		// organization_discovery_methods ["email"].
+		client := &Client{
+			Name:                         auth0.Stringf("Test Client (%s)", time.Now().Format(time.StampMilli)),
+			OIDCConformant:               auth0.Bool(true),
+			OrganizationUsage:            auth0.String("require"),
+			OrganizationRequireBehavior:  auth0.String("pre_login_prompt"),
+			OrganizationDiscoveryMethods: &[]string{"email"},
+		}
+
+		err := api.Client.Create(ctx, client)
+		require.NoError(t, err)
+		require.NotEmpty(t, client.GetClientID())
+
+		t.Cleanup(func() {
+			cleanupClient(t, client.GetClientID())
+		})
+
+		assert.Equal(t, "require", client.GetOrganizationUsage())
+		assert.Equal(t, "pre_login_prompt", client.GetOrganizationRequireBehavior())
+		assert.NotNil(t, client.OrganizationDiscoveryMethods)
+		assert.Contains(t, *client.OrganizationDiscoveryMethods, "email")
+
+		// Step 2: Read the client back and verify organization_discovery_methods
+		// contains ["email"]
+		retrievedClient, err := api.Client.Read(ctx, client.GetClientID())
+		require.NoError(t, err)
+		assert.Equal(t, "require", retrievedClient.GetOrganizationUsage())
+		assert.Equal(t, "pre_login_prompt", retrievedClient.GetOrganizationRequireBehavior())
+		assert.NotNil(t, retrievedClient.OrganizationDiscoveryMethods)
+		assert.ElementsMatch(t, []string{"email"}, *retrievedClient.OrganizationDiscoveryMethods)
+
+		// Step 3: Patch the client to change organization_usage to "allow" while
+		// organization_require_behavior remains "pre_login_prompt".
+		err = api.Client.Update(ctx, client.GetClientID(), &Client{
+			OrganizationUsage: auth0.String("allow"),
+		})
+		require.NoError(t, err)
+
+		patchedClient, err := api.Client.Read(ctx, client.GetClientID())
+		require.NoError(t, err)
+		assert.Equal(t, "allow", patchedClient.GetOrganizationUsage())
+		assert.Equal(t, "pre_login_prompt", patchedClient.GetOrganizationRequireBehavior())
+		assert.NotNil(t, patchedClient.GetOrganizationDiscoveryMethods())
+		assert.Contains(t, patchedClient.GetOrganizationDiscoveryMethods(), "email")
+
+		// Step 4: Patch the client to remove organization_discovery_methods (set to null)
+		// and change organization_require_behavior to "post_login_prompt".
+		// Since omitempty prevents sending null, use custom raw request.
+		type clientPatchNullDiscovery struct {
+			OrganizationRequireBehavior  *string   `json:"organization_require_behavior,omitempty"`
+			OrganizationDiscoveryMethods *[]string `json:"organization_discovery_methods"` // no omitempty to allow null.
+		}
+
+		patch := &clientPatchNullDiscovery{
+			OrganizationRequireBehavior:  auth0.String("post_login_prompt"),
+			OrganizationDiscoveryMethods: nil,
+		}
+		err = api.Request(ctx, http.MethodPatch, api.URI("clients", client.GetClientID()), patch)
+		require.NoError(t, err)
+
+		finalClient, err := api.Client.Read(ctx, client.GetClientID())
+		require.NoError(t, err)
+		assert.Equal(t, "allow", finalClient.GetOrganizationUsage())
+		assert.Equal(t, "post_login_prompt", finalClient.GetOrganizationRequireBehavior())
+		assert.Nil(t, finalClient.OrganizationDiscoveryMethods)
+	})
 }
 
 func cleanupCredential(t *testing.T, clientID string, credentialID string) {
@@ -1477,6 +1549,66 @@ aibASY5pIRiKENmbZELDtucCAwEAAQ==
 		assert.GreaterOrEqual(t, len(*createdClient.ExpressConfiguration.LinkedClients), 1)
 		assert.Equal(t, linkedWebClient.GetClientID(), (*createdClient.ExpressConfiguration.LinkedClients)[0].GetClientID())
 	})
+}
+
+func TestClient_MyOrganizationConfiguration(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+	userAttributeProfile := givenAUserAttributeProfile(t)
+	// Case : Create a client with full my_organization_configuration fields.
+	fullStrategies := []string{"pingfederate", "adfs", "waad", "google-apps", "okta", "oidc", "samlp"}
+	clientWith := &Client{
+		Name:        auth0.Stringf("Test Client Full MyOrgConfig (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("Client with full my_organization_configuration."),
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			ConnectionProfileID:        auth0.String("cop_1cu7hYRotxr9BYXXwLH14g"),
+			UserAttributeProfileID:     auth0.String(userAttributeProfile.GetID()),
+			AllowedStrategies:          &fullStrategies,
+			ConnectionDeletionBehavior: auth0.String("allow"),
+		},
+	}
+	err := api.Client.Create(ctx, clientWith)
+	require.NoError(t, err)
+	require.NotEmpty(t, clientWith.GetClientID())
+	t.Cleanup(func() {
+		cleanupClient(t, clientWith.GetClientID())
+	})
+
+	require.NotNil(t, clientWith.GetMyOrganizationConfiguration())
+	assert.Equal(t, "cop_1cu7hYRotxr9BYXXwLH14g", clientWith.GetMyOrganizationConfiguration().GetConnectionProfileID())
+	assert.Equal(t, userAttributeProfile.GetID(), clientWith.GetMyOrganizationConfiguration().GetUserAttributeProfileID())
+	assert.ElementsMatch(t, fullStrategies, clientWith.GetMyOrganizationConfiguration().GetAllowedStrategies())
+	assert.Equal(t, "allow", clientWith.GetMyOrganizationConfiguration().GetConnectionDeletionBehavior())
+
+	// Case: Create a client with wrong connection_profile_id / user_attribute_profile_id (404).
+	clientBadProfile := &Client{
+		Name: auth0.Stringf("Test Client Bad Profile (%s)", time.Now().Format(time.StampMilli)),
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			ConnectionProfileID:        auth0.String("cop_WRONG"),
+			UserAttributeProfileID:     auth0.String("uap_WRONG"),
+			AllowedStrategies:          &fullStrategies,
+			ConnectionDeletionBehavior: auth0.String("allow"),
+		},
+	}
+	err = api.Client.Create(ctx, clientBadProfile)
+	require.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusBadRequest, err.(Error).Status())
+
+	// Case: List and Read clients to verify my_organization_configuration is present.
+	clientList, err := api.Client.List(ctx, IncludeFields("client_id", "my_organization_configuration"))
+	require.NoError(t, err)
+	assert.Greater(t, len(clientList.Clients), 0)
+
+	// Case: Read the specific client and verify my_organization_configuration fields.
+	readClient, err := api.Client.Read(ctx, clientWith.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, readClient.GetMyOrganizationConfiguration())
+	assert.Equal(t, "cop_1cu7hYRotxr9BYXXwLH14g", readClient.GetMyOrganizationConfiguration().GetConnectionProfileID())
+	assert.Equal(t, userAttributeProfile.GetID(), readClient.GetMyOrganizationConfiguration().GetUserAttributeProfileID())
+	assert.ElementsMatch(t, fullStrategies, readClient.GetMyOrganizationConfiguration().GetAllowedStrategies())
+	assert.Equal(t, "allow", readClient.GetMyOrganizationConfiguration().GetConnectionDeletionBehavior())
 }
 
 func givenAnExpressConfigurationClient(t *testing.T) *Client {
