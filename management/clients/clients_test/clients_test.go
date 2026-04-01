@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -97,6 +98,9 @@ func TestClientsListWithWireMock(
 		AppType: management.String(
 			"app_type",
 		),
+		ExternalClientID: management.String(
+			"external_client_id",
+		),
 		Q: management.String(
 			"q",
 		),
@@ -110,7 +114,7 @@ func TestClientsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestClientsListWithWireMock", "GET", "/clients", map[string]string{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "is_global": "true", "is_first_party": "true", "app_type": "app_type", "q": "q"}, 1)
+	VerifyRequestCount(t, "TestClientsListWithWireMock", "GET", "/clients", map[string]string{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "is_global": "true", "is_first_party": "true", "app_type": "app_type", "external_client_id": "external_client_id", "q": "q"}, 1)
 }
 
 func TestClientsCreateWithWireMock(

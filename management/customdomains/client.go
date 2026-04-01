@@ -4,6 +4,7 @@ package customdomains
 
 import (
 	context "context"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
@@ -68,38 +69,6 @@ func (c *Client) Create(
 	opts ...option.RequestOption,
 ) (*management.CreateCustomDomainResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-// Retrieve the tenant's default domain.
-func (c *Client) GetDefault(
-	ctx context.Context,
-	opts ...option.RequestOption,
-) (*management.GetDefaultDomainResponseContent, error) {
-	response, err := c.WithRawResponse.GetDefault(
-		ctx,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-// Set the default custom domain for the tenant.
-func (c *Client) SetDefault(
-	ctx context.Context,
-	request *management.SetDefaultCustomDomainRequestContent,
-	opts ...option.RequestOption,
-) (*management.UpdateDefaultDomainResponseContent, error) {
-	response, err := c.WithRawResponse.SetDefault(
 		ctx,
 		request,
 		opts...,

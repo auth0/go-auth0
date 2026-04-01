@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -73,9 +74,7 @@ func TestActionsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &management.ListActionsRequestParameters{
-		TriggerID: management.String(
-			"triggerId",
-		),
+		TriggerID: management.ActionTriggerTypeEnumPostLogin.Ptr(),
 		ActionName: management.String(
 			"actionName",
 		),
@@ -101,7 +100,7 @@ func TestActionsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestActionsListWithWireMock", "GET", "/actions/actions", map[string]string{"triggerId": "triggerId", "actionName": "actionName", "deployed": "true", "page": "1", "per_page": "1", "installed": "true"}, 1)
+	VerifyRequestCount(t, "TestActionsListWithWireMock", "GET", "/actions/actions", map[string]string{"triggerId": "post-login", "actionName": "actionName", "deployed": "true", "page": "1", "per_page": "1", "installed": "true"}, 1)
 }
 
 func TestActionsCreateWithWireMock(
@@ -118,7 +117,7 @@ func TestActionsCreateWithWireMock(
 		Name: "name",
 		SupportedTriggers: []*management.ActionTrigger{
 			&management.ActionTrigger{
-				ID: "id",
+				ID: management.ActionTriggerTypeEnumPostLogin,
 			},
 		},
 	}

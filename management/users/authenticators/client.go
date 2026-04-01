@@ -4,6 +4,7 @@ package authenticators
 
 import (
 	context "context"
+
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
