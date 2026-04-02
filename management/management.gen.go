@@ -1935,6 +1935,14 @@ func (c *Client) GetMobile() *ClientMobile {
 	return c.Mobile
 }
 
+// GetMyOrganizationConfiguration returns the MyOrganizationConfiguration field.
+func (c *Client) GetMyOrganizationConfiguration() *MyOrganizationConfiguration {
+	if c == nil {
+		return nil
+	}
+	return c.MyOrganizationConfiguration
+}
+
 // GetName returns the Name field if it's non-nil, zero value otherwise.
 func (c *Client) GetName() string {
 	if c == nil || c.Name == nil {
@@ -10076,6 +10084,43 @@ func (m *MultiFactorWebAuthnSettings) GetUserVerification() string {
 
 // String returns a string representation of MultiFactorWebAuthnSettings.
 func (m *MultiFactorWebAuthnSettings) String() string {
+	return Stringify(m)
+}
+
+// GetAllowedStrategies returns the AllowedStrategies field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationConfiguration) GetAllowedStrategies() []string {
+	if m == nil || m.AllowedStrategies == nil {
+		return nil
+	}
+	return *m.AllowedStrategies
+}
+
+// GetConnectionDeletionBehavior returns the ConnectionDeletionBehavior field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationConfiguration) GetConnectionDeletionBehavior() string {
+	if m == nil || m.ConnectionDeletionBehavior == nil {
+		return ""
+	}
+	return *m.ConnectionDeletionBehavior
+}
+
+// GetConnectionProfileID returns the ConnectionProfileID field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationConfiguration) GetConnectionProfileID() string {
+	if m == nil || m.ConnectionProfileID == nil {
+		return ""
+	}
+	return *m.ConnectionProfileID
+}
+
+// GetUserAttributeProfileID returns the UserAttributeProfileID field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationConfiguration) GetUserAttributeProfileID() string {
+	if m == nil || m.UserAttributeProfileID == nil {
+		return ""
+	}
+	return *m.UserAttributeProfileID
+}
+
+// String returns a string representation of MyOrganizationConfiguration.
+func (m *MyOrganizationConfiguration) String() string {
 	return Stringify(m)
 }
 
