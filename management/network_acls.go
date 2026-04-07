@@ -499,18 +499,24 @@ var (
 	networkACLMatchFieldJa3Fingerprints     = big.NewInt(1 << 6)
 	networkACLMatchFieldJa4Fingerprints     = big.NewInt(1 << 7)
 	networkACLMatchFieldUserAgents          = big.NewInt(1 << 8)
+	networkACLMatchFieldHostnames           = big.NewInt(1 << 9)
+	networkACLMatchFieldConnectingIpv4Cidrs = big.NewInt(1 << 10)
+	networkACLMatchFieldConnectingIpv6Cidrs = big.NewInt(1 << 11)
 )
 
 type NetworkACLMatch struct {
-	Asns                []int                     `json:"asns,omitempty" url:"asns,omitempty"`
-	Auth0Managed        []string                  `json:"auth0_managed,omitempty" url:"auth0_managed,omitempty"`
-	GeoCountryCodes     []string                  `json:"geo_country_codes,omitempty" url:"geo_country_codes,omitempty"`
-	GeoSubdivisionCodes []string                  `json:"geo_subdivision_codes,omitempty" url:"geo_subdivision_codes,omitempty"`
-	Ipv4Cidrs           []NetworkACLMatchIpv4Cidr `json:"ipv4_cidrs,omitempty" url:"ipv4_cidrs,omitempty"`
-	Ipv6Cidrs           []NetworkACLMatchIpv6Cidr `json:"ipv6_cidrs,omitempty" url:"ipv6_cidrs,omitempty"`
-	Ja3Fingerprints     []string                  `json:"ja3_fingerprints,omitempty" url:"ja3_fingerprints,omitempty"`
-	Ja4Fingerprints     []string                  `json:"ja4_fingerprints,omitempty" url:"ja4_fingerprints,omitempty"`
-	UserAgents          []string                  `json:"user_agents,omitempty" url:"user_agents,omitempty"`
+	Asns                []int                               `json:"asns,omitempty" url:"asns,omitempty"`
+	Auth0Managed        []string                            `json:"auth0_managed,omitempty" url:"auth0_managed,omitempty"`
+	GeoCountryCodes     []string                            `json:"geo_country_codes,omitempty" url:"geo_country_codes,omitempty"`
+	GeoSubdivisionCodes []string                            `json:"geo_subdivision_codes,omitempty" url:"geo_subdivision_codes,omitempty"`
+	Ipv4Cidrs           []NetworkACLMatchIpv4Cidr           `json:"ipv4_cidrs,omitempty" url:"ipv4_cidrs,omitempty"`
+	Ipv6Cidrs           []NetworkACLMatchIpv6Cidr           `json:"ipv6_cidrs,omitempty" url:"ipv6_cidrs,omitempty"`
+	Ja3Fingerprints     []string                            `json:"ja3_fingerprints,omitempty" url:"ja3_fingerprints,omitempty"`
+	Ja4Fingerprints     []string                            `json:"ja4_fingerprints,omitempty" url:"ja4_fingerprints,omitempty"`
+	UserAgents          []string                            `json:"user_agents,omitempty" url:"user_agents,omitempty"`
+	Hostnames           []string                            `json:"hostnames,omitempty" url:"hostnames,omitempty"`
+	ConnectingIpv4Cidrs []NetworkACLMatchConnectingIpv4Cidr `json:"connecting_ipv4_cidrs,omitempty" url:"connecting_ipv4_cidrs,omitempty"`
+	ConnectingIpv6Cidrs []NetworkACLMatchConnectingIpv6Cidr `json:"connecting_ipv6_cidrs,omitempty" url:"connecting_ipv6_cidrs,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -580,6 +586,27 @@ func (n *NetworkACLMatch) GetUserAgents() []string {
 		return nil
 	}
 	return n.UserAgents
+}
+
+func (n *NetworkACLMatch) GetHostnames() []string {
+	if n == nil || n.Hostnames == nil {
+		return nil
+	}
+	return n.Hostnames
+}
+
+func (n *NetworkACLMatch) GetConnectingIpv4Cidrs() []NetworkACLMatchConnectingIpv4Cidr {
+	if n == nil || n.ConnectingIpv4Cidrs == nil {
+		return nil
+	}
+	return n.ConnectingIpv4Cidrs
+}
+
+func (n *NetworkACLMatch) GetConnectingIpv6Cidrs() []NetworkACLMatchConnectingIpv6Cidr {
+	if n == nil || n.ConnectingIpv6Cidrs == nil {
+		return nil
+	}
+	return n.ConnectingIpv6Cidrs
 }
 
 func (n *NetworkACLMatch) GetExtraProperties() map[string]interface{} {
@@ -659,6 +686,27 @@ func (n *NetworkACLMatch) SetUserAgents(userAgents []string) {
 	n.require(networkACLMatchFieldUserAgents)
 }
 
+// SetHostnames sets the Hostnames field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLMatch) SetHostnames(hostnames []string) {
+	n.Hostnames = hostnames
+	n.require(networkACLMatchFieldHostnames)
+}
+
+// SetConnectingIpv4Cidrs sets the ConnectingIpv4Cidrs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLMatch) SetConnectingIpv4Cidrs(connectingIpv4Cidrs []NetworkACLMatchConnectingIpv4Cidr) {
+	n.ConnectingIpv4Cidrs = connectingIpv4Cidrs
+	n.require(networkACLMatchFieldConnectingIpv4Cidrs)
+}
+
+// SetConnectingIpv6Cidrs sets the ConnectingIpv6Cidrs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLMatch) SetConnectingIpv6Cidrs(connectingIpv6Cidrs []NetworkACLMatchConnectingIpv6Cidr) {
+	n.ConnectingIpv6Cidrs = connectingIpv6Cidrs
+	n.require(networkACLMatchFieldConnectingIpv6Cidrs)
+}
+
 func (n *NetworkACLMatch) UnmarshalJSON(data []byte) error {
 	type unmarshaler NetworkACLMatch
 	var value unmarshaler
@@ -700,6 +748,10 @@ func (n *NetworkACLMatch) String() string {
 	}
 	return fmt.Sprintf("%#v", n)
 }
+
+type NetworkACLMatchConnectingIpv4Cidr = string
+
+type NetworkACLMatchConnectingIpv6Cidr = string
 
 type NetworkACLMatchIpv4Cidr = string
 

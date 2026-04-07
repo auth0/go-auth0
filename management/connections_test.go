@@ -2842,6 +2842,1289 @@ func TestSettersMarkExplicitConnectionPasswordNoPersonalInfoOptions(t *testing.T
 
 }
 
+func TestSettersConnectionPasswordOptions(t *testing.T) {
+	t.Run("SetComplexity", func(t *testing.T) {
+		obj := &ConnectionPasswordOptions{}
+		var fernTestValueComplexity *ConnectionPasswordOptionsComplexity
+		obj.SetComplexity(fernTestValueComplexity)
+		assert.Equal(t, fernTestValueComplexity, obj.Complexity)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDictionary", func(t *testing.T) {
+		obj := &ConnectionPasswordOptions{}
+		var fernTestValueDictionary *ConnectionPasswordOptionsDictionary
+		obj.SetDictionary(fernTestValueDictionary)
+		assert.Equal(t, fernTestValueDictionary, obj.Dictionary)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHistory", func(t *testing.T) {
+		obj := &ConnectionPasswordOptions{}
+		var fernTestValueHistory *ConnectionPasswordOptionsHistory
+		obj.SetHistory(fernTestValueHistory)
+		assert.Equal(t, fernTestValueHistory, obj.History)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetProfileData", func(t *testing.T) {
+		obj := &ConnectionPasswordOptions{}
+		var fernTestValueProfileData *ConnectionPasswordOptionsProfileData
+		obj.SetProfileData(fernTestValueProfileData)
+		assert.Equal(t, fernTestValueProfileData, obj.ProfileData)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionPasswordOptions(t *testing.T) {
+	t.Run("GetComplexity", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		var value ConnectionPasswordOptionsComplexity
+		obj.Complexity = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetComplexity(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetComplexity_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		obj.Complexity = nil
+		var expectedZero ConnectionPasswordOptionsComplexity
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetComplexity(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetComplexity_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetComplexity() // Should return zero value
+	})
+
+	t.Run("GetDictionary", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		var value ConnectionPasswordOptionsDictionary
+		obj.Dictionary = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDictionary(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDictionary_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		obj.Dictionary = nil
+		var expectedZero ConnectionPasswordOptionsDictionary
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDictionary(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDictionary_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDictionary() // Should return zero value
+	})
+
+	t.Run("GetHistory", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		var value ConnectionPasswordOptionsHistory
+		obj.History = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetHistory(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetHistory_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		obj.History = nil
+		var expectedZero ConnectionPasswordOptionsHistory
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetHistory(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetHistory_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHistory() // Should return zero value
+	})
+
+	t.Run("GetProfileData", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		var value ConnectionPasswordOptionsProfileData
+		obj.ProfileData = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetProfileData(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetProfileData_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		obj.ProfileData = nil
+		var expectedZero ConnectionPasswordOptionsProfileData
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetProfileData(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetProfileData_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetProfileData() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionPasswordOptions(t *testing.T) {
+	t.Run("SetComplexity_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		var fernTestValueComplexity *ConnectionPasswordOptionsComplexity
+
+		// Act
+		obj.SetComplexity(fernTestValueComplexity)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDictionary_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		var fernTestValueDictionary *ConnectionPasswordOptionsDictionary
+
+		// Act
+		obj.SetDictionary(fernTestValueDictionary)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHistory_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		var fernTestValueHistory *ConnectionPasswordOptionsHistory
+
+		// Act
+		obj.SetHistory(fernTestValueHistory)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetProfileData_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+		var fernTestValueProfileData *ConnectionPasswordOptionsProfileData
+
+		// Act
+		obj.SetProfileData(fernTestValueProfileData)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionPasswordOptionsComplexity(t *testing.T) {
+	t.Run("SetMinLength", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueMinLength *int
+		obj.SetMinLength(fernTestValueMinLength)
+		assert.Equal(t, fernTestValueMinLength, obj.MinLength)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCharacterTypes", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueCharacterTypes []PasswordCharacterTypeEnum
+		obj.SetCharacterTypes(fernTestValueCharacterTypes)
+		assert.Equal(t, fernTestValueCharacterTypes, obj.CharacterTypes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCharacterTypeRule", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueCharacterTypeRule *PasswordCharacterTypeRulePolicyEnum
+		obj.SetCharacterTypeRule(fernTestValueCharacterTypeRule)
+		assert.Equal(t, fernTestValueCharacterTypeRule, obj.CharacterTypeRule)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIdenticalCharacters", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueIdenticalCharacters *PasswordIdenticalCharactersPolicyEnum
+		obj.SetIdenticalCharacters(fernTestValueIdenticalCharacters)
+		assert.Equal(t, fernTestValueIdenticalCharacters, obj.IdenticalCharacters)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSequentialCharacters", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueSequentialCharacters *PasswordSequentialCharactersPolicyEnum
+		obj.SetSequentialCharacters(fernTestValueSequentialCharacters)
+		assert.Equal(t, fernTestValueSequentialCharacters, obj.SequentialCharacters)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMaxLengthExceeded", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueMaxLengthExceeded *PasswordMaxLengthExceededPolicyEnum
+		obj.SetMaxLengthExceeded(fernTestValueMaxLengthExceeded)
+		assert.Equal(t, fernTestValueMaxLengthExceeded, obj.MaxLengthExceeded)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionPasswordOptionsComplexity(t *testing.T) {
+	t.Run("GetMinLength", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var value int
+		obj.MinLength = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMinLength(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMinLength_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		obj.MinLength = nil
+		var expectedZero int
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMinLength(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMinLength_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsComplexity
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMinLength() // Should return zero value
+	})
+
+	t.Run("GetCharacterTypes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var expected []PasswordCharacterTypeEnum
+		obj.CharacterTypes = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetCharacterTypes(), "getter should return the property value")
+	})
+
+	t.Run("GetCharacterTypes_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		obj.CharacterTypes = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetCharacterTypes(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetCharacterTypes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsComplexity
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCharacterTypes() // Should return zero value
+	})
+
+	t.Run("GetCharacterTypeRule", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var value PasswordCharacterTypeRulePolicyEnum
+		obj.CharacterTypeRule = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCharacterTypeRule(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCharacterTypeRule_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		obj.CharacterTypeRule = nil
+		var expectedZero PasswordCharacterTypeRulePolicyEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCharacterTypeRule(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCharacterTypeRule_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsComplexity
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCharacterTypeRule() // Should return zero value
+	})
+
+	t.Run("GetIdenticalCharacters", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var value PasswordIdenticalCharactersPolicyEnum
+		obj.IdenticalCharacters = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIdenticalCharacters(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIdenticalCharacters_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		obj.IdenticalCharacters = nil
+		var expectedZero PasswordIdenticalCharactersPolicyEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIdenticalCharacters(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIdenticalCharacters_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsComplexity
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIdenticalCharacters() // Should return zero value
+	})
+
+	t.Run("GetSequentialCharacters", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var value PasswordSequentialCharactersPolicyEnum
+		obj.SequentialCharacters = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSequentialCharacters(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSequentialCharacters_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		obj.SequentialCharacters = nil
+		var expectedZero PasswordSequentialCharactersPolicyEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSequentialCharacters(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSequentialCharacters_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsComplexity
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSequentialCharacters() // Should return zero value
+	})
+
+	t.Run("GetMaxLengthExceeded", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var value PasswordMaxLengthExceededPolicyEnum
+		obj.MaxLengthExceeded = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMaxLengthExceeded(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMaxLengthExceeded_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		obj.MaxLengthExceeded = nil
+		var expectedZero PasswordMaxLengthExceededPolicyEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMaxLengthExceeded(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMaxLengthExceeded_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsComplexity
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMaxLengthExceeded() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionPasswordOptionsComplexity(t *testing.T) {
+	t.Run("SetMinLength_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueMinLength *int
+
+		// Act
+		obj.SetMinLength(fernTestValueMinLength)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCharacterTypes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueCharacterTypes []PasswordCharacterTypeEnum
+
+		// Act
+		obj.SetCharacterTypes(fernTestValueCharacterTypes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCharacterTypeRule_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueCharacterTypeRule *PasswordCharacterTypeRulePolicyEnum
+
+		// Act
+		obj.SetCharacterTypeRule(fernTestValueCharacterTypeRule)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIdenticalCharacters_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueIdenticalCharacters *PasswordIdenticalCharactersPolicyEnum
+
+		// Act
+		obj.SetIdenticalCharacters(fernTestValueIdenticalCharacters)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSequentialCharacters_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueSequentialCharacters *PasswordSequentialCharactersPolicyEnum
+
+		// Act
+		obj.SetSequentialCharacters(fernTestValueSequentialCharacters)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMaxLengthExceeded_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+		var fernTestValueMaxLengthExceeded *PasswordMaxLengthExceededPolicyEnum
+
+		// Act
+		obj.SetMaxLengthExceeded(fernTestValueMaxLengthExceeded)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionPasswordOptionsDictionary(t *testing.T) {
+	t.Run("SetActive", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsDictionary{}
+		var fernTestValueActive *bool
+		obj.SetActive(fernTestValueActive)
+		assert.Equal(t, fernTestValueActive, obj.Active)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCustom", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsDictionary{}
+		var fernTestValueCustom []string
+		obj.SetCustom(fernTestValueCustom)
+		assert.Equal(t, fernTestValueCustom, obj.Custom)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDefault", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsDictionary{}
+		var fernTestValueDefault *PasswordDefaultDictionariesEnum
+		obj.SetDefault(fernTestValueDefault)
+		assert.Equal(t, fernTestValueDefault, obj.Default)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionPasswordOptionsDictionary(t *testing.T) {
+	t.Run("GetActive", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+		var value bool
+		obj.Active = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetActive(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetActive_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+		obj.Active = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetActive(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetActive_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsDictionary
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActive() // Should return zero value
+	})
+
+	t.Run("GetCustom", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+		var expected []string
+		obj.Custom = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetCustom(), "getter should return the property value")
+	})
+
+	t.Run("GetCustom_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+		obj.Custom = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetCustom(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetCustom_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsDictionary
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCustom() // Should return zero value
+	})
+
+	t.Run("GetDefault", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+		var value PasswordDefaultDictionariesEnum
+		obj.Default = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefault(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefault_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+		obj.Default = nil
+		var expectedZero PasswordDefaultDictionariesEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefault(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefault_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsDictionary
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefault() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionPasswordOptionsDictionary(t *testing.T) {
+	t.Run("SetActive_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+		var fernTestValueActive *bool
+
+		// Act
+		obj.SetActive(fernTestValueActive)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCustom_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+		var fernTestValueCustom []string
+
+		// Act
+		obj.SetCustom(fernTestValueCustom)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDefault_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+		var fernTestValueDefault *PasswordDefaultDictionariesEnum
+
+		// Act
+		obj.SetDefault(fernTestValueDefault)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionPasswordOptionsHistory(t *testing.T) {
+	t.Run("SetActive", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsHistory{}
+		var fernTestValueActive *bool
+		obj.SetActive(fernTestValueActive)
+		assert.Equal(t, fernTestValueActive, obj.Active)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSize", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsHistory{}
+		var fernTestValueSize *int
+		obj.SetSize(fernTestValueSize)
+		assert.Equal(t, fernTestValueSize, obj.Size)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionPasswordOptionsHistory(t *testing.T) {
+	t.Run("GetActive", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsHistory{}
+		var value bool
+		obj.Active = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetActive(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetActive_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsHistory{}
+		obj.Active = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetActive(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetActive_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsHistory
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActive() // Should return zero value
+	})
+
+	t.Run("GetSize", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsHistory{}
+		var value int
+		obj.Size = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSize(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSize_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsHistory{}
+		obj.Size = nil
+		var expectedZero int
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSize(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSize_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsHistory
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSize() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionPasswordOptionsHistory(t *testing.T) {
+	t.Run("SetActive_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsHistory{}
+		var fernTestValueActive *bool
+
+		// Act
+		obj.SetActive(fernTestValueActive)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSize_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsHistory{}
+		var fernTestValueSize *int
+
+		// Act
+		obj.SetSize(fernTestValueSize)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionPasswordOptionsProfileData(t *testing.T) {
+	t.Run("SetActive", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsProfileData{}
+		var fernTestValueActive *bool
+		obj.SetActive(fernTestValueActive)
+		assert.Equal(t, fernTestValueActive, obj.Active)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetBlockedFields", func(t *testing.T) {
+		obj := &ConnectionPasswordOptionsProfileData{}
+		var fernTestValueBlockedFields []string
+		obj.SetBlockedFields(fernTestValueBlockedFields)
+		assert.Equal(t, fernTestValueBlockedFields, obj.BlockedFields)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionPasswordOptionsProfileData(t *testing.T) {
+	t.Run("GetActive", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsProfileData{}
+		var value bool
+		obj.Active = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetActive(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetActive_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsProfileData{}
+		obj.Active = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetActive(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetActive_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsProfileData
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActive() // Should return zero value
+	})
+
+	t.Run("GetBlockedFields", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsProfileData{}
+		var expected []string
+		obj.BlockedFields = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetBlockedFields(), "getter should return the property value")
+	})
+
+	t.Run("GetBlockedFields_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsProfileData{}
+		obj.BlockedFields = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetBlockedFields(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetBlockedFields_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsProfileData
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetBlockedFields() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionPasswordOptionsProfileData(t *testing.T) {
+	t.Run("SetActive_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsProfileData{}
+		var fernTestValueActive *bool
+
+		// Act
+		obj.SetActive(fernTestValueActive)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetBlockedFields_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsProfileData{}
+		var fernTestValueBlockedFields []string
+
+		// Act
+		obj.SetBlockedFields(fernTestValueBlockedFields)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersConnectionPhoneOtpAuthenticationMethod(t *testing.T) {
 	t.Run("SetEnabled", func(t *testing.T) {
 		obj := &ConnectionPhoneOtpAuthenticationMethod{}
@@ -3154,6 +4437,14 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		var fernTestValueFederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens
 		obj.SetFederatedConnectionsAccessTokens(fernTestValueFederatedConnectionsAccessTokens)
 		assert.Equal(t, fernTestValueFederatedConnectionsAccessTokens, obj.FederatedConnectionsAccessTokens)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPasswordOptions", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValuePasswordOptions *ConnectionPasswordOptions
+		obj.SetPasswordOptions(fernTestValuePasswordOptions)
+		assert.Equal(t, fernTestValuePasswordOptions, obj.PasswordOptions)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -4143,6 +5434,40 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 		_ = obj.GetFederatedConnectionsAccessTokens() // Should return zero value
 	})
 
+	t.Run("GetPasswordOptions", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionPasswordOptions
+		obj.PasswordOptions = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetPasswordOptions(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetPasswordOptions_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.PasswordOptions = nil
+		var expectedZero ConnectionPasswordOptions
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetPasswordOptions(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetPasswordOptions_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPasswordOptions() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
@@ -5022,6 +6347,37 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 
 		// Act
 		obj.SetFederatedConnectionsAccessTokens(fernTestValueFederatedConnectionsAccessTokens)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPasswordOptions_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValuePasswordOptions *ConnectionPasswordOptions
+
+		// Act
+		obj.SetPasswordOptions(fernTestValuePasswordOptions)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -8569,6 +9925,14 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetPasswordOptions", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValuePasswordOptions *ConnectionPasswordOptions
+		obj.SetPasswordOptions(fernTestValuePasswordOptions)
+		assert.Equal(t, fernTestValuePasswordOptions, obj.PasswordOptions)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersUpdateConnectionOptions(t *testing.T) {
@@ -9555,6 +10919,40 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 		_ = obj.GetFederatedConnectionsAccessTokens() // Should return zero value
 	})
 
+	t.Run("GetPasswordOptions", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionPasswordOptions
+		obj.PasswordOptions = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetPasswordOptions(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetPasswordOptions_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.PasswordOptions = nil
+		var expectedZero ConnectionPasswordOptions
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetPasswordOptions(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetPasswordOptions_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPasswordOptions() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
@@ -10434,6 +11832,37 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetFederatedConnectionsAccessTokens(fernTestValueFederatedConnectionsAccessTokens)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPasswordOptions_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValuePasswordOptions *ConnectionPasswordOptions
+
+		// Act
+		obj.SetPasswordOptions(fernTestValuePasswordOptions)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -12488,6 +13917,171 @@ func TestJSONMarshalingConnectionPasswordNoPersonalInfoOptions(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingConnectionPasswordOptions(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptions{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionPasswordOptions
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptions
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptions
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionPasswordOptionsComplexity(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsComplexity{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionPasswordOptionsComplexity
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptionsComplexity
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptionsComplexity
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionPasswordOptionsDictionary(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsDictionary{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionPasswordOptionsDictionary
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptionsDictionary
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptionsDictionary
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionPasswordOptionsHistory(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsHistory{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionPasswordOptionsHistory
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptionsHistory
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptionsHistory
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionPasswordOptionsProfileData(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPasswordOptionsProfileData{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionPasswordOptionsProfileData
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptionsProfileData
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionPasswordOptionsProfileData
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingConnectionPhoneOtpAuthenticationMethod(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -13339,6 +14933,86 @@ func TestStringConnectionPasswordNoPersonalInfoOptions(t *testing.T) {
 	})
 }
 
+func TestStringConnectionPasswordOptions(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptions{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptions
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionPasswordOptionsComplexity(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptionsComplexity{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsComplexity
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionPasswordOptionsDictionary(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptionsDictionary{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsDictionary
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionPasswordOptionsHistory(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptionsHistory{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsHistory
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionPasswordOptionsProfileData(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptionsProfileData{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsProfileData
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringConnectionPhoneOtpAuthenticationMethod(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -13751,13 +15425,6 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		assert.Equal(t, ConnectionIdentityProviderEnum("bitbucket"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_aol", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("aol")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("aol"), val, "enum value should match expected wire value")
-	})
-
 	t.Run("NewFromString_auth0_oidc", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewConnectionIdentityProviderEnumFromString("auth0-oidc")
@@ -13912,13 +15579,6 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		assert.Equal(t, ConnectionIdentityProviderEnum("linkedin"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_miicard", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("miicard")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("miicard"), val, "enum value should match expected wire value")
-	})
-
 	t.Run("NewFromString_oauth1", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewConnectionIdentityProviderEnumFromString("oauth1")
@@ -13980,13 +15640,6 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		val, err := NewConnectionIdentityProviderEnumFromString("planningcenter")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, ConnectionIdentityProviderEnum("planningcenter"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_renren", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("renren")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("renren"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_salesforce_community", func(t *testing.T) {
@@ -14052,20 +15705,6 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		assert.Equal(t, ConnectionIdentityProviderEnum("soundcloud"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_thecity_sandbox", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("thecity-sandbox")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("thecity-sandbox"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_thecity", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("thecity")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("thecity"), val, "enum value should match expected wire value")
-	})
-
 	t.Run("NewFromString_thirtysevensignals", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewConnectionIdentityProviderEnumFromString("thirtysevensignals")
@@ -14127,13 +15766,6 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		val, err := NewConnectionIdentityProviderEnumFromString("yahoo")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, ConnectionIdentityProviderEnum("yahoo"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_yammer", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("yammer")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("yammer"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_yandex", func(t *testing.T) {
@@ -14429,6 +16061,194 @@ func TestEnumDefaultMethodEmailIdentifierEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewDefaultMethodEmailIdentifierEnumFromString("password")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPasswordCharacterTypeEnum(t *testing.T) {
+	t.Run("NewFromString_uppercase", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordCharacterTypeEnumFromString("uppercase")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordCharacterTypeEnum("uppercase"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_lowercase", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordCharacterTypeEnumFromString("lowercase")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordCharacterTypeEnum("lowercase"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_number", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordCharacterTypeEnumFromString("number")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordCharacterTypeEnum("number"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_special", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordCharacterTypeEnumFromString("special")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordCharacterTypeEnum("special"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPasswordCharacterTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPasswordCharacterTypeEnumFromString("uppercase")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPasswordCharacterTypeRulePolicyEnum(t *testing.T) {
+	t.Run("NewFromString_all", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordCharacterTypeRulePolicyEnumFromString("all")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordCharacterTypeRulePolicyEnum("all"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_three_of_four", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordCharacterTypeRulePolicyEnumFromString("three_of_four")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordCharacterTypeRulePolicyEnum("three_of_four"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPasswordCharacterTypeRulePolicyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPasswordCharacterTypeRulePolicyEnumFromString("all")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPasswordDefaultDictionariesEnum(t *testing.T) {
+	t.Run("NewFromString_en_10k", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordDefaultDictionariesEnumFromString("en_10k")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordDefaultDictionariesEnum("en_10k"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_en_100k", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordDefaultDictionariesEnumFromString("en_100k")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordDefaultDictionariesEnum("en_100k"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPasswordDefaultDictionariesEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPasswordDefaultDictionariesEnumFromString("en_10k")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPasswordIdenticalCharactersPolicyEnum(t *testing.T) {
+	t.Run("NewFromString_allow", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordIdenticalCharactersPolicyEnumFromString("allow")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordIdenticalCharactersPolicyEnum("allow"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_block", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordIdenticalCharactersPolicyEnumFromString("block")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordIdenticalCharactersPolicyEnum("block"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPasswordIdenticalCharactersPolicyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPasswordIdenticalCharactersPolicyEnumFromString("allow")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPasswordMaxLengthExceededPolicyEnum(t *testing.T) {
+	t.Run("NewFromString_truncate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordMaxLengthExceededPolicyEnumFromString("truncate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordMaxLengthExceededPolicyEnum("truncate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_error", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordMaxLengthExceededPolicyEnumFromString("error")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordMaxLengthExceededPolicyEnum("error"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPasswordMaxLengthExceededPolicyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPasswordMaxLengthExceededPolicyEnumFromString("truncate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPasswordSequentialCharactersPolicyEnum(t *testing.T) {
+	t.Run("NewFromString_allow", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordSequentialCharactersPolicyEnumFromString("allow")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordSequentialCharactersPolicyEnum("allow"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_block", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPasswordSequentialCharactersPolicyEnumFromString("block")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PasswordSequentialCharactersPolicyEnum("block"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPasswordSequentialCharactersPolicyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPasswordSequentialCharactersPolicyEnumFromString("allow")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -14818,6 +16638,121 @@ func TestExtraPropertiesConnectionPasswordNoPersonalInfoOptions(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionPasswordNoPersonalInfoOptions
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionPasswordOptions(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptions{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptions
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionPasswordOptionsComplexity(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptionsComplexity{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsComplexity
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionPasswordOptionsDictionary(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptionsDictionary{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsDictionary
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionPasswordOptionsHistory(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptionsHistory{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsHistory
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionPasswordOptionsProfileData(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionPasswordOptionsProfileData{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPasswordOptionsProfileData
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

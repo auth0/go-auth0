@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerID management.ActionTriggerTypeEnum,
+	triggerID *management.ActionTriggerTypeEnum,
 	request *management.ListActionTriggerBindingsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*int, *management.ActionBinding, *management.ListActionBindingsPaginatedResponseContent], error) {
@@ -116,7 +116,7 @@ func (c *Client) List(
 func (c *Client) UpdateMany(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerID management.ActionTriggerTypeEnum,
+	triggerID *management.ActionTriggerTypeEnum,
 	request *management.UpdateActionBindingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateActionBindingsResponseContent, error) {

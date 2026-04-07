@@ -1276,6 +1276,30 @@ func TestSettersNetworkACLMatch(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetHostnames", func(t *testing.T) {
+		obj := &NetworkACLMatch{}
+		var fernTestValueHostnames []string
+		obj.SetHostnames(fernTestValueHostnames)
+		assert.Equal(t, fernTestValueHostnames, obj.Hostnames)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetConnectingIpv4Cidrs", func(t *testing.T) {
+		obj := &NetworkACLMatch{}
+		var fernTestValueConnectingIpv4Cidrs []NetworkACLMatchConnectingIpv4Cidr
+		obj.SetConnectingIpv4Cidrs(fernTestValueConnectingIpv4Cidrs)
+		assert.Equal(t, fernTestValueConnectingIpv4Cidrs, obj.ConnectingIpv4Cidrs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetConnectingIpv6Cidrs", func(t *testing.T) {
+		obj := &NetworkACLMatch{}
+		var fernTestValueConnectingIpv6Cidrs []NetworkACLMatchConnectingIpv6Cidr
+		obj.SetConnectingIpv6Cidrs(fernTestValueConnectingIpv6Cidrs)
+		assert.Equal(t, fernTestValueConnectingIpv6Cidrs, obj.ConnectingIpv6Cidrs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersNetworkACLMatch(t *testing.T) {
@@ -1576,6 +1600,105 @@ func TestGettersNetworkACLMatch(t *testing.T) {
 		_ = obj.GetUserAgents() // Should return zero value
 	})
 
+	t.Run("GetHostnames", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var expected []string
+		obj.Hostnames = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetHostnames(), "getter should return the property value")
+	})
+
+	t.Run("GetHostnames_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		obj.Hostnames = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHostnames(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHostnames_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHostnames() // Should return zero value
+	})
+
+	t.Run("GetConnectingIpv4Cidrs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var expected []NetworkACLMatchConnectingIpv4Cidr
+		obj.ConnectingIpv4Cidrs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetConnectingIpv4Cidrs(), "getter should return the property value")
+	})
+
+	t.Run("GetConnectingIpv4Cidrs_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		obj.ConnectingIpv4Cidrs = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetConnectingIpv4Cidrs(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetConnectingIpv4Cidrs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetConnectingIpv4Cidrs() // Should return zero value
+	})
+
+	t.Run("GetConnectingIpv6Cidrs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var expected []NetworkACLMatchConnectingIpv6Cidr
+		obj.ConnectingIpv6Cidrs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetConnectingIpv6Cidrs(), "getter should return the property value")
+	})
+
+	t.Run("GetConnectingIpv6Cidrs_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		obj.ConnectingIpv6Cidrs = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetConnectingIpv6Cidrs(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetConnectingIpv6Cidrs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetConnectingIpv6Cidrs() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitNetworkACLMatch(t *testing.T) {
@@ -1835,6 +1958,99 @@ func TestSettersMarkExplicitNetworkACLMatch(t *testing.T) {
 
 		// Act
 		obj.SetUserAgents(fernTestValueUserAgents)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHostnames_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var fernTestValueHostnames []string
+
+		// Act
+		obj.SetHostnames(fernTestValueHostnames)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetConnectingIpv4Cidrs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var fernTestValueConnectingIpv4Cidrs []NetworkACLMatchConnectingIpv4Cidr
+
+		// Act
+		obj.SetConnectingIpv4Cidrs(fernTestValueConnectingIpv4Cidrs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetConnectingIpv6Cidrs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var fernTestValueConnectingIpv6Cidrs []NetworkACLMatchConnectingIpv6Cidr
+
+		// Act
+		obj.SetConnectingIpv6Cidrs(fernTestValueConnectingIpv6Cidrs)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

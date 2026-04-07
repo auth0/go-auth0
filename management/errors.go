@@ -103,7 +103,7 @@ func (f *ForbiddenError) Unwrap() error {
 	return f.APIError
 }
 
-// Internal error.
+// An internal server error occurred.
 type InternalServerError struct {
 	*core.APIError
 	Body any

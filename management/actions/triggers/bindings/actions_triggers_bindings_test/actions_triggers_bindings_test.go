@@ -82,7 +82,7 @@ func TestActionsTriggersBindingsListWithWireMock(
 	}
 	_, invocationErr := client.Actions.Triggers.Bindings.List(
 		context.TODO(),
-		"triggerId",
+		management.ActionTriggerTypeEnumPostLogin.Ptr(),
 		request,
 		option.WithHTTPHeader(
 			http.Header{"X-Test-Id": []string{"TestActionsTriggersBindingsListWithWireMock"}},
@@ -90,7 +90,7 @@ func TestActionsTriggersBindingsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestActionsTriggersBindingsListWithWireMock", "GET", "/actions/triggers/triggerId/bindings", map[string]string{"page": "1", "per_page": "1"}, 1)
+	VerifyRequestCount(t, "TestActionsTriggersBindingsListWithWireMock", "GET", "/actions/triggers/post-login/bindings", map[string]string{"page": "1", "per_page": "1"}, 1)
 }
 
 func TestActionsTriggersBindingsUpdateManyWithWireMock(
@@ -106,7 +106,7 @@ func TestActionsTriggersBindingsUpdateManyWithWireMock(
 	request := &management.UpdateActionBindingsRequestContent{}
 	_, invocationErr := client.Actions.Triggers.Bindings.UpdateMany(
 		context.TODO(),
-		"triggerId",
+		management.ActionTriggerTypeEnumPostLogin.Ptr(),
 		request,
 		option.WithHTTPHeader(
 			http.Header{"X-Test-Id": []string{"TestActionsTriggersBindingsUpdateManyWithWireMock"}},
@@ -114,5 +114,5 @@ func TestActionsTriggersBindingsUpdateManyWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestActionsTriggersBindingsUpdateManyWithWireMock", "PATCH", "/actions/triggers/triggerId/bindings", nil, 1)
+	VerifyRequestCount(t, "TestActionsTriggersBindingsUpdateManyWithWireMock", "PATCH", "/actions/triggers/post-login/bindings", nil, 1)
 }

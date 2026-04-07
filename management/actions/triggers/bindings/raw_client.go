@@ -34,7 +34,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) UpdateMany(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerID management.ActionTriggerTypeEnum,
+	triggerID *management.ActionTriggerTypeEnum,
 	request *management.UpdateActionBindingsRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.UpdateActionBindingsResponseContent], error) {

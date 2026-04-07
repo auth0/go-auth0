@@ -186,6 +186,679 @@ func (c CertificateSubjectDnCredentialTypeEnum) Ptr() *CertificateSubjectDnCrede
 	return &c
 }
 
+// Client authentication methods derived from the JWKS document
+var (
+	cimdMappedClientAuthenticationMethodsFieldPrivateKeyJwt = big.NewInt(1 << 0)
+)
+
+type CimdMappedClientAuthenticationMethods struct {
+	PrivateKeyJwt *CimdMappedClientAuthenticationMethodsPrivateKeyJwt `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *CimdMappedClientAuthenticationMethods) GetPrivateKeyJwt() CimdMappedClientAuthenticationMethodsPrivateKeyJwt {
+	if c == nil || c.PrivateKeyJwt == nil {
+		return CimdMappedClientAuthenticationMethodsPrivateKeyJwt{}
+	}
+	return *c.PrivateKeyJwt
+}
+
+func (c *CimdMappedClientAuthenticationMethods) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *CimdMappedClientAuthenticationMethods) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetPrivateKeyJwt sets the PrivateKeyJwt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientAuthenticationMethods) SetPrivateKeyJwt(privateKeyJwt *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) {
+	c.PrivateKeyJwt = privateKeyJwt
+	c.require(cimdMappedClientAuthenticationMethodsFieldPrivateKeyJwt)
+}
+
+func (c *CimdMappedClientAuthenticationMethods) UnmarshalJSON(data []byte) error {
+	type embed CimdMappedClientAuthenticationMethods
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CimdMappedClientAuthenticationMethods(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CimdMappedClientAuthenticationMethods) MarshalJSON() ([]byte, error) {
+	type embed CimdMappedClientAuthenticationMethods
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *CimdMappedClientAuthenticationMethods) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Private Key JWT authentication configuration
+var (
+	cimdMappedClientAuthenticationMethodsPrivateKeyJwtFieldCredentials = big.NewInt(1 << 0)
+)
+
+type CimdMappedClientAuthenticationMethodsPrivateKeyJwt struct {
+	// Credentials derived from the JWKS document
+	Credentials []*CimdMappedPrivateKeyJwtCredential `json:"credentials" url:"credentials"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) GetCredentials() []*CimdMappedPrivateKeyJwtCredential {
+	if c == nil {
+		return nil
+	}
+	return c.Credentials
+}
+
+func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCredentials sets the Credentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) SetCredentials(credentials []*CimdMappedPrivateKeyJwtCredential) {
+	c.Credentials = credentials
+	c.require(cimdMappedClientAuthenticationMethodsPrivateKeyJwtFieldCredentials)
+}
+
+func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) UnmarshalJSON(data []byte) error {
+	type embed CimdMappedClientAuthenticationMethodsPrivateKeyJwt
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CimdMappedClientAuthenticationMethodsPrivateKeyJwt(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) MarshalJSON() ([]byte, error) {
+	type embed CimdMappedClientAuthenticationMethodsPrivateKeyJwt
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Auth0 client fields mapped from the Client ID Metadata Document
+var (
+	cimdMappedClientFieldsFieldExternalClientID            = big.NewInt(1 << 0)
+	cimdMappedClientFieldsFieldName                        = big.NewInt(1 << 1)
+	cimdMappedClientFieldsFieldAppType                     = big.NewInt(1 << 2)
+	cimdMappedClientFieldsFieldCallbacks                   = big.NewInt(1 << 3)
+	cimdMappedClientFieldsFieldLogoURI                     = big.NewInt(1 << 4)
+	cimdMappedClientFieldsFieldDescription                 = big.NewInt(1 << 5)
+	cimdMappedClientFieldsFieldGrantTypes                  = big.NewInt(1 << 6)
+	cimdMappedClientFieldsFieldTokenEndpointAuthMethod     = big.NewInt(1 << 7)
+	cimdMappedClientFieldsFieldJwksURI                     = big.NewInt(1 << 8)
+	cimdMappedClientFieldsFieldClientAuthenticationMethods = big.NewInt(1 << 9)
+)
+
+type CimdMappedClientFields struct {
+	// The URL of the Client ID Metadata Document
+	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
+	// Client name
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Application type (e.g., web, native)
+	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
+	// Callback URLs
+	Callbacks []string `json:"callbacks,omitempty" url:"callbacks,omitempty"`
+	// Logo URI
+	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
+	// Human-readable brief description of this client presentable to the end-user
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// List of grant types
+	GrantTypes []string `json:"grant_types,omitempty" url:"grant_types,omitempty"`
+	// Token endpoint authentication method
+	TokenEndpointAuthMethod *string `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	// URL for the JSON Web Key Set containing the public keys for private_key_jwt authentication
+	JwksURI                     *string                                `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
+	ClientAuthenticationMethods *CimdMappedClientAuthenticationMethods `json:"client_authentication_methods,omitempty" url:"client_authentication_methods,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *CimdMappedClientFields) GetExternalClientID() string {
+	if c == nil || c.ExternalClientID == nil {
+		return ""
+	}
+	return *c.ExternalClientID
+}
+
+func (c *CimdMappedClientFields) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+func (c *CimdMappedClientFields) GetAppType() string {
+	if c == nil || c.AppType == nil {
+		return ""
+	}
+	return *c.AppType
+}
+
+func (c *CimdMappedClientFields) GetCallbacks() []string {
+	if c == nil || c.Callbacks == nil {
+		return nil
+	}
+	return c.Callbacks
+}
+
+func (c *CimdMappedClientFields) GetLogoURI() string {
+	if c == nil || c.LogoURI == nil {
+		return ""
+	}
+	return *c.LogoURI
+}
+
+func (c *CimdMappedClientFields) GetDescription() string {
+	if c == nil || c.Description == nil {
+		return ""
+	}
+	return *c.Description
+}
+
+func (c *CimdMappedClientFields) GetGrantTypes() []string {
+	if c == nil || c.GrantTypes == nil {
+		return nil
+	}
+	return c.GrantTypes
+}
+
+func (c *CimdMappedClientFields) GetTokenEndpointAuthMethod() string {
+	if c == nil || c.TokenEndpointAuthMethod == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthMethod
+}
+
+func (c *CimdMappedClientFields) GetJwksURI() string {
+	if c == nil || c.JwksURI == nil {
+		return ""
+	}
+	return *c.JwksURI
+}
+
+func (c *CimdMappedClientFields) GetClientAuthenticationMethods() CimdMappedClientAuthenticationMethods {
+	if c == nil || c.ClientAuthenticationMethods == nil {
+		return CimdMappedClientAuthenticationMethods{}
+	}
+	return *c.ClientAuthenticationMethods
+}
+
+func (c *CimdMappedClientFields) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *CimdMappedClientFields) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetExternalClientID(externalClientID *string) {
+	c.ExternalClientID = externalClientID
+	c.require(cimdMappedClientFieldsFieldExternalClientID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetName(name *string) {
+	c.Name = name
+	c.require(cimdMappedClientFieldsFieldName)
+}
+
+// SetAppType sets the AppType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetAppType(appType *string) {
+	c.AppType = appType
+	c.require(cimdMappedClientFieldsFieldAppType)
+}
+
+// SetCallbacks sets the Callbacks field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetCallbacks(callbacks []string) {
+	c.Callbacks = callbacks
+	c.require(cimdMappedClientFieldsFieldCallbacks)
+}
+
+// SetLogoURI sets the LogoURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetLogoURI(logoURI *string) {
+	c.LogoURI = logoURI
+	c.require(cimdMappedClientFieldsFieldLogoURI)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetDescription(description *string) {
+	c.Description = description
+	c.require(cimdMappedClientFieldsFieldDescription)
+}
+
+// SetGrantTypes sets the GrantTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetGrantTypes(grantTypes []string) {
+	c.GrantTypes = grantTypes
+	c.require(cimdMappedClientFieldsFieldGrantTypes)
+}
+
+// SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *string) {
+	c.TokenEndpointAuthMethod = tokenEndpointAuthMethod
+	c.require(cimdMappedClientFieldsFieldTokenEndpointAuthMethod)
+}
+
+// SetJwksURI sets the JwksURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetJwksURI(jwksURI *string) {
+	c.JwksURI = jwksURI
+	c.require(cimdMappedClientFieldsFieldJwksURI)
+}
+
+// SetClientAuthenticationMethods sets the ClientAuthenticationMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedClientFields) SetClientAuthenticationMethods(clientAuthenticationMethods *CimdMappedClientAuthenticationMethods) {
+	c.ClientAuthenticationMethods = clientAuthenticationMethods
+	c.require(cimdMappedClientFieldsFieldClientAuthenticationMethods)
+}
+
+func (c *CimdMappedClientFields) UnmarshalJSON(data []byte) error {
+	type embed CimdMappedClientFields
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CimdMappedClientFields(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CimdMappedClientFields) MarshalJSON() ([]byte, error) {
+	type embed CimdMappedClientFields
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *CimdMappedClientFields) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	cimdMappedPrivateKeyJwtCredentialFieldCredentialType = big.NewInt(1 << 0)
+	cimdMappedPrivateKeyJwtCredentialFieldKid            = big.NewInt(1 << 1)
+	cimdMappedPrivateKeyJwtCredentialFieldAlg            = big.NewInt(1 << 2)
+)
+
+type CimdMappedPrivateKeyJwtCredential struct {
+	// Type of credential (e.g., public_key)
+	CredentialType string `json:"credential_type" url:"credential_type"`
+	// Key identifier from JWKS or calculated thumbprint
+	Kid string `json:"kid" url:"kid"`
+	// Algorithm (e.g., RS256, RS384, PS256)
+	Alg string `json:"alg" url:"alg"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *CimdMappedPrivateKeyJwtCredential) GetCredentialType() string {
+	if c == nil {
+		return ""
+	}
+	return c.CredentialType
+}
+
+func (c *CimdMappedPrivateKeyJwtCredential) GetKid() string {
+	if c == nil {
+		return ""
+	}
+	return c.Kid
+}
+
+func (c *CimdMappedPrivateKeyJwtCredential) GetAlg() string {
+	if c == nil {
+		return ""
+	}
+	return c.Alg
+}
+
+func (c *CimdMappedPrivateKeyJwtCredential) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *CimdMappedPrivateKeyJwtCredential) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCredentialType sets the CredentialType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedPrivateKeyJwtCredential) SetCredentialType(credentialType string) {
+	c.CredentialType = credentialType
+	c.require(cimdMappedPrivateKeyJwtCredentialFieldCredentialType)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedPrivateKeyJwtCredential) SetKid(kid string) {
+	c.Kid = kid
+	c.require(cimdMappedPrivateKeyJwtCredentialFieldKid)
+}
+
+// SetAlg sets the Alg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdMappedPrivateKeyJwtCredential) SetAlg(alg string) {
+	c.Alg = alg
+	c.require(cimdMappedPrivateKeyJwtCredentialFieldAlg)
+}
+
+func (c *CimdMappedPrivateKeyJwtCredential) UnmarshalJSON(data []byte) error {
+	type embed CimdMappedPrivateKeyJwtCredential
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CimdMappedPrivateKeyJwtCredential(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CimdMappedPrivateKeyJwtCredential) MarshalJSON() ([]byte, error) {
+	type embed CimdMappedPrivateKeyJwtCredential
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *CimdMappedPrivateKeyJwtCredential) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Validation result for the Client ID Metadata Document
+var (
+	cimdValidationResultFieldValid      = big.NewInt(1 << 0)
+	cimdValidationResultFieldViolations = big.NewInt(1 << 1)
+	cimdValidationResultFieldWarnings   = big.NewInt(1 << 2)
+)
+
+type CimdValidationResult struct {
+	// Whether the metadata document passed validation
+	Valid bool `json:"valid" url:"valid"`
+	// Array of validation violation messages (if any)
+	Violations []string `json:"violations" url:"violations"`
+	// Array of warning messages (if any)
+	Warnings []string `json:"warnings" url:"warnings"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *CimdValidationResult) GetValid() bool {
+	if c == nil {
+		return false
+	}
+	return c.Valid
+}
+
+func (c *CimdValidationResult) GetViolations() []string {
+	if c == nil {
+		return nil
+	}
+	return c.Violations
+}
+
+func (c *CimdValidationResult) GetWarnings() []string {
+	if c == nil {
+		return nil
+	}
+	return c.Warnings
+}
+
+func (c *CimdValidationResult) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *CimdValidationResult) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetValid sets the Valid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdValidationResult) SetValid(valid bool) {
+	c.Valid = valid
+	c.require(cimdValidationResultFieldValid)
+}
+
+// SetViolations sets the Violations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdValidationResult) SetViolations(violations []string) {
+	c.Violations = violations
+	c.require(cimdValidationResultFieldViolations)
+}
+
+// SetWarnings sets the Warnings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CimdValidationResult) SetWarnings(warnings []string) {
+	c.Warnings = warnings
+	c.require(cimdValidationResultFieldWarnings)
+}
+
+func (c *CimdValidationResult) UnmarshalJSON(data []byte) error {
+	type embed CimdValidationResult
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CimdValidationResult(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CimdValidationResult) MarshalJSON() ([]byte, error) {
+	type embed CimdValidationResult
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *CimdValidationResult) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	clientFieldClientID                                       = big.NewInt(1 << 0)
 	clientFieldTenant                                         = big.NewInt(1 << 1)
@@ -240,6 +913,10 @@ var (
 	clientFieldExpressConfiguration                           = big.NewInt(1 << 50)
 	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
 	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
+	clientFieldExternalMetadataType                           = big.NewInt(1 << 53)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
+	clientFieldExternalClientID                               = big.NewInt(1 << 55)
+	clientFieldJwksURI                                        = big.NewInt(1 << 56)
 )
 
 type Client struct {
@@ -330,6 +1007,12 @@ type Client struct {
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
+	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
+	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
+	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
+	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
+	JwksURI *string `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -708,6 +1391,34 @@ func (c *Client) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotif
 		return nil
 	}
 	return *c.AsyncApprovalNotificationChannels
+}
+
+func (c *Client) GetExternalMetadataType() ClientExternalMetadataTypeEnum {
+	if c == nil || c.ExternalMetadataType == nil {
+		return ""
+	}
+	return *c.ExternalMetadataType
+}
+
+func (c *Client) GetExternalMetadataCreatedBy() ClientExternalMetadataCreatedByEnum {
+	if c == nil || c.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *c.ExternalMetadataCreatedBy
+}
+
+func (c *Client) GetExternalClientID() string {
+	if c == nil || c.ExternalClientID == nil {
+		return ""
+	}
+	return *c.ExternalClientID
+}
+
+func (c *Client) GetJwksURI() string {
+	if c == nil || c.JwksURI == nil {
+		return ""
+	}
+	return *c.JwksURI
 }
 
 func (c *Client) GetExtraProperties() map[string]interface{} {
@@ -1093,6 +1804,34 @@ func (c *Client) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 func (c *Client) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
 	c.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
 	c.require(clientFieldAsyncApprovalNotificationChannels)
+}
+
+// SetExternalMetadataType sets the ExternalMetadataType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetExternalMetadataType(externalMetadataType *ClientExternalMetadataTypeEnum) {
+	c.ExternalMetadataType = externalMetadataType
+	c.require(clientFieldExternalMetadataType)
+}
+
+// SetExternalMetadataCreatedBy sets the ExternalMetadataCreatedBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
+	c.ExternalMetadataCreatedBy = externalMetadataCreatedBy
+	c.require(clientFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetExternalClientID(externalClientID *string) {
+	c.ExternalClientID = externalClientID
+	c.require(clientFieldExternalClientID)
+}
+
+// SetJwksURI sets the JwksURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetJwksURI(jwksURI *string) {
+	c.JwksURI = jwksURI
+	c.require(clientFieldJwksURI)
 }
 
 func (c *Client) UnmarshalJSON(data []byte) error {
@@ -6005,6 +6744,49 @@ func (c *ClientEncryptionKey) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Indicates who created the external metadata client. The value <code>admin</code> indicates the client was registered via the Management API. The value <code>client</code> indicates the client was registered dynamically. This field is only present when external_metadata_type is set.
+type ClientExternalMetadataCreatedByEnum string
+
+const (
+	ClientExternalMetadataCreatedByEnumAdmin  ClientExternalMetadataCreatedByEnum = "admin"
+	ClientExternalMetadataCreatedByEnumClient ClientExternalMetadataCreatedByEnum = "client"
+)
+
+func NewClientExternalMetadataCreatedByEnumFromString(s string) (ClientExternalMetadataCreatedByEnum, error) {
+	switch s {
+	case "admin":
+		return ClientExternalMetadataCreatedByEnumAdmin, nil
+	case "client":
+		return ClientExternalMetadataCreatedByEnumClient, nil
+	}
+	var t ClientExternalMetadataCreatedByEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientExternalMetadataCreatedByEnum) Ptr() *ClientExternalMetadataCreatedByEnum {
+	return &c
+}
+
+// Indicates the type of external metadata used to register the client. This field is omitted for regular clients. The value <code>cimd</code> identifies clients registered via a Client ID Metadata Document.
+type ClientExternalMetadataTypeEnum string
+
+const (
+	ClientExternalMetadataTypeEnumCimd ClientExternalMetadataTypeEnum = "cimd"
+)
+
+func NewClientExternalMetadataTypeEnumFromString(s string) (ClientExternalMetadataTypeEnum, error) {
+	switch s {
+	case "cimd":
+		return ClientExternalMetadataTypeEnumCimd, nil
+	}
+	var t ClientExternalMetadataTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientExternalMetadataTypeEnum) Ptr() *ClientExternalMetadataTypeEnum {
+	return &c
+}
+
 // Configuration related to JWTs for the client.
 var (
 	clientJwtConfigurationFieldLifetimeInSeconds = big.NewInt(1 << 0)
@@ -8229,6 +9011,10 @@ var (
 	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
 	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
 	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 53)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 55)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 56)
 )
 
 type CreateClientResponseContent struct {
@@ -8319,6 +9105,12 @@ type CreateClientResponseContent struct {
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
+	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
+	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
+	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
+	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
+	JwksURI *string `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -8697,6 +9489,34 @@ func (c *CreateClientResponseContent) GetAsyncApprovalNotificationChannels() Cli
 		return nil
 	}
 	return *c.AsyncApprovalNotificationChannels
+}
+
+func (c *CreateClientResponseContent) GetExternalMetadataType() ClientExternalMetadataTypeEnum {
+	if c == nil || c.ExternalMetadataType == nil {
+		return ""
+	}
+	return *c.ExternalMetadataType
+}
+
+func (c *CreateClientResponseContent) GetExternalMetadataCreatedBy() ClientExternalMetadataCreatedByEnum {
+	if c == nil || c.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *c.ExternalMetadataCreatedBy
+}
+
+func (c *CreateClientResponseContent) GetExternalClientID() string {
+	if c == nil || c.ExternalClientID == nil {
+		return ""
+	}
+	return *c.ExternalClientID
+}
+
+func (c *CreateClientResponseContent) GetJwksURI() string {
+	if c == nil || c.JwksURI == nil {
+		return ""
+	}
+	return *c.JwksURI
 }
 
 func (c *CreateClientResponseContent) GetExtraProperties() map[string]interface{} {
@@ -9082,6 +9902,34 @@ func (c *CreateClientResponseContent) SetResourceServerIdentifier(resourceServer
 func (c *CreateClientResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
 	c.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
 	c.require(createClientResponseContentFieldAsyncApprovalNotificationChannels)
+}
+
+// SetExternalMetadataType sets the ExternalMetadataType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetExternalMetadataType(externalMetadataType *ClientExternalMetadataTypeEnum) {
+	c.ExternalMetadataType = externalMetadataType
+	c.require(createClientResponseContentFieldExternalMetadataType)
+}
+
+// SetExternalMetadataCreatedBy sets the ExternalMetadataCreatedBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
+	c.ExternalMetadataCreatedBy = externalMetadataCreatedBy
+	c.require(createClientResponseContentFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetExternalClientID(externalClientID *string) {
+	c.ExternalClientID = externalClientID
+	c.require(createClientResponseContentFieldExternalClientID)
+}
+
+// SetJwksURI sets the JwksURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetJwksURI(jwksURI *string) {
+	c.JwksURI = jwksURI
+	c.require(createClientResponseContentFieldJwksURI)
 }
 
 func (c *CreateClientResponseContent) UnmarshalJSON(data []byte) error {
@@ -9713,6 +10561,10 @@ var (
 	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
 	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
 	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 53)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 55)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 56)
 )
 
 type GetClientResponseContent struct {
@@ -9803,6 +10655,12 @@ type GetClientResponseContent struct {
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
+	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
+	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
+	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
+	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
+	JwksURI *string `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10181,6 +11039,34 @@ func (g *GetClientResponseContent) GetAsyncApprovalNotificationChannels() Client
 		return nil
 	}
 	return *g.AsyncApprovalNotificationChannels
+}
+
+func (g *GetClientResponseContent) GetExternalMetadataType() ClientExternalMetadataTypeEnum {
+	if g == nil || g.ExternalMetadataType == nil {
+		return ""
+	}
+	return *g.ExternalMetadataType
+}
+
+func (g *GetClientResponseContent) GetExternalMetadataCreatedBy() ClientExternalMetadataCreatedByEnum {
+	if g == nil || g.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *g.ExternalMetadataCreatedBy
+}
+
+func (g *GetClientResponseContent) GetExternalClientID() string {
+	if g == nil || g.ExternalClientID == nil {
+		return ""
+	}
+	return *g.ExternalClientID
+}
+
+func (g *GetClientResponseContent) GetJwksURI() string {
+	if g == nil || g.JwksURI == nil {
+		return ""
+	}
+	return *g.JwksURI
 }
 
 func (g *GetClientResponseContent) GetExtraProperties() map[string]interface{} {
@@ -10566,6 +11452,34 @@ func (g *GetClientResponseContent) SetResourceServerIdentifier(resourceServerIde
 func (g *GetClientResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
 	g.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
 	g.require(getClientResponseContentFieldAsyncApprovalNotificationChannels)
+}
+
+// SetExternalMetadataType sets the ExternalMetadataType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetExternalMetadataType(externalMetadataType *ClientExternalMetadataTypeEnum) {
+	g.ExternalMetadataType = externalMetadataType
+	g.require(getClientResponseContentFieldExternalMetadataType)
+}
+
+// SetExternalMetadataCreatedBy sets the ExternalMetadataCreatedBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
+	g.ExternalMetadataCreatedBy = externalMetadataCreatedBy
+	g.require(getClientResponseContentFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetExternalClientID(externalClientID *string) {
+	g.ExternalClientID = externalClientID
+	g.require(getClientResponseContentFieldExternalClientID)
+}
+
+// SetJwksURI sets the JwksURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetJwksURI(jwksURI *string) {
+	g.JwksURI = jwksURI
+	g.require(getClientResponseContentFieldJwksURI)
 }
 
 func (g *GetClientResponseContent) UnmarshalJSON(data []byte) error {
@@ -11208,6 +12122,145 @@ func (n *NativeSocialLoginGoogle) String() string {
 }
 
 var (
+	previewCimdMetadataResponseContentFieldClientID     = big.NewInt(1 << 0)
+	previewCimdMetadataResponseContentFieldErrors       = big.NewInt(1 << 1)
+	previewCimdMetadataResponseContentFieldValidation   = big.NewInt(1 << 2)
+	previewCimdMetadataResponseContentFieldMappedFields = big.NewInt(1 << 3)
+)
+
+type PreviewCimdMetadataResponseContent struct {
+	// The client_id of an existing client registered with this external_client_id, if one exists.
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// Array of retrieval errors (populated when the metadata document could not be fetched). When present, validation is omitted.
+	Errors       []string                `json:"errors,omitempty" url:"errors,omitempty"`
+	Validation   *CimdValidationResult   `json:"validation,omitempty" url:"validation,omitempty"`
+	MappedFields *CimdMappedClientFields `json:"mapped_fields,omitempty" url:"mapped_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (p *PreviewCimdMetadataResponseContent) GetClientID() string {
+	if p == nil || p.ClientID == nil {
+		return ""
+	}
+	return *p.ClientID
+}
+
+func (p *PreviewCimdMetadataResponseContent) GetErrors() []string {
+	if p == nil || p.Errors == nil {
+		return nil
+	}
+	return p.Errors
+}
+
+func (p *PreviewCimdMetadataResponseContent) GetValidation() CimdValidationResult {
+	if p == nil || p.Validation == nil {
+		return CimdValidationResult{}
+	}
+	return *p.Validation
+}
+
+func (p *PreviewCimdMetadataResponseContent) GetMappedFields() CimdMappedClientFields {
+	if p == nil || p.MappedFields == nil {
+		return CimdMappedClientFields{}
+	}
+	return *p.MappedFields
+}
+
+func (p *PreviewCimdMetadataResponseContent) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.ExtraProperties
+}
+
+func (p *PreviewCimdMetadataResponseContent) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PreviewCimdMetadataResponseContent) SetClientID(clientID *string) {
+	p.ClientID = clientID
+	p.require(previewCimdMetadataResponseContentFieldClientID)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PreviewCimdMetadataResponseContent) SetErrors(errors []string) {
+	p.Errors = errors
+	p.require(previewCimdMetadataResponseContentFieldErrors)
+}
+
+// SetValidation sets the Validation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PreviewCimdMetadataResponseContent) SetValidation(validation *CimdValidationResult) {
+	p.Validation = validation
+	p.require(previewCimdMetadataResponseContentFieldValidation)
+}
+
+// SetMappedFields sets the MappedFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PreviewCimdMetadataResponseContent) SetMappedFields(mappedFields *CimdMappedClientFields) {
+	p.MappedFields = mappedFields
+	p.require(previewCimdMetadataResponseContentFieldMappedFields)
+}
+
+func (p *PreviewCimdMetadataResponseContent) UnmarshalJSON(data []byte) error {
+	type embed PreviewCimdMetadataResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = PreviewCimdMetadataResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.ExtraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PreviewCimdMetadataResponseContent) MarshalJSON() ([]byte, error) {
+	type embed PreviewCimdMetadataResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, p.ExtraProperties)
+}
+
+func (p *PreviewCimdMetadataResponseContent) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
 	publicKeyCredentialFieldCredentialType      = big.NewInt(1 << 0)
 	publicKeyCredentialFieldName                = big.NewInt(1 << 1)
 	publicKeyCredentialFieldPem                 = big.NewInt(1 << 2)
@@ -11466,6 +12519,129 @@ func (r RefreshTokenRotationTypeEnum) Ptr() *RefreshTokenRotationTypeEnum {
 	return &r
 }
 
+// Response after successfully registering or updating a CIMD client
+var (
+	registerCimdClientResponseContentFieldClientID     = big.NewInt(1 << 0)
+	registerCimdClientResponseContentFieldMappedFields = big.NewInt(1 << 1)
+	registerCimdClientResponseContentFieldValidation   = big.NewInt(1 << 2)
+)
+
+type RegisterCimdClientResponseContent struct {
+	// The Auth0 client_id of the created or updated client
+	ClientID     string                  `json:"client_id" url:"client_id"`
+	MappedFields *CimdMappedClientFields `json:"mapped_fields" url:"mapped_fields"`
+	Validation   *CimdValidationResult   `json:"validation" url:"validation"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (r *RegisterCimdClientResponseContent) GetClientID() string {
+	if r == nil {
+		return ""
+	}
+	return r.ClientID
+}
+
+func (r *RegisterCimdClientResponseContent) GetMappedFields() *CimdMappedClientFields {
+	if r == nil {
+		return nil
+	}
+	return r.MappedFields
+}
+
+func (r *RegisterCimdClientResponseContent) GetValidation() *CimdValidationResult {
+	if r == nil {
+		return nil
+	}
+	return r.Validation
+}
+
+func (r *RegisterCimdClientResponseContent) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.ExtraProperties
+}
+
+func (r *RegisterCimdClientResponseContent) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RegisterCimdClientResponseContent) SetClientID(clientID string) {
+	r.ClientID = clientID
+	r.require(registerCimdClientResponseContentFieldClientID)
+}
+
+// SetMappedFields sets the MappedFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RegisterCimdClientResponseContent) SetMappedFields(mappedFields *CimdMappedClientFields) {
+	r.MappedFields = mappedFields
+	r.require(registerCimdClientResponseContentFieldMappedFields)
+}
+
+// SetValidation sets the Validation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RegisterCimdClientResponseContent) SetValidation(validation *CimdValidationResult) {
+	r.Validation = validation
+	r.require(registerCimdClientResponseContentFieldValidation)
+}
+
+func (r *RegisterCimdClientResponseContent) UnmarshalJSON(data []byte) error {
+	type embed RegisterCimdClientResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*r = RegisterCimdClientResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.ExtraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RegisterCimdClientResponseContent) MarshalJSON() ([]byte, error) {
+	type embed RegisterCimdClientResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, r.ExtraProperties)
+}
+
+func (r *RegisterCimdClientResponseContent) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
 var (
 	rotateClientSecretResponseContentFieldClientID                                       = big.NewInt(1 << 0)
 	rotateClientSecretResponseContentFieldTenant                                         = big.NewInt(1 << 1)
@@ -11520,6 +12696,10 @@ var (
 	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
 	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
 	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 53)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 55)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(1 << 56)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -11610,6 +12790,12 @@ type RotateClientSecretResponseContent struct {
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
+	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
+	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
+	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
+	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
+	JwksURI *string `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11988,6 +13174,34 @@ func (r *RotateClientSecretResponseContent) GetAsyncApprovalNotificationChannels
 		return nil
 	}
 	return *r.AsyncApprovalNotificationChannels
+}
+
+func (r *RotateClientSecretResponseContent) GetExternalMetadataType() ClientExternalMetadataTypeEnum {
+	if r == nil || r.ExternalMetadataType == nil {
+		return ""
+	}
+	return *r.ExternalMetadataType
+}
+
+func (r *RotateClientSecretResponseContent) GetExternalMetadataCreatedBy() ClientExternalMetadataCreatedByEnum {
+	if r == nil || r.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *r.ExternalMetadataCreatedBy
+}
+
+func (r *RotateClientSecretResponseContent) GetExternalClientID() string {
+	if r == nil || r.ExternalClientID == nil {
+		return ""
+	}
+	return *r.ExternalClientID
+}
+
+func (r *RotateClientSecretResponseContent) GetJwksURI() string {
+	if r == nil || r.JwksURI == nil {
+		return ""
+	}
+	return *r.JwksURI
 }
 
 func (r *RotateClientSecretResponseContent) GetExtraProperties() map[string]interface{} {
@@ -12375,6 +13589,34 @@ func (r *RotateClientSecretResponseContent) SetAsyncApprovalNotificationChannels
 	r.require(rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels)
 }
 
+// SetExternalMetadataType sets the ExternalMetadataType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetExternalMetadataType(externalMetadataType *ClientExternalMetadataTypeEnum) {
+	r.ExternalMetadataType = externalMetadataType
+	r.require(rotateClientSecretResponseContentFieldExternalMetadataType)
+}
+
+// SetExternalMetadataCreatedBy sets the ExternalMetadataCreatedBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
+	r.ExternalMetadataCreatedBy = externalMetadataCreatedBy
+	r.require(rotateClientSecretResponseContentFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetExternalClientID(externalClientID *string) {
+	r.ExternalClientID = externalClientID
+	r.require(rotateClientSecretResponseContentFieldExternalClientID)
+}
+
+// SetJwksURI sets the JwksURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetJwksURI(jwksURI *string) {
+	r.JwksURI = jwksURI
+	r.require(rotateClientSecretResponseContentFieldJwksURI)
+}
+
 func (r *RotateClientSecretResponseContent) UnmarshalJSON(data []byte) error {
 	type embed RotateClientSecretResponseContent
 	var unmarshaler = struct {
@@ -12475,6 +13717,10 @@ var (
 	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
 	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
 	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 53)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 55)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 56)
 )
 
 type UpdateClientResponseContent struct {
@@ -12565,6 +13811,12 @@ type UpdateClientResponseContent struct {
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
+	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
+	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
+	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
+	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
+	JwksURI *string `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -12943,6 +14195,34 @@ func (u *UpdateClientResponseContent) GetAsyncApprovalNotificationChannels() Cli
 		return nil
 	}
 	return *u.AsyncApprovalNotificationChannels
+}
+
+func (u *UpdateClientResponseContent) GetExternalMetadataType() ClientExternalMetadataTypeEnum {
+	if u == nil || u.ExternalMetadataType == nil {
+		return ""
+	}
+	return *u.ExternalMetadataType
+}
+
+func (u *UpdateClientResponseContent) GetExternalMetadataCreatedBy() ClientExternalMetadataCreatedByEnum {
+	if u == nil || u.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *u.ExternalMetadataCreatedBy
+}
+
+func (u *UpdateClientResponseContent) GetExternalClientID() string {
+	if u == nil || u.ExternalClientID == nil {
+		return ""
+	}
+	return *u.ExternalClientID
+}
+
+func (u *UpdateClientResponseContent) GetJwksURI() string {
+	if u == nil || u.JwksURI == nil {
+		return ""
+	}
+	return *u.JwksURI
 }
 
 func (u *UpdateClientResponseContent) GetExtraProperties() map[string]interface{} {
@@ -13328,6 +14608,34 @@ func (u *UpdateClientResponseContent) SetResourceServerIdentifier(resourceServer
 func (u *UpdateClientResponseContent) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
 	u.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
 	u.require(updateClientResponseContentFieldAsyncApprovalNotificationChannels)
+}
+
+// SetExternalMetadataType sets the ExternalMetadataType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetExternalMetadataType(externalMetadataType *ClientExternalMetadataTypeEnum) {
+	u.ExternalMetadataType = externalMetadataType
+	u.require(updateClientResponseContentFieldExternalMetadataType)
+}
+
+// SetExternalMetadataCreatedBy sets the ExternalMetadataCreatedBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
+	u.ExternalMetadataCreatedBy = externalMetadataCreatedBy
+	u.require(updateClientResponseContentFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetExternalClientID(externalClientID *string) {
+	u.ExternalClientID = externalClientID
+	u.require(updateClientResponseContentFieldExternalClientID)
+}
+
+// SetJwksURI sets the JwksURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetJwksURI(jwksURI *string) {
+	u.JwksURI = jwksURI
+	u.require(updateClientResponseContentFieldJwksURI)
 }
 
 func (u *UpdateClientResponseContent) UnmarshalJSON(data []byte) error {

@@ -968,7 +968,6 @@ const (
 	ConnectionIdentityProviderEnumApple               ConnectionIdentityProviderEnum = "apple"
 	ConnectionIdentityProviderEnumDropbox             ConnectionIdentityProviderEnum = "dropbox"
 	ConnectionIdentityProviderEnumBitbucket           ConnectionIdentityProviderEnum = "bitbucket"
-	ConnectionIdentityProviderEnumAol                 ConnectionIdentityProviderEnum = "aol"
 	ConnectionIdentityProviderEnumAuth0Oidc           ConnectionIdentityProviderEnum = "auth0-oidc"
 	ConnectionIdentityProviderEnumAuth0               ConnectionIdentityProviderEnum = "auth0"
 	ConnectionIdentityProviderEnumBaidu               ConnectionIdentityProviderEnum = "baidu"
@@ -991,7 +990,6 @@ const (
 	ConnectionIdentityProviderEnumIP                  ConnectionIdentityProviderEnum = "ip"
 	ConnectionIdentityProviderEnumLine                ConnectionIdentityProviderEnum = "line"
 	ConnectionIdentityProviderEnumLinkedin            ConnectionIdentityProviderEnum = "linkedin"
-	ConnectionIdentityProviderEnumMiicard             ConnectionIdentityProviderEnum = "miicard"
 	ConnectionIdentityProviderEnumOauth1              ConnectionIdentityProviderEnum = "oauth1"
 	ConnectionIdentityProviderEnumOauth2              ConnectionIdentityProviderEnum = "oauth2"
 	ConnectionIdentityProviderEnumOffice365           ConnectionIdentityProviderEnum = "office365"
@@ -1001,7 +999,6 @@ const (
 	ConnectionIdentityProviderEnumPaypalSandbox       ConnectionIdentityProviderEnum = "paypal-sandbox"
 	ConnectionIdentityProviderEnumPingfederate        ConnectionIdentityProviderEnum = "pingfederate"
 	ConnectionIdentityProviderEnumPlanningcenter      ConnectionIdentityProviderEnum = "planningcenter"
-	ConnectionIdentityProviderEnumRenren              ConnectionIdentityProviderEnum = "renren"
 	ConnectionIdentityProviderEnumSalesforceCommunity ConnectionIdentityProviderEnum = "salesforce-community"
 	ConnectionIdentityProviderEnumSalesforceSandbox   ConnectionIdentityProviderEnum = "salesforce-sandbox"
 	ConnectionIdentityProviderEnumSalesforce          ConnectionIdentityProviderEnum = "salesforce"
@@ -1011,8 +1008,6 @@ const (
 	ConnectionIdentityProviderEnumShop                ConnectionIdentityProviderEnum = "shop"
 	ConnectionIdentityProviderEnumSms                 ConnectionIdentityProviderEnum = "sms"
 	ConnectionIdentityProviderEnumSoundcloud          ConnectionIdentityProviderEnum = "soundcloud"
-	ConnectionIdentityProviderEnumThecitySandbox      ConnectionIdentityProviderEnum = "thecity-sandbox"
-	ConnectionIdentityProviderEnumThecity             ConnectionIdentityProviderEnum = "thecity"
 	ConnectionIdentityProviderEnumThirtysevensignals  ConnectionIdentityProviderEnum = "thirtysevensignals"
 	ConnectionIdentityProviderEnumTwitter             ConnectionIdentityProviderEnum = "twitter"
 	ConnectionIdentityProviderEnumUntappd             ConnectionIdentityProviderEnum = "untappd"
@@ -1022,7 +1017,6 @@ const (
 	ConnectionIdentityProviderEnumWindowslive         ConnectionIdentityProviderEnum = "windowslive"
 	ConnectionIdentityProviderEnumWordpress           ConnectionIdentityProviderEnum = "wordpress"
 	ConnectionIdentityProviderEnumYahoo               ConnectionIdentityProviderEnum = "yahoo"
-	ConnectionIdentityProviderEnumYammer              ConnectionIdentityProviderEnum = "yammer"
 	ConnectionIdentityProviderEnumYandex              ConnectionIdentityProviderEnum = "yandex"
 )
 
@@ -1040,8 +1034,6 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 		return ConnectionIdentityProviderEnumDropbox, nil
 	case "bitbucket":
 		return ConnectionIdentityProviderEnumBitbucket, nil
-	case "aol":
-		return ConnectionIdentityProviderEnumAol, nil
 	case "auth0-oidc":
 		return ConnectionIdentityProviderEnumAuth0Oidc, nil
 	case "auth0":
@@ -1086,8 +1078,6 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 		return ConnectionIdentityProviderEnumLine, nil
 	case "linkedin":
 		return ConnectionIdentityProviderEnumLinkedin, nil
-	case "miicard":
-		return ConnectionIdentityProviderEnumMiicard, nil
 	case "oauth1":
 		return ConnectionIdentityProviderEnumOauth1, nil
 	case "oauth2":
@@ -1106,8 +1096,6 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 		return ConnectionIdentityProviderEnumPingfederate, nil
 	case "planningcenter":
 		return ConnectionIdentityProviderEnumPlanningcenter, nil
-	case "renren":
-		return ConnectionIdentityProviderEnumRenren, nil
 	case "salesforce-community":
 		return ConnectionIdentityProviderEnumSalesforceCommunity, nil
 	case "salesforce-sandbox":
@@ -1126,10 +1114,6 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 		return ConnectionIdentityProviderEnumSms, nil
 	case "soundcloud":
 		return ConnectionIdentityProviderEnumSoundcloud, nil
-	case "thecity-sandbox":
-		return ConnectionIdentityProviderEnumThecitySandbox, nil
-	case "thecity":
-		return ConnectionIdentityProviderEnumThecity, nil
 	case "thirtysevensignals":
 		return ConnectionIdentityProviderEnumThirtysevensignals, nil
 	case "twitter":
@@ -1148,8 +1132,6 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 		return ConnectionIdentityProviderEnumWordpress, nil
 	case "yahoo":
 		return ConnectionIdentityProviderEnumYahoo, nil
-	case "yammer":
-		return ConnectionIdentityProviderEnumYammer, nil
 	case "yandex":
 		return ConnectionIdentityProviderEnumYandex, nil
 	}
@@ -1884,6 +1866,631 @@ func (c *ConnectionPasswordNoPersonalInfoOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Password policy options for flexible password policy configuration
+var (
+	connectionPasswordOptionsFieldComplexity  = big.NewInt(1 << 0)
+	connectionPasswordOptionsFieldDictionary  = big.NewInt(1 << 1)
+	connectionPasswordOptionsFieldHistory     = big.NewInt(1 << 2)
+	connectionPasswordOptionsFieldProfileData = big.NewInt(1 << 3)
+)
+
+type ConnectionPasswordOptions struct {
+	Complexity  *ConnectionPasswordOptionsComplexity  `json:"complexity,omitempty" url:"complexity,omitempty"`
+	Dictionary  *ConnectionPasswordOptionsDictionary  `json:"dictionary,omitempty" url:"dictionary,omitempty"`
+	History     *ConnectionPasswordOptionsHistory     `json:"history,omitempty" url:"history,omitempty"`
+	ProfileData *ConnectionPasswordOptionsProfileData `json:"profile_data,omitempty" url:"profile_data,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionPasswordOptions) GetComplexity() ConnectionPasswordOptionsComplexity {
+	if c == nil || c.Complexity == nil {
+		return ConnectionPasswordOptionsComplexity{}
+	}
+	return *c.Complexity
+}
+
+func (c *ConnectionPasswordOptions) GetDictionary() ConnectionPasswordOptionsDictionary {
+	if c == nil || c.Dictionary == nil {
+		return ConnectionPasswordOptionsDictionary{}
+	}
+	return *c.Dictionary
+}
+
+func (c *ConnectionPasswordOptions) GetHistory() ConnectionPasswordOptionsHistory {
+	if c == nil || c.History == nil {
+		return ConnectionPasswordOptionsHistory{}
+	}
+	return *c.History
+}
+
+func (c *ConnectionPasswordOptions) GetProfileData() ConnectionPasswordOptionsProfileData {
+	if c == nil || c.ProfileData == nil {
+		return ConnectionPasswordOptionsProfileData{}
+	}
+	return *c.ProfileData
+}
+
+func (c *ConnectionPasswordOptions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionPasswordOptions) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetComplexity sets the Complexity field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptions) SetComplexity(complexity *ConnectionPasswordOptionsComplexity) {
+	c.Complexity = complexity
+	c.require(connectionPasswordOptionsFieldComplexity)
+}
+
+// SetDictionary sets the Dictionary field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptions) SetDictionary(dictionary *ConnectionPasswordOptionsDictionary) {
+	c.Dictionary = dictionary
+	c.require(connectionPasswordOptionsFieldDictionary)
+}
+
+// SetHistory sets the History field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptions) SetHistory(history *ConnectionPasswordOptionsHistory) {
+	c.History = history
+	c.require(connectionPasswordOptionsFieldHistory)
+}
+
+// SetProfileData sets the ProfileData field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptions) SetProfileData(profileData *ConnectionPasswordOptionsProfileData) {
+	c.ProfileData = profileData
+	c.require(connectionPasswordOptionsFieldProfileData)
+}
+
+func (c *ConnectionPasswordOptions) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionPasswordOptions
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionPasswordOptions(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionPasswordOptions) MarshalJSON() ([]byte, error) {
+	type embed ConnectionPasswordOptions
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionPasswordOptions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Password complexity requirements configuration
+var (
+	connectionPasswordOptionsComplexityFieldMinLength            = big.NewInt(1 << 0)
+	connectionPasswordOptionsComplexityFieldCharacterTypes       = big.NewInt(1 << 1)
+	connectionPasswordOptionsComplexityFieldCharacterTypeRule    = big.NewInt(1 << 2)
+	connectionPasswordOptionsComplexityFieldIdenticalCharacters  = big.NewInt(1 << 3)
+	connectionPasswordOptionsComplexityFieldSequentialCharacters = big.NewInt(1 << 4)
+	connectionPasswordOptionsComplexityFieldMaxLengthExceeded    = big.NewInt(1 << 5)
+)
+
+type ConnectionPasswordOptionsComplexity struct {
+	// Minimum password length required (1-72 characters)
+	MinLength *int `json:"min_length,omitempty" url:"min_length,omitempty"`
+	// Required character types that must be present in passwords. Valid options: uppercase, lowercase, number, special
+	CharacterTypes       []PasswordCharacterTypeEnum             `json:"character_types,omitempty" url:"character_types,omitempty"`
+	CharacterTypeRule    *PasswordCharacterTypeRulePolicyEnum    `json:"character_type_rule,omitempty" url:"character_type_rule,omitempty"`
+	IdenticalCharacters  *PasswordIdenticalCharactersPolicyEnum  `json:"identical_characters,omitempty" url:"identical_characters,omitempty"`
+	SequentialCharacters *PasswordSequentialCharactersPolicyEnum `json:"sequential_characters,omitempty" url:"sequential_characters,omitempty"`
+	MaxLengthExceeded    *PasswordMaxLengthExceededPolicyEnum    `json:"max_length_exceeded,omitempty" url:"max_length_exceeded,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionPasswordOptionsComplexity) GetMinLength() int {
+	if c == nil || c.MinLength == nil {
+		return 0
+	}
+	return *c.MinLength
+}
+
+func (c *ConnectionPasswordOptionsComplexity) GetCharacterTypes() []PasswordCharacterTypeEnum {
+	if c == nil || c.CharacterTypes == nil {
+		return nil
+	}
+	return c.CharacterTypes
+}
+
+func (c *ConnectionPasswordOptionsComplexity) GetCharacterTypeRule() PasswordCharacterTypeRulePolicyEnum {
+	if c == nil || c.CharacterTypeRule == nil {
+		return ""
+	}
+	return *c.CharacterTypeRule
+}
+
+func (c *ConnectionPasswordOptionsComplexity) GetIdenticalCharacters() PasswordIdenticalCharactersPolicyEnum {
+	if c == nil || c.IdenticalCharacters == nil {
+		return ""
+	}
+	return *c.IdenticalCharacters
+}
+
+func (c *ConnectionPasswordOptionsComplexity) GetSequentialCharacters() PasswordSequentialCharactersPolicyEnum {
+	if c == nil || c.SequentialCharacters == nil {
+		return ""
+	}
+	return *c.SequentialCharacters
+}
+
+func (c *ConnectionPasswordOptionsComplexity) GetMaxLengthExceeded() PasswordMaxLengthExceededPolicyEnum {
+	if c == nil || c.MaxLengthExceeded == nil {
+		return ""
+	}
+	return *c.MaxLengthExceeded
+}
+
+func (c *ConnectionPasswordOptionsComplexity) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionPasswordOptionsComplexity) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetMinLength sets the MinLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsComplexity) SetMinLength(minLength *int) {
+	c.MinLength = minLength
+	c.require(connectionPasswordOptionsComplexityFieldMinLength)
+}
+
+// SetCharacterTypes sets the CharacterTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsComplexity) SetCharacterTypes(characterTypes []PasswordCharacterTypeEnum) {
+	c.CharacterTypes = characterTypes
+	c.require(connectionPasswordOptionsComplexityFieldCharacterTypes)
+}
+
+// SetCharacterTypeRule sets the CharacterTypeRule field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsComplexity) SetCharacterTypeRule(characterTypeRule *PasswordCharacterTypeRulePolicyEnum) {
+	c.CharacterTypeRule = characterTypeRule
+	c.require(connectionPasswordOptionsComplexityFieldCharacterTypeRule)
+}
+
+// SetIdenticalCharacters sets the IdenticalCharacters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsComplexity) SetIdenticalCharacters(identicalCharacters *PasswordIdenticalCharactersPolicyEnum) {
+	c.IdenticalCharacters = identicalCharacters
+	c.require(connectionPasswordOptionsComplexityFieldIdenticalCharacters)
+}
+
+// SetSequentialCharacters sets the SequentialCharacters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsComplexity) SetSequentialCharacters(sequentialCharacters *PasswordSequentialCharactersPolicyEnum) {
+	c.SequentialCharacters = sequentialCharacters
+	c.require(connectionPasswordOptionsComplexityFieldSequentialCharacters)
+}
+
+// SetMaxLengthExceeded sets the MaxLengthExceeded field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsComplexity) SetMaxLengthExceeded(maxLengthExceeded *PasswordMaxLengthExceededPolicyEnum) {
+	c.MaxLengthExceeded = maxLengthExceeded
+	c.require(connectionPasswordOptionsComplexityFieldMaxLengthExceeded)
+}
+
+func (c *ConnectionPasswordOptionsComplexity) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionPasswordOptionsComplexity
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionPasswordOptionsComplexity(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionPasswordOptionsComplexity) MarshalJSON() ([]byte, error) {
+	type embed ConnectionPasswordOptionsComplexity
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionPasswordOptionsComplexity) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Dictionary-based password restriction policy to prevent common passwords
+var (
+	connectionPasswordOptionsDictionaryFieldActive  = big.NewInt(1 << 0)
+	connectionPasswordOptionsDictionaryFieldCustom  = big.NewInt(1 << 1)
+	connectionPasswordOptionsDictionaryFieldDefault = big.NewInt(1 << 2)
+)
+
+type ConnectionPasswordOptionsDictionary struct {
+	// Enables dictionary checking to prevent use of common passwords and custom blocked words
+	Active *bool `json:"active,omitempty" url:"active,omitempty"`
+	// Array of custom words to block in passwords. Maximum 200 items, each up to 50 characters
+	Custom  []string                         `json:"custom,omitempty" url:"custom,omitempty"`
+	Default *PasswordDefaultDictionariesEnum `json:"default,omitempty" url:"default,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionPasswordOptionsDictionary) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+func (c *ConnectionPasswordOptionsDictionary) GetCustom() []string {
+	if c == nil || c.Custom == nil {
+		return nil
+	}
+	return c.Custom
+}
+
+func (c *ConnectionPasswordOptionsDictionary) GetDefault() PasswordDefaultDictionariesEnum {
+	if c == nil || c.Default == nil {
+		return ""
+	}
+	return *c.Default
+}
+
+func (c *ConnectionPasswordOptionsDictionary) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionPasswordOptionsDictionary) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsDictionary) SetActive(active *bool) {
+	c.Active = active
+	c.require(connectionPasswordOptionsDictionaryFieldActive)
+}
+
+// SetCustom sets the Custom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsDictionary) SetCustom(custom []string) {
+	c.Custom = custom
+	c.require(connectionPasswordOptionsDictionaryFieldCustom)
+}
+
+// SetDefault sets the Default field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsDictionary) SetDefault(default_ *PasswordDefaultDictionariesEnum) {
+	c.Default = default_
+	c.require(connectionPasswordOptionsDictionaryFieldDefault)
+}
+
+func (c *ConnectionPasswordOptionsDictionary) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionPasswordOptionsDictionary
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionPasswordOptionsDictionary(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionPasswordOptionsDictionary) MarshalJSON() ([]byte, error) {
+	type embed ConnectionPasswordOptionsDictionary
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionPasswordOptionsDictionary) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Password history policy configuration to prevent password reuse
+var (
+	connectionPasswordOptionsHistoryFieldActive = big.NewInt(1 << 0)
+	connectionPasswordOptionsHistoryFieldSize   = big.NewInt(1 << 1)
+)
+
+type ConnectionPasswordOptionsHistory struct {
+	// Enables password history checking to prevent users from reusing recent passwords
+	Active *bool `json:"active,omitempty" url:"active,omitempty"`
+	// Number of previous passwords to remember and prevent reuse (1-24)
+	Size *int `json:"size,omitempty" url:"size,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionPasswordOptionsHistory) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+func (c *ConnectionPasswordOptionsHistory) GetSize() int {
+	if c == nil || c.Size == nil {
+		return 0
+	}
+	return *c.Size
+}
+
+func (c *ConnectionPasswordOptionsHistory) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionPasswordOptionsHistory) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsHistory) SetActive(active *bool) {
+	c.Active = active
+	c.require(connectionPasswordOptionsHistoryFieldActive)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsHistory) SetSize(size *int) {
+	c.Size = size
+	c.require(connectionPasswordOptionsHistoryFieldSize)
+}
+
+func (c *ConnectionPasswordOptionsHistory) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionPasswordOptionsHistory
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionPasswordOptionsHistory(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionPasswordOptionsHistory) MarshalJSON() ([]byte, error) {
+	type embed ConnectionPasswordOptionsHistory
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionPasswordOptionsHistory) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Personal information restriction policy to prevent use of profile data in passwords
+var (
+	connectionPasswordOptionsProfileDataFieldActive        = big.NewInt(1 << 0)
+	connectionPasswordOptionsProfileDataFieldBlockedFields = big.NewInt(1 << 1)
+)
+
+type ConnectionPasswordOptionsProfileData struct {
+	// Prevents users from including profile data (like name, email) in their passwords
+	Active *bool `json:"active,omitempty" url:"active,omitempty"`
+	// Blocked profile fields. An array of up to 12 entries.
+	BlockedFields []string `json:"blocked_fields,omitempty" url:"blocked_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionPasswordOptionsProfileData) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+func (c *ConnectionPasswordOptionsProfileData) GetBlockedFields() []string {
+	if c == nil || c.BlockedFields == nil {
+		return nil
+	}
+	return c.BlockedFields
+}
+
+func (c *ConnectionPasswordOptionsProfileData) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionPasswordOptionsProfileData) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsProfileData) SetActive(active *bool) {
+	c.Active = active
+	c.require(connectionPasswordOptionsProfileDataFieldActive)
+}
+
+// SetBlockedFields sets the BlockedFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsProfileData) SetBlockedFields(blockedFields []string) {
+	c.BlockedFields = blockedFields
+	c.require(connectionPasswordOptionsProfileDataFieldBlockedFields)
+}
+
+func (c *ConnectionPasswordOptionsProfileData) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionPasswordOptionsProfileData
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionPasswordOptionsProfileData(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionPasswordOptionsProfileData) MarshalJSON() ([]byte, error) {
+	type embed ConnectionPasswordOptionsProfileData
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionPasswordOptionsProfileData) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 // Password strength level
 type ConnectionPasswordPolicyEnum string
 
@@ -2033,6 +2640,7 @@ var (
 	connectionPropertiesOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 26)
 	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 27)
 	connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 28)
+	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2071,6 +2679,7 @@ type ConnectionPropertiesOptions struct {
 	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum        `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
 	GatewayAuthentication            *ConnectionGatewayAuthentication            `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
 	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
+	PasswordOptions                  *ConnectionPasswordOptions                  `json:"password_options,omitempty" url:"password_options,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2281,6 +2890,13 @@ func (c *ConnectionPropertiesOptions) GetFederatedConnectionsAccessTokens() Conn
 		return ConnectionFederatedConnectionsAccessTokens{}
 	}
 	return *c.FederatedConnectionsAccessTokens
+}
+
+func (c *ConnectionPropertiesOptions) GetPasswordOptions() ConnectionPasswordOptions {
+	if c == nil || c.PasswordOptions == nil {
+		return ConnectionPasswordOptions{}
+	}
+	return *c.PasswordOptions
 }
 
 func (c *ConnectionPropertiesOptions) GetExtraProperties() map[string]interface{} {
@@ -2498,6 +3114,13 @@ func (c *ConnectionPropertiesOptions) SetGatewayAuthentication(gatewayAuthentica
 func (c *ConnectionPropertiesOptions) SetFederatedConnectionsAccessTokens(federatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens) {
 	c.FederatedConnectionsAccessTokens = federatedConnectionsAccessTokens
 	c.require(connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens)
+}
+
+// SetPasswordOptions sets the PasswordOptions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetPasswordOptions(passwordOptions *ConnectionPasswordOptions) {
+	c.PasswordOptions = passwordOptions
+	c.require(connectionPropertiesOptionsFieldPasswordOptions)
 }
 
 func (c *ConnectionPropertiesOptions) UnmarshalJSON(data []byte) error {
@@ -3876,6 +4499,149 @@ func (l *ListConnectionsCheckpointPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type PasswordCharacterTypeEnum string
+
+const (
+	PasswordCharacterTypeEnumUppercase PasswordCharacterTypeEnum = "uppercase"
+	PasswordCharacterTypeEnumLowercase PasswordCharacterTypeEnum = "lowercase"
+	PasswordCharacterTypeEnumNumber    PasswordCharacterTypeEnum = "number"
+	PasswordCharacterTypeEnumSpecial   PasswordCharacterTypeEnum = "special"
+)
+
+func NewPasswordCharacterTypeEnumFromString(s string) (PasswordCharacterTypeEnum, error) {
+	switch s {
+	case "uppercase":
+		return PasswordCharacterTypeEnumUppercase, nil
+	case "lowercase":
+		return PasswordCharacterTypeEnumLowercase, nil
+	case "number":
+		return PasswordCharacterTypeEnumNumber, nil
+	case "special":
+		return PasswordCharacterTypeEnumSpecial, nil
+	}
+	var t PasswordCharacterTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PasswordCharacterTypeEnum) Ptr() *PasswordCharacterTypeEnum {
+	return &p
+}
+
+// When enabled, passwords must contain at least 3 out of 4 character types. Can only be enabled when all 4 character types are specified
+type PasswordCharacterTypeRulePolicyEnum string
+
+const (
+	PasswordCharacterTypeRulePolicyEnumAll         PasswordCharacterTypeRulePolicyEnum = "all"
+	PasswordCharacterTypeRulePolicyEnumThreeOfFour PasswordCharacterTypeRulePolicyEnum = "three_of_four"
+)
+
+func NewPasswordCharacterTypeRulePolicyEnumFromString(s string) (PasswordCharacterTypeRulePolicyEnum, error) {
+	switch s {
+	case "all":
+		return PasswordCharacterTypeRulePolicyEnumAll, nil
+	case "three_of_four":
+		return PasswordCharacterTypeRulePolicyEnumThreeOfFour, nil
+	}
+	var t PasswordCharacterTypeRulePolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PasswordCharacterTypeRulePolicyEnum) Ptr() *PasswordCharacterTypeRulePolicyEnum {
+	return &p
+}
+
+// Default dictionary to use for password validation. Options: "en_10k" (10,000 common words) or "en_100k" (100,000 common words)
+type PasswordDefaultDictionariesEnum string
+
+const (
+	PasswordDefaultDictionariesEnumEn10K  PasswordDefaultDictionariesEnum = "en_10k"
+	PasswordDefaultDictionariesEnumEn100K PasswordDefaultDictionariesEnum = "en_100k"
+)
+
+func NewPasswordDefaultDictionariesEnumFromString(s string) (PasswordDefaultDictionariesEnum, error) {
+	switch s {
+	case "en_10k":
+		return PasswordDefaultDictionariesEnumEn10K, nil
+	case "en_100k":
+		return PasswordDefaultDictionariesEnumEn100K, nil
+	}
+	var t PasswordDefaultDictionariesEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PasswordDefaultDictionariesEnum) Ptr() *PasswordDefaultDictionariesEnum {
+	return &p
+}
+
+// Controls whether identical consecutive characters are allowed in passwords
+type PasswordIdenticalCharactersPolicyEnum string
+
+const (
+	PasswordIdenticalCharactersPolicyEnumAllow PasswordIdenticalCharactersPolicyEnum = "allow"
+	PasswordIdenticalCharactersPolicyEnumBlock PasswordIdenticalCharactersPolicyEnum = "block"
+)
+
+func NewPasswordIdenticalCharactersPolicyEnumFromString(s string) (PasswordIdenticalCharactersPolicyEnum, error) {
+	switch s {
+	case "allow":
+		return PasswordIdenticalCharactersPolicyEnumAllow, nil
+	case "block":
+		return PasswordIdenticalCharactersPolicyEnumBlock, nil
+	}
+	var t PasswordIdenticalCharactersPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PasswordIdenticalCharactersPolicyEnum) Ptr() *PasswordIdenticalCharactersPolicyEnum {
+	return &p
+}
+
+// Controls whether passwords that exceed the maximum length are truncated or rejected
+type PasswordMaxLengthExceededPolicyEnum string
+
+const (
+	PasswordMaxLengthExceededPolicyEnumTruncate PasswordMaxLengthExceededPolicyEnum = "truncate"
+	PasswordMaxLengthExceededPolicyEnumError    PasswordMaxLengthExceededPolicyEnum = "error"
+)
+
+func NewPasswordMaxLengthExceededPolicyEnumFromString(s string) (PasswordMaxLengthExceededPolicyEnum, error) {
+	switch s {
+	case "truncate":
+		return PasswordMaxLengthExceededPolicyEnumTruncate, nil
+	case "error":
+		return PasswordMaxLengthExceededPolicyEnumError, nil
+	}
+	var t PasswordMaxLengthExceededPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PasswordMaxLengthExceededPolicyEnum) Ptr() *PasswordMaxLengthExceededPolicyEnum {
+	return &p
+}
+
+// Controls whether sequential characters are allowed in passwords
+type PasswordSequentialCharactersPolicyEnum string
+
+const (
+	PasswordSequentialCharactersPolicyEnumAllow PasswordSequentialCharactersPolicyEnum = "allow"
+	PasswordSequentialCharactersPolicyEnumBlock PasswordSequentialCharactersPolicyEnum = "block"
+)
+
+func NewPasswordSequentialCharactersPolicyEnumFromString(s string) (PasswordSequentialCharactersPolicyEnum, error) {
+	switch s {
+	case "allow":
+		return PasswordSequentialCharactersPolicyEnumAllow, nil
+	case "block":
+		return PasswordSequentialCharactersPolicyEnumBlock, nil
+	}
+	var t PasswordSequentialCharactersPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PasswordSequentialCharactersPolicyEnum) Ptr() *PasswordSequentialCharactersPolicyEnum {
+	return &p
+}
+
 // Configuration for the phone number attribute for users.
 var (
 	phoneAttributeFieldIdentifier      = big.NewInt(1 << 0)
@@ -4318,6 +5084,7 @@ var (
 	updateConnectionOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 26)
 	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 27)
 	updateConnectionOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 28)
+	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
 )
 
 type UpdateConnectionOptions struct {
@@ -4356,6 +5123,7 @@ type UpdateConnectionOptions struct {
 	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum        `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
 	GatewayAuthentication            *ConnectionGatewayAuthentication            `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
 	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
+	PasswordOptions                  *ConnectionPasswordOptions                  `json:"password_options,omitempty" url:"password_options,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4566,6 +5334,13 @@ func (u *UpdateConnectionOptions) GetFederatedConnectionsAccessTokens() Connecti
 		return ConnectionFederatedConnectionsAccessTokens{}
 	}
 	return *u.FederatedConnectionsAccessTokens
+}
+
+func (u *UpdateConnectionOptions) GetPasswordOptions() ConnectionPasswordOptions {
+	if u == nil || u.PasswordOptions == nil {
+		return ConnectionPasswordOptions{}
+	}
+	return *u.PasswordOptions
 }
 
 func (u *UpdateConnectionOptions) GetExtraProperties() map[string]interface{} {
@@ -4783,6 +5558,13 @@ func (u *UpdateConnectionOptions) SetGatewayAuthentication(gatewayAuthentication
 func (u *UpdateConnectionOptions) SetFederatedConnectionsAccessTokens(federatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens) {
 	u.FederatedConnectionsAccessTokens = federatedConnectionsAccessTokens
 	u.require(updateConnectionOptionsFieldFederatedConnectionsAccessTokens)
+}
+
+// SetPasswordOptions sets the PasswordOptions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetPasswordOptions(passwordOptions *ConnectionPasswordOptions) {
+	u.PasswordOptions = passwordOptions
+	u.require(updateConnectionOptionsFieldPasswordOptions)
 }
 
 func (u *UpdateConnectionOptions) UnmarshalJSON(data []byte) error {

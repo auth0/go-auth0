@@ -178,6 +178,44 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+//	Fetches and validates a Client ID Metadata Document without creating a client.
+//	Returns the raw metadata and how it would be mapped to Auth0 client fields.
+//	This endpoint is useful for testing metadata URIs before creating CIMD clients.
+func (c *Client) PreviewCimdMetadata(
+	ctx context.Context,
+	request *management.PreviewCimdMetadataRequestContent,
+	opts ...option.RequestOption,
+) (*management.PreviewCimdMetadataResponseContent, error) {
+	response, err := c.WithRawResponse.PreviewCimdMetadata(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Idempotent registration for Client ID Metadata Document (CIMD) clients.
+// Uses external_client_id as the unique identifier for upsert operations.
+// **Create:** Returns 201 when a new client is created (requires \
+func (c *Client) RegisterCimdClient(
+	ctx context.Context,
+	request *management.RegisterCimdClientRequestContent,
+	opts ...option.RequestOption,
+) (*management.RegisterCimdClientResponseContent, error) {
+	response, err := c.WithRawResponse.RegisterCimdClient(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Retrieve client details by ID. Clients are SSO connections or Applications linked with your Auth0 tenant. A list of fields to include or exclude may also be specified.
 // For more information, read <a href="https://www.auth0.com/docs/get-started/applications"> Applications in Auth0</a> and <a href="https://www.auth0.com/docs/authenticate/single-sign-on"> Single Sign-On</a>.
 // <ul>

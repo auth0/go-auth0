@@ -1950,8 +1950,9 @@ func (e EventStreamTestEventTypeEnum) Ptr() *EventStreamTestEventTypeEnum {
 }
 
 type EventStreamWebhookAuthorizationResponse struct {
-	EventStreamWebhookBasicAuth  *EventStreamWebhookBasicAuth
-	EventStreamWebhookBearerAuth *EventStreamWebhookBearerAuth
+	EventStreamWebhookBasicAuth        *EventStreamWebhookBasicAuth
+	EventStreamWebhookBearerAuth       *EventStreamWebhookBearerAuth
+	EventStreamWebhookCustomHeaderAuth *EventStreamWebhookCustomHeaderAuth
 
 	typ string
 }
@@ -1970,6 +1971,13 @@ func (e *EventStreamWebhookAuthorizationResponse) GetEventStreamWebhookBearerAut
 	return e.EventStreamWebhookBearerAuth
 }
 
+func (e *EventStreamWebhookAuthorizationResponse) GetEventStreamWebhookCustomHeaderAuth() *EventStreamWebhookCustomHeaderAuth {
+	if e == nil {
+		return nil
+	}
+	return e.EventStreamWebhookCustomHeaderAuth
+}
+
 func (e *EventStreamWebhookAuthorizationResponse) UnmarshalJSON(data []byte) error {
 	valueEventStreamWebhookBasicAuth := new(EventStreamWebhookBasicAuth)
 	if err := json.Unmarshal(data, &valueEventStreamWebhookBasicAuth); err == nil {
@@ -1983,6 +1991,12 @@ func (e *EventStreamWebhookAuthorizationResponse) UnmarshalJSON(data []byte) err
 		e.EventStreamWebhookBearerAuth = valueEventStreamWebhookBearerAuth
 		return nil
 	}
+	valueEventStreamWebhookCustomHeaderAuth := new(EventStreamWebhookCustomHeaderAuth)
+	if err := json.Unmarshal(data, &valueEventStreamWebhookCustomHeaderAuth); err == nil {
+		e.typ = "EventStreamWebhookCustomHeaderAuth"
+		e.EventStreamWebhookCustomHeaderAuth = valueEventStreamWebhookCustomHeaderAuth
+		return nil
+	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
 }
 
@@ -1993,12 +2007,16 @@ func (e EventStreamWebhookAuthorizationResponse) MarshalJSON() ([]byte, error) {
 	if e.typ == "EventStreamWebhookBearerAuth" || e.EventStreamWebhookBearerAuth != nil {
 		return json.Marshal(e.EventStreamWebhookBearerAuth)
 	}
+	if e.typ == "EventStreamWebhookCustomHeaderAuth" || e.EventStreamWebhookCustomHeaderAuth != nil {
+		return json.Marshal(e.EventStreamWebhookCustomHeaderAuth)
+	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
 type EventStreamWebhookAuthorizationResponseVisitor interface {
 	VisitEventStreamWebhookBasicAuth(*EventStreamWebhookBasicAuth) error
 	VisitEventStreamWebhookBearerAuth(*EventStreamWebhookBearerAuth) error
+	VisitEventStreamWebhookCustomHeaderAuth(*EventStreamWebhookCustomHeaderAuth) error
 }
 
 func (e *EventStreamWebhookAuthorizationResponse) Accept(visitor EventStreamWebhookAuthorizationResponseVisitor) error {
@@ -2007,6 +2025,9 @@ func (e *EventStreamWebhookAuthorizationResponse) Accept(visitor EventStreamWebh
 	}
 	if e.typ == "EventStreamWebhookBearerAuth" || e.EventStreamWebhookBearerAuth != nil {
 		return visitor.VisitEventStreamWebhookBearerAuth(e.EventStreamWebhookBearerAuth)
+	}
+	if e.typ == "EventStreamWebhookCustomHeaderAuth" || e.EventStreamWebhookCustomHeaderAuth != nil {
+		return visitor.VisitEventStreamWebhookCustomHeaderAuth(e.EventStreamWebhookCustomHeaderAuth)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
@@ -2338,6 +2359,128 @@ func (e *EventStreamWebhookConfiguration) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+// Custom header authorization for HTTP requests.
+var (
+	eventStreamWebhookCustomHeaderAuthFieldMethod    = big.NewInt(1 << 0)
+	eventStreamWebhookCustomHeaderAuthFieldHeaderKey = big.NewInt(1 << 1)
+)
+
+type EventStreamWebhookCustomHeaderAuth struct {
+	Method EventStreamWebhookCustomHeaderAuthMethodEnum `json:"method" url:"method"`
+	// HTTP header name.
+	HeaderKey string `json:"header_key" url:"header_key"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *EventStreamWebhookCustomHeaderAuth) GetMethod() EventStreamWebhookCustomHeaderAuthMethodEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Method
+}
+
+func (e *EventStreamWebhookCustomHeaderAuth) GetHeaderKey() string {
+	if e == nil {
+		return ""
+	}
+	return e.HeaderKey
+}
+
+func (e *EventStreamWebhookCustomHeaderAuth) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *EventStreamWebhookCustomHeaderAuth) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookCustomHeaderAuth) SetMethod(method EventStreamWebhookCustomHeaderAuthMethodEnum) {
+	e.Method = method
+	e.require(eventStreamWebhookCustomHeaderAuthFieldMethod)
+}
+
+// SetHeaderKey sets the HeaderKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookCustomHeaderAuth) SetHeaderKey(headerKey string) {
+	e.HeaderKey = headerKey
+	e.require(eventStreamWebhookCustomHeaderAuthFieldHeaderKey)
+}
+
+func (e *EventStreamWebhookCustomHeaderAuth) UnmarshalJSON(data []byte) error {
+	type unmarshaler EventStreamWebhookCustomHeaderAuth
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = EventStreamWebhookCustomHeaderAuth(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *EventStreamWebhookCustomHeaderAuth) MarshalJSON() ([]byte, error) {
+	type embed EventStreamWebhookCustomHeaderAuth
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *EventStreamWebhookCustomHeaderAuth) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+// Type of authorization.
+type EventStreamWebhookCustomHeaderAuthMethodEnum string
+
+const (
+	EventStreamWebhookCustomHeaderAuthMethodEnumCustomHeader EventStreamWebhookCustomHeaderAuthMethodEnum = "custom_header"
+)
+
+func NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString(s string) (EventStreamWebhookCustomHeaderAuthMethodEnum, error) {
+	switch s {
+	case "custom_header":
+		return EventStreamWebhookCustomHeaderAuthMethodEnumCustomHeader, nil
+	}
+	var t EventStreamWebhookCustomHeaderAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookCustomHeaderAuthMethodEnum) Ptr() *EventStreamWebhookCustomHeaderAuthMethodEnum {
+	return &e
 }
 
 var (

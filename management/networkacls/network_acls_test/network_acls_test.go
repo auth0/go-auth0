@@ -108,7 +108,6 @@ func TestNetworkACLsCreateWithWireMock(
 	request := &management.CreateNetworkACLRequestContent{
 		Description: "description",
 		Active:      true,
-		Priority:    1.1,
 		Rule: &management.NetworkACLRule{
 			Action: &management.NetworkACLAction{},
 			Scope:  management.NetworkACLRuleScopeEnumManagement,
@@ -161,7 +160,6 @@ func TestNetworkACLsSetWithWireMock(
 	request := &management.SetNetworkACLRequestContent{
 		Description: "description",
 		Active:      true,
-		Priority:    1.1,
 		Rule: &management.NetworkACLRule{
 			Action: &management.NetworkACLAction{},
 			Scope:  management.NetworkACLRuleScopeEnumManagement,
