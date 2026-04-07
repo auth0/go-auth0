@@ -228,6 +228,18 @@ type Client struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	MyOrganizationConfiguration *MyOrganizationConfiguration `json:"my_organization_configuration,omitempty"`
+
+	// ExternalClientID is the URL of the Client ID Metadata Document.
+	// Only present for CIMD-registered clients.
+	ExternalClientID *string `json:"external_client_id,omitempty"`
+
+	// ExternalMetadataType is the type of external metadata.
+	// Value is "cimd" for CIMD-registered clients.
+	ExternalMetadataType *string `json:"external_metadata_type,omitempty"`
+
+	// ExternalMetadataCreatedBy indicates who created the external metadata client.
+	// Values: "admin" (via Management API), "client" (self-registered), or "unknown".
+	ExternalMetadataCreatedBy *string `json:"external_metadata_created_by,omitempty"`
 }
 
 // ExpressConfiguration represents the OIN Express Configuration settings for a client.

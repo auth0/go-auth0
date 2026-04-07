@@ -1871,6 +1871,30 @@ func (c *Client) GetExpressConfiguration() *ExpressConfiguration {
 	return c.ExpressConfiguration
 }
 
+// GetExternalClientID returns the ExternalClientID field if it's non-nil, zero value otherwise.
+func (c *Client) GetExternalClientID() string {
+	if c == nil || c.ExternalClientID == nil {
+		return ""
+	}
+	return *c.ExternalClientID
+}
+
+// GetExternalMetadataCreatedBy returns the ExternalMetadataCreatedBy field if it's non-nil, zero value otherwise.
+func (c *Client) GetExternalMetadataCreatedBy() string {
+	if c == nil || c.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *c.ExternalMetadataCreatedBy
+}
+
+// GetExternalMetadataType returns the ExternalMetadataType field if it's non-nil, zero value otherwise.
+func (c *Client) GetExternalMetadataType() string {
+	if c == nil || c.ExternalMetadataType == nil {
+		return ""
+	}
+	return *c.ExternalMetadataType
+}
+
 // GetFormTemplate returns the FormTemplate field if it's non-nil, zero value otherwise.
 func (c *Client) GetFormTemplate() string {
 	if c == nil || c.FormTemplate == nil {
@@ -13330,6 +13354,14 @@ func (t *Tenant) GetChangePassword() *TenantChangePassword {
 	return t.ChangePassword
 }
 
+// GetClientIDMetadataDocumentSupported returns the ClientIDMetadataDocumentSupported field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetClientIDMetadataDocumentSupported() bool {
+	if t == nil || t.ClientIDMetadataDocumentSupported == nil {
+		return false
+	}
+	return *t.ClientIDMetadataDocumentSupported
+}
+
 // GetCustomizeMFAInPostLoginAction returns the CustomizeMFAInPostLoginAction field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetCustomizeMFAInPostLoginAction() bool {
 	if t == nil || t.CustomizeMFAInPostLoginAction == nil {
@@ -13480,6 +13512,14 @@ func (t *Tenant) GetPushedAuthorizationRequestsSupported() bool {
 		return false
 	}
 	return *t.PushedAuthorizationRequestsSupported
+}
+
+// GetResourceParameterProfile returns the ResourceParameterProfile field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetResourceParameterProfile() string {
+	if t == nil || t.ResourceParameterProfile == nil {
+		return ""
+	}
+	return *t.ResourceParameterProfile
 }
 
 // GetSandboxVersion returns the SandboxVersion field if it's non-nil, zero value otherwise.

@@ -2371,6 +2371,36 @@ func TestClient_GetExpressConfiguration(tt *testing.T) {
 	c.GetExpressConfiguration()
 }
 
+func TestClient_GetExternalClientID(tt *testing.T) {
+	var zeroValue string
+	c := &Client{ExternalClientID: &zeroValue}
+	c.GetExternalClientID()
+	c = &Client{}
+	c.GetExternalClientID()
+	c = nil
+	c.GetExternalClientID()
+}
+
+func TestClient_GetExternalMetadataCreatedBy(tt *testing.T) {
+	var zeroValue string
+	c := &Client{ExternalMetadataCreatedBy: &zeroValue}
+	c.GetExternalMetadataCreatedBy()
+	c = &Client{}
+	c.GetExternalMetadataCreatedBy()
+	c = nil
+	c.GetExternalMetadataCreatedBy()
+}
+
+func TestClient_GetExternalMetadataType(tt *testing.T) {
+	var zeroValue string
+	c := &Client{ExternalMetadataType: &zeroValue}
+	c.GetExternalMetadataType()
+	c = &Client{}
+	c.GetExternalMetadataType()
+	c = nil
+	c.GetExternalMetadataType()
+}
+
 func TestClient_GetFormTemplate(tt *testing.T) {
 	var zeroValue string
 	c := &Client{FormTemplate: &zeroValue}
@@ -16751,6 +16781,16 @@ func TestTenant_GetChangePassword(tt *testing.T) {
 	t.GetChangePassword()
 }
 
+func TestTenant_GetClientIDMetadataDocumentSupported(tt *testing.T) {
+	var zeroValue bool
+	t := &Tenant{ClientIDMetadataDocumentSupported: &zeroValue}
+	t.GetClientIDMetadataDocumentSupported()
+	t = &Tenant{}
+	t.GetClientIDMetadataDocumentSupported()
+	t = nil
+	t.GetClientIDMetadataDocumentSupported()
+}
+
 func TestTenant_GetCustomizeMFAInPostLoginAction(tt *testing.T) {
 	var zeroValue bool
 	t := &Tenant{CustomizeMFAInPostLoginAction: &zeroValue}
@@ -16918,6 +16958,16 @@ func TestTenant_GetPushedAuthorizationRequestsSupported(tt *testing.T) {
 	t.GetPushedAuthorizationRequestsSupported()
 	t = nil
 	t.GetPushedAuthorizationRequestsSupported()
+}
+
+func TestTenant_GetResourceParameterProfile(tt *testing.T) {
+	var zeroValue string
+	t := &Tenant{ResourceParameterProfile: &zeroValue}
+	t.GetResourceParameterProfile()
+	t = &Tenant{}
+	t.GetResourceParameterProfile()
+	t = nil
+	t.GetResourceParameterProfile()
 }
 
 func TestTenant_GetSandboxVersion(tt *testing.T) {
