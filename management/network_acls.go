@@ -351,34 +351,6 @@ type NetworkACLAction struct {
 	rawJSON         json.RawMessage
 }
 
-func (n *NetworkACLAction) GetBlock() NetworkACLActionBlockEnum {
-	if n == nil || n.Block == nil {
-		return false
-	}
-	return *n.Block
-}
-
-func (n *NetworkACLAction) GetAllow() NetworkACLActionAllowEnum {
-	if n == nil || n.Allow == nil {
-		return false
-	}
-	return *n.Allow
-}
-
-func (n *NetworkACLAction) GetLog() NetworkACLActionLogEnum {
-	if n == nil || n.Log == nil {
-		return false
-	}
-	return *n.Log
-}
-
-func (n *NetworkACLAction) GetRedirect() NetworkACLActionRedirectEnum {
-	if n == nil || n.Redirect == nil {
-		return false
-	}
-	return *n.Redirect
-}
-
 func (n *NetworkACLAction) GetRedirectURI() string {
 	if n == nil || n.RedirectURI == nil {
 		return ""
