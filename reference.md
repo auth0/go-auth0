@@ -28,9 +28,7 @@ Retrieve all actions.
 
 ```go
 request := &management.ListActionsRequestParameters{
-        TriggerID: management.String(
-            "triggerId",
-        ),
+        TriggerID: management.ActionTriggerTypeEnumPostLogin.Ptr(),
         ActionName: management.String(
             "actionName",
         ),
@@ -149,7 +147,7 @@ request := &management.CreateActionRequestContent{
         Name: "name",
         SupportedTriggers: []*management.ActionTrigger{
             &management.ActionTrigger{
-                ID: "id",
+                ID: management.ActionTriggerTypeEnumPostLogin,
             },
         },
     }
@@ -1278,6 +1276,9 @@ request := &management.ListClientsRequestParameters{
         AppType: management.String(
             "app_type",
         ),
+        ExternalClientID: management.String(
+            "external_client_id",
+        ),
         Q: management.String(
             "q",
         ),
@@ -1358,6 +1359,14 @@ client.Clients.List(
 <dd>
 
 **appType:** `*string` — Optional filter by a comma-separated list of application types.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**externalClientID:** `*string` — Optional filter by the <a href="https://www.ietf.org/archive/id/draft-ietf-oauth-client-id-metadata-document-04.html">Client ID Metadata Document</a> URI for CIMD-registered clients.
     
 </dd>
 </dl>
@@ -1836,6 +1845,135 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Clients.PreviewCimdMetadata(request) -> *management.PreviewCimdMetadataResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+      Fetches and validates a Client ID Metadata Document without creating a client.
+      Returns the raw metadata and how it would be mapped to Auth0 client fields.
+      This endpoint is useful for testing metadata URIs before creating CIMD clients.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.PreviewCimdMetadataRequestContent{
+        ExternalClientID: "external_client_id",
+    }
+client.Clients.PreviewCimdMetadata(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**externalClientID:** `string` — URL to the Client ID Metadata Document
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Clients.RegisterCimdClient(request) -> *management.RegisterCimdClientResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+      Idempotent registration for Client ID Metadata Document (CIMD) clients.
+      Uses external_client_id as the unique identifier for upsert operations.
+      **Create:** Returns 201 when a new client is created (requires \
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.RegisterCimdClientRequestContent{
+        ExternalClientID: "external_client_id",
+    }
+client.Clients.RegisterCimdClient(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**externalClientID:** `string` — URL to the Client ID Metadata Document. Acts as the unique identifier for upsert operations.
     
 </dd>
 </dl>
@@ -3270,7 +3408,7 @@ client.Connections.Create(
 <dl>
 <dd>
 
-**enabledClients:** `[]string` — DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
+**enabledClients:** `[]string` — Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
     
 </dd>
 </dl>
@@ -6561,6 +6699,64 @@ client.Groups.Get(
 </dl>
 </details>
 
+<details><summary><code>client.Groups.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a group by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Groups.Delete(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the group (service-generated).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Hooks
 <details><summary><code>client.Hooks.List() -> *management.ListHooksOffsetPaginatedResponseContent</code></summary>
 <dl>
@@ -8048,7 +8244,6 @@ Create a new access control list for your client.
 request := &management.CreateNetworkACLRequestContent{
         Description: "description",
         Active: true,
-        Priority: 1.1,
         Rule: &management.NetworkACLRule{
             Action: &management.NetworkACLAction{},
             Scope: management.NetworkACLRuleScopeEnumManagement,
@@ -8089,7 +8284,7 @@ client.NetworkACLs.Create(
 <dl>
 <dd>
 
-**priority:** `float64` — Indicates the order in which the ACL will be evaluated relative to other ACL rules.
+**priority:** `*float64` — Indicates the order in which the ACL will be evaluated relative to other ACL rules.
     
 </dd>
 </dl>
@@ -8197,7 +8392,6 @@ Update existing access control list for your client.
 request := &management.SetNetworkACLRequestContent{
         Description: "description",
         Active: true,
-        Priority: 1.1,
         Rule: &management.NetworkACLRule{
             Action: &management.NetworkACLAction{},
             Scope: management.NetworkACLRuleScopeEnumManagement,
@@ -8247,7 +8441,7 @@ client.NetworkACLs.Set(
 <dl>
 <dd>
 
-**priority:** `float64` — Indicates the order in which the ACL will be evaluated relative to other ACL rules.
+**priority:** `*float64` — Indicates the order in which the ACL will be evaluated relative to other ACL rules.
     
 </dd>
 </dl>
@@ -9017,6 +9211,122 @@ client.Prompts.UpdateSettings(
 </details>
 
 ## RefreshTokens
+<details><summary><code>client.RefreshTokens.List() -> *management.GetRefreshTokensPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a paginated list of refresh tokens for a specific user, with optional filtering by client ID. Results are sorted by credential_id ascending.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetRefreshTokensRequestParameters{
+        UserID: "user_id",
+        ClientID: management.String(
+            "client_id",
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
+client.RefreshTokens.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user whose refresh tokens to retrieve. Required.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `*string` — Filter results by client ID. Only valid when user_id is provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — An opaque cursor from which to start the selection (exclusive). Expires after 24 hours. Obtained from the next property of a previous response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.RefreshTokens.Get(ID) -> *management.GetRefreshTokenResponseContent</code></summary>
 <dl>
 <dd>
@@ -9403,6 +9713,14 @@ client.ResourceServers.Create(
 <dl>
 <dd>
 
+**allowOnlineAccess:** `*bool` — Whether Online Refresh Tokens can be issued for this API (true) or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **tokenLifetime:** `*int` — Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
     
 </dd>
@@ -9706,6 +10024,14 @@ client.ResourceServers.Update(
 <dd>
 
 **allowOfflineAccess:** `*bool` — Whether refresh tokens can be issued for this API (true) or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowOnlineAccess:** `*bool` — Whether Online Refresh Tokens can be issued for this API (true) or not (false).
     
 </dd>
 </dl>
@@ -15094,7 +15420,7 @@ request := &management.ListActionTriggerBindingsRequestParameters{
     }
 client.Actions.Triggers.Bindings.List(
         context.TODO(),
-        "triggerId",
+        management.ActionTriggerTypeEnumPostLogin.Ptr(),
         request,
     )
 }
@@ -15112,7 +15438,7 @@ client.Actions.Triggers.Bindings.List(
 <dl>
 <dd>
 
-**triggerID:** `management.ActionTriggerTypeEnum` — An actions extensibility point.
+**triggerID:** `*management.ActionTriggerTypeEnum` — An actions extensibility point.
     
 </dd>
 </dl>
@@ -15170,7 +15496,7 @@ Update the actions that are bound (i.e. attached) to a trigger. Once an action i
 request := &management.UpdateActionBindingsRequestContent{}
 client.Actions.Triggers.Bindings.UpdateMany(
         context.TODO(),
-        "triggerId",
+        management.ActionTriggerTypeEnumPostLogin.Ptr(),
         request,
     )
 }
@@ -15188,7 +15514,7 @@ client.Actions.Triggers.Bindings.UpdateMany(
 <dl>
 <dd>
 
-**triggerID:** `management.ActionTriggerTypeEnum` — An actions extensibility point.
+**triggerID:** `*management.ActionTriggerTypeEnum` — An actions extensibility point.
     
 </dd>
 </dl>

@@ -830,38 +830,6 @@ func TestSettersMarkExplicitListNetworkACLsOffsetPaginatedResponseContent(t *tes
 }
 
 func TestSettersNetworkACLAction(t *testing.T) {
-	t.Run("SetBlock", func(t *testing.T) {
-		obj := &NetworkACLAction{}
-		var fernTestValueBlock *NetworkACLActionBlockEnum
-		obj.SetBlock(fernTestValueBlock)
-		assert.Equal(t, fernTestValueBlock, obj.Block)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetAllow", func(t *testing.T) {
-		obj := &NetworkACLAction{}
-		var fernTestValueAllow *NetworkACLActionAllowEnum
-		obj.SetAllow(fernTestValueAllow)
-		assert.Equal(t, fernTestValueAllow, obj.Allow)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetLog", func(t *testing.T) {
-		obj := &NetworkACLAction{}
-		var fernTestValueLog *NetworkACLActionLogEnum
-		obj.SetLog(fernTestValueLog)
-		assert.Equal(t, fernTestValueLog, obj.Log)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetRedirect", func(t *testing.T) {
-		obj := &NetworkACLAction{}
-		var fernTestValueRedirect *NetworkACLActionRedirectEnum
-		obj.SetRedirect(fernTestValueRedirect)
-		assert.Equal(t, fernTestValueRedirect, obj.Redirect)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetRedirectURI", func(t *testing.T) {
 		obj := &NetworkACLAction{}
 		var fernTestValueRedirectURI *string
@@ -873,142 +841,6 @@ func TestSettersNetworkACLAction(t *testing.T) {
 }
 
 func TestGettersNetworkACLAction(t *testing.T) {
-	t.Run("GetBlock", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		var value NetworkACLActionBlockEnum
-		obj.Block = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetBlock(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetBlock_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		obj.Block = nil
-		var expectedZero NetworkACLActionBlockEnum
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetBlock(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetBlock_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *NetworkACLAction
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBlock() // Should return zero value
-	})
-
-	t.Run("GetAllow", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		var value NetworkACLActionAllowEnum
-		obj.Allow = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetAllow(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetAllow_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		obj.Allow = nil
-		var expectedZero NetworkACLActionAllowEnum
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetAllow(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetAllow_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *NetworkACLAction
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAllow() // Should return zero value
-	})
-
-	t.Run("GetLog", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		var value NetworkACLActionLogEnum
-		obj.Log = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetLog(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetLog_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		obj.Log = nil
-		var expectedZero NetworkACLActionLogEnum
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetLog(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetLog_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *NetworkACLAction
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetLog() // Should return zero value
-	})
-
-	t.Run("GetRedirect", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		var value NetworkACLActionRedirectEnum
-		obj.Redirect = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetRedirect(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetRedirect_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		obj.Redirect = nil
-		var expectedZero NetworkACLActionRedirectEnum
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetRedirect(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetRedirect_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *NetworkACLAction
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetRedirect() // Should return zero value
-	})
-
 	t.Run("GetRedirectURI", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1046,130 +878,6 @@ func TestGettersNetworkACLAction(t *testing.T) {
 }
 
 func TestSettersMarkExplicitNetworkACLAction(t *testing.T) {
-	t.Run("SetBlock_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		var fernTestValueBlock *NetworkACLActionBlockEnum
-
-		// Act
-		obj.SetBlock(fernTestValueBlock)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetAllow_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		var fernTestValueAllow *NetworkACLActionAllowEnum
-
-		// Act
-		obj.SetAllow(fernTestValueAllow)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetLog_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		var fernTestValueLog *NetworkACLActionLogEnum
-
-		// Act
-		obj.SetLog(fernTestValueLog)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetRedirect_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &NetworkACLAction{}
-		var fernTestValueRedirect *NetworkACLActionRedirectEnum
-
-		// Act
-		obj.SetRedirect(fernTestValueRedirect)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetRedirectURI_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1273,6 +981,30 @@ func TestSettersNetworkACLMatch(t *testing.T) {
 		var fernTestValueUserAgents []string
 		obj.SetUserAgents(fernTestValueUserAgents)
 		assert.Equal(t, fernTestValueUserAgents, obj.UserAgents)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHostnames", func(t *testing.T) {
+		obj := &NetworkACLMatch{}
+		var fernTestValueHostnames []string
+		obj.SetHostnames(fernTestValueHostnames)
+		assert.Equal(t, fernTestValueHostnames, obj.Hostnames)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetConnectingIpv4Cidrs", func(t *testing.T) {
+		obj := &NetworkACLMatch{}
+		var fernTestValueConnectingIpv4Cidrs []NetworkACLMatchConnectingIpv4Cidr
+		obj.SetConnectingIpv4Cidrs(fernTestValueConnectingIpv4Cidrs)
+		assert.Equal(t, fernTestValueConnectingIpv4Cidrs, obj.ConnectingIpv4Cidrs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetConnectingIpv6Cidrs", func(t *testing.T) {
+		obj := &NetworkACLMatch{}
+		var fernTestValueConnectingIpv6Cidrs []NetworkACLMatchConnectingIpv6Cidr
+		obj.SetConnectingIpv6Cidrs(fernTestValueConnectingIpv6Cidrs)
+		assert.Equal(t, fernTestValueConnectingIpv6Cidrs, obj.ConnectingIpv6Cidrs)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1576,6 +1308,105 @@ func TestGettersNetworkACLMatch(t *testing.T) {
 		_ = obj.GetUserAgents() // Should return zero value
 	})
 
+	t.Run("GetHostnames", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var expected []string
+		obj.Hostnames = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetHostnames(), "getter should return the property value")
+	})
+
+	t.Run("GetHostnames_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		obj.Hostnames = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHostnames(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHostnames_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHostnames() // Should return zero value
+	})
+
+	t.Run("GetConnectingIpv4Cidrs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var expected []NetworkACLMatchConnectingIpv4Cidr
+		obj.ConnectingIpv4Cidrs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetConnectingIpv4Cidrs(), "getter should return the property value")
+	})
+
+	t.Run("GetConnectingIpv4Cidrs_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		obj.ConnectingIpv4Cidrs = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetConnectingIpv4Cidrs(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetConnectingIpv4Cidrs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetConnectingIpv4Cidrs() // Should return zero value
+	})
+
+	t.Run("GetConnectingIpv6Cidrs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var expected []NetworkACLMatchConnectingIpv6Cidr
+		obj.ConnectingIpv6Cidrs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetConnectingIpv6Cidrs(), "getter should return the property value")
+	})
+
+	t.Run("GetConnectingIpv6Cidrs_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		obj.ConnectingIpv6Cidrs = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetConnectingIpv6Cidrs(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetConnectingIpv6Cidrs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetConnectingIpv6Cidrs() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitNetworkACLMatch(t *testing.T) {
@@ -1835,6 +1666,99 @@ func TestSettersMarkExplicitNetworkACLMatch(t *testing.T) {
 
 		// Act
 		obj.SetUserAgents(fernTestValueUserAgents)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHostnames_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var fernTestValueHostnames []string
+
+		// Act
+		obj.SetHostnames(fernTestValueHostnames)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetConnectingIpv4Cidrs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var fernTestValueConnectingIpv4Cidrs []NetworkACLMatchConnectingIpv4Cidr
+
+		// Act
+		obj.SetConnectingIpv4Cidrs(fernTestValueConnectingIpv4Cidrs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetConnectingIpv6Cidrs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var fernTestValueConnectingIpv6Cidrs []NetworkACLMatchConnectingIpv6Cidr
+
+		// Act
+		obj.SetConnectingIpv6Cidrs(fernTestValueConnectingIpv6Cidrs)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -3332,6 +3332,39 @@ func TestGettersEventStreamWebhookAuthorizationResponse(t *testing.T) {
 		_ = obj.GetEventStreamWebhookBearerAuth() // Should return zero value
 	})
 
+	t.Run("GetEventStreamWebhookCustomHeaderAuth", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamWebhookAuthorizationResponse{}
+		var expected *EventStreamWebhookCustomHeaderAuth
+		obj.EventStreamWebhookCustomHeaderAuth = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamWebhookCustomHeaderAuth(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamWebhookCustomHeaderAuth_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamWebhookAuthorizationResponse{}
+		obj.EventStreamWebhookCustomHeaderAuth = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetEventStreamWebhookCustomHeaderAuth(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetEventStreamWebhookCustomHeaderAuth_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamWebhookAuthorizationResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamWebhookCustomHeaderAuth() // Should return zero value
+	})
+
 }
 
 func TestSettersEventStreamWebhookBasicAuth(t *testing.T) {
@@ -3656,6 +3689,139 @@ func TestSettersMarkExplicitEventStreamWebhookConfiguration(t *testing.T) {
 
 		// Act
 		obj.SetWebhookAuthorization(fernTestValueWebhookAuthorization)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersEventStreamWebhookCustomHeaderAuth(t *testing.T) {
+	t.Run("SetMethod", func(t *testing.T) {
+		obj := &EventStreamWebhookCustomHeaderAuth{}
+		var fernTestValueMethod EventStreamWebhookCustomHeaderAuthMethodEnum
+		obj.SetMethod(fernTestValueMethod)
+		assert.Equal(t, fernTestValueMethod, obj.Method)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHeaderKey", func(t *testing.T) {
+		obj := &EventStreamWebhookCustomHeaderAuth{}
+		var fernTestValueHeaderKey string
+		obj.SetHeaderKey(fernTestValueHeaderKey)
+		assert.Equal(t, fernTestValueHeaderKey, obj.HeaderKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersEventStreamWebhookCustomHeaderAuth(t *testing.T) {
+	t.Run("GetMethod", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamWebhookCustomHeaderAuth{}
+		var expected EventStreamWebhookCustomHeaderAuthMethodEnum
+		obj.Method = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMethod(), "getter should return the property value")
+	})
+
+	t.Run("GetMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamWebhookCustomHeaderAuth
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMethod() // Should return zero value
+	})
+
+	t.Run("GetHeaderKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamWebhookCustomHeaderAuth{}
+		var expected string
+		obj.HeaderKey = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetHeaderKey(), "getter should return the property value")
+	})
+
+	t.Run("GetHeaderKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamWebhookCustomHeaderAuth
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHeaderKey() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitEventStreamWebhookCustomHeaderAuth(t *testing.T) {
+	t.Run("SetMethod_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamWebhookCustomHeaderAuth{}
+		var fernTestValueMethod EventStreamWebhookCustomHeaderAuthMethodEnum
+
+		// Act
+		obj.SetMethod(fernTestValueMethod)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHeaderKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamWebhookCustomHeaderAuth{}
+		var fernTestValueHeaderKey string
+
+		// Act
+		obj.SetHeaderKey(fernTestValueHeaderKey)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5265,6 +5431,39 @@ func TestJSONMarshalingEventStreamWebhookConfiguration(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingEventStreamWebhookCustomHeaderAuth(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamWebhookCustomHeaderAuth{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled EventStreamWebhookCustomHeaderAuth
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj EventStreamWebhookCustomHeaderAuth
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj EventStreamWebhookCustomHeaderAuth
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingEventStreamWebhookDestination(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -5583,6 +5782,22 @@ func TestStringEventStreamWebhookConfiguration(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamWebhookConfiguration
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringEventStreamWebhookCustomHeaderAuth(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &EventStreamWebhookCustomHeaderAuth{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamWebhookCustomHeaderAuth
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -6161,6 +6376,28 @@ func TestEnumEventStreamWebhookBearerAuthMethodEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamWebhookCustomHeaderAuthMethodEnum(t *testing.T) {
+	t.Run("NewFromString_custom_header", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString("custom_header")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamWebhookCustomHeaderAuthMethodEnum("custom_header"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString("custom_header")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamWebhookDestinationTypeEnum(t *testing.T) {
 	t.Run("NewFromString_webhook", func(t *testing.T) {
 		t.Parallel()
@@ -6500,6 +6737,29 @@ func TestExtraPropertiesEventStreamWebhookConfiguration(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamWebhookConfiguration
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesEventStreamWebhookCustomHeaderAuth(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &EventStreamWebhookCustomHeaderAuth{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamWebhookCustomHeaderAuth
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

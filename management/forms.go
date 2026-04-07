@@ -2841,13 +2841,6 @@ func (f *FormEndingNode) GetCoordinates() FormNodeCoordinates {
 	return *f.Coordinates
 }
 
-func (f *FormEndingNode) GetResumeFlow() FormEndingNodeResumeFlowTrueConst {
-	if f == nil || f.ResumeFlow == nil {
-		return false
-	}
-	return *f.ResumeFlow
-}
-
 func (f *FormEndingNode) GetExtraProperties() map[string]interface{} {
 	if f == nil {
 		return nil
@@ -4647,13 +4640,6 @@ type FormFieldChoiceConfigAllowOther struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
-}
-
-func (f *FormFieldChoiceConfigAllowOther) GetEnabled() FormFieldChoiceConfigAllowOtherEnabledTrueEnum {
-	if f == nil || f.Enabled == nil {
-		return false
-	}
-	return *f.Enabled
 }
 
 func (f *FormFieldChoiceConfigAllowOther) GetLabel() string {

@@ -280,6 +280,112 @@ func (g *GetRefreshTokenResponseContent) String() string {
 }
 
 var (
+	getRefreshTokensPaginatedResponseContentFieldRefreshTokens = big.NewInt(1 << 0)
+	getRefreshTokensPaginatedResponseContentFieldNext          = big.NewInt(1 << 1)
+)
+
+type GetRefreshTokensPaginatedResponseContent struct {
+	RefreshTokens []*RefreshTokenResponseContent `json:"refresh_tokens,omitempty" url:"refresh_tokens,omitempty"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetRefreshTokensPaginatedResponseContent) GetRefreshTokens() []*RefreshTokenResponseContent {
+	if g == nil || g.RefreshTokens == nil {
+		return nil
+	}
+	return g.RefreshTokens
+}
+
+func (g *GetRefreshTokensPaginatedResponseContent) GetNext() string {
+	if g == nil || g.Next == nil {
+		return ""
+	}
+	return *g.Next
+}
+
+func (g *GetRefreshTokensPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.ExtraProperties
+}
+
+func (g *GetRefreshTokensPaginatedResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetRefreshTokens sets the RefreshTokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRefreshTokensPaginatedResponseContent) SetRefreshTokens(refreshTokens []*RefreshTokenResponseContent) {
+	g.RefreshTokens = refreshTokens
+	g.require(getRefreshTokensPaginatedResponseContentFieldRefreshTokens)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRefreshTokensPaginatedResponseContent) SetNext(next *string) {
+	g.Next = next
+	g.require(getRefreshTokensPaginatedResponseContentFieldNext)
+}
+
+func (g *GetRefreshTokensPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetRefreshTokensPaginatedResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetRefreshTokensPaginatedResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetRefreshTokensPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetRefreshTokensPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetRefreshTokensPaginatedResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	updateRefreshTokenResponseContentFieldID                   = big.NewInt(1 << 0)
 	updateRefreshTokenResponseContentFieldUserID               = big.NewInt(1 << 1)
 	updateRefreshTokenResponseContentFieldCreatedAt            = big.NewInt(1 << 2)

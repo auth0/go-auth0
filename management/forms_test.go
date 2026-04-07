@@ -4837,14 +4837,6 @@ func TestSettersFormEndingNode(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetResumeFlow", func(t *testing.T) {
-		obj := &FormEndingNode{}
-		var fernTestValueResumeFlow *FormEndingNodeResumeFlowTrueConst
-		obj.SetResumeFlow(fernTestValueResumeFlow)
-		assert.Equal(t, fernTestValueResumeFlow, obj.ResumeFlow)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersFormEndingNode(t *testing.T) {
@@ -4950,40 +4942,6 @@ func TestGettersFormEndingNode(t *testing.T) {
 		_ = obj.GetCoordinates() // Should return zero value
 	})
 
-	t.Run("GetResumeFlow", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormEndingNode{}
-		var value FormEndingNodeResumeFlowTrueConst
-		obj.ResumeFlow = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetResumeFlow(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetResumeFlow_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormEndingNode{}
-		obj.ResumeFlow = nil
-		var expectedZero FormEndingNodeResumeFlowTrueConst
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetResumeFlow(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetResumeFlow_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormEndingNode
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetResumeFlow() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitFormEndingNode(t *testing.T) {
@@ -5057,37 +5015,6 @@ func TestSettersMarkExplicitFormEndingNode(t *testing.T) {
 
 		// Act
 		obj.SetCoordinates(fernTestValueCoordinates)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetResumeFlow_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormEndingNode{}
-		var fernTestValueResumeFlow *FormEndingNodeResumeFlowTrueConst
-
-		// Act
-		obj.SetResumeFlow(fernTestValueResumeFlow)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -8509,14 +8436,6 @@ func TestSettersMarkExplicitFormFieldChoiceConfig(t *testing.T) {
 }
 
 func TestSettersFormFieldChoiceConfigAllowOther(t *testing.T) {
-	t.Run("SetEnabled", func(t *testing.T) {
-		obj := &FormFieldChoiceConfigAllowOther{}
-		var fernTestValueEnabled *FormFieldChoiceConfigAllowOtherEnabledTrueEnum
-		obj.SetEnabled(fernTestValueEnabled)
-		assert.Equal(t, fernTestValueEnabled, obj.Enabled)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetLabel", func(t *testing.T) {
 		obj := &FormFieldChoiceConfigAllowOther{}
 		var fernTestValueLabel *string
@@ -8536,40 +8455,6 @@ func TestSettersFormFieldChoiceConfigAllowOther(t *testing.T) {
 }
 
 func TestGettersFormFieldChoiceConfigAllowOther(t *testing.T) {
-	t.Run("GetEnabled", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldChoiceConfigAllowOther{}
-		var value FormFieldChoiceConfigAllowOtherEnabledTrueEnum
-		obj.Enabled = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetEnabled(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetEnabled_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldChoiceConfigAllowOther{}
-		obj.Enabled = nil
-		var expectedZero FormFieldChoiceConfigAllowOtherEnabledTrueEnum
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetEnabled(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetEnabled_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldChoiceConfigAllowOther
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetEnabled() // Should return zero value
-	})
-
 	t.Run("GetLabel", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -8641,37 +8526,6 @@ func TestGettersFormFieldChoiceConfigAllowOther(t *testing.T) {
 }
 
 func TestSettersMarkExplicitFormFieldChoiceConfigAllowOther(t *testing.T) {
-	t.Run("SetEnabled_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldChoiceConfigAllowOther{}
-		var fernTestValueEnabled *FormFieldChoiceConfigAllowOtherEnabledTrueEnum
-
-		// Act
-		obj.SetEnabled(fernTestValueEnabled)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetLabel_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange

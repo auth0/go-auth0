@@ -3,7 +3,25 @@
 package scimconfiguration
 
 import (
+	management "github.com/auth0/go-auth0/v2/management"
+	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
 
-var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
+	400: func(apiError *core.APIError) error {
+		return &management.BadRequestError{
+			APIError: apiError,
+		}
+	},
+	404: func(apiError *core.APIError) error {
+		return &management.NotFoundError{
+			APIError: apiError,
+		}
+	},
+	409: func(apiError *core.APIError) error {
+		return &management.ConflictError{
+			APIError: apiError,
+		}
+	},
+}

@@ -5,14 +5,15 @@ package client
 import (
 	context "context"
 	fmt "fmt"
+	http "net/http"
+	strconv "strconv"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	connections "github.com/auth0/go-auth0/v2/management/clients/connections"
 	credentials "github.com/auth0/go-auth0/v2/management/clients/credentials"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	http "net/http"
-	strconv "strconv"
 )
 
 type Client struct {
@@ -168,6 +169,44 @@ func (c *Client) Create(
 	opts ...option.RequestOption,
 ) (*management.CreateClientResponseContent, error) {
 	response, err := c.WithRawResponse.Create(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+//	Fetches and validates a Client ID Metadata Document without creating a client.
+//	Returns the raw metadata and how it would be mapped to Auth0 client fields.
+//	This endpoint is useful for testing metadata URIs before creating CIMD clients.
+func (c *Client) PreviewCimdMetadata(
+	ctx context.Context,
+	request *management.PreviewCimdMetadataRequestContent,
+	opts ...option.RequestOption,
+) (*management.PreviewCimdMetadataResponseContent, error) {
+	response, err := c.WithRawResponse.PreviewCimdMetadata(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Idempotent registration for Client ID Metadata Document (CIMD) clients.
+// Uses external_client_id as the unique identifier for upsert operations.
+// **Create:** Returns 201 when a new client is created (requires \
+func (c *Client) RegisterCimdClient(
+	ctx context.Context,
+	request *management.RegisterCimdClientRequestContent,
+	opts ...option.RequestOption,
+) (*management.RegisterCimdClientResponseContent, error) {
+	response, err := c.WithRawResponse.RegisterCimdClient(
 		ctx,
 		request,
 		opts...,

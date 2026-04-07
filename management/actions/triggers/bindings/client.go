@@ -5,12 +5,13 @@ package bindings
 import (
 	context "context"
 	fmt "fmt"
+	http "net/http"
+	strconv "strconv"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	http "net/http"
-	strconv "strconv"
 )
 
 type Client struct {
@@ -39,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) List(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerID management.ActionTriggerTypeEnum,
+	triggerID *management.ActionTriggerTypeEnum,
 	request *management.ListActionTriggerBindingsRequestParameters,
 	opts ...option.RequestOption,
 ) (*core.Page[*int, *management.ActionBinding, *management.ListActionBindingsPaginatedResponseContent], error) {
@@ -116,7 +117,7 @@ func (c *Client) List(
 func (c *Client) UpdateMany(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerID management.ActionTriggerTypeEnum,
+	triggerID *management.ActionTriggerTypeEnum,
 	request *management.UpdateActionBindingsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateActionBindingsResponseContent, error) {

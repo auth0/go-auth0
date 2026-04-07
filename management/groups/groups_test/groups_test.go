@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -127,4 +128,26 @@ func TestGroupsGetWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestGroupsGetWithWireMock", "GET", "/groups/id", nil, 1)
+}
+
+func TestGroupsDeleteWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	invocationErr := client.Groups.Delete(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGroupsDeleteWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestGroupsDeleteWithWireMock", "DELETE", "/groups/id", nil, 1)
 }

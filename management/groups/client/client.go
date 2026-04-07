@@ -4,12 +4,13 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	members "github.com/auth0/go-auth0/v2/management/groups/members"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	http "net/http"
 )
 
 type Client struct {
@@ -117,4 +118,22 @@ func (c *Client) Get(
 		return nil, err
 	}
 	return response.Body, nil
+}
+
+// Delete a group by its ID.
+func (c *Client) Delete(
+	ctx context.Context,
+	// Unique identifier for the group (service-generated).
+	id string,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.Delete(
+		ctx,
+		id,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
 }

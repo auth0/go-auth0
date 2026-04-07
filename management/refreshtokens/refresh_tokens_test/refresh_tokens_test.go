@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -60,6 +61,46 @@ func VerifyRequestCount(
 	}
 	json.NewDecoder(resp.Body).Decode(&result)
 	require.Equal(t, expected, len(result.Requests))
+}
+
+func TestRefreshTokensListWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &management.GetRefreshTokensRequestParameters{
+		UserID: "user_id",
+		ClientID: management.String(
+			"client_id",
+		),
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.RefreshTokens.List(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestRefreshTokensListWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestRefreshTokensListWithWireMock", "GET", "/refresh-tokens", map[string]string{"user_id": "user_id", "client_id": "client_id", "from": "from", "take": "1", "fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestRefreshTokensGetWithWireMock(

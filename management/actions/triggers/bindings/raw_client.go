@@ -4,12 +4,13 @@ package bindings
 
 import (
 	context "context"
+	http "net/http"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	triggers "github.com/auth0/go-auth0/v2/management/actions/triggers"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -34,7 +35,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) UpdateMany(
 	ctx context.Context,
 	// An actions extensibility point.
-	triggerID management.ActionTriggerTypeEnum,
+	triggerID *management.ActionTriggerTypeEnum,
 	request *management.UpdateActionBindingsRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.UpdateActionBindingsResponseContent], error) {
