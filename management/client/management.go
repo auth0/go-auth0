@@ -26,8 +26,9 @@ func New(domain string, options ...option.RequestOption) (*Management, error) {
 		return nil, fmt.Errorf("invalid Auth0 domain %q: %w", domain, err)
 	}
 
-	// Remove any trailing slash in the host (e.g. "example.com/")
-	u.Host = strings.TrimSuffix(u.Host, "/")
+	// Clear any path that url.Parse may have extracted from the domain
+	// (e.g. trailing slash in "example.com/" ends up in u.Path, not u.Host).
+	u.Path = ""
 
 	retryOptions := internal.RetryOptions{
 		MaxRetries: 3,
