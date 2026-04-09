@@ -409,7 +409,6 @@ func DebugTransport(base http.RoundTripper, debug bool) http.RoundTripper {
 	}
 
 	return RoundTripFunc(func(req *http.Request) (*http.Response, error) {
-
 		// Save body before RoundTrip consumes it.
 		var bodyBytes []byte
 		if req.Body != nil {
