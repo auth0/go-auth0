@@ -1,0 +1,177 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 138
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"domain":"1769586907952489000.tempdomain.com","type":"auth0_managed_certs","tls_policy":"recommended","domain_metadata":{"key":"value"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 454
+        uncompressed: false
+        body: '{"custom_domain_id":"cd_xYz123AbcDeFgHi","domain":"1769586907952489000.tempdomain.com","primary":true,"is_default":false,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-xyz123abcdefghi.edge.tenants.us.auth0.com","domain":"1769586907952489000.tempdomain.com"}]},"tls_policy":"recommended","domain_metadata":{"key":"value"},"created_at":"2026-01-28T07:55:08.292Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 482.526209ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 52
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"domain":"1769586907952489000.tempdomain.com"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/default
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"custom_domain_id":"cd_xYz123AbcDeFgHi","domain":"1769586907952489000.tempdomain.com","primary":true,"is_default":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-xyz123abcdefghi.edge.tenants.us.auth0.com","domain":"1769586907952489000.tempdomain.com"}],"status":"pending"},"tls_policy":"recommended","domain_metadata":{"key":"value"},"certificate":{"certificate_authority":"letsencrypt"},"created_at":"2026-01-28T07:55:08.292Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 425.123456ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/default
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"custom_domain_id":"cd_xYz123AbcDeFgHi","domain":"1769586907952489000.tempdomain.com","primary":true,"is_default":true,"status":"pending_verification","type":"auth0_managed_certs","verification":{"methods":[{"name":"CNAME","record":"go-auth0-dev.eu.auth0.com-cd-xyz123abcdefghi.edge.tenants.us.auth0.com","domain":"1769586907952489000.tempdomain.com"}],"status":"pending"},"tls_policy":"recommended","domain_metadata":{"key":"value"},"certificate":{"certificate_authority":"letsencrypt"},"created_at":"2026-01-28T07:55:08.292Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 368.16175ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 53
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"domain":"go-auth0-dev.eu.auth0.com.us.auth0.com"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/default
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 51
+        uncompressed: false
+        body: '{"domain":"go-auth0-dev.eu.auth0.com.us.auth0.com"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 425.123456ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/custom-domains/cd_xYz123AbcDeFgHi
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 375.8135ms
