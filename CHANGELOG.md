@@ -6,9 +6,18 @@
 **Added**
 - feat: SDK regeneration with typed error codes and org connections client [\#746](https://github.com/auth0/go-auth0/pull/746) ([fern-api[bot]](https://github.com/apps/fern-api))
 - feat: add CIMD client registration, refresh token listing, and group deletion [\#741](https://github.com/auth0/go-auth0/pull/741) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add custom domain defaults, credential kid, and connection configuration [\#732](https://github.com/auth0/go-auth0/pull/732) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Changed**
+- refactor: replace interface{} with any and use millisecond time formatting [\#733](https://github.com/auth0/go-auth0/pull/733) ([fern-api[bot]](https://github.com/apps/fern-api))
 
 **Fixed**
 - fix: prevent double-slash in base URL when domain has trailing slash [\#745](https://github.com/auth0/go-auth0/pull/745) ([developerkunal](https://github.com/developerkunal))
+- fix: serialize client assertion aud claim as string instead of array [\#727](https://github.com/auth0/go-auth0/pull/727) ([developerkunal](https://github.com/developerkunal))
+
+**Security**
+- chore(deps): bump codecov/codecov-action from 5.5.2 to 6.0.0 [\#736](https://github.com/auth0/go-auth0/pull/736) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore: add SCA scan workflow [\#729](https://github.com/auth0/go-auth0/pull/729) ([developerkunal](https://github.com/developerkunal))
 
 ## [v2.7.0](https://github.com/auth0/go-auth0/tree/v2.7.0) (2026-03-11)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.6.0...v2.7.0)
