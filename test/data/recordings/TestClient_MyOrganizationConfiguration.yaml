@@ -1,0 +1,243 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 824
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test User Attribute Profile (Mar 31 11:47:34.824)","user_id":{"oidc_mapping":"sub","saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"userName"},"user_attributes":{"email":{"description":"User's email address","label":"Email","profile_required":true,"auth0_mapping":"email","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"emails[primary eq true].value"},"name":{"description":"User's full name","label":"Name","profile_required":false,"auth0_mapping":"name","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"displayName","strategy_overrides":{"oidc":{"scim_mapping":"name.givenName"}}}}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 857
+        uncompressed: false
+        body: '{"id":"uap_1cyzEQFSNB3A82BQCargzi","name":"Test User Attribute Profile (Mar 31 11:47:34.824)","user_id":{"oidc_mapping":"sub","saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"userName"},"user_attributes":{"name":{"label":"Name","description":"User''s full name","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"displayName","auth0_mapping":"name","profile_required":false,"strategy_overrides":{"oidc":{"scim_mapping":"name.givenName"}}},"email":{"label":"Email","description":"User''s email address","oidc_mapping":{"mapping":"email"},"saml_mapping":["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],"scim_mapping":"emails[primary eq true].value","auth0_mapping":"email","profile_required":true}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 1.002260833s
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 397
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test Client Full MyOrgConfig (Mar 31 11:47:35.828)","description":"Client with full my_organization_configuration.","my_organization_configuration":{"connection_profile_id":"cop_1cu7hYRotxr9BYXXwLH14g","user_attribute_profile_id":"uap_1cyzEQFSNB3A82BQCargzi","allowed_strategies":["pingfederate","adfs","waad","google-apps","okta","oidc","samlp"],"connection_deletion_behavior":"allow"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"name":"Test Client Full MyOrgConfig (Mar 31 11:47:35.828)","description":"Client with full my_organization_configuration.","client_id":"xPkWwI7ROs4DbniMiwKfs5W0dq94tfP6","client_secret":"[REDACTED]","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"my_organization_configuration":{"connection_profile_id":"cop_1cu7hYRotxr9BYXXwLH14g","user_attribute_profile_id":"uap_1cyzEQFSNB3A82BQCargzi","allowed_strategies":["pingfederate","adfs","waad","google-apps","okta","oidc","samlp"],"connection_deletion_behavior":"allow"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 543.97975ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 294
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test Client Bad Profile (Mar 31 11:47:36.373)","my_organization_configuration":{"connection_profile_id":"cop_WRONG","user_attribute_profile_id":"uap_WRONG","allowed_strategies":["pingfederate","adfs","waad","google-apps","okta","oidc","samlp"],"connection_deletion_behavior":"allow"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 570
+        uncompressed: false
+        body: '{"client_secret":"[REDACTED]","signing_keys":[{"cert":"[REDACTED]"}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 400 Bad Request
+        code: 400
+        duration: 328.550917ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients?fields=client_id%2Cmy_organization_configuration&include_fields=true&include_totals=true&per_page=50
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"total":98,"start":0,"limit":50,"clients":[{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"u15kDcCf5WRegxf93WUzGNcoAMaedsDZ"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"T2QUXhLciH0CSlDCICirlExjNDIrsHJQ"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"z8LPbXcO2vfnz6Xq0fERNCbJhvBL1Prp"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"spOzDv4VNJc9yHh6NPOFLaOkttZ8cSKd"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"QjlAo2nIDERZYBBZozsv8apykJUBtCq4"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"GjP0CbEjCSSqMuG4EJcM42qQ9RwKsnMN"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"xZZtIIMJhPHjhFPwzi3asd6BaxsCWzh1"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"3ihEwMkDE0Jr4zWedAEvZDxgrPUarLKW"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"ayEdCv8BWKHzBKvNaBklfyw2BCWOchVw"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"O1ID0X3Vc4qHddCqHvlSvUi7wkhCG95l"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"BXUQ69RCKtH2Ef0kqQv2zIKW8gH9JdDz"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"xnpDN2UWVErhZEbWnXamXIxuqmDpn4Az"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"z0mDTXWYSaJwwaSw1A4MYoKz5w32HTy9"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"Tp16hZC8S7veGbeOX3lCYZMiNRhgIDOm"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"ST1BDB1sYqZtBpPHr0DP3GWGjye6vc2q"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"scCKDRkV4gnlzRujGEsAzss1UzXsrZN4"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"YM1Vheva4Zwf5iFzCNkLWOFG0ussmNjx"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"SysBSYT6saHyUk1qGcNT1sqx7poaawWi"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"i2ibhCdV0ZwxyAc9wdrvD0pIKTY2MdSi"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"RfUulaWtmglkg5dkVtht4fizwo0eg1q6"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"2mVXzDq4o8fkw2BuCdp1JJgV7cpb17MK"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"qmDEJnHTKw3ErCuOiOQ9Pub0sAUFlu5g"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"1bnDcBxbOcRNPvEYaOxqqkdSKDl6HIs8"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"5phgz9FlzUBpj9rKWGAALwCPaA04wS3s"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"dRqU4bTHsKgWE0c4mmaThMjPh6vM892U"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"2wnR7jYX71gpFVMbFFTZImHjIkt0rBcN"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"cq11NfGObmpEF1rkxrVuxiqJwdhJ6RBj"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"h32sYvZ6Zw2ymOueiP2NfP6UxidMkFjU"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"h33wMvZBp1WWCmbXpfDas21mnFZ6NhKo"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"RvGGHnAEV9ntaJJnkx4gIn5aonEcfBjq"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"EVwx6SzCkjzOogFDsvvAWyP3CFERuywq"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"9osqksGUVVEYiRpSspRGMGh7hkIOI0f2"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"0TBgiKIZcbJRUN0ytutidmSawarNnKKn"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"uPY2xJFVPBcAK6DFV3Yylh2VjbSbymXp"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"qnTD8C0YiZ4AtqrcEdLVxfZQVyNoRkzo"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"SWcKvYbiAX2JqXoRYo5erRCNLPPwwHwC"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"Mu6jpTsoQQeo8Oe7kbST8Nn2RTJ5Jiip"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"90jnMipR6Nn0LGYlmlnHHZAdpZEomrDB"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"LBcuLdCG239P6VZAPTKe0HO9HzeiXJAy"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"JEFspe0OmusrVMSqOQIUxDEd05RLzpyb"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"wA22PRFKkbbBbmx3r9r877icaGjIdDbu"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"ZoLO1VHXjTa0QqbK5JsY7bsw8nXssBdM"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"S6lCCvi22KfjHfw6UTlzpkVEDZgKgZDE"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"dxiJDl5Ajm9RKNyylUyDKkNYrXPYSFKI"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"nQmFicT7w93QmvKrTuyVHnMo1UU9K9VC"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"8jz7NshbkgHoba2OxkOPrPdmjvCqnydD"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"qCUs3NwWC2rUXc5PoEGa0efkuWtjtLjG"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"fg9u744w7mVv0dj8CgG2wr2sg3iWriBL"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"4X989WhMxaCBsPnvV8HYCgOrdXpKSREf"},{"tenant":"go-auth0-dev.eu.auth0.com","client_id":"0l7SK3RVZEAcZkq0T6dOdMjQe60uDF7j"}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 582.517208ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/xPkWwI7ROs4DbniMiwKfs5W0dq94tfP6
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client Full MyOrgConfig (Mar 31 11:47:35.828)","description":"Client with full my_organization_configuration.","client_id":"xPkWwI7ROs4DbniMiwKfs5W0dq94tfP6","client_secret":"[REDACTED]","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"my_organization_configuration":{"connection_profile_id":"cop_1cu7hYRotxr9BYXXwLH14g","user_attribute_profile_id":"uap_1cyzEQFSNB3A82BQCargzi","allowed_strategies":["pingfederate","adfs","waad","google-apps","okta","oidc","samlp"],"connection_deletion_behavior":"allow"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 337.167375ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/xPkWwI7ROs4DbniMiwKfs5W0dq94tfP6
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 413.382542ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.36.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/user-attribute-profiles/uap_1cyzEQFSNB3A82BQCargzi
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 560.87975ms

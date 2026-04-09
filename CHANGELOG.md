@@ -1,5 +1,15 @@
 # Change Log
 
+## [v1.37.0](https://github.com/auth0/go-auth0/tree/v1.37.0) (2026-04-02)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.36.0...v1.37.0)
+
+**Added**
+- feat: MyOrg Details & IdP support on v1 [\#737](https://github.com/auth0/go-auth0/pull/737) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: Support DPoP on Okta/OIDC Connections - EA [\#734](https://github.com/auth0/go-auth0/pull/734) ([duedares-rvj](https://github.com/duedares-rvj))
+
+**Fixed**
+- fix: serialize client assertion aud claim as string instead of array [\#726](https://github.com/auth0/go-auth0/pull/726) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.36.0](https://github.com/auth0/go-auth0/tree/v1.36.0) (2026-03-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.35.0...v1.36.0)
 

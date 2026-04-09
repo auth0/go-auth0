@@ -215,6 +215,19 @@ type Client struct {
 	// ExpressConfiguration holds the express configuration for the client.
 	// Application-specific configuration for use with the OIN Express Configuration feature
 	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty"`
+
+	// MyOrganizationConfiguration holds the configuration for self-service organization
+	// features, controlling how organizations are created and managed for this client.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	// PATCH /api/v2/clients/{id}
+	// {
+	//	 "my_organization_configuration": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	MyOrganizationConfiguration *MyOrganizationConfiguration `json:"my_organization_configuration,omitempty"`
 }
 
 // ExpressConfiguration represents the OIN Express Configuration settings for a client.
@@ -246,6 +259,28 @@ type ExpressConfiguration struct {
 type LinkedClient struct {
 	// ClientID is the ID of the linked client.
 	ClientID *string `json:"client_id,omitempty"`
+}
+
+// MyOrganizationConfiguration represents the self-service organization configuration
+// for a client application. It controls how organizations are created and managed,
+// including which connection strategies are allowed and how connection deletion is handled.
+type MyOrganizationConfiguration struct {
+	// ConnectionProfileID is the ID of the connection profile to use when creating
+	// organizations for this client.
+	ConnectionProfileID *string `json:"connection_profile_id,omitempty"`
+
+	// UserAttributeProfileID is the ID of the user attribute profile to use when
+	// creating organizations for this client.
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty"`
+
+	// AllowedStrategies is the list of connection strategies that are allowed when
+	// creating organizations for this client (e.g. "okta", "samlp").
+	AllowedStrategies *[]string `json:"allowed_strategies,omitempty"`
+
+	// ConnectionDeletionBehavior controls the behavior when deleting connections
+	// associated with organizations for this client.
+	// Possible values: "allow", "allow_if_empty".
+	ConnectionDeletionBehavior *string `json:"connection_deletion_behavior,omitempty"`
 }
 
 // ClientTokenExchange allows configuration for token exchange.

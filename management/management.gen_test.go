@@ -2445,6 +2445,13 @@ func TestClient_GetMobile(tt *testing.T) {
 	c.GetMobile()
 }
 
+func TestClient_GetMyOrganizationConfiguration(tt *testing.T) {
+	c := &Client{}
+	c.GetMyOrganizationConfiguration()
+	c = nil
+	c.GetMyOrganizationConfiguration()
+}
+
 func TestClient_GetName(tt *testing.T) {
 	var zeroValue string
 	c := &Client{Name: &zeroValue}
@@ -12623,6 +12630,54 @@ func TestMultiFactorWebAuthnSettings_GetUserVerification(tt *testing.T) {
 func TestMultiFactorWebAuthnSettings_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MultiFactorWebAuthnSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestMyOrganizationConfiguration_GetAllowedStrategies(tt *testing.T) {
+	var zeroValue []string
+	m := &MyOrganizationConfiguration{AllowedStrategies: &zeroValue}
+	m.GetAllowedStrategies()
+	m = &MyOrganizationConfiguration{}
+	m.GetAllowedStrategies()
+	m = nil
+	m.GetAllowedStrategies()
+}
+
+func TestMyOrganizationConfiguration_GetConnectionDeletionBehavior(tt *testing.T) {
+	var zeroValue string
+	m := &MyOrganizationConfiguration{ConnectionDeletionBehavior: &zeroValue}
+	m.GetConnectionDeletionBehavior()
+	m = &MyOrganizationConfiguration{}
+	m.GetConnectionDeletionBehavior()
+	m = nil
+	m.GetConnectionDeletionBehavior()
+}
+
+func TestMyOrganizationConfiguration_GetConnectionProfileID(tt *testing.T) {
+	var zeroValue string
+	m := &MyOrganizationConfiguration{ConnectionProfileID: &zeroValue}
+	m.GetConnectionProfileID()
+	m = &MyOrganizationConfiguration{}
+	m.GetConnectionProfileID()
+	m = nil
+	m.GetConnectionProfileID()
+}
+
+func TestMyOrganizationConfiguration_GetUserAttributeProfileID(tt *testing.T) {
+	var zeroValue string
+	m := &MyOrganizationConfiguration{UserAttributeProfileID: &zeroValue}
+	m.GetUserAttributeProfileID()
+	m = &MyOrganizationConfiguration{}
+	m.GetUserAttributeProfileID()
+	m = nil
+	m.GetUserAttributeProfileID()
+}
+
+func TestMyOrganizationConfiguration_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MyOrganizationConfiguration{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
