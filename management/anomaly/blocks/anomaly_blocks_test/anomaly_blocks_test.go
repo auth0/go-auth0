@@ -6,12 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	client "github.com/auth0/go-auth0/v2/management/client"
-	option "github.com/auth0/go-auth0/v2/management/option"
-	require "github.com/stretchr/testify/require"
 	http "net/http"
 	os "os"
 	testing "testing"
+
+	client "github.com/auth0/go-auth0/v2/management/client"
+	option "github.com/auth0/go-auth0/v2/management/option"
+	require "github.com/stretchr/testify/require"
 )
 
 func VerifyRequestCount(
@@ -70,6 +71,7 @@ func TestAnomalyBlocksCheckIPWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	invocationErr := client.Anomaly.Blocks.CheckIP(
 		context.TODO(),
@@ -92,6 +94,7 @@ func TestAnomalyBlocksUnblockIPWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	invocationErr := client.Anomaly.Blocks.UnblockIP(
 		context.TODO(),

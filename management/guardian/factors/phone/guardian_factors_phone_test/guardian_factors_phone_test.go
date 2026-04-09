@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestGuardianFactorsPhoneGetMessageTypesWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.Phone.GetMessageTypes(
 		context.TODO(),
@@ -92,6 +94,7 @@ func TestGuardianFactorsPhoneSetMessageTypesWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorPhoneMessageTypesRequestContent{
 		MessageTypes: []management.GuardianFactorPhoneFactorMessageTypeEnum{
@@ -119,6 +122,7 @@ func TestGuardianFactorsPhoneGetTwilioProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.Phone.GetTwilioProvider(
 		context.TODO(),
@@ -140,6 +144,7 @@ func TestGuardianFactorsPhoneSetTwilioProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorsProviderPhoneTwilioRequestContent{}
 	_, invocationErr := client.Guardian.Factors.Phone.SetTwilioProvider(
@@ -163,6 +168,7 @@ func TestGuardianFactorsPhoneGetSelectedProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.Phone.GetSelectedProvider(
 		context.TODO(),
@@ -184,6 +190,7 @@ func TestGuardianFactorsPhoneSetProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorsProviderPhoneRequestContent{
 		Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
@@ -209,6 +216,7 @@ func TestGuardianFactorsPhoneGetTemplatesWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.Phone.GetTemplates(
 		context.TODO(),
@@ -230,6 +238,7 @@ func TestGuardianFactorsPhoneSetTemplatesWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorPhoneTemplatesRequestContent{
 		EnrollmentMessage:   "enrollment_message",

@@ -15523,13 +15523,6 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		assert.Equal(t, ConnectionIdentityProviderEnum("fitbit"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_flickr", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("flickr")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("flickr"), val, "enum value should match expected wire value")
-	})
-
 	t.Run("NewFromString_github", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewConnectionIdentityProviderEnumFromString("github")

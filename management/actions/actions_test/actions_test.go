@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestActionsListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.ListActionsRequestParameters{
 		TriggerID: management.ActionTriggerTypeEnumPostLogin.Ptr(),
@@ -111,6 +113,7 @@ func TestActionsCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.CreateActionRequestContent{
 		Name: "name",
@@ -141,6 +144,7 @@ func TestActionsGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Actions.Get(
 		context.TODO(),
@@ -163,6 +167,7 @@ func TestActionsDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.DeleteActionRequestParameters{
 		Force: management.Bool(
@@ -191,6 +196,7 @@ func TestActionsUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.UpdateActionRequestContent{}
 	_, invocationErr := client.Actions.Update(
@@ -215,6 +221,7 @@ func TestActionsDeployWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Actions.Deploy(
 		context.TODO(),
@@ -237,6 +244,7 @@ func TestActionsTestWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.TestActionRequestContent{
 		Payload: map[string]any{

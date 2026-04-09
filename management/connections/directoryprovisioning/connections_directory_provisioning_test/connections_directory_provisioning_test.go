@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestConnectionsDirectoryProvisioningListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.ListDirectoryProvisioningsRequestParameters{
 		From: management.String(
@@ -101,6 +103,7 @@ func TestConnectionsDirectoryProvisioningGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Connections.DirectoryProvisioning.Get(
 		context.TODO(),
@@ -123,6 +126,7 @@ func TestConnectionsDirectoryProvisioningCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.CreateDirectoryProvisioningRequestContent{}
 	_, invocationErr := client.Connections.DirectoryProvisioning.Create(
@@ -147,6 +151,7 @@ func TestConnectionsDirectoryProvisioningDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	invocationErr := client.Connections.DirectoryProvisioning.Delete(
 		context.TODO(),
@@ -169,6 +174,7 @@ func TestConnectionsDirectoryProvisioningUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.UpdateDirectoryProvisioningRequestContent{}
 	_, invocationErr := client.Connections.DirectoryProvisioning.Update(
@@ -193,6 +199,7 @@ func TestConnectionsDirectoryProvisioningGetDefaultMappingWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Connections.DirectoryProvisioning.GetDefaultMapping(
 		context.TODO(),

@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestSelfServiceProfilesListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.ListSelfServiceProfilesRequestParameters{
 		Page: management.Int(
@@ -104,6 +106,7 @@ func TestSelfServiceProfilesCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.CreateSelfServiceProfileRequestContent{
 		Name: "name",
@@ -129,6 +132,7 @@ func TestSelfServiceProfilesGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.SelfServiceProfiles.Get(
 		context.TODO(),
@@ -151,6 +155,7 @@ func TestSelfServiceProfilesDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	invocationErr := client.SelfServiceProfiles.Delete(
 		context.TODO(),
@@ -173,6 +178,7 @@ func TestSelfServiceProfilesUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.UpdateSelfServiceProfileRequestContent{}
 	_, invocationErr := client.SelfServiceProfiles.Update(

@@ -24878,6 +24878,411 @@ client.Organizations.ClientGrants.Delete(
 </dl>
 </details>
 
+## Organizations Connections
+<details><summary><code>client.Organizations.Connections.List(ID) -> *management.ListOrganizationAllConnectionsOffsetPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationAllConnectionsRequestParameters{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        IsEnabled: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.Connections.List(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isEnabled:** `*bool` — Filter connections by enabled status.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Connections.Create(ID, request) -> *management.CreateOrganizationAllConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationAllConnectionRequestParameters{
+        ConnectionID: "connection_id",
+    }
+client.Organizations.Connections.Create(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationConnectionName:** `*string` — Name of the connection in the scope of this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationAccessLevel:** `*management.OrganizationAccessLevelEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isEnabled:** `*bool` — Whether the connection is enabled for the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Connections.Get(ID, ConnectionID) -> *management.GetOrganizationAllConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.Connections.Get(
+        context.TODO(),
+        "id",
+        "connection_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Connections.Delete(ID, ConnectionID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.Connections.Delete(
+        context.TODO(),
+        "id",
+        "connection_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Connections.Update(ID, ConnectionID, request) -> *management.UpdateOrganizationAllConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateOrganizationConnectionRequestParameters{}
+client.Organizations.Connections.Update(
+        context.TODO(),
+        "id",
+        "connection_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationConnectionName:** `*string` — Name of the connection in the scope of this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationAccessLevel:** `*management.OrganizationAccessLevelEnumWithNull` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isEnabled:** `*bool` — Whether the connection is enabled for the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Organizations DiscoveryDomains
 <details><summary><code>client.Organizations.DiscoveryDomains.List(ID) -> *management.ListOrganizationDiscoveryDomainsResponseContent</code></summary>
 <dl>

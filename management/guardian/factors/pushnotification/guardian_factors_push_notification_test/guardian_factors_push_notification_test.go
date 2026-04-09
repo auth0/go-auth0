@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestGuardianFactorsPushNotificationGetApnsProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.PushNotification.GetApnsProvider(
 		context.TODO(),
@@ -92,6 +94,7 @@ func TestGuardianFactorsPushNotificationSetApnsProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationApnsRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetApnsProvider(
@@ -115,6 +118,7 @@ func TestGuardianFactorsPushNotificationUpdateApnsProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateApnsProvider(
@@ -138,6 +142,7 @@ func TestGuardianFactorsPushNotificationSetFcmProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationFcmRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetFcmProvider(
@@ -161,6 +166,7 @@ func TestGuardianFactorsPushNotificationUpdateFcmProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateFcmProvider(
@@ -184,6 +190,7 @@ func TestGuardianFactorsPushNotificationSetFcmv1ProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetFcmv1Provider(
@@ -207,6 +214,7 @@ func TestGuardianFactorsPushNotificationUpdateFcmv1ProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(
@@ -230,6 +238,7 @@ func TestGuardianFactorsPushNotificationGetSnsProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.PushNotification.GetSnsProvider(
 		context.TODO(),
@@ -251,6 +260,7 @@ func TestGuardianFactorsPushNotificationSetSnsProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationSnsRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.SetSnsProvider(
@@ -274,6 +284,7 @@ func TestGuardianFactorsPushNotificationUpdateSnsProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent{}
 	_, invocationErr := client.Guardian.Factors.PushNotification.UpdateSnsProvider(
@@ -297,6 +308,7 @@ func TestGuardianFactorsPushNotificationGetSelectedProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.PushNotification.GetSelectedProvider(
 		context.TODO(),
@@ -318,6 +330,7 @@ func TestGuardianFactorsPushNotificationSetProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorsProviderPushNotificationRequestContent{
 		Provider: management.GuardianFactorsProviderPushNotificationProviderDataEnumGuardian,

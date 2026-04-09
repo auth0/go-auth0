@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestConnectionsSCIMConfigurationListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.ListSCIMConfigurationsRequestParameters{
 		From: management.String(
@@ -101,6 +103,7 @@ func TestConnectionsSCIMConfigurationGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Connections.SCIMConfiguration.Get(
 		context.TODO(),
@@ -123,6 +126,7 @@ func TestConnectionsSCIMConfigurationCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.CreateSCIMConfigurationRequestContent{}
 	_, invocationErr := client.Connections.SCIMConfiguration.Create(
@@ -147,6 +151,7 @@ func TestConnectionsSCIMConfigurationDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	invocationErr := client.Connections.SCIMConfiguration.Delete(
 		context.TODO(),
@@ -169,6 +174,7 @@ func TestConnectionsSCIMConfigurationUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.UpdateSCIMConfigurationRequestContent{
 		UserIDAttribute: "user_id_attribute",
@@ -198,6 +204,7 @@ func TestConnectionsSCIMConfigurationGetDefaultMappingWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Connections.SCIMConfiguration.GetDefaultMapping(
 		context.TODO(),

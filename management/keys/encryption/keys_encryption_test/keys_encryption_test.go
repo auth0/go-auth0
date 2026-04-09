@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestKeysEncryptionListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.ListEncryptionKeysRequestParameters{
 		Page: management.Int(
@@ -104,6 +106,7 @@ func TestKeysEncryptionCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.CreateEncryptionKeyRequestContent{
 		Type: management.CreateEncryptionKeyTypeCustomerProvidedRootKey,
@@ -129,6 +132,7 @@ func TestKeysEncryptionRekeyWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	invocationErr := client.Keys.Encryption.Rekey(
 		context.TODO(),
@@ -150,6 +154,7 @@ func TestKeysEncryptionGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Keys.Encryption.Get(
 		context.TODO(),
@@ -172,6 +177,7 @@ func TestKeysEncryptionImportWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.ImportEncryptionKeyRequestContent{
 		WrappedKey: "wrapped_key",
@@ -198,6 +204,7 @@ func TestKeysEncryptionDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	invocationErr := client.Keys.Encryption.Delete(
 		context.TODO(),
@@ -220,6 +227,7 @@ func TestKeysEncryptionCreatePublicWrappingKeyWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Keys.Encryption.CreatePublicWrappingKey(
 		context.TODO(),

@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestCustomDomainsListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.ListCustomDomainsRequestParameters{
 		Q: management.String(
@@ -107,6 +109,7 @@ func TestCustomDomainsCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.CreateCustomDomainRequestContent{
 		Domain: "domain",
@@ -133,6 +136,7 @@ func TestCustomDomainsGetDefaultWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.CustomDomains.GetDefault(
 		context.TODO(),
@@ -154,6 +158,7 @@ func TestCustomDomainsSetDefaultWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.SetDefaultCustomDomainRequestContent{
 		Domain: "domain",
@@ -179,6 +184,7 @@ func TestCustomDomainsGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.CustomDomains.Get(
 		context.TODO(),
@@ -201,6 +207,7 @@ func TestCustomDomainsDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	invocationErr := client.CustomDomains.Delete(
 		context.TODO(),
@@ -223,6 +230,7 @@ func TestCustomDomainsUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &management.UpdateCustomDomainRequestContent{}
 	_, invocationErr := client.CustomDomains.Update(
@@ -247,6 +255,7 @@ func TestCustomDomainsTestWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.CustomDomains.Test(
 		context.TODO(),
@@ -269,6 +278,7 @@ func TestCustomDomainsVerifyWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.CustomDomains.Verify(
 		context.TODO(),

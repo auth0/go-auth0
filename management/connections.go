@@ -982,7 +982,6 @@ const (
 	ConnectionIdentityProviderEnumExact               ConnectionIdentityProviderEnum = "exact"
 	ConnectionIdentityProviderEnumFacebook            ConnectionIdentityProviderEnum = "facebook"
 	ConnectionIdentityProviderEnumFitbit              ConnectionIdentityProviderEnum = "fitbit"
-	ConnectionIdentityProviderEnumFlickr              ConnectionIdentityProviderEnum = "flickr"
 	ConnectionIdentityProviderEnumGithub              ConnectionIdentityProviderEnum = "github"
 	ConnectionIdentityProviderEnumGoogleApps          ConnectionIdentityProviderEnum = "google-apps"
 	ConnectionIdentityProviderEnumGoogleOauth2        ConnectionIdentityProviderEnum = "google-oauth2"
@@ -1062,8 +1061,6 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 		return ConnectionIdentityProviderEnumFacebook, nil
 	case "fitbit":
 		return ConnectionIdentityProviderEnumFitbit, nil
-	case "flickr":
-		return ConnectionIdentityProviderEnumFlickr, nil
 	case "github":
 		return ConnectionIdentityProviderEnumGithub, nil
 	case "google-apps":
