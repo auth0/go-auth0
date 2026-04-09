@@ -240,6 +240,10 @@ type Client struct {
 	// ExternalMetadataCreatedBy indicates who created the external metadata client.
 	// Values: "admin" (via Management API), "client" (self-registered), or "unknown".
 	ExternalMetadataCreatedBy *string `json:"external_metadata_created_by,omitempty"`
+
+	// JwksURI is the URL for the JSON Web Key Set (JWKS) containing the public keys
+	// used for private_key_jwt authentication. Only present for CIMD clients.
+	JwksURI *string `json:"jwks_uri,omitempty"`
 }
 
 // ExpressConfiguration represents the OIN Express Configuration settings for a client.

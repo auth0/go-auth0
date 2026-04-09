@@ -2451,6 +2451,16 @@ func TestClient_GetIsTokenEndpointIPHeaderTrusted(tt *testing.T) {
 	c.GetIsTokenEndpointIPHeaderTrusted()
 }
 
+func TestClient_GetJwksURI(tt *testing.T) {
+	var zeroValue string
+	c := &Client{JwksURI: &zeroValue}
+	c.GetJwksURI()
+	c = &Client{}
+	c.GetJwksURI()
+	c = nil
+	c.GetJwksURI()
+}
+
 func TestClient_GetJWTConfiguration(tt *testing.T) {
 	c := &Client{}
 	c.GetJWTConfiguration()

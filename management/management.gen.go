@@ -1935,6 +1935,14 @@ func (c *Client) GetIsTokenEndpointIPHeaderTrusted() bool {
 	return *c.IsTokenEndpointIPHeaderTrusted
 }
 
+// GetJwksURI returns the JwksURI field if it's non-nil, zero value otherwise.
+func (c *Client) GetJwksURI() string {
+	if c == nil || c.JwksURI == nil {
+		return ""
+	}
+	return *c.JwksURI
+}
+
 // GetJWTConfiguration returns the JWTConfiguration field.
 func (c *Client) GetJWTConfiguration() *ClientJWTConfiguration {
 	if c == nil {
