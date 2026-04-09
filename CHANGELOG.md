@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.38.0](https://github.com/auth0/go-auth0/tree/v1.38.0) (2026-04-09)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.37.0...v1.38.0)
+
+**Added**
+- feat: add support for CIMD and external metadata fields [\#744](https://github.com/auth0/go-auth0/pull/744) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add is_default field and default domain management for custom domains [\#728](https://github.com/auth0/go-auth0/pull/728) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.37.0](https://github.com/auth0/go-auth0/tree/v1.37.0) (2026-04-02)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.36.0...v1.37.0)
 
