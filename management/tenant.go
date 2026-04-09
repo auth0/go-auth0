@@ -157,6 +157,13 @@ type Tenant struct {
 
 	// When enabled, the tenant-level Phone Provider is used for Multi-Factor Authentication (MFA) and Passwordless phone notifications.
 	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty"`
+
+	// Whether the tenant supports Client ID Metadata Document (CIMD) for client registration.
+	ClientIDMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty"`
+
+	// ResourceParameterProfile determines how the protected resource identity is specified in OAuth
+	// endpoints. Values: "audience" (default) or "compatibility".
+	ResourceParameterProfile *string `json:"resource_parameter_profile,omitempty"`
 }
 
 // TenantDefaultTokenQuota holds settings for the default token quota.

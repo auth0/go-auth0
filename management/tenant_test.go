@@ -199,6 +199,46 @@ func TestTenantManager_NullableFields(t *testing.T) {
 	assert.Nil(t, actualTenantSettings.GetDefaultTokenQuota())
 }
 
+func TestTenantManager_CIMDAndResourceParameterProfile(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	initialSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+
+	t.Cleanup(func() {
+		initialSettings.SandboxVersionAvailable = nil
+		initialSettings.UniversalLogin = nil
+		initialSettings.Flags = nil
+		err := api.Tenant.Update(context.Background(), initialSettings)
+		require.NoError(t, err)
+	})
+
+	newTenantSettings := &Tenant{
+		ClientIDMetadataDocumentSupported: auth0.Bool(true),
+		ResourceParameterProfile:          auth0.String("compatibility"),
+	}
+	err = api.Tenant.Update(context.Background(), newTenantSettings)
+	assert.NoError(t, err)
+
+	actualTenantSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, true, actualTenantSettings.GetClientIDMetadataDocumentSupported())
+	assert.Equal(t, "compatibility", actualTenantSettings.GetResourceParameterProfile())
+
+	// Update back to defaults.
+	resetSettings := &Tenant{
+		ClientIDMetadataDocumentSupported: auth0.Bool(false),
+		ResourceParameterProfile:          auth0.String("audience"),
+	}
+	err = api.Tenant.Update(context.Background(), resetSettings)
+	assert.NoError(t, err)
+
+	finalSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, "audience", finalSettings.GetResourceParameterProfile())
+	assert.False(t, finalSettings.GetClientIDMetadataDocumentSupported())
+}
+
 func TestTenant_MarshalJSON(t *testing.T) {
 	for tenant, expected := range map[*Tenant]string{
 		{}:                                                  `{}`,

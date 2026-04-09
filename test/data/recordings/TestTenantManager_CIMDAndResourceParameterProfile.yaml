@@ -1,0 +1,210 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.37.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/tenants/settings
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"change_password":{"enabled":false},"enabled_locales":["en"],"flags":{"allow_changing_enable_sso":false,"allow_legacy_delegation_grant_types":true,"allow_legacy_ro_grant_types":true,"allow_other_legacy_grant_types":true,"disable_impersonation":true,"enable_sso":true,"universal_login":true,"revoke_refresh_token_grant":false,"disable_clickjack_protection_headers":false},"guardian_mfa_page":{"enabled":false},"idle_session_lifetime":72,"ephemeral_session_lifetime":1,"idle_ephemeral_session_lifetime":1,"sandbox_version":"22","session_lifetime":168,"oidc_logout":{"rp_logout_end_session_endpoint_discovery":true},"resource_parameter_profile":"audience","phone_consolidated_experience":true,"client_id_metadata_document_supported":true,"sandbox_versions_available":["22","18"]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 389.366708ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 92
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"client_id_metadata_document_supported":true,"resource_parameter_profile":"compatibility"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.37.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/tenants/settings
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"change_password":{"enabled":false},"enabled_locales":["en"],"flags":{"allow_changing_enable_sso":false,"allow_legacy_delegation_grant_types":true,"allow_legacy_ro_grant_types":true,"allow_other_legacy_grant_types":true,"cannot_change_enforce_client_authentication_on_passwordless_start":true,"disable_impersonation":true,"enable_sso":true,"enforce_client_authentication_on_passwordless_start":true,"universal_login":true,"revoke_refresh_token_grant":false,"disable_clickjack_protection_headers":false},"guardian_mfa_page":{"enabled":false},"idle_session_lifetime":72,"ephemeral_session_lifetime":1,"idle_ephemeral_session_lifetime":1,"sandbox_version":"22","session_lifetime":168,"oidc_logout":{"rp_logout_end_session_endpoint_discovery":true},"resource_parameter_profile":"compatibility","phone_consolidated_experience":true,"client_id_metadata_document_supported":true}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 416.347583ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.37.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/tenants/settings
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"change_password":{"enabled":false},"enabled_locales":["en"],"flags":{"allow_changing_enable_sso":false,"allow_legacy_delegation_grant_types":true,"allow_legacy_ro_grant_types":true,"allow_other_legacy_grant_types":true,"disable_impersonation":true,"enable_sso":true,"universal_login":true,"revoke_refresh_token_grant":false,"disable_clickjack_protection_headers":false},"guardian_mfa_page":{"enabled":false},"idle_session_lifetime":72,"ephemeral_session_lifetime":1,"idle_ephemeral_session_lifetime":1,"sandbox_version":"22","session_lifetime":168,"oidc_logout":{"rp_logout_end_session_endpoint_discovery":true},"resource_parameter_profile":"compatibility","phone_consolidated_experience":true,"client_id_metadata_document_supported":true,"sandbox_versions_available":["22","18"]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 387.835917ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 88
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"client_id_metadata_document_supported":false,"resource_parameter_profile":"audience"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.37.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/tenants/settings
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"change_password":{"enabled":false},"enabled_locales":["en"],"flags":{"allow_changing_enable_sso":false,"allow_legacy_delegation_grant_types":true,"allow_legacy_ro_grant_types":true,"allow_other_legacy_grant_types":true,"cannot_change_enforce_client_authentication_on_passwordless_start":true,"disable_impersonation":true,"enable_sso":true,"enforce_client_authentication_on_passwordless_start":true,"universal_login":true,"revoke_refresh_token_grant":false,"disable_clickjack_protection_headers":false},"guardian_mfa_page":{"enabled":false},"idle_session_lifetime":72,"ephemeral_session_lifetime":1,"idle_ephemeral_session_lifetime":1,"sandbox_version":"22","session_lifetime":168,"oidc_logout":{"rp_logout_end_session_endpoint_discovery":true},"resource_parameter_profile":"audience","phone_consolidated_experience":true,"client_id_metadata_document_supported":false}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 421.090875ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.37.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/tenants/settings
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"change_password":{"enabled":false},"enabled_locales":["en"],"flags":{"allow_changing_enable_sso":false,"allow_legacy_delegation_grant_types":true,"allow_legacy_ro_grant_types":true,"allow_other_legacy_grant_types":true,"disable_impersonation":true,"enable_sso":true,"universal_login":true,"revoke_refresh_token_grant":false,"disable_clickjack_protection_headers":false},"guardian_mfa_page":{"enabled":false},"idle_session_lifetime":72,"ephemeral_session_lifetime":1,"idle_ephemeral_session_lifetime":1,"sandbox_version":"22","session_lifetime":168,"oidc_logout":{"rp_logout_end_session_endpoint_discovery":true},"resource_parameter_profile":"audience","phone_consolidated_experience":true,"client_id_metadata_document_supported":false,"sandbox_versions_available":["22","18"]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 405.137042ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 427
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"change_password":{"enabled":false},"guardian_mfa_page":{"enabled":false},"session_lifetime":168,"idle_session_lifetime":72,"ephemeral_session_lifetime":1,"idle_ephemeral_session_lifetime":1,"sandbox_version":"22","enabled_locales":["en"],"oidc_logout":{"rp_logout_end_session_endpoint_discovery":true},"phone_consolidated_experience":true,"client_id_metadata_document_supported":true,"resource_parameter_profile":"audience"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.37.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/tenants/settings
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"change_password":{"enabled":false},"enabled_locales":["en"],"flags":{"allow_changing_enable_sso":false,"allow_legacy_delegation_grant_types":true,"allow_legacy_ro_grant_types":true,"allow_other_legacy_grant_types":true,"cannot_change_enforce_client_authentication_on_passwordless_start":true,"disable_impersonation":true,"enable_sso":true,"enforce_client_authentication_on_passwordless_start":true,"universal_login":true,"revoke_refresh_token_grant":false,"disable_clickjack_protection_headers":false},"guardian_mfa_page":{"enabled":false},"idle_session_lifetime":72,"ephemeral_session_lifetime":1,"idle_ephemeral_session_lifetime":1,"sandbox_version":"22","session_lifetime":168,"oidc_logout":{"rp_logout_end_session_endpoint_discovery":true},"resource_parameter_profile":"audience","phone_consolidated_experience":true,"client_id_metadata_document_supported":true}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 445.326209ms

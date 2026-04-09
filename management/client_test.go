@@ -1385,6 +1385,36 @@ func cleanupCredential(t *testing.T, clientID string, credentialID string) {
 	require.NoError(t, err)
 }
 
+func TestClient_CIMDFields(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	// Register a CIMD client via POST /api/v2/clients/cimd/register.
+	type cimdRegister struct {
+		ExternalClientID string `json:"external_client_id,omitempty"`
+		ClientID         string `json:"client_id,omitempty"`
+	}
+
+	registerPayload := &cimdRegister{
+		ExternalClientID: "https://client.dev/oauth/metadata.json",
+	}
+	err := api.Request(ctx, http.MethodPost, api.URI("clients", "cimd", "register"), registerPayload)
+	require.NoError(t, err)
+	require.NotEmpty(t, registerPayload.ClientID)
+
+	t.Cleanup(func() {
+		cleanupClient(t, registerPayload.ClientID)
+	})
+
+	// Read back the client and verify all CIMD fields.
+	actualClient, err := api.Client.Read(ctx, registerPayload.ClientID)
+	require.NoError(t, err)
+	assert.Equal(t, "https://client.dev/oauth/metadata.json", actualClient.GetExternalClientID())
+	assert.Equal(t, "cimd", actualClient.GetExternalMetadataType())
+	assert.Equal(t, "admin", actualClient.GetExternalMetadataCreatedBy())
+}
+
 func TestClient_ExpressConfiguration(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
