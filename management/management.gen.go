@@ -7335,6 +7335,14 @@ func (c *CustomDomain) GetID() string {
 	return *c.ID
 }
 
+// GetIsDefault returns the IsDefault field if it's non-nil, zero value otherwise.
+func (c *CustomDomain) GetIsDefault() bool {
+	if c == nil || c.IsDefault == nil {
+		return false
+	}
+	return *c.IsDefault
+}
+
 // GetOriginDomainName returns the OriginDomainName field if it's non-nil, zero value otherwise.
 func (c *CustomDomain) GetOriginDomainName() string {
 	if c == nil || c.OriginDomainName == nil {

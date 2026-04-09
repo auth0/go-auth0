@@ -9067,6 +9067,16 @@ func TestCustomDomain_GetID(tt *testing.T) {
 	c.GetID()
 }
 
+func TestCustomDomain_GetIsDefault(tt *testing.T) {
+	var zeroValue bool
+	c := &CustomDomain{IsDefault: &zeroValue}
+	c.GetIsDefault()
+	c = &CustomDomain{}
+	c.GetIsDefault()
+	c = nil
+	c.GetIsDefault()
+}
+
 func TestCustomDomain_GetOriginDomainName(tt *testing.T) {
 	var zeroValue string
 	c := &CustomDomain{OriginDomainName: &zeroValue}
