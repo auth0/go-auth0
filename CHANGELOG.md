@@ -1,5 +1,15 @@
 # Change Log
 
+## [v2.8.0](https://github.com/auth0/go-auth0/tree/v2.8.0) (2026-04-09)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.7.0...v2.8.0)
+
+**Added**
+- feat: SDK regeneration with typed error codes and org connections client [\#746](https://github.com/auth0/go-auth0/pull/746) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add CIMD client registration, refresh token listing, and group deletion [\#741](https://github.com/auth0/go-auth0/pull/741) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Fixed**
+- fix: prevent double-slash in base URL when domain has trailing slash [\#745](https://github.com/auth0/go-auth0/pull/745) ([developerkunal](https://github.com/developerkunal))
+
 ## [v2.7.0](https://github.com/auth0/go-auth0/tree/v2.7.0) (2026-03-11)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.6.0...v2.7.0)
 
