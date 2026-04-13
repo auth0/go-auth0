@@ -1,0 +1,79 @@
+name: Update PR Title & Description
+
+on:
+  pull_request:
+    types: [opened, labeled]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "PR number to update"
+        required: true
+        type: number
+      skip_title:
+        description: "Skip title update"
+        required: false
+        type: boolean
+        default: false
+      skip_description:
+        description: "Skip description update"
+        required: false
+        type: boolean
+        default: false
+      dry_run:
+        description: "Dry run — show generated content without updating the PR"
+        required: false
+        type: boolean
+        default: false
+      model:
+        description: "GitHub Models model to use"
+        required: false
+        type: string
+        default: "claude-opus-4.6"
+
+# Least-privilege permissions — only what's needed.
+permissions:
+  contents: read
+  pull-requests: write
+  issues: read
+  models: read
+
+concurrency:
+  group: update-pr-${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+  cancel-in-progress: true
+
+jobs:
+  update-pr:
+    name: Update PR Metadata
+    runs-on: ubuntu-latest
+    # Security: Skip forks (GITHUB_TOKEN is read-only for fork PRs and
+    # fork code could contain malicious diffs crafted to exfiltrate via AI).
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.action == 'opened' &&
+       github.event.pull_request.head.repo.full_name == github.repository) ||
+      (github.event.action == 'labeled' &&
+       github.event.label.name == 'update-pr-metadata' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Security: Mask the token in logs so it's never printed.
+      - name: Mask GITHUB_TOKEN in logs
+        run: echo "::add-mask::${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Update PR title and description
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.pull_request.number }}
+          SKIP_TITLE: ${{ github.event.inputs.skip_title || 'false' }}
+          SKIP_DESCRIPTION: ${{ github.event.inputs.skip_description || 'false' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          MODEL: ${{ github.event.inputs.model || 'claude-opus-4.6' }}
+        run: bash .github/scripts/update-pr.sh || echo "⚠️ AI-powered PR update failed, continuing..."
+
+      - name: Remove trigger label
+        if: github.event.action == 'labeled' && github.event.label.name == 'update-pr-metadata'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr edit "${{ github.event.pull_request.number }}" --remove-label update-pr-metadata
