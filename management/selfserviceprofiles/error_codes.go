@@ -3,35 +3,7 @@
 package selfserviceprofiles
 
 import (
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 )
 
-var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
-	401: func(apiError *core.APIError) error {
-		return &management.UnauthorizedError{
-			APIError: apiError,
-		}
-	},
-	403: func(apiError *core.APIError) error {
-		return &management.ForbiddenError{
-			APIError: apiError,
-		}
-	},
-	404: func(apiError *core.APIError) error {
-		return &management.NotFoundError{
-			APIError: apiError,
-		}
-	},
-	429: func(apiError *core.APIError) error {
-		return &management.TooManyRequestsError{
-			APIError: apiError,
-		}
-	},
-	400: func(apiError *core.APIError) error {
-		return &management.BadRequestError{
-			APIError: apiError,
-		}
-	},
-}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

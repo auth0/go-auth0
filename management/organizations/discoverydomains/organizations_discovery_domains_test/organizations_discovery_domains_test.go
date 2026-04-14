@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestOrganizationsDiscoveryDomainsListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListOrganizationDiscoveryDomainsRequestParameters{
 		From: management.String(
@@ -104,7 +102,6 @@ func TestOrganizationsDiscoveryDomainsCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreateOrganizationDiscoveryDomainRequestContent{
 		Domain: "domain",
@@ -131,7 +128,6 @@ func TestOrganizationsDiscoveryDomainsGetByNameWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Organizations.DiscoveryDomains.GetByName(
 		context.TODO(),
@@ -155,7 +151,6 @@ func TestOrganizationsDiscoveryDomainsGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Organizations.DiscoveryDomains.Get(
 		context.TODO(),
@@ -179,7 +174,6 @@ func TestOrganizationsDiscoveryDomainsDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.Organizations.DiscoveryDomains.Delete(
 		context.TODO(),
@@ -203,7 +197,6 @@ func TestOrganizationsDiscoveryDomainsUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdateOrganizationDiscoveryDomainRequestContent{}
 	_, invocationErr := client.Organizations.DiscoveryDomains.Update(

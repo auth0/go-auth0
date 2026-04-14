@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestEventStreamsListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListEventStreamsRequestParameters{
 		From: management.String(
@@ -103,7 +101,6 @@ func TestEventStreamsCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.EventStreamsCreateRequest{
 		CreateEventStreamWebHookRequestContent: &management.CreateEventStreamWebHookRequestContent{
@@ -142,7 +139,6 @@ func TestEventStreamsGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.EventStreams.Get(
 		context.TODO(),
@@ -165,7 +161,6 @@ func TestEventStreamsDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.EventStreams.Delete(
 		context.TODO(),
@@ -188,7 +183,6 @@ func TestEventStreamsUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdateEventStreamRequestContent{}
 	_, invocationErr := client.EventStreams.Update(
@@ -213,7 +207,6 @@ func TestEventStreamsTestWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreateEventStreamTestEventRequestContent{
 		EventType: management.EventStreamTestEventTypeEnumUserCreated,

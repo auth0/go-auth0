@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestBrandingPhoneTemplatesListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListPhoneTemplatesRequestParameters{
 		Disabled: management.Bool(
@@ -100,7 +98,6 @@ func TestBrandingPhoneTemplatesCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreatePhoneTemplateRequestContent{}
 	_, invocationErr := client.Branding.Phone.Templates.Create(
@@ -124,7 +121,6 @@ func TestBrandingPhoneTemplatesGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Branding.Phone.Templates.Get(
 		context.TODO(),
@@ -147,7 +143,6 @@ func TestBrandingPhoneTemplatesDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.Branding.Phone.Templates.Delete(
 		context.TODO(),
@@ -170,7 +165,6 @@ func TestBrandingPhoneTemplatesUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdatePhoneTemplateRequestContent{}
 	_, invocationErr := client.Branding.Phone.Templates.Update(
@@ -195,7 +189,6 @@ func TestBrandingPhoneTemplatesResetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := map[string]any{
 		"key": "value",
@@ -222,7 +215,6 @@ func TestBrandingPhoneTemplatesTestWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreatePhoneTemplateTestNotificationRequestContent{
 		To: "to",

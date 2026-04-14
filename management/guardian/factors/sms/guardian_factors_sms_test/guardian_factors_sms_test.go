@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestGuardianFactorsSmsGetTwilioProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.Sms.GetTwilioProvider(
 		context.TODO(),
@@ -94,7 +92,6 @@ func TestGuardianFactorsSmsSetTwilioProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorsProviderSmsTwilioRequestContent{}
 	_, invocationErr := client.Guardian.Factors.Sms.SetTwilioProvider(
@@ -118,7 +115,6 @@ func TestGuardianFactorsSmsGetSelectedProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.Sms.GetSelectedProvider(
 		context.TODO(),
@@ -140,7 +136,6 @@ func TestGuardianFactorsSmsSetProviderWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorsProviderSmsRequestContent{
 		Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
@@ -166,7 +161,6 @@ func TestGuardianFactorsSmsGetTemplatesWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Guardian.Factors.Sms.GetTemplates(
 		context.TODO(),
@@ -188,7 +182,6 @@ func TestGuardianFactorsSmsSetTemplatesWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.SetGuardianFactorSmsTemplatesRequestContent{
 		EnrollmentMessage:   "enrollment_message",

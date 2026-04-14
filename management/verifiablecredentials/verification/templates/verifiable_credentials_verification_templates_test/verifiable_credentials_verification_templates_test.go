@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestVerifiableCredentialsVerificationTemplatesListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListVerifiableCredentialTemplatesRequestParameters{
 		From: management.String(
@@ -103,7 +101,6 @@ func TestVerifiableCredentialsVerificationTemplatesCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreateVerifiableCredentialTemplateRequestContent{
 		Name:    "name",
@@ -137,7 +134,6 @@ func TestVerifiableCredentialsVerificationTemplatesGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.VerifiableCredentials.Verification.Templates.Get(
 		context.TODO(),
@@ -160,7 +156,6 @@ func TestVerifiableCredentialsVerificationTemplatesDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.VerifiableCredentials.Verification.Templates.Delete(
 		context.TODO(),
@@ -183,7 +178,6 @@ func TestVerifiableCredentialsVerificationTemplatesUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdateVerifiableCredentialTemplateRequestContent{}
 	_, invocationErr := client.VerifiableCredentials.Verification.Templates.Update(

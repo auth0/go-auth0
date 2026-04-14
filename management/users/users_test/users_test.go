@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestUsersListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListUsersRequestParameters{
 		Page: management.Int(
@@ -125,7 +123,6 @@ func TestUsersCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreateUserRequestContent{
 		Connection: "connection",
@@ -151,7 +148,6 @@ func TestUsersListUsersByEmailWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListUsersByEmailRequestParameters{
 		Fields: management.String(
@@ -183,7 +179,6 @@ func TestUsersGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.GetUserRequestParameters{
 		Fields: management.String(
@@ -215,7 +210,6 @@ func TestUsersDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.Users.Delete(
 		context.TODO(),
@@ -238,7 +232,6 @@ func TestUsersUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdateUserRequestContent{}
 	_, invocationErr := client.Users.Update(
@@ -263,7 +256,6 @@ func TestUsersRegenerateRecoveryCodeWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Users.RegenerateRecoveryCode(
 		context.TODO(),
@@ -286,7 +278,6 @@ func TestUsersRevokeAccessWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.RevokeUserAccessRequestContent{}
 	invocationErr := client.Users.RevokeAccess(

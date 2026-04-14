@@ -4,13 +4,12 @@ package encryption
 
 import (
 	context "context"
-	http "net/http"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	keys "github.com/auth0/go-auth0/v2/management/keys"
 	option "github.com/auth0/go-auth0/v2/management/option"
+	http "net/http"
 )
 
 type RawClient struct {

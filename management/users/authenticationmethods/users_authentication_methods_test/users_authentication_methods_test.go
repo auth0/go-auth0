@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestUsersAuthenticationMethodsListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListUserAuthenticationMethodsRequestParameters{
 		Page: management.Int(
@@ -107,7 +105,6 @@ func TestUsersAuthenticationMethodsCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreateUserAuthenticationMethodRequestContent{
 		Type: management.CreatedUserAuthenticationMethodTypeEnumPhone,
@@ -134,7 +131,6 @@ func TestUsersAuthenticationMethodsSetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := []*management.SetUserAuthenticationMethods{
 		&management.SetUserAuthenticationMethods{
@@ -163,7 +159,6 @@ func TestUsersAuthenticationMethodsDeleteAllWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.Users.AuthenticationMethods.DeleteAll(
 		context.TODO(),
@@ -186,7 +181,6 @@ func TestUsersAuthenticationMethodsGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Users.AuthenticationMethods.Get(
 		context.TODO(),
@@ -210,7 +204,6 @@ func TestUsersAuthenticationMethodsDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.Users.AuthenticationMethods.Delete(
 		context.TODO(),
@@ -234,7 +227,6 @@ func TestUsersAuthenticationMethodsUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdateUserAuthenticationMethodRequestContent{}
 	_, invocationErr := client.Users.AuthenticationMethods.Update(

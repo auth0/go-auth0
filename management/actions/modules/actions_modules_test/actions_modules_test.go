@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestActionsModulesListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.GetActionModulesRequestParameters{
 		Page: management.Int(
@@ -103,7 +101,6 @@ func TestActionsModulesCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreateActionModuleRequestContent{
 		Name: "name",
@@ -130,7 +127,6 @@ func TestActionsModulesGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Actions.Modules.Get(
 		context.TODO(),
@@ -153,7 +149,6 @@ func TestActionsModulesDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.Actions.Modules.Delete(
 		context.TODO(),
@@ -176,7 +171,6 @@ func TestActionsModulesUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdateActionModuleRequestContent{}
 	_, invocationErr := client.Actions.Modules.Update(
@@ -201,7 +195,6 @@ func TestActionsModulesListActionsWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.GetActionModuleActionsRequestParameters{
 		Page: management.Int(
@@ -233,7 +226,6 @@ func TestActionsModulesRollbackWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.RollbackActionModuleRequestParameters{
 		ModuleVersionID: "module_version_id",

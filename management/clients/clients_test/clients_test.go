@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestClientsListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListClientsRequestParameters{
 		Fields: management.String(
@@ -127,7 +125,6 @@ func TestClientsCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreateClientRequestContent{
 		Name: "name",
@@ -153,7 +150,6 @@ func TestClientsPreviewCimdMetadataWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.PreviewCimdMetadataRequestContent{
 		ExternalClientID: "external_client_id",
@@ -179,7 +175,6 @@ func TestClientsRegisterCimdClientWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.RegisterCimdClientRequestContent{
 		ExternalClientID: "external_client_id",
@@ -205,7 +200,6 @@ func TestClientsGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.GetClientRequestParameters{
 		Fields: management.String(
@@ -237,7 +231,6 @@ func TestClientsDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.Clients.Delete(
 		context.TODO(),
@@ -260,7 +253,6 @@ func TestClientsUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdateClientRequestContent{}
 	_, invocationErr := client.Clients.Update(
@@ -285,7 +277,6 @@ func TestClientsRotateSecretWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Clients.RotateSecret(
 		context.TODO(),

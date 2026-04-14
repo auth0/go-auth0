@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestOrganizationsConnectionsListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListOrganizationAllConnectionsRequestParameters{
 		Page: management.Int(
@@ -110,7 +108,6 @@ func TestOrganizationsConnectionsCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreateOrganizationAllConnectionRequestParameters{
 		ConnectionID: "connection_id",
@@ -137,7 +134,6 @@ func TestOrganizationsConnectionsGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.Organizations.Connections.Get(
 		context.TODO(),
@@ -161,7 +157,6 @@ func TestOrganizationsConnectionsDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.Organizations.Connections.Delete(
 		context.TODO(),
@@ -185,7 +180,6 @@ func TestOrganizationsConnectionsUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdateOrganizationConnectionRequestParameters{}
 	_, invocationErr := client.Organizations.Connections.Update(

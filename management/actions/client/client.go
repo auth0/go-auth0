@@ -5,9 +5,6 @@ package client
 import (
 	context "context"
 	fmt "fmt"
-	http "net/http"
-	strconv "strconv"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	executions "github.com/auth0/go-auth0/v2/management/actions/executions"
 	client "github.com/auth0/go-auth0/v2/management/actions/modules/client"
@@ -16,6 +13,8 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
+	http "net/http"
+	strconv "strconv"
 )
 
 type Client struct {

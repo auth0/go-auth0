@@ -6,14 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	http "net/http"
-	os "os"
-	testing "testing"
-
 	management "github.com/auth0/go-auth0/v2/management"
 	client "github.com/auth0/go-auth0/v2/management/client"
 	option "github.com/auth0/go-auth0/v2/management/option"
 	require "github.com/stretchr/testify/require"
+	http "net/http"
+	os "os"
+	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -72,7 +71,6 @@ func TestConnectionProfilesListWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.ListConnectionProfileRequestParameters{
 		From: management.String(
@@ -103,7 +101,6 @@ func TestConnectionProfilesCreateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.CreateConnectionProfileRequestContent{
 		Name: "name",
@@ -129,7 +126,6 @@ func TestConnectionProfilesListTemplatesWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.ConnectionProfiles.ListTemplates(
 		context.TODO(),
@@ -151,7 +147,6 @@ func TestConnectionProfilesGetTemplateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.ConnectionProfiles.GetTemplate(
 		context.TODO(),
@@ -174,7 +169,6 @@ func TestConnectionProfilesGetWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.ConnectionProfiles.Get(
 		context.TODO(),
@@ -197,7 +191,6 @@ func TestConnectionProfilesDeleteWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	invocationErr := client.ConnectionProfiles.Delete(
 		context.TODO(),
@@ -220,7 +213,6 @@ func TestConnectionProfilesUpdateWithWireMock(
 	}
 	client := client.NewWithOptions(
 		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
 	)
 	request := &management.UpdateConnectionProfileRequestContent{}
 	_, invocationErr := client.ConnectionProfiles.Update(
