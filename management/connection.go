@@ -78,6 +78,36 @@ const (
 	ConnectionStrategyPingFederate = "pingfederate"
 	// ConnectionStrategyLine constant.
 	ConnectionStrategyLine = "line"
+
+	// PasswordComplexityCharacterTypeRuleAll requires all specified character types. Default.
+	PasswordComplexityCharacterTypeRuleAll = "all"
+	// PasswordComplexityCharacterTypeRuleThreeOfFour requires 3 of 4 character types.
+	// Only valid when all 4 character types (uppercase, lowercase, number, special) are specified.
+	PasswordComplexityCharacterTypeRuleThreeOfFour = "three_of_four"
+
+	// PasswordCharacterTypeUppercase is the "uppercase" character type for password complexity.
+	PasswordCharacterTypeUppercase = "uppercase"
+	// PasswordCharacterTypeLowercase is the "lowercase" character type for password complexity.
+	PasswordCharacterTypeLowercase = "lowercase"
+	// PasswordCharacterTypeNumber is the "number" character type for password complexity.
+	PasswordCharacterTypeNumber = "number"
+	// PasswordCharacterTypeSpecial is the "special" character type for password complexity.
+	PasswordCharacterTypeSpecial = "special"
+
+	// PasswordComplexityCharactersAllow permits identical/sequential characters. Default.
+	PasswordComplexityCharactersAllow = "allow"
+	// PasswordComplexityCharactersBlock forbids identical/sequential characters.
+	PasswordComplexityCharactersBlock = "block"
+
+	// PasswordComplexityMaxLengthExceededError rejects passwords exceeding 72 bytes. Default.
+	PasswordComplexityMaxLengthExceededError = "error"
+	// PasswordComplexityMaxLengthExceededTruncate truncates passwords exceeding 72 bytes.
+	PasswordComplexityMaxLengthExceededTruncate = "truncate"
+
+	// PasswordDictionaryDefaultEn10k uses the 10,000-word English dictionary.
+	PasswordDictionaryDefaultEn10k = "en_10k"
+	// PasswordDictionaryDefaultEn100k uses the 100,000-word English dictionary. Default.
+	PasswordDictionaryDefaultEn100k = "en_100k"
 )
 
 var (
@@ -487,6 +517,12 @@ type ConnectionOptions struct {
 	// Options for enabling authentication methods.
 	AuthenticationMethods *AuthenticationMethods `json:"authentication_methods,omitempty"`
 
+	// Options for flexible password policy configuration.
+	// Only available for auth0 strategy connections.
+	// Cannot be set together with legacy password policy fields (PasswordPolicy,
+	// PasswordComplexityOptions, PasswordHistory, PasswordNoPersonalInfo, PasswordDictionary).
+	PasswordOptions *PasswordOptions `json:"password_options,omitempty"`
+
 	// Options for the passkey authentication method.
 	PasskeyOptions *PasskeyOptions `json:"passkey_options,omitempty"`
 
@@ -651,6 +687,214 @@ type EmailOTPAuthenticationMethod struct {
 type PhoneOTPAuthenticationMethod struct {
 	// Determines whether phone_otp are enabled.
 	Enabled *bool `json:"enabled,omitempty"`
+}
+
+// PasswordOptions contains the flexible password policy configuration for a connection.
+// Only available for auth0 strategy connections.
+type PasswordOptions struct {
+	// Password complexity requirements.
+	Complexity *PasswordOptionsComplexity `json:"complexity,omitempty"`
+	// Personal information restriction policy.
+	ProfileData *PasswordOptionsProfileData `json:"profile_data,omitempty"`
+	// Password history enforcement.
+	History *PasswordOptionsHistory `json:"history,omitempty"`
+	// Dictionary-based password validation.
+	Dictionary *PasswordOptionsDictionary `json:"dictionary,omitempty"`
+}
+
+// PasswordOptionsComplexity contains password complexity requirements.
+type PasswordOptionsComplexity struct {
+	// Minimum password length. Must be between 1 and 72. Default: 15.
+	MinLength *int `json:"min_length,omitempty"`
+	// Required character types. Valid values: "uppercase", "lowercase", "number", "special". Default: [].
+	// To explicitly clear all required character types, set this to a pointer to an empty slice (&[]string{}).
+	CharacterTypes *[]string `json:"character_types,omitempty"`
+	// When all 4 character types are specified, determines if all or 3 of 4 are required.
+	// Possible values: "all", "three_of_four". Default: "all".
+	CharacterTypeRule *string `json:"character_type_rule,omitempty"`
+	// Controls whether 3+ consecutive identical characters are allowed.
+	// Possible values: "allow", "block". Default: "allow".
+	IdenticalCharacters *string `json:"identical_characters,omitempty"`
+	// Controls whether sequential characters (abc, 123, etc.) are allowed.
+	// Possible values: "allow", "block". Default: "allow".
+	SequentialCharacters *string `json:"sequential_characters,omitempty"`
+	// Controls behavior when the password exceeds 72 bytes.
+	// Possible values: "truncate", "error". Default: "error".
+	MaxLengthExceeded *string `json:"max_length_exceeded,omitempty"`
+}
+
+// PasswordOptionsProfileData contains the personal information restriction policy.
+type PasswordOptionsProfileData struct {
+	// Prevents users from including profile data in passwords. Default: false.
+	Active *bool `json:"active,omitempty"`
+	// User profile fields to block from passwords. Maximum 12 items, each max 100 characters.
+	BlockedFields *[]string `json:"blocked_fields,omitempty"`
+}
+
+// PasswordOptionsHistory contains the password history enforcement configuration.
+type PasswordOptionsHistory struct {
+	// Enables password history checking. Default: false.
+	Active *bool `json:"active,omitempty"`
+	// Number of previous passwords to check against. Must be between 1 and 24. Default: 3.
+	Size *int `json:"size,omitempty"`
+}
+
+// PasswordOptionsDictionary contains dictionary-based password validation configuration.
+type PasswordOptionsDictionary struct {
+	// Enables dictionary checking. Default: false.
+	Active *bool `json:"active,omitempty"`
+	// Default dictionary to use. Possible values: "en_10k", "en_100k". Default: "en_100k".
+	Default *string `json:"default,omitempty"`
+	// Custom list of disallowed terms.
+	Custom *[]string `json:"custom,omitempty"`
+}
+
+func (o *ConnectionOptions) validate() error {
+	if o == nil || o.PasswordOptions == nil {
+		return nil
+	}
+	if o.PasswordPolicy != nil ||
+		o.PasswordComplexityOptions != nil ||
+		o.PasswordHistory != nil ||
+		o.PasswordNoPersonalInfo != nil ||
+		o.PasswordDictionary != nil {
+		return fmt.Errorf(
+			"cannot set password_options together with legacy password policy fields " +
+				"(passwordPolicy, password_complexity_options, password_history, " +
+				"password_no_personal_info, password_dictionary)",
+		)
+	}
+	return o.PasswordOptions.validate()
+}
+
+func (p *PasswordOptions) validate() error {
+	if p == nil {
+		return nil
+	}
+	if c := p.Complexity; c != nil {
+		if c.MinLength != nil && (*c.MinLength < 1 || *c.MinLength > 72) {
+			return fmt.Errorf("password_options.complexity.min_length must be between 1 and 72, got %d", *c.MinLength)
+		}
+		if c.CharacterTypes != nil {
+			validCharTypes := map[string]bool{
+				PasswordCharacterTypeUppercase: true,
+				PasswordCharacterTypeLowercase: true,
+				PasswordCharacterTypeNumber:    true,
+				PasswordCharacterTypeSpecial:   true,
+			}
+			for _, ct := range *c.CharacterTypes {
+				if !validCharTypes[ct] {
+					return fmt.Errorf(
+						"password_options.complexity.character_types contains invalid value %q; must be one of %q, %q, %q, %q",
+						ct,
+						PasswordCharacterTypeUppercase,
+						PasswordCharacterTypeLowercase,
+						PasswordCharacterTypeNumber,
+						PasswordCharacterTypeSpecial,
+					)
+				}
+			}
+		}
+		if c.CharacterTypeRule != nil {
+			switch *c.CharacterTypeRule {
+			case PasswordComplexityCharacterTypeRuleAll, PasswordComplexityCharacterTypeRuleThreeOfFour:
+				// valid
+			default:
+				return fmt.Errorf(
+					"password_options.complexity.character_type_rule must be %q or %q, got %q",
+					PasswordComplexityCharacterTypeRuleAll,
+					PasswordComplexityCharacterTypeRuleThreeOfFour,
+					*c.CharacterTypeRule,
+				)
+			}
+			if *c.CharacterTypeRule == PasswordComplexityCharacterTypeRuleThreeOfFour {
+				allFour := map[string]bool{
+					PasswordCharacterTypeUppercase: false,
+					PasswordCharacterTypeLowercase: false,
+					PasswordCharacterTypeNumber:    false,
+					PasswordCharacterTypeSpecial:   false,
+				}
+				if c.CharacterTypes != nil {
+					for _, ct := range *c.CharacterTypes {
+						allFour[ct] = true
+					}
+				}
+				for _, present := range allFour {
+					if !present {
+						return fmt.Errorf(
+							"password_options.complexity.character_type_rule can only be %q when all 4 character types are specified",
+							PasswordComplexityCharacterTypeRuleThreeOfFour,
+						)
+					}
+				}
+			}
+		}
+		if c.IdenticalCharacters != nil {
+			switch *c.IdenticalCharacters {
+			case PasswordComplexityCharactersAllow, PasswordComplexityCharactersBlock:
+				// valid
+			default:
+				return fmt.Errorf(
+					"password_options.complexity.identical_characters must be %q or %q, got %q",
+					PasswordComplexityCharactersAllow,
+					PasswordComplexityCharactersBlock,
+					*c.IdenticalCharacters,
+				)
+			}
+		}
+		if c.SequentialCharacters != nil {
+			switch *c.SequentialCharacters {
+			case PasswordComplexityCharactersAllow, PasswordComplexityCharactersBlock:
+				// valid
+			default:
+				return fmt.Errorf(
+					"password_options.complexity.sequential_characters must be %q or %q, got %q",
+					PasswordComplexityCharactersAllow,
+					PasswordComplexityCharactersBlock,
+					*c.SequentialCharacters,
+				)
+			}
+		}
+		if c.MaxLengthExceeded != nil {
+			switch *c.MaxLengthExceeded {
+			case PasswordComplexityMaxLengthExceededError, PasswordComplexityMaxLengthExceededTruncate:
+				// valid
+			default:
+				return fmt.Errorf(
+					"password_options.complexity.max_length_exceeded must be %q or %q, got %q",
+					PasswordComplexityMaxLengthExceededError,
+					PasswordComplexityMaxLengthExceededTruncate,
+					*c.MaxLengthExceeded,
+				)
+			}
+		}
+	}
+	if h := p.History; h != nil {
+		if h.Size != nil && (*h.Size < 1 || *h.Size > 24) {
+			return fmt.Errorf("password_options.history.size must be between 1 and 24, got %d", *h.Size)
+		}
+	}
+	if pd := p.ProfileData; pd != nil {
+		if pd.BlockedFields != nil && len(*pd.BlockedFields) > 12 {
+			return fmt.Errorf("password_options.profile_data.blocked_fields cannot exceed 12 items, got %d", len(*pd.BlockedFields))
+		}
+	}
+	if d := p.Dictionary; d != nil {
+		if d.Default != nil {
+			switch *d.Default {
+			case PasswordDictionaryDefaultEn10k, PasswordDictionaryDefaultEn100k:
+				// valid
+			default:
+				return fmt.Errorf(
+					"password_options.dictionary.default must be %q or %q, got %q",
+					PasswordDictionaryDefaultEn10k,
+					PasswordDictionaryDefaultEn100k,
+					*d.Default,
+				)
+			}
+		}
+	}
+	return nil
 }
 
 // PasskeyOptions contains Passkey configuration for the connection.
@@ -1739,6 +1983,11 @@ type ConnectionList struct {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/post_connections
 func (m *ConnectionManager) Create(ctx context.Context, c *Connection, opts ...RequestOption) error {
+	if connOpts, ok := c.Options.(*ConnectionOptions); ok {
+		if err := connOpts.validate(); err != nil {
+			return err
+		}
+	}
 	return m.management.Request(ctx, "POST", m.management.URI("connections"), c, opts...)
 }
 
@@ -1767,6 +2016,11 @@ func (m *ConnectionManager) List(ctx context.Context, opts ...RequestOption) (c 
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/patch_connections_by_id
 func (m *ConnectionManager) Update(ctx context.Context, id string, c *Connection, opts ...RequestOption) (err error) {
+	if connOpts, ok := c.Options.(*ConnectionOptions); ok {
+		if err := connOpts.validate(); err != nil {
+			return err
+		}
+	}
 	return m.management.Request(ctx, "PATCH", m.management.URI("connections", id), c, opts...)
 }
 
