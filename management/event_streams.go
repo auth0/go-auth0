@@ -1882,40 +1882,60 @@ func (e *EventStreamSubscription) String() string {
 type EventStreamTestEventTypeEnum string
 
 const (
-	EventStreamTestEventTypeEnumUserCreated                    EventStreamTestEventTypeEnum = "user.created"
-	EventStreamTestEventTypeEnumUserDeleted                    EventStreamTestEventTypeEnum = "user.deleted"
-	EventStreamTestEventTypeEnumUserUpdated                    EventStreamTestEventTypeEnum = "user.updated"
+	EventStreamTestEventTypeEnumGroupCreated                   EventStreamTestEventTypeEnum = "group.created"
+	EventStreamTestEventTypeEnumGroupDeleted                   EventStreamTestEventTypeEnum = "group.deleted"
+	EventStreamTestEventTypeEnumGroupMemberAdded               EventStreamTestEventTypeEnum = "group.member.added"
+	EventStreamTestEventTypeEnumGroupMemberDeleted             EventStreamTestEventTypeEnum = "group.member.deleted"
+	EventStreamTestEventTypeEnumGroupRoleAssigned              EventStreamTestEventTypeEnum = "group.role.assigned"
+	EventStreamTestEventTypeEnumGroupRoleDeleted               EventStreamTestEventTypeEnum = "group.role.deleted"
+	EventStreamTestEventTypeEnumGroupUpdated                   EventStreamTestEventTypeEnum = "group.updated"
+	EventStreamTestEventTypeEnumOrganizationConnectionAdded    EventStreamTestEventTypeEnum = "organization.connection.added"
+	EventStreamTestEventTypeEnumOrganizationConnectionRemoved  EventStreamTestEventTypeEnum = "organization.connection.removed"
+	EventStreamTestEventTypeEnumOrganizationConnectionUpdated  EventStreamTestEventTypeEnum = "organization.connection.updated"
 	EventStreamTestEventTypeEnumOrganizationCreated            EventStreamTestEventTypeEnum = "organization.created"
-	EventStreamTestEventTypeEnumOrganizationUpdated            EventStreamTestEventTypeEnum = "organization.updated"
 	EventStreamTestEventTypeEnumOrganizationDeleted            EventStreamTestEventTypeEnum = "organization.deleted"
+	EventStreamTestEventTypeEnumOrganizationGroupRoleAssigned  EventStreamTestEventTypeEnum = "organization.group.role.assigned"
+	EventStreamTestEventTypeEnumOrganizationGroupRoleDeleted   EventStreamTestEventTypeEnum = "organization.group.role.deleted"
 	EventStreamTestEventTypeEnumOrganizationMemberAdded        EventStreamTestEventTypeEnum = "organization.member.added"
 	EventStreamTestEventTypeEnumOrganizationMemberDeleted      EventStreamTestEventTypeEnum = "organization.member.deleted"
 	EventStreamTestEventTypeEnumOrganizationMemberRoleAssigned EventStreamTestEventTypeEnum = "organization.member.role.assigned"
 	EventStreamTestEventTypeEnumOrganizationMemberRoleDeleted  EventStreamTestEventTypeEnum = "organization.member.role.deleted"
-	EventStreamTestEventTypeEnumOrganizationConnectionAdded    EventStreamTestEventTypeEnum = "organization.connection.added"
-	EventStreamTestEventTypeEnumOrganizationConnectionUpdated  EventStreamTestEventTypeEnum = "organization.connection.updated"
-	EventStreamTestEventTypeEnumOrganizationConnectionRemoved  EventStreamTestEventTypeEnum = "organization.connection.removed"
-	EventStreamTestEventTypeEnumGroupCreated                   EventStreamTestEventTypeEnum = "group.created"
-	EventStreamTestEventTypeEnumGroupUpdated                   EventStreamTestEventTypeEnum = "group.updated"
-	EventStreamTestEventTypeEnumGroupDeleted                   EventStreamTestEventTypeEnum = "group.deleted"
-	EventStreamTestEventTypeEnumGroupMemberAdded               EventStreamTestEventTypeEnum = "group.member.added"
-	EventStreamTestEventTypeEnumGroupMemberDeleted             EventStreamTestEventTypeEnum = "group.member.deleted"
+	EventStreamTestEventTypeEnumOrganizationUpdated            EventStreamTestEventTypeEnum = "organization.updated"
+	EventStreamTestEventTypeEnumUserCreated                    EventStreamTestEventTypeEnum = "user.created"
+	EventStreamTestEventTypeEnumUserDeleted                    EventStreamTestEventTypeEnum = "user.deleted"
+	EventStreamTestEventTypeEnumUserUpdated                    EventStreamTestEventTypeEnum = "user.updated"
 )
 
 func NewEventStreamTestEventTypeEnumFromString(s string) (EventStreamTestEventTypeEnum, error) {
 	switch s {
-	case "user.created":
-		return EventStreamTestEventTypeEnumUserCreated, nil
-	case "user.deleted":
-		return EventStreamTestEventTypeEnumUserDeleted, nil
-	case "user.updated":
-		return EventStreamTestEventTypeEnumUserUpdated, nil
+	case "group.created":
+		return EventStreamTestEventTypeEnumGroupCreated, nil
+	case "group.deleted":
+		return EventStreamTestEventTypeEnumGroupDeleted, nil
+	case "group.member.added":
+		return EventStreamTestEventTypeEnumGroupMemberAdded, nil
+	case "group.member.deleted":
+		return EventStreamTestEventTypeEnumGroupMemberDeleted, nil
+	case "group.role.assigned":
+		return EventStreamTestEventTypeEnumGroupRoleAssigned, nil
+	case "group.role.deleted":
+		return EventStreamTestEventTypeEnumGroupRoleDeleted, nil
+	case "group.updated":
+		return EventStreamTestEventTypeEnumGroupUpdated, nil
+	case "organization.connection.added":
+		return EventStreamTestEventTypeEnumOrganizationConnectionAdded, nil
+	case "organization.connection.removed":
+		return EventStreamTestEventTypeEnumOrganizationConnectionRemoved, nil
+	case "organization.connection.updated":
+		return EventStreamTestEventTypeEnumOrganizationConnectionUpdated, nil
 	case "organization.created":
 		return EventStreamTestEventTypeEnumOrganizationCreated, nil
-	case "organization.updated":
-		return EventStreamTestEventTypeEnumOrganizationUpdated, nil
 	case "organization.deleted":
 		return EventStreamTestEventTypeEnumOrganizationDeleted, nil
+	case "organization.group.role.assigned":
+		return EventStreamTestEventTypeEnumOrganizationGroupRoleAssigned, nil
+	case "organization.group.role.deleted":
+		return EventStreamTestEventTypeEnumOrganizationGroupRoleDeleted, nil
 	case "organization.member.added":
 		return EventStreamTestEventTypeEnumOrganizationMemberAdded, nil
 	case "organization.member.deleted":
@@ -1924,22 +1944,14 @@ func NewEventStreamTestEventTypeEnumFromString(s string) (EventStreamTestEventTy
 		return EventStreamTestEventTypeEnumOrganizationMemberRoleAssigned, nil
 	case "organization.member.role.deleted":
 		return EventStreamTestEventTypeEnumOrganizationMemberRoleDeleted, nil
-	case "organization.connection.added":
-		return EventStreamTestEventTypeEnumOrganizationConnectionAdded, nil
-	case "organization.connection.updated":
-		return EventStreamTestEventTypeEnumOrganizationConnectionUpdated, nil
-	case "organization.connection.removed":
-		return EventStreamTestEventTypeEnumOrganizationConnectionRemoved, nil
-	case "group.created":
-		return EventStreamTestEventTypeEnumGroupCreated, nil
-	case "group.updated":
-		return EventStreamTestEventTypeEnumGroupUpdated, nil
-	case "group.deleted":
-		return EventStreamTestEventTypeEnumGroupDeleted, nil
-	case "group.member.added":
-		return EventStreamTestEventTypeEnumGroupMemberAdded, nil
-	case "group.member.deleted":
-		return EventStreamTestEventTypeEnumGroupMemberDeleted, nil
+	case "organization.updated":
+		return EventStreamTestEventTypeEnumOrganizationUpdated, nil
+	case "user.created":
+		return EventStreamTestEventTypeEnumUserCreated, nil
+	case "user.deleted":
+		return EventStreamTestEventTypeEnumUserDeleted, nil
+	case "user.updated":
+		return EventStreamTestEventTypeEnumUserUpdated, nil
 	}
 	var t EventStreamTestEventTypeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)

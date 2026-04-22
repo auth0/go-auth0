@@ -216,7 +216,7 @@ func TestEventStreamsTestWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.CreateEventStreamTestEventRequestContent{
-		EventType: management.EventStreamTestEventTypeEnumUserCreated,
+		EventType: management.EventStreamTestEventTypeEnumGroupCreated,
 	}
 	_, invocationErr := client.EventStreams.Test(
 		context.TODO(),

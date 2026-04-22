@@ -2625,19 +2625,20 @@ var (
 	connectionPropertiesOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 14)
 	connectionPropertiesOptionsFieldPasswordDictionary               = big.NewInt(1 << 15)
 	connectionPropertiesOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 16)
-	connectionPropertiesOptionsFieldBasicProfile                     = big.NewInt(1 << 17)
-	connectionPropertiesOptionsFieldExtAdmin                         = big.NewInt(1 << 18)
-	connectionPropertiesOptionsFieldExtIsSuspended                   = big.NewInt(1 << 19)
-	connectionPropertiesOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 20)
-	connectionPropertiesOptionsFieldExtGroups                        = big.NewInt(1 << 21)
-	connectionPropertiesOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 22)
-	connectionPropertiesOptionsFieldExtProfile                       = big.NewInt(1 << 23)
-	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 24)
-	connectionPropertiesOptionsFieldUpstreamParams                   = big.NewInt(1 << 25)
-	connectionPropertiesOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 26)
-	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 27)
-	connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 28)
-	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
+	connectionPropertiesOptionsFieldAPIEnableGroups                  = big.NewInt(1 << 17)
+	connectionPropertiesOptionsFieldBasicProfile                     = big.NewInt(1 << 18)
+	connectionPropertiesOptionsFieldExtAdmin                         = big.NewInt(1 << 19)
+	connectionPropertiesOptionsFieldExtIsSuspended                   = big.NewInt(1 << 20)
+	connectionPropertiesOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 21)
+	connectionPropertiesOptionsFieldExtGroups                        = big.NewInt(1 << 22)
+	connectionPropertiesOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 23)
+	connectionPropertiesOptionsFieldExtProfile                       = big.NewInt(1 << 24)
+	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 25)
+	connectionPropertiesOptionsFieldUpstreamParams                   = big.NewInt(1 << 26)
+	connectionPropertiesOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 27)
+	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
+	connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 29)
+	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2664,6 +2665,7 @@ type ConnectionPropertiesOptions struct {
 	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions    `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
 	PasswordDictionary               *ConnectionPasswordDictionaryOptions        `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
 	APIEnableUsers                   *bool                                       `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableGroups                  *bool                                       `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
 	BasicProfile                     *bool                                       `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
 	ExtAdmin                         *bool                                       `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
 	ExtIsSuspended                   *bool                                       `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
@@ -2803,6 +2805,13 @@ func (c *ConnectionPropertiesOptions) GetAPIEnableUsers() bool {
 		return false
 	}
 	return *c.APIEnableUsers
+}
+
+func (c *ConnectionPropertiesOptions) GetAPIEnableGroups() bool {
+	if c == nil || c.APIEnableGroups == nil {
+		return false
+	}
+	return *c.APIEnableGroups
 }
 
 func (c *ConnectionPropertiesOptions) GetBasicProfile() bool {
@@ -3027,6 +3036,13 @@ func (c *ConnectionPropertiesOptions) SetPasswordDictionary(passwordDictionary *
 func (c *ConnectionPropertiesOptions) SetAPIEnableUsers(apiEnableUsers *bool) {
 	c.APIEnableUsers = apiEnableUsers
 	c.require(connectionPropertiesOptionsFieldAPIEnableUsers)
+}
+
+// SetAPIEnableGroups sets the APIEnableGroups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetAPIEnableGroups(apiEnableGroups *bool) {
+	c.APIEnableGroups = apiEnableGroups
+	c.require(connectionPropertiesOptionsFieldAPIEnableGroups)
 }
 
 // SetBasicProfile sets the BasicProfile field and marks it as non-optional;
@@ -5069,19 +5085,20 @@ var (
 	updateConnectionOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 14)
 	updateConnectionOptionsFieldPasswordDictionary               = big.NewInt(1 << 15)
 	updateConnectionOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 16)
-	updateConnectionOptionsFieldBasicProfile                     = big.NewInt(1 << 17)
-	updateConnectionOptionsFieldExtAdmin                         = big.NewInt(1 << 18)
-	updateConnectionOptionsFieldExtIsSuspended                   = big.NewInt(1 << 19)
-	updateConnectionOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 20)
-	updateConnectionOptionsFieldExtGroups                        = big.NewInt(1 << 21)
-	updateConnectionOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 22)
-	updateConnectionOptionsFieldExtProfile                       = big.NewInt(1 << 23)
-	updateConnectionOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 24)
-	updateConnectionOptionsFieldUpstreamParams                   = big.NewInt(1 << 25)
-	updateConnectionOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 26)
-	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 27)
-	updateConnectionOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 28)
-	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
+	updateConnectionOptionsFieldAPIEnableGroups                  = big.NewInt(1 << 17)
+	updateConnectionOptionsFieldBasicProfile                     = big.NewInt(1 << 18)
+	updateConnectionOptionsFieldExtAdmin                         = big.NewInt(1 << 19)
+	updateConnectionOptionsFieldExtIsSuspended                   = big.NewInt(1 << 20)
+	updateConnectionOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 21)
+	updateConnectionOptionsFieldExtGroups                        = big.NewInt(1 << 22)
+	updateConnectionOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 23)
+	updateConnectionOptionsFieldExtProfile                       = big.NewInt(1 << 24)
+	updateConnectionOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 25)
+	updateConnectionOptionsFieldUpstreamParams                   = big.NewInt(1 << 26)
+	updateConnectionOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 27)
+	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
+	updateConnectionOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 29)
+	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
 )
 
 type UpdateConnectionOptions struct {
@@ -5108,6 +5125,7 @@ type UpdateConnectionOptions struct {
 	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions    `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
 	PasswordDictionary               *ConnectionPasswordDictionaryOptions        `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
 	APIEnableUsers                   *bool                                       `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableGroups                  *bool                                       `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
 	BasicProfile                     *bool                                       `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
 	ExtAdmin                         *bool                                       `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
 	ExtIsSuspended                   *bool                                       `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
@@ -5247,6 +5265,13 @@ func (u *UpdateConnectionOptions) GetAPIEnableUsers() bool {
 		return false
 	}
 	return *u.APIEnableUsers
+}
+
+func (u *UpdateConnectionOptions) GetAPIEnableGroups() bool {
+	if u == nil || u.APIEnableGroups == nil {
+		return false
+	}
+	return *u.APIEnableGroups
 }
 
 func (u *UpdateConnectionOptions) GetBasicProfile() bool {
@@ -5471,6 +5496,13 @@ func (u *UpdateConnectionOptions) SetPasswordDictionary(passwordDictionary *Conn
 func (u *UpdateConnectionOptions) SetAPIEnableUsers(apiEnableUsers *bool) {
 	u.APIEnableUsers = apiEnableUsers
 	u.require(updateConnectionOptionsFieldAPIEnableUsers)
+}
+
+// SetAPIEnableGroups sets the APIEnableGroups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetAPIEnableGroups(apiEnableGroups *bool) {
+	u.APIEnableGroups = apiEnableGroups
+	u.require(updateConnectionOptionsFieldAPIEnableGroups)
 }
 
 // SetBasicProfile sets the BasicProfile field and marks it as non-optional;

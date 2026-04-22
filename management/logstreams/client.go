@@ -33,78 +33,84 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Retrieve details on <a href="https://auth0.com/docs/logs/streams">log streams</a>.
+// Retrieve details on [log streams](https://auth0.com/docs/logs/streams).
 //
-//	<h5>Sample Response</h5><pre><code>[{
-//		"id": "string",
-//		"name": "string",
-//		"type": "eventbridge",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"awsAccountId": "string",
-//			"awsRegion": "string",
-//			"awsPartnerEventSource": "string"
-//		}
+// **Sample Response**
+//
+// ```json
+//
+//	[{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "eventbridge",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "awsAccountId": "string",
+//	    "awsRegion": "string",
+//	    "awsPartnerEventSource": "string"
+//	  }
 //	}, {
 //
-//		"id": "string",
-//		"name": "string",
-//		"type": "http",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"httpContentFormat": "JSONLINES|JSONARRAY",
-//			"httpContentType": "string",
-//			"httpEndpoint": "string",
-//			"httpAuthorization": "string"
-//		}
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "http",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "httpContentFormat": "JSONLINES|JSONARRAY",
+//	    "httpContentType": "string",
+//	    "httpEndpoint": "string",
+//	    "httpAuthorization": "string"
+//	  }
 //	},
 //
 //	{
-//		"id": "string",
-//		"name": "string",
-//		"type": "eventgrid",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"azureSubscriptionId": "string",
-//			"azureResourceGroup": "string",
-//			"azureRegion": "string",
-//			"azurePartnerTopic": "string"
-//		}
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "eventgrid",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "azureSubscriptionId": "string",
+//	    "azureResourceGroup": "string",
+//	    "azureRegion": "string",
+//	    "azurePartnerTopic": "string"
+//	  }
 //	},
 //
 //	{
-//		"id": "string",
-//		"name": "string",
-//		"type": "splunk",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"splunkDomain": "string",
-//			"splunkToken": "string",
-//			"splunkPort": "string",
-//			"splunkSecure": "boolean"
-//		}
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "splunk",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "splunkDomain": "string",
+//	    "splunkToken": "string",
+//	    "splunkPort": "string",
+//	    "splunkSecure": "boolean"
+//	  }
 //	},
 //
 //	{
-//		"id": "string",
-//		"name": "string",
-//		"type": "sumo",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"sumoSourceAddress": "string",
-//		}
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "sumo",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "sumoSourceAddress": "string"
+//	  }
 //	},
 //
 //	{
-//		"id": "string",
-//		"name": "string",
-//		"type": "datadog",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"datadogRegion": "string",
-//			"datadogApiKey": "string"
-//		}
-//	}]</code></pre>
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "datadog",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "datadogRegion": "string",
+//	    "datadogApiKey": "string"
+//	  }
+//	}]
+//
+// ```
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -120,148 +126,226 @@ func (c *Client) List(
 }
 
 // Create a log stream.
-// <h5>Log Stream Types</h5> The <code>type</code> of log stream being created determines the properties required in the <code>sink</code> payload.
-// <h5>HTTP Stream</h5> For an <code>http</code> Stream, the <code>sink</code> properties are listed in the payload below
 //
-//	Request: <pre><code>{
-//		"name": "string",
-//		"type": "http",
-//		"sink": {
-//			"httpEndpoint": "string",
-//			"httpContentType": "string",
-//			"httpContentFormat": "JSONLINES|JSONARRAY",
-//			"httpAuthorization": "string"
-//		}
-//	}</code></pre>
+// **Log Stream Types**
 //
-//	Response: <pre><code>{
-//		"id": "string",
-//		"name": "string",
-//		"type": "http",
-//		"status": "active",
-//		"sink": {
-//			"httpEndpoint": "string",
-//			"httpContentType": "string",
-//			"httpContentFormat": "JSONLINES|JSONARRAY",
-//			"httpAuthorization": "string"
-//		}
-//	}</code></pre>
+// The `type` of log stream being created determines the properties required in the `sink` payload.
 //
-// <h5>Amazon EventBridge Stream</h5> For an <code>eventbridge</code> Stream, the <code>sink</code> properties are listed in the payload below
+// **HTTP Stream**
 //
-//	Request: <pre><code>{
-//		"name": "string",
-//		"type": "eventbridge",
-//		"sink": {
-//			"awsRegion": "string",
-//			"awsAccountId": "string"
-//		}
-//	}</code></pre>
+// For an `http` Stream, the `sink` properties are listed in the payload below.
 //
-//	The response will include an additional field <code>awsPartnerEventSource</code> in the <code>sink</code>: <pre><code>{
-//		"id": "string",
-//		"name": "string",
-//		"type": "eventbridge",
-//		"status": "active",
-//		"sink": {
-//			"awsAccountId": "string",
-//			"awsRegion": "string",
-//			"awsPartnerEventSource": "string"
-//		}
-//	}</code></pre>
+// **Request:**
+// ```json
 //
-// <h5>Azure Event Grid Stream</h5> For an <code>Azure Event Grid</code> Stream, the <code>sink</code> properties are listed in the payload below
+//	{
+//	  "name": "string",
+//	  "type": "http",
+//	  "sink": {
+//	    "httpEndpoint": "string",
+//	    "httpContentType": "string",
+//	    "httpContentFormat": "JSONLINES|JSONARRAY",
+//	    "httpAuthorization": "string"
+//	  }
+//	}
 //
-//	Request: <pre><code>{
-//		"name": "string",
-//		"type": "eventgrid",
-//		"sink": {
-//			"azureSubscriptionId": "string",
-//			"azureResourceGroup": "string",
-//			"azureRegion": "string"
-//		}
-//	}</code></pre>
+// ```
 //
-//	Response: <pre><code>{
-//		"id": "string",
-//		"name": "string",
-//		"type": "http",
-//		"status": "active",
-//		"sink": {
-//			"azureSubscriptionId": "string",
-//			"azureResourceGroup": "string",
-//			"azureRegion": "string",
-//			"azurePartnerTopic": "string"
-//		}
-//	}</code></pre>
+// **Response:**
+// ```json
 //
-// <h5>Datadog Stream</h5> For a <code>Datadog</code> Stream, the <code>sink</code> properties are listed in the payload below
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "http",
+//	  "status": "active",
+//	  "sink": {
+//	    "httpEndpoint": "string",
+//	    "httpContentType": "string",
+//	    "httpContentFormat": "JSONLINES|JSONARRAY",
+//	    "httpAuthorization": "string"
+//	  }
+//	}
 //
-//	Request: <pre><code>{
-//		"name": "string",
-//		"type": "datadog",
-//		"sink": {
-//			"datadogRegion": "string",
-//			"datadogApiKey": "string"
-//		}
-//	}</code></pre>
+// ```
 //
-//	Response: <pre><code>{
-//		"id": "string",
-//		"name": "string",
-//		"type": "datadog",
-//		"status": "active",
-//		"sink": {
-//			"datadogRegion": "string",
-//			"datadogApiKey": "string"
-//		}
-//	}</code></pre>
+// **Amazon EventBridge Stream**
 //
-// <h5>Splunk Stream</h5> For a <code>Splunk</code> Stream, the <code>sink</code> properties are listed in the payload below
+// For an `eventbridge` Stream, the `sink` properties are listed in the payload below.
 //
-//	Request: <pre><code>{
-//		"name": "string",
-//		"type": "splunk",
-//		"sink": {
-//			"splunkDomain": "string",
-//			"splunkToken": "string",
-//			"splunkPort": "string",
-//			"splunkSecure": "boolean"
-//		}
-//	}</code></pre>
+// **Request:**
+// ```json
 //
-//	Response: <pre><code>{
-//		"id": "string",
-//		"name": "string",
-//		"type": "splunk",
-//		"status": "active",
-//		"sink": {
-//			"splunkDomain": "string",
-//			"splunkToken": "string",
-//			"splunkPort": "string",
-//			"splunkSecure": "boolean"
-//		}
-//	}</code></pre>
+//	{
+//	  "name": "string",
+//	  "type": "eventbridge",
+//	  "sink": {
+//	    "awsRegion": "string",
+//	    "awsAccountId": "string"
+//	  }
+//	}
 //
-// <h5>Sumo Logic Stream</h5> For a <code>Sumo Logic</code> Stream, the <code>sink</code> properties are listed in the payload below
+// ```
 //
-//	Request: <pre><code>{
-//		"name": "string",
-//		"type": "sumo",
-//		"sink": {
-//			"sumoSourceAddress": "string",
-//		}
-//	}</code></pre>
+// The response will include an additional field `awsPartnerEventSource` in the `sink`:
 //
-//	Response: <pre><code>{
-//		"id": "string",
-//		"name": "string",
-//		"type": "sumo",
-//		"status": "active",
-//		"sink": {
-//			"sumoSourceAddress": "string",
-//		}
-//	}</code></pre>
+// **Response:**
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "eventbridge",
+//	  "status": "active",
+//	  "sink": {
+//	    "awsAccountId": "string",
+//	    "awsRegion": "string",
+//	    "awsPartnerEventSource": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Azure Event Grid Stream**
+//
+// For an `Azure Event Grid` Stream, the `sink` properties are listed in the payload below.
+//
+// **Request:**
+// ```json
+//
+//	{
+//	  "name": "string",
+//	  "type": "eventgrid",
+//	  "sink": {
+//	    "azureSubscriptionId": "string",
+//	    "azureResourceGroup": "string",
+//	    "azureRegion": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Response:**
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "http",
+//	  "status": "active",
+//	  "sink": {
+//	    "azureSubscriptionId": "string",
+//	    "azureResourceGroup": "string",
+//	    "azureRegion": "string",
+//	    "azurePartnerTopic": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Datadog Stream**
+//
+// For a `Datadog` Stream, the `sink` properties are listed in the payload below.
+//
+// **Request:**
+// ```json
+//
+//	{
+//	  "name": "string",
+//	  "type": "datadog",
+//	  "sink": {
+//	    "datadogRegion": "string",
+//	    "datadogApiKey": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Response:**
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "datadog",
+//	  "status": "active",
+//	  "sink": {
+//	    "datadogRegion": "string",
+//	    "datadogApiKey": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Splunk Stream**
+//
+// For a `Splunk` Stream, the `sink` properties are listed in the payload below.
+//
+// **Request:**
+// ```json
+//
+//	{
+//	  "name": "string",
+//	  "type": "splunk",
+//	  "sink": {
+//	    "splunkDomain": "string",
+//	    "splunkToken": "string",
+//	    "splunkPort": "string",
+//	    "splunkSecure": "boolean"
+//	  }
+//	}
+//
+// ```
+//
+// **Response:**
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "splunk",
+//	  "status": "active",
+//	  "sink": {
+//	    "splunkDomain": "string",
+//	    "splunkToken": "string",
+//	    "splunkPort": "string",
+//	    "splunkSecure": "boolean"
+//	  }
+//	}
+//
+// ```
+//
+// **Sumo Logic Stream**
+//
+// For a `Sumo Logic` Stream, the `sink` properties are listed in the payload below.
+//
+// **Request:**
+// ```json
+//
+//	{
+//	  "name": "string",
+//	  "type": "sumo",
+//	  "sink": {
+//	    "sumoSourceAddress": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Response:**
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "sumo",
+//	  "status": "active",
+//	  "sink": {
+//	    "sumoSourceAddress": "string"
+//	  }
+//	}
+//
+// ```
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateLogStreamRequestContent,
@@ -280,111 +364,174 @@ func (c *Client) Create(
 
 // Retrieve a log stream configuration and status.
 //
-//	<h5>Sample responses</h5><h5>Amazon EventBridge Log Stream</h5><pre><code>{
-//		"id": "string",
-//		"name": "string",
-//		"type": "eventbridge",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"awsAccountId": "string",
-//			"awsRegion": "string",
-//			"awsPartnerEventSource": "string"
-//		}
-//	}</code></pre> <h5>HTTP Log Stream</h5><pre><code>{
+// **Sample responses**
 //
-//		"id": "string",
-//		"name": "string",
-//		"type": "http",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"httpContentFormat": "JSONLINES|JSONARRAY",
-//			"httpContentType": "string",
-//			"httpEndpoint": "string",
-//			"httpAuthorization": "string"
-//		}
-//	}</code></pre> <h5>Datadog Log Stream</h5><pre><code>{
+// **Amazon EventBridge Log Stream**
 //
-//	"id": "string",
-//	"name": "string",
-//	"type": "datadog",
-//	"status": "active|paused|suspended",
-//	"sink": {
-//		"datadogRegion": "string",
-//		"datadogApiKey": "string"
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "eventbridge",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "awsAccountId": "string",
+//	    "awsRegion": "string",
+//	    "awsPartnerEventSource": "string"
+//	  }
 //	}
 //
-// }</code></pre><h5>Mixpanel</h5>
+// ```
 //
-//	Request: <pre><code>{
+// **HTTP Log Stream**
+//
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "http",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "httpContentFormat": "JSONLINES|JSONARRAY",
+//	    "httpContentType": "string",
+//	    "httpEndpoint": "string",
+//	    "httpAuthorization": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Datadog Log Stream**
+//
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "datadog",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "datadogRegion": "string",
+//	    "datadogApiKey": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Mixpanel**
+//
+// **Request:**
+//
+// ```json
+//
+//	{
 //	  "name": "string",
 //	  "type": "mixpanel",
 //	  "sink": {
-//		"mixpanelRegion": "string", // "us" | "eu",
-//		"mixpanelProjectId": "string",
-//		"mixpanelServiceAccountUsername": "string",
-//		"mixpanelServiceAccountPassword": "string"
+//	    "mixpanelRegion": "string",
+//	    "mixpanelProjectId": "string",
+//	    "mixpanelServiceAccountUsername": "string",
+//	    "mixpanelServiceAccountPassword": "string"
 //	  }
-//	} </code></pre>
+//	}
 //
+// ```
 //
-//	Response: <pre><code>{
-//		"id": "string",
-//		"name": "string",
-//		"type": "mixpanel",
-//		"status": "active",
-//		"sink": {
-//		  "mixpanelRegion": "string", // "us" | "eu",
-//		  "mixpanelProjectId": "string",
-//		  "mixpanelServiceAccountUsername": "string",
-//		  "mixpanelServiceAccountPassword": "string" // the following is redacted on return
-//		}
-//	  } </code></pre>
+// **Response:**
 //
-//	<h5>Segment</h5>
+// ```json
 //
-//	Request: <pre><code> {
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "mixpanel",
+//	  "status": "active",
+//	  "sink": {
+//	    "mixpanelRegion": "string",
+//	    "mixpanelProjectId": "string",
+//	    "mixpanelServiceAccountUsername": "string",
+//	    "mixpanelServiceAccountPassword": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Segment**
+//
+// **Request:**
+//
+// ```json
+//
+//	{
 //	  "name": "string",
 //	  "type": "segment",
 //	  "sink": {
-//		"segmentWriteKey": "string"
+//	    "segmentWriteKey": "string"
 //	  }
-//	}</code></pre>
+//	}
 //
-//	Response: <pre><code>{
+// ```
+//
+// **Response:**
+//
+// ```json
+//
+//	{
 //	  "id": "string",
 //	  "name": "string",
 //	  "type": "segment",
 //	  "status": "active",
 //	  "sink": {
-//		"segmentWriteKey": "string"
+//	    "segmentWriteKey": "string"
 //	  }
-//	} </code></pre>
+//	}
 //
-//	<h5>Splunk Log Stream</h5><pre><code>{
-//		"id": "string",
-//		"name": "string",
-//		"type": "splunk",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"splunkDomain": "string",
-//			"splunkToken": "string",
-//			"splunkPort": "string",
-//			"splunkSecure": "boolean"
-//		}
-//	}</code></pre> <h5>Sumo Logic Log Stream</h5><pre><code>{
+// ```
 //
-//		"id": "string",
-//		"name": "string",
-//		"type": "sumo",
-//		"status": "active|paused|suspended",
-//		"sink": {
-//			"sumoSourceAddress": "string",
-//		}
-//	}</code></pre> <h5>Status</h5> The <code>status</code> of a log stream maybe any of the following:
+// **Splunk Log Stream**
 //
-// 1. <code>active</code> - Stream is currently enabled.
-// 2. <code>paused</code> - Stream is currently user disabled and will not attempt log delivery.
-// 3. <code>suspended</code> - Stream is currently disabled because of errors and will not attempt log delivery.
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "splunk",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "splunkDomain": "string",
+//	    "splunkToken": "string",
+//	    "splunkPort": "string",
+//	    "splunkSecure": "boolean"
+//	  }
+//	}
+//
+// ```
+//
+// **Sumo Logic Log Stream**
+//
+// ```json
+//
+//	{
+//	  "id": "string",
+//	  "name": "string",
+//	  "type": "sumo",
+//	  "status": "active|paused|suspended",
+//	  "sink": {
+//	    "sumoSourceAddress": "string"
+//	  }
+//	}
+//
+// ```
+//
+// **Status**
+//
+// The `status` of a log stream maybe any of the following:
+//
+// 1. `active` - Stream is currently enabled.
+// 2. `paused` - Stream is currently user disabled and will not attempt log delivery.
+// 3. `suspended` - Stream is currently disabled because of errors and will not attempt log delivery.
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the log stream to get
@@ -421,46 +568,91 @@ func (c *Client) Delete(
 }
 
 // Update a log stream.
-// <h4>Examples of how to use the PATCH endpoint.</h4> The following fields may be updated in a PATCH operation: <ul><li>name</li><li>status</li><li>sink</li></ul> Note: For log streams of type <code>eventbridge</code> and <code>eventgrid</code>, updating the <code>sink</code> is not permitted.
 //
-//	<h5>Update the status of a log stream</h5><pre><code>{
-//		"status": "active|paused"
-//	}</code></pre>
+// **Examples of how to use the PATCH endpoint.**
 //
-//	<h5>Update the name of a log stream</h5><pre><code>{
-//		"name": "string"
-//	}</code></pre>
+// The following fields may be updated in a PATCH operation:
 //
-//	<h5>Update the sink properties of a stream of type <code>http</code></h5><pre><code>{
+// - name
+// - status
+// - sink
+//
+// Note: For log streams of type `eventbridge` and `eventgrid`, updating the `sink` is not permitted.
+//
+// **Update the status of a log stream**
+//
+// ```json
+//
+//	{
+//	  "status": "active|paused"
+//	}
+//
+// ```
+//
+// **Update the name of a log stream**
+//
+// ```json
+//
+//	{
+//	  "name": "string"
+//	}
+//
+// ```
+//
+// **Update the sink properties of a stream of type `http`**
+//
+// ```json
+//
+//	{
 //	  "sink": {
 //	    "httpEndpoint": "string",
 //	    "httpContentType": "string",
 //	    "httpContentFormat": "JSONARRAY|JSONLINES",
 //	    "httpAuthorization": "string"
 //	  }
-//	}</code></pre>
+//	}
 //
-//	<h5>Update the sink properties of a stream of type <code>datadog</code></h5><pre><code>{
+// ```
+//
+// **Update the sink properties of a stream of type `datadog`**
+//
+// ```json
+//
+//	{
 //	  "sink": {
-//			"datadogRegion": "string",
-//			"datadogApiKey": "string"
+//	    "datadogRegion": "string",
+//	    "datadogApiKey": "string"
 //	  }
-//	}</code></pre>
+//	}
 //
-//	<h5>Update the sink properties of a stream of type <code>splunk</code></h5><pre><code>{
+// ```
+//
+// **Update the sink properties of a stream of type `splunk`**
+//
+// ```json
+//
+//	{
 //	  "sink": {
 //	    "splunkDomain": "string",
 //	    "splunkToken": "string",
 //	    "splunkPort": "string",
 //	    "splunkSecure": "boolean"
 //	  }
-//	}</code></pre>
+//	}
 //
-//	<h5>Update the sink properties of a stream of type <code>sumo</code></h5><pre><code>{
+// ```
+//
+// **Update the sink properties of a stream of type `sumo`**
+//
+// ```json
+//
+//	{
 //	  "sink": {
 //	    "sumoSourceAddress": "string"
 //	  }
-//	}</code></pre>
+//	}
+//
+// ```
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the log stream to get

@@ -91,6 +91,7 @@ func TestClientGrantsListWithWireMock(
 			true,
 		),
 		SubjectType: management.ClientGrantSubjectTypeEnumClient.Ptr(),
+		DefaultFor:  management.ClientGrantDefaultForEnumThirdPartyClients.Ptr(),
 	}
 	_, invocationErr := client.ClientGrants.List(
 		context.TODO(),
@@ -101,7 +102,7 @@ func TestClientGrantsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestClientGrantsListWithWireMock", "GET", "/client-grants", map[string]string{"from": "from", "take": "1", "audience": "audience", "client_id": "client_id", "allow_any_organization": "true", "subject_type": "client"}, 1)
+	VerifyRequestCount(t, "TestClientGrantsListWithWireMock", "GET", "/client-grants", map[string]string{"from": "from", "take": "1", "audience": "audience", "client_id": "client_id", "allow_any_organization": "true", "subject_type": "client", "default_for": "third_party_clients"}, 1)
 }
 
 func TestClientGrantsCreateWithWireMock(

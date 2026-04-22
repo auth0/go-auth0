@@ -58,6 +58,14 @@ func TestSettersClientGrantResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetDefaultFor", func(t *testing.T) {
+		obj := &ClientGrantResponseContent{}
+		var fernTestValueDefaultFor *ClientGrantDefaultForEnum
+		obj.SetDefaultFor(fernTestValueDefaultFor)
+		assert.Equal(t, fernTestValueDefaultFor, obj.DefaultFor)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsSystem", func(t *testing.T) {
 		obj := &ClientGrantResponseContent{}
 		var fernTestValueIsSystem *bool
@@ -294,6 +302,40 @@ func TestGettersClientGrantResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAllowAnyOrganization() // Should return zero value
+	})
+
+	t.Run("GetDefaultFor", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientGrantResponseContent{}
+		var value ClientGrantDefaultForEnum
+		obj.DefaultFor = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefaultFor(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefaultFor_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientGrantResponseContent{}
+		obj.DefaultFor = nil
+		var expectedZero ClientGrantDefaultForEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefaultFor(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefaultFor_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientGrantResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultFor() // Should return zero value
 	})
 
 	t.Run("GetIsSystem", func(t *testing.T) {
@@ -620,6 +662,37 @@ func TestSettersMarkExplicitClientGrantResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetDefaultFor_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientGrantResponseContent{}
+		var fernTestValueDefaultFor *ClientGrantDefaultForEnum
+
+		// Act
+		obj.SetDefaultFor(fernTestValueDefaultFor)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsSystem_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -792,6 +865,14 @@ func TestSettersCreateClientGrantResponseContent(t *testing.T) {
 		var fernTestValueAllowAnyOrganization *bool
 		obj.SetAllowAnyOrganization(fernTestValueAllowAnyOrganization)
 		assert.Equal(t, fernTestValueAllowAnyOrganization, obj.AllowAnyOrganization)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDefaultFor", func(t *testing.T) {
+		obj := &CreateClientGrantResponseContent{}
+		var fernTestValueDefaultFor *ClientGrantDefaultForEnum
+		obj.SetDefaultFor(fernTestValueDefaultFor)
+		assert.Equal(t, fernTestValueDefaultFor, obj.DefaultFor)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1031,6 +1112,40 @@ func TestGettersCreateClientGrantResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAllowAnyOrganization() // Should return zero value
+	})
+
+	t.Run("GetDefaultFor", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientGrantResponseContent{}
+		var value ClientGrantDefaultForEnum
+		obj.DefaultFor = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefaultFor(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefaultFor_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientGrantResponseContent{}
+		obj.DefaultFor = nil
+		var expectedZero ClientGrantDefaultForEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefaultFor(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefaultFor_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateClientGrantResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultFor() // Should return zero value
 	})
 
 	t.Run("GetIsSystem", func(t *testing.T) {
@@ -1357,6 +1472,37 @@ func TestSettersMarkExplicitCreateClientGrantResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetDefaultFor_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientGrantResponseContent{}
+		var fernTestValueDefaultFor *ClientGrantDefaultForEnum
+
+		// Act
+		obj.SetDefaultFor(fernTestValueDefaultFor)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsSystem_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1529,6 +1675,14 @@ func TestSettersGetClientGrantResponseContent(t *testing.T) {
 		var fernTestValueAllowAnyOrganization *bool
 		obj.SetAllowAnyOrganization(fernTestValueAllowAnyOrganization)
 		assert.Equal(t, fernTestValueAllowAnyOrganization, obj.AllowAnyOrganization)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDefaultFor", func(t *testing.T) {
+		obj := &GetClientGrantResponseContent{}
+		var fernTestValueDefaultFor *ClientGrantDefaultForEnum
+		obj.SetDefaultFor(fernTestValueDefaultFor)
+		assert.Equal(t, fernTestValueDefaultFor, obj.DefaultFor)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1768,6 +1922,40 @@ func TestGettersGetClientGrantResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAllowAnyOrganization() // Should return zero value
+	})
+
+	t.Run("GetDefaultFor", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientGrantResponseContent{}
+		var value ClientGrantDefaultForEnum
+		obj.DefaultFor = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefaultFor(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefaultFor_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientGrantResponseContent{}
+		obj.DefaultFor = nil
+		var expectedZero ClientGrantDefaultForEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefaultFor(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefaultFor_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetClientGrantResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultFor() // Should return zero value
 	})
 
 	t.Run("GetIsSystem", func(t *testing.T) {
@@ -2071,6 +2259,37 @@ func TestSettersMarkExplicitGetClientGrantResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetAllowAnyOrganization(fernTestValueAllowAnyOrganization)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDefaultFor_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientGrantResponseContent{}
+		var fernTestValueDefaultFor *ClientGrantDefaultForEnum
+
+		// Act
+		obj.SetDefaultFor(fernTestValueDefaultFor)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2423,6 +2642,14 @@ func TestSettersUpdateClientGrantResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetDefaultFor", func(t *testing.T) {
+		obj := &UpdateClientGrantResponseContent{}
+		var fernTestValueDefaultFor *ClientGrantDefaultForEnum
+		obj.SetDefaultFor(fernTestValueDefaultFor)
+		assert.Equal(t, fernTestValueDefaultFor, obj.DefaultFor)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsSystem", func(t *testing.T) {
 		obj := &UpdateClientGrantResponseContent{}
 		var fernTestValueIsSystem *bool
@@ -2659,6 +2886,40 @@ func TestGettersUpdateClientGrantResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAllowAnyOrganization() // Should return zero value
+	})
+
+	t.Run("GetDefaultFor", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientGrantResponseContent{}
+		var value ClientGrantDefaultForEnum
+		obj.DefaultFor = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefaultFor(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefaultFor_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientGrantResponseContent{}
+		obj.DefaultFor = nil
+		var expectedZero ClientGrantDefaultForEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefaultFor(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefaultFor_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateClientGrantResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultFor() // Should return zero value
 	})
 
 	t.Run("GetIsSystem", func(t *testing.T) {
@@ -2962,6 +3223,37 @@ func TestSettersMarkExplicitUpdateClientGrantResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetAllowAnyOrganization(fernTestValueAllowAnyOrganization)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDefaultFor_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientGrantResponseContent{}
+		var fernTestValueDefaultFor *ClientGrantDefaultForEnum
+
+		// Act
+		obj.SetDefaultFor(fernTestValueDefaultFor)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3353,6 +3645,28 @@ func TestStringUpdateClientGrantResponseContent(t *testing.T) {
 		var obj *UpdateClientGrantResponseContent
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestEnumClientGrantDefaultForEnum(t *testing.T) {
+	t.Run("NewFromString_third_party_clients", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientGrantDefaultForEnumFromString("third_party_clients")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientGrantDefaultForEnum("third_party_clients"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewClientGrantDefaultForEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewClientGrantDefaultForEnumFromString("third_party_clients")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
 	})
 }
 

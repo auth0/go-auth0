@@ -6192,25 +6192,74 @@ func TestEnumEventStreamStatusEnum(t *testing.T) {
 }
 
 func TestEnumEventStreamTestEventTypeEnum(t *testing.T) {
-	t.Run("NewFromString_user_created", func(t *testing.T) {
+	t.Run("NewFromString_group_created", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("user.created")
+		val, err := NewEventStreamTestEventTypeEnumFromString("group.created")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("user.created"), val, "enum value should match expected wire value")
+		assert.Equal(t, EventStreamTestEventTypeEnum("group.created"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_user_deleted", func(t *testing.T) {
+	t.Run("NewFromString_group_deleted", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("user.deleted")
+		val, err := NewEventStreamTestEventTypeEnumFromString("group.deleted")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("user.deleted"), val, "enum value should match expected wire value")
+		assert.Equal(t, EventStreamTestEventTypeEnum("group.deleted"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_user_updated", func(t *testing.T) {
+	t.Run("NewFromString_group_member_added", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("user.updated")
+		val, err := NewEventStreamTestEventTypeEnumFromString("group.member.added")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("user.updated"), val, "enum value should match expected wire value")
+		assert.Equal(t, EventStreamTestEventTypeEnum("group.member.added"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_group_member_deleted", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamTestEventTypeEnumFromString("group.member.deleted")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamTestEventTypeEnum("group.member.deleted"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_group_role_assigned", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamTestEventTypeEnumFromString("group.role.assigned")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamTestEventTypeEnum("group.role.assigned"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_group_role_deleted", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamTestEventTypeEnumFromString("group.role.deleted")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamTestEventTypeEnum("group.role.deleted"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_group_updated", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamTestEventTypeEnumFromString("group.updated")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamTestEventTypeEnum("group.updated"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organization_connection_added", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamTestEventTypeEnumFromString("organization.connection.added")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamTestEventTypeEnum("organization.connection.added"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organization_connection_removed", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamTestEventTypeEnumFromString("organization.connection.removed")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamTestEventTypeEnum("organization.connection.removed"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organization_connection_updated", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamTestEventTypeEnumFromString("organization.connection.updated")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamTestEventTypeEnum("organization.connection.updated"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_organization_created", func(t *testing.T) {
@@ -6220,18 +6269,25 @@ func TestEnumEventStreamTestEventTypeEnum(t *testing.T) {
 		assert.Equal(t, EventStreamTestEventTypeEnum("organization.created"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_organization_updated", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("organization.updated")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("organization.updated"), val, "enum value should match expected wire value")
-	})
-
 	t.Run("NewFromString_organization_deleted", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewEventStreamTestEventTypeEnumFromString("organization.deleted")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, EventStreamTestEventTypeEnum("organization.deleted"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organization_group_role_assigned", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamTestEventTypeEnumFromString("organization.group.role.assigned")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamTestEventTypeEnum("organization.group.role.assigned"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organization_group_role_deleted", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamTestEventTypeEnumFromString("organization.group.role.deleted")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamTestEventTypeEnum("organization.group.role.deleted"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_organization_member_added", func(t *testing.T) {
@@ -6262,60 +6318,32 @@ func TestEnumEventStreamTestEventTypeEnum(t *testing.T) {
 		assert.Equal(t, EventStreamTestEventTypeEnum("organization.member.role.deleted"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_organization_connection_added", func(t *testing.T) {
+	t.Run("NewFromString_organization_updated", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("organization.connection.added")
+		val, err := NewEventStreamTestEventTypeEnumFromString("organization.updated")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("organization.connection.added"), val, "enum value should match expected wire value")
+		assert.Equal(t, EventStreamTestEventTypeEnum("organization.updated"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_organization_connection_updated", func(t *testing.T) {
+	t.Run("NewFromString_user_created", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("organization.connection.updated")
+		val, err := NewEventStreamTestEventTypeEnumFromString("user.created")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("organization.connection.updated"), val, "enum value should match expected wire value")
+		assert.Equal(t, EventStreamTestEventTypeEnum("user.created"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_organization_connection_removed", func(t *testing.T) {
+	t.Run("NewFromString_user_deleted", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("organization.connection.removed")
+		val, err := NewEventStreamTestEventTypeEnumFromString("user.deleted")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("organization.connection.removed"), val, "enum value should match expected wire value")
+		assert.Equal(t, EventStreamTestEventTypeEnum("user.deleted"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_group_created", func(t *testing.T) {
+	t.Run("NewFromString_user_updated", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("group.created")
+		val, err := NewEventStreamTestEventTypeEnumFromString("user.updated")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("group.created"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_group_updated", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("group.updated")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("group.updated"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_group_deleted", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("group.deleted")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("group.deleted"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_group_member_added", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("group.member.added")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("group.member.added"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_group_member_deleted", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamTestEventTypeEnumFromString("group.member.deleted")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamTestEventTypeEnum("group.member.deleted"), val, "enum value should match expected wire value")
+		assert.Equal(t, EventStreamTestEventTypeEnum("user.updated"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
@@ -6324,7 +6352,7 @@ func TestEnumEventStreamTestEventTypeEnum(t *testing.T) {
 	})
 
 	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamTestEventTypeEnumFromString("user.created")
+		val, err := NewEventStreamTestEventTypeEnumFromString("group.created")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
