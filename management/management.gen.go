@@ -3249,6 +3249,14 @@ func (c *ConnectionOptions) GetPasswordNoPersonalInfo() map[string]interface{} {
 	return c.PasswordNoPersonalInfo
 }
 
+// GetPasswordOptions returns the PasswordOptions field.
+func (c *ConnectionOptions) GetPasswordOptions() *PasswordOptions {
+	if c == nil {
+		return nil
+	}
+	return c.PasswordOptions
+}
+
 // GetPasswordPolicy returns the PasswordPolicy field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptions) GetPasswordPolicy() string {
 	if c == nil || c.PasswordPolicy == nil {
@@ -10984,6 +10992,167 @@ func (p *PasswordAuthenticationMethod) GetSignupBehavior() string {
 
 // String returns a string representation of PasswordAuthenticationMethod.
 func (p *PasswordAuthenticationMethod) String() string {
+	return Stringify(p)
+}
+
+// GetComplexity returns the Complexity field.
+func (p *PasswordOptions) GetComplexity() *PasswordOptionsComplexity {
+	if p == nil {
+		return nil
+	}
+	return p.Complexity
+}
+
+// GetDictionary returns the Dictionary field.
+func (p *PasswordOptions) GetDictionary() *PasswordOptionsDictionary {
+	if p == nil {
+		return nil
+	}
+	return p.Dictionary
+}
+
+// GetHistory returns the History field.
+func (p *PasswordOptions) GetHistory() *PasswordOptionsHistory {
+	if p == nil {
+		return nil
+	}
+	return p.History
+}
+
+// GetProfileData returns the ProfileData field.
+func (p *PasswordOptions) GetProfileData() *PasswordOptionsProfileData {
+	if p == nil {
+		return nil
+	}
+	return p.ProfileData
+}
+
+// String returns a string representation of PasswordOptions.
+func (p *PasswordOptions) String() string {
+	return Stringify(p)
+}
+
+// GetCharacterTypeRule returns the CharacterTypeRule field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsComplexity) GetCharacterTypeRule() string {
+	if p == nil || p.CharacterTypeRule == nil {
+		return ""
+	}
+	return *p.CharacterTypeRule
+}
+
+// GetCharacterTypes returns the CharacterTypes field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsComplexity) GetCharacterTypes() []string {
+	if p == nil || p.CharacterTypes == nil {
+		return nil
+	}
+	return *p.CharacterTypes
+}
+
+// GetIdenticalCharacters returns the IdenticalCharacters field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsComplexity) GetIdenticalCharacters() string {
+	if p == nil || p.IdenticalCharacters == nil {
+		return ""
+	}
+	return *p.IdenticalCharacters
+}
+
+// GetMaxLengthExceeded returns the MaxLengthExceeded field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsComplexity) GetMaxLengthExceeded() string {
+	if p == nil || p.MaxLengthExceeded == nil {
+		return ""
+	}
+	return *p.MaxLengthExceeded
+}
+
+// GetMinLength returns the MinLength field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsComplexity) GetMinLength() int {
+	if p == nil || p.MinLength == nil {
+		return 0
+	}
+	return *p.MinLength
+}
+
+// GetSequentialCharacters returns the SequentialCharacters field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsComplexity) GetSequentialCharacters() string {
+	if p == nil || p.SequentialCharacters == nil {
+		return ""
+	}
+	return *p.SequentialCharacters
+}
+
+// String returns a string representation of PasswordOptionsComplexity.
+func (p *PasswordOptionsComplexity) String() string {
+	return Stringify(p)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsDictionary) GetActive() bool {
+	if p == nil || p.Active == nil {
+		return false
+	}
+	return *p.Active
+}
+
+// GetCustom returns the Custom field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsDictionary) GetCustom() []string {
+	if p == nil || p.Custom == nil {
+		return nil
+	}
+	return *p.Custom
+}
+
+// GetDefault returns the Default field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsDictionary) GetDefault() string {
+	if p == nil || p.Default == nil {
+		return ""
+	}
+	return *p.Default
+}
+
+// String returns a string representation of PasswordOptionsDictionary.
+func (p *PasswordOptionsDictionary) String() string {
+	return Stringify(p)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsHistory) GetActive() bool {
+	if p == nil || p.Active == nil {
+		return false
+	}
+	return *p.Active
+}
+
+// GetSize returns the Size field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsHistory) GetSize() int {
+	if p == nil || p.Size == nil {
+		return 0
+	}
+	return *p.Size
+}
+
+// String returns a string representation of PasswordOptionsHistory.
+func (p *PasswordOptionsHistory) String() string {
+	return Stringify(p)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsProfileData) GetActive() bool {
+	if p == nil || p.Active == nil {
+		return false
+	}
+	return *p.Active
+}
+
+// GetBlockedFields returns the BlockedFields field if it's non-nil, zero value otherwise.
+func (p *PasswordOptionsProfileData) GetBlockedFields() []string {
+	if p == nil || p.BlockedFields == nil {
+		return nil
+	}
+	return *p.BlockedFields
+}
+
+// String returns a string representation of PasswordOptionsProfileData.
+func (p *PasswordOptionsProfileData) String() string {
 	return Stringify(p)
 }
 

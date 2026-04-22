@@ -749,153 +749,6 @@ type PasswordOptionsDictionary struct {
 	Custom *[]string `json:"custom,omitempty"`
 }
 
-func (o *ConnectionOptions) validate() error {
-	if o == nil || o.PasswordOptions == nil {
-		return nil
-	}
-	if o.PasswordPolicy != nil ||
-		o.PasswordComplexityOptions != nil ||
-		o.PasswordHistory != nil ||
-		o.PasswordNoPersonalInfo != nil ||
-		o.PasswordDictionary != nil {
-		return fmt.Errorf(
-			"cannot set password_options together with legacy password policy fields " +
-				"(passwordPolicy, password_complexity_options, password_history, " +
-				"password_no_personal_info, password_dictionary)",
-		)
-	}
-	return o.PasswordOptions.validate()
-}
-
-func (p *PasswordOptions) validate() error {
-	if p == nil {
-		return nil
-	}
-	if c := p.Complexity; c != nil {
-		if c.MinLength != nil && (*c.MinLength < 1 || *c.MinLength > 72) {
-			return fmt.Errorf("password_options.complexity.min_length must be between 1 and 72, got %d", *c.MinLength)
-		}
-		if c.CharacterTypes != nil {
-			validCharTypes := map[string]bool{
-				PasswordCharacterTypeUppercase: true,
-				PasswordCharacterTypeLowercase: true,
-				PasswordCharacterTypeNumber:    true,
-				PasswordCharacterTypeSpecial:   true,
-			}
-			for _, ct := range *c.CharacterTypes {
-				if !validCharTypes[ct] {
-					return fmt.Errorf(
-						"password_options.complexity.character_types contains invalid value %q; must be one of %q, %q, %q, %q",
-						ct,
-						PasswordCharacterTypeUppercase,
-						PasswordCharacterTypeLowercase,
-						PasswordCharacterTypeNumber,
-						PasswordCharacterTypeSpecial,
-					)
-				}
-			}
-		}
-		if c.CharacterTypeRule != nil {
-			switch *c.CharacterTypeRule {
-			case PasswordComplexityCharacterTypeRuleAll, PasswordComplexityCharacterTypeRuleThreeOfFour:
-				// valid
-			default:
-				return fmt.Errorf(
-					"password_options.complexity.character_type_rule must be %q or %q, got %q",
-					PasswordComplexityCharacterTypeRuleAll,
-					PasswordComplexityCharacterTypeRuleThreeOfFour,
-					*c.CharacterTypeRule,
-				)
-			}
-			if *c.CharacterTypeRule == PasswordComplexityCharacterTypeRuleThreeOfFour {
-				allFour := map[string]bool{
-					PasswordCharacterTypeUppercase: false,
-					PasswordCharacterTypeLowercase: false,
-					PasswordCharacterTypeNumber:    false,
-					PasswordCharacterTypeSpecial:   false,
-				}
-				if c.CharacterTypes != nil {
-					for _, ct := range *c.CharacterTypes {
-						allFour[ct] = true
-					}
-				}
-				for _, present := range allFour {
-					if !present {
-						return fmt.Errorf(
-							"password_options.complexity.character_type_rule can only be %q when all 4 character types are specified",
-							PasswordComplexityCharacterTypeRuleThreeOfFour,
-						)
-					}
-				}
-			}
-		}
-		if c.IdenticalCharacters != nil {
-			switch *c.IdenticalCharacters {
-			case PasswordComplexityCharactersAllow, PasswordComplexityCharactersBlock:
-				// valid
-			default:
-				return fmt.Errorf(
-					"password_options.complexity.identical_characters must be %q or %q, got %q",
-					PasswordComplexityCharactersAllow,
-					PasswordComplexityCharactersBlock,
-					*c.IdenticalCharacters,
-				)
-			}
-		}
-		if c.SequentialCharacters != nil {
-			switch *c.SequentialCharacters {
-			case PasswordComplexityCharactersAllow, PasswordComplexityCharactersBlock:
-				// valid
-			default:
-				return fmt.Errorf(
-					"password_options.complexity.sequential_characters must be %q or %q, got %q",
-					PasswordComplexityCharactersAllow,
-					PasswordComplexityCharactersBlock,
-					*c.SequentialCharacters,
-				)
-			}
-		}
-		if c.MaxLengthExceeded != nil {
-			switch *c.MaxLengthExceeded {
-			case PasswordComplexityMaxLengthExceededError, PasswordComplexityMaxLengthExceededTruncate:
-				// valid
-			default:
-				return fmt.Errorf(
-					"password_options.complexity.max_length_exceeded must be %q or %q, got %q",
-					PasswordComplexityMaxLengthExceededError,
-					PasswordComplexityMaxLengthExceededTruncate,
-					*c.MaxLengthExceeded,
-				)
-			}
-		}
-	}
-	if h := p.History; h != nil {
-		if h.Size != nil && (*h.Size < 1 || *h.Size > 24) {
-			return fmt.Errorf("password_options.history.size must be between 1 and 24, got %d", *h.Size)
-		}
-	}
-	if pd := p.ProfileData; pd != nil {
-		if pd.BlockedFields != nil && len(*pd.BlockedFields) > 12 {
-			return fmt.Errorf("password_options.profile_data.blocked_fields cannot exceed 12 items, got %d", len(*pd.BlockedFields))
-		}
-	}
-	if d := p.Dictionary; d != nil {
-		if d.Default != nil {
-			switch *d.Default {
-			case PasswordDictionaryDefaultEn10k, PasswordDictionaryDefaultEn100k:
-				// valid
-			default:
-				return fmt.Errorf(
-					"password_options.dictionary.default must be %q or %q, got %q",
-					PasswordDictionaryDefaultEn10k,
-					PasswordDictionaryDefaultEn100k,
-					*d.Default,
-				)
-			}
-		}
-	}
-	return nil
-}
 
 // PasskeyOptions contains Passkey configuration for the connection.
 type PasskeyOptions struct {
@@ -1983,11 +1836,6 @@ type ConnectionList struct {
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/post_connections
 func (m *ConnectionManager) Create(ctx context.Context, c *Connection, opts ...RequestOption) error {
-	if connOpts, ok := c.Options.(*ConnectionOptions); ok {
-		if err := connOpts.validate(); err != nil {
-			return err
-		}
-	}
 	return m.management.Request(ctx, "POST", m.management.URI("connections"), c, opts...)
 }
 
@@ -2016,11 +1864,6 @@ func (m *ConnectionManager) List(ctx context.Context, opts ...RequestOption) (c 
 //
 // See: https://auth0.com/docs/api/management/v2#!/Connections/patch_connections_by_id
 func (m *ConnectionManager) Update(ctx context.Context, id string, c *Connection, opts ...RequestOption) (err error) {
-	if connOpts, ok := c.Options.(*ConnectionOptions); ok {
-		if err := connOpts.validate(); err != nil {
-			return err
-		}
-	}
 	return m.management.Request(ctx, "PATCH", m.management.URI("connections", id), c, opts...)
 }
 

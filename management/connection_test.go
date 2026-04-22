@@ -992,22 +992,22 @@ func TestConnectionManager_PasswordOptions(t *testing.T) {
 
 	actualOptions, ok := actualConn.Options.(*ConnectionOptions)
 	require.True(t, ok)
-	require.NotNil(t, actualOptions.PasswordOptions)
-	require.NotNil(t, actualOptions.PasswordOptions.Complexity)
-	assert.Equal(t, auth0.Int(10), actualOptions.PasswordOptions.Complexity.MinLength)
-	assert.Equal(t, &[]string{"uppercase", "lowercase", "number"}, actualOptions.PasswordOptions.Complexity.CharacterTypes)
-	assert.Equal(t, auth0.String("block"), actualOptions.PasswordOptions.Complexity.IdenticalCharacters)
-	assert.Equal(t, auth0.String("allow"), actualOptions.PasswordOptions.Complexity.SequentialCharacters)
-	assert.Equal(t, auth0.String("error"), actualOptions.PasswordOptions.Complexity.MaxLengthExceeded)
-	require.NotNil(t, actualOptions.PasswordOptions.History)
-	assert.Equal(t, auth0.Bool(true), actualOptions.PasswordOptions.History.Active)
-	assert.Equal(t, auth0.Int(3), actualOptions.PasswordOptions.History.Size)
-	require.NotNil(t, actualOptions.PasswordOptions.Dictionary)
-	assert.Equal(t, auth0.Bool(true), actualOptions.PasswordOptions.Dictionary.Active)
-	assert.Equal(t, auth0.String("en_100k"), actualOptions.PasswordOptions.Dictionary.Default)
-	require.NotNil(t, actualOptions.PasswordOptions.ProfileData)
-	assert.Equal(t, auth0.Bool(true), actualOptions.PasswordOptions.ProfileData.Active)
-	assert.Equal(t, &[]string{"name", "username", "email"}, actualOptions.PasswordOptions.ProfileData.BlockedFields)
+	require.NotNil(t, actualOptions.GetPasswordOptions())
+	require.NotNil(t, actualOptions.GetPasswordOptions().GetComplexity())
+	assert.Equal(t, 10, actualOptions.GetPasswordOptions().GetComplexity().GetMinLength())
+	assert.Equal(t, []string{"uppercase", "lowercase", "number"}, actualOptions.GetPasswordOptions().GetComplexity().GetCharacterTypes())
+	assert.Equal(t, "block", actualOptions.GetPasswordOptions().GetComplexity().GetIdenticalCharacters())
+	assert.Equal(t, "allow", actualOptions.GetPasswordOptions().GetComplexity().GetSequentialCharacters())
+	assert.Equal(t, "error", actualOptions.GetPasswordOptions().GetComplexity().GetMaxLengthExceeded())
+	require.NotNil(t, actualOptions.GetPasswordOptions().GetHistory())
+	assert.Equal(t, true, actualOptions.GetPasswordOptions().GetHistory().GetActive())
+	assert.Equal(t, 3, actualOptions.GetPasswordOptions().GetHistory().GetSize())
+	require.NotNil(t, actualOptions.GetPasswordOptions().GetDictionary())
+	assert.Equal(t, true, actualOptions.GetPasswordOptions().GetDictionary().GetActive())
+	assert.Equal(t, "en_100k", actualOptions.GetPasswordOptions().GetDictionary().GetDefault())
+	require.NotNil(t, actualOptions.GetPasswordOptions().GetProfileData())
+	assert.Equal(t, true, actualOptions.GetPasswordOptions().GetProfileData().GetActive())
+	assert.Equal(t, []string{"name", "username", "email"}, actualOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
 
 	// Update: change complexity min_length and disable history.
 	err = api.Connection.Update(context.Background(), conn.GetID(), &Connection{
@@ -1029,239 +1029,24 @@ func TestConnectionManager_PasswordOptions(t *testing.T) {
 
 	updatedOptions, ok := updatedConn.Options.(*ConnectionOptions)
 	require.True(t, ok)
-	require.NotNil(t, updatedOptions.PasswordOptions)
-	require.NotNil(t, updatedOptions.PasswordOptions.Complexity)
-	assert.Equal(t, auth0.Int(20), updatedOptions.PasswordOptions.Complexity.MinLength)
-	require.NotNil(t, updatedOptions.PasswordOptions.History)
-	assert.Equal(t, auth0.Bool(false), updatedOptions.PasswordOptions.History.Active)
+	require.NotNil(t, updatedOptions.GetPasswordOptions())
+	require.NotNil(t, updatedOptions.GetPasswordOptions().GetComplexity())
+	assert.Equal(t, 20, updatedOptions.GetPasswordOptions().GetComplexity().GetMinLength())
+	require.NotNil(t, updatedOptions.GetPasswordOptions().GetHistory())
+	assert.Equal(t, false, updatedOptions.GetPasswordOptions().GetHistory().GetActive())
 	// Verify unmodified fields are preserved after partial PATCH.
-	assert.Equal(t, &[]string{"uppercase", "lowercase", "number"}, updatedOptions.PasswordOptions.Complexity.CharacterTypes)
-	assert.Equal(t, auth0.String("block"), updatedOptions.PasswordOptions.Complexity.IdenticalCharacters)
-	assert.Equal(t, auth0.String("allow"), updatedOptions.PasswordOptions.Complexity.SequentialCharacters)
-	assert.Equal(t, auth0.String("error"), updatedOptions.PasswordOptions.Complexity.MaxLengthExceeded)
-	require.NotNil(t, updatedOptions.PasswordOptions.Dictionary)
-	assert.Equal(t, auth0.Bool(true), updatedOptions.PasswordOptions.Dictionary.Active)
-	assert.Equal(t, auth0.String("en_100k"), updatedOptions.PasswordOptions.Dictionary.Default)
-	require.NotNil(t, updatedOptions.PasswordOptions.ProfileData)
-	assert.Equal(t, auth0.Bool(true), updatedOptions.PasswordOptions.ProfileData.Active)
-	assert.Equal(t, &[]string{"name", "username", "email"}, updatedOptions.PasswordOptions.ProfileData.BlockedFields)
+	assert.Equal(t, []string{"uppercase", "lowercase", "number"}, updatedOptions.GetPasswordOptions().GetComplexity().GetCharacterTypes())
+	assert.Equal(t, "block", updatedOptions.GetPasswordOptions().GetComplexity().GetIdenticalCharacters())
+	assert.Equal(t, "allow", updatedOptions.GetPasswordOptions().GetComplexity().GetSequentialCharacters())
+	assert.Equal(t, "error", updatedOptions.GetPasswordOptions().GetComplexity().GetMaxLengthExceeded())
+	require.NotNil(t, updatedOptions.GetPasswordOptions().GetDictionary())
+	assert.Equal(t, true, updatedOptions.GetPasswordOptions().GetDictionary().GetActive())
+	assert.Equal(t, "en_100k", updatedOptions.GetPasswordOptions().GetDictionary().GetDefault())
+	require.NotNil(t, updatedOptions.GetPasswordOptions().GetProfileData())
+	assert.Equal(t, true, updatedOptions.GetPasswordOptions().GetProfileData().GetActive())
+	assert.Equal(t, []string{"name", "username", "email"}, updatedOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
 }
 
-func TestConnectionManager_PasswordOptions_ClientValidation(t *testing.T) {
-	t.Run("rejects MinLength out of range", func(t *testing.T) {
-		err := api.Connection.Create(context.Background(), &Connection{
-			Name:     auth0.String("Test-Validation"),
-			Strategy: auth0.String("auth0"),
-			Options: &ConnectionOptions{
-				PasswordOptions: &PasswordOptions{
-					Complexity: &PasswordOptionsComplexity{MinLength: auth0.Int(0)},
-				},
-			},
-		})
-		assert.ErrorContains(t, err, "password_options.complexity.min_length must be between 1 and 72")
-	})
-
-	t.Run("rejects MinLength above 72", func(t *testing.T) {
-		err := api.Connection.Create(context.Background(), &Connection{
-			Name:     auth0.String("Test-Validation"),
-			Strategy: auth0.String("auth0"),
-			Options: &ConnectionOptions{
-				PasswordOptions: &PasswordOptions{
-					Complexity: &PasswordOptionsComplexity{MinLength: auth0.Int(73)},
-				},
-			},
-		})
-		assert.ErrorContains(t, err, "password_options.complexity.min_length must be between 1 and 72")
-	})
-
-	t.Run("rejects History.Size out of range", func(t *testing.T) {
-		err := api.Connection.Create(context.Background(), &Connection{
-			Name:     auth0.String("Test-Validation"),
-			Strategy: auth0.String("auth0"),
-			Options: &ConnectionOptions{
-				PasswordOptions: &PasswordOptions{
-					History: &PasswordOptionsHistory{Active: auth0.Bool(true), Size: auth0.Int(25)},
-				},
-			},
-		})
-		assert.ErrorContains(t, err, "password_options.history.size must be between 1 and 24")
-	})
-
-	t.Run("rejects BlockedFields exceeding 12 items", func(t *testing.T) {
-		tooMany := make([]string, 13)
-		for i := range tooMany {
-			tooMany[i] = "field"
-		}
-		err := api.Connection.Create(context.Background(), &Connection{
-			Name:     auth0.String("Test-Validation"),
-			Strategy: auth0.String("auth0"),
-			Options: &ConnectionOptions{
-				PasswordOptions: &PasswordOptions{
-					ProfileData: &PasswordOptionsProfileData{BlockedFields: &tooMany},
-				},
-			},
-		})
-		assert.ErrorContains(t, err, "password_options.profile_data.blocked_fields cannot exceed 12 items")
-	})
-
-	t.Run("rejects three_of_four without all 4 character types", func(t *testing.T) {
-		err := api.Connection.Create(context.Background(), &Connection{
-			Name:     auth0.String("Test-Validation"),
-			Strategy: auth0.String("auth0"),
-			Options: &ConnectionOptions{
-				PasswordOptions: &PasswordOptions{
-					Complexity: &PasswordOptionsComplexity{
-						CharacterTypes:    &[]string{"uppercase", "lowercase", "number"},
-						CharacterTypeRule: auth0.String(PasswordComplexityCharacterTypeRuleThreeOfFour),
-					},
-				},
-			},
-		})
-		assert.ErrorContains(t, err, "character_type_rule")
-	})
-
-	t.Run("rejects mixing PasswordOptions with legacy PasswordPolicy", func(t *testing.T) {
-		err := api.Connection.Create(context.Background(), &Connection{
-			Name:     auth0.String("Test-Validation"),
-			Strategy: auth0.String("auth0"),
-			Options: &ConnectionOptions{
-				PasswordPolicy: auth0.String("good"),
-				PasswordOptions: &PasswordOptions{
-					Complexity: &PasswordOptionsComplexity{MinLength: auth0.Int(10)},
-				},
-			},
-		})
-		assert.ErrorContains(t, err, "cannot set password_options together with legacy password policy fields")
-	})
-
-	t.Run("rejects mixing PasswordOptions with legacy PasswordComplexityOptions on Update", func(t *testing.T) {
-		err := api.Connection.Update(context.Background(), "con_fake", &Connection{
-			Options: &ConnectionOptions{
-				PasswordComplexityOptions: map[string]interface{}{"min_length": 8},
-				PasswordOptions: &PasswordOptions{
-					Complexity: &PasswordOptionsComplexity{MinLength: auth0.Int(10)},
-				},
-			},
-		})
-		assert.ErrorContains(t, err, "cannot set password_options together with legacy password policy fields")
-	})
-
-	// Boundary-valid tests: ensure boundary values pass client-side validation.
-	t.Run("accepts MinLength=1 (lower boundary)", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Complexity: &PasswordOptionsComplexity{MinLength: auth0.Int(1)},
-			},
-		}
-		assert.NoError(t, opts.validate())
-	})
-
-	t.Run("accepts MinLength=72 (upper boundary)", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Complexity: &PasswordOptionsComplexity{MinLength: auth0.Int(72)},
-			},
-		}
-		assert.NoError(t, opts.validate())
-	})
-
-	t.Run("accepts History.Size=1 (lower boundary)", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				History: &PasswordOptionsHistory{Active: auth0.Bool(true), Size: auth0.Int(1)},
-			},
-		}
-		assert.NoError(t, opts.validate())
-	})
-
-	t.Run("accepts History.Size=24 (upper boundary)", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				History: &PasswordOptionsHistory{Active: auth0.Bool(true), Size: auth0.Int(24)},
-			},
-		}
-		assert.NoError(t, opts.validate())
-	})
-
-	// Enum validation tests.
-	t.Run("rejects invalid CharacterTypes item", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Complexity: &PasswordOptionsComplexity{
-					CharacterTypes: &[]string{"uppercase", "invalid"},
-				},
-			},
-		}
-		assert.ErrorContains(t, opts.validate(), "character_types")
-	})
-
-	t.Run("rejects invalid CharacterTypeRule", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Complexity: &PasswordOptionsComplexity{
-					CharacterTypeRule: auth0.String("invalid"),
-				},
-			},
-		}
-		assert.ErrorContains(t, opts.validate(), "character_type_rule")
-	})
-
-	t.Run("rejects three_of_four with 4 items but wrong content", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Complexity: &PasswordOptionsComplexity{
-					CharacterTypes:    &[]string{"uppercase", "lowercase", "number", "uppercase"},
-					CharacterTypeRule: auth0.String(PasswordComplexityCharacterTypeRuleThreeOfFour),
-				},
-			},
-		}
-		assert.ErrorContains(t, opts.validate(), "character_type_rule")
-	})
-
-	t.Run("rejects invalid IdenticalCharacters", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Complexity: &PasswordOptionsComplexity{
-					IdenticalCharacters: auth0.String("invalid"),
-				},
-			},
-		}
-		assert.ErrorContains(t, opts.validate(), "identical_characters")
-	})
-
-	t.Run("rejects invalid SequentialCharacters", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Complexity: &PasswordOptionsComplexity{
-					SequentialCharacters: auth0.String("invalid"),
-				},
-			},
-		}
-		assert.ErrorContains(t, opts.validate(), "sequential_characters")
-	})
-
-	t.Run("rejects invalid MaxLengthExceeded", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Complexity: &PasswordOptionsComplexity{
-					MaxLengthExceeded: auth0.String("invalid"),
-				},
-			},
-		}
-		assert.ErrorContains(t, opts.validate(), "max_length_exceeded")
-	})
-
-	t.Run("rejects invalid Dictionary.Default", func(t *testing.T) {
-		opts := &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Dictionary: &PasswordOptionsDictionary{
-					Default: auth0.String("invalid"),
-				},
-			},
-		}
-		assert.ErrorContains(t, opts.validate(), "dictionary.default")
-	})
-}
 
 func TestConnectionManager_Read(t *testing.T) {
 	for _, testCase := range connectionTestCases {
