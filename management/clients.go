@@ -911,12 +911,15 @@ var (
 	clientFieldParRequestExpiry                               = big.NewInt(1 << 48)
 	clientFieldTokenQuota                                     = big.NewInt(1 << 49)
 	clientFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
-	clientFieldExternalMetadataType                           = big.NewInt(1 << 53)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
-	clientFieldExternalClientID                               = big.NewInt(1 << 55)
-	clientFieldJwksURI                                        = big.NewInt(1 << 56)
+	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
+	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
+	clientFieldRedirectionPolicy                              = big.NewInt(1 << 53)
+	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
+	clientFieldExternalMetadataType                           = big.NewInt(1 << 56)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
+	clientFieldExternalClientID                               = big.NewInt(1 << 58)
+	clientFieldJwksURI                                        = big.NewInt(1 << 59)
 )
 
 type Client struct {
@@ -1001,9 +1004,12 @@ type Client struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -1377,6 +1383,27 @@ func (c *Client) GetExpressConfiguration() ExpressConfiguration {
 		return ExpressConfiguration{}
 	}
 	return *c.ExpressConfiguration
+}
+
+func (c *Client) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
+	if c == nil || c.MyOrganizationConfiguration == nil {
+		return ClientMyOrganizationResponseConfiguration{}
+	}
+	return *c.MyOrganizationConfiguration
+}
+
+func (c *Client) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
+	if c == nil || c.ThirdPartySecurityMode == nil {
+		return ""
+	}
+	return *c.ThirdPartySecurityMode
+}
+
+func (c *Client) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
+	if c == nil || c.RedirectionPolicy == nil {
+		return ""
+	}
+	return *c.RedirectionPolicy
 }
 
 func (c *Client) GetResourceServerIdentifier() string {
@@ -1790,6 +1817,27 @@ func (c *Client) SetTokenQuota(tokenQuota *TokenQuota) {
 func (c *Client) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
 	c.ExpressConfiguration = expressConfiguration
 	c.require(clientFieldExpressConfiguration)
+}
+
+// SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
+	c.MyOrganizationConfiguration = myOrganizationConfiguration
+	c.require(clientFieldMyOrganizationConfiguration)
+}
+
+// SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
+	c.ThirdPartySecurityMode = thirdPartySecurityMode
+	c.require(clientFieldThirdPartySecurityMode)
+}
+
+// SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetRedirectionPolicy(redirectionPolicy *ClientRedirectionPolicyEnum) {
+	c.RedirectionPolicy = redirectionPolicy
+	c.require(clientFieldRedirectionPolicy)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
@@ -7255,6 +7303,475 @@ func (c *ClientMobileiOs) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// The allowed connection strategy values for the My Organization Configuration.
+type ClientMyOrganizationConfigurationAllowedStrategiesEnum string
+
+const (
+	ClientMyOrganizationConfigurationAllowedStrategiesEnumPingfederate ClientMyOrganizationConfigurationAllowedStrategiesEnum = "pingfederate"
+	ClientMyOrganizationConfigurationAllowedStrategiesEnumAdfs         ClientMyOrganizationConfigurationAllowedStrategiesEnum = "adfs"
+	ClientMyOrganizationConfigurationAllowedStrategiesEnumWaad         ClientMyOrganizationConfigurationAllowedStrategiesEnum = "waad"
+	ClientMyOrganizationConfigurationAllowedStrategiesEnumGoogleApps   ClientMyOrganizationConfigurationAllowedStrategiesEnum = "google-apps"
+	ClientMyOrganizationConfigurationAllowedStrategiesEnumOkta         ClientMyOrganizationConfigurationAllowedStrategiesEnum = "okta"
+	ClientMyOrganizationConfigurationAllowedStrategiesEnumOidc         ClientMyOrganizationConfigurationAllowedStrategiesEnum = "oidc"
+	ClientMyOrganizationConfigurationAllowedStrategiesEnumSamlp        ClientMyOrganizationConfigurationAllowedStrategiesEnum = "samlp"
+)
+
+func NewClientMyOrganizationConfigurationAllowedStrategiesEnumFromString(s string) (ClientMyOrganizationConfigurationAllowedStrategiesEnum, error) {
+	switch s {
+	case "pingfederate":
+		return ClientMyOrganizationConfigurationAllowedStrategiesEnumPingfederate, nil
+	case "adfs":
+		return ClientMyOrganizationConfigurationAllowedStrategiesEnumAdfs, nil
+	case "waad":
+		return ClientMyOrganizationConfigurationAllowedStrategiesEnumWaad, nil
+	case "google-apps":
+		return ClientMyOrganizationConfigurationAllowedStrategiesEnumGoogleApps, nil
+	case "okta":
+		return ClientMyOrganizationConfigurationAllowedStrategiesEnumOkta, nil
+	case "oidc":
+		return ClientMyOrganizationConfigurationAllowedStrategiesEnumOidc, nil
+	case "samlp":
+		return ClientMyOrganizationConfigurationAllowedStrategiesEnumSamlp, nil
+	}
+	var t ClientMyOrganizationConfigurationAllowedStrategiesEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientMyOrganizationConfigurationAllowedStrategiesEnum) Ptr() *ClientMyOrganizationConfigurationAllowedStrategiesEnum {
+	return &c
+}
+
+// The deletion behavior for this client.
+type ClientMyOrganizationDeletionBehaviorEnum string
+
+const (
+	ClientMyOrganizationDeletionBehaviorEnumAllow        ClientMyOrganizationDeletionBehaviorEnum = "allow"
+	ClientMyOrganizationDeletionBehaviorEnumAllowIfEmpty ClientMyOrganizationDeletionBehaviorEnum = "allow_if_empty"
+)
+
+func NewClientMyOrganizationDeletionBehaviorEnumFromString(s string) (ClientMyOrganizationDeletionBehaviorEnum, error) {
+	switch s {
+	case "allow":
+		return ClientMyOrganizationDeletionBehaviorEnumAllow, nil
+	case "allow_if_empty":
+		return ClientMyOrganizationDeletionBehaviorEnumAllowIfEmpty, nil
+	}
+	var t ClientMyOrganizationDeletionBehaviorEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientMyOrganizationDeletionBehaviorEnum) Ptr() *ClientMyOrganizationDeletionBehaviorEnum {
+	return &c
+}
+
+// Configuration related to the My Organization Configuration for the client.
+var (
+	clientMyOrganizationPatchConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
+	clientMyOrganizationPatchConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
+	clientMyOrganizationPatchConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
+	clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
+)
+
+type ClientMyOrganizationPatchConfiguration struct {
+	// The connection profile ID that this client should validate against.
+	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
+	// The user attribute profile ID that this client should validate against.
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
+	// The allowed connection strategies for the My Organization Configuration.
+	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
+	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetConnectionProfileID() string {
+	if c == nil || c.ConnectionProfileID == nil {
+		return ""
+	}
+	return *c.ConnectionProfileID
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetUserAttributeProfileID() string {
+	if c == nil || c.UserAttributeProfileID == nil {
+		return ""
+	}
+	return *c.UserAttributeProfileID
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetAllowedStrategies() []ClientMyOrganizationConfigurationAllowedStrategiesEnum {
+	if c == nil {
+		return nil
+	}
+	return c.AllowedStrategies
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetConnectionDeletionBehavior() ClientMyOrganizationDeletionBehaviorEnum {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionDeletionBehavior
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetConnectionProfileID(connectionProfileID *string) {
+	c.ConnectionProfileID = connectionProfileID
+	c.require(clientMyOrganizationPatchConfigurationFieldConnectionProfileID)
+}
+
+// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetUserAttributeProfileID(userAttributeProfileID *string) {
+	c.UserAttributeProfileID = userAttributeProfileID
+	c.require(clientMyOrganizationPatchConfigurationFieldUserAttributeProfileID)
+}
+
+// SetAllowedStrategies sets the AllowedStrategies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetAllowedStrategies(allowedStrategies []ClientMyOrganizationConfigurationAllowedStrategiesEnum) {
+	c.AllowedStrategies = allowedStrategies
+	c.require(clientMyOrganizationPatchConfigurationFieldAllowedStrategies)
+}
+
+// SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
+	c.ConnectionDeletionBehavior = connectionDeletionBehavior
+	c.require(clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior)
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientMyOrganizationPatchConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientMyOrganizationPatchConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) MarshalJSON() ([]byte, error) {
+	type embed ClientMyOrganizationPatchConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Configuration related to the My Organization Configuration for the client.
+var (
+	clientMyOrganizationPostConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
+	clientMyOrganizationPostConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
+	clientMyOrganizationPostConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
+	clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
+)
+
+type ClientMyOrganizationPostConfiguration struct {
+	// The connection profile ID that this client should validate against.
+	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
+	// The user attribute profile ID that this client should validate against.
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
+	// The allowed connection strategies for the My Organization Configuration.
+	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
+	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetConnectionProfileID() string {
+	if c == nil || c.ConnectionProfileID == nil {
+		return ""
+	}
+	return *c.ConnectionProfileID
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetUserAttributeProfileID() string {
+	if c == nil || c.UserAttributeProfileID == nil {
+		return ""
+	}
+	return *c.UserAttributeProfileID
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetAllowedStrategies() []ClientMyOrganizationConfigurationAllowedStrategiesEnum {
+	if c == nil {
+		return nil
+	}
+	return c.AllowedStrategies
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetConnectionDeletionBehavior() ClientMyOrganizationDeletionBehaviorEnum {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionDeletionBehavior
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientMyOrganizationPostConfiguration) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetConnectionProfileID(connectionProfileID *string) {
+	c.ConnectionProfileID = connectionProfileID
+	c.require(clientMyOrganizationPostConfigurationFieldConnectionProfileID)
+}
+
+// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetUserAttributeProfileID(userAttributeProfileID *string) {
+	c.UserAttributeProfileID = userAttributeProfileID
+	c.require(clientMyOrganizationPostConfigurationFieldUserAttributeProfileID)
+}
+
+// SetAllowedStrategies sets the AllowedStrategies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetAllowedStrategies(allowedStrategies []ClientMyOrganizationConfigurationAllowedStrategiesEnum) {
+	c.AllowedStrategies = allowedStrategies
+	c.require(clientMyOrganizationPostConfigurationFieldAllowedStrategies)
+}
+
+// SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
+	c.ConnectionDeletionBehavior = connectionDeletionBehavior
+	c.require(clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior)
+}
+
+func (c *ClientMyOrganizationPostConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientMyOrganizationPostConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientMyOrganizationPostConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientMyOrganizationPostConfiguration) MarshalJSON() ([]byte, error) {
+	type embed ClientMyOrganizationPostConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientMyOrganizationPostConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Configuration related to the My Organization Configuration for the client.
+var (
+	clientMyOrganizationResponseConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
+	clientMyOrganizationResponseConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
+	clientMyOrganizationResponseConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
+	clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
+)
+
+type ClientMyOrganizationResponseConfiguration struct {
+	// The connection profile ID that this client should validate against.
+	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
+	// The user attribute profile ID that this client should validate against.
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
+	// The allowed connection strategies for the My Organization Configuration.
+	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
+	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetConnectionProfileID() string {
+	if c == nil || c.ConnectionProfileID == nil {
+		return ""
+	}
+	return *c.ConnectionProfileID
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetUserAttributeProfileID() string {
+	if c == nil || c.UserAttributeProfileID == nil {
+		return ""
+	}
+	return *c.UserAttributeProfileID
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetAllowedStrategies() []ClientMyOrganizationConfigurationAllowedStrategiesEnum {
+	if c == nil {
+		return nil
+	}
+	return c.AllowedStrategies
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetConnectionDeletionBehavior() ClientMyOrganizationDeletionBehaviorEnum {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionDeletionBehavior
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetConnectionProfileID(connectionProfileID *string) {
+	c.ConnectionProfileID = connectionProfileID
+	c.require(clientMyOrganizationResponseConfigurationFieldConnectionProfileID)
+}
+
+// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetUserAttributeProfileID(userAttributeProfileID *string) {
+	c.UserAttributeProfileID = userAttributeProfileID
+	c.require(clientMyOrganizationResponseConfigurationFieldUserAttributeProfileID)
+}
+
+// SetAllowedStrategies sets the AllowedStrategies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetAllowedStrategies(allowedStrategies []ClientMyOrganizationConfigurationAllowedStrategiesEnum) {
+	c.AllowedStrategies = allowedStrategies
+	c.require(clientMyOrganizationResponseConfigurationFieldAllowedStrategies)
+}
+
+// SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
+	c.ConnectionDeletionBehavior = connectionDeletionBehavior
+	c.require(clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior)
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientMyOrganizationResponseConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientMyOrganizationResponseConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) MarshalJSON() ([]byte, error) {
+	type embed ClientMyOrganizationResponseConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 // Configuration for OIDC backchannel logout initiators
 var (
 	clientOidcBackchannelLogoutInitiatorsFieldMode               = big.NewInt(1 << 0)
@@ -7769,6 +8286,29 @@ func (c ClientOrganizationUsagePatchEnum) Ptr() *ClientOrganizationUsagePatchEnu
 	return &c
 }
 
+// Controls whether Auth0 redirects users to the application's callback URL on authentication errors or in email verification flows. `open_redirect_protection` shows an error page instead of redirecting, and hides the callback domain from email templates. `allow_always` enables standard redirect behavior. Defaults to `open_redirect_protection` for third-party clients. Only applies when `is_first_party` is `false` and `third_party_security_mode` is `strict`.
+type ClientRedirectionPolicyEnum string
+
+const (
+	ClientRedirectionPolicyEnumAllowAlways            ClientRedirectionPolicyEnum = "allow_always"
+	ClientRedirectionPolicyEnumOpenRedirectProtection ClientRedirectionPolicyEnum = "open_redirect_protection"
+)
+
+func NewClientRedirectionPolicyEnumFromString(s string) (ClientRedirectionPolicyEnum, error) {
+	switch s {
+	case "allow_always":
+		return ClientRedirectionPolicyEnumAllowAlways, nil
+	case "open_redirect_protection":
+		return ClientRedirectionPolicyEnumOpenRedirectProtection, nil
+	}
+	var t ClientRedirectionPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientRedirectionPolicyEnum) Ptr() *ClientRedirectionPolicyEnum {
+	return &c
+}
+
 // Refresh token configuration
 var (
 	clientRefreshTokenConfigurationFieldRotationType              = big.NewInt(1 << 0)
@@ -8104,6 +8644,7 @@ var (
 	clientSessionTransferConfigurationFieldEnforceDeviceBinding          = big.NewInt(1 << 3)
 	clientSessionTransferConfigurationFieldAllowRefreshToken             = big.NewInt(1 << 4)
 	clientSessionTransferConfigurationFieldEnforceOnlineRefreshTokens    = big.NewInt(1 << 5)
+	clientSessionTransferConfigurationFieldDelegation                    = big.NewInt(1 << 6)
 )
 
 type ClientSessionTransferConfiguration struct {
@@ -8117,7 +8658,8 @@ type ClientSessionTransferConfiguration struct {
 	// Indicates whether Refresh Tokens are allowed to be issued when authenticating with a Session Transfer Token. Usually configured in the web application. Default value is `false`.
 	AllowRefreshToken *bool `json:"allow_refresh_token,omitempty" url:"allow_refresh_token,omitempty"`
 	// Indicates whether Refresh Tokens created during a Native to Web session are tied to that session's lifetime. This determines if such refresh tokens should be automatically revoked when their corresponding sessions are. Usually configured in the web application. Default value is `true`, applicable only in Native to Web SSO context.
-	EnforceOnlineRefreshTokens *bool `json:"enforce_online_refresh_tokens,omitempty" url:"enforce_online_refresh_tokens,omitempty"`
+	EnforceOnlineRefreshTokens *bool                                         `json:"enforce_online_refresh_tokens,omitempty" url:"enforce_online_refresh_tokens,omitempty"`
+	Delegation                 *ClientSessionTransferDelegationConfiguration `json:"delegation,omitempty" url:"delegation,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -8166,6 +8708,13 @@ func (c *ClientSessionTransferConfiguration) GetEnforceOnlineRefreshTokens() boo
 		return false
 	}
 	return *c.EnforceOnlineRefreshTokens
+}
+
+func (c *ClientSessionTransferConfiguration) GetDelegation() ClientSessionTransferDelegationConfiguration {
+	if c == nil || c.Delegation == nil {
+		return ClientSessionTransferDelegationConfiguration{}
+	}
+	return *c.Delegation
 }
 
 func (c *ClientSessionTransferConfiguration) GetExtraProperties() map[string]interface{} {
@@ -8224,6 +8773,13 @@ func (c *ClientSessionTransferConfiguration) SetEnforceOnlineRefreshTokens(enfor
 	c.require(clientSessionTransferConfigurationFieldEnforceOnlineRefreshTokens)
 }
 
+// SetDelegation sets the Delegation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSessionTransferConfiguration) SetDelegation(delegation *ClientSessionTransferDelegationConfiguration) {
+	c.Delegation = delegation
+	c.require(clientSessionTransferConfigurationFieldDelegation)
+}
+
 func (c *ClientSessionTransferConfiguration) UnmarshalJSON(data []byte) error {
 	type unmarshaler ClientSessionTransferConfiguration
 	var value unmarshaler
@@ -8264,6 +8820,131 @@ func (c *ClientSessionTransferConfiguration) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
+}
+
+// Configuration for delegation (impersonation) access using Session Transfer Tokens
+var (
+	clientSessionTransferDelegationConfigurationFieldAllowDelegatedAccess = big.NewInt(1 << 0)
+	clientSessionTransferDelegationConfigurationFieldEnforceDeviceBinding = big.NewInt(1 << 1)
+)
+
+type ClientSessionTransferDelegationConfiguration struct {
+	// Indicates whether delegation (impersonation) access is allowed using Session Transfer Tokens. Default value is `false`.
+	AllowDelegatedAccess *bool                                             `json:"allow_delegated_access,omitempty" url:"allow_delegated_access,omitempty"`
+	EnforceDeviceBinding *ClientSessionTransferDelegationDeviceBindingEnum `json:"enforce_device_binding,omitempty" url:"enforce_device_binding,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientSessionTransferDelegationConfiguration) GetAllowDelegatedAccess() bool {
+	if c == nil || c.AllowDelegatedAccess == nil {
+		return false
+	}
+	return *c.AllowDelegatedAccess
+}
+
+func (c *ClientSessionTransferDelegationConfiguration) GetEnforceDeviceBinding() ClientSessionTransferDelegationDeviceBindingEnum {
+	if c == nil || c.EnforceDeviceBinding == nil {
+		return ""
+	}
+	return *c.EnforceDeviceBinding
+}
+
+func (c *ClientSessionTransferDelegationConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientSessionTransferDelegationConfiguration) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetAllowDelegatedAccess sets the AllowDelegatedAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSessionTransferDelegationConfiguration) SetAllowDelegatedAccess(allowDelegatedAccess *bool) {
+	c.AllowDelegatedAccess = allowDelegatedAccess
+	c.require(clientSessionTransferDelegationConfigurationFieldAllowDelegatedAccess)
+}
+
+// SetEnforceDeviceBinding sets the EnforceDeviceBinding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSessionTransferDelegationConfiguration) SetEnforceDeviceBinding(enforceDeviceBinding *ClientSessionTransferDelegationDeviceBindingEnum) {
+	c.EnforceDeviceBinding = enforceDeviceBinding
+	c.require(clientSessionTransferDelegationConfigurationFieldEnforceDeviceBinding)
+}
+
+func (c *ClientSessionTransferDelegationConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientSessionTransferDelegationConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientSessionTransferDelegationConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientSessionTransferDelegationConfiguration) MarshalJSON() ([]byte, error) {
+	type embed ClientSessionTransferDelegationConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientSessionTransferDelegationConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Indicates the device binding enforcement for delegation (impersonation) access. If set to 'ip', device binding is enforced by IP. If set to 'asn', device binding is enforced by ASN. Default value is `ip`.
+type ClientSessionTransferDelegationDeviceBindingEnum string
+
+const (
+	ClientSessionTransferDelegationDeviceBindingEnumIP  ClientSessionTransferDelegationDeviceBindingEnum = "ip"
+	ClientSessionTransferDelegationDeviceBindingEnumAsn ClientSessionTransferDelegationDeviceBindingEnum = "asn"
+)
+
+func NewClientSessionTransferDelegationDeviceBindingEnumFromString(s string) (ClientSessionTransferDelegationDeviceBindingEnum, error) {
+	switch s {
+	case "ip":
+		return ClientSessionTransferDelegationDeviceBindingEnumIP, nil
+	case "asn":
+		return ClientSessionTransferDelegationDeviceBindingEnumAsn, nil
+	}
+	var t ClientSessionTransferDelegationDeviceBindingEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientSessionTransferDelegationDeviceBindingEnum) Ptr() *ClientSessionTransferDelegationDeviceBindingEnum {
+	return &c
 }
 
 // Indicates whether device binding security should be enforced for the app. If set to 'ip', the app will enforce device binding by IP, meaning that consumption of Session Transfer Token must be done from the same IP of the issuer. Likewise, if set to 'asn', device binding is enforced by ASN, meaning consumption of Session Transfer Token must be done from the same ASN as the issuer. If set to 'none', device binding is not enforced. Usually configured in the web application. Default value is `ip`.
@@ -8623,6 +9304,29 @@ func (c *ClientSigningKey) String() string {
 // Signing certificates associated with this client.
 type ClientSigningKeys = []*ClientSigningKey
 
+// Security mode for third-party clients. `strict` enforces enhanced security controls: OAuth 2.1 alignment, explicit API authorization, and a curated set of supported features. `permissive` preserves pre-existing behavior and is only available to tenants with prior third-party client usage. Set on creation and cannot be modified.
+type ClientThirdPartySecurityModeEnum string
+
+const (
+	ClientThirdPartySecurityModeEnumStrict     ClientThirdPartySecurityModeEnum = "strict"
+	ClientThirdPartySecurityModeEnumPermissive ClientThirdPartySecurityModeEnum = "permissive"
+)
+
+func NewClientThirdPartySecurityModeEnumFromString(s string) (ClientThirdPartySecurityModeEnum, error) {
+	switch s {
+	case "strict":
+		return ClientThirdPartySecurityModeEnumStrict, nil
+	case "permissive":
+		return ClientThirdPartySecurityModeEnumPermissive, nil
+	}
+	var t ClientThirdPartySecurityModeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientThirdPartySecurityModeEnum) Ptr() *ClientThirdPartySecurityModeEnum {
+	return &c
+}
+
 // Defines the requested authentication method for the token endpoint. Can be `none` (public client without a client secret), `client_secret_post` (client uses HTTP POST parameters), or `client_secret_basic` (client uses HTTP Basic).
 type ClientTokenEndpointAuthMethodEnum string
 
@@ -8847,6 +9551,7 @@ func (c *ClientTokenExchangeConfigurationOrNull) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Token exchange type. `on_behalf_of_token_exchange`: enables On-Behalf-Of token exchange (Generally Available). `custom_authentication`: enables custom token exchange profiles (Early Access, requires entitlement).
 type ClientTokenExchangeTypeEnum string
 
 const (
@@ -9009,12 +9714,15 @@ var (
 	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
 	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
 	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 53)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 55)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 56)
+	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
+	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 53)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 56)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 58)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 59)
 )
 
 type CreateClientResponseContent struct {
@@ -9099,9 +9807,12 @@ type CreateClientResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -9475,6 +10186,27 @@ func (c *CreateClientResponseContent) GetExpressConfiguration() ExpressConfigura
 		return ExpressConfiguration{}
 	}
 	return *c.ExpressConfiguration
+}
+
+func (c *CreateClientResponseContent) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
+	if c == nil || c.MyOrganizationConfiguration == nil {
+		return ClientMyOrganizationResponseConfiguration{}
+	}
+	return *c.MyOrganizationConfiguration
+}
+
+func (c *CreateClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
+	if c == nil || c.ThirdPartySecurityMode == nil {
+		return ""
+	}
+	return *c.ThirdPartySecurityMode
+}
+
+func (c *CreateClientResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
+	if c == nil || c.RedirectionPolicy == nil {
+		return ""
+	}
+	return *c.RedirectionPolicy
 }
 
 func (c *CreateClientResponseContent) GetResourceServerIdentifier() string {
@@ -9888,6 +10620,27 @@ func (c *CreateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (c *CreateClientResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
 	c.ExpressConfiguration = expressConfiguration
 	c.require(createClientResponseContentFieldExpressConfiguration)
+}
+
+// SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
+	c.MyOrganizationConfiguration = myOrganizationConfiguration
+	c.require(createClientResponseContentFieldMyOrganizationConfiguration)
+}
+
+// SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
+	c.ThirdPartySecurityMode = thirdPartySecurityMode
+	c.require(createClientResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetRedirectionPolicy(redirectionPolicy *ClientRedirectionPolicyEnum) {
+	c.RedirectionPolicy = redirectionPolicy
+	c.require(createClientResponseContentFieldRedirectionPolicy)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
@@ -10559,12 +11312,15 @@ var (
 	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
 	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
 	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 53)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 55)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 56)
+	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
+	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 53)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 56)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 58)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 59)
 )
 
 type GetClientResponseContent struct {
@@ -10649,9 +11405,12 @@ type GetClientResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -11025,6 +11784,27 @@ func (g *GetClientResponseContent) GetExpressConfiguration() ExpressConfiguratio
 		return ExpressConfiguration{}
 	}
 	return *g.ExpressConfiguration
+}
+
+func (g *GetClientResponseContent) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
+	if g == nil || g.MyOrganizationConfiguration == nil {
+		return ClientMyOrganizationResponseConfiguration{}
+	}
+	return *g.MyOrganizationConfiguration
+}
+
+func (g *GetClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
+	if g == nil || g.ThirdPartySecurityMode == nil {
+		return ""
+	}
+	return *g.ThirdPartySecurityMode
+}
+
+func (g *GetClientResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
+	if g == nil || g.RedirectionPolicy == nil {
+		return ""
+	}
+	return *g.RedirectionPolicy
 }
 
 func (g *GetClientResponseContent) GetResourceServerIdentifier() string {
@@ -11438,6 +12218,27 @@ func (g *GetClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (g *GetClientResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
 	g.ExpressConfiguration = expressConfiguration
 	g.require(getClientResponseContentFieldExpressConfiguration)
+}
+
+// SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
+	g.MyOrganizationConfiguration = myOrganizationConfiguration
+	g.require(getClientResponseContentFieldMyOrganizationConfiguration)
+}
+
+// SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
+	g.ThirdPartySecurityMode = thirdPartySecurityMode
+	g.require(getClientResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetRedirectionPolicy(redirectionPolicy *ClientRedirectionPolicyEnum) {
+	g.RedirectionPolicy = redirectionPolicy
+	g.require(getClientResponseContentFieldRedirectionPolicy)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
@@ -12694,12 +13495,15 @@ var (
 	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
 	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
 	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 53)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 55)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(1 << 56)
+	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
+	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 53)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 56)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 58)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(1 << 59)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -12784,9 +13588,12 @@ type RotateClientSecretResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -13160,6 +13967,27 @@ func (r *RotateClientSecretResponseContent) GetExpressConfiguration() ExpressCon
 		return ExpressConfiguration{}
 	}
 	return *r.ExpressConfiguration
+}
+
+func (r *RotateClientSecretResponseContent) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
+	if r == nil || r.MyOrganizationConfiguration == nil {
+		return ClientMyOrganizationResponseConfiguration{}
+	}
+	return *r.MyOrganizationConfiguration
+}
+
+func (r *RotateClientSecretResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
+	if r == nil || r.ThirdPartySecurityMode == nil {
+		return ""
+	}
+	return *r.ThirdPartySecurityMode
+}
+
+func (r *RotateClientSecretResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
+	if r == nil || r.RedirectionPolicy == nil {
+		return ""
+	}
+	return *r.RedirectionPolicy
 }
 
 func (r *RotateClientSecretResponseContent) GetResourceServerIdentifier() string {
@@ -13575,6 +14403,27 @@ func (r *RotateClientSecretResponseContent) SetExpressConfiguration(expressConfi
 	r.require(rotateClientSecretResponseContentFieldExpressConfiguration)
 }
 
+// SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
+	r.MyOrganizationConfiguration = myOrganizationConfiguration
+	r.require(rotateClientSecretResponseContentFieldMyOrganizationConfiguration)
+}
+
+// SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
+	r.ThirdPartySecurityMode = thirdPartySecurityMode
+	r.require(rotateClientSecretResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetRedirectionPolicy(redirectionPolicy *ClientRedirectionPolicyEnum) {
+	r.RedirectionPolicy = redirectionPolicy
+	r.require(rotateClientSecretResponseContentFieldRedirectionPolicy)
+}
+
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
@@ -13715,12 +14564,15 @@ var (
 	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
 	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
 	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 51)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 53)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 54)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 55)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 56)
+	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
+	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 53)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 56)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 58)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 59)
 )
 
 type UpdateClientResponseContent struct {
@@ -13805,9 +14657,12 @@ type UpdateClientResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry     *int                  `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota           *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration *ExpressConfiguration `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -14181,6 +15036,27 @@ func (u *UpdateClientResponseContent) GetExpressConfiguration() ExpressConfigura
 		return ExpressConfiguration{}
 	}
 	return *u.ExpressConfiguration
+}
+
+func (u *UpdateClientResponseContent) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
+	if u == nil || u.MyOrganizationConfiguration == nil {
+		return ClientMyOrganizationResponseConfiguration{}
+	}
+	return *u.MyOrganizationConfiguration
+}
+
+func (u *UpdateClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
+	if u == nil || u.ThirdPartySecurityMode == nil {
+		return ""
+	}
+	return *u.ThirdPartySecurityMode
+}
+
+func (u *UpdateClientResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
+	if u == nil || u.RedirectionPolicy == nil {
+		return ""
+	}
+	return *u.RedirectionPolicy
 }
 
 func (u *UpdateClientResponseContent) GetResourceServerIdentifier() string {
@@ -14594,6 +15470,27 @@ func (u *UpdateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (u *UpdateClientResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
 	u.ExpressConfiguration = expressConfiguration
 	u.require(updateClientResponseContentFieldExpressConfiguration)
+}
+
+// SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
+	u.MyOrganizationConfiguration = myOrganizationConfiguration
+	u.require(updateClientResponseContentFieldMyOrganizationConfiguration)
+}
+
+// SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
+	u.ThirdPartySecurityMode = thirdPartySecurityMode
+	u.require(updateClientResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetRedirectionPolicy(redirectionPolicy *ClientRedirectionPolicyEnum) {
+	u.RedirectionPolicy = redirectionPolicy
+	u.require(updateClientResponseContentFieldRedirectionPolicy)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;

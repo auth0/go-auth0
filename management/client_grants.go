@@ -12,6 +12,26 @@ import (
 // Optional filter on allow_any_organization.
 type ClientGrantAllowAnyOrganizationEnum = bool
 
+// Applies this client grant as the default for all clients in the specified group. The only accepted value is `third_party_clients`, which applies the grant to all third-party clients. Per-client grants for the same audience take precedence. Mutually exclusive with `client_id`.
+type ClientGrantDefaultForEnum string
+
+const (
+	ClientGrantDefaultForEnumThirdPartyClients ClientGrantDefaultForEnum = "third_party_clients"
+)
+
+func NewClientGrantDefaultForEnumFromString(s string) (ClientGrantDefaultForEnum, error) {
+	switch s {
+	case "third_party_clients":
+		return ClientGrantDefaultForEnumThirdPartyClients, nil
+	}
+	var t ClientGrantDefaultForEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientGrantDefaultForEnum) Ptr() *ClientGrantDefaultForEnum {
+	return &c
+}
+
 // Controls how organizations may be used with this grant
 type ClientGrantOrganizationNullableUsageEnum string
 
@@ -71,10 +91,11 @@ var (
 	clientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
 	clientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
 	clientGrantResponseContentFieldAllowAnyOrganization      = big.NewInt(1 << 5)
-	clientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
-	clientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
-	clientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
-	clientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 9)
+	clientGrantResponseContentFieldDefaultFor                = big.NewInt(1 << 6)
+	clientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 7)
+	clientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 8)
+	clientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 9)
+	clientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 10)
 )
 
 type ClientGrantResponseContent struct {
@@ -88,7 +109,8 @@ type ClientGrantResponseContent struct {
 	Scope             []string                          `json:"scope,omitempty" url:"scope,omitempty"`
 	OrganizationUsage *ClientGrantOrganizationUsageEnum `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
 	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
-	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+	AllowAnyOrganization *bool                      `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+	DefaultFor           *ClientGrantDefaultForEnum `json:"default_for,omitempty" url:"default_for,omitempty"`
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
 	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
@@ -144,6 +166,13 @@ func (c *ClientGrantResponseContent) GetAllowAnyOrganization() bool {
 		return false
 	}
 	return *c.AllowAnyOrganization
+}
+
+func (c *ClientGrantResponseContent) GetDefaultFor() ClientGrantDefaultForEnum {
+	if c == nil || c.DefaultFor == nil {
+		return ""
+	}
+	return *c.DefaultFor
 }
 
 func (c *ClientGrantResponseContent) GetIsSystem() bool {
@@ -228,6 +257,13 @@ func (c *ClientGrantResponseContent) SetOrganizationUsage(organizationUsage *Cli
 func (c *ClientGrantResponseContent) SetAllowAnyOrganization(allowAnyOrganization *bool) {
 	c.AllowAnyOrganization = allowAnyOrganization
 	c.require(clientGrantResponseContentFieldAllowAnyOrganization)
+}
+
+// SetDefaultFor sets the DefaultFor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientGrantResponseContent) SetDefaultFor(defaultFor *ClientGrantDefaultForEnum) {
+	c.DefaultFor = defaultFor
+	c.require(clientGrantResponseContentFieldDefaultFor)
 }
 
 // SetIsSystem sets the IsSystem field and marks it as non-optional;
@@ -330,10 +366,11 @@ var (
 	createClientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
 	createClientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
 	createClientGrantResponseContentFieldAllowAnyOrganization      = big.NewInt(1 << 5)
-	createClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
-	createClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
-	createClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
-	createClientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 9)
+	createClientGrantResponseContentFieldDefaultFor                = big.NewInt(1 << 6)
+	createClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 7)
+	createClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 8)
+	createClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 9)
+	createClientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 10)
 )
 
 type CreateClientGrantResponseContent struct {
@@ -347,7 +384,8 @@ type CreateClientGrantResponseContent struct {
 	Scope             []string                          `json:"scope,omitempty" url:"scope,omitempty"`
 	OrganizationUsage *ClientGrantOrganizationUsageEnum `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
 	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
-	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+	AllowAnyOrganization *bool                      `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+	DefaultFor           *ClientGrantDefaultForEnum `json:"default_for,omitempty" url:"default_for,omitempty"`
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
 	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
@@ -403,6 +441,13 @@ func (c *CreateClientGrantResponseContent) GetAllowAnyOrganization() bool {
 		return false
 	}
 	return *c.AllowAnyOrganization
+}
+
+func (c *CreateClientGrantResponseContent) GetDefaultFor() ClientGrantDefaultForEnum {
+	if c == nil || c.DefaultFor == nil {
+		return ""
+	}
+	return *c.DefaultFor
 }
 
 func (c *CreateClientGrantResponseContent) GetIsSystem() bool {
@@ -489,6 +534,13 @@ func (c *CreateClientGrantResponseContent) SetAllowAnyOrganization(allowAnyOrgan
 	c.require(createClientGrantResponseContentFieldAllowAnyOrganization)
 }
 
+// SetDefaultFor sets the DefaultFor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientGrantResponseContent) SetDefaultFor(defaultFor *ClientGrantDefaultForEnum) {
+	c.DefaultFor = defaultFor
+	c.require(createClientGrantResponseContentFieldDefaultFor)
+}
+
 // SetIsSystem sets the IsSystem field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateClientGrantResponseContent) SetIsSystem(isSystem *bool) {
@@ -566,10 +618,11 @@ var (
 	getClientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
 	getClientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
 	getClientGrantResponseContentFieldAllowAnyOrganization      = big.NewInt(1 << 5)
-	getClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
-	getClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
-	getClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
-	getClientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 9)
+	getClientGrantResponseContentFieldDefaultFor                = big.NewInt(1 << 6)
+	getClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 7)
+	getClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 8)
+	getClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 9)
+	getClientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 10)
 )
 
 type GetClientGrantResponseContent struct {
@@ -583,7 +636,8 @@ type GetClientGrantResponseContent struct {
 	Scope             []string                          `json:"scope,omitempty" url:"scope,omitempty"`
 	OrganizationUsage *ClientGrantOrganizationUsageEnum `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
 	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
-	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+	AllowAnyOrganization *bool                      `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+	DefaultFor           *ClientGrantDefaultForEnum `json:"default_for,omitempty" url:"default_for,omitempty"`
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
 	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
@@ -639,6 +693,13 @@ func (g *GetClientGrantResponseContent) GetAllowAnyOrganization() bool {
 		return false
 	}
 	return *g.AllowAnyOrganization
+}
+
+func (g *GetClientGrantResponseContent) GetDefaultFor() ClientGrantDefaultForEnum {
+	if g == nil || g.DefaultFor == nil {
+		return ""
+	}
+	return *g.DefaultFor
 }
 
 func (g *GetClientGrantResponseContent) GetIsSystem() bool {
@@ -723,6 +784,13 @@ func (g *GetClientGrantResponseContent) SetOrganizationUsage(organizationUsage *
 func (g *GetClientGrantResponseContent) SetAllowAnyOrganization(allowAnyOrganization *bool) {
 	g.AllowAnyOrganization = allowAnyOrganization
 	g.require(getClientGrantResponseContentFieldAllowAnyOrganization)
+}
+
+// SetDefaultFor sets the DefaultFor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientGrantResponseContent) SetDefaultFor(defaultFor *ClientGrantDefaultForEnum) {
+	g.DefaultFor = defaultFor
+	g.require(getClientGrantResponseContentFieldDefaultFor)
 }
 
 // SetIsSystem sets the IsSystem field and marks it as non-optional;
@@ -903,10 +971,11 @@ var (
 	updateClientGrantResponseContentFieldScope                     = big.NewInt(1 << 3)
 	updateClientGrantResponseContentFieldOrganizationUsage         = big.NewInt(1 << 4)
 	updateClientGrantResponseContentFieldAllowAnyOrganization      = big.NewInt(1 << 5)
-	updateClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 6)
-	updateClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 7)
-	updateClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 8)
-	updateClientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 9)
+	updateClientGrantResponseContentFieldDefaultFor                = big.NewInt(1 << 6)
+	updateClientGrantResponseContentFieldIsSystem                  = big.NewInt(1 << 7)
+	updateClientGrantResponseContentFieldSubjectType               = big.NewInt(1 << 8)
+	updateClientGrantResponseContentFieldAuthorizationDetailsTypes = big.NewInt(1 << 9)
+	updateClientGrantResponseContentFieldAllowAllScopes            = big.NewInt(1 << 10)
 )
 
 type UpdateClientGrantResponseContent struct {
@@ -920,7 +989,8 @@ type UpdateClientGrantResponseContent struct {
 	Scope             []string                          `json:"scope,omitempty" url:"scope,omitempty"`
 	OrganizationUsage *ClientGrantOrganizationUsageEnum `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
 	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
-	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+	AllowAnyOrganization *bool                      `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+	DefaultFor           *ClientGrantDefaultForEnum `json:"default_for,omitempty" url:"default_for,omitempty"`
 	// If enabled, this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
 	IsSystem    *bool                       `json:"is_system,omitempty" url:"is_system,omitempty"`
 	SubjectType *ClientGrantSubjectTypeEnum `json:"subject_type,omitempty" url:"subject_type,omitempty"`
@@ -976,6 +1046,13 @@ func (u *UpdateClientGrantResponseContent) GetAllowAnyOrganization() bool {
 		return false
 	}
 	return *u.AllowAnyOrganization
+}
+
+func (u *UpdateClientGrantResponseContent) GetDefaultFor() ClientGrantDefaultForEnum {
+	if u == nil || u.DefaultFor == nil {
+		return ""
+	}
+	return *u.DefaultFor
 }
 
 func (u *UpdateClientGrantResponseContent) GetIsSystem() bool {
@@ -1060,6 +1137,13 @@ func (u *UpdateClientGrantResponseContent) SetOrganizationUsage(organizationUsag
 func (u *UpdateClientGrantResponseContent) SetAllowAnyOrganization(allowAnyOrganization *bool) {
 	u.AllowAnyOrganization = allowAnyOrganization
 	u.require(updateClientGrantResponseContentFieldAllowAnyOrganization)
+}
+
+// SetDefaultFor sets the DefaultFor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientGrantResponseContent) SetDefaultFor(defaultFor *ClientGrantDefaultForEnum) {
+	u.DefaultFor = defaultFor
+	u.require(updateClientGrantResponseContentFieldDefaultFor)
 }
 
 // SetIsSystem sets the IsSystem field and marks it as non-optional;

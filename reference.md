@@ -785,6 +785,7 @@ request := &management.ListClientGrantsRequestParameters{
             true,
         ),
         SubjectType: management.ClientGrantSubjectTypeEnumClient.Ptr(),
+        DefaultFor: management.ClientGrantDefaultForEnumThirdPartyClients.Ptr(),
     }
 client.ClientGrants.List(
         context.TODO(),
@@ -846,6 +847,14 @@ client.ClientGrants.List(
 <dd>
 
 **subjectType:** `*management.ClientGrantSubjectTypeEnum` — The type of application access the client grant allows.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**defaultFor:** `*management.ClientGrantDefaultForEnum` — Applies this client grant as the default for all clients in the specified group. The only accepted value is `third_party_clients`, which applies the grant to all third-party clients. Per-client grants for the same audience take precedence. Mutually exclusive with `client_id`.
     
 </dd>
 </dl>
@@ -915,6 +924,14 @@ client.ClientGrants.Create(
 <dd>
 
 **audience:** `string` — The audience (API identifier) of this client grant
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**defaultFor:** `*management.ClientGrantDefaultForEnum` 
     
 </dd>
 </dl>
@@ -1836,7 +1853,31 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dl>
 <dd>
 
+**thirdPartySecurityMode:** `*management.ClientThirdPartySecurityModeEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**redirectionPolicy:** `*management.ClientRedirectionPolicyEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **expressConfiguration:** `*management.ExpressConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**myOrganizationConfiguration:** `*management.ClientMyOrganizationPostConfiguration` 
     
 </dd>
 </dl>
@@ -2616,7 +2657,31 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dl>
 <dd>
 
+**myOrganizationConfiguration:** `*management.ClientMyOrganizationPatchConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thirdPartySecurityMode:** `*management.ClientThirdPartySecurityModeEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**redirectionPolicy:** `*management.ClientRedirectionPolicyEnum` 
     
 </dd>
 </dl>
@@ -5526,7 +5591,7 @@ client.EventStreams.Update(
 
 ```go
 request := &management.CreateEventStreamTestEventRequestContent{
-        EventType: management.EventStreamTestEventTypeEnumUserCreated,
+        EventType: management.EventStreamTestEventTypeEnumGroupCreated,
     }
 client.EventStreams.Test(
         context.TODO(),
@@ -7263,72 +7328,77 @@ client.Jobs.Get(
 <dl>
 <dd>
 
-Retrieve details on <a href="https://auth0.com/docs/logs/streams">log streams</a>.
-<h5>Sample Response</h5><pre><code>[{
-	"id": "string",
-	"name": "string",
-	"type": "eventbridge",
-	"status": "active|paused|suspended",
-	"sink": {
-		"awsAccountId": "string",
-		"awsRegion": "string",
-		"awsPartnerEventSource": "string"
-	}
+Retrieve details on [log streams](https://auth0.com/docs/logs/streams).
+
+**Sample Response**
+
+```json
+[{
+  "id": "string",
+  "name": "string",
+  "type": "eventbridge",
+  "status": "active|paused|suspended",
+  "sink": {
+    "awsAccountId": "string",
+    "awsRegion": "string",
+    "awsPartnerEventSource": "string"
+  }
 }, {
-	"id": "string",
-	"name": "string",
-	"type": "http",
-	"status": "active|paused|suspended",
-	"sink": {
-		"httpContentFormat": "JSONLINES|JSONARRAY",
-		"httpContentType": "string",
-		"httpEndpoint": "string",
-		"httpAuthorization": "string"
-	}
+  "id": "string",
+  "name": "string",
+  "type": "http",
+  "status": "active|paused|suspended",
+  "sink": {
+    "httpContentFormat": "JSONLINES|JSONARRAY",
+    "httpContentType": "string",
+    "httpEndpoint": "string",
+    "httpAuthorization": "string"
+  }
 },
 {
-	"id": "string",
-	"name": "string",
-	"type": "eventgrid",
-	"status": "active|paused|suspended",
-	"sink": {
-		"azureSubscriptionId": "string",
-		"azureResourceGroup": "string",
-		"azureRegion": "string",
-		"azurePartnerTopic": "string"
-	}
+  "id": "string",
+  "name": "string",
+  "type": "eventgrid",
+  "status": "active|paused|suspended",
+  "sink": {
+    "azureSubscriptionId": "string",
+    "azureResourceGroup": "string",
+    "azureRegion": "string",
+    "azurePartnerTopic": "string"
+  }
 },
 {
-	"id": "string",
-	"name": "string",
-	"type": "splunk",
-	"status": "active|paused|suspended",
-	"sink": {
-		"splunkDomain": "string",
-		"splunkToken": "string",
-		"splunkPort": "string",
-		"splunkSecure": "boolean"
-	}
+  "id": "string",
+  "name": "string",
+  "type": "splunk",
+  "status": "active|paused|suspended",
+  "sink": {
+    "splunkDomain": "string",
+    "splunkToken": "string",
+    "splunkPort": "string",
+    "splunkSecure": "boolean"
+  }
 },
 {
-	"id": "string",
-	"name": "string",
-	"type": "sumo",
-	"status": "active|paused|suspended",
-	"sink": {
-		"sumoSourceAddress": "string",
-	}
+  "id": "string",
+  "name": "string",
+  "type": "sumo",
+  "status": "active|paused|suspended",
+  "sink": {
+    "sumoSourceAddress": "string"
+  }
 },
 {
-	"id": "string",
-	"name": "string",
-	"type": "datadog",
-	"status": "active|paused|suspended",
-	"sink": {
-		"datadogRegion": "string",
-		"datadogApiKey": "string"
-	}
-}]</code></pre>
+  "id": "string",
+  "name": "string",
+  "type": "datadog",
+  "status": "active|paused|suspended",
+  "sink": {
+    "datadogRegion": "string",
+    "datadogApiKey": "string"
+  }
+}]
+```
 </dd>
 </dl>
 </dd>
@@ -7371,131 +7441,202 @@ client.LogStreams.List(
 <dd>
 
 Create a log stream.
-<h5>Log Stream Types</h5> The <code>type</code> of log stream being created determines the properties required in the <code>sink</code> payload.
-<h5>HTTP Stream</h5> For an <code>http</code> Stream, the <code>sink</code> properties are listed in the payload below
-Request: <pre><code>{
-	"name": "string",
-	"type": "http",
-	"sink": {
-		"httpEndpoint": "string",
-		"httpContentType": "string",
-		"httpContentFormat": "JSONLINES|JSONARRAY",
-		"httpAuthorization": "string"
-	}
-}</code></pre>
-Response: <pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "http",
-	"status": "active",
-	"sink": {
-		"httpEndpoint": "string",
-		"httpContentType": "string",
-		"httpContentFormat": "JSONLINES|JSONARRAY",
-		"httpAuthorization": "string"
-	}
-}</code></pre>
-<h5>Amazon EventBridge Stream</h5> For an <code>eventbridge</code> Stream, the <code>sink</code> properties are listed in the payload below
-Request: <pre><code>{
-	"name": "string",
-	"type": "eventbridge",
-	"sink": {
-		"awsRegion": "string",
-		"awsAccountId": "string"
-	}
-}</code></pre>
-The response will include an additional field <code>awsPartnerEventSource</code> in the <code>sink</code>: <pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "eventbridge",
-	"status": "active",
-	"sink": {
-		"awsAccountId": "string",
-		"awsRegion": "string",
-		"awsPartnerEventSource": "string"
-	}
-}</code></pre>
-<h5>Azure Event Grid Stream</h5> For an <code>Azure Event Grid</code> Stream, the <code>sink</code> properties are listed in the payload below
-Request: <pre><code>{
-	"name": "string",
-	"type": "eventgrid",
-	"sink": {
-		"azureSubscriptionId": "string",
-		"azureResourceGroup": "string",
-		"azureRegion": "string"
-	}
-}</code></pre>
-Response: <pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "http",
-	"status": "active",
-	"sink": {
-		"azureSubscriptionId": "string",
-		"azureResourceGroup": "string",
-		"azureRegion": "string",
-		"azurePartnerTopic": "string"
-	}
-}</code></pre>
-<h5>Datadog Stream</h5> For a <code>Datadog</code> Stream, the <code>sink</code> properties are listed in the payload below
-Request: <pre><code>{
-	"name": "string",
-	"type": "datadog",
-	"sink": {
-		"datadogRegion": "string",
-		"datadogApiKey": "string"
-	}
-}</code></pre>
-Response: <pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "datadog",
-	"status": "active",
-	"sink": {
-		"datadogRegion": "string",
-		"datadogApiKey": "string"
-	}
-}</code></pre>
-<h5>Splunk Stream</h5> For a <code>Splunk</code> Stream, the <code>sink</code> properties are listed in the payload below
-Request: <pre><code>{
-	"name": "string",
-	"type": "splunk",
-	"sink": {
-		"splunkDomain": "string",
-		"splunkToken": "string",
-		"splunkPort": "string",
-		"splunkSecure": "boolean"
-	}
-}</code></pre>
-Response: <pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "splunk",
-	"status": "active",
-	"sink": {
-		"splunkDomain": "string",
-		"splunkToken": "string",
-		"splunkPort": "string",
-		"splunkSecure": "boolean"
-	}
-}</code></pre>
-<h5>Sumo Logic Stream</h5> For a <code>Sumo Logic</code> Stream, the <code>sink</code> properties are listed in the payload below
-Request: <pre><code>{
-	"name": "string",
-	"type": "sumo",
-	"sink": {
-		"sumoSourceAddress": "string",
-	}
-}</code></pre>
-Response: <pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "sumo",
-	"status": "active",
-	"sink": {
-		"sumoSourceAddress": "string",
-	}
-}</code></pre>
+
+**Log Stream Types**
+
+The `type` of log stream being created determines the properties required in the `sink` payload.
+
+**HTTP Stream**
+
+For an `http` Stream, the `sink` properties are listed in the payload below.
+
+**Request:**
+```json
+{
+  "name": "string",
+  "type": "http",
+  "sink": {
+    "httpEndpoint": "string",
+    "httpContentType": "string",
+    "httpContentFormat": "JSONLINES|JSONARRAY",
+    "httpAuthorization": "string"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "http",
+  "status": "active",
+  "sink": {
+    "httpEndpoint": "string",
+    "httpContentType": "string",
+    "httpContentFormat": "JSONLINES|JSONARRAY",
+    "httpAuthorization": "string"
+  }
+}
+```
+
+**Amazon EventBridge Stream**
+
+For an `eventbridge` Stream, the `sink` properties are listed in the payload below.
+
+**Request:**
+```json
+{
+  "name": "string",
+  "type": "eventbridge",
+  "sink": {
+    "awsRegion": "string",
+    "awsAccountId": "string"
+  }
+}
+```
+
+The response will include an additional field `awsPartnerEventSource` in the `sink`:
+
+**Response:**
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "eventbridge",
+  "status": "active",
+  "sink": {
+    "awsAccountId": "string",
+    "awsRegion": "string",
+    "awsPartnerEventSource": "string"
+  }
+}
+```
+
+**Azure Event Grid Stream**
+
+For an `Azure Event Grid` Stream, the `sink` properties are listed in the payload below.
+
+**Request:**
+```json
+{
+  "name": "string",
+  "type": "eventgrid",
+  "sink": {
+    "azureSubscriptionId": "string",
+    "azureResourceGroup": "string",
+    "azureRegion": "string"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "http",
+  "status": "active",
+  "sink": {
+    "azureSubscriptionId": "string",
+    "azureResourceGroup": "string",
+    "azureRegion": "string",
+    "azurePartnerTopic": "string"
+  }
+}
+```
+
+**Datadog Stream**
+
+For a `Datadog` Stream, the `sink` properties are listed in the payload below.
+
+**Request:**
+```json
+{
+  "name": "string",
+  "type": "datadog",
+  "sink": {
+    "datadogRegion": "string",
+    "datadogApiKey": "string"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "datadog",
+  "status": "active",
+  "sink": {
+    "datadogRegion": "string",
+    "datadogApiKey": "string"
+  }
+}
+```
+
+**Splunk Stream**
+
+For a `Splunk` Stream, the `sink` properties are listed in the payload below.
+
+**Request:**
+```json
+{
+  "name": "string",
+  "type": "splunk",
+  "sink": {
+    "splunkDomain": "string",
+    "splunkToken": "string",
+    "splunkPort": "string",
+    "splunkSecure": "boolean"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "splunk",
+  "status": "active",
+  "sink": {
+    "splunkDomain": "string",
+    "splunkToken": "string",
+    "splunkPort": "string",
+    "splunkSecure": "boolean"
+  }
+}
+```
+
+**Sumo Logic Stream**
+
+For a `Sumo Logic` Stream, the `sink` properties are listed in the payload below.
+
+**Request:**
+```json
+{
+  "name": "string",
+  "type": "sumo",
+  "sink": {
+    "sumoSourceAddress": "string"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "sumo",
+  "status": "active",
+  "sink": {
+    "sumoSourceAddress": "string"
+  }
+}
+```
 </dd>
 </dl>
 </dd>
@@ -7562,107 +7703,157 @@ client.LogStreams.Create(
 <dd>
 
 Retrieve a log stream configuration and status.
-<h5>Sample responses</h5><h5>Amazon EventBridge Log Stream</h5><pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "eventbridge",
-	"status": "active|paused|suspended",
-	"sink": {
-		"awsAccountId": "string",
-		"awsRegion": "string",
-		"awsPartnerEventSource": "string"
-	}
-}</code></pre> <h5>HTTP Log Stream</h5><pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "http",
-	"status": "active|paused|suspended",
-	"sink": {
-		"httpContentFormat": "JSONLINES|JSONARRAY",
-		"httpContentType": "string",
-		"httpEndpoint": "string",
-		"httpAuthorization": "string"
-	}
-}</code></pre> <h5>Datadog Log Stream</h5><pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "datadog",
-	"status": "active|paused|suspended",
-	"sink": {
-		"datadogRegion": "string",
-		"datadogApiKey": "string"
-	}
 
-}</code></pre><h5>Mixpanel</h5>
-	
-	Request: <pre><code>{
-	  "name": "string",
-	  "type": "mixpanel",
-	  "sink": {
-		"mixpanelRegion": "string", // "us" | "eu",
-		"mixpanelProjectId": "string",
-		"mixpanelServiceAccountUsername": "string",
-		"mixpanelServiceAccountPassword": "string"
-	  }
-	} </code></pre>
-	
-	
-	Response: <pre><code>{
-		"id": "string",
-		"name": "string",
-		"type": "mixpanel",
-		"status": "active",
-		"sink": {
-		  "mixpanelRegion": "string", // "us" | "eu",
-		  "mixpanelProjectId": "string",
-		  "mixpanelServiceAccountUsername": "string",
-		  "mixpanelServiceAccountPassword": "string" // the following is redacted on return
-		}
-	  } </code></pre>
+**Sample responses**
 
-	<h5>Segment</h5>
+**Amazon EventBridge Log Stream**
 
-	Request: <pre><code> {
-	  "name": "string",
-	  "type": "segment",
-	  "sink": {
-		"segmentWriteKey": "string"
-	  }
-	}</code></pre>
-	
-	Response: <pre><code>{
-	  "id": "string",
-	  "name": "string",
-	  "type": "segment",
-	  "status": "active",
-	  "sink": {
-		"segmentWriteKey": "string"
-	  }
-	} </code></pre>
-	
-<h5>Splunk Log Stream</h5><pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "splunk",
-	"status": "active|paused|suspended",
-	"sink": {
-		"splunkDomain": "string",
-		"splunkToken": "string",
-		"splunkPort": "string",
-		"splunkSecure": "boolean"
-	}
-}</code></pre> <h5>Sumo Logic Log Stream</h5><pre><code>{
-	"id": "string",
-	"name": "string",
-	"type": "sumo",
-	"status": "active|paused|suspended",
-	"sink": {
-		"sumoSourceAddress": "string",
-	}
-}</code></pre> <h5>Status</h5> The <code>status</code> of a log stream maybe any of the following:
-1. <code>active</code> - Stream is currently enabled.
-2. <code>paused</code> - Stream is currently user disabled and will not attempt log delivery.
-3. <code>suspended</code> - Stream is currently disabled because of errors and will not attempt log delivery.
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "eventbridge",
+  "status": "active|paused|suspended",
+  "sink": {
+    "awsAccountId": "string",
+    "awsRegion": "string",
+    "awsPartnerEventSource": "string"
+  }
+}
+```
+
+**HTTP Log Stream**
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "http",
+  "status": "active|paused|suspended",
+  "sink": {
+    "httpContentFormat": "JSONLINES|JSONARRAY",
+    "httpContentType": "string",
+    "httpEndpoint": "string",
+    "httpAuthorization": "string"
+  }
+}
+```
+
+**Datadog Log Stream**
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "datadog",
+  "status": "active|paused|suspended",
+  "sink": {
+    "datadogRegion": "string",
+    "datadogApiKey": "string"
+  }
+}
+```
+
+**Mixpanel**
+
+**Request:**
+
+```json
+{
+  "name": "string",
+  "type": "mixpanel",
+  "sink": {
+    "mixpanelRegion": "string",
+    "mixpanelProjectId": "string",
+    "mixpanelServiceAccountUsername": "string",
+    "mixpanelServiceAccountPassword": "string"
+  }
+}
+```
+
+**Response:**
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "mixpanel",
+  "status": "active",
+  "sink": {
+    "mixpanelRegion": "string",
+    "mixpanelProjectId": "string",
+    "mixpanelServiceAccountUsername": "string",
+    "mixpanelServiceAccountPassword": "string"
+  }
+}
+```
+
+**Segment**
+
+**Request:**
+
+```json
+{
+  "name": "string",
+  "type": "segment",
+  "sink": {
+    "segmentWriteKey": "string"
+  }
+}
+```
+
+**Response:**
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "segment",
+  "status": "active",
+  "sink": {
+    "segmentWriteKey": "string"
+  }
+}
+```
+
+**Splunk Log Stream**
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "splunk",
+  "status": "active|paused|suspended",
+  "sink": {
+    "splunkDomain": "string",
+    "splunkToken": "string",
+    "splunkPort": "string",
+    "splunkSecure": "boolean"
+  }
+}
+```
+
+**Sumo Logic Log Stream**
+
+```json
+{
+  "id": "string",
+  "name": "string",
+  "type": "sumo",
+  "status": "active|paused|suspended",
+  "sink": {
+    "sumoSourceAddress": "string"
+  }
+}
+```
+
+**Status**
+
+The `status` of a log stream maybe any of the following:
+
+1. `active` - Stream is currently enabled.
+2. `paused` - Stream is currently user disabled and will not attempt log delivery.
+3. `suspended` - Stream is currently disabled because of errors and will not attempt log delivery.
 </dd>
 </dl>
 </dd>
@@ -7779,40 +7970,79 @@ client.LogStreams.Delete(
 <dd>
 
 Update a log stream.
-<h4>Examples of how to use the PATCH endpoint.</h4> The following fields may be updated in a PATCH operation: <ul><li>name</li><li>status</li><li>sink</li></ul> Note: For log streams of type <code>eventbridge</code> and <code>eventgrid</code>, updating the <code>sink</code> is not permitted.
-<h5>Update the status of a log stream</h5><pre><code>{
-	"status": "active|paused"
-}</code></pre>
-<h5>Update the name of a log stream</h5><pre><code>{
-	"name": "string"
-}</code></pre>
-<h5>Update the sink properties of a stream of type <code>http</code></h5><pre><code>{
+
+**Examples of how to use the PATCH endpoint.**
+
+The following fields may be updated in a PATCH operation:
+
+- name
+- status
+- sink
+
+Note: For log streams of type `eventbridge` and `eventgrid`, updating the `sink` is not permitted.
+
+**Update the status of a log stream**
+
+```json
+{
+  "status": "active|paused"
+}
+```
+
+**Update the name of a log stream**
+
+```json
+{
+  "name": "string"
+}
+```
+
+**Update the sink properties of a stream of type `http`**
+
+```json
+{
   "sink": {
     "httpEndpoint": "string",
     "httpContentType": "string",
     "httpContentFormat": "JSONARRAY|JSONLINES",
     "httpAuthorization": "string"
   }
-}</code></pre>
-<h5>Update the sink properties of a stream of type <code>datadog</code></h5><pre><code>{
+}
+```
+
+**Update the sink properties of a stream of type `datadog`**
+
+```json
+{
   "sink": {
-		"datadogRegion": "string",
-		"datadogApiKey": "string"
+    "datadogRegion": "string",
+    "datadogApiKey": "string"
   }
-}</code></pre>
-<h5>Update the sink properties of a stream of type <code>splunk</code></h5><pre><code>{
+}
+```
+
+**Update the sink properties of a stream of type `splunk`**
+
+```json
+{
   "sink": {
     "splunkDomain": "string",
     "splunkToken": "string",
     "splunkPort": "string",
     "splunkSecure": "boolean"
   }
-}</code></pre>
-<h5>Update the sink properties of a stream of type <code>sumo</code></h5><pre><code>{
+}
+```
+
+**Update the sink properties of a stream of type `sumo`**
+
+```json
+{
   "sink": {
     "sumoSourceAddress": "string"
   }
-}</code></pre> 
+}
+```
 </dd>
 </dl>
 </dd>
@@ -18824,6 +19054,163 @@ client.Connections.DirectoryProvisioning.GetDefaultMapping(
 </dl>
 </details>
 
+<details><summary><code>client.Connections.DirectoryProvisioning.ListSynchronizedGroups(ID) -> *management.ListSynchronizedGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the configured synchronized groups for a connection directory provisioning configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListSynchronizedGroupsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Connections.DirectoryProvisioning.ListSynchronizedGroups(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to list synchronized groups for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DirectoryProvisioning.Set(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or replace the selected groups for a connection directory provisioning configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ReplaceSynchronizedGroupsRequestContent{
+        Groups: []*management.SynchronizedGroupPayload{
+            &management.SynchronizedGroupPayload{
+                ID: "id",
+            },
+        },
+    }
+client.Connections.DirectoryProvisioning.Set(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to create or replace synchronized groups for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]*management.SynchronizedGroupPayload` — Array of Google Workspace Directory group objects to synchronize.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Connections SCIMConfiguration
 <details><summary><code>client.Connections.SCIMConfiguration.List() -> *management.ListSCIMConfigurationsResponseContent</code></summary>
 <dl>
@@ -28668,6 +29055,14 @@ client.SelfServiceProfiles.SSOTicket.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**enabledFeatures:** `*management.SelfServiceProfileSSOTicketEnabledFeatures` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -29126,6 +29521,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dl>
 <dd>
 
+**clientIDMetadataDocumentSupported:** `*bool` — Whether the authorization server supports retrieving client metadata from a client_id URL.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **enableAiGuide:** `*bool` — Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
     
 </dd>
@@ -29135,6 +29538,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **phoneConsolidatedExperience:** `*bool` — Whether Phone Consolidated Experience is enabled for this tenant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dynamicClientRegistrationSecurityMode:** `*management.TenantSettingsDynamicClientRegistrationSecurityMode` 
     
 </dd>
 </dl>

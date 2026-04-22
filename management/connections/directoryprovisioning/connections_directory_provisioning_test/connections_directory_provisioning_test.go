@@ -212,3 +212,66 @@ func TestConnectionsDirectoryProvisioningGetDefaultMappingWithWireMock(
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestConnectionsDirectoryProvisioningGetDefaultMappingWithWireMock", "GET", "/connections/id/directory-provisioning/default-mapping", nil, 1)
 }
+
+func TestConnectionsDirectoryProvisioningListSynchronizedGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.ListSynchronizedGroupsRequestParameters{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Connections.DirectoryProvisioning.ListSynchronizedGroups(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsDirectoryProvisioningListSynchronizedGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsDirectoryProvisioningListSynchronizedGroupsWithWireMock", "GET", "/connections/id/directory-provisioning/synchronized-groups", map[string]string{"from": "from", "take": "1"}, 1)
+}
+
+func TestConnectionsDirectoryProvisioningSetWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.ReplaceSynchronizedGroupsRequestContent{
+		Groups: []*management.SynchronizedGroupPayload{
+			&management.SynchronizedGroupPayload{
+				ID: "id",
+			},
+		},
+	}
+	invocationErr := client.Connections.DirectoryProvisioning.Set(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsDirectoryProvisioningSetWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsDirectoryProvisioningSetWithWireMock", "PUT", "/connections/id/directory-provisioning/synchronized-groups", nil, 1)
+}

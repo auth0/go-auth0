@@ -4344,6 +4344,14 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAPIEnableGroups", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueAPIEnableGroups *bool
+		obj.SetAPIEnableGroups(fernTestValueAPIEnableGroups)
+		assert.Equal(t, fernTestValueAPIEnableGroups, obj.APIEnableGroups)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetBasicProfile", func(t *testing.T) {
 		obj := &ConnectionPropertiesOptions{}
 		var fernTestValueBasicProfile *bool
@@ -5024,6 +5032,40 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAPIEnableUsers() // Should return zero value
+	})
+
+	t.Run("GetAPIEnableGroups", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value bool
+		obj.APIEnableGroups = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAPIEnableGroups(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAPIEnableGroups_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.APIEnableGroups = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAPIEnableGroups(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAPIEnableGroups_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAPIEnableGroups() // Should return zero value
 	})
 
 	t.Run("GetBasicProfile", func(t *testing.T) {
@@ -5975,6 +6017,37 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 
 		// Act
 		obj.SetAPIEnableUsers(fernTestValueAPIEnableUsers)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAPIEnableGroups_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueAPIEnableGroups *bool
+
+		// Act
+		obj.SetAPIEnableGroups(fernTestValueAPIEnableGroups)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -9829,6 +9902,14 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAPIEnableGroups", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueAPIEnableGroups *bool
+		obj.SetAPIEnableGroups(fernTestValueAPIEnableGroups)
+		assert.Equal(t, fernTestValueAPIEnableGroups, obj.APIEnableGroups)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetBasicProfile", func(t *testing.T) {
 		obj := &UpdateConnectionOptions{}
 		var fernTestValueBasicProfile *bool
@@ -10509,6 +10590,40 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAPIEnableUsers() // Should return zero value
+	})
+
+	t.Run("GetAPIEnableGroups", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value bool
+		obj.APIEnableGroups = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAPIEnableGroups(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAPIEnableGroups_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.APIEnableGroups = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAPIEnableGroups(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAPIEnableGroups_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAPIEnableGroups() // Should return zero value
 	})
 
 	t.Run("GetBasicProfile", func(t *testing.T) {
@@ -11460,6 +11575,37 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetAPIEnableUsers(fernTestValueAPIEnableUsers)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAPIEnableGroups_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueAPIEnableGroups *bool
+
+		// Act
+		obj.SetAPIEnableGroups(fernTestValueAPIEnableGroups)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

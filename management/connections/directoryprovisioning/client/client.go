@@ -195,3 +195,93 @@ func (c *Client) GetDefaultMapping(
 	}
 	return response.Body, nil
 }
+
+// Retrieve the configured synchronized groups for a connection directory provisioning configuration.
+func (c *Client) ListSynchronizedGroups(
+	ctx context.Context,
+	// The id of the connection to list synchronized groups for.
+	id string,
+	request *management.ListSynchronizedGroupsRequestParameters,
+	opts ...option.RequestOption,
+) (*core.Page[*string, *management.SynchronizedGroupPayload, *management.ListSynchronizedGroupsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/connections/%v/directory-provisioning/synchronized-groups",
+		id,
+	)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("from", *pageRequest.Cursor)
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		}
+	}
+	readPageResponse := func(response *management.ListSynchronizedGroupsResponseContent) *core.PageResponse[*string, *management.SynchronizedGroupPayload, *management.ListSynchronizedGroupsResponseContent] {
+		var zeroValue *string
+		next := response.Next
+		results := response.Groups
+		return &core.PageResponse[*string, *management.SynchronizedGroupPayload, *management.ListSynchronizedGroupsResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.From)
+}
+
+// Create or replace the selected groups for a connection directory provisioning configuration.
+func (c *Client) Set(
+	ctx context.Context,
+	// The id of the connection to create or replace synchronized groups for
+	id string,
+	request *management.ReplaceSynchronizedGroupsRequestContent,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.Set(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
