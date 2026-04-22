@@ -1,5 +1,17 @@
 # Change Log
 
+## [v2.9.0](https://github.com/auth0/go-auth0/tree/v2.9.0) (2026-04-22)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.8.0...v2.9.0)
+
+**Added**
+- feat: add `default_for` field to client grant response types (`ClientGrantDefaultForEnum`) [\#755](https://github.com/auth0/go-auth0/pull/755) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `my_organization_configuration`, `third_party_security_mode`, and `redirection_policy` client fields [\#755](https://github.com/auth0/go-auth0/pull/755) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `ClientSessionTransferDelegationConfiguration` with `allow_delegated_access` and `enforce_device_binding` fields [\#755](https://github.com/auth0/go-auth0/pull/755) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `dpop_signing_alg` field to OIDC and Okta connection options (`ConnectionDpopSigningAlgEnum`) [\#755](https://github.com/auth0/go-auth0/pull/755) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `organization_id` field to `ConnectedAccount` [\#755](https://github.com/auth0/go-auth0/pull/755) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `ListSynchronizedGroups` and `Set` operations for directory provisioning [\#755](https://github.com/auth0/go-auth0/pull/755) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `TenantSettingsDynamicClientRegistrationSecurityMode` enum [\#755](https://github.com/auth0/go-auth0/pull/755) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.8.0](https://github.com/auth0/go-auth0/tree/v2.8.0) (2026-04-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.7.0...v2.8.0)
 
