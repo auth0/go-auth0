@@ -411,13 +411,18 @@ func DebugTransport(base http.RoundTripper, debug bool) http.RoundTripper {
 	return RoundTripFunc(func(req *http.Request) (*http.Response, error) {
 		// Save body before RoundTrip consumes it.
 		var bodyBytes []byte
+
 		if req.Body != nil {
 			var err error
+
 			bodyBytes, err = io.ReadAll(req.Body)
-			req.Body.Close()
+
+			_ = req.Body.Close()
+
 			if err != nil {
 				return nil, fmt.Errorf("debug transport: failed to read request body: %w", err)
 			}
+
 			req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 		}
 
