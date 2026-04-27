@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"net/http"
+	"os"
 	"testing"
 	"time"
 
@@ -422,5 +423,26 @@ func TestResourceServer_ExpressConfiguration(t *testing.T) {
 		}
 
 		assert.True(t, foundExpressConfig, "urn:auth0:express-configure should exist in resource server list")
+	})
+}
+
+func TestResourceServer_ACR(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedResourceServer := &ResourceServer{
+		Name:       auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
+		Identifier: auth0.String("https://" + os.Getenv("AUTH0_DOMAIN") + "/me/"),
+		AuthorizationPolicy: &ResourceServerAuthorizationPolicy{
+			PolicyID: auth0.String("019b76da-a800-73c9-b656-b349ae415c17"),
+		},
+	}
+
+	err := api.ResourceServer.Create(context.Background(), expectedResourceServer)
+	assert.NoError(t, err)
+	assert.Equal(t, expectedResourceServer.GetName(), "Auth0 My Account API")
+	assert.NotEmpty(t, expectedResourceServer.GetID())
+
+	t.Cleanup(func() {
+		cleanupResourceServer(t, expectedResourceServer.GetID())
 	})
 }
