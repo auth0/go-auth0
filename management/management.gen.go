@@ -2039,6 +2039,14 @@ func (c *Client) GetOrganizationUsage() string {
 	return *c.OrganizationUsage
 }
 
+// GetRedirectionPolicy returns the RedirectionPolicy field if it's non-nil, zero value otherwise.
+func (c *Client) GetRedirectionPolicy() string {
+	if c == nil || c.RedirectionPolicy == nil {
+		return ""
+	}
+	return *c.RedirectionPolicy
+}
+
 // GetRefreshToken returns the RefreshToken field.
 func (c *Client) GetRefreshToken() *ClientRefreshToken {
 	if c == nil {
@@ -2109,6 +2117,14 @@ func (c *Client) GetSSODisabled() bool {
 		return false
 	}
 	return *c.SSODisabled
+}
+
+// GetThirdPartySecurityMode returns the ThirdPartySecurityMode field if it's non-nil, zero value otherwise.
+func (c *Client) GetThirdPartySecurityMode() string {
+	if c == nil || c.ThirdPartySecurityMode == nil {
+		return ""
+	}
+	return *c.ThirdPartySecurityMode
 }
 
 // GetTokenEndpointAuthMethod returns the TokenEndpointAuthMethod field if it's non-nil, zero value otherwise.
@@ -2473,6 +2489,14 @@ func (c *ClientGrant) GetClientID() string {
 		return ""
 	}
 	return *c.ClientID
+}
+
+// GetDefaultFor returns the DefaultFor field if it's non-nil, zero value otherwise.
+func (c *ClientGrant) GetDefaultFor() string {
+	if c == nil || c.DefaultFor == nil {
+		return ""
+	}
+	return *c.DefaultFor
 }
 
 // GetID returns the ID field if it's non-nil, zero value otherwise.
@@ -13630,6 +13654,14 @@ func (t *Tenant) GetDeviceFlow() *TenantDeviceFlow {
 		return nil
 	}
 	return t.DeviceFlow
+}
+
+// GetDynamicClientRegistrationSecurityMode returns the DynamicClientRegistrationSecurityMode field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetDynamicClientRegistrationSecurityMode() string {
+	if t == nil || t.DynamicClientRegistrationSecurityMode == nil {
+		return ""
+	}
+	return *t.DynamicClientRegistrationSecurityMode
 }
 
 // GetEnabledLocales returns the EnabledLocales field if it's non-nil, zero value otherwise.
