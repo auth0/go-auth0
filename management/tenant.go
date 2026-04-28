@@ -164,6 +164,12 @@ type Tenant struct {
 	// ResourceParameterProfile determines how the protected resource identity is specified in OAuth
 	// endpoints. Values: "audience" (default) or "compatibility".
 	ResourceParameterProfile *string `json:"resource_parameter_profile,omitempty"`
+
+	// DynamicClientRegistrationSecurityMode sets the default third_party_security_mode for clients
+	// created via Dynamic Client Registration (DCR). Values: "strict" or "permissive". 
+	// "permissive" can only be configured by customers with pre-existing third-party client usage before April 2026. 
+	// See https://auth0.com/docs/get-started/applications/third-party-applications/permissive-mode#who-can-use-permissive-mode for more details.
+	DynamicClientRegistrationSecurityMode *string `json:"dynamic_client_registration_security_mode,omitempty"`
 }
 
 // TenantDefaultTokenQuota holds settings for the default token quota.
