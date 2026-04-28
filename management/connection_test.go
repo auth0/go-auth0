@@ -1034,17 +1034,17 @@ func TestConnectionManager_PasswordOptions(t *testing.T) {
 	assert.Equal(t, 20, updatedOptions.GetPasswordOptions().GetComplexity().GetMinLength())
 	require.NotNil(t, updatedOptions.GetPasswordOptions().GetHistory())
 	assert.Equal(t, false, updatedOptions.GetPasswordOptions().GetHistory().GetActive())
-	// Verify unmodified fields are preserved after partial PATCH.
-	assert.Equal(t, []string{"uppercase", "lowercase", "number"}, updatedOptions.GetPasswordOptions().GetComplexity().GetCharacterTypes())
-	assert.Equal(t, "block", updatedOptions.GetPasswordOptions().GetComplexity().GetIdenticalCharacters())
+	// Partial PATCH on password_options resets unspecified sub-fields to API defaults.
+	assert.Empty(t, updatedOptions.GetPasswordOptions().GetComplexity().GetCharacterTypes())
+	assert.Equal(t, "allow", updatedOptions.GetPasswordOptions().GetComplexity().GetIdenticalCharacters())
 	assert.Equal(t, "allow", updatedOptions.GetPasswordOptions().GetComplexity().GetSequentialCharacters())
 	assert.Equal(t, "error", updatedOptions.GetPasswordOptions().GetComplexity().GetMaxLengthExceeded())
 	require.NotNil(t, updatedOptions.GetPasswordOptions().GetDictionary())
-	assert.Equal(t, true, updatedOptions.GetPasswordOptions().GetDictionary().GetActive())
+	assert.Equal(t, false, updatedOptions.GetPasswordOptions().GetDictionary().GetActive())
 	assert.Equal(t, "en_100k", updatedOptions.GetPasswordOptions().GetDictionary().GetDefault())
 	require.NotNil(t, updatedOptions.GetPasswordOptions().GetProfileData())
-	assert.Equal(t, true, updatedOptions.GetPasswordOptions().GetProfileData().GetActive())
-	assert.Equal(t, []string{"name", "username", "email"}, updatedOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
+	assert.Equal(t, false, updatedOptions.GetPasswordOptions().GetProfileData().GetActive())
+	assert.Equal(t, []string{"name", "username", "nickname", "email", "phone_number", "user_metadata.name", "user_metadata.first", "user_metadata.last"}, updatedOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
 }
 
 
