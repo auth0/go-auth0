@@ -749,7 +749,6 @@ type PasswordOptionsDictionary struct {
 	Custom *[]string `json:"custom,omitempty"`
 }
 
-
 // PasskeyOptions contains Passkey configuration for the connection.
 type PasskeyOptions struct {
 	// Controls the UI used to challenge the user for their passkey. Should be one of "both", "autofill", or "button".

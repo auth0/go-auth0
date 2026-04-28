@@ -1047,7 +1047,6 @@ func TestConnectionManager_PasswordOptions(t *testing.T) {
 	assert.Equal(t, []string{"name", "username", "nickname", "email", "phone_number", "user_metadata.name", "user_metadata.first", "user_metadata.last"}, updatedOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
 }
 
-
 func TestConnectionManager_Read(t *testing.T) {
 	for _, testCase := range connectionTestCases {
 		t.Run("It can successfully read a "+testCase.name, func(t *testing.T) {
