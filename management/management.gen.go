@@ -5738,6 +5738,14 @@ func (c *ConnectionOptionsOIDC) GetTokenEndpointAuthSigningAlg() string {
 	return *c.TokenEndpointAuthSigningAlg
 }
 
+// GetTokenEndpointJwtcaAudFormat returns the TokenEndpointJwtcaAudFormat field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDC) GetTokenEndpointJwtcaAudFormat() string {
+	if c == nil || c.TokenEndpointJwtcaAudFormat == nil {
+		return ""
+	}
+	return *c.TokenEndpointJwtcaAudFormat
+}
+
 // GetType returns the Type field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOIDC) GetType() string {
 	if c == nil || c.Type == nil {
@@ -5959,6 +5967,14 @@ func (c *ConnectionOptionsOkta) GetTokenEndpointAuthSigningAlg() string {
 		return ""
 	}
 	return *c.TokenEndpointAuthSigningAlg
+}
+
+// GetTokenEndpointJwtcaAudFormat returns the TokenEndpointJwtcaAudFormat field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetTokenEndpointJwtcaAudFormat() string {
+	if c == nil || c.TokenEndpointJwtcaAudFormat == nil {
+		return ""
+	}
+	return *c.TokenEndpointJwtcaAudFormat
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.
