@@ -7089,6 +7089,16 @@ func TestConnectionOptionsOIDC_GetTokenEndpointAuthSigningAlg(tt *testing.T) {
 	c.GetTokenEndpointAuthSigningAlg()
 }
 
+func TestConnectionOptionsOIDC_GetTokenEndpointJwtcaAudFormat(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOIDC{TokenEndpointJwtcaAudFormat: &zeroValue}
+	c.GetTokenEndpointJwtcaAudFormat()
+	c = &ConnectionOptionsOIDC{}
+	c.GetTokenEndpointJwtcaAudFormat()
+	c = nil
+	c.GetTokenEndpointJwtcaAudFormat()
+}
+
 func TestConnectionOptionsOIDC_GetType(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOIDC{Type: &zeroValue}
@@ -7365,6 +7375,16 @@ func TestConnectionOptionsOkta_GetTokenEndpointAuthSigningAlg(tt *testing.T) {
 	c.GetTokenEndpointAuthSigningAlg()
 	c = nil
 	c.GetTokenEndpointAuthSigningAlg()
+}
+
+func TestConnectionOptionsOkta_GetTokenEndpointJwtcaAudFormat(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{TokenEndpointJwtcaAudFormat: &zeroValue}
+	c.GetTokenEndpointJwtcaAudFormat()
+	c = &ConnectionOptionsOkta{}
+	c.GetTokenEndpointJwtcaAudFormat()
+	c = nil
+	c.GetTokenEndpointJwtcaAudFormat()
 }
 
 func TestConnectionOptionsOkta_GetUpstreamParams(tt *testing.T) {
