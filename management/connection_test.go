@@ -1780,3 +1780,48 @@ func TestConnectionManager_DpopForOktaAndOIDC(t *testing.T) {
 		cleanupConnection(t, expectedOIDCConnection.GetID())
 	})
 }
+
+func TestConnectionManager_TokenEndpointJwtcaAudFormatForOktaAndOIDC(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	oktaConnection := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Okta-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("okta"),
+		},
+		options: &ConnectionOptionsOkta{
+			ClientID:                    auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+			ClientSecret:                auth0.String("mySecret"),
+			Scope:                       auth0.String("openid"),
+			Domain:                      auth0.String("domain.okta.com"),
+			Issuer:                      auth0.String("https://example.com"),
+			AuthorizationEndpoint:       auth0.String("https://example.com"),
+			JWKSURI:                     auth0.String("https://example.com/jwks"),
+			TokenEndpointJwtcaAudFormat: auth0.String("issuer"),
+		},
+	})
+
+	oidcConnection := givenAConnection(t, connectionTestCase{
+		connection: Connection{
+			Name:     auth0.Stringf("Test-OIDC-Connection-%d", time.Now().Unix()),
+			Strategy: auth0.String("oidc"),
+		},
+		options: &ConnectionOptionsOIDC{
+			ClientID:                    auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+			ClientSecret:                auth0.String("mySecret"),
+			Scope:                       auth0.String("openid"),
+			TenantDomain:                auth0.String("domain.okta.com"),
+			Issuer:                      auth0.String("https://example.com"),
+			AuthorizationEndpoint:       auth0.String("https://example.com"),
+			JWKSURI:                     auth0.String("https://example.com/jwks"),
+			TokenEndpointJwtcaAudFormat: auth0.String("token_endpoint"),
+			Type:                        auth0.String("back_channel"),
+		},
+	})
+
+	oktaOpts := oktaConnection.Options.(*ConnectionOptionsOkta)
+	oidcOpts := oidcConnection.Options.(*ConnectionOptionsOIDC)
+
+	assert.Equal(t, "issuer", oktaOpts.GetTokenEndpointJwtcaAudFormat())
+	assert.Equal(t, "token_endpoint", oidcOpts.GetTokenEndpointJwtcaAudFormat())
+}

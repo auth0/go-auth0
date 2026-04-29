@@ -708,6 +708,10 @@ type ConnectionOptionsOkta struct {
 
 	// DPoPSigningAlg is the algorithm used to sign the DPoP proof. Currently allowed values: ES256, Ed25519.
 	DPoPSigningAlg *string `json:"dpop_signing_alg,omitempty"`
+
+	// TokenEndpointJwtcaAudFormat specifies the aud claim format in the JWT for client authentication
+	// at the token endpoint. Possible values: "issuer", "token_endpoint".
+	TokenEndpointJwtcaAudFormat *string `json:"token_endpoint_jwtca_aud_format,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOkta.
@@ -1213,6 +1217,10 @@ type ConnectionOptionsOIDC struct {
 
 	// DPoPSigningAlg is the algorithm used to sign the DPoP proof. Currently allowed values: ES256, Ed25519.
 	DPoPSigningAlg *string `json:"dpop_signing_alg,omitempty"`
+
+	// TokenEndpointJwtcaAudFormat specifies the aud claim format in the JWT for client authentication
+	// at the token endpoint. Possible values: "issuer", "token_endpoint".
+	TokenEndpointJwtcaAudFormat *string `json:"token_endpoint_jwtca_aud_format,omitempty"`
 }
 
 // ConnectionOptionsOIDCConnectionSettings contains PKCE configuration for the connection.
