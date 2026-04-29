@@ -29,7 +29,8 @@ var (
 	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
 	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 17)
 	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 19)
+	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
+	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 20)
 )
 
 type CreateResourceServerResponseContent struct {
@@ -64,6 +65,7 @@ type CreateResourceServerResponseContent struct {
 	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy      *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
@@ -205,6 +207,13 @@ func (c *CreateResourceServerResponseContent) GetSubjectTypeAuthorization() Reso
 		return ResourceServerSubjectTypeAuthorization{}
 	}
 	return *c.SubjectTypeAuthorization
+}
+
+func (c *CreateResourceServerResponseContent) GetAuthorizationPolicy() ResourceServerAuthorizationPolicy {
+	if c == nil || c.AuthorizationPolicy == nil {
+		return ResourceServerAuthorizationPolicy{}
+	}
+	return *c.AuthorizationPolicy
 }
 
 func (c *CreateResourceServerResponseContent) GetClientID() string {
@@ -361,6 +370,13 @@ func (c *CreateResourceServerResponseContent) SetSubjectTypeAuthorization(subjec
 	c.require(createResourceServerResponseContentFieldSubjectTypeAuthorization)
 }
 
+// SetAuthorizationPolicy sets the AuthorizationPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
+	c.AuthorizationPolicy = authorizationPolicy
+	c.require(createResourceServerResponseContentFieldAuthorizationPolicy)
+}
+
 // SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateResourceServerResponseContent) SetClientID(clientID *string) {
@@ -430,7 +446,8 @@ var (
 	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
 	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 17)
 	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 19)
+	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
+	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 20)
 )
 
 type GetResourceServerResponseContent struct {
@@ -465,6 +482,7 @@ type GetResourceServerResponseContent struct {
 	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy      *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
@@ -606,6 +624,13 @@ func (g *GetResourceServerResponseContent) GetSubjectTypeAuthorization() Resourc
 		return ResourceServerSubjectTypeAuthorization{}
 	}
 	return *g.SubjectTypeAuthorization
+}
+
+func (g *GetResourceServerResponseContent) GetAuthorizationPolicy() ResourceServerAuthorizationPolicy {
+	if g == nil || g.AuthorizationPolicy == nil {
+		return ResourceServerAuthorizationPolicy{}
+	}
+	return *g.AuthorizationPolicy
 }
 
 func (g *GetResourceServerResponseContent) GetClientID() string {
@@ -760,6 +785,13 @@ func (g *GetResourceServerResponseContent) SetProofOfPossession(proofOfPossessio
 func (g *GetResourceServerResponseContent) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
 	g.SubjectTypeAuthorization = subjectTypeAuthorization
 	g.require(getResourceServerResponseContentFieldSubjectTypeAuthorization)
+}
+
+// SetAuthorizationPolicy sets the AuthorizationPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
+	g.AuthorizationPolicy = authorizationPolicy
+	g.require(getResourceServerResponseContentFieldAuthorizationPolicy)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -963,7 +995,8 @@ var (
 	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 16)
 	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 17)
 	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	resourceServerFieldClientID                                  = big.NewInt(1 << 19)
+	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
+	resourceServerFieldClientID                                  = big.NewInt(1 << 20)
 )
 
 type ResourceServer struct {
@@ -998,6 +1031,7 @@ type ResourceServer struct {
 	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy      *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
@@ -1139,6 +1173,13 @@ func (r *ResourceServer) GetSubjectTypeAuthorization() ResourceServerSubjectType
 		return ResourceServerSubjectTypeAuthorization{}
 	}
 	return *r.SubjectTypeAuthorization
+}
+
+func (r *ResourceServer) GetAuthorizationPolicy() ResourceServerAuthorizationPolicy {
+	if r == nil || r.AuthorizationPolicy == nil {
+		return ResourceServerAuthorizationPolicy{}
+	}
+	return *r.AuthorizationPolicy
 }
 
 func (r *ResourceServer) GetClientID() string {
@@ -1295,6 +1336,13 @@ func (r *ResourceServer) SetSubjectTypeAuthorization(subjectTypeAuthorization *R
 	r.require(resourceServerFieldSubjectTypeAuthorization)
 }
 
+// SetAuthorizationPolicy sets the AuthorizationPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
+	r.AuthorizationPolicy = authorizationPolicy
+	r.require(resourceServerFieldAuthorizationPolicy)
+}
+
 // SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ResourceServer) SetClientID(clientID *string) {
@@ -1330,6 +1378,92 @@ func (r *ResourceServer) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ResourceServer) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Authorization policy for the resource server.
+var (
+	resourceServerAuthorizationPolicyFieldPolicyID = big.NewInt(1 << 0)
+)
+
+type ResourceServerAuthorizationPolicy struct {
+	// The ID of the authorization policy to apply.
+	PolicyID string `json:"policy_id" url:"policy_id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ResourceServerAuthorizationPolicy) GetPolicyID() string {
+	if r == nil {
+		return ""
+	}
+	return r.PolicyID
+}
+
+func (r *ResourceServerAuthorizationPolicy) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ResourceServerAuthorizationPolicy) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetPolicyID sets the PolicyID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerAuthorizationPolicy) SetPolicyID(policyID string) {
+	r.PolicyID = policyID
+	r.require(resourceServerAuthorizationPolicyFieldPolicyID)
+}
+
+func (r *ResourceServerAuthorizationPolicy) UnmarshalJSON(data []byte) error {
+	type unmarshaler ResourceServerAuthorizationPolicy
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ResourceServerAuthorizationPolicy(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResourceServerAuthorizationPolicy) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerAuthorizationPolicy
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *ResourceServerAuthorizationPolicy) String() string {
 	if r == nil {
 		return "<nil>"
 	}
@@ -2318,7 +2452,8 @@ var (
 	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
 	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 17)
 	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 19)
+	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
+	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 20)
 )
 
 type UpdateResourceServerResponseContent struct {
@@ -2353,6 +2488,7 @@ type UpdateResourceServerResponseContent struct {
 	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
 	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy      *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
@@ -2494,6 +2630,13 @@ func (u *UpdateResourceServerResponseContent) GetSubjectTypeAuthorization() Reso
 		return ResourceServerSubjectTypeAuthorization{}
 	}
 	return *u.SubjectTypeAuthorization
+}
+
+func (u *UpdateResourceServerResponseContent) GetAuthorizationPolicy() ResourceServerAuthorizationPolicy {
+	if u == nil || u.AuthorizationPolicy == nil {
+		return ResourceServerAuthorizationPolicy{}
+	}
+	return *u.AuthorizationPolicy
 }
 
 func (u *UpdateResourceServerResponseContent) GetClientID() string {
@@ -2648,6 +2791,13 @@ func (u *UpdateResourceServerResponseContent) SetProofOfPossession(proofOfPosses
 func (u *UpdateResourceServerResponseContent) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
 	u.SubjectTypeAuthorization = subjectTypeAuthorization
 	u.require(updateResourceServerResponseContentFieldSubjectTypeAuthorization)
+}
+
+// SetAuthorizationPolicy sets the AuthorizationPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
+	u.AuthorizationPolicy = authorizationPolicy
+	u.require(updateResourceServerResponseContentFieldAuthorizationPolicy)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;

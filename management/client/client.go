@@ -16,6 +16,7 @@ import (
 	devicecredentials "github.com/auth0/go-auth0/v2/management/devicecredentials"
 	emailsclient "github.com/auth0/go-auth0/v2/management/emails/client"
 	emailtemplates "github.com/auth0/go-auth0/v2/management/emailtemplates"
+	events "github.com/auth0/go-auth0/v2/management/events"
 	eventstreamsclient "github.com/auth0/go-auth0/v2/management/eventstreams/client"
 	flowsclient "github.com/auth0/go-auth0/v2/management/flows/client"
 	forms "github.com/auth0/go-auth0/v2/management/forms"
@@ -62,6 +63,7 @@ type Management struct {
 	DeviceCredentials     *devicecredentials.Client
 	EmailTemplates        *emailtemplates.Client
 	EventStreams          *eventstreamsclient.Client
+	Events                *events.Client
 	Flows                 *flowsclient.Client
 	Forms                 *forms.Client
 	UserGrants            *usergrants.Client
@@ -114,6 +116,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		DeviceCredentials:     devicecredentials.NewClient(options),
 		EmailTemplates:        emailtemplates.NewClient(options),
 		EventStreams:          eventstreamsclient.NewClient(options),
+		Events:                events.NewClient(options),
 		Flows:                 flowsclient.NewClient(options),
 		Forms:                 forms.NewClient(options),
 		UserGrants:            usergrants.NewClient(options),

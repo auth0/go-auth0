@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -101,7 +115,7 @@ func TestHooksListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestHooksListWithWireMock", "GET", "/hooks", map[string]string{"page": "1", "per_page": "1", "include_totals": "true", "enabled": "true", "fields": "fields", "triggerId": "credentials-exchange"}, 1)
+	VerifyRequestCount(t, "TestHooksListWithWireMock", "GET", "/hooks", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "enabled": "true", "fields": "fields", "triggerId": "credentials-exchange"}, 1)
 }
 
 func TestHooksCreateWithWireMock(
@@ -158,7 +172,7 @@ func TestHooksGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestHooksGetWithWireMock", "GET", "/hooks/id", map[string]string{"fields": "fields"}, 1)
+	VerifyRequestCount(t, "TestHooksGetWithWireMock", "GET", "/hooks/id", map[string]interface{}{"fields": "fields"}, 1)
 }
 
 func TestHooksDeleteWithWireMock(

@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -75,6 +89,11 @@ func TestResourceServersListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListResourceServerRequestParameters{
+		Identifiers: []*string{
+			management.String(
+				"identifiers",
+			),
+		},
 		Page: management.Int(
 			1,
 		),
@@ -97,7 +116,7 @@ func TestResourceServersListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestResourceServersListWithWireMock", "GET", "/resource-servers", map[string]string{"page": "1", "per_page": "1", "include_totals": "true", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestResourceServersListWithWireMock", "GET", "/resource-servers", map[string]interface{}{"identifiers": "identifiers", "page": "1", "per_page": "1", "include_totals": "true", "include_fields": "true"}, 1)
 }
 
 func TestResourceServersCreateWithWireMock(
@@ -152,7 +171,7 @@ func TestResourceServersGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestResourceServersGetWithWireMock", "GET", "/resource-servers/id", map[string]string{"include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestResourceServersGetWithWireMock", "GET", "/resource-servers/id", map[string]interface{}{"include_fields": "true"}, 1)
 }
 
 func TestResourceServersDeleteWithWireMock(

@@ -34,7 +34,7 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// List a verifiable credential templates.
+// List verifiable credential templates.
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListVerifiableCredentialTemplatesRequestParameters,

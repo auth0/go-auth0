@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -103,7 +117,7 @@ func TestUserGrantsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserGrantsListWithWireMock", "GET", "/grants", map[string]string{"per_page": "1", "page": "1", "include_totals": "true", "user_id": "user_id", "client_id": "client_id", "audience": "audience"}, 1)
+	VerifyRequestCount(t, "TestUserGrantsListWithWireMock", "GET", "/grants", map[string]interface{}{"per_page": "1", "page": "1", "include_totals": "true", "user_id": "user_id", "client_id": "client_id", "audience": "audience"}, 1)
 }
 
 func TestUserGrantsDeleteByUserIDWithWireMock(
@@ -129,7 +143,7 @@ func TestUserGrantsDeleteByUserIDWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserGrantsDeleteByUserIDWithWireMock", "DELETE", "/grants", map[string]string{"user_id": "user_id"}, 1)
+	VerifyRequestCount(t, "TestUserGrantsDeleteByUserIDWithWireMock", "DELETE", "/grants", map[string]interface{}{"user_id": "user_id"}, 1)
 }
 
 func TestUserGrantsDeleteWithWireMock(

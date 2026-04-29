@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -113,7 +127,7 @@ func TestUsersListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUsersListWithWireMock", "GET", "/users", map[string]string{"page": "1", "per_page": "1", "include_totals": "true", "sort": "sort", "connection": "connection", "fields": "fields", "include_fields": "true", "q": "q", "search_engine": "v1", "primary_order": "true"}, 1)
+	VerifyRequestCount(t, "TestUsersListWithWireMock", "GET", "/users", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "sort": "sort", "connection": "connection", "fields": "fields", "include_fields": "true", "q": "q", "search_engine": "v1", "primary_order": "true"}, 1)
 }
 
 func TestUsersCreateWithWireMock(
@@ -171,7 +185,7 @@ func TestUsersListUsersByEmailWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUsersListUsersByEmailWithWireMock", "GET", "/users-by-email", map[string]string{"fields": "fields", "include_fields": "true", "email": "email"}, 1)
+	VerifyRequestCount(t, "TestUsersListUsersByEmailWithWireMock", "GET", "/users-by-email", map[string]interface{}{"fields": "fields", "include_fields": "true", "email": "email"}, 1)
 }
 
 func TestUsersGetWithWireMock(
@@ -203,7 +217,7 @@ func TestUsersGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUsersGetWithWireMock", "GET", "/users/id", map[string]string{"fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestUsersGetWithWireMock", "GET", "/users/id", map[string]interface{}{"fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestUsersDeleteWithWireMock(
