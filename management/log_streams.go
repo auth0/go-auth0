@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
+	url "net/url"
 )
 
 var (
@@ -1078,6 +1079,45 @@ func (c CreateLogStreamRequestContent) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
+func (c *CreateLogStreamRequestContent) EncodeQueryValues(key string, values *url.Values) error {
+	if c == nil {
+		return nil
+	}
+	if c.typ == "CreateLogStreamHTTPRequestBody" || c.CreateLogStreamHTTPRequestBody != nil {
+		values.Add(key, fmt.Sprintf("%v", c.CreateLogStreamHTTPRequestBody))
+		return nil
+	}
+	if c.typ == "CreateLogStreamEventBridgeRequestBody" || c.CreateLogStreamEventBridgeRequestBody != nil {
+		values.Add(key, fmt.Sprintf("%v", c.CreateLogStreamEventBridgeRequestBody))
+		return nil
+	}
+	if c.typ == "CreateLogStreamEventGridRequestBody" || c.CreateLogStreamEventGridRequestBody != nil {
+		values.Add(key, fmt.Sprintf("%v", c.CreateLogStreamEventGridRequestBody))
+		return nil
+	}
+	if c.typ == "CreateLogStreamDatadogRequestBody" || c.CreateLogStreamDatadogRequestBody != nil {
+		values.Add(key, fmt.Sprintf("%v", c.CreateLogStreamDatadogRequestBody))
+		return nil
+	}
+	if c.typ == "CreateLogStreamSplunkRequestBody" || c.CreateLogStreamSplunkRequestBody != nil {
+		values.Add(key, fmt.Sprintf("%v", c.CreateLogStreamSplunkRequestBody))
+		return nil
+	}
+	if c.typ == "CreateLogStreamSumoRequestBody" || c.CreateLogStreamSumoRequestBody != nil {
+		values.Add(key, fmt.Sprintf("%v", c.CreateLogStreamSumoRequestBody))
+		return nil
+	}
+	if c.typ == "CreateLogStreamSegmentRequestBody" || c.CreateLogStreamSegmentRequestBody != nil {
+		values.Add(key, fmt.Sprintf("%v", c.CreateLogStreamSegmentRequestBody))
+		return nil
+	}
+	if c.typ == "CreateLogStreamMixpanelRequestBody" || c.CreateLogStreamMixpanelRequestBody != nil {
+		values.Add(key, fmt.Sprintf("%v", c.CreateLogStreamMixpanelRequestBody))
+		return nil
+	}
+	return nil
+}
+
 type CreateLogStreamRequestContentVisitor interface {
 	VisitCreateLogStreamHTTPRequestBody(*CreateLogStreamHTTPRequestBody) error
 	VisitCreateLogStreamEventBridgeRequestBody(*CreateLogStreamEventBridgeRequestBody) error
@@ -1264,6 +1304,45 @@ func (c CreateLogStreamResponseContent) MarshalJSON() ([]byte, error) {
 		return json.Marshal(c.LogStreamMixpanelResponseSchema)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+func (c *CreateLogStreamResponseContent) EncodeQueryValues(key string, values *url.Values) error {
+	if c == nil {
+		return nil
+	}
+	if c.typ == "LogStreamHTTPResponseSchema" || c.LogStreamHTTPResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", c.LogStreamHTTPResponseSchema))
+		return nil
+	}
+	if c.typ == "LogStreamEventBridgeResponseSchema" || c.LogStreamEventBridgeResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", c.LogStreamEventBridgeResponseSchema))
+		return nil
+	}
+	if c.typ == "LogStreamEventGridResponseSchema" || c.LogStreamEventGridResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", c.LogStreamEventGridResponseSchema))
+		return nil
+	}
+	if c.typ == "LogStreamDatadogResponseSchema" || c.LogStreamDatadogResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", c.LogStreamDatadogResponseSchema))
+		return nil
+	}
+	if c.typ == "LogStreamSplunkResponseSchema" || c.LogStreamSplunkResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", c.LogStreamSplunkResponseSchema))
+		return nil
+	}
+	if c.typ == "LogStreamSumoResponseSchema" || c.LogStreamSumoResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", c.LogStreamSumoResponseSchema))
+		return nil
+	}
+	if c.typ == "LogStreamSegmentResponseSchema" || c.LogStreamSegmentResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", c.LogStreamSegmentResponseSchema))
+		return nil
+	}
+	if c.typ == "LogStreamMixpanelResponseSchema" || c.LogStreamMixpanelResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", c.LogStreamMixpanelResponseSchema))
+		return nil
+	}
+	return nil
 }
 
 type CreateLogStreamResponseContentVisitor interface {
@@ -2004,6 +2083,45 @@ func (g GetLogStreamResponseContent) MarshalJSON() ([]byte, error) {
 		return json.Marshal(g.LogStreamMixpanelResponseSchema)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", g)
+}
+
+func (g *GetLogStreamResponseContent) EncodeQueryValues(key string, values *url.Values) error {
+	if g == nil {
+		return nil
+	}
+	if g.typ == "LogStreamHTTPResponseSchema" || g.LogStreamHTTPResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", g.LogStreamHTTPResponseSchema))
+		return nil
+	}
+	if g.typ == "LogStreamEventBridgeResponseSchema" || g.LogStreamEventBridgeResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", g.LogStreamEventBridgeResponseSchema))
+		return nil
+	}
+	if g.typ == "LogStreamEventGridResponseSchema" || g.LogStreamEventGridResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", g.LogStreamEventGridResponseSchema))
+		return nil
+	}
+	if g.typ == "LogStreamDatadogResponseSchema" || g.LogStreamDatadogResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", g.LogStreamDatadogResponseSchema))
+		return nil
+	}
+	if g.typ == "LogStreamSplunkResponseSchema" || g.LogStreamSplunkResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", g.LogStreamSplunkResponseSchema))
+		return nil
+	}
+	if g.typ == "LogStreamSumoResponseSchema" || g.LogStreamSumoResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", g.LogStreamSumoResponseSchema))
+		return nil
+	}
+	if g.typ == "LogStreamSegmentResponseSchema" || g.LogStreamSegmentResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", g.LogStreamSegmentResponseSchema))
+		return nil
+	}
+	if g.typ == "LogStreamMixpanelResponseSchema" || g.LogStreamMixpanelResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", g.LogStreamMixpanelResponseSchema))
+		return nil
+	}
+	return nil
 }
 
 type GetLogStreamResponseContentVisitor interface {
@@ -4912,6 +5030,45 @@ func (l LogStreamResponseSchema) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
 }
 
+func (l *LogStreamResponseSchema) EncodeQueryValues(key string, values *url.Values) error {
+	if l == nil {
+		return nil
+	}
+	if l.typ == "LogStreamHTTPResponseSchema" || l.LogStreamHTTPResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamHTTPResponseSchema))
+		return nil
+	}
+	if l.typ == "LogStreamEventBridgeResponseSchema" || l.LogStreamEventBridgeResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamEventBridgeResponseSchema))
+		return nil
+	}
+	if l.typ == "LogStreamEventGridResponseSchema" || l.LogStreamEventGridResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamEventGridResponseSchema))
+		return nil
+	}
+	if l.typ == "LogStreamDatadogResponseSchema" || l.LogStreamDatadogResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamDatadogResponseSchema))
+		return nil
+	}
+	if l.typ == "LogStreamSplunkResponseSchema" || l.LogStreamSplunkResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamSplunkResponseSchema))
+		return nil
+	}
+	if l.typ == "LogStreamSumoResponseSchema" || l.LogStreamSumoResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamSumoResponseSchema))
+		return nil
+	}
+	if l.typ == "LogStreamSegmentResponseSchema" || l.LogStreamSegmentResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamSegmentResponseSchema))
+		return nil
+	}
+	if l.typ == "LogStreamMixpanelResponseSchema" || l.LogStreamMixpanelResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamMixpanelResponseSchema))
+		return nil
+	}
+	return nil
+}
+
 type LogStreamResponseSchemaVisitor interface {
 	VisitLogStreamHTTPResponseSchema(*LogStreamHTTPResponseSchema) error
 	VisitLogStreamEventBridgeResponseSchema(*LogStreamEventBridgeResponseSchema) error
@@ -5458,6 +5615,37 @@ func (l LogStreamSinkPatch) MarshalJSON() ([]byte, error) {
 		return json.Marshal(l.LogStreamMixpanelSinkPatch)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+func (l *LogStreamSinkPatch) EncodeQueryValues(key string, values *url.Values) error {
+	if l == nil {
+		return nil
+	}
+	if l.typ == "LogStreamHTTPSink" || l.LogStreamHTTPSink != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamHTTPSink))
+		return nil
+	}
+	if l.typ == "LogStreamDatadogSink" || l.LogStreamDatadogSink != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamDatadogSink))
+		return nil
+	}
+	if l.typ == "LogStreamSplunkSink" || l.LogStreamSplunkSink != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamSplunkSink))
+		return nil
+	}
+	if l.typ == "LogStreamSumoSink" || l.LogStreamSumoSink != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamSumoSink))
+		return nil
+	}
+	if l.typ == "LogStreamSegmentSink" || l.LogStreamSegmentSink != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamSegmentSink))
+		return nil
+	}
+	if l.typ == "LogStreamMixpanelSinkPatch" || l.LogStreamMixpanelSinkPatch != nil {
+		values.Add(key, fmt.Sprintf("%v", l.LogStreamMixpanelSinkPatch))
+		return nil
+	}
+	return nil
 }
 
 type LogStreamSinkPatchVisitor interface {
@@ -6333,6 +6521,45 @@ func (u UpdateLogStreamResponseContent) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.LogStreamMixpanelResponseSchema)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+func (u *UpdateLogStreamResponseContent) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "LogStreamHTTPResponseSchema" || u.LogStreamHTTPResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", u.LogStreamHTTPResponseSchema))
+		return nil
+	}
+	if u.typ == "LogStreamEventBridgeResponseSchema" || u.LogStreamEventBridgeResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", u.LogStreamEventBridgeResponseSchema))
+		return nil
+	}
+	if u.typ == "LogStreamEventGridResponseSchema" || u.LogStreamEventGridResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", u.LogStreamEventGridResponseSchema))
+		return nil
+	}
+	if u.typ == "LogStreamDatadogResponseSchema" || u.LogStreamDatadogResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", u.LogStreamDatadogResponseSchema))
+		return nil
+	}
+	if u.typ == "LogStreamSplunkResponseSchema" || u.LogStreamSplunkResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", u.LogStreamSplunkResponseSchema))
+		return nil
+	}
+	if u.typ == "LogStreamSumoResponseSchema" || u.LogStreamSumoResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", u.LogStreamSumoResponseSchema))
+		return nil
+	}
+	if u.typ == "LogStreamSegmentResponseSchema" || u.LogStreamSegmentResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", u.LogStreamSegmentResponseSchema))
+		return nil
+	}
+	if u.typ == "LogStreamMixpanelResponseSchema" || u.LogStreamMixpanelResponseSchema != nil {
+		values.Add(key, fmt.Sprintf("%v", u.LogStreamMixpanelResponseSchema))
+		return nil
+	}
+	return nil
 }
 
 type UpdateLogStreamResponseContentVisitor interface {

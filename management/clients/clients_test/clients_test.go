@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -115,7 +129,7 @@ func TestClientsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestClientsListWithWireMock", "GET", "/clients", map[string]string{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "is_global": "true", "is_first_party": "true", "app_type": "app_type", "external_client_id": "external_client_id", "q": "q"}, 1)
+	VerifyRequestCount(t, "TestClientsListWithWireMock", "GET", "/clients", map[string]interface{}{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "is_global": "true", "is_first_party": "true", "app_type": "app_type", "external_client_id": "external_client_id", "q": "q"}, 1)
 }
 
 func TestClientsCreateWithWireMock(
@@ -225,7 +239,7 @@ func TestClientsGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestClientsGetWithWireMock", "GET", "/clients/id", map[string]string{"fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestClientsGetWithWireMock", "GET", "/clients/id", map[string]interface{}{"fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestClientsDeleteWithWireMock(

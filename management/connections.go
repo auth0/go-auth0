@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
+	url "net/url"
 )
 
 // Specifies the API behavior for password authentication
@@ -931,6 +932,47 @@ func (c *ConnectionGatewayAuthentication) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+// Algorithm allowed to verify the ID tokens.
+type ConnectionIDTokenSignedResponseAlgEnum string
+
+const (
+	ConnectionIDTokenSignedResponseAlgEnumEs256 ConnectionIDTokenSignedResponseAlgEnum = "ES256"
+	ConnectionIDTokenSignedResponseAlgEnumEs384 ConnectionIDTokenSignedResponseAlgEnum = "ES384"
+	ConnectionIDTokenSignedResponseAlgEnumPs256 ConnectionIDTokenSignedResponseAlgEnum = "PS256"
+	ConnectionIDTokenSignedResponseAlgEnumPs384 ConnectionIDTokenSignedResponseAlgEnum = "PS384"
+	ConnectionIDTokenSignedResponseAlgEnumRs256 ConnectionIDTokenSignedResponseAlgEnum = "RS256"
+	ConnectionIDTokenSignedResponseAlgEnumRs384 ConnectionIDTokenSignedResponseAlgEnum = "RS384"
+	ConnectionIDTokenSignedResponseAlgEnumRs512 ConnectionIDTokenSignedResponseAlgEnum = "RS512"
+)
+
+func NewConnectionIDTokenSignedResponseAlgEnumFromString(s string) (ConnectionIDTokenSignedResponseAlgEnum, error) {
+	switch s {
+	case "ES256":
+		return ConnectionIDTokenSignedResponseAlgEnumEs256, nil
+	case "ES384":
+		return ConnectionIDTokenSignedResponseAlgEnumEs384, nil
+	case "PS256":
+		return ConnectionIDTokenSignedResponseAlgEnumPs256, nil
+	case "PS384":
+		return ConnectionIDTokenSignedResponseAlgEnumPs384, nil
+	case "RS256":
+		return ConnectionIDTokenSignedResponseAlgEnumRs256, nil
+	case "RS384":
+		return ConnectionIDTokenSignedResponseAlgEnumRs384, nil
+	case "RS512":
+		return ConnectionIDTokenSignedResponseAlgEnumRs512, nil
+	}
+	var t ConnectionIDTokenSignedResponseAlgEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionIDTokenSignedResponseAlgEnum) Ptr() *ConnectionIDTokenSignedResponseAlgEnum {
+	return &c
+}
+
+// List of algorithms allowed to verify the ID tokens.
+type ConnectionIDTokenSignedResponseAlgs = []ConnectionIDTokenSignedResponseAlgEnum
 
 // Order of precedence for attribute types
 type ConnectionIdentifierPrecedenceEnum string
@@ -2639,6 +2681,10 @@ var (
 	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
 	connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 29)
 	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
+	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
+	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 32)
+	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 33)
+	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 34)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2655,30 +2701,34 @@ type ConnectionPropertiesOptions struct {
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
 	ImportMode *bool `json:"import_mode,omitempty" url:"import_mode,omitempty"`
 	// Stores encrypted string only configurations for connections
-	Configuration                    map[string]*string                          `json:"configuration,omitempty" url:"configuration,omitempty"`
-	CustomScripts                    *ConnectionCustomScripts                    `json:"customScripts,omitempty" url:"customScripts,omitempty"`
-	AuthenticationMethods            *ConnectionAuthenticationMethods            `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
-	PasskeyOptions                   *ConnectionPasskeyOptions                   `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
-	PasswordPolicy                   *ConnectionPasswordPolicyEnum               `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
-	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions        `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
-	PasswordHistory                  *ConnectionPasswordHistoryOptions           `json:"password_history,omitempty" url:"password_history,omitempty"`
-	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions    `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
-	PasswordDictionary               *ConnectionPasswordDictionaryOptions        `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
-	APIEnableUsers                   *bool                                       `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
-	APIEnableGroups                  *bool                                       `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
-	BasicProfile                     *bool                                       `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
-	ExtAdmin                         *bool                                       `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
-	ExtIsSuspended                   *bool                                       `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
-	ExtAgreedTerms                   *bool                                       `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
-	ExtGroups                        *bool                                       `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
-	ExtAssignedPlans                 *bool                                       `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
-	ExtProfile                       *bool                                       `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
-	DisableSelfServiceChangePassword *bool                                       `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
-	UpstreamParams                   *ConnectionUpstreamParams                   `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum        `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	GatewayAuthentication            *ConnectionGatewayAuthentication            `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
-	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
-	PasswordOptions                  *ConnectionPasswordOptions                  `json:"password_options,omitempty" url:"password_options,omitempty"`
+	Configuration                    map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
+	CustomScripts                    *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
+	AuthenticationMethods            *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	PasskeyOptions                   *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
+	PasswordPolicy                   *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
+	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
+	PasswordHistory                  *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
+	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
+	PasswordDictionary               *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
+	APIEnableUsers                   *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableGroups                  *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
+	BasicProfile                     *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
+	ExtAdmin                         *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
+	ExtIsSuspended                   *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
+	ExtAgreedTerms                   *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
+	ExtGroups                        *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
+	ExtAssignedPlans                 *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
+	ExtProfile                       *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
+	DisableSelfServiceChangePassword *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
+	UpstreamParams                   *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
+	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens    `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
+	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
+	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2903,6 +2953,34 @@ func (c *ConnectionPropertiesOptions) GetPasswordOptions() ConnectionPasswordOpt
 		return ConnectionPasswordOptions{}
 	}
 	return *c.PasswordOptions
+}
+
+func (c *ConnectionPropertiesOptions) GetIDTokenSignedResponseAlgs() ConnectionIDTokenSignedResponseAlgs {
+	if c == nil || c.IDTokenSignedResponseAlgs == nil {
+		return nil
+	}
+	return *c.IDTokenSignedResponseAlgs
+}
+
+func (c *ConnectionPropertiesOptions) GetTokenEndpointAuthMethod() ConnectionTokenEndpointAuthMethodEnum {
+	if c == nil || c.TokenEndpointAuthMethod == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthMethod
+}
+
+func (c *ConnectionPropertiesOptions) GetTokenEndpointAuthSigningAlg() ConnectionTokenEndpointAuthSigningAlgEnum {
+	if c == nil || c.TokenEndpointAuthSigningAlg == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthSigningAlg
+}
+
+func (c *ConnectionPropertiesOptions) GetTokenEndpointJwtcaAudFormat() ConnectionTokenEndpointJwtcaAudFormatEnumOidc {
+	if c == nil || c.TokenEndpointJwtcaAudFormat == nil {
+		return ""
+	}
+	return *c.TokenEndpointJwtcaAudFormat
 }
 
 func (c *ConnectionPropertiesOptions) GetExtraProperties() map[string]interface{} {
@@ -3136,6 +3214,34 @@ func (c *ConnectionPropertiesOptions) SetPasswordOptions(passwordOptions *Connec
 	c.require(connectionPropertiesOptionsFieldPasswordOptions)
 }
 
+// SetIDTokenSignedResponseAlgs sets the IDTokenSignedResponseAlgs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetIDTokenSignedResponseAlgs(idTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs) {
+	c.IDTokenSignedResponseAlgs = idTokenSignedResponseAlgs
+	c.require(connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs)
+}
+
+// SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum) {
+	c.TokenEndpointAuthMethod = tokenEndpointAuthMethod
+	c.require(connectionPropertiesOptionsFieldTokenEndpointAuthMethod)
+}
+
+// SetTokenEndpointAuthSigningAlg sets the TokenEndpointAuthSigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetTokenEndpointAuthSigningAlg(tokenEndpointAuthSigningAlg *ConnectionTokenEndpointAuthSigningAlgEnum) {
+	c.TokenEndpointAuthSigningAlg = tokenEndpointAuthSigningAlg
+	c.require(connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg)
+}
+
+// SetTokenEndpointJwtcaAudFormat sets the TokenEndpointJwtcaAudFormat field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetTokenEndpointJwtcaAudFormat(tokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc) {
+	c.TokenEndpointJwtcaAudFormat = tokenEndpointJwtcaAudFormat
+	c.require(connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat)
+}
+
 func (c *ConnectionPropertiesOptions) UnmarshalJSON(data []byte) error {
 	type embed ConnectionPropertiesOptions
 	var unmarshaler = struct {
@@ -3231,6 +3337,90 @@ func (c ConnectionSignupBehaviorEnum) Ptr() *ConnectionSignupBehaviorEnum {
 	return &c
 }
 
+// Authentication method used at the identity provider's token endpoint. 'client_secret_post' sends credentials in the request body; 'private_key_jwt' uses a signed JWT assertion for enhanced security.
+type ConnectionTokenEndpointAuthMethodEnum string
+
+const (
+	ConnectionTokenEndpointAuthMethodEnumClientSecretPost ConnectionTokenEndpointAuthMethodEnum = "client_secret_post"
+	ConnectionTokenEndpointAuthMethodEnumPrivateKeyJwt    ConnectionTokenEndpointAuthMethodEnum = "private_key_jwt"
+)
+
+func NewConnectionTokenEndpointAuthMethodEnumFromString(s string) (ConnectionTokenEndpointAuthMethodEnum, error) {
+	switch s {
+	case "client_secret_post":
+		return ConnectionTokenEndpointAuthMethodEnumClientSecretPost, nil
+	case "private_key_jwt":
+		return ConnectionTokenEndpointAuthMethodEnumPrivateKeyJwt, nil
+	}
+	var t ConnectionTokenEndpointAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionTokenEndpointAuthMethodEnum) Ptr() *ConnectionTokenEndpointAuthMethodEnum {
+	return &c
+}
+
+// Algorithm used to sign client_assertions.
+type ConnectionTokenEndpointAuthSigningAlgEnum string
+
+const (
+	ConnectionTokenEndpointAuthSigningAlgEnumEs256 ConnectionTokenEndpointAuthSigningAlgEnum = "ES256"
+	ConnectionTokenEndpointAuthSigningAlgEnumEs384 ConnectionTokenEndpointAuthSigningAlgEnum = "ES384"
+	ConnectionTokenEndpointAuthSigningAlgEnumPs256 ConnectionTokenEndpointAuthSigningAlgEnum = "PS256"
+	ConnectionTokenEndpointAuthSigningAlgEnumPs384 ConnectionTokenEndpointAuthSigningAlgEnum = "PS384"
+	ConnectionTokenEndpointAuthSigningAlgEnumRs256 ConnectionTokenEndpointAuthSigningAlgEnum = "RS256"
+	ConnectionTokenEndpointAuthSigningAlgEnumRs384 ConnectionTokenEndpointAuthSigningAlgEnum = "RS384"
+	ConnectionTokenEndpointAuthSigningAlgEnumRs512 ConnectionTokenEndpointAuthSigningAlgEnum = "RS512"
+)
+
+func NewConnectionTokenEndpointAuthSigningAlgEnumFromString(s string) (ConnectionTokenEndpointAuthSigningAlgEnum, error) {
+	switch s {
+	case "ES256":
+		return ConnectionTokenEndpointAuthSigningAlgEnumEs256, nil
+	case "ES384":
+		return ConnectionTokenEndpointAuthSigningAlgEnumEs384, nil
+	case "PS256":
+		return ConnectionTokenEndpointAuthSigningAlgEnumPs256, nil
+	case "PS384":
+		return ConnectionTokenEndpointAuthSigningAlgEnumPs384, nil
+	case "RS256":
+		return ConnectionTokenEndpointAuthSigningAlgEnumRs256, nil
+	case "RS384":
+		return ConnectionTokenEndpointAuthSigningAlgEnumRs384, nil
+	case "RS512":
+		return ConnectionTokenEndpointAuthSigningAlgEnumRs512, nil
+	}
+	var t ConnectionTokenEndpointAuthSigningAlgEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionTokenEndpointAuthSigningAlgEnum) Ptr() *ConnectionTokenEndpointAuthSigningAlgEnum {
+	return &c
+}
+
+// Specifies the format of the aud (audience) claim included in the JWT used for client authentication at the token endpoint. Accepted values are: 'issuer' (the aud claim is set to the OIDC issuer URL) or 'token_endpoint' (the aud claim is set to the token endpoint URL).
+type ConnectionTokenEndpointJwtcaAudFormatEnumOidc string
+
+const (
+	ConnectionTokenEndpointJwtcaAudFormatEnumOidcIssuer        ConnectionTokenEndpointJwtcaAudFormatEnumOidc = "issuer"
+	ConnectionTokenEndpointJwtcaAudFormatEnumOidcTokenEndpoint ConnectionTokenEndpointJwtcaAudFormatEnumOidc = "token_endpoint"
+)
+
+func NewConnectionTokenEndpointJwtcaAudFormatEnumOidcFromString(s string) (ConnectionTokenEndpointJwtcaAudFormatEnumOidc, error) {
+	switch s {
+	case "issuer":
+		return ConnectionTokenEndpointJwtcaAudFormatEnumOidcIssuer, nil
+	case "token_endpoint":
+		return ConnectionTokenEndpointJwtcaAudFormatEnumOidcTokenEndpoint, nil
+	}
+	var t ConnectionTokenEndpointJwtcaAudFormatEnumOidc
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionTokenEndpointJwtcaAudFormatEnumOidc) Ptr() *ConnectionTokenEndpointJwtcaAudFormatEnumOidc {
+	return &c
+}
+
 type ConnectionUpstreamAdditionalProperties struct {
 	ConnectionUpstreamAlias *ConnectionUpstreamAlias
 	ConnectionUpstreamValue *ConnectionUpstreamValue
@@ -3276,6 +3466,21 @@ func (c ConnectionUpstreamAdditionalProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(c.ConnectionUpstreamValue)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+func (c *ConnectionUpstreamAdditionalProperties) EncodeQueryValues(key string, values *url.Values) error {
+	if c == nil {
+		return nil
+	}
+	if c.typ == "ConnectionUpstreamAlias" || c.ConnectionUpstreamAlias != nil {
+		values.Add(key, fmt.Sprintf("%v", c.ConnectionUpstreamAlias))
+		return nil
+	}
+	if c.typ == "ConnectionUpstreamValue" || c.ConnectionUpstreamValue != nil {
+		values.Add(key, fmt.Sprintf("%v", c.ConnectionUpstreamValue))
+		return nil
+	}
+	return nil
 }
 
 type ConnectionUpstreamAdditionalPropertiesVisitor interface {
@@ -5099,6 +5304,10 @@ var (
 	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
 	updateConnectionOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 29)
 	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
+	updateConnectionOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
+	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 32)
+	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 33)
+	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 34)
 )
 
 type UpdateConnectionOptions struct {
@@ -5115,30 +5324,34 @@ type UpdateConnectionOptions struct {
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
 	ImportMode *bool `json:"import_mode,omitempty" url:"import_mode,omitempty"`
 	// Stores encrypted string only configurations for connections
-	Configuration                    map[string]*string                          `json:"configuration,omitempty" url:"configuration,omitempty"`
-	CustomScripts                    *ConnectionCustomScripts                    `json:"customScripts,omitempty" url:"customScripts,omitempty"`
-	AuthenticationMethods            *ConnectionAuthenticationMethods            `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
-	PasskeyOptions                   *ConnectionPasskeyOptions                   `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
-	PasswordPolicy                   *ConnectionPasswordPolicyEnum               `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
-	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions        `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
-	PasswordHistory                  *ConnectionPasswordHistoryOptions           `json:"password_history,omitempty" url:"password_history,omitempty"`
-	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions    `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
-	PasswordDictionary               *ConnectionPasswordDictionaryOptions        `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
-	APIEnableUsers                   *bool                                       `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
-	APIEnableGroups                  *bool                                       `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
-	BasicProfile                     *bool                                       `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
-	ExtAdmin                         *bool                                       `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
-	ExtIsSuspended                   *bool                                       `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
-	ExtAgreedTerms                   *bool                                       `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
-	ExtGroups                        *bool                                       `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
-	ExtAssignedPlans                 *bool                                       `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
-	ExtProfile                       *bool                                       `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
-	DisableSelfServiceChangePassword *bool                                       `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
-	UpstreamParams                   *ConnectionUpstreamParams                   `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum        `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	GatewayAuthentication            *ConnectionGatewayAuthentication            `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
-	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
-	PasswordOptions                  *ConnectionPasswordOptions                  `json:"password_options,omitempty" url:"password_options,omitempty"`
+	Configuration                    map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
+	CustomScripts                    *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
+	AuthenticationMethods            *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	PasskeyOptions                   *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
+	PasswordPolicy                   *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
+	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
+	PasswordHistory                  *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
+	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
+	PasswordDictionary               *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
+	APIEnableUsers                   *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableGroups                  *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
+	BasicProfile                     *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
+	ExtAdmin                         *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
+	ExtIsSuspended                   *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
+	ExtAgreedTerms                   *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
+	ExtGroups                        *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
+	ExtAssignedPlans                 *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
+	ExtProfile                       *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
+	DisableSelfServiceChangePassword *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
+	UpstreamParams                   *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
+	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens    `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
+	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
+	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -5363,6 +5576,34 @@ func (u *UpdateConnectionOptions) GetPasswordOptions() ConnectionPasswordOptions
 		return ConnectionPasswordOptions{}
 	}
 	return *u.PasswordOptions
+}
+
+func (u *UpdateConnectionOptions) GetIDTokenSignedResponseAlgs() ConnectionIDTokenSignedResponseAlgs {
+	if u == nil || u.IDTokenSignedResponseAlgs == nil {
+		return nil
+	}
+	return *u.IDTokenSignedResponseAlgs
+}
+
+func (u *UpdateConnectionOptions) GetTokenEndpointAuthMethod() ConnectionTokenEndpointAuthMethodEnum {
+	if u == nil || u.TokenEndpointAuthMethod == nil {
+		return ""
+	}
+	return *u.TokenEndpointAuthMethod
+}
+
+func (u *UpdateConnectionOptions) GetTokenEndpointAuthSigningAlg() ConnectionTokenEndpointAuthSigningAlgEnum {
+	if u == nil || u.TokenEndpointAuthSigningAlg == nil {
+		return ""
+	}
+	return *u.TokenEndpointAuthSigningAlg
+}
+
+func (u *UpdateConnectionOptions) GetTokenEndpointJwtcaAudFormat() ConnectionTokenEndpointJwtcaAudFormatEnumOidc {
+	if u == nil || u.TokenEndpointJwtcaAudFormat == nil {
+		return ""
+	}
+	return *u.TokenEndpointJwtcaAudFormat
 }
 
 func (u *UpdateConnectionOptions) GetExtraProperties() map[string]interface{} {
@@ -5594,6 +5835,34 @@ func (u *UpdateConnectionOptions) SetFederatedConnectionsAccessTokens(federatedC
 func (u *UpdateConnectionOptions) SetPasswordOptions(passwordOptions *ConnectionPasswordOptions) {
 	u.PasswordOptions = passwordOptions
 	u.require(updateConnectionOptionsFieldPasswordOptions)
+}
+
+// SetIDTokenSignedResponseAlgs sets the IDTokenSignedResponseAlgs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetIDTokenSignedResponseAlgs(idTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs) {
+	u.IDTokenSignedResponseAlgs = idTokenSignedResponseAlgs
+	u.require(updateConnectionOptionsFieldIDTokenSignedResponseAlgs)
+}
+
+// SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum) {
+	u.TokenEndpointAuthMethod = tokenEndpointAuthMethod
+	u.require(updateConnectionOptionsFieldTokenEndpointAuthMethod)
+}
+
+// SetTokenEndpointAuthSigningAlg sets the TokenEndpointAuthSigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetTokenEndpointAuthSigningAlg(tokenEndpointAuthSigningAlg *ConnectionTokenEndpointAuthSigningAlgEnum) {
+	u.TokenEndpointAuthSigningAlg = tokenEndpointAuthSigningAlg
+	u.require(updateConnectionOptionsFieldTokenEndpointAuthSigningAlg)
+}
+
+// SetTokenEndpointJwtcaAudFormat sets the TokenEndpointJwtcaAudFormat field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetTokenEndpointJwtcaAudFormat(tokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc) {
+	u.TokenEndpointJwtcaAudFormat = tokenEndpointJwtcaAudFormat
+	u.require(updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat)
 }
 
 func (u *UpdateConnectionOptions) UnmarshalJSON(data []byte) error {

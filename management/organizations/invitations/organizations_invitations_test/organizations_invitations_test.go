@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -104,7 +118,7 @@ func TestOrganizationsInvitationsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsInvitationsListWithWireMock", "GET", "/organizations/id/invitations", map[string]string{"page": "1", "per_page": "1", "include_totals": "true", "fields": "fields", "include_fields": "true", "sort": "sort"}, 1)
+	VerifyRequestCount(t, "TestOrganizationsInvitationsListWithWireMock", "GET", "/organizations/id/invitations", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "fields": "fields", "include_fields": "true", "sort": "sort"}, 1)
 }
 
 func TestOrganizationsInvitationsCreateWithWireMock(
@@ -170,7 +184,7 @@ func TestOrganizationsInvitationsGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsInvitationsGetWithWireMock", "GET", "/organizations/id/invitations/invitation_id", map[string]string{"fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestOrganizationsInvitationsGetWithWireMock", "GET", "/organizations/id/invitations/invitation_id", map[string]interface{}{"fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestOrganizationsInvitationsDeleteWithWireMock(

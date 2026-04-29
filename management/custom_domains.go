@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
+	url "net/url"
 )
 
 var (
@@ -1899,6 +1900,21 @@ func (g GetDefaultDomainResponseContent) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", g)
 }
 
+func (g *GetDefaultDomainResponseContent) EncodeQueryValues(key string, values *url.Values) error {
+	if g == nil {
+		return nil
+	}
+	if g.typ == "GetDefaultCustomDomainResponseContent" || g.GetDefaultCustomDomainResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", g.GetDefaultCustomDomainResponseContent))
+		return nil
+	}
+	if g.typ == "GetDefaultCanonicalDomainResponseContent" || g.GetDefaultCanonicalDomainResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", g.GetDefaultCanonicalDomainResponseContent))
+		return nil
+	}
+	return nil
+}
+
 type GetDefaultDomainResponseContentVisitor interface {
 	VisitGetDefaultCustomDomainResponseContent(*GetDefaultCustomDomainResponseContent) error
 	VisitGetDefaultCanonicalDomainResponseContent(*GetDefaultCanonicalDomainResponseContent) error
@@ -2699,6 +2715,21 @@ func (u UpdateDefaultDomainResponseContent) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.UpdateDefaultCanonicalDomainResponseContent)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+func (u *UpdateDefaultDomainResponseContent) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "UpdateDefaultCustomDomainResponseContent" || u.UpdateDefaultCustomDomainResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", u.UpdateDefaultCustomDomainResponseContent))
+		return nil
+	}
+	if u.typ == "UpdateDefaultCanonicalDomainResponseContent" || u.UpdateDefaultCanonicalDomainResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", u.UpdateDefaultCanonicalDomainResponseContent))
+		return nil
+	}
+	return nil
 }
 
 type UpdateDefaultDomainResponseContentVisitor interface {

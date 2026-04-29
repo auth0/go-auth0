@@ -4456,6 +4456,38 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetIDTokenSignedResponseAlgs", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueIDTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs
+		obj.SetIDTokenSignedResponseAlgs(fernTestValueIDTokenSignedResponseAlgs)
+		assert.Equal(t, fernTestValueIDTokenSignedResponseAlgs, obj.IDTokenSignedResponseAlgs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTokenEndpointAuthMethod", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueTokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum
+		obj.SetTokenEndpointAuthMethod(fernTestValueTokenEndpointAuthMethod)
+		assert.Equal(t, fernTestValueTokenEndpointAuthMethod, obj.TokenEndpointAuthMethod)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTokenEndpointAuthSigningAlg", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueTokenEndpointAuthSigningAlg *ConnectionTokenEndpointAuthSigningAlgEnum
+		obj.SetTokenEndpointAuthSigningAlg(fernTestValueTokenEndpointAuthSigningAlg)
+		assert.Equal(t, fernTestValueTokenEndpointAuthSigningAlg, obj.TokenEndpointAuthSigningAlg)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTokenEndpointJwtcaAudFormat", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueTokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc
+		obj.SetTokenEndpointJwtcaAudFormat(fernTestValueTokenEndpointJwtcaAudFormat)
+		assert.Equal(t, fernTestValueTokenEndpointJwtcaAudFormat, obj.TokenEndpointJwtcaAudFormat)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersConnectionPropertiesOptions(t *testing.T) {
@@ -5510,6 +5542,142 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 		_ = obj.GetPasswordOptions() // Should return zero value
 	})
 
+	t.Run("GetIDTokenSignedResponseAlgs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionIDTokenSignedResponseAlgs
+		obj.IDTokenSignedResponseAlgs = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIDTokenSignedResponseAlgs(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIDTokenSignedResponseAlgs_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.IDTokenSignedResponseAlgs = nil
+		var expectedZero ConnectionIDTokenSignedResponseAlgs
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIDTokenSignedResponseAlgs(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIDTokenSignedResponseAlgs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIDTokenSignedResponseAlgs() // Should return zero value
+	})
+
+	t.Run("GetTokenEndpointAuthMethod", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionTokenEndpointAuthMethodEnum
+		obj.TokenEndpointAuthMethod = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenEndpointAuthMethod(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenEndpointAuthMethod_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.TokenEndpointAuthMethod = nil
+		var expectedZero ConnectionTokenEndpointAuthMethodEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenEndpointAuthMethod(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenEndpointAuthMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenEndpointAuthMethod() // Should return zero value
+	})
+
+	t.Run("GetTokenEndpointAuthSigningAlg", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionTokenEndpointAuthSigningAlgEnum
+		obj.TokenEndpointAuthSigningAlg = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenEndpointAuthSigningAlg(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenEndpointAuthSigningAlg_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.TokenEndpointAuthSigningAlg = nil
+		var expectedZero ConnectionTokenEndpointAuthSigningAlgEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenEndpointAuthSigningAlg(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenEndpointAuthSigningAlg_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenEndpointAuthSigningAlg() // Should return zero value
+	})
+
+	t.Run("GetTokenEndpointJwtcaAudFormat", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionTokenEndpointJwtcaAudFormatEnumOidc
+		obj.TokenEndpointJwtcaAudFormat = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenEndpointJwtcaAudFormat(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenEndpointJwtcaAudFormat_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.TokenEndpointJwtcaAudFormat = nil
+		var expectedZero ConnectionTokenEndpointJwtcaAudFormatEnumOidc
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenEndpointJwtcaAudFormat(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenEndpointJwtcaAudFormat_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenEndpointJwtcaAudFormat() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
@@ -6451,6 +6619,130 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 
 		// Act
 		obj.SetPasswordOptions(fernTestValuePasswordOptions)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIDTokenSignedResponseAlgs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueIDTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs
+
+		// Act
+		obj.SetIDTokenSignedResponseAlgs(fernTestValueIDTokenSignedResponseAlgs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenEndpointAuthMethod_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueTokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum
+
+		// Act
+		obj.SetTokenEndpointAuthMethod(fernTestValueTokenEndpointAuthMethod)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenEndpointAuthSigningAlg_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueTokenEndpointAuthSigningAlg *ConnectionTokenEndpointAuthSigningAlgEnum
+
+		// Act
+		obj.SetTokenEndpointAuthSigningAlg(fernTestValueTokenEndpointAuthSigningAlg)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenEndpointJwtcaAudFormat_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueTokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc
+
+		// Act
+		obj.SetTokenEndpointJwtcaAudFormat(fernTestValueTokenEndpointJwtcaAudFormat)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -10014,6 +10306,38 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetIDTokenSignedResponseAlgs", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueIDTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs
+		obj.SetIDTokenSignedResponseAlgs(fernTestValueIDTokenSignedResponseAlgs)
+		assert.Equal(t, fernTestValueIDTokenSignedResponseAlgs, obj.IDTokenSignedResponseAlgs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTokenEndpointAuthMethod", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueTokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum
+		obj.SetTokenEndpointAuthMethod(fernTestValueTokenEndpointAuthMethod)
+		assert.Equal(t, fernTestValueTokenEndpointAuthMethod, obj.TokenEndpointAuthMethod)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTokenEndpointAuthSigningAlg", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueTokenEndpointAuthSigningAlg *ConnectionTokenEndpointAuthSigningAlgEnum
+		obj.SetTokenEndpointAuthSigningAlg(fernTestValueTokenEndpointAuthSigningAlg)
+		assert.Equal(t, fernTestValueTokenEndpointAuthSigningAlg, obj.TokenEndpointAuthSigningAlg)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTokenEndpointJwtcaAudFormat", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueTokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc
+		obj.SetTokenEndpointJwtcaAudFormat(fernTestValueTokenEndpointJwtcaAudFormat)
+		assert.Equal(t, fernTestValueTokenEndpointJwtcaAudFormat, obj.TokenEndpointJwtcaAudFormat)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersUpdateConnectionOptions(t *testing.T) {
@@ -11068,6 +11392,142 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 		_ = obj.GetPasswordOptions() // Should return zero value
 	})
 
+	t.Run("GetIDTokenSignedResponseAlgs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionIDTokenSignedResponseAlgs
+		obj.IDTokenSignedResponseAlgs = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIDTokenSignedResponseAlgs(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIDTokenSignedResponseAlgs_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.IDTokenSignedResponseAlgs = nil
+		var expectedZero ConnectionIDTokenSignedResponseAlgs
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIDTokenSignedResponseAlgs(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIDTokenSignedResponseAlgs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIDTokenSignedResponseAlgs() // Should return zero value
+	})
+
+	t.Run("GetTokenEndpointAuthMethod", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionTokenEndpointAuthMethodEnum
+		obj.TokenEndpointAuthMethod = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenEndpointAuthMethod(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenEndpointAuthMethod_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.TokenEndpointAuthMethod = nil
+		var expectedZero ConnectionTokenEndpointAuthMethodEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenEndpointAuthMethod(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenEndpointAuthMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenEndpointAuthMethod() // Should return zero value
+	})
+
+	t.Run("GetTokenEndpointAuthSigningAlg", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionTokenEndpointAuthSigningAlgEnum
+		obj.TokenEndpointAuthSigningAlg = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenEndpointAuthSigningAlg(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenEndpointAuthSigningAlg_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.TokenEndpointAuthSigningAlg = nil
+		var expectedZero ConnectionTokenEndpointAuthSigningAlgEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenEndpointAuthSigningAlg(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenEndpointAuthSigningAlg_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenEndpointAuthSigningAlg() // Should return zero value
+	})
+
+	t.Run("GetTokenEndpointJwtcaAudFormat", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionTokenEndpointJwtcaAudFormatEnumOidc
+		obj.TokenEndpointJwtcaAudFormat = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenEndpointJwtcaAudFormat(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenEndpointJwtcaAudFormat_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.TokenEndpointJwtcaAudFormat = nil
+		var expectedZero ConnectionTokenEndpointJwtcaAudFormatEnumOidc
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenEndpointJwtcaAudFormat(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenEndpointJwtcaAudFormat_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenEndpointJwtcaAudFormat() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
@@ -12009,6 +12469,130 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetPasswordOptions(fernTestValuePasswordOptions)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIDTokenSignedResponseAlgs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueIDTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs
+
+		// Act
+		obj.SetIDTokenSignedResponseAlgs(fernTestValueIDTokenSignedResponseAlgs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenEndpointAuthMethod_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueTokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum
+
+		// Act
+		obj.SetTokenEndpointAuthMethod(fernTestValueTokenEndpointAuthMethod)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenEndpointAuthSigningAlg_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueTokenEndpointAuthSigningAlg *ConnectionTokenEndpointAuthSigningAlgEnum
+
+		// Act
+		obj.SetTokenEndpointAuthSigningAlg(fernTestValueTokenEndpointAuthSigningAlg)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenEndpointJwtcaAudFormat_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueTokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc
+
+		// Act
+		obj.SetTokenEndpointJwtcaAudFormat(fernTestValueTokenEndpointJwtcaAudFormat)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -15492,6 +16076,70 @@ func TestEnumConnectionAPIBehaviorEnum(t *testing.T) {
 	})
 }
 
+func TestEnumConnectionIDTokenSignedResponseAlgEnum(t *testing.T) {
+	t.Run("NewFromString_ES256", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIDTokenSignedResponseAlgEnumFromString("ES256")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIDTokenSignedResponseAlgEnum("ES256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ES384", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIDTokenSignedResponseAlgEnumFromString("ES384")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIDTokenSignedResponseAlgEnum("ES384"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_PS256", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIDTokenSignedResponseAlgEnumFromString("PS256")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIDTokenSignedResponseAlgEnum("PS256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_PS384", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIDTokenSignedResponseAlgEnumFromString("PS384")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIDTokenSignedResponseAlgEnum("PS384"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_RS256", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIDTokenSignedResponseAlgEnumFromString("RS256")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIDTokenSignedResponseAlgEnum("RS256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_RS384", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIDTokenSignedResponseAlgEnumFromString("RS384")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIDTokenSignedResponseAlgEnum("RS384"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_RS512", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIDTokenSignedResponseAlgEnumFromString("RS512")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIDTokenSignedResponseAlgEnum("RS512"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewConnectionIDTokenSignedResponseAlgEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewConnectionIDTokenSignedResponseAlgEnumFromString("ES256")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumConnectionIdentifierPrecedenceEnum(t *testing.T) {
 	t.Run("NewFromString_email", func(t *testing.T) {
 		t.Parallel()
@@ -16072,6 +16720,128 @@ func TestEnumConnectionSignupBehaviorEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewConnectionSignupBehaviorEnumFromString("allow")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumConnectionTokenEndpointAuthMethodEnum(t *testing.T) {
+	t.Run("NewFromString_client_secret_post", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointAuthMethodEnumFromString("client_secret_post")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointAuthMethodEnum("client_secret_post"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_private_key_jwt", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointAuthMethodEnumFromString("private_key_jwt")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointAuthMethodEnum("private_key_jwt"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewConnectionTokenEndpointAuthMethodEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewConnectionTokenEndpointAuthMethodEnumFromString("client_secret_post")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumConnectionTokenEndpointAuthSigningAlgEnum(t *testing.T) {
+	t.Run("NewFromString_ES256", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointAuthSigningAlgEnumFromString("ES256")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointAuthSigningAlgEnum("ES256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ES384", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointAuthSigningAlgEnumFromString("ES384")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointAuthSigningAlgEnum("ES384"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_PS256", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointAuthSigningAlgEnumFromString("PS256")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointAuthSigningAlgEnum("PS256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_PS384", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointAuthSigningAlgEnumFromString("PS384")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointAuthSigningAlgEnum("PS384"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_RS256", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointAuthSigningAlgEnumFromString("RS256")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointAuthSigningAlgEnum("RS256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_RS384", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointAuthSigningAlgEnumFromString("RS384")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointAuthSigningAlgEnum("RS384"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_RS512", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointAuthSigningAlgEnumFromString("RS512")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointAuthSigningAlgEnum("RS512"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewConnectionTokenEndpointAuthSigningAlgEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewConnectionTokenEndpointAuthSigningAlgEnumFromString("ES256")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumConnectionTokenEndpointJwtcaAudFormatEnumOidc(t *testing.T) {
+	t.Run("NewFromString_issuer", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointJwtcaAudFormatEnumOidcFromString("issuer")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointJwtcaAudFormatEnumOidc("issuer"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_token_endpoint", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionTokenEndpointJwtcaAudFormatEnumOidcFromString("token_endpoint")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionTokenEndpointJwtcaAudFormatEnumOidc("token_endpoint"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewConnectionTokenEndpointJwtcaAudFormatEnumOidcFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewConnectionTokenEndpointJwtcaAudFormatEnumOidcFromString("issuer")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

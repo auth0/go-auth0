@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -92,7 +106,7 @@ func TestFlowsExecutionsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsExecutionsListWithWireMock", "GET", "/flows/flow_id/executions", map[string]string{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestFlowsExecutionsListWithWireMock", "GET", "/flows/flow_id/executions", map[string]interface{}{"from": "from", "take": "1"}, 1)
 }
 
 func TestFlowsExecutionsGetWithWireMock(
@@ -106,7 +120,11 @@ func TestFlowsExecutionsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetFlowExecutionRequestParameters{}
+	request := &management.GetFlowExecutionRequestParameters{
+		Hydrate: []*management.GetFlowExecutionRequestParametersHydrateEnum{
+			management.GetFlowExecutionRequestParametersHydrateEnumDebug.Ptr(),
+		},
+	}
 	_, invocationErr := client.Flows.Executions.Get(
 		context.TODO(),
 		"flow_id",
@@ -118,7 +136,7 @@ func TestFlowsExecutionsGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsExecutionsGetWithWireMock", "GET", "/flows/flow_id/executions/execution_id", nil, 1)
+	VerifyRequestCount(t, "TestFlowsExecutionsGetWithWireMock", "GET", "/flows/flow_id/executions/execution_id", map[string]interface{}{"hydrate": "debug"}, 1)
 }
 
 func TestFlowsExecutionsDeleteWithWireMock(

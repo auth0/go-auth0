@@ -99,7 +99,7 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
-// Retrieve details about a single User Attribute Profile specified by ID.
+// Create a User Attribute Profile
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateUserAttributeProfileRequestContent,

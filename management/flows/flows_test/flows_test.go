@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -84,6 +98,9 @@ func TestFlowsListWithWireMock(
 		IncludeTotals: management.Bool(
 			true,
 		),
+		Hydrate: []*management.ListFlowsRequestParametersHydrateEnum{
+			management.ListFlowsRequestParametersHydrateEnumFormCount.Ptr(),
+		},
 		Synchronous: management.Bool(
 			true,
 		),
@@ -97,7 +114,7 @@ func TestFlowsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsListWithWireMock", "GET", "/flows", map[string]string{"page": "1", "per_page": "1", "include_totals": "true", "synchronous": "true"}, 1)
+	VerifyRequestCount(t, "TestFlowsListWithWireMock", "GET", "/flows", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "hydrate": "form_count", "synchronous": "true"}, 1)
 }
 
 func TestFlowsCreateWithWireMock(
@@ -137,7 +154,11 @@ func TestFlowsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetFlowRequestParameters{}
+	request := &management.GetFlowRequestParameters{
+		Hydrate: []*management.GetFlowRequestParametersHydrateEnum{
+			management.GetFlowRequestParametersHydrateEnumFormCount.Ptr(),
+		},
+	}
 	_, invocationErr := client.Flows.Get(
 		context.TODO(),
 		"id",
@@ -148,7 +169,7 @@ func TestFlowsGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsGetWithWireMock", "GET", "/flows/id", nil, 1)
+	VerifyRequestCount(t, "TestFlowsGetWithWireMock", "GET", "/flows/id", map[string]interface{}{"hydrate": "form_count"}, 1)
 }
 
 func TestFlowsDeleteWithWireMock(

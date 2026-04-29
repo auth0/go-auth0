@@ -99,6 +99,23 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
+// Revoke refresh tokens in bulk by ID list, user, user+client, or client.
+func (c *Client) Revoke(
+	ctx context.Context,
+	request *management.RevokeRefreshTokensRequestContent,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.Revoke(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // Retrieve refresh token information.
 func (c *Client) Get(
 	ctx context.Context,

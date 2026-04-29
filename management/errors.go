@@ -103,6 +103,30 @@ func (f *ForbiddenError) Unwrap() error {
 	return f.APIError
 }
 
+// Cursor points to data no longer available in the stream.
+type GoneError struct {
+	*core.APIError
+	Body any
+}
+
+func (g *GoneError) UnmarshalJSON(data []byte) error {
+	var body any
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	g.StatusCode = 410
+	g.Body = body
+	return nil
+}
+
+func (g *GoneError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(g.Body)
+}
+
+func (g *GoneError) Unwrap() error {
+	return g.APIError
+}
+
 // An internal server error occurred.
 type InternalServerError struct {
 	*core.APIError

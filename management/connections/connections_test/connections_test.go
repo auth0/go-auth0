@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -81,6 +95,9 @@ func TestConnectionsListWithWireMock(
 		Take: management.Int(
 			1,
 		),
+		Strategy: []*management.ConnectionStrategyEnum{
+			management.ConnectionStrategyEnumAd.Ptr(),
+		},
 		Name: management.String(
 			"name",
 		),
@@ -100,7 +117,7 @@ func TestConnectionsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsListWithWireMock", "GET", "/connections", map[string]string{"from": "from", "take": "1", "name": "name", "fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestConnectionsListWithWireMock", "GET", "/connections", map[string]interface{}{"from": "from", "take": "1", "strategy": "ad", "name": "name", "fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestConnectionsCreateWithWireMock(
@@ -159,7 +176,7 @@ func TestConnectionsGetWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsGetWithWireMock", "GET", "/connections/id", map[string]string{"fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestConnectionsGetWithWireMock", "GET", "/connections/id", map[string]interface{}{"fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestConnectionsDeleteWithWireMock(

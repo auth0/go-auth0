@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
+	url "net/url"
 	time "time"
 )
 
@@ -4612,6 +4613,23 @@ func (c ClientAddonSharePointExternalURL) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
+func (c *ClientAddonSharePointExternalURL) EncodeQueryValues(key string, values *url.Values) error {
+	if c == nil {
+		return nil
+	}
+	if c.typ == "StringList" || c.StringList != nil {
+		for _, item := range c.StringList {
+			values.Add(key, fmt.Sprintf("%v", item))
+		}
+		return nil
+	}
+	if c.typ == "String" || c.String != "" {
+		values.Add(key, fmt.Sprintf("%v", c.String))
+		return nil
+	}
+	return nil
+}
+
 type ClientAddonSharePointExternalURLVisitor interface {
 	VisitStringList([]string) error
 	VisitString(string) error
@@ -8286,7 +8304,7 @@ func (c ClientOrganizationUsagePatchEnum) Ptr() *ClientOrganizationUsagePatchEnu
 	return &c
 }
 
-// Controls whether Auth0 redirects users to the application's callback URL on authentication errors or in email verification flows. `open_redirect_protection` shows an error page instead of redirecting, and hides the callback domain from email templates. `allow_always` enables standard redirect behavior. Defaults to `open_redirect_protection` for third-party clients. Only applies when `is_first_party` is `false` and `third_party_security_mode` is `strict`.
+// Controls whether Auth0 redirects users to the application's callback URL on authentication errors or in email verification flows. `open_redirect_protection` shows an error page instead of redirecting, and hides the callback domain from email templates. `allow_always` enables standard redirect behavior. Defaults to `open_redirect_protection` for third-party clients. Only applies when `is_first_party` is `false` and `third_party_security_mode` is `strict`. To learn more, read <a href="https://auth0.com/docs/get-started/applications/third-party-applications/security-controls#redirect-protection">Redirect protection</a>.
 type ClientRedirectionPolicyEnum string
 
 const (
@@ -9304,7 +9322,7 @@ func (c *ClientSigningKey) String() string {
 // Signing certificates associated with this client.
 type ClientSigningKeys = []*ClientSigningKey
 
-// Security mode for third-party clients. `strict` enforces enhanced security controls: OAuth 2.1 alignment, explicit API authorization, and a curated set of supported features. `permissive` preserves pre-existing behavior and is only available to tenants with prior third-party client usage. Set on creation and cannot be modified.
+// Security mode for third-party clients. `strict` enforces <a href="https://auth0.com/docs/get-started/applications/third-party-applications/security-controls">enhanced security controls</a>: OAuth 2.1 alignment, explicit API authorization, and a curated set of supported features. `permissive` preserves <a href="https://auth0.com/docs/get-started/applications/third-party-applications/permissive-mode">pre-existing behavior</a> and is only available to tenants with prior third-party client usage. Set on creation and cannot be modified.
 type ClientThirdPartySecurityModeEnum string
 
 const (

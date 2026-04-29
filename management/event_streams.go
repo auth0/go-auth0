@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
+	url "net/url"
 	time "time"
 )
 
@@ -340,6 +341,25 @@ func (c CreateEventStreamResponseContent) MarshalJSON() ([]byte, error) {
 		return json.Marshal(c.EventStreamActionResponseContent)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
+}
+
+func (c *CreateEventStreamResponseContent) EncodeQueryValues(key string, values *url.Values) error {
+	if c == nil {
+		return nil
+	}
+	if c.typ == "EventStreamWebhookResponseContent" || c.EventStreamWebhookResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", c.EventStreamWebhookResponseContent))
+		return nil
+	}
+	if c.typ == "EventStreamEventBridgeResponseContent" || c.EventStreamEventBridgeResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", c.EventStreamEventBridgeResponseContent))
+		return nil
+	}
+	if c.typ == "EventStreamActionResponseContent" || c.EventStreamActionResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", c.EventStreamActionResponseContent))
+		return nil
+	}
+	return nil
 }
 
 type CreateEventStreamResponseContentVisitor interface {
@@ -1112,6 +1132,21 @@ func (e EventStreamDestinationPatch) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
+func (e *EventStreamDestinationPatch) EncodeQueryValues(key string, values *url.Values) error {
+	if e == nil {
+		return nil
+	}
+	if e.typ == "EventStreamWebhookDestination" || e.EventStreamWebhookDestination != nil {
+		values.Add(key, fmt.Sprintf("%v", e.EventStreamWebhookDestination))
+		return nil
+	}
+	if e.typ == "EventStreamActionDestination" || e.EventStreamActionDestination != nil {
+		values.Add(key, fmt.Sprintf("%v", e.EventStreamActionDestination))
+		return nil
+	}
+	return nil
+}
+
 type EventStreamDestinationPatchVisitor interface {
 	VisitEventStreamWebhookDestination(*EventStreamWebhookDestination) error
 	VisitEventStreamActionDestination(*EventStreamActionDestination) error
@@ -1751,6 +1786,25 @@ func (e EventStreamResponseContent) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
+func (e *EventStreamResponseContent) EncodeQueryValues(key string, values *url.Values) error {
+	if e == nil {
+		return nil
+	}
+	if e.typ == "EventStreamWebhookResponseContent" || e.EventStreamWebhookResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", e.EventStreamWebhookResponseContent))
+		return nil
+	}
+	if e.typ == "EventStreamEventBridgeResponseContent" || e.EventStreamEventBridgeResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", e.EventStreamEventBridgeResponseContent))
+		return nil
+	}
+	if e.typ == "EventStreamActionResponseContent" || e.EventStreamActionResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", e.EventStreamActionResponseContent))
+		return nil
+	}
+	return nil
+}
+
 type EventStreamResponseContentVisitor interface {
 	VisitEventStreamWebhookResponseContent(*EventStreamWebhookResponseContent) error
 	VisitEventStreamEventBridgeResponseContent(*EventStreamEventBridgeResponseContent) error
@@ -2023,6 +2077,25 @@ func (e EventStreamWebhookAuthorizationResponse) MarshalJSON() ([]byte, error) {
 		return json.Marshal(e.EventStreamWebhookCustomHeaderAuth)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+func (e *EventStreamWebhookAuthorizationResponse) EncodeQueryValues(key string, values *url.Values) error {
+	if e == nil {
+		return nil
+	}
+	if e.typ == "EventStreamWebhookBasicAuth" || e.EventStreamWebhookBasicAuth != nil {
+		values.Add(key, fmt.Sprintf("%v", e.EventStreamWebhookBasicAuth))
+		return nil
+	}
+	if e.typ == "EventStreamWebhookBearerAuth" || e.EventStreamWebhookBearerAuth != nil {
+		values.Add(key, fmt.Sprintf("%v", e.EventStreamWebhookBearerAuth))
+		return nil
+	}
+	if e.typ == "EventStreamWebhookCustomHeaderAuth" || e.EventStreamWebhookCustomHeaderAuth != nil {
+		values.Add(key, fmt.Sprintf("%v", e.EventStreamWebhookCustomHeaderAuth))
+		return nil
+	}
+	return nil
 }
 
 type EventStreamWebhookAuthorizationResponseVisitor interface {
@@ -2875,6 +2948,25 @@ func (g GetEventStreamResponseContent) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", g)
 }
 
+func (g *GetEventStreamResponseContent) EncodeQueryValues(key string, values *url.Values) error {
+	if g == nil {
+		return nil
+	}
+	if g.typ == "EventStreamWebhookResponseContent" || g.EventStreamWebhookResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", g.EventStreamWebhookResponseContent))
+		return nil
+	}
+	if g.typ == "EventStreamEventBridgeResponseContent" || g.EventStreamEventBridgeResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", g.EventStreamEventBridgeResponseContent))
+		return nil
+	}
+	if g.typ == "EventStreamActionResponseContent" || g.EventStreamActionResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", g.EventStreamActionResponseContent))
+		return nil
+	}
+	return nil
+}
+
 type GetEventStreamResponseContentVisitor interface {
 	VisitEventStreamWebhookResponseContent(*EventStreamWebhookResponseContent) error
 	VisitEventStreamEventBridgeResponseContent(*EventStreamEventBridgeResponseContent) error
@@ -3067,6 +3159,25 @@ func (u UpdateEventStreamResponseContent) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+func (u *UpdateEventStreamResponseContent) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "EventStreamWebhookResponseContent" || u.EventStreamWebhookResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", u.EventStreamWebhookResponseContent))
+		return nil
+	}
+	if u.typ == "EventStreamEventBridgeResponseContent" || u.EventStreamEventBridgeResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", u.EventStreamEventBridgeResponseContent))
+		return nil
+	}
+	if u.typ == "EventStreamActionResponseContent" || u.EventStreamActionResponseContent != nil {
+		values.Add(key, fmt.Sprintf("%v", u.EventStreamActionResponseContent))
+		return nil
+	}
+	return nil
+}
+
 type UpdateEventStreamResponseContentVisitor interface {
 	VisitEventStreamWebhookResponseContent(*EventStreamWebhookResponseContent) error
 	VisitEventStreamEventBridgeResponseContent(*EventStreamEventBridgeResponseContent) error
@@ -3148,6 +3259,25 @@ func (e EventStreamsCreateRequest) MarshalJSON() ([]byte, error) {
 		return json.Marshal(e.CreateEventStreamActionRequestContent)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+func (e *EventStreamsCreateRequest) EncodeQueryValues(key string, values *url.Values) error {
+	if e == nil {
+		return nil
+	}
+	if e.typ == "CreateEventStreamWebHookRequestContent" || e.CreateEventStreamWebHookRequestContent != nil {
+		values.Add(key, fmt.Sprintf("%v", e.CreateEventStreamWebHookRequestContent))
+		return nil
+	}
+	if e.typ == "CreateEventStreamEventBridgeRequestContent" || e.CreateEventStreamEventBridgeRequestContent != nil {
+		values.Add(key, fmt.Sprintf("%v", e.CreateEventStreamEventBridgeRequestContent))
+		return nil
+	}
+	if e.typ == "CreateEventStreamActionRequestContent" || e.CreateEventStreamActionRequestContent != nil {
+		values.Add(key, fmt.Sprintf("%v", e.CreateEventStreamActionRequestContent))
+		return nil
+	}
+	return nil
 }
 
 type EventStreamsCreateRequestVisitor interface {

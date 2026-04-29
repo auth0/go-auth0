@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
+	url "net/url"
 )
 
 // Custom color settings.
@@ -197,6 +198,147 @@ func (b *BrandingFont) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+// Identifier input display settings.
+var (
+	brandingIdentifiersFieldLoginDisplay    = big.NewInt(1 << 0)
+	brandingIdentifiersFieldOtpAutocomplete = big.NewInt(1 << 1)
+	brandingIdentifiersFieldPhoneDisplay    = big.NewInt(1 << 2)
+)
+
+type BrandingIdentifiers struct {
+	LoginDisplay *BrandingLoginDisplayEnum `json:"login_display,omitempty" url:"login_display,omitempty"`
+	// Whether OTP autocomplete (autocomplete="one-time-code") is enabled.
+	OtpAutocomplete *bool                 `json:"otp_autocomplete,omitempty" url:"otp_autocomplete,omitempty"`
+	PhoneDisplay    *BrandingPhoneDisplay `json:"phone_display,omitempty" url:"phone_display,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingIdentifiers) GetLoginDisplay() BrandingLoginDisplayEnum {
+	if b == nil || b.LoginDisplay == nil {
+		return ""
+	}
+	return *b.LoginDisplay
+}
+
+func (b *BrandingIdentifiers) GetOtpAutocomplete() bool {
+	if b == nil || b.OtpAutocomplete == nil {
+		return false
+	}
+	return *b.OtpAutocomplete
+}
+
+func (b *BrandingIdentifiers) GetPhoneDisplay() BrandingPhoneDisplay {
+	if b == nil || b.PhoneDisplay == nil {
+		return BrandingPhoneDisplay{}
+	}
+	return *b.PhoneDisplay
+}
+
+func (b *BrandingIdentifiers) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingIdentifiers) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetLoginDisplay sets the LoginDisplay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingIdentifiers) SetLoginDisplay(loginDisplay *BrandingLoginDisplayEnum) {
+	b.LoginDisplay = loginDisplay
+	b.require(brandingIdentifiersFieldLoginDisplay)
+}
+
+// SetOtpAutocomplete sets the OtpAutocomplete field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingIdentifiers) SetOtpAutocomplete(otpAutocomplete *bool) {
+	b.OtpAutocomplete = otpAutocomplete
+	b.require(brandingIdentifiersFieldOtpAutocomplete)
+}
+
+// SetPhoneDisplay sets the PhoneDisplay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingIdentifiers) SetPhoneDisplay(phoneDisplay *BrandingPhoneDisplay) {
+	b.PhoneDisplay = phoneDisplay
+	b.require(brandingIdentifiersFieldPhoneDisplay)
+}
+
+func (b *BrandingIdentifiers) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingIdentifiers
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingIdentifiers(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingIdentifiers) MarshalJSON() ([]byte, error) {
+	type embed BrandingIdentifiers
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingIdentifiers) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Controls identifier input presentation on the login flow. Defaults to "unified" for legacy tenants, "separate" for tenants created post-GA of this feature.
+type BrandingLoginDisplayEnum string
+
+const (
+	BrandingLoginDisplayEnumUnified  BrandingLoginDisplayEnum = "unified"
+	BrandingLoginDisplayEnumSeparate BrandingLoginDisplayEnum = "separate"
+)
+
+func NewBrandingLoginDisplayEnumFromString(s string) (BrandingLoginDisplayEnum, error) {
+	switch s {
+	case "unified":
+		return BrandingLoginDisplayEnumUnified, nil
+	case "separate":
+		return BrandingLoginDisplayEnumSeparate, nil
+	}
+	var t BrandingLoginDisplayEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingLoginDisplayEnum) Ptr() *BrandingLoginDisplayEnum {
+	return &b
+}
+
 // Page Background Color or Gradient.
 // Property contains either <code>null</code> to unset, a solid color as a string value <code>#FFFFFF</code>, or a gradient as an object.
 //
@@ -257,6 +399,21 @@ func (b BrandingPageBackground) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", b)
 }
 
+func (b *BrandingPageBackground) EncodeQueryValues(key string, values *url.Values) error {
+	if b == nil {
+		return nil
+	}
+	if b.typ == "StringOptional" || b.StringOptional != nil {
+		values.Add(key, fmt.Sprintf("%v", b.StringOptional))
+		return nil
+	}
+	if b.typ == "StringUnknownMapOptional" || b.StringUnknownMapOptional != nil {
+		values.Add(key, fmt.Sprintf("%v", b.StringUnknownMapOptional))
+		return nil
+	}
+	return nil
+}
+
 type BrandingPageBackgroundVisitor interface {
 	VisitStringOptional(*string) error
 	VisitStringUnknownMapOptional(map[string]any) error
@@ -272,11 +429,162 @@ func (b *BrandingPageBackground) Accept(visitor BrandingPageBackgroundVisitor) e
 	return fmt.Errorf("type %T does not include a non-empty union type", b)
 }
 
+// Phone number display settings.
 var (
-	getBrandingResponseContentFieldColors     = big.NewInt(1 << 0)
-	getBrandingResponseContentFieldFaviconURL = big.NewInt(1 << 1)
-	getBrandingResponseContentFieldLogoURL    = big.NewInt(1 << 2)
-	getBrandingResponseContentFieldFont       = big.NewInt(1 << 3)
+	brandingPhoneDisplayFieldMasking    = big.NewInt(1 << 0)
+	brandingPhoneDisplayFieldFormatting = big.NewInt(1 << 1)
+)
+
+type BrandingPhoneDisplay struct {
+	Masking    *BrandingPhoneMaskingEnum    `json:"masking,omitempty" url:"masking,omitempty"`
+	Formatting *BrandingPhoneFormattingEnum `json:"formatting,omitempty" url:"formatting,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingPhoneDisplay) GetMasking() BrandingPhoneMaskingEnum {
+	if b == nil || b.Masking == nil {
+		return ""
+	}
+	return *b.Masking
+}
+
+func (b *BrandingPhoneDisplay) GetFormatting() BrandingPhoneFormattingEnum {
+	if b == nil || b.Formatting == nil {
+		return ""
+	}
+	return *b.Formatting
+}
+
+func (b *BrandingPhoneDisplay) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingPhoneDisplay) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetMasking sets the Masking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingPhoneDisplay) SetMasking(masking *BrandingPhoneMaskingEnum) {
+	b.Masking = masking
+	b.require(brandingPhoneDisplayFieldMasking)
+}
+
+// SetFormatting sets the Formatting field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingPhoneDisplay) SetFormatting(formatting *BrandingPhoneFormattingEnum) {
+	b.Formatting = formatting
+	b.require(brandingPhoneDisplayFieldFormatting)
+}
+
+func (b *BrandingPhoneDisplay) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingPhoneDisplay
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingPhoneDisplay(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingPhoneDisplay) MarshalJSON() ([]byte, error) {
+	type embed BrandingPhoneDisplay
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingPhoneDisplay) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Controls the format used when displaying phone numbers.
+type BrandingPhoneFormattingEnum string
+
+const (
+	BrandingPhoneFormattingEnumRegional      BrandingPhoneFormattingEnum = "regional"
+	BrandingPhoneFormattingEnumInternational BrandingPhoneFormattingEnum = "international"
+)
+
+func NewBrandingPhoneFormattingEnumFromString(s string) (BrandingPhoneFormattingEnum, error) {
+	switch s {
+	case "regional":
+		return BrandingPhoneFormattingEnumRegional, nil
+	case "international":
+		return BrandingPhoneFormattingEnumInternational, nil
+	}
+	var t BrandingPhoneFormattingEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingPhoneFormattingEnum) Ptr() *BrandingPhoneFormattingEnum {
+	return &b
+}
+
+// Controls how phone numbers are masked when displayed back to users.
+type BrandingPhoneMaskingEnum string
+
+const (
+	BrandingPhoneMaskingEnumShowAll         BrandingPhoneMaskingEnum = "show_all"
+	BrandingPhoneMaskingEnumHideCountryCode BrandingPhoneMaskingEnum = "hide_country_code"
+	BrandingPhoneMaskingEnumMaskDigits      BrandingPhoneMaskingEnum = "mask_digits"
+)
+
+func NewBrandingPhoneMaskingEnumFromString(s string) (BrandingPhoneMaskingEnum, error) {
+	switch s {
+	case "show_all":
+		return BrandingPhoneMaskingEnumShowAll, nil
+	case "hide_country_code":
+		return BrandingPhoneMaskingEnumHideCountryCode, nil
+	case "mask_digits":
+		return BrandingPhoneMaskingEnumMaskDigits, nil
+	}
+	var t BrandingPhoneMaskingEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingPhoneMaskingEnum) Ptr() *BrandingPhoneMaskingEnum {
+	return &b
+}
+
+var (
+	getBrandingResponseContentFieldColors      = big.NewInt(1 << 0)
+	getBrandingResponseContentFieldFaviconURL  = big.NewInt(1 << 1)
+	getBrandingResponseContentFieldLogoURL     = big.NewInt(1 << 2)
+	getBrandingResponseContentFieldIdentifiers = big.NewInt(1 << 3)
+	getBrandingResponseContentFieldFont        = big.NewInt(1 << 4)
 )
 
 type GetBrandingResponseContent struct {
@@ -284,8 +592,9 @@ type GetBrandingResponseContent struct {
 	// URL for the favicon. Must use HTTPS.
 	FaviconURL *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
 	// URL for the logo. Must use HTTPS.
-	LogoURL *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
-	Font    *BrandingFont `json:"font,omitempty" url:"font,omitempty"`
+	LogoURL     *string              `json:"logo_url,omitempty" url:"logo_url,omitempty"`
+	Identifiers *BrandingIdentifiers `json:"identifiers,omitempty" url:"identifiers,omitempty"`
+	Font        *BrandingFont        `json:"font,omitempty" url:"font,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -314,6 +623,13 @@ func (g *GetBrandingResponseContent) GetLogoURL() string {
 		return ""
 	}
 	return *g.LogoURL
+}
+
+func (g *GetBrandingResponseContent) GetIdentifiers() BrandingIdentifiers {
+	if g == nil || g.Identifiers == nil {
+		return BrandingIdentifiers{}
+	}
+	return *g.Identifiers
 }
 
 func (g *GetBrandingResponseContent) GetFont() BrandingFont {
@@ -356,6 +672,13 @@ func (g *GetBrandingResponseContent) SetFaviconURL(faviconURL *string) {
 func (g *GetBrandingResponseContent) SetLogoURL(logoURL *string) {
 	g.LogoURL = logoURL
 	g.require(getBrandingResponseContentFieldLogoURL)
+}
+
+// SetIdentifiers sets the Identifiers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingResponseContent) SetIdentifiers(identifiers *BrandingIdentifiers) {
+	g.Identifiers = identifiers
+	g.require(getBrandingResponseContentFieldIdentifiers)
 }
 
 // SetFont sets the Font field and marks it as non-optional;
@@ -599,6 +922,147 @@ func (u *UpdateBrandingFont) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Identifier input display settings.
+var (
+	updateBrandingIdentifiersFieldLoginDisplay    = big.NewInt(1 << 0)
+	updateBrandingIdentifiersFieldOtpAutocomplete = big.NewInt(1 << 1)
+	updateBrandingIdentifiersFieldPhoneDisplay    = big.NewInt(1 << 2)
+)
+
+type UpdateBrandingIdentifiers struct {
+	LoginDisplay *UpdateBrandingLoginDisplayEnum `json:"login_display,omitempty" url:"login_display,omitempty"`
+	// Whether OTP autocomplete (autocomplete="one-time-code") is enabled.
+	OtpAutocomplete *bool                       `json:"otp_autocomplete,omitempty" url:"otp_autocomplete,omitempty"`
+	PhoneDisplay    *UpdateBrandingPhoneDisplay `json:"phone_display,omitempty" url:"phone_display,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateBrandingIdentifiers) GetLoginDisplay() UpdateBrandingLoginDisplayEnum {
+	if u == nil || u.LoginDisplay == nil {
+		return ""
+	}
+	return *u.LoginDisplay
+}
+
+func (u *UpdateBrandingIdentifiers) GetOtpAutocomplete() bool {
+	if u == nil || u.OtpAutocomplete == nil {
+		return false
+	}
+	return *u.OtpAutocomplete
+}
+
+func (u *UpdateBrandingIdentifiers) GetPhoneDisplay() UpdateBrandingPhoneDisplay {
+	if u == nil || u.PhoneDisplay == nil {
+		return UpdateBrandingPhoneDisplay{}
+	}
+	return *u.PhoneDisplay
+}
+
+func (u *UpdateBrandingIdentifiers) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateBrandingIdentifiers) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetLoginDisplay sets the LoginDisplay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingIdentifiers) SetLoginDisplay(loginDisplay *UpdateBrandingLoginDisplayEnum) {
+	u.LoginDisplay = loginDisplay
+	u.require(updateBrandingIdentifiersFieldLoginDisplay)
+}
+
+// SetOtpAutocomplete sets the OtpAutocomplete field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingIdentifiers) SetOtpAutocomplete(otpAutocomplete *bool) {
+	u.OtpAutocomplete = otpAutocomplete
+	u.require(updateBrandingIdentifiersFieldOtpAutocomplete)
+}
+
+// SetPhoneDisplay sets the PhoneDisplay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingIdentifiers) SetPhoneDisplay(phoneDisplay *UpdateBrandingPhoneDisplay) {
+	u.PhoneDisplay = phoneDisplay
+	u.require(updateBrandingIdentifiersFieldPhoneDisplay)
+}
+
+func (u *UpdateBrandingIdentifiers) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateBrandingIdentifiers
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateBrandingIdentifiers(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateBrandingIdentifiers) MarshalJSON() ([]byte, error) {
+	type embed UpdateBrandingIdentifiers
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateBrandingIdentifiers) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Controls identifier input presentation on the login flow. Defaults to "unified" for legacy tenants, "separate" for tenants created post-GA of this feature.
+type UpdateBrandingLoginDisplayEnum string
+
+const (
+	UpdateBrandingLoginDisplayEnumUnified  UpdateBrandingLoginDisplayEnum = "unified"
+	UpdateBrandingLoginDisplayEnumSeparate UpdateBrandingLoginDisplayEnum = "separate"
+)
+
+func NewUpdateBrandingLoginDisplayEnumFromString(s string) (UpdateBrandingLoginDisplayEnum, error) {
+	switch s {
+	case "unified":
+		return UpdateBrandingLoginDisplayEnumUnified, nil
+	case "separate":
+		return UpdateBrandingLoginDisplayEnumSeparate, nil
+	}
+	var t UpdateBrandingLoginDisplayEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UpdateBrandingLoginDisplayEnum) Ptr() *UpdateBrandingLoginDisplayEnum {
+	return &u
+}
+
 // Page Background Color or Gradient.
 // Property contains either <code>null</code> to unset, a solid color as a string value <code>#FFFFFF</code>, or a gradient as an object.
 //
@@ -659,6 +1123,21 @@ func (u UpdateBrandingPageBackground) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+func (u *UpdateBrandingPageBackground) EncodeQueryValues(key string, values *url.Values) error {
+	if u == nil {
+		return nil
+	}
+	if u.typ == "StringOptional" || u.StringOptional != nil {
+		values.Add(key, fmt.Sprintf("%v", u.StringOptional))
+		return nil
+	}
+	if u.typ == "StringUnknownMapOptional" || u.StringUnknownMapOptional != nil {
+		values.Add(key, fmt.Sprintf("%v", u.StringUnknownMapOptional))
+		return nil
+	}
+	return nil
+}
+
 type UpdateBrandingPageBackgroundVisitor interface {
 	VisitStringOptional(*string) error
 	VisitStringUnknownMapOptional(map[string]any) error
@@ -674,11 +1153,162 @@ func (u *UpdateBrandingPageBackground) Accept(visitor UpdateBrandingPageBackgrou
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+// Phone number display settings.
 var (
-	updateBrandingResponseContentFieldColors     = big.NewInt(1 << 0)
-	updateBrandingResponseContentFieldFaviconURL = big.NewInt(1 << 1)
-	updateBrandingResponseContentFieldLogoURL    = big.NewInt(1 << 2)
-	updateBrandingResponseContentFieldFont       = big.NewInt(1 << 3)
+	updateBrandingPhoneDisplayFieldMasking    = big.NewInt(1 << 0)
+	updateBrandingPhoneDisplayFieldFormatting = big.NewInt(1 << 1)
+)
+
+type UpdateBrandingPhoneDisplay struct {
+	Masking    UpdateBrandingPhoneMaskingEnum    `json:"masking" url:"masking"`
+	Formatting UpdateBrandingPhoneFormattingEnum `json:"formatting" url:"formatting"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateBrandingPhoneDisplay) GetMasking() UpdateBrandingPhoneMaskingEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Masking
+}
+
+func (u *UpdateBrandingPhoneDisplay) GetFormatting() UpdateBrandingPhoneFormattingEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Formatting
+}
+
+func (u *UpdateBrandingPhoneDisplay) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateBrandingPhoneDisplay) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetMasking sets the Masking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneDisplay) SetMasking(masking UpdateBrandingPhoneMaskingEnum) {
+	u.Masking = masking
+	u.require(updateBrandingPhoneDisplayFieldMasking)
+}
+
+// SetFormatting sets the Formatting field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneDisplay) SetFormatting(formatting UpdateBrandingPhoneFormattingEnum) {
+	u.Formatting = formatting
+	u.require(updateBrandingPhoneDisplayFieldFormatting)
+}
+
+func (u *UpdateBrandingPhoneDisplay) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateBrandingPhoneDisplay
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateBrandingPhoneDisplay(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateBrandingPhoneDisplay) MarshalJSON() ([]byte, error) {
+	type embed UpdateBrandingPhoneDisplay
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateBrandingPhoneDisplay) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Controls the format used when displaying phone numbers.
+type UpdateBrandingPhoneFormattingEnum string
+
+const (
+	UpdateBrandingPhoneFormattingEnumRegional      UpdateBrandingPhoneFormattingEnum = "regional"
+	UpdateBrandingPhoneFormattingEnumInternational UpdateBrandingPhoneFormattingEnum = "international"
+)
+
+func NewUpdateBrandingPhoneFormattingEnumFromString(s string) (UpdateBrandingPhoneFormattingEnum, error) {
+	switch s {
+	case "regional":
+		return UpdateBrandingPhoneFormattingEnumRegional, nil
+	case "international":
+		return UpdateBrandingPhoneFormattingEnumInternational, nil
+	}
+	var t UpdateBrandingPhoneFormattingEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UpdateBrandingPhoneFormattingEnum) Ptr() *UpdateBrandingPhoneFormattingEnum {
+	return &u
+}
+
+// Controls how phone numbers are masked when displayed back to users.
+type UpdateBrandingPhoneMaskingEnum string
+
+const (
+	UpdateBrandingPhoneMaskingEnumShowAll         UpdateBrandingPhoneMaskingEnum = "show_all"
+	UpdateBrandingPhoneMaskingEnumHideCountryCode UpdateBrandingPhoneMaskingEnum = "hide_country_code"
+	UpdateBrandingPhoneMaskingEnumMaskDigits      UpdateBrandingPhoneMaskingEnum = "mask_digits"
+)
+
+func NewUpdateBrandingPhoneMaskingEnumFromString(s string) (UpdateBrandingPhoneMaskingEnum, error) {
+	switch s {
+	case "show_all":
+		return UpdateBrandingPhoneMaskingEnumShowAll, nil
+	case "hide_country_code":
+		return UpdateBrandingPhoneMaskingEnumHideCountryCode, nil
+	case "mask_digits":
+		return UpdateBrandingPhoneMaskingEnumMaskDigits, nil
+	}
+	var t UpdateBrandingPhoneMaskingEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UpdateBrandingPhoneMaskingEnum) Ptr() *UpdateBrandingPhoneMaskingEnum {
+	return &u
+}
+
+var (
+	updateBrandingResponseContentFieldColors      = big.NewInt(1 << 0)
+	updateBrandingResponseContentFieldFaviconURL  = big.NewInt(1 << 1)
+	updateBrandingResponseContentFieldLogoURL     = big.NewInt(1 << 2)
+	updateBrandingResponseContentFieldIdentifiers = big.NewInt(1 << 3)
+	updateBrandingResponseContentFieldFont        = big.NewInt(1 << 4)
 )
 
 type UpdateBrandingResponseContent struct {
@@ -686,8 +1316,9 @@ type UpdateBrandingResponseContent struct {
 	// URL for the favicon. Must use HTTPS.
 	FaviconURL *string `json:"favicon_url,omitempty" url:"favicon_url,omitempty"`
 	// URL for the logo. Must use HTTPS.
-	LogoURL *string       `json:"logo_url,omitempty" url:"logo_url,omitempty"`
-	Font    *BrandingFont `json:"font,omitempty" url:"font,omitempty"`
+	LogoURL     *string              `json:"logo_url,omitempty" url:"logo_url,omitempty"`
+	Identifiers *BrandingIdentifiers `json:"identifiers,omitempty" url:"identifiers,omitempty"`
+	Font        *BrandingFont        `json:"font,omitempty" url:"font,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -716,6 +1347,13 @@ func (u *UpdateBrandingResponseContent) GetLogoURL() string {
 		return ""
 	}
 	return *u.LogoURL
+}
+
+func (u *UpdateBrandingResponseContent) GetIdentifiers() BrandingIdentifiers {
+	if u == nil || u.Identifiers == nil {
+		return BrandingIdentifiers{}
+	}
+	return *u.Identifiers
 }
 
 func (u *UpdateBrandingResponseContent) GetFont() BrandingFont {
@@ -758,6 +1396,13 @@ func (u *UpdateBrandingResponseContent) SetFaviconURL(faviconURL *string) {
 func (u *UpdateBrandingResponseContent) SetLogoURL(logoURL *string) {
 	u.LogoURL = logoURL
 	u.require(updateBrandingResponseContentFieldLogoURL)
+}
+
+// SetIdentifiers sets the Identifiers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingResponseContent) SetIdentifiers(identifiers *BrandingIdentifiers) {
+	u.Identifiers = identifiers
+	u.require(updateBrandingResponseContentFieldIdentifiers)
 }
 
 // SetFont sets the Font field and marks it as non-optional;

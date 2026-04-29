@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -84,6 +98,9 @@ func TestGroupsListWithWireMock(
 		ExternalID: management.String(
 			"external_id",
 		),
+		Search: management.String(
+			"search",
+		),
 		Fields: management.String(
 			"fields",
 		),
@@ -106,7 +123,7 @@ func TestGroupsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestGroupsListWithWireMock", "GET", "/groups", map[string]string{"connection_id": "connection_id", "name": "name", "external_id": "external_id", "fields": "fields", "include_fields": "true", "from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestGroupsListWithWireMock", "GET", "/groups", map[string]interface{}{"connection_id": "connection_id", "name": "name", "external_id": "external_id", "search": "search", "fields": "fields", "include_fields": "true", "from": "from", "take": "1"}, 1)
 }
 
 func TestGroupsGetWithWireMock(

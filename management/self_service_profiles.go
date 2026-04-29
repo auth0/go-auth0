@@ -29,14 +29,14 @@ type CreateSelfServiceProfileResponseContent struct {
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The description of the self-service Profile.
 	Description *string `json:"description,omitempty" url:"description,omitempty"`
-	// List of attributes to be mapped that will be shown to the user during the SS-SSO flow.
+	// List of attributes to be mapped that will be shown to the user during the Self-Service Enterprise Configuration flow.
 	UserAttributes []*SelfServiceProfileUserAttribute `json:"user_attributes,omitempty" url:"user_attributes,omitempty"`
 	// The time when this self-service Profile was created.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The time when this self-service Profile was updated.
 	UpdatedAt *time.Time                            `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	Branding  *SelfServiceProfileBrandingProperties `json:"branding,omitempty" url:"branding,omitempty"`
-	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
+	// List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
@@ -261,14 +261,14 @@ type GetSelfServiceProfileResponseContent struct {
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The description of the self-service Profile.
 	Description *string `json:"description,omitempty" url:"description,omitempty"`
-	// List of attributes to be mapped that will be shown to the user during the SS-SSO flow.
+	// List of attributes to be mapped that will be shown to the user during the Self-Service Enterprise Configuration flow.
 	UserAttributes []*SelfServiceProfileUserAttribute `json:"user_attributes,omitempty" url:"user_attributes,omitempty"`
 	// The time when this self-service Profile was created.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The time when this self-service Profile was updated.
 	UpdatedAt *time.Time                            `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	Branding  *SelfServiceProfileBrandingProperties `json:"branding,omitempty" url:"branding,omitempty"`
-	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
+	// List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
@@ -625,14 +625,14 @@ type SelfServiceProfile struct {
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The description of the self-service Profile.
 	Description *string `json:"description,omitempty" url:"description,omitempty"`
-	// List of attributes to be mapped that will be shown to the user during the SS-SSO flow.
+	// List of attributes to be mapped that will be shown to the user during the Self-Service Enterprise Configuration flow.
 	UserAttributes []*SelfServiceProfileUserAttribute `json:"user_attributes,omitempty" url:"user_attributes,omitempty"`
 	// The time when this self-service Profile was created.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The time when this self-service Profile was updated.
 	UpdatedAt *time.Time                            `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	Branding  *SelfServiceProfileBrandingProperties `json:"branding,omitempty" url:"branding,omitempty"`
-	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
+	// List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
@@ -1202,7 +1202,7 @@ func (s *SelfServiceProfileUserAttribute) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
-// List of attributes to be mapped that will be shown to the user during the SS-SSO flow.
+// List of attributes to be mapped that will be shown to the user during the Self-Service Enterprise Configuration flow.
 type SelfServiceProfileUserAttributes = []*SelfServiceProfileUserAttribute
 
 var (
@@ -1224,14 +1224,14 @@ type UpdateSelfServiceProfileResponseContent struct {
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// The description of the self-service Profile.
 	Description *string `json:"description,omitempty" url:"description,omitempty"`
-	// List of attributes to be mapped that will be shown to the user during the SS-SSO flow.
+	// List of attributes to be mapped that will be shown to the user during the Self-Service Enterprise Configuration flow.
 	UserAttributes []*SelfServiceProfileUserAttribute `json:"user_attributes,omitempty" url:"user_attributes,omitempty"`
 	// The time when this self-service Profile was created.
 	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
 	// The time when this self-service Profile was updated.
 	UpdatedAt *time.Time                            `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	Branding  *SelfServiceProfileBrandingProperties `json:"branding,omitempty" url:"branding,omitempty"`
-	// List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
+	// List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
 	AllowedStrategies []SelfServiceProfileAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
 	// ID of the user-attribute-profile to associate with this self-service profile.
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`

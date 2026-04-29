@@ -21,7 +21,7 @@ func VerifyRequestCount(
 	testId string,
 	method string,
 	urlPath string,
-	queryParams map[string]string,
+	queryParams map[string]any,
 	expected int,
 ) {
 	wiremockURL := os.Getenv("WIREMOCK_URL")
@@ -46,9 +46,23 @@ func VerifyRequestCount(
 			}
 			reqBody.WriteString(`"`)
 			reqBody.WriteString(key)
-			reqBody.WriteString(`":{"equalTo":"`)
-			reqBody.WriteString(value)
-			reqBody.WriteString(`"}`)
+			switch v := value.(type) {
+			case string:
+				reqBody.WriteString(`":{"equalTo":"`)
+				reqBody.WriteString(v)
+				reqBody.WriteString(`"}`)
+			case []string:
+				reqBody.WriteString(`":{"hasExactly":[`)
+				for i, item := range v {
+					if i > 0 {
+						reqBody.WriteString(",")
+					}
+					reqBody.WriteString(`{"equalTo":"`)
+					reqBody.WriteString(item)
+					reqBody.WriteString(`"}`)
+				}
+				reqBody.WriteString(`]}`)
+			}
 			first = false
 		}
 		reqBody.WriteString("}")
@@ -89,7 +103,7 @@ func TestUserBlocksListByIdentifierWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserBlocksListByIdentifierWithWireMock", "GET", "/user-blocks", map[string]string{"identifier": "identifier", "consider_brute_force_enablement": "true"}, 1)
+	VerifyRequestCount(t, "TestUserBlocksListByIdentifierWithWireMock", "GET", "/user-blocks", map[string]interface{}{"identifier": "identifier", "consider_brute_force_enablement": "true"}, 1)
 }
 
 func TestUserBlocksDeleteByIdentifierWithWireMock(
@@ -115,7 +129,7 @@ func TestUserBlocksDeleteByIdentifierWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserBlocksDeleteByIdentifierWithWireMock", "DELETE", "/user-blocks", map[string]string{"identifier": "identifier"}, 1)
+	VerifyRequestCount(t, "TestUserBlocksDeleteByIdentifierWithWireMock", "DELETE", "/user-blocks", map[string]interface{}{"identifier": "identifier"}, 1)
 }
 
 func TestUserBlocksListWithWireMock(
@@ -144,7 +158,7 @@ func TestUserBlocksListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserBlocksListWithWireMock", "GET", "/user-blocks/id", map[string]string{"consider_brute_force_enablement": "true"}, 1)
+	VerifyRequestCount(t, "TestUserBlocksListWithWireMock", "GET", "/user-blocks/id", map[string]interface{}{"consider_brute_force_enablement": "true"}, 1)
 }
 
 func TestUserBlocksDeleteWithWireMock(

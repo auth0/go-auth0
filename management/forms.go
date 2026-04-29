@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
+	url "net/url"
 	time "time"
 )
 
@@ -445,6 +446,45 @@ func (f FormBlock) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FormBlockRichText)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+}
+
+func (f *FormBlock) EncodeQueryValues(key string, values *url.Values) error {
+	if f == nil {
+		return nil
+	}
+	if f.typ == "FormBlockDivider" || f.FormBlockDivider != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormBlockDivider))
+		return nil
+	}
+	if f.typ == "FormBlockHTML" || f.FormBlockHTML != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormBlockHTML))
+		return nil
+	}
+	if f.typ == "FormBlockImage" || f.FormBlockImage != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormBlockImage))
+		return nil
+	}
+	if f.typ == "FormBlockJumpButton" || f.FormBlockJumpButton != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormBlockJumpButton))
+		return nil
+	}
+	if f.typ == "FormBlockResendButton" || f.FormBlockResendButton != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormBlockResendButton))
+		return nil
+	}
+	if f.typ == "FormBlockNextButton" || f.FormBlockNextButton != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormBlockNextButton))
+		return nil
+	}
+	if f.typ == "FormBlockPreviousButton" || f.FormBlockPreviousButton != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormBlockPreviousButton))
+		return nil
+	}
+	if f.typ == "FormBlockRichText" || f.FormBlockRichText != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormBlockRichText))
+		return nil
+	}
+	return nil
 }
 
 type FormBlockVisitor interface {
@@ -2724,6 +2764,25 @@ func (f FormComponent) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
+func (f *FormComponent) EncodeQueryValues(key string, values *url.Values) error {
+	if f == nil {
+		return nil
+	}
+	if f.typ == "FormBlock" || f.FormBlock != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormBlock))
+		return nil
+	}
+	if f.typ == "FormWidget" || f.FormWidget != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormWidget))
+		return nil
+	}
+	if f.typ == "FormField" || f.FormField != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormField))
+		return nil
+	}
+	return nil
+}
+
 type FormComponentVisitor interface {
 	VisitFormBlock(*FormBlock) error
 	VisitFormWidget(*FormWidget) error
@@ -3422,6 +3481,77 @@ func (f FormField) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FormFieldURL)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+}
+
+func (f *FormField) EncodeQueryValues(key string, values *url.Values) error {
+	if f == nil {
+		return nil
+	}
+	if f.typ == "FormFieldBoolean" || f.FormFieldBoolean != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldBoolean))
+		return nil
+	}
+	if f.typ == "FormFieldCards" || f.FormFieldCards != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldCards))
+		return nil
+	}
+	if f.typ == "FormFieldChoice" || f.FormFieldChoice != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldChoice))
+		return nil
+	}
+	if f.typ == "FormFieldCustom" || f.FormFieldCustom != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldCustom))
+		return nil
+	}
+	if f.typ == "FormFieldDate" || f.FormFieldDate != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldDate))
+		return nil
+	}
+	if f.typ == "FormFieldDropdown" || f.FormFieldDropdown != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldDropdown))
+		return nil
+	}
+	if f.typ == "FormFieldEmail" || f.FormFieldEmail != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldEmail))
+		return nil
+	}
+	if f.typ == "FormFieldFile" || f.FormFieldFile != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldFile))
+		return nil
+	}
+	if f.typ == "FormFieldLegal" || f.FormFieldLegal != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldLegal))
+		return nil
+	}
+	if f.typ == "FormFieldNumber" || f.FormFieldNumber != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldNumber))
+		return nil
+	}
+	if f.typ == "FormFieldPassword" || f.FormFieldPassword != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldPassword))
+		return nil
+	}
+	if f.typ == "FormFieldPayment" || f.FormFieldPayment != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldPayment))
+		return nil
+	}
+	if f.typ == "FormFieldSocial" || f.FormFieldSocial != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldSocial))
+		return nil
+	}
+	if f.typ == "FormFieldTel" || f.FormFieldTel != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldTel))
+		return nil
+	}
+	if f.typ == "FormFieldText" || f.FormFieldText != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldText))
+		return nil
+	}
+	if f.typ == "FormFieldURL" || f.FormFieldURL != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldURL))
+		return nil
+	}
+	return nil
 }
 
 type FormFieldVisitor interface {
@@ -8115,6 +8245,21 @@ func (f FormFieldPaymentConfigCharge) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
+func (f *FormFieldPaymentConfigCharge) EncodeQueryValues(key string, values *url.Values) error {
+	if f == nil {
+		return nil
+	}
+	if f.typ == "FormFieldPaymentConfigChargeOneOff" || f.FormFieldPaymentConfigChargeOneOff != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldPaymentConfigChargeOneOff))
+		return nil
+	}
+	if f.typ == "FormFieldPaymentConfigChargeSubscription" || f.FormFieldPaymentConfigChargeSubscription != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFieldPaymentConfigChargeSubscription))
+		return nil
+	}
+	return nil
+}
+
 type FormFieldPaymentConfigChargeVisitor interface {
 	VisitFormFieldPaymentConfigChargeOneOff(*FormFieldPaymentConfigChargeOneOff) error
 	VisitFormFieldPaymentConfigChargeSubscription(*FormFieldPaymentConfigChargeSubscription) error
@@ -8423,6 +8568,21 @@ func (f FormFieldPaymentConfigChargeOneOffOneOffAmount) MarshalJSON() ([]byte, e
 		return json.Marshal(f.Double)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+}
+
+func (f *FormFieldPaymentConfigChargeOneOffOneOffAmount) EncodeQueryValues(key string, values *url.Values) error {
+	if f == nil {
+		return nil
+	}
+	if f.typ == "String" || f.String != "" {
+		values.Add(key, fmt.Sprintf("%v", f.String))
+		return nil
+	}
+	if f.typ == "Double" || f.Double != 0 {
+		values.Add(key, fmt.Sprintf("%v", f.Double))
+		return nil
+	}
+	return nil
 }
 
 type FormFieldPaymentConfigChargeOneOffOneOffAmountVisitor interface {
@@ -11202,6 +11362,25 @@ func (f FormNode) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
+func (f *FormNode) EncodeQueryValues(key string, values *url.Values) error {
+	if f == nil {
+		return nil
+	}
+	if f.typ == "FormFlow" || f.FormFlow != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormFlow))
+		return nil
+	}
+	if f.typ == "FormRouter" || f.FormRouter != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormRouter))
+		return nil
+	}
+	if f.typ == "FormStep" || f.FormStep != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormStep))
+		return nil
+	}
+	return nil
+}
+
 type FormNodeVisitor interface {
 	VisitFormFlow(*FormFlow) error
 	VisitFormRouter(*FormRouter) error
@@ -11370,6 +11549,21 @@ func (f FormNodePointer) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FormEndingNodeID)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+}
+
+func (f *FormNodePointer) EncodeQueryValues(key string, values *url.Values) error {
+	if f == nil {
+		return nil
+	}
+	if f.typ == "String" || f.String != "" {
+		values.Add(key, fmt.Sprintf("%v", f.String))
+		return nil
+	}
+	if f.typ == "FormEndingNodeID" || f.FormEndingNodeID != "" {
+		values.Add(key, fmt.Sprintf("%v", f.FormEndingNodeID))
+		return nil
+	}
+	return nil
 }
 
 type FormNodePointerVisitor interface {
@@ -12504,6 +12698,25 @@ func (f FormWidget) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FormWidgetRecaptcha)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+}
+
+func (f *FormWidget) EncodeQueryValues(key string, values *url.Values) error {
+	if f == nil {
+		return nil
+	}
+	if f.typ == "FormWidgetAuth0VerifiableCredentials" || f.FormWidgetAuth0VerifiableCredentials != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormWidgetAuth0VerifiableCredentials))
+		return nil
+	}
+	if f.typ == "FormWidgetGMapsAddress" || f.FormWidgetGMapsAddress != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormWidgetGMapsAddress))
+		return nil
+	}
+	if f.typ == "FormWidgetRecaptcha" || f.FormWidgetRecaptcha != nil {
+		values.Add(key, fmt.Sprintf("%v", f.FormWidgetRecaptcha))
+		return nil
+	}
+	return nil
 }
 
 type FormWidgetVisitor interface {

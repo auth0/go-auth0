@@ -728,6 +728,14 @@ client.Branding.Update(
 <dl>
 <dd>
 
+**identifiers:** `*management.UpdateBrandingIdentifiers` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **font:** `*management.UpdateBrandingFont` 
     
 </dd>
@@ -854,7 +862,7 @@ client.ClientGrants.List(
 <dl>
 <dd>
 
-**defaultFor:** `*management.ClientGrantDefaultForEnum` — Applies this client grant as the default for all clients in the specified group. The only accepted value is `third_party_clients`, which applies the grant to all third-party clients. Per-client grants for the same audience take precedence. Mutually exclusive with `client_id`.
+**defaultFor:** `*management.ClientGrantDefaultForEnum` — Applies this client grant as the default for all clients in the specified group. The only accepted value is <a href="https://auth0.com/docs/get-started/applications/application-access-to-apis-client-grants#default-permissions-for-third-party-applications">`third_party_clients`</a>, which applies the grant to all third-party clients. Per-client grants for the same audience take precedence. Mutually exclusive with `client_id`.
     
 </dd>
 </dl>
@@ -3308,6 +3316,9 @@ request := &management.ListConnectionsQueryParameters{
         Take: management.Int(
             1,
         ),
+        Strategy: []*management.ConnectionStrategyEnum{
+            management.ConnectionStrategyEnumAd.Ptr(),
+        },
         Name: management.String(
             "name",
         ),
@@ -5641,6 +5652,92 @@ client.EventStreams.Test(
 </dl>
 </details>
 
+## Events
+<details><summary><code>client.Events.Subscribe() -> management.EventStreamSubscribeEventsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Subscribe to events via Server-Sent Events (SSE)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SubscribeEventsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        FromTimestamp: management.String(
+            "from_timestamp",
+        ),
+        EventType: &management.EventStreamSubscribeEventsEventTypeParam{
+            EventStreamSubscribeEventsEventTypeEnum: management.EventStreamSubscribeEventsEventTypeEnumGroupCreated,
+        },
+    }
+client.Events.Subscribe(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Opaque token representing position in the stream. If not provided, stream will start from the latest events.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fromTimestamp:** `*string` — RFC-3339 timestamp indicating where to start streaming events from. This should only be used on the initial query when a cursor may not be available. Subsequent requests should use the cursor (from) as it will be more accurate.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eventType:** `*management.EventStreamSubscribeEventsEventTypeParam` — Event type(s) to listen for. Specify multiple times for multiple types (e.g., ?event_type=user.created&event_type=user.updated). If not provided, all event types will be streamed.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Flows
 <details><summary><code>client.Flows.List() -> *management.ListFlowsOffsetPaginatedResponseContent</code></summary>
 <dl>
@@ -5665,6 +5762,9 @@ request := &management.ListFlowsRequestParameters{
         IncludeTotals: management.Bool(
             true,
         ),
+        Hydrate: []*management.ListFlowsRequestParametersHydrateEnum{
+            management.ListFlowsRequestParametersHydrateEnumFormCount.Ptr(),
+        },
         Synchronous: management.Bool(
             true,
         ),
@@ -5800,7 +5900,11 @@ client.Flows.Create(
 <dd>
 
 ```go
-request := &management.GetFlowRequestParameters{}
+request := &management.GetFlowRequestParameters{
+        Hydrate: []*management.GetFlowRequestParametersHydrateEnum{
+            management.GetFlowRequestParametersHydrateEnumFormCount.Ptr(),
+        },
+    }
 client.Flows.Get(
         context.TODO(),
         "id",
@@ -5971,6 +6075,9 @@ request := &management.ListFormsRequestParameters{
         IncludeTotals: management.Bool(
             true,
         ),
+        Hydrate: []*management.FormsRequestParametersHydrateEnum{
+            management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
+        },
     }
 client.Forms.List(
         context.TODO(),
@@ -6143,7 +6250,11 @@ client.Forms.Create(
 <dd>
 
 ```go
-request := &management.GetFormRequestParameters{}
+request := &management.GetFormRequestParameters{
+        Hydrate: []*management.FormsRequestParametersHydrateEnum{
+            management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
+        },
+    }
 client.Forms.Get(
         context.TODO(),
         "id",
@@ -6614,6 +6725,9 @@ request := &management.ListGroupsRequestParameters{
         ExternalID: management.String(
             "external_id",
         ),
+        Search: management.String(
+            "search",
+        ),
         Fields: management.String(
             "fields",
         ),
@@ -6663,6 +6777,14 @@ client.Groups.List(
 <dd>
 
 **externalID:** `*string` — Filter groups by external ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `*string` — Search for groups by name or external ID.
     
 </dd>
 </dl>
@@ -9557,6 +9679,81 @@ client.RefreshTokens.List(
 </dl>
 </details>
 
+<details><summary><code>client.RefreshTokens.Revoke(request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Revoke refresh tokens in bulk by ID list, user, user+client, or client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.RevokeRefreshTokensRequestContent{}
+client.RefreshTokens.Revoke(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ids:** `[]string` — Array of refresh token IDs to revoke. Limited to 100 at a time.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `*string` — Revoke all refresh tokens for this user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `*string` — Revoke all refresh tokens for this client.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.RefreshTokens.Get(ID) -> *management.GetRefreshTokenResponseContent</code></summary>
 <dl>
 <dd>
@@ -9770,6 +9967,11 @@ Retrieve details of all APIs associated with your tenant.
 
 ```go
 request := &management.ListResourceServerRequestParameters{
+        Identifiers: []*string{
+            management.String(
+                "identifiers",
+            ),
+        },
         Page: management.Int(
             1,
         ),
@@ -10016,6 +10218,14 @@ client.ResourceServers.Create(
 <dd>
 
 **subjectTypeAuthorization:** `*management.ResourceServerSubjectTypeAuthorization` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authorizationPolicy:** `*management.ResourceServerAuthorizationPolicy` 
     
 </dd>
 </dl>
@@ -10326,6 +10536,14 @@ client.ResourceServers.Update(
 <dd>
 
 **subjectTypeAuthorization:** `*management.ResourceServerSubjectTypeAuthorization` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authorizationPolicy:** `*management.ResourceServerAuthorizationPolicy` 
     
 </dd>
 </dl>
@@ -11471,7 +11689,7 @@ client.SelfServiceProfiles.Create(
 <dl>
 <dd>
 
-**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
+**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
     
 </dd>
 </dl>
@@ -11479,7 +11697,7 @@ client.SelfServiceProfiles.Create(
 <dl>
 <dd>
 
-**userAttributes:** `[]*management.SelfServiceProfileUserAttribute` — List of attributes to be mapped that will be shown to the user during the SS-SSO flow.
+**userAttributes:** `[]*management.SelfServiceProfileUserAttribute` — List of attributes to be mapped that will be shown to the user during the Self-Service Enterprise Configuration flow.
     
 </dd>
 </dl>
@@ -11695,7 +11913,7 @@ client.SelfServiceProfiles.Update(
 <dl>
 <dd>
 
-**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service SSO flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
+**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
     
 </dd>
 </dl>
@@ -12892,7 +13110,7 @@ client.UserAttributeProfiles.List(
 <dl>
 <dd>
 
-Retrieve details about a single User Attribute Profile specified by ID. 
+Create a User Attribute Profile
 </dd>
 </dl>
 </dd>
@@ -18584,6 +18802,9 @@ Retrieve all connections that are enabled for the specified <a href="https://www
 
 ```go
 request := &management.ConnectionsGetRequest{
+        Strategy: []*management.ConnectionStrategyEnum{
+            management.ConnectionStrategyEnumAd.Ptr(),
+        },
         From: management.String(
             "from",
         ),
@@ -21049,7 +21270,11 @@ client.Flows.Executions.List(
 <dd>
 
 ```go
-request := &management.GetFlowExecutionRequestParameters{}
+request := &management.GetFlowExecutionRequestParameters{
+        Hydrate: []*management.GetFlowExecutionRequestParametersHydrateEnum{
+            management.GetFlowExecutionRequestParametersHydrateEnumDebug.Ptr(),
+        },
+    }
 client.Flows.Executions.Get(
         context.TODO(),
         "flow_id",
@@ -25066,6 +25291,11 @@ request := &management.ListOrganizationClientGrantsRequestParameters{
         ClientID: management.String(
             "client_id",
         ),
+        GrantIDs: []*string{
+            management.String(
+                "grant_ids",
+            ),
+        },
         Page: management.Int(
             1,
         ),
@@ -28786,7 +29016,7 @@ client.Roles.Users.Assign(
 <dl>
 <dd>
 
-Retrieves text customizations for a given self-service profile, language and Self Service SSO Flow page.
+Retrieves text customizations for a given self-service profile, language and Self-Service Enterprise Configuration flow page.
 </dd>
 </dl>
 </dd>
@@ -28862,7 +29092,7 @@ client.SelfServiceProfiles.CustomText.List(
 <dl>
 <dd>
 
-Updates text customizations for a given self-service profile, language and Self Service SSO Flow page.
+Updates text customizations for a given self-service profile, language and Self-Service Enterprise Configuration flow page.
 </dd>
 </dl>
 </dd>
@@ -28951,7 +29181,7 @@ client.SelfServiceProfiles.CustomText.Set(
 <dl>
 <dd>
 
-Creates an SSO access ticket to initiate the Self Service SSO Flow using a self-service profile.
+Creates an access ticket to initiate the Self-Service Enterprise Configuration flow using a self-service profile.
 </dd>
 </dl>
 </dd>
@@ -28995,7 +29225,7 @@ client.SelfServiceProfiles.SSOTicket.Create(
 <dl>
 <dd>
 
-**connectionID:** `*string` — If provided, this will allow editing of the provided connection during the SSO Flow
+**connectionID:** `*string` — If provided, this will allow editing of the provided connection during the Self-Service Enterprise Configuration flow
     
 </dd>
 </dl>
@@ -29083,7 +29313,7 @@ client.SelfServiceProfiles.SSOTicket.Create(
 <dl>
 <dd>
 
-Revokes an SSO access ticket and invalidates associated sessions. The ticket will no longer be accepted to initiate a Self-Service SSO session. If any users have already started a session through this ticket, their session will be terminated. Clients should expect a `202 Accepted` response upon successful processing, indicating that the request has been acknowledged and that the revocation is underway but may not be fully completed at the time of response. If the specified ticket does not exist, a `202 Accepted` response is also returned, signaling that no further action is required.
+Revokes a Self-Service Enterprise Configuration access ticket and invalidates associated sessions. The ticket will no longer be accepted to initiate a Self-Service Enterprise Configuration session. If any users have already started a session through this ticket, their session will be terminated. Clients should expect a `202 Accepted` response upon successful processing, indicating that the request has been acknowledged and that the revocation is underway but may not be fully completed at the time of response. If the specified ticket does not exist, a `202 Accepted` response is also returned, signaling that no further action is required.
 Clients should treat these `202` responses as an acknowledgment that the request has been accepted and is in progress, even if the ticket was not found.
 </dd>
 </dl>
@@ -31943,7 +32173,7 @@ client.Users.Sessions.Delete(
 <dl>
 <dd>
 
-List a verifiable credential templates.
+List verifiable credential templates.
 </dd>
 </dl>
 </dd>
