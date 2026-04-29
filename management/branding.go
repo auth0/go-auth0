@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
-	url "net/url"
 )
 
 // Custom color settings.
@@ -397,21 +396,6 @@ func (b BrandingPageBackground) MarshalJSON() ([]byte, error) {
 		return json.Marshal(b.StringUnknownMapOptional)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", b)
-}
-
-func (b *BrandingPageBackground) EncodeQueryValues(key string, values *url.Values) error {
-	if b == nil {
-		return nil
-	}
-	if b.typ == "StringOptional" || b.StringOptional != nil {
-		values.Add(key, fmt.Sprintf("%v", b.StringOptional))
-		return nil
-	}
-	if b.typ == "StringUnknownMapOptional" || b.StringUnknownMapOptional != nil {
-		values.Add(key, fmt.Sprintf("%v", b.StringUnknownMapOptional))
-		return nil
-	}
-	return nil
 }
 
 type BrandingPageBackgroundVisitor interface {
@@ -1121,21 +1105,6 @@ func (u UpdateBrandingPageBackground) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.StringUnknownMapOptional)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
-}
-
-func (u *UpdateBrandingPageBackground) EncodeQueryValues(key string, values *url.Values) error {
-	if u == nil {
-		return nil
-	}
-	if u.typ == "StringOptional" || u.StringOptional != nil {
-		values.Add(key, fmt.Sprintf("%v", u.StringOptional))
-		return nil
-	}
-	if u.typ == "StringUnknownMapOptional" || u.StringUnknownMapOptional != nil {
-		values.Add(key, fmt.Sprintf("%v", u.StringUnknownMapOptional))
-		return nil
-	}
-	return nil
 }
 
 type UpdateBrandingPageBackgroundVisitor interface {

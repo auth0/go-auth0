@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
-	url "net/url"
 )
 
 var (
@@ -1599,21 +1598,6 @@ func (u UserDateSchema) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.StringUnknownMap)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
-}
-
-func (u *UserDateSchema) EncodeQueryValues(key string, values *url.Values) error {
-	if u == nil {
-		return nil
-	}
-	if u.typ == "String" || u.String != "" {
-		values.Add(key, fmt.Sprintf("%v", u.String))
-		return nil
-	}
-	if u.typ == "StringUnknownMap" || u.StringUnknownMap != nil {
-		values.Add(key, fmt.Sprintf("%v", u.StringUnknownMap))
-		return nil
-	}
-	return nil
 }
 
 type UserDateSchemaVisitor interface {

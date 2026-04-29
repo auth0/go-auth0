@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
-	url "net/url"
 	time "time"
 )
 
@@ -625,113 +624,6 @@ func (f FlowAction) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowAction) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionActivecampaign" || f.FlowActionActivecampaign != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionActivecampaign))
-		return nil
-	}
-	if f.typ == "FlowActionAirtable" || f.FlowActionAirtable != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAirtable))
-		return nil
-	}
-	if f.typ == "FlowActionAuth0" || f.FlowActionAuth0 != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAuth0))
-		return nil
-	}
-	if f.typ == "FlowActionBigquery" || f.FlowActionBigquery != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionBigquery))
-		return nil
-	}
-	if f.typ == "FlowActionClearbit" || f.FlowActionClearbit != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionClearbit))
-		return nil
-	}
-	if f.typ == "FlowActionEmail" || f.FlowActionEmail != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionEmail))
-		return nil
-	}
-	if f.typ == "FlowActionFlow" || f.FlowActionFlow != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlow))
-		return nil
-	}
-	if f.typ == "FlowActionGoogleSheets" || f.FlowActionGoogleSheets != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionGoogleSheets))
-		return nil
-	}
-	if f.typ == "FlowActionHTTP" || f.FlowActionHTTP != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionHTTP))
-		return nil
-	}
-	if f.typ == "FlowActionHubspot" || f.FlowActionHubspot != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionHubspot))
-		return nil
-	}
-	if f.typ == "FlowActionJSON" || f.FlowActionJSON != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionJSON))
-		return nil
-	}
-	if f.typ == "FlowActionJwt" || f.FlowActionJwt != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionJwt))
-		return nil
-	}
-	if f.typ == "FlowActionMailchimp" || f.FlowActionMailchimp != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionMailchimp))
-		return nil
-	}
-	if f.typ == "FlowActionMailjet" || f.FlowActionMailjet != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionMailjet))
-		return nil
-	}
-	if f.typ == "FlowActionOtp" || f.FlowActionOtp != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionOtp))
-		return nil
-	}
-	if f.typ == "FlowActionPipedrive" || f.FlowActionPipedrive != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionPipedrive))
-		return nil
-	}
-	if f.typ == "FlowActionSalesforce" || f.FlowActionSalesforce != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionSalesforce))
-		return nil
-	}
-	if f.typ == "FlowActionSendgrid" || f.FlowActionSendgrid != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionSendgrid))
-		return nil
-	}
-	if f.typ == "FlowActionSlack" || f.FlowActionSlack != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionSlack))
-		return nil
-	}
-	if f.typ == "FlowActionStripe" || f.FlowActionStripe != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionStripe))
-		return nil
-	}
-	if f.typ == "FlowActionTelegram" || f.FlowActionTelegram != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionTelegram))
-		return nil
-	}
-	if f.typ == "FlowActionTwilio" || f.FlowActionTwilio != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionTwilio))
-		return nil
-	}
-	if f.typ == "FlowActionWhatsapp" || f.FlowActionWhatsapp != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionWhatsapp))
-		return nil
-	}
-	if f.typ == "FlowActionXML" || f.FlowActionXML != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionXML))
-		return nil
-	}
-	if f.typ == "FlowActionZapier" || f.FlowActionZapier != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionZapier))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionVisitor interface {
 	VisitFlowActionActivecampaign(*FlowActionActivecampaign) error
 	VisitFlowActionAirtable(*FlowActionAirtable) error
@@ -884,21 +776,6 @@ func (f FlowActionActivecampaign) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionActivecampaignUpsertContact)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionActivecampaign) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionActivecampaignListContacts" || f.FlowActionActivecampaignListContacts != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionActivecampaignListContacts))
-		return nil
-	}
-	if f.typ == "FlowActionActivecampaignUpsertContact" || f.FlowActionActivecampaignUpsertContact != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionActivecampaignUpsertContact))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionActivecampaignVisitor interface {
@@ -1680,25 +1557,6 @@ func (f FlowActionAirtable) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionAirtableUpdateRecord)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionAirtable) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionAirtableCreateRecord" || f.FlowActionAirtableCreateRecord != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAirtableCreateRecord))
-		return nil
-	}
-	if f.typ == "FlowActionAirtableListRecords" || f.FlowActionAirtableListRecords != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAirtableListRecords))
-		return nil
-	}
-	if f.typ == "FlowActionAirtableUpdateRecord" || f.FlowActionAirtableUpdateRecord != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAirtableUpdateRecord))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionAirtableVisitor interface {
@@ -2936,41 +2794,6 @@ func (f FlowActionAuth0) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionAuth0MakeCall)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionAuth0) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionAuth0CreateUser" || f.FlowActionAuth0CreateUser != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAuth0CreateUser))
-		return nil
-	}
-	if f.typ == "FlowActionAuth0GetUser" || f.FlowActionAuth0GetUser != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAuth0GetUser))
-		return nil
-	}
-	if f.typ == "FlowActionAuth0UpdateUser" || f.FlowActionAuth0UpdateUser != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAuth0UpdateUser))
-		return nil
-	}
-	if f.typ == "FlowActionAuth0SendRequest" || f.FlowActionAuth0SendRequest != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAuth0SendRequest))
-		return nil
-	}
-	if f.typ == "FlowActionAuth0SendEmail" || f.FlowActionAuth0SendEmail != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAuth0SendEmail))
-		return nil
-	}
-	if f.typ == "FlowActionAuth0SendSms" || f.FlowActionAuth0SendSms != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAuth0SendSms))
-		return nil
-	}
-	if f.typ == "FlowActionAuth0MakeCall" || f.FlowActionAuth0MakeCall != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAuth0MakeCall))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionAuth0Visitor interface {
@@ -4930,27 +4753,6 @@ func (f FlowActionAuth0SendRequestParamsPayload) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionAuth0SendRequestParamsPayload) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "UnknownList" || f.UnknownList != nil {
-		for _, item := range f.UnknownList {
-			values.Add(key, fmt.Sprintf("%v", item))
-		}
-		return nil
-	}
-	if f.typ == "FlowActionAuth0SendRequestParamsPayloadObject" || f.FlowActionAuth0SendRequestParamsPayloadObject != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionAuth0SendRequestParamsPayloadObject))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionAuth0SendRequestParamsPayloadVisitor interface {
 	VisitString(string) error
 	VisitUnknownList([]any) error
@@ -5019,21 +4821,6 @@ func (f FlowActionAuth0SendRequestParamsQueryParamsValue) MarshalJSON() ([]byte,
 		return json.Marshal(f.String)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionAuth0SendRequestParamsQueryParamsValue) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionAuth0SendRequestParamsQueryParamsValueVisitor interface {
@@ -6157,21 +5944,6 @@ func (f FlowActionClearbit) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionClearbitFindCompany)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionClearbit) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionClearbitFindPerson" || f.FlowActionClearbitFindPerson != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionClearbitFindPerson))
-		return nil
-	}
-	if f.typ == "FlowActionClearbitFindCompany" || f.FlowActionClearbitFindCompany != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionClearbitFindCompany))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionClearbitVisitor interface {
@@ -7441,41 +7213,6 @@ func (f FlowActionFlow) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionFlow) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionFlowBooleanCondition" || f.FlowActionFlowBooleanCondition != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlowBooleanCondition))
-		return nil
-	}
-	if f.typ == "FlowActionFlowDelayFlow" || f.FlowActionFlowDelayFlow != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlowDelayFlow))
-		return nil
-	}
-	if f.typ == "FlowActionFlowDoNothing" || f.FlowActionFlowDoNothing != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlowDoNothing))
-		return nil
-	}
-	if f.typ == "FlowActionFlowErrorMessage" || f.FlowActionFlowErrorMessage != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlowErrorMessage))
-		return nil
-	}
-	if f.typ == "FlowActionFlowMapValue" || f.FlowActionFlowMapValue != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlowMapValue))
-		return nil
-	}
-	if f.typ == "FlowActionFlowReturnJSON" || f.FlowActionFlowReturnJSON != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlowReturnJSON))
-		return nil
-	}
-	if f.typ == "FlowActionFlowStoreVars" || f.FlowActionFlowStoreVars != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlowStoreVars))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionFlowVisitor interface {
 	VisitFlowActionFlowBooleanCondition(*FlowActionFlowBooleanCondition) error
 	VisitFlowActionFlowDelayFlow(*FlowActionFlowDelayFlow) error
@@ -8173,21 +7910,6 @@ func (f FlowActionFlowDelayFlowParamsNumber) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.String)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionFlowDelayFlowParamsNumber) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "Integer" || f.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Integer))
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionFlowDelayFlowParamsNumberVisitor interface {
@@ -9235,31 +8957,6 @@ func (f FlowActionFlowMapValueParamsFallback) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionFlowMapValueParamsFallback) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	if f.typ == "FlowActionFlowMapValueParamsFallbackObject" || f.FlowActionFlowMapValueParamsFallbackObject != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlowMapValueParamsFallbackObject))
-		return nil
-	}
-	if f.typ == "UnknownList" || f.UnknownList != nil {
-		for _, item := range f.UnknownList {
-			values.Add(key, fmt.Sprintf("%v", item))
-		}
-		return nil
-	}
-	return nil
-}
-
 type FlowActionFlowMapValueParamsFallbackVisitor interface {
 	VisitString(string) error
 	VisitDouble(float64) error
@@ -9330,21 +9027,6 @@ func (f FlowActionFlowMapValueParamsInput) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.Double)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionFlowMapValueParamsInput) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionFlowMapValueParamsInputVisitor interface {
@@ -9709,21 +9391,6 @@ func (f FlowActionFlowReturnJSONParamsPayload) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.String)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionFlowReturnJSONParamsPayload) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionFlowReturnJSONParamsPayloadObject" || f.FlowActionFlowReturnJSONParamsPayloadObject != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionFlowReturnJSONParamsPayloadObject))
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionFlowReturnJSONParamsPayloadVisitor interface {
@@ -10446,21 +10113,6 @@ func (f FlowActionGoogleSheetsAddRowParamsSheetID) MarshalJSON() ([]byte, error)
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionGoogleSheetsAddRowParamsSheetID) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "Integer" || f.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Integer))
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionGoogleSheetsAddRowParamsSheetIDVisitor interface {
 	VisitInteger(int) error
 	VisitString(string) error
@@ -11116,27 +10768,6 @@ func (f FlowActionHTTPSendRequestParamsPayload) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionHTTPSendRequestParamsPayload) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "UnknownList" || f.UnknownList != nil {
-		for _, item := range f.UnknownList {
-			values.Add(key, fmt.Sprintf("%v", item))
-		}
-		return nil
-	}
-	if f.typ == "FlowActionHTTPSendRequestParamsPayloadObject" || f.FlowActionHTTPSendRequestParamsPayloadObject != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionHTTPSendRequestParamsPayloadObject))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionHTTPSendRequestParamsPayloadVisitor interface {
 	VisitString(string) error
 	VisitUnknownList([]any) error
@@ -11205,21 +10836,6 @@ func (f FlowActionHTTPSendRequestParamsQueryParamsValue) MarshalJSON() ([]byte, 
 		return json.Marshal(f.String)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionHTTPSendRequestParamsQueryParamsValue) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionHTTPSendRequestParamsQueryParamsValueVisitor interface {
@@ -11318,25 +10934,6 @@ func (f FlowActionHubspot) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionHubspotUpsertContact)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionHubspot) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionHubspotEnrollContact" || f.FlowActionHubspotEnrollContact != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionHubspotEnrollContact))
-		return nil
-	}
-	if f.typ == "FlowActionHubspotGetContact" || f.FlowActionHubspotGetContact != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionHubspotGetContact))
-		return nil
-	}
-	if f.typ == "FlowActionHubspotUpsertContact" || f.FlowActionHubspotUpsertContact != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionHubspotUpsertContact))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionHubspotVisitor interface {
@@ -11718,21 +11315,6 @@ func (f FlowActionHubspotEnrollContactParamsWorkflowID) MarshalJSON() ([]byte, e
 		return json.Marshal(f.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionHubspotEnrollContactParamsWorkflowID) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Integer" || f.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Integer))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionHubspotEnrollContactParamsWorkflowIDVisitor interface {
@@ -12572,25 +12154,6 @@ func (f FlowActionJSON) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionJSONSerializeJSON)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionJSON) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionJSONCreateJSON" || f.FlowActionJSONCreateJSON != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionJSONCreateJSON))
-		return nil
-	}
-	if f.typ == "FlowActionJSONParseJSON" || f.FlowActionJSONParseJSON != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionJSONParseJSON))
-		return nil
-	}
-	if f.typ == "FlowActionJSONSerializeJSON" || f.FlowActionJSONSerializeJSON != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionJSONSerializeJSON))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionJSONVisitor interface {
@@ -13548,21 +13111,6 @@ func (f FlowActionJSONSerializeJSONParamsObject) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionJSONSerializeJSONParamsObject) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "FlowActionJSONSerializeJSONParamsObjectObject" || f.FlowActionJSONSerializeJSONParamsObjectObject != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionJSONSerializeJSONParamsObjectObject))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionJSONSerializeJSONParamsObjectVisitor interface {
 	VisitString(string) error
 	VisitFlowActionJSONSerializeJSONParamsObjectObject(FlowActionJSONSerializeJSONParamsObjectObject) error
@@ -13661,25 +13209,6 @@ func (f FlowActionJwt) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionJwtVerifyJwt)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionJwt) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionJwtDecodeJwt" || f.FlowActionJwtDecodeJwt != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionJwtDecodeJwt))
-		return nil
-	}
-	if f.typ == "FlowActionJwtSignJwt" || f.FlowActionJwtSignJwt != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionJwtSignJwt))
-		return nil
-	}
-	if f.typ == "FlowActionJwtVerifyJwt" || f.FlowActionJwtVerifyJwt != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionJwtVerifyJwt))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionJwtVisitor interface {
@@ -15439,21 +14968,6 @@ func (f FlowActionMailjetSendEmailParams) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionMailjetSendEmailParams) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionMailjetSendEmailParamsContent" || f.FlowActionMailjetSendEmailParamsContent != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionMailjetSendEmailParamsContent))
-		return nil
-	}
-	if f.typ == "FlowActionMailjetSendEmailParamsTemplateID" || f.FlowActionMailjetSendEmailParamsTemplateID != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionMailjetSendEmailParamsTemplateID))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionMailjetSendEmailParamsVisitor interface {
 	VisitFlowActionMailjetSendEmailParamsContent(*FlowActionMailjetSendEmailParamsContent) error
 	VisitFlowActionMailjetSendEmailParamsTemplateID(*FlowActionMailjetSendEmailParamsTemplateID) error
@@ -15727,21 +15241,6 @@ func (f FlowActionOtp) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionOtpVerifyCode)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionOtp) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionOtpGenerateCode" || f.FlowActionOtpGenerateCode != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionOtpGenerateCode))
-		return nil
-	}
-	if f.typ == "FlowActionOtpVerifyCode" || f.FlowActionOtpVerifyCode != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionOtpVerifyCode))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionOtpVisitor interface {
@@ -16423,21 +15922,6 @@ func (f FlowActionOtpVerifyCodeParamsCode) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionOtpVerifyCodeParamsCode) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "Integer" || f.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Integer))
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionOtpVerifyCodeParamsCodeVisitor interface {
 	VisitInteger(int) error
 	VisitString(string) error
@@ -16534,25 +16018,6 @@ func (f FlowActionPipedrive) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionPipedriveAddPerson)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionPipedrive) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionPipedriveAddDeal" || f.FlowActionPipedriveAddDeal != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionPipedriveAddDeal))
-		return nil
-	}
-	if f.typ == "FlowActionPipedriveAddOrganization" || f.FlowActionPipedriveAddOrganization != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionPipedriveAddOrganization))
-		return nil
-	}
-	if f.typ == "FlowActionPipedriveAddPerson" || f.FlowActionPipedriveAddPerson != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionPipedriveAddPerson))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionPipedriveVisitor interface {
@@ -17018,21 +16483,6 @@ func (f FlowActionPipedriveAddDealParamsOrganizationID) MarshalJSON() ([]byte, e
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionPipedriveAddDealParamsOrganizationID) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionPipedriveAddDealParamsOrganizationIDVisitor interface {
 	VisitString(string) error
 	VisitDouble(float64) error
@@ -17093,21 +16543,6 @@ func (f FlowActionPipedriveAddDealParamsPersonID) MarshalJSON() ([]byte, error) 
 		return json.Marshal(f.Double)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionPipedriveAddDealParamsPersonID) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionPipedriveAddDealParamsPersonIDVisitor interface {
@@ -17172,21 +16607,6 @@ func (f FlowActionPipedriveAddDealParamsStageID) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionPipedriveAddDealParamsStageID) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionPipedriveAddDealParamsStageIDVisitor interface {
 	VisitString(string) error
 	VisitDouble(float64) error
@@ -17247,21 +16667,6 @@ func (f FlowActionPipedriveAddDealParamsUserID) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.Double)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionPipedriveAddDealParamsUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionPipedriveAddDealParamsUserIDVisitor interface {
@@ -17676,21 +17081,6 @@ func (f FlowActionPipedriveAddOrganizationParamsOwnerID) MarshalJSON() ([]byte, 
 		return json.Marshal(f.Double)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionPipedriveAddOrganizationParamsOwnerID) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionPipedriveAddOrganizationParamsOwnerIDVisitor interface {
@@ -18155,21 +17545,6 @@ func (f FlowActionPipedriveAddPersonParamsOrganizationID) MarshalJSON() ([]byte,
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionPipedriveAddPersonParamsOrganizationID) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionPipedriveAddPersonParamsOrganizationIDVisitor interface {
 	VisitString(string) error
 	VisitDouble(float64) error
@@ -18230,21 +17605,6 @@ func (f FlowActionPipedriveAddPersonParamsOwnerID) MarshalJSON() ([]byte, error)
 		return json.Marshal(f.Double)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionPipedriveAddPersonParamsOwnerID) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "Double" || f.Double != 0 {
-		values.Add(key, fmt.Sprintf("%v", f.Double))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionPipedriveAddPersonParamsOwnerIDVisitor interface {
@@ -18360,29 +17720,6 @@ func (f FlowActionSalesforce) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionSalesforceUpdateLead)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionSalesforce) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionSalesforceCreateLead" || f.FlowActionSalesforceCreateLead != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionSalesforceCreateLead))
-		return nil
-	}
-	if f.typ == "FlowActionSalesforceGetLead" || f.FlowActionSalesforceGetLead != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionSalesforceGetLead))
-		return nil
-	}
-	if f.typ == "FlowActionSalesforceSearchLeads" || f.FlowActionSalesforceSearchLeads != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionSalesforceSearchLeads))
-		return nil
-	}
-	if f.typ == "FlowActionSalesforceUpdateLead" || f.FlowActionSalesforceUpdateLead != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionSalesforceUpdateLead))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionSalesforceVisitor interface {
@@ -21020,41 +20357,6 @@ func (f FlowActionStripe) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionStripeUpdateCustomer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionStripe) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionStripeAddTaxID" || f.FlowActionStripeAddTaxID != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionStripeAddTaxID))
-		return nil
-	}
-	if f.typ == "FlowActionStripeCreateCustomer" || f.FlowActionStripeCreateCustomer != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionStripeCreateCustomer))
-		return nil
-	}
-	if f.typ == "FlowActionStripeCreatePortalSession" || f.FlowActionStripeCreatePortalSession != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionStripeCreatePortalSession))
-		return nil
-	}
-	if f.typ == "FlowActionStripeDeleteTaxID" || f.FlowActionStripeDeleteTaxID != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionStripeDeleteTaxID))
-		return nil
-	}
-	if f.typ == "FlowActionStripeFindCustomers" || f.FlowActionStripeFindCustomers != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionStripeFindCustomers))
-		return nil
-	}
-	if f.typ == "FlowActionStripeGetCustomer" || f.FlowActionStripeGetCustomer != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionStripeGetCustomer))
-		return nil
-	}
-	if f.typ == "FlowActionStripeUpdateCustomer" || f.FlowActionStripeUpdateCustomer != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionStripeUpdateCustomer))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionStripeVisitor interface {
@@ -24255,21 +23557,6 @@ func (f FlowActionTwilio) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionTwilio) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionTwilioMakeCall" || f.FlowActionTwilioMakeCall != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionTwilioMakeCall))
-		return nil
-	}
-	if f.typ == "FlowActionTwilioSendSms" || f.FlowActionTwilioSendSms != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionTwilioSendSms))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionTwilioVisitor interface {
 	VisitFlowActionTwilioMakeCall(*FlowActionTwilioMakeCall) error
 	VisitFlowActionTwilioSendSms(*FlowActionTwilioSendSms) error
@@ -25381,21 +24668,6 @@ func (f FlowActionWhatsappSendMessageParamsPayload) MarshalJSON() ([]byte, error
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
 }
 
-func (f *FlowActionWhatsappSendMessageParamsPayload) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionWhatsappSendMessageParamsPayloadObject" || f.FlowActionWhatsappSendMessageParamsPayloadObject != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionWhatsappSendMessageParamsPayloadObject))
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	return nil
-}
-
 type FlowActionWhatsappSendMessageParamsPayloadVisitor interface {
 	VisitFlowActionWhatsappSendMessageParamsPayloadObject(FlowActionWhatsappSendMessageParamsPayloadObject) error
 	VisitString(string) error
@@ -25520,21 +24792,6 @@ func (f FlowActionXML) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionXMLSerializeXML)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionXML) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "FlowActionXMLParseXML" || f.FlowActionXMLParseXML != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionXMLParseXML))
-		return nil
-	}
-	if f.typ == "FlowActionXMLSerializeXML" || f.FlowActionXMLSerializeXML != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionXMLSerializeXML))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionXMLVisitor interface {
@@ -26182,21 +25439,6 @@ func (f FlowActionXMLSerializeXMLParamsObject) MarshalJSON() ([]byte, error) {
 		return json.Marshal(f.FlowActionXMLSerializeXMLParamsObjectObject)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
-}
-
-func (f *FlowActionXMLSerializeXMLParamsObject) EncodeQueryValues(key string, values *url.Values) error {
-	if f == nil {
-		return nil
-	}
-	if f.typ == "String" || f.String != "" {
-		values.Add(key, fmt.Sprintf("%v", f.String))
-		return nil
-	}
-	if f.typ == "FlowActionXMLSerializeXMLParamsObjectObject" || f.FlowActionXMLSerializeXMLParamsObjectObject != nil {
-		values.Add(key, fmt.Sprintf("%v", f.FlowActionXMLSerializeXMLParamsObjectObject))
-		return nil
-	}
-	return nil
 }
 
 type FlowActionXMLSerializeXMLParamsObjectVisitor interface {

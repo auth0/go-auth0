@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
-	url "net/url"
 	time "time"
 )
 
@@ -4611,23 +4610,6 @@ func (c ClientAddonSharePointExternalURL) MarshalJSON() ([]byte, error) {
 		return json.Marshal(c.String)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
-}
-
-func (c *ClientAddonSharePointExternalURL) EncodeQueryValues(key string, values *url.Values) error {
-	if c == nil {
-		return nil
-	}
-	if c.typ == "StringList" || c.StringList != nil {
-		for _, item := range c.StringList {
-			values.Add(key, fmt.Sprintf("%v", item))
-		}
-		return nil
-	}
-	if c.typ == "String" || c.String != "" {
-		values.Add(key, fmt.Sprintf("%v", c.String))
-		return nil
-	}
-	return nil
 }
 
 type ClientAddonSharePointExternalURLVisitor interface {
