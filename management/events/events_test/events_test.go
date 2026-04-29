@@ -95,8 +95,8 @@ func TestEventsSubscribeWithWireMock(
 		FromTimestamp: management.String(
 			"from_timestamp",
 		),
-		EventType: &management.EventStreamSubscribeEventsEventTypeParam{
-			EventStreamSubscribeEventsEventTypeEnum: management.EventStreamSubscribeEventsEventTypeEnumGroupCreated,
+		EventType: []*management.EventStreamSubscribeEventsEventTypeEnum{
+			management.EventStreamSubscribeEventsEventTypeEnumGroupCreated.Ptr(),
 		},
 	}
 	_, invocationErr := client.Events.Subscribe(

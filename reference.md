@@ -5687,8 +5687,8 @@ request := &management.SubscribeEventsRequestParameters{
         FromTimestamp: management.String(
             "from_timestamp",
         ),
-        EventType: &management.EventStreamSubscribeEventsEventTypeParam{
-            EventStreamSubscribeEventsEventTypeEnum: management.EventStreamSubscribeEventsEventTypeEnumGroupCreated,
+        EventType: []*management.EventStreamSubscribeEventsEventTypeEnum{
+            management.EventStreamSubscribeEventsEventTypeEnumGroupCreated.Ptr(),
         },
     }
 client.Events.Subscribe(
@@ -5726,7 +5726,7 @@ client.Events.Subscribe(
 <dl>
 <dd>
 
-**eventType:** `*management.EventStreamSubscribeEventsEventTypeParam` — Event type(s) to listen for. Specify multiple times for multiple types (e.g., ?event_type=user.created&event_type=user.updated). If not provided, all event types will be streamed.
+**eventType:** `*management.EventStreamSubscribeEventsEventTypeEnum` — Event type(s) to listen for. Specify multiple times for multiple types (e.g., ?event_type=user.created&event_type=user.updated). If not provided, all event types will be streamed.
     
 </dd>
 </dl>

@@ -10687,7 +10687,7 @@ type SubscribeEventsRequestParameters struct {
 	// RFC-3339 timestamp indicating where to start streaming events from. This should only be used on the initial query when a cursor may not be available. Subsequent requests should use the cursor (from) as it will be more accurate.
 	FromTimestamp *string `json:"-" url:"from_timestamp,omitempty"`
 	// Event type(s) to listen for. Specify multiple times for multiple types (e.g., ?event_type=user.created&event_type=user.updated). If not provided, all event types will be streamed.
-	EventType *EventStreamSubscribeEventsEventTypeParam `json:"-" url:"event_type,omitempty"`
+	EventType []*EventStreamSubscribeEventsEventTypeEnum `json:"-" url:"event_type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -10716,7 +10716,7 @@ func (s *SubscribeEventsRequestParameters) SetFromTimestamp(fromTimestamp *strin
 
 // SetEventType sets the EventType field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SubscribeEventsRequestParameters) SetEventType(eventType *EventStreamSubscribeEventsEventTypeParam) {
+func (s *SubscribeEventsRequestParameters) SetEventType(eventType []*EventStreamSubscribeEventsEventTypeEnum) {
 	s.EventType = eventType
 	s.require(subscribeEventsRequestParametersFieldEventType)
 }
