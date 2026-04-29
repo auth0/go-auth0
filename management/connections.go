@@ -32,6 +32,128 @@ func (c ConnectionAPIBehaviorEnum) Ptr() *ConnectionAPIBehaviorEnum {
 	return &c
 }
 
+// The algorithm profile to use for decrypting SAML assertions.
+type ConnectionAssertionDecryptionAlgorithmProfileEnum string
+
+const (
+	ConnectionAssertionDecryptionAlgorithmProfileEnumV20261 ConnectionAssertionDecryptionAlgorithmProfileEnum = "v2026-1"
+)
+
+func NewConnectionAssertionDecryptionAlgorithmProfileEnumFromString(s string) (ConnectionAssertionDecryptionAlgorithmProfileEnum, error) {
+	switch s {
+	case "v2026-1":
+		return ConnectionAssertionDecryptionAlgorithmProfileEnumV20261, nil
+	}
+	var t ConnectionAssertionDecryptionAlgorithmProfileEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionAssertionDecryptionAlgorithmProfileEnum) Ptr() *ConnectionAssertionDecryptionAlgorithmProfileEnum {
+	return &c
+}
+
+// Settings for SAML assertion decryption.
+var (
+	connectionAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 0)
+	connectionAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 1)
+)
+
+type ConnectionAssertionDecryptionSettings struct {
+	AlgorithmProfile ConnectionAssertionDecryptionAlgorithmProfileEnum `json:"algorithm_profile" url:"algorithm_profile"`
+	// A list of insecure algorithms to allow for SAML assertion decryption.
+	AlgorithmExceptions []string `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionAssertionDecryptionSettings) GetAlgorithmProfile() ConnectionAssertionDecryptionAlgorithmProfileEnum {
+	if c == nil {
+		return ""
+	}
+	return c.AlgorithmProfile
+}
+
+func (c *ConnectionAssertionDecryptionSettings) GetAlgorithmExceptions() []string {
+	if c == nil || c.AlgorithmExceptions == nil {
+		return nil
+	}
+	return c.AlgorithmExceptions
+}
+
+func (c *ConnectionAssertionDecryptionSettings) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionAssertionDecryptionSettings) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetAlgorithmProfile sets the AlgorithmProfile field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionAssertionDecryptionSettings) SetAlgorithmProfile(algorithmProfile ConnectionAssertionDecryptionAlgorithmProfileEnum) {
+	c.AlgorithmProfile = algorithmProfile
+	c.require(connectionAssertionDecryptionSettingsFieldAlgorithmProfile)
+}
+
+// SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionAssertionDecryptionSettings) SetAlgorithmExceptions(algorithmExceptions []string) {
+	c.AlgorithmExceptions = algorithmExceptions
+	c.require(connectionAssertionDecryptionSettingsFieldAlgorithmExceptions)
+}
+
+func (c *ConnectionAssertionDecryptionSettings) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionAssertionDecryptionSettings
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionAssertionDecryptionSettings(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionAssertionDecryptionSettings) MarshalJSON() ([]byte, error) {
+	type embed ConnectionAssertionDecryptionSettings
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionAssertionDecryptionSettings) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	connectionAttributeIdentifierFieldActive        = big.NewInt(1 << 0)
 	connectionAttributeIdentifierFieldDefaultMethod = big.NewInt(1 << 1)
@@ -2680,10 +2802,11 @@ var (
 	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
 	connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 29)
 	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
-	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
-	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 32)
-	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 33)
-	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 34)
+	connectionPropertiesOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 31)
+	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 32)
+	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
+	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
+	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2724,6 +2847,7 @@ type ConnectionPropertiesOptions struct {
 	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
 	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens    `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
 	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
+	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
@@ -2952,6 +3076,13 @@ func (c *ConnectionPropertiesOptions) GetPasswordOptions() ConnectionPasswordOpt
 		return ConnectionPasswordOptions{}
 	}
 	return *c.PasswordOptions
+}
+
+func (c *ConnectionPropertiesOptions) GetAssertionDecryptionSettings() ConnectionAssertionDecryptionSettings {
+	if c == nil || c.AssertionDecryptionSettings == nil {
+		return ConnectionAssertionDecryptionSettings{}
+	}
+	return *c.AssertionDecryptionSettings
 }
 
 func (c *ConnectionPropertiesOptions) GetIDTokenSignedResponseAlgs() ConnectionIDTokenSignedResponseAlgs {
@@ -3211,6 +3342,13 @@ func (c *ConnectionPropertiesOptions) SetFederatedConnectionsAccessTokens(federa
 func (c *ConnectionPropertiesOptions) SetPasswordOptions(passwordOptions *ConnectionPasswordOptions) {
 	c.PasswordOptions = passwordOptions
 	c.require(connectionPropertiesOptionsFieldPasswordOptions)
+}
+
+// SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetAssertionDecryptionSettings(assertionDecryptionSettings *ConnectionAssertionDecryptionSettings) {
+	c.AssertionDecryptionSettings = assertionDecryptionSettings
+	c.require(connectionPropertiesOptionsFieldAssertionDecryptionSettings)
 }
 
 // SetIDTokenSignedResponseAlgs sets the IDTokenSignedResponseAlgs field and marks it as non-optional;
@@ -5288,10 +5426,11 @@ var (
 	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
 	updateConnectionOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 29)
 	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
-	updateConnectionOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
-	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 32)
-	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 33)
-	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 34)
+	updateConnectionOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 31)
+	updateConnectionOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 32)
+	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
+	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
+	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
 )
 
 type UpdateConnectionOptions struct {
@@ -5332,6 +5471,7 @@ type UpdateConnectionOptions struct {
 	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
 	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens    `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
 	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
+	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
@@ -5560,6 +5700,13 @@ func (u *UpdateConnectionOptions) GetPasswordOptions() ConnectionPasswordOptions
 		return ConnectionPasswordOptions{}
 	}
 	return *u.PasswordOptions
+}
+
+func (u *UpdateConnectionOptions) GetAssertionDecryptionSettings() ConnectionAssertionDecryptionSettings {
+	if u == nil || u.AssertionDecryptionSettings == nil {
+		return ConnectionAssertionDecryptionSettings{}
+	}
+	return *u.AssertionDecryptionSettings
 }
 
 func (u *UpdateConnectionOptions) GetIDTokenSignedResponseAlgs() ConnectionIDTokenSignedResponseAlgs {
@@ -5819,6 +5966,13 @@ func (u *UpdateConnectionOptions) SetFederatedConnectionsAccessTokens(federatedC
 func (u *UpdateConnectionOptions) SetPasswordOptions(passwordOptions *ConnectionPasswordOptions) {
 	u.PasswordOptions = passwordOptions
 	u.require(updateConnectionOptionsFieldPasswordOptions)
+}
+
+// SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetAssertionDecryptionSettings(assertionDecryptionSettings *ConnectionAssertionDecryptionSettings) {
+	u.AssertionDecryptionSettings = assertionDecryptionSettings
+	u.require(updateConnectionOptionsFieldAssertionDecryptionSettings)
 }
 
 // SetIDTokenSignedResponseAlgs sets the IDTokenSignedResponseAlgs field and marks it as non-optional;

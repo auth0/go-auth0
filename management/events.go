@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
-	url "net/url"
 	time "time"
 )
 
@@ -30559,86 +30558,6 @@ func NewEventStreamSubscribeEventsEventTypeEnumFromString(s string) (EventStream
 
 func (e EventStreamSubscribeEventsEventTypeEnum) Ptr() *EventStreamSubscribeEventsEventTypeEnum {
 	return &e
-}
-
-// Event type(s) to listen for. Specify multiple times for multiple types (e.g., ?event_type=user.created&event_type=user.updated). If not provided, all event types will be streamed.
-type EventStreamSubscribeEventsEventTypeParam struct {
-	EventStreamSubscribeEventsEventTypeEnum     EventStreamSubscribeEventsEventTypeEnum
-	EventStreamSubscribeEventsEventTypeEnumList []EventStreamSubscribeEventsEventTypeEnum
-
-	typ string
-}
-
-func (e *EventStreamSubscribeEventsEventTypeParam) GetEventStreamSubscribeEventsEventTypeEnum() EventStreamSubscribeEventsEventTypeEnum {
-	if e == nil {
-		return ""
-	}
-	return e.EventStreamSubscribeEventsEventTypeEnum
-}
-
-func (e *EventStreamSubscribeEventsEventTypeParam) GetEventStreamSubscribeEventsEventTypeEnumList() []EventStreamSubscribeEventsEventTypeEnum {
-	if e == nil {
-		return nil
-	}
-	return e.EventStreamSubscribeEventsEventTypeEnumList
-}
-
-func (e *EventStreamSubscribeEventsEventTypeParam) UnmarshalJSON(data []byte) error {
-	var valueEventStreamSubscribeEventsEventTypeEnum EventStreamSubscribeEventsEventTypeEnum
-	if err := json.Unmarshal(data, &valueEventStreamSubscribeEventsEventTypeEnum); err == nil {
-		e.typ = "EventStreamSubscribeEventsEventTypeEnum"
-		e.EventStreamSubscribeEventsEventTypeEnum = valueEventStreamSubscribeEventsEventTypeEnum
-		return nil
-	}
-	var valueEventStreamSubscribeEventsEventTypeEnumList []EventStreamSubscribeEventsEventTypeEnum
-	if err := json.Unmarshal(data, &valueEventStreamSubscribeEventsEventTypeEnumList); err == nil {
-		e.typ = "EventStreamSubscribeEventsEventTypeEnumList"
-		e.EventStreamSubscribeEventsEventTypeEnumList = valueEventStreamSubscribeEventsEventTypeEnumList
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
-}
-
-func (e EventStreamSubscribeEventsEventTypeParam) MarshalJSON() ([]byte, error) {
-	if e.typ == "EventStreamSubscribeEventsEventTypeEnum" || e.EventStreamSubscribeEventsEventTypeEnum != "" {
-		return json.Marshal(e.EventStreamSubscribeEventsEventTypeEnum)
-	}
-	if e.typ == "EventStreamSubscribeEventsEventTypeEnumList" || e.EventStreamSubscribeEventsEventTypeEnumList != nil {
-		return json.Marshal(e.EventStreamSubscribeEventsEventTypeEnumList)
-	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamSubscribeEventsEventTypeParam) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamSubscribeEventsEventTypeEnum" || e.EventStreamSubscribeEventsEventTypeEnum != "" {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamSubscribeEventsEventTypeEnum))
-		return nil
-	}
-	if e.typ == "EventStreamSubscribeEventsEventTypeEnumList" || e.EventStreamSubscribeEventsEventTypeEnumList != nil {
-		for _, item := range e.EventStreamSubscribeEventsEventTypeEnumList {
-			values.Add(key, fmt.Sprintf("%v", item))
-		}
-		return nil
-	}
-	return nil
-}
-
-type EventStreamSubscribeEventsEventTypeParamVisitor interface {
-	VisitEventStreamSubscribeEventsEventTypeEnum(EventStreamSubscribeEventsEventTypeEnum) error
-	VisitEventStreamSubscribeEventsEventTypeEnumList([]EventStreamSubscribeEventsEventTypeEnum) error
-}
-
-func (e *EventStreamSubscribeEventsEventTypeParam) Accept(visitor EventStreamSubscribeEventsEventTypeParamVisitor) error {
-	if e.typ == "EventStreamSubscribeEventsEventTypeEnum" || e.EventStreamSubscribeEventsEventTypeEnum != "" {
-		return visitor.VisitEventStreamSubscribeEventsEventTypeEnum(e.EventStreamSubscribeEventsEventTypeEnum)
-	}
-	if e.typ == "EventStreamSubscribeEventsEventTypeEnumList" || e.EventStreamSubscribeEventsEventTypeEnumList != nil {
-		return visitor.VisitEventStreamSubscribeEventsEventTypeEnumList(e.EventStreamSubscribeEventsEventTypeEnumList)
-	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
 // The JSON payload delivered in each SSE data line. The type field is injected from the SSE event field by the SDK. Discriminated by type: an event type name for events, "error" for errors, and "offset-only" for cursor-only heartbeats.

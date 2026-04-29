@@ -9,6 +9,149 @@ import (
 	testing "testing"
 )
 
+func TestSettersConnectionAssertionDecryptionSettings(t *testing.T) {
+	t.Run("SetAlgorithmProfile", func(t *testing.T) {
+		obj := &ConnectionAssertionDecryptionSettings{}
+		var fernTestValueAlgorithmProfile ConnectionAssertionDecryptionAlgorithmProfileEnum
+		obj.SetAlgorithmProfile(fernTestValueAlgorithmProfile)
+		assert.Equal(t, fernTestValueAlgorithmProfile, obj.AlgorithmProfile)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAlgorithmExceptions", func(t *testing.T) {
+		obj := &ConnectionAssertionDecryptionSettings{}
+		var fernTestValueAlgorithmExceptions []string
+		obj.SetAlgorithmExceptions(fernTestValueAlgorithmExceptions)
+		assert.Equal(t, fernTestValueAlgorithmExceptions, obj.AlgorithmExceptions)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionAssertionDecryptionSettings(t *testing.T) {
+	t.Run("GetAlgorithmProfile", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionAssertionDecryptionSettings{}
+		var expected ConnectionAssertionDecryptionAlgorithmProfileEnum
+		obj.AlgorithmProfile = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAlgorithmProfile(), "getter should return the property value")
+	})
+
+	t.Run("GetAlgorithmProfile_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionAssertionDecryptionSettings
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAlgorithmProfile() // Should return zero value
+	})
+
+	t.Run("GetAlgorithmExceptions", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionAssertionDecryptionSettings{}
+		var expected []string
+		obj.AlgorithmExceptions = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAlgorithmExceptions(), "getter should return the property value")
+	})
+
+	t.Run("GetAlgorithmExceptions_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionAssertionDecryptionSettings{}
+		obj.AlgorithmExceptions = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAlgorithmExceptions(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAlgorithmExceptions_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionAssertionDecryptionSettings
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAlgorithmExceptions() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionAssertionDecryptionSettings(t *testing.T) {
+	t.Run("SetAlgorithmProfile_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionAssertionDecryptionSettings{}
+		var fernTestValueAlgorithmProfile ConnectionAssertionDecryptionAlgorithmProfileEnum
+
+		// Act
+		obj.SetAlgorithmProfile(fernTestValueAlgorithmProfile)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAlgorithmExceptions_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionAssertionDecryptionSettings{}
+		var fernTestValueAlgorithmExceptions []string
+
+		// Act
+		obj.SetAlgorithmExceptions(fernTestValueAlgorithmExceptions)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersConnectionAttributeIdentifier(t *testing.T) {
 	t.Run("SetActive", func(t *testing.T) {
 		obj := &ConnectionAttributeIdentifier{}
@@ -4456,6 +4599,14 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAssertionDecryptionSettings", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueAssertionDecryptionSettings *ConnectionAssertionDecryptionSettings
+		obj.SetAssertionDecryptionSettings(fernTestValueAssertionDecryptionSettings)
+		assert.Equal(t, fernTestValueAssertionDecryptionSettings, obj.AssertionDecryptionSettings)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIDTokenSignedResponseAlgs", func(t *testing.T) {
 		obj := &ConnectionPropertiesOptions{}
 		var fernTestValueIDTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs
@@ -5542,6 +5693,40 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 		_ = obj.GetPasswordOptions() // Should return zero value
 	})
 
+	t.Run("GetAssertionDecryptionSettings", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionAssertionDecryptionSettings
+		obj.AssertionDecryptionSettings = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAssertionDecryptionSettings(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAssertionDecryptionSettings_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.AssertionDecryptionSettings = nil
+		var expectedZero ConnectionAssertionDecryptionSettings
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAssertionDecryptionSettings(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAssertionDecryptionSettings_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAssertionDecryptionSettings() // Should return zero value
+	})
+
 	t.Run("GetIDTokenSignedResponseAlgs", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -6619,6 +6804,37 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 
 		// Act
 		obj.SetPasswordOptions(fernTestValuePasswordOptions)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAssertionDecryptionSettings_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueAssertionDecryptionSettings *ConnectionAssertionDecryptionSettings
+
+		// Act
+		obj.SetAssertionDecryptionSettings(fernTestValueAssertionDecryptionSettings)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -10306,6 +10522,14 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAssertionDecryptionSettings", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueAssertionDecryptionSettings *ConnectionAssertionDecryptionSettings
+		obj.SetAssertionDecryptionSettings(fernTestValueAssertionDecryptionSettings)
+		assert.Equal(t, fernTestValueAssertionDecryptionSettings, obj.AssertionDecryptionSettings)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIDTokenSignedResponseAlgs", func(t *testing.T) {
 		obj := &UpdateConnectionOptions{}
 		var fernTestValueIDTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs
@@ -11392,6 +11616,40 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 		_ = obj.GetPasswordOptions() // Should return zero value
 	})
 
+	t.Run("GetAssertionDecryptionSettings", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionAssertionDecryptionSettings
+		obj.AssertionDecryptionSettings = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAssertionDecryptionSettings(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAssertionDecryptionSettings_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.AssertionDecryptionSettings = nil
+		var expectedZero ConnectionAssertionDecryptionSettings
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAssertionDecryptionSettings(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAssertionDecryptionSettings_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAssertionDecryptionSettings() // Should return zero value
+	})
+
 	t.Run("GetIDTokenSignedResponseAlgs", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -12469,6 +12727,37 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetPasswordOptions(fernTestValuePasswordOptions)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAssertionDecryptionSettings_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueAssertionDecryptionSettings *ConnectionAssertionDecryptionSettings
+
+		// Act
+		obj.SetAssertionDecryptionSettings(fernTestValueAssertionDecryptionSettings)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -14185,6 +14474,39 @@ func TestSettersMarkExplicitUsernameValidation(t *testing.T) {
 
 }
 
+func TestJSONMarshalingConnectionAssertionDecryptionSettings(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionAssertionDecryptionSettings{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionAssertionDecryptionSettings
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionAssertionDecryptionSettings
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionAssertionDecryptionSettings
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingConnectionAttributeIdentifier(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -15439,6 +15761,22 @@ func TestJSONMarshalingUsernameValidation(t *testing.T) {
 	})
 }
 
+func TestStringConnectionAssertionDecryptionSettings(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionAssertionDecryptionSettings{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionAssertionDecryptionSettings
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringConnectionAttributeIdentifier(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -16069,6 +16407,28 @@ func TestEnumConnectionAPIBehaviorEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewConnectionAPIBehaviorEnumFromString("required")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumConnectionAssertionDecryptionAlgorithmProfileEnum(t *testing.T) {
+	t.Run("NewFromString_v2026_1", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionAssertionDecryptionAlgorithmProfileEnumFromString("v2026-1")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionAssertionDecryptionAlgorithmProfileEnum("v2026-1"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewConnectionAssertionDecryptionAlgorithmProfileEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewConnectionAssertionDecryptionAlgorithmProfileEnumFromString("v2026-1")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -17227,6 +17587,29 @@ func TestEnumVerificationMethodEnum(t *testing.T) {
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
 		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestExtraPropertiesConnectionAssertionDecryptionSettings(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionAssertionDecryptionSettings{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionAssertionDecryptionSettings
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
 }
 

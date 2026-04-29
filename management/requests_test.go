@@ -26051,7 +26051,7 @@ func TestSettersSubscribeEventsRequestParameters(t *testing.T) {
 
 	t.Run("SetEventType", func(t *testing.T) {
 		obj := &SubscribeEventsRequestParameters{}
-		var fernTestValueEventType *EventStreamSubscribeEventsEventTypeParam
+		var fernTestValueEventType []*EventStreamSubscribeEventsEventTypeEnum
 		obj.SetEventType(fernTestValueEventType)
 		assert.Equal(t, fernTestValueEventType, obj.EventType)
 		assert.NotNil(t, obj.explicitFields)
@@ -26126,7 +26126,7 @@ func TestSettersMarkExplicitSubscribeEventsRequestParameters(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &SubscribeEventsRequestParameters{}
-		var fernTestValueEventType *EventStreamSubscribeEventsEventTypeParam
+		var fernTestValueEventType []*EventStreamSubscribeEventsEventTypeEnum
 
 		// Act
 		obj.SetEventType(fernTestValueEventType)

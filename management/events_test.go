@@ -58260,65 +58260,6 @@ func TestGettersEventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialUserID
 
 }
 
-func TestGettersEventStreamSubscribeEventsEventTypeParam(t *testing.T) {
-	t.Run("GetEventStreamSubscribeEventsEventTypeEnum", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamSubscribeEventsEventTypeParam{}
-		var expected EventStreamSubscribeEventsEventTypeEnum
-		obj.EventStreamSubscribeEventsEventTypeEnum = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamSubscribeEventsEventTypeEnum(), "getter should return the property value")
-	})
-
-	t.Run("GetEventStreamSubscribeEventsEventTypeEnum_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamSubscribeEventsEventTypeParam
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetEventStreamSubscribeEventsEventTypeEnum() // Should return zero value
-	})
-
-	t.Run("GetEventStreamSubscribeEventsEventTypeEnumList", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamSubscribeEventsEventTypeParam{}
-		var expected []EventStreamSubscribeEventsEventTypeEnum
-		obj.EventStreamSubscribeEventsEventTypeEnumList = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamSubscribeEventsEventTypeEnumList(), "getter should return the property value")
-	})
-
-	t.Run("GetEventStreamSubscribeEventsEventTypeEnumList_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamSubscribeEventsEventTypeParam{}
-		obj.EventStreamSubscribeEventsEventTypeEnumList = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamSubscribeEventsEventTypeEnumList(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetEventStreamSubscribeEventsEventTypeEnumList_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamSubscribeEventsEventTypeParam
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetEventStreamSubscribeEventsEventTypeEnumList() // Should return zero value
-	})
-
-}
-
 func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()

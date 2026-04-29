@@ -2138,7 +2138,11 @@
             "equalTo": "from_timestamp"
           },
           "event_type": {
-            "equalTo": "group.created"
+            "hasExactly": [
+              {
+                "equalTo": "group.created"
+              }
+            ]
           }
         }
       },
