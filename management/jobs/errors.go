@@ -6,7 +6,6 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	management "github.com/auth0/go-auth0/v2/management"
-	url "net/url"
 )
 
 type ErrorsGetResponse struct {
@@ -54,23 +53,6 @@ func (e ErrorsGetResponse) MarshalJSON() ([]byte, error) {
 		return json.Marshal(e.GetJobGenericErrorResponseContent)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *ErrorsGetResponse) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "GetJobErrorResponseContentList" || e.GetJobErrorResponseContentList != nil {
-		for _, item := range e.GetJobErrorResponseContentList {
-			values.Add(key, fmt.Sprintf("%v", item))
-		}
-		return nil
-	}
-	if e.typ == "GetJobGenericErrorResponseContent" || e.GetJobGenericErrorResponseContent != nil {
-		values.Add(key, fmt.Sprintf("%v", e.GetJobGenericErrorResponseContent))
-		return nil
-	}
-	return nil
 }
 
 type ErrorsGetResponseVisitor interface {

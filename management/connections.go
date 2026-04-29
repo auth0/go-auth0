@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
-	url "net/url"
 )
 
 // Specifies the API behavior for password authentication
@@ -3466,21 +3465,6 @@ func (c ConnectionUpstreamAdditionalProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(c.ConnectionUpstreamValue)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
-}
-
-func (c *ConnectionUpstreamAdditionalProperties) EncodeQueryValues(key string, values *url.Values) error {
-	if c == nil {
-		return nil
-	}
-	if c.typ == "ConnectionUpstreamAlias" || c.ConnectionUpstreamAlias != nil {
-		values.Add(key, fmt.Sprintf("%v", c.ConnectionUpstreamAlias))
-		return nil
-	}
-	if c.typ == "ConnectionUpstreamValue" || c.ConnectionUpstreamValue != nil {
-		values.Add(key, fmt.Sprintf("%v", c.ConnectionUpstreamValue))
-		return nil
-	}
-	return nil
 }
 
 type ConnectionUpstreamAdditionalPropertiesVisitor interface {

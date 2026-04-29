@@ -1643,25 +1643,6 @@ func (e EventStreamCloudEventGroupCreatedObject) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventGroupCreatedObject) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupCreatedObject0" || e.EventStreamCloudEventGroupCreatedObject0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupCreatedObject0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupCreatedObject1" || e.EventStreamCloudEventGroupCreatedObject1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupCreatedObject1))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupCreatedObject2" || e.EventStreamCloudEventGroupCreatedObject2 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupCreatedObject2))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventGroupCreatedObjectVisitor interface {
 	VisitEventStreamCloudEventGroupCreatedObject0(*EventStreamCloudEventGroupCreatedObject0) error
 	VisitEventStreamCloudEventGroupCreatedObject1(*EventStreamCloudEventGroupCreatedObject1) error
@@ -2771,25 +2752,6 @@ func (e EventStreamCloudEventGroupDeletedObject) MarshalJSON() ([]byte, error) {
 		return json.Marshal(e.EventStreamCloudEventGroupDeletedObject2)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventGroupDeletedObject) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupDeletedObject0" || e.EventStreamCloudEventGroupDeletedObject0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupDeletedObject0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupDeletedObject1" || e.EventStreamCloudEventGroupDeletedObject1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupDeletedObject1))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupDeletedObject2" || e.EventStreamCloudEventGroupDeletedObject2 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupDeletedObject2))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventGroupDeletedObjectVisitor interface {
@@ -4067,25 +4029,6 @@ func (e EventStreamCloudEventGroupMemberAddedObjectGroup) MarshalJSON() ([]byte,
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectGroup0" || e.EventStreamCloudEventGroupMemberAddedObjectGroup0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberAddedObjectGroup0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectGroup1" || e.EventStreamCloudEventGroupMemberAddedObjectGroup1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberAddedObjectGroup1))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectGroup2" || e.EventStreamCloudEventGroupMemberAddedObjectGroup2 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberAddedObjectGroup2))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventGroupMemberAddedObjectGroupVisitor interface {
 	VisitEventStreamCloudEventGroupMemberAddedObjectGroup0(*EventStreamCloudEventGroupMemberAddedObjectGroup0) error
 	VisitEventStreamCloudEventGroupMemberAddedObjectGroup1(*EventStreamCloudEventGroupMemberAddedObjectGroup1) error
@@ -4602,21 +4545,6 @@ func (e EventStreamCloudEventGroupMemberAddedObjectMember) MarshalJSON() ([]byte
 		return json.Marshal(e.EventStreamCloudEventGroupMemberAddedObjectMember1)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventGroupMemberAddedObjectMember) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectMember0" || e.EventStreamCloudEventGroupMemberAddedObjectMember0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberAddedObjectMember0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberAddedObjectMember1" || e.EventStreamCloudEventGroupMemberAddedObjectMember1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberAddedObjectMember1))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventGroupMemberAddedObjectMemberVisitor interface {
@@ -5528,25 +5456,6 @@ func (e EventStreamCloudEventGroupMemberDeletedObjectGroup) MarshalJSON() ([]byt
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectGroup0" || e.EventStreamCloudEventGroupMemberDeletedObjectGroup0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberDeletedObjectGroup0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectGroup1" || e.EventStreamCloudEventGroupMemberDeletedObjectGroup1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberDeletedObjectGroup1))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectGroup2" || e.EventStreamCloudEventGroupMemberDeletedObjectGroup2 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberDeletedObjectGroup2))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventGroupMemberDeletedObjectGroupVisitor interface {
 	VisitEventStreamCloudEventGroupMemberDeletedObjectGroup0(*EventStreamCloudEventGroupMemberDeletedObjectGroup0) error
 	VisitEventStreamCloudEventGroupMemberDeletedObjectGroup1(*EventStreamCloudEventGroupMemberDeletedObjectGroup1) error
@@ -6063,21 +5972,6 @@ func (e EventStreamCloudEventGroupMemberDeletedObjectMember) MarshalJSON() ([]by
 		return json.Marshal(e.EventStreamCloudEventGroupMemberDeletedObjectMember1)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectMember0" || e.EventStreamCloudEventGroupMemberDeletedObjectMember0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberDeletedObjectMember0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupMemberDeletedObjectMember1" || e.EventStreamCloudEventGroupMemberDeletedObjectMember1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupMemberDeletedObjectMember1))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventGroupMemberDeletedObjectMemberVisitor interface {
@@ -7012,25 +6906,6 @@ func (e EventStreamCloudEventGroupRoleAssignedObjectGroup) MarshalJSON() ([]byte
 		return json.Marshal(e.EventStreamCloudEventGroupRoleAssignedObjectGroup2)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedObjectGroup0" || e.EventStreamCloudEventGroupRoleAssignedObjectGroup0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupRoleAssignedObjectGroup0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedObjectGroup1" || e.EventStreamCloudEventGroupRoleAssignedObjectGroup1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupRoleAssignedObjectGroup1))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupRoleAssignedObjectGroup2" || e.EventStreamCloudEventGroupRoleAssignedObjectGroup2 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupRoleAssignedObjectGroup2))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventGroupRoleAssignedObjectGroupVisitor interface {
@@ -8247,25 +8122,6 @@ func (e EventStreamCloudEventGroupRoleDeletedObjectGroup) MarshalJSON() ([]byte,
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedObjectGroup0" || e.EventStreamCloudEventGroupRoleDeletedObjectGroup0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupRoleDeletedObjectGroup0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedObjectGroup1" || e.EventStreamCloudEventGroupRoleDeletedObjectGroup1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupRoleDeletedObjectGroup1))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupRoleDeletedObjectGroup2" || e.EventStreamCloudEventGroupRoleDeletedObjectGroup2 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupRoleDeletedObjectGroup2))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventGroupRoleDeletedObjectGroupVisitor interface {
 	VisitEventStreamCloudEventGroupRoleDeletedObjectGroup0(*EventStreamCloudEventGroupRoleDeletedObjectGroup0) error
 	VisitEventStreamCloudEventGroupRoleDeletedObjectGroup1(*EventStreamCloudEventGroupRoleDeletedObjectGroup1) error
@@ -9335,25 +9191,6 @@ func (e EventStreamCloudEventGroupUpdatedObject) MarshalJSON() ([]byte, error) {
 		return json.Marshal(e.EventStreamCloudEventGroupUpdatedObject2)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventGroupUpdatedObject) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedObject0" || e.EventStreamCloudEventGroupUpdatedObject0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupUpdatedObject0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedObject1" || e.EventStreamCloudEventGroupUpdatedObject1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupUpdatedObject1))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventGroupUpdatedObject2" || e.EventStreamCloudEventGroupUpdatedObject2 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventGroupUpdatedObject2))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventGroupUpdatedObjectVisitor interface {
@@ -14484,25 +14321,6 @@ func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) MarshalJSON() ([]b
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventOrgGroupRoleAssignedObjectGroupVisitor interface {
 	VisitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0(*EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) error
 	VisitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1(*EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) error
@@ -15817,25 +15635,6 @@ func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) MarshalJSON() ([]by
 		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0" || e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1" || e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2" || e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventOrgGroupRoleDeletedObjectGroupVisitor interface {
@@ -21467,33 +21266,6 @@ func (e EventStreamCloudEventUserCreatedObjectIdentitiesItem) MarshalJSON() ([]b
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItem) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom" || e.EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase" || e.EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise" || e.EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless" || e.EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial" || e.EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemVisitor interface {
 	VisitEventStreamCloudEventUserCreatedObjectIdentitiesItemCustom(*EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom) error
 	VisitEventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase(*EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase) error
@@ -21951,21 +21723,6 @@ func (e EventStreamCloudEventUserCreatedObjectIdentitiesItemCustomUserID) Marsha
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemCustomUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemCustomUserIDVisitor interface {
 	VisitString(string) error
 	VisitInteger(int) error
@@ -22409,21 +22166,6 @@ func (e EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseUserID) Mars
 		return json.Marshal(e.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseUserIDVisitor interface {
@@ -22901,21 +22643,6 @@ func (e EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseUserID) Ma
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseUserIDVisitor interface {
 	VisitString(string) error
 	VisitInteger(int) error
@@ -23362,21 +23089,6 @@ func (e EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessUserID) 
 		return json.Marshal(e.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessUserIDVisitor interface {
@@ -23936,21 +23648,6 @@ func (e EventStreamCloudEventUserCreatedObjectIdentitiesItemSocialUserID) Marsha
 		return json.Marshal(e.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemSocialUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemSocialUserIDVisitor interface {
@@ -24985,33 +24682,6 @@ func (e EventStreamCloudEventUserDeletedObjectIdentitiesItem) MarshalJSON() ([]b
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItem) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom" || e.EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase" || e.EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise" || e.EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless" || e.EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial" || e.EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemVisitor interface {
 	VisitEventStreamCloudEventUserDeletedObjectIdentitiesItemCustom(*EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom) error
 	VisitEventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase(*EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase) error
@@ -25469,21 +25139,6 @@ func (e EventStreamCloudEventUserDeletedObjectIdentitiesItemCustomUserID) Marsha
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemCustomUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemCustomUserIDVisitor interface {
 	VisitString(string) error
 	VisitInteger(int) error
@@ -25927,21 +25582,6 @@ func (e EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseUserID) Mars
 		return json.Marshal(e.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseUserIDVisitor interface {
@@ -26419,21 +26059,6 @@ func (e EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseUserID) Ma
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseUserIDVisitor interface {
 	VisitString(string) error
 	VisitInteger(int) error
@@ -26880,21 +26505,6 @@ func (e EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessUserID) 
 		return json.Marshal(e.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessUserIDVisitor interface {
@@ -27454,21 +27064,6 @@ func (e EventStreamCloudEventUserDeletedObjectIdentitiesItemSocialUserID) Marsha
 		return json.Marshal(e.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemSocialUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemSocialUserIDVisitor interface {
@@ -28482,33 +28077,6 @@ func (e EventStreamCloudEventUserUpdatedObjectIdentitiesItem) MarshalJSON() ([]b
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItem) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom" || e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase" || e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise" || e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless" || e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless))
-		return nil
-	}
-	if e.typ == "EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial" || e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial != nil {
-		values.Add(key, fmt.Sprintf("%v", e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemVisitor interface {
 	VisitEventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom(*EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom) error
 	VisitEventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase(*EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase) error
@@ -28966,21 +28534,6 @@ func (e EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomUserID) Marsha
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomUserIDVisitor interface {
 	VisitString(string) error
 	VisitInteger(int) error
@@ -29424,21 +28977,6 @@ func (e EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseUserID) Mars
 		return json.Marshal(e.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseUserIDVisitor interface {
@@ -29916,21 +29454,6 @@ func (e EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseUserID) Ma
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
-}
-
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseUserIDVisitor interface {
 	VisitString(string) error
 	VisitInteger(int) error
@@ -30377,21 +29900,6 @@ func (e EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessUserID) 
 		return json.Marshal(e.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessUserIDVisitor interface {
@@ -30951,21 +30459,6 @@ func (e EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialUserID) Marsha
 		return json.Marshal(e.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
-}
-
-func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialUserID) EncodeQueryValues(key string, values *url.Values) error {
-	if e == nil {
-		return nil
-	}
-	if e.typ == "String" || e.String != "" {
-		values.Add(key, fmt.Sprintf("%v", e.String))
-		return nil
-	}
-	if e.typ == "Integer" || e.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", e.Integer))
-		return nil
-	}
-	return nil
 }
 
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialUserIDVisitor interface {
