@@ -78,36 +78,6 @@ const (
 	ConnectionStrategyPingFederate = "pingfederate"
 	// ConnectionStrategyLine constant.
 	ConnectionStrategyLine = "line"
-
-	// PasswordComplexityCharacterTypeRuleAll requires all specified character types. Default.
-	PasswordComplexityCharacterTypeRuleAll = "all"
-	// PasswordComplexityCharacterTypeRuleThreeOfFour requires 3 of 4 character types.
-	// Only valid when all 4 character types (uppercase, lowercase, number, special) are specified.
-	PasswordComplexityCharacterTypeRuleThreeOfFour = "three_of_four"
-
-	// PasswordCharacterTypeUppercase is the "uppercase" character type for password complexity.
-	PasswordCharacterTypeUppercase = "uppercase"
-	// PasswordCharacterTypeLowercase is the "lowercase" character type for password complexity.
-	PasswordCharacterTypeLowercase = "lowercase"
-	// PasswordCharacterTypeNumber is the "number" character type for password complexity.
-	PasswordCharacterTypeNumber = "number"
-	// PasswordCharacterTypeSpecial is the "special" character type for password complexity.
-	PasswordCharacterTypeSpecial = "special"
-
-	// PasswordComplexityCharactersAllow permits identical/sequential characters. Default.
-	PasswordComplexityCharactersAllow = "allow"
-	// PasswordComplexityCharactersBlock forbids identical/sequential characters.
-	PasswordComplexityCharactersBlock = "block"
-
-	// PasswordComplexityMaxLengthExceededError rejects passwords exceeding 72 bytes. Default.
-	PasswordComplexityMaxLengthExceededError = "error"
-	// PasswordComplexityMaxLengthExceededTruncate truncates passwords exceeding 72 bytes.
-	PasswordComplexityMaxLengthExceededTruncate = "truncate"
-
-	// PasswordDictionaryDefaultEn10k uses the 10,000-word English dictionary.
-	PasswordDictionaryDefaultEn10k = "en_10k"
-	// PasswordDictionaryDefaultEn100k uses the 100,000-word English dictionary. Default.
-	PasswordDictionaryDefaultEn100k = "en_100k"
 )
 
 var (
