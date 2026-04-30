@@ -1,5 +1,19 @@
 # Change Log
 
+## [v2.10.0](https://github.com/auth0/go-auth0/tree/v2.10.0) (2026-04-29)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.9.0...v2.10.0)
+
+**Added**
+- feat: add SSE Events API with `Subscribe()` method for consuming events via Server-Sent Events [\#761](https://github.com/auth0/go-auth0/pull/761) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add streaming infrastructure in `core/stream.go` with SSE spec-compliant parsing and event discriminator injection [\#761](https://github.com/auth0/go-auth0/pull/761) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `GoneError` (HTTP 410) error type for expired stream cursors [\#761](https://github.com/auth0/go-auth0/pull/761) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `WithMaxStreamBufSize` request option for configuring streaming buffer size [\#761](https://github.com/auth0/go-auth0/pull/761) ([developerkunal](https://github.com/developerkunal))
+- feat: add `Revoke()` method for bulk refresh token revocation [\#761](https://github.com/auth0/go-auth0/pull/761) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `BrandingIdentifiers` with login display, OTP autocomplete, and phone display settings [\#761](https://github.com/auth0/go-auth0/pull/761) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `ConnectionAssertionDecryptionSettings` for SAML assertion decryption [\#761](https://github.com/auth0/go-auth0/pull/761) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `TokenEndpointJwtcaAudFormat` field to OIDC connection options [\#761](https://github.com/auth0/go-auth0/pull/761) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Strategy` query parameter for filtering connections by strategy [\#761](https://github.com/auth0/go-auth0/pull/761) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.9.0](https://github.com/auth0/go-auth0/tree/v2.9.0) (2026-04-22)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.8.0...v2.9.0)
 
