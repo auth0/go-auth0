@@ -854,6 +854,60 @@ var Auth0ConnectionTestCase = []connectionTestCase{
 			},
 		},
 	},
+	{
+		name: "Auth0 Connection With PasswordOptions Complexity",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-PasswordOptions-Complexity-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			PasswordOptions: &PasswordOptions{
+				Complexity: &PasswordOptionsComplexity{
+					MinLength:            auth0.Int(12),
+					CharacterTypes:       &[]string{"uppercase", "lowercase", "number", "special"},
+					CharacterTypeRule:    auth0.String("three_of_four"),
+					IdenticalCharacters:  auth0.String("block"),
+					SequentialCharacters: auth0.String("block"),
+					MaxLengthExceeded:    auth0.String("error"),
+				},
+			},
+		},
+	},
+	{
+		name: "Auth0 Connection With PasswordOptions History and Dictionary",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-PasswordOptions-History-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			PasswordOptions: &PasswordOptions{
+				History: &PasswordOptionsHistory{
+					Active: auth0.Bool(true),
+					Size:   auth0.Int(5),
+				},
+				Dictionary: &PasswordOptionsDictionary{
+					Active:  auth0.Bool(true),
+					Default: auth0.String("en_100k"),
+					Custom:  &[]string{"forbidden1", "forbidden2"},
+				},
+			},
+		},
+	},
+	{
+		name: "Auth0 Connection With PasswordOptions ProfileData",
+		connection: Connection{
+			Name:     auth0.Stringf("Test-Auth0-Connection-PasswordOptions-ProfileData-%d", time.Now().Unix()),
+			Strategy: auth0.String("auth0"),
+		},
+		options: &ConnectionOptions{
+			PasswordOptions: &PasswordOptions{
+				ProfileData: &PasswordOptionsProfileData{
+					Active:        auth0.Bool(true),
+					BlockedFields: &[]string{"name", "username", "email"},
+				},
+			},
+		},
+	},
 }
 
 func TestConnectionManager_CreateDBConnectionWithDifferentOptions(t *testing.T) {
@@ -892,6 +946,109 @@ func TestConnectionManager_CreateDBConnectionWithDifferentOptions(t *testing.T) 
 			}
 		})
 	}
+}
+
+func TestConnectionManager_PasswordOptions(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	conn := &Connection{
+		Name:     auth0.Stringf("Test-Auth0-Connection-PasswordOptions-%d", time.Now().Unix()),
+		Strategy: auth0.String("auth0"),
+		Options: &ConnectionOptions{
+			PasswordOptions: &PasswordOptions{
+				Complexity: &PasswordOptionsComplexity{
+					MinLength:            auth0.Int(10),
+					CharacterTypes:       &[]string{"uppercase", "lowercase", "number"},
+					IdenticalCharacters:  auth0.String("block"),
+					SequentialCharacters: auth0.String("allow"),
+					MaxLengthExceeded:    auth0.String("error"),
+				},
+				History: &PasswordOptionsHistory{
+					Active: auth0.Bool(true),
+					Size:   auth0.Int(3),
+				},
+				Dictionary: &PasswordOptionsDictionary{
+					Active:  auth0.Bool(true),
+					Default: auth0.String("en_100k"),
+				},
+				ProfileData: &PasswordOptionsProfileData{
+					Active:        auth0.Bool(true),
+					BlockedFields: &[]string{"name", "username", "email"},
+				},
+			},
+		},
+	}
+
+	err := api.Connection.Create(context.Background(), conn)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, conn.GetID())
+
+	t.Cleanup(func() {
+		cleanupConnection(t, conn.GetID())
+	})
+
+	actualConn, err := api.Connection.Read(context.Background(), conn.GetID())
+	assert.NoError(t, err)
+
+	actualOptions, ok := actualConn.Options.(*ConnectionOptions)
+	require.True(t, ok)
+	require.NotNil(t, actualOptions.GetPasswordOptions())
+	require.NotNil(t, actualOptions.GetPasswordOptions().GetComplexity())
+	assert.Equal(t, 10, actualOptions.GetPasswordOptions().GetComplexity().GetMinLength())
+	assert.Equal(t, []string{"uppercase", "lowercase", "number"}, actualOptions.GetPasswordOptions().GetComplexity().GetCharacterTypes())
+	assert.Equal(t, "block", actualOptions.GetPasswordOptions().GetComplexity().GetIdenticalCharacters())
+	assert.Equal(t, "allow", actualOptions.GetPasswordOptions().GetComplexity().GetSequentialCharacters())
+	assert.Equal(t, "error", actualOptions.GetPasswordOptions().GetComplexity().GetMaxLengthExceeded())
+	require.NotNil(t, actualOptions.GetPasswordOptions().GetHistory())
+	assert.Equal(t, true, actualOptions.GetPasswordOptions().GetHistory().GetActive())
+	assert.Equal(t, 3, actualOptions.GetPasswordOptions().GetHistory().GetSize())
+	require.NotNil(t, actualOptions.GetPasswordOptions().GetDictionary())
+	assert.Equal(t, true, actualOptions.GetPasswordOptions().GetDictionary().GetActive())
+	assert.Equal(t, "en_100k", actualOptions.GetPasswordOptions().GetDictionary().GetDefault())
+	require.NotNil(t, actualOptions.GetPasswordOptions().GetProfileData())
+	assert.Equal(t, true, actualOptions.GetPasswordOptions().GetProfileData().GetActive())
+	assert.Equal(t, []string{"name", "username", "email"}, actualOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
+
+	// The PATCH connection API replaces (not merges) the options object on every request.
+	// To update specific fields while preserving others, read the full options first,
+	// modify the desired fields, then update with the complete options object.
+	connForUpdate, err := api.Connection.Read(context.Background(), conn.GetID())
+	assert.NoError(t, err)
+
+	optionsForUpdate, ok := connForUpdate.Options.(*ConnectionOptions)
+	require.True(t, ok)
+
+	// Modify only the fields we want to change.
+	optionsForUpdate.PasswordOptions.Complexity.MinLength = auth0.Int(20)
+	optionsForUpdate.PasswordOptions.History.Active = auth0.Bool(false)
+
+	err = api.Connection.Update(context.Background(), conn.GetID(), &Connection{
+		Options: optionsForUpdate,
+	})
+	assert.NoError(t, err)
+
+	updatedConn, err := api.Connection.Read(context.Background(), conn.GetID())
+	assert.NoError(t, err)
+
+	updatedOptions, ok := updatedConn.Options.(*ConnectionOptions)
+	require.True(t, ok)
+	require.NotNil(t, updatedOptions.GetPasswordOptions())
+	require.NotNil(t, updatedOptions.GetPasswordOptions().GetComplexity())
+	assert.Equal(t, 20, updatedOptions.GetPasswordOptions().GetComplexity().GetMinLength())
+	// With the read-first pattern, unmodified fields are preserved.
+	assert.Equal(t, []string{"uppercase", "lowercase", "number"}, updatedOptions.GetPasswordOptions().GetComplexity().GetCharacterTypes())
+	assert.Equal(t, "block", updatedOptions.GetPasswordOptions().GetComplexity().GetIdenticalCharacters())
+	assert.Equal(t, "allow", updatedOptions.GetPasswordOptions().GetComplexity().GetSequentialCharacters())
+	assert.Equal(t, "error", updatedOptions.GetPasswordOptions().GetComplexity().GetMaxLengthExceeded())
+	require.NotNil(t, updatedOptions.GetPasswordOptions().GetHistory())
+	assert.Equal(t, false, updatedOptions.GetPasswordOptions().GetHistory().GetActive())
+	assert.Equal(t, 3, updatedOptions.GetPasswordOptions().GetHistory().GetSize())
+	require.NotNil(t, updatedOptions.GetPasswordOptions().GetDictionary())
+	assert.Equal(t, true, updatedOptions.GetPasswordOptions().GetDictionary().GetActive())
+	assert.Equal(t, "en_100k", updatedOptions.GetPasswordOptions().GetDictionary().GetDefault())
+	require.NotNil(t, updatedOptions.GetPasswordOptions().GetProfileData())
+	assert.Equal(t, true, updatedOptions.GetPasswordOptions().GetProfileData().GetActive())
+	assert.Equal(t, []string{"name", "username", "email"}, updatedOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
 }
 
 func TestConnectionManager_Read(t *testing.T) {

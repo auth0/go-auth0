@@ -487,6 +487,12 @@ type ConnectionOptions struct {
 	// Options for enabling authentication methods.
 	AuthenticationMethods *AuthenticationMethods `json:"authentication_methods,omitempty"`
 
+	// Options for flexible password policy configuration.
+	// Only available for auth0 strategy connections.
+	// Cannot be set together with legacy password policy fields (PasswordPolicy,
+	// PasswordComplexityOptions, PasswordHistory, PasswordNoPersonalInfo, PasswordDictionary).
+	PasswordOptions *PasswordOptions `json:"password_options,omitempty"`
+
 	// Options for the passkey authentication method.
 	PasskeyOptions *PasskeyOptions `json:"passkey_options,omitempty"`
 
@@ -651,6 +657,66 @@ type EmailOTPAuthenticationMethod struct {
 type PhoneOTPAuthenticationMethod struct {
 	// Determines whether phone_otp are enabled.
 	Enabled *bool `json:"enabled,omitempty"`
+}
+
+// PasswordOptions contains the flexible password policy configuration for a connection.
+// Only available for auth0 strategy connections.
+type PasswordOptions struct {
+	// Password complexity requirements.
+	Complexity *PasswordOptionsComplexity `json:"complexity,omitempty"`
+	// Personal information restriction policy.
+	ProfileData *PasswordOptionsProfileData `json:"profile_data,omitempty"`
+	// Password history enforcement.
+	History *PasswordOptionsHistory `json:"history,omitempty"`
+	// Dictionary-based password validation.
+	Dictionary *PasswordOptionsDictionary `json:"dictionary,omitempty"`
+}
+
+// PasswordOptionsComplexity contains password complexity requirements.
+type PasswordOptionsComplexity struct {
+	// Minimum password length. Must be between 1 and 72. Default: 15.
+	MinLength *int `json:"min_length,omitempty"`
+	// Required character types. Valid values: "uppercase", "lowercase", "number", "special". Default: [].
+	// To explicitly clear all required character types, set this to a pointer to an empty slice (&[]string{}).
+	CharacterTypes *[]string `json:"character_types,omitempty"`
+	// When all 4 character types are specified, determines if all or 3 of 4 are required.
+	// Possible values: "all", "three_of_four". Default: "all".
+	CharacterTypeRule *string `json:"character_type_rule,omitempty"`
+	// Controls whether 3+ consecutive identical characters are allowed.
+	// Possible values: "allow", "block". Default: "allow".
+	IdenticalCharacters *string `json:"identical_characters,omitempty"`
+	// Controls whether sequential characters (abc, 123, etc.) are allowed.
+	// Possible values: "allow", "block". Default: "allow".
+	SequentialCharacters *string `json:"sequential_characters,omitempty"`
+	// Controls behavior when the password exceeds 72 bytes.
+	// Possible values: "truncate", "error". Default: "error".
+	MaxLengthExceeded *string `json:"max_length_exceeded,omitempty"`
+}
+
+// PasswordOptionsProfileData contains the personal information restriction policy.
+type PasswordOptionsProfileData struct {
+	// Prevents users from including profile data in passwords. Default: false.
+	Active *bool `json:"active,omitempty"`
+	// User profile fields to block from passwords. Maximum 12 items, each max 100 characters.
+	BlockedFields *[]string `json:"blocked_fields,omitempty"`
+}
+
+// PasswordOptionsHistory contains the password history enforcement configuration.
+type PasswordOptionsHistory struct {
+	// Enables password history checking. Default: false.
+	Active *bool `json:"active,omitempty"`
+	// Number of previous passwords to check against. Must be between 1 and 24. Default: 3.
+	Size *int `json:"size,omitempty"`
+}
+
+// PasswordOptionsDictionary contains dictionary-based password validation configuration.
+type PasswordOptionsDictionary struct {
+	// Enables dictionary checking. Default: false.
+	Active *bool `json:"active,omitempty"`
+	// Default dictionary to use. Possible values: "en_10k", "en_100k". Default: "en_100k".
+	Default *string `json:"default,omitempty"`
+	// Custom list of disallowed terms.
+	Custom *[]string `json:"custom,omitempty"`
 }
 
 // PasskeyOptions contains Passkey configuration for the connection.

@@ -3977,6 +3977,13 @@ func TestConnectionOptions_GetPasswordNoPersonalInfo(tt *testing.T) {
 	c.GetPasswordNoPersonalInfo()
 }
 
+func TestConnectionOptions_GetPasswordOptions(tt *testing.T) {
+	c := &ConnectionOptions{}
+	c.GetPasswordOptions()
+	c = nil
+	c.GetPasswordOptions()
+}
+
 func TestConnectionOptions_GetPasswordPolicy(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptions{PasswordPolicy: &zeroValue}
@@ -13761,6 +13768,204 @@ func TestPasswordAuthenticationMethod_GetSignupBehavior(tt *testing.T) {
 func TestPasswordAuthenticationMethod_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &PasswordAuthenticationMethod{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPasswordOptions_GetComplexity(tt *testing.T) {
+	p := &PasswordOptions{}
+	p.GetComplexity()
+	p = nil
+	p.GetComplexity()
+}
+
+func TestPasswordOptions_GetDictionary(tt *testing.T) {
+	p := &PasswordOptions{}
+	p.GetDictionary()
+	p = nil
+	p.GetDictionary()
+}
+
+func TestPasswordOptions_GetHistory(tt *testing.T) {
+	p := &PasswordOptions{}
+	p.GetHistory()
+	p = nil
+	p.GetHistory()
+}
+
+func TestPasswordOptions_GetProfileData(tt *testing.T) {
+	p := &PasswordOptions{}
+	p.GetProfileData()
+	p = nil
+	p.GetProfileData()
+}
+
+func TestPasswordOptions_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PasswordOptions{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPasswordOptionsComplexity_GetCharacterTypeRule(tt *testing.T) {
+	var zeroValue string
+	p := &PasswordOptionsComplexity{CharacterTypeRule: &zeroValue}
+	p.GetCharacterTypeRule()
+	p = &PasswordOptionsComplexity{}
+	p.GetCharacterTypeRule()
+	p = nil
+	p.GetCharacterTypeRule()
+}
+
+func TestPasswordOptionsComplexity_GetCharacterTypes(tt *testing.T) {
+	var zeroValue []string
+	p := &PasswordOptionsComplexity{CharacterTypes: &zeroValue}
+	p.GetCharacterTypes()
+	p = &PasswordOptionsComplexity{}
+	p.GetCharacterTypes()
+	p = nil
+	p.GetCharacterTypes()
+}
+
+func TestPasswordOptionsComplexity_GetIdenticalCharacters(tt *testing.T) {
+	var zeroValue string
+	p := &PasswordOptionsComplexity{IdenticalCharacters: &zeroValue}
+	p.GetIdenticalCharacters()
+	p = &PasswordOptionsComplexity{}
+	p.GetIdenticalCharacters()
+	p = nil
+	p.GetIdenticalCharacters()
+}
+
+func TestPasswordOptionsComplexity_GetMaxLengthExceeded(tt *testing.T) {
+	var zeroValue string
+	p := &PasswordOptionsComplexity{MaxLengthExceeded: &zeroValue}
+	p.GetMaxLengthExceeded()
+	p = &PasswordOptionsComplexity{}
+	p.GetMaxLengthExceeded()
+	p = nil
+	p.GetMaxLengthExceeded()
+}
+
+func TestPasswordOptionsComplexity_GetMinLength(tt *testing.T) {
+	var zeroValue int
+	p := &PasswordOptionsComplexity{MinLength: &zeroValue}
+	p.GetMinLength()
+	p = &PasswordOptionsComplexity{}
+	p.GetMinLength()
+	p = nil
+	p.GetMinLength()
+}
+
+func TestPasswordOptionsComplexity_GetSequentialCharacters(tt *testing.T) {
+	var zeroValue string
+	p := &PasswordOptionsComplexity{SequentialCharacters: &zeroValue}
+	p.GetSequentialCharacters()
+	p = &PasswordOptionsComplexity{}
+	p.GetSequentialCharacters()
+	p = nil
+	p.GetSequentialCharacters()
+}
+
+func TestPasswordOptionsComplexity_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PasswordOptionsComplexity{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPasswordOptionsDictionary_GetActive(tt *testing.T) {
+	var zeroValue bool
+	p := &PasswordOptionsDictionary{Active: &zeroValue}
+	p.GetActive()
+	p = &PasswordOptionsDictionary{}
+	p.GetActive()
+	p = nil
+	p.GetActive()
+}
+
+func TestPasswordOptionsDictionary_GetCustom(tt *testing.T) {
+	var zeroValue []string
+	p := &PasswordOptionsDictionary{Custom: &zeroValue}
+	p.GetCustom()
+	p = &PasswordOptionsDictionary{}
+	p.GetCustom()
+	p = nil
+	p.GetCustom()
+}
+
+func TestPasswordOptionsDictionary_GetDefault(tt *testing.T) {
+	var zeroValue string
+	p := &PasswordOptionsDictionary{Default: &zeroValue}
+	p.GetDefault()
+	p = &PasswordOptionsDictionary{}
+	p.GetDefault()
+	p = nil
+	p.GetDefault()
+}
+
+func TestPasswordOptionsDictionary_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PasswordOptionsDictionary{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPasswordOptionsHistory_GetActive(tt *testing.T) {
+	var zeroValue bool
+	p := &PasswordOptionsHistory{Active: &zeroValue}
+	p.GetActive()
+	p = &PasswordOptionsHistory{}
+	p.GetActive()
+	p = nil
+	p.GetActive()
+}
+
+func TestPasswordOptionsHistory_GetSize(tt *testing.T) {
+	var zeroValue int
+	p := &PasswordOptionsHistory{Size: &zeroValue}
+	p.GetSize()
+	p = &PasswordOptionsHistory{}
+	p.GetSize()
+	p = nil
+	p.GetSize()
+}
+
+func TestPasswordOptionsHistory_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PasswordOptionsHistory{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestPasswordOptionsProfileData_GetActive(tt *testing.T) {
+	var zeroValue bool
+	p := &PasswordOptionsProfileData{Active: &zeroValue}
+	p.GetActive()
+	p = &PasswordOptionsProfileData{}
+	p.GetActive()
+	p = nil
+	p.GetActive()
+}
+
+func TestPasswordOptionsProfileData_GetBlockedFields(tt *testing.T) {
+	var zeroValue []string
+	p := &PasswordOptionsProfileData{BlockedFields: &zeroValue}
+	p.GetBlockedFields()
+	p = &PasswordOptionsProfileData{}
+	p.GetBlockedFields()
+	p = nil
+	p.GetBlockedFields()
+}
+
+func TestPasswordOptionsProfileData_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &PasswordOptionsProfileData{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
