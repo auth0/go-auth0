@@ -123,6 +123,14 @@ type ResourceServer struct {
 
 	// SubjectTypeAuthorization defines the authorization policies for user and client flows.
 	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty"`
+
+	// AuthorizationPolicy specifies the authorization policy for the resource server.
+	AuthorizationPolicy *ResourceServerAuthorizationPolicy `json:"authorization_policy,omitempty"`
+}
+
+// ResourceServerAuthorizationPolicy specifies the authorization policy for the resource server.
+type ResourceServerAuthorizationPolicy struct {
+	PolicyID *string `json:"policy_id,omitempty"`
 }
 
 // ResourceServerSubjectTypeAuthorization defines the authorization policies for user and client flows.

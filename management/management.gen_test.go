@@ -14365,6 +14365,13 @@ func TestResourceServer_GetAuthorizationDetails(tt *testing.T) {
 	r.GetAuthorizationDetails()
 }
 
+func TestResourceServer_GetAuthorizationPolicy(tt *testing.T) {
+	r := &ResourceServer{}
+	r.GetAuthorizationPolicy()
+	r = nil
+	r.GetAuthorizationPolicy()
+}
+
 func TestResourceServer_GetClientID(tt *testing.T) {
 	var zeroValue string
 	r := &ResourceServer{ClientID: &zeroValue}
@@ -14567,6 +14574,24 @@ func TestResourceServerAuthorizationDetails_GetType(tt *testing.T) {
 func TestResourceServerAuthorizationDetails_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ResourceServerAuthorizationDetails{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerAuthorizationPolicy_GetPolicyID(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerAuthorizationPolicy{PolicyID: &zeroValue}
+	r.GetPolicyID()
+	r = &ResourceServerAuthorizationPolicy{}
+	r.GetPolicyID()
+	r = nil
+	r.GetPolicyID()
+}
+
+func TestResourceServerAuthorizationPolicy_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerAuthorizationPolicy{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
