@@ -1009,18 +1009,21 @@ func TestConnectionManager_PasswordOptions(t *testing.T) {
 	assert.Equal(t, true, actualOptions.GetPasswordOptions().GetProfileData().GetActive())
 	assert.Equal(t, []string{"name", "username", "email"}, actualOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
 
-	// Update: change complexity min_length and disable history.
+	// The PATCH connection API replaces (not merges) the options object on every request.
+	// To update specific fields while preserving others, read the full options first,
+	// modify the desired fields, then update with the complete options object.
+	connForUpdate, err := api.Connection.Read(context.Background(), conn.GetID())
+	assert.NoError(t, err)
+
+	optionsForUpdate, ok := connForUpdate.Options.(*ConnectionOptions)
+	require.True(t, ok)
+
+	// Modify only the fields we want to change.
+	optionsForUpdate.PasswordOptions.Complexity.MinLength = auth0.Int(20)
+	optionsForUpdate.PasswordOptions.History.Active = auth0.Bool(false)
+
 	err = api.Connection.Update(context.Background(), conn.GetID(), &Connection{
-		Options: &ConnectionOptions{
-			PasswordOptions: &PasswordOptions{
-				Complexity: &PasswordOptionsComplexity{
-					MinLength: auth0.Int(20),
-				},
-				History: &PasswordOptionsHistory{
-					Active: auth0.Bool(false),
-				},
-			},
-		},
+		Options: optionsForUpdate,
 	})
 	assert.NoError(t, err)
 
@@ -1032,19 +1035,20 @@ func TestConnectionManager_PasswordOptions(t *testing.T) {
 	require.NotNil(t, updatedOptions.GetPasswordOptions())
 	require.NotNil(t, updatedOptions.GetPasswordOptions().GetComplexity())
 	assert.Equal(t, 20, updatedOptions.GetPasswordOptions().GetComplexity().GetMinLength())
-	require.NotNil(t, updatedOptions.GetPasswordOptions().GetHistory())
-	assert.Equal(t, false, updatedOptions.GetPasswordOptions().GetHistory().GetActive())
-	// Partial PATCH on password_options resets unspecified sub-fields to API defaults.
-	assert.Empty(t, updatedOptions.GetPasswordOptions().GetComplexity().GetCharacterTypes())
-	assert.Equal(t, "allow", updatedOptions.GetPasswordOptions().GetComplexity().GetIdenticalCharacters())
+	// With the read-first pattern, unmodified fields are preserved.
+	assert.Equal(t, []string{"uppercase", "lowercase", "number"}, updatedOptions.GetPasswordOptions().GetComplexity().GetCharacterTypes())
+	assert.Equal(t, "block", updatedOptions.GetPasswordOptions().GetComplexity().GetIdenticalCharacters())
 	assert.Equal(t, "allow", updatedOptions.GetPasswordOptions().GetComplexity().GetSequentialCharacters())
 	assert.Equal(t, "error", updatedOptions.GetPasswordOptions().GetComplexity().GetMaxLengthExceeded())
+	require.NotNil(t, updatedOptions.GetPasswordOptions().GetHistory())
+	assert.Equal(t, false, updatedOptions.GetPasswordOptions().GetHistory().GetActive())
+	assert.Equal(t, 3, updatedOptions.GetPasswordOptions().GetHistory().GetSize())
 	require.NotNil(t, updatedOptions.GetPasswordOptions().GetDictionary())
-	assert.Equal(t, false, updatedOptions.GetPasswordOptions().GetDictionary().GetActive())
+	assert.Equal(t, true, updatedOptions.GetPasswordOptions().GetDictionary().GetActive())
 	assert.Equal(t, "en_100k", updatedOptions.GetPasswordOptions().GetDictionary().GetDefault())
 	require.NotNil(t, updatedOptions.GetPasswordOptions().GetProfileData())
-	assert.Equal(t, false, updatedOptions.GetPasswordOptions().GetProfileData().GetActive())
-	assert.Equal(t, []string{"name", "username", "nickname", "email", "phone_number", "user_metadata.name", "user_metadata.first", "user_metadata.last"}, updatedOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
+	assert.Equal(t, true, updatedOptions.GetPasswordOptions().GetProfileData().GetActive())
+	assert.Equal(t, []string{"name", "username", "email"}, updatedOptions.GetPasswordOptions().GetProfileData().GetBlockedFields())
 }
 
 func TestConnectionManager_Read(t *testing.T) {
