@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-No-Active-Attributes-1777361987","strategy":"auth0","options":{"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}},"username":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required"}},"phone_number":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}}}}}
+            {"name":"Test-Auth0-Connection-No-Active-Attributes-1777519532","strategy":"auth0","options":{"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}},"username":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required"}},"phone_number":{"identifier":{"active":false},"profile_required":true,"signup":{"status":"required","verification":{"active":false}}}}}}
         form: {}
         headers:
             Content-Type:
@@ -36,4 +36,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 400 Bad Request
         code: 400
-        duration: 306.546792ms
+        duration: 2.021365209s

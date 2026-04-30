@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-Auth0-Connection-Email-VerificationMethod-Link1777361987","strategy":"auth0","options":{"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required","verification":{"active":false}},"verification_method":"link"}}}}
+            {"name":"Test-Auth0-Connection-Email-VerificationMethod-Link1777519532","strategy":"auth0","options":{"precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required","verification":{"active":false}},"verification_method":"link"}}}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 934
         uncompressed: false
-        body: '{"id":"con_bcJpXG8Qf66KI6sV","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required","verification":{"active":false}},"verification_method":"link","unique":true}},"strategy_version":2,"authentication_methods":{"password":{"enabled":true,"api_behavior":"required","signup_behavior":"allow"},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-Email-VerificationMethod-Link1777361987","is_domain_connection":false,"authentication":{"active":true},"connected_accounts":{"active":false},"enabled_clients":[],"realms":["Test-Auth0-Connection-Email-VerificationMethod-Link1777361987"]}'
+        body: '{"id":"con_x7MuuaCDW1RwaskE","options":{"mfa":{"active":true,"return_enroll_settings":true},"passwordPolicy":"good","precedence":["username","email","phone_number"],"attributes":{"email":{"identifier":{"active":true},"profile_required":true,"signup":{"status":"required","verification":{"active":false}},"verification_method":"link","unique":true}},"strategy_version":2,"authentication_methods":{"password":{"enabled":true,"api_behavior":"required","signup_behavior":"allow"},"passkey":{"enabled":false}},"passkey_options":{"challenge_ui":"both","progressive_enrollment_enabled":true,"local_enrollment_enabled":true},"brute_force_protection":true},"strategy":"auth0","name":"Test-Auth0-Connection-Email-VerificationMethod-Link1777519532","is_domain_connection":false,"authentication":{"active":true},"connected_accounts":{"active":false},"enabled_clients":[],"realms":["Test-Auth0-Connection-Email-VerificationMethod-Link1777519532"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 320.826375ms
+        duration: 818.128125ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -53,7 +53,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.38.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_bcJpXG8Qf66KI6sV
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_x7MuuaCDW1RwaskE
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -63,10 +63,10 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2026-04-28T07:39:51.386Z"}'
+        body: '{"deleted_at":"2026-04-30T03:25:53.150Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 291.525875ms
+        duration: 1.199227917s
