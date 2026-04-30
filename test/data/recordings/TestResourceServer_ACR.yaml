@@ -1,0 +1,72 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 180
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test Resource Server (Apr 27 12:17:07.056)","identifier":"https://go-auth0-dev.eu.auth0.com.us.auth0.com/me/","authorization_policy":{"policy_id":"019b76da-a800-73c9-b656-b349ae415c17"}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.38.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 780
+        uncompressed: false
+        body: '{"id":"69ef066bd334660159726096","name":"Auth0 My Account API","identifier":"https://go-auth0-dev.eu.auth0.com.us.auth0.com/me/","scopes":[{"value":"create:me:connected_accounts","description":"Create Connected Accounts"},{"value":"read:me:connected_accounts","description":"Read Connected Accounts"},{"value":"delete:me:connected_accounts","description":"Delete Connected Accounts"}],"signing_alg":"RS256","allow_offline_access":true,"token_lifetime":600,"token_lifetime_for_web":600,"skip_consent_for_verifiable_first_party_clients":true,"is_system":true,"proof_of_possession":{"mechanism":"dpop","required":false},"subject_type_authorization":{"user":{"policy":"require_client_grant"},"client":{"policy":"deny_all"}},"authorization_policy":{"policy_id":"019b76da-a800-73c9-b656-b349ae415c17"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 972.28325ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.38.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/69ef066bd334660159726096
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 341.630125ms

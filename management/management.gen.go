@@ -11622,6 +11622,14 @@ func (r *ResourceServer) GetAuthorizationDetails() []ResourceServerAuthorization
 	return *r.AuthorizationDetails
 }
 
+// GetAuthorizationPolicy returns the AuthorizationPolicy field.
+func (r *ResourceServer) GetAuthorizationPolicy() *ResourceServerAuthorizationPolicy {
+	if r == nil {
+		return nil
+	}
+	return r.AuthorizationPolicy
+}
+
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetClientID() string {
 	if r == nil || r.ClientID == nil {
@@ -11789,6 +11797,19 @@ func (r *ResourceServerAuthorizationDetails) GetType() string {
 
 // String returns a string representation of ResourceServerAuthorizationDetails.
 func (r *ResourceServerAuthorizationDetails) String() string {
+	return Stringify(r)
+}
+
+// GetPolicyID returns the PolicyID field if it's non-nil, zero value otherwise.
+func (r *ResourceServerAuthorizationPolicy) GetPolicyID() string {
+	if r == nil || r.PolicyID == nil {
+		return ""
+	}
+	return *r.PolicyID
+}
+
+// String returns a string representation of ResourceServerAuthorizationPolicy.
+func (r *ResourceServerAuthorizationPolicy) String() string {
 	return Stringify(r)
 }
 
