@@ -148,3 +148,29 @@ type PushedAuthorizationRequestResponse struct {
 	RequestURI string `json:"request_uri,omitempty"`
 	ExpiresIn  int    `json:"expires_in,omitempty"`
 }
+
+// LoginWithCustomTokenExchangeRequest defines the request body for logging in using the
+// Custom Token Exchange grant (RFC 8693). This flow allows exchanging an external token
+// (e.g., a legacy IdP token or a partner IdP token) for Auth0 tokens.
+//
+// See: https://auth0.com/docs/authenticate/custom-token-exchange
+type LoginWithCustomTokenExchangeRequest struct {
+	ClientAuthentication
+	// The external token to be exchanged. Required.
+	SubjectToken string
+	// A URI that uniquely identifies the type of the subject token and maps to a
+	// Custom Token Exchange Profile configured in the Auth0 tenant. Required.
+	// Must start with "https://" or "urn:" and must not use reserved namespaces
+	// such as "urn:ietf", "urn:auth0", "https://auth0.com", etc.
+	SubjectTokenType string
+	// The unique identifier of the target API you want to access.
+	Audience string
+	// Space-separated list of requested scopes.
+	Scope string
+	// The type of token requested. Defaults to
+	// "urn:ietf:params:oauth:token-type:access_token" when omitted.
+	RequestedTokenType string
+	// Extra parameters to be merged into the request body. Values set here will
+	// override any existing values.
+	ExtraParameters map[string]string
+}
