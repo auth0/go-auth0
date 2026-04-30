@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.39.0](https://github.com/auth0/go-auth0/tree/v1.39.0) (2026-04-30)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.38.0...v1.39.0)
+
+**Added**
+- feat: add support for new password policy fields [\#754](https://github.com/auth0/go-auth0/pull/754) ([KartikJha](https://github.com/KartikJha))
+- feat: Add support for `authorization_policy` in Resource Servers [\#758](https://github.com/auth0/go-auth0/pull/758) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: add TokenEndpointJwtcaAudFormat support for Okta and OIDC connections [\#759](https://github.com/auth0/go-auth0/pull/759) ([ramya18101](https://github.com/ramya18101))
+
 ## [v1.38.0](https://github.com/auth0/go-auth0/tree/v1.38.0) (2026-04-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.37.0...v1.38.0)
 
