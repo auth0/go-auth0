@@ -6052,6 +6052,16 @@ func TestConnectionOptionsGoogleApps_GetDomainAliases(tt *testing.T) {
 	c.GetDomainAliases()
 }
 
+func TestConnectionOptionsGoogleApps_GetEnableGroupsAPI(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsGoogleApps{EnableGroupsAPI: &zeroValue}
+	c.GetEnableGroupsAPI()
+	c = &ConnectionOptionsGoogleApps{}
+	c.GetEnableGroupsAPI()
+	c = nil
+	c.GetEnableGroupsAPI()
+}
+
 func TestConnectionOptionsGoogleApps_GetEnableUsersAPI(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsGoogleApps{EnableUsersAPI: &zeroValue}
