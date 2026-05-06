@@ -2563,6 +2563,16 @@ func TestClient_GetOrganizationUsage(tt *testing.T) {
 	c.GetOrganizationUsage()
 }
 
+func TestClient_GetRedirectionPolicy(tt *testing.T) {
+	var zeroValue string
+	c := &Client{RedirectionPolicy: &zeroValue}
+	c.GetRedirectionPolicy()
+	c = &Client{}
+	c.GetRedirectionPolicy()
+	c = nil
+	c.GetRedirectionPolicy()
+}
+
 func TestClient_GetRefreshToken(tt *testing.T) {
 	c := &Client{}
 	c.GetRefreshToken()
@@ -2642,6 +2652,16 @@ func TestClient_GetSSODisabled(tt *testing.T) {
 	c.GetSSODisabled()
 	c = nil
 	c.GetSSODisabled()
+}
+
+func TestClient_GetThirdPartySecurityMode(tt *testing.T) {
+	var zeroValue string
+	c := &Client{ThirdPartySecurityMode: &zeroValue}
+	c.GetThirdPartySecurityMode()
+	c = &Client{}
+	c.GetThirdPartySecurityMode()
+	c = nil
+	c.GetThirdPartySecurityMode()
 }
 
 func TestClient_GetTokenEndpointAuthMethod(tt *testing.T) {
@@ -3002,6 +3022,16 @@ func TestClientGrant_GetClientID(tt *testing.T) {
 	c.GetClientID()
 	c = nil
 	c.GetClientID()
+}
+
+func TestClientGrant_GetDefaultFor(tt *testing.T) {
+	var zeroValue string
+	c := &ClientGrant{DefaultFor: &zeroValue}
+	c.GetDefaultFor()
+	c = &ClientGrant{}
+	c.GetDefaultFor()
+	c = nil
+	c.GetDefaultFor()
 }
 
 func TestClientGrant_GetID(tt *testing.T) {
@@ -17123,6 +17153,16 @@ func TestTenant_GetDeviceFlow(tt *testing.T) {
 	t.GetDeviceFlow()
 	t = nil
 	t.GetDeviceFlow()
+}
+
+func TestTenant_GetDynamicClientRegistrationSecurityMode(tt *testing.T) {
+	var zeroValue string
+	t := &Tenant{DynamicClientRegistrationSecurityMode: &zeroValue}
+	t.GetDynamicClientRegistrationSecurityMode()
+	t = &Tenant{}
+	t.GetDynamicClientRegistrationSecurityMode()
+	t = nil
+	t.GetDynamicClientRegistrationSecurityMode()
 }
 
 func TestTenant_GetEnabledLocales(tt *testing.T) {

@@ -39,6 +39,11 @@ type ClientGrant struct {
 
 	// IsSystem indicates whether this grant is a special grant created by Auth0. It cannot be modified or deleted directly.
 	IsSystem *bool `json:"is_system,omitempty"`
+
+	// DefaultFor applies this client grant as the default for all clients in the specified group.
+	// Values: "third_party_clients". Mutually exclusive with ClientID.
+	// Immutable after creation.
+	DefaultFor *string `json:"default_for,omitempty"`
 }
 
 // ClientGrantList is a list of ClientGrants.

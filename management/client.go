@@ -244,6 +244,19 @@ type Client struct {
 	// JwksURI is the URL for the JSON Web Key Set (JWKS) containing the public keys
 	// used for private_key_jwt authentication. Only present for CIMD clients.
 	JwksURI *string `json:"jwks_uri,omitempty"`
+
+	// ThirdPartySecurityMode controls the security mode for third-party clients.
+	// Immutable after creation. Values: "strict" or "permissive".
+	// strict enforces enhanced security controls.
+	// permissive preserves pre-existing behavior and is only available to tenants
+	// with prior third-party client usage.
+	ThirdPartySecurityMode *string `json:"third_party_security_mode,omitempty"`
+
+	// RedirectionPolicy controls whether Auth0 redirects users to the application's
+	// callback URL on authentication errors or in email verification flows.
+	// Values: "allow_always" or "open_redirect_protection".
+	// Only applies when is_first_party is false and third_party_security_mode is strict.
+	RedirectionPolicy *string `json:"redirection_policy,omitempty"`
 }
 
 // ExpressConfiguration represents the OIN Express Configuration settings for a client.
