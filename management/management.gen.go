@@ -4937,6 +4937,14 @@ func (c *ConnectionOptionsGoogleApps) GetDomainAliases() []string {
 	return *c.DomainAliases
 }
 
+// GetEnableGroupsAPI returns the EnableGroupsAPI field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsGoogleApps) GetEnableGroupsAPI() bool {
+	if c == nil || c.EnableGroupsAPI == nil {
+		return false
+	}
+	return *c.EnableGroupsAPI
+}
+
 // GetEnableUsersAPI returns the EnableUsersAPI field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsGoogleApps) GetEnableUsersAPI() bool {
 	if c == nil || c.EnableUsersAPI == nil {

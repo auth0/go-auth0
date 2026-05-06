@@ -1770,6 +1770,7 @@ type ConnectionOptionsGoogleApps struct {
 	IsSuspended               *bool                  `json:"ext_is_suspended,omitempty" scope:"ext_is_suspended"`
 	AgreedTerms               *bool                  `json:"ext_agreed_terms,omitempty" scope:"ext_agreed_terms"`
 	EnableUsersAPI            *bool                  `json:"api_enable_users,omitempty"`
+	EnableGroupsAPI           *bool                  `json:"api_enable_groups,omitempty"`
 	SetUserAttributes         *string                `json:"set_user_root_attributes,omitempty"`
 	MapUserIDtoID             *bool                  `json:"map_user_id_to_id,omitempty"`
 	HandleLoginFromSocial     *bool                  `json:"handle_login_from_social,omitempty"`
