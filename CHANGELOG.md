@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.40.0](https://github.com/auth0/go-auth0/tree/v1.40.0) (2026-05-08)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.39.0...v1.40.0)
+
+**Added**
+- feat: Support third party app security params [\#760](https://github.com/auth0/go-auth0/pull/760) ([bkiran6398](https://github.com/bkiran6398))
+- feat: Add EnableGroupsAPI field to ConnectionOptionsGoogleApps [\#767](https://github.com/auth0/go-auth0/pull/767) ([bkiran6398](https://github.com/bkiran6398))
+
 ## [v1.39.0](https://github.com/auth0/go-auth0/tree/v1.39.0) (2026-04-30)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.38.0...v1.39.0)
 
