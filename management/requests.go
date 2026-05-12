@@ -335,7 +335,7 @@ var (
 )
 
 type ChangePasswordTicketRequestContent struct {
-	// URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
+	// URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using organization_id. May be specified together with client_id when the tenant has a custom password reset page enabled and a password-reset-post-challenge Action bound.
 	ResultURL *string `json:"result_url,omitempty" url:"-"`
 	// user_id of for whom the ticket should be created.
 	UserID *string `json:"user_id,omitempty" url:"-"`
@@ -691,7 +691,14 @@ var (
 	createUserAuthenticationMethodRequestContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 5)
 	createUserAuthenticationMethodRequestContentFieldKeyID                         = big.NewInt(1 << 6)
 	createUserAuthenticationMethodRequestContentFieldPublicKey                     = big.NewInt(1 << 7)
-	createUserAuthenticationMethodRequestContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 8)
+	createUserAuthenticationMethodRequestContentFieldAaguid                        = big.NewInt(1 << 8)
+	createUserAuthenticationMethodRequestContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 9)
+	createUserAuthenticationMethodRequestContentFieldCredentialDeviceType          = big.NewInt(1 << 10)
+	createUserAuthenticationMethodRequestContentFieldCredentialBackedUp            = big.NewInt(1 << 11)
+	createUserAuthenticationMethodRequestContentFieldIdentityUserID                = big.NewInt(1 << 12)
+	createUserAuthenticationMethodRequestContentFieldUserAgent                     = big.NewInt(1 << 13)
+	createUserAuthenticationMethodRequestContentFieldUserHandle                    = big.NewInt(1 << 14)
+	createUserAuthenticationMethodRequestContentFieldTransports                    = big.NewInt(1 << 15)
 )
 
 type CreateUserAuthenticationMethodRequestContent struct {
@@ -705,12 +712,25 @@ type CreateUserAuthenticationMethodRequestContent struct {
 	// Applies to email authentication methods only. The email address used to send verification messages.
 	Email                         *string                            `json:"email,omitempty" url:"-"`
 	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum `json:"preferred_authentication_method,omitempty" url:"-"`
-	// Applies to webauthn authentication methods only. The id of the credential.
+	// Applies to webauthn/passkey authentication methods only. The id of the credential.
 	KeyID *string `json:"key_id,omitempty" url:"-"`
-	// Applies to webauthn authentication methods only. The public key, which is encoded as base64.
+	// Applies to webauthn/passkey authentication methods only. The public key, which is encoded as base64.
 	PublicKey *string `json:"public_key,omitempty" url:"-"`
+	// Applies to passkeys only. Authenticator Attestation Globally Unique Identifier
+	Aaguid *string `json:"aaguid,omitempty" url:"-"`
 	// Applies to webauthn authentication methods only. The relying party identifier.
-	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"-"`
+	RelyingPartyIdentifier *string                   `json:"relying_party_identifier,omitempty" url:"-"`
+	CredentialDeviceType   *CredentialDeviceTypeEnum `json:"credential_device_type,omitempty" url:"-"`
+	// Applies to passkeys only. Whether the credential was backed up.
+	CredentialBackedUp *bool `json:"credential_backed_up,omitempty" url:"-"`
+	// Applies to passkeys only. The ID of the user identity linked with the authentication method.
+	IdentityUserID *string `json:"identity_user_id,omitempty" url:"-"`
+	// Applies to passkeys only. The user-agent of the browser used to create the passkey.
+	UserAgent *string `json:"user_agent,omitempty" url:"-"`
+	// Applies to passkeys only. The user handle of the user identity.
+	UserHandle *string `json:"user_handle,omitempty" url:"-"`
+	// Applies to passkeys only. The transports used by clients to communicate with the authenticator.
+	Transports []string `json:"transports,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -779,11 +799,60 @@ func (c *CreateUserAuthenticationMethodRequestContent) SetPublicKey(publicKey *s
 	c.require(createUserAuthenticationMethodRequestContentFieldPublicKey)
 }
 
+// SetAaguid sets the Aaguid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetAaguid(aaguid *string) {
+	c.Aaguid = aaguid
+	c.require(createUserAuthenticationMethodRequestContentFieldAaguid)
+}
+
 // SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserAuthenticationMethodRequestContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
 	c.RelyingPartyIdentifier = relyingPartyIdentifier
 	c.require(createUserAuthenticationMethodRequestContentFieldRelyingPartyIdentifier)
+}
+
+// SetCredentialDeviceType sets the CredentialDeviceType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetCredentialDeviceType(credentialDeviceType *CredentialDeviceTypeEnum) {
+	c.CredentialDeviceType = credentialDeviceType
+	c.require(createUserAuthenticationMethodRequestContentFieldCredentialDeviceType)
+}
+
+// SetCredentialBackedUp sets the CredentialBackedUp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetCredentialBackedUp(credentialBackedUp *bool) {
+	c.CredentialBackedUp = credentialBackedUp
+	c.require(createUserAuthenticationMethodRequestContentFieldCredentialBackedUp)
+}
+
+// SetIdentityUserID sets the IdentityUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetIdentityUserID(identityUserID *string) {
+	c.IdentityUserID = identityUserID
+	c.require(createUserAuthenticationMethodRequestContentFieldIdentityUserID)
+}
+
+// SetUserAgent sets the UserAgent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetUserAgent(userAgent *string) {
+	c.UserAgent = userAgent
+	c.require(createUserAuthenticationMethodRequestContentFieldUserAgent)
+}
+
+// SetUserHandle sets the UserHandle field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetUserHandle(userHandle *string) {
+	c.UserHandle = userHandle
+	c.require(createUserAuthenticationMethodRequestContentFieldUserHandle)
+}
+
+// SetTransports sets the Transports field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetTransports(transports []string) {
+	c.Transports = transports
+	c.require(createUserAuthenticationMethodRequestContentFieldTransports)
 }
 
 func (c *CreateUserAuthenticationMethodRequestContent) UnmarshalJSON(data []byte) error {
@@ -1996,16 +2065,17 @@ var (
 	createResourceServerRequestContentFieldSigningSecret                             = big.NewInt(1 << 4)
 	createResourceServerRequestContentFieldAllowOfflineAccess                        = big.NewInt(1 << 5)
 	createResourceServerRequestContentFieldAllowOnlineAccess                         = big.NewInt(1 << 6)
-	createResourceServerRequestContentFieldTokenLifetime                             = big.NewInt(1 << 7)
-	createResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 8)
-	createResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 9)
-	createResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 10)
-	createResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 11)
-	createResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 12)
-	createResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 13)
-	createResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 14)
-	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 15)
-	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 16)
+	createResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 7)
+	createResourceServerRequestContentFieldTokenLifetime                             = big.NewInt(1 << 8)
+	createResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 9)
+	createResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 10)
+	createResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 11)
+	createResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 12)
+	createResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 13)
+	createResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 14)
+	createResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 15)
+	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 16)
+	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 17)
 )
 
 type CreateResourceServerRequestContent struct {
@@ -2022,6 +2092,8 @@ type CreateResourceServerRequestContent struct {
 	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"-"`
 	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
 	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"-"`
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"-"`
 	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
 	TokenLifetime *int                                  `json:"token_lifetime,omitempty" url:"-"`
 	TokenDialect  *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
@@ -2094,6 +2166,13 @@ func (c *CreateResourceServerRequestContent) SetAllowOfflineAccess(allowOfflineA
 func (c *CreateResourceServerRequestContent) SetAllowOnlineAccess(allowOnlineAccess *bool) {
 	c.AllowOnlineAccess = allowOnlineAccess
 	c.require(createResourceServerRequestContentFieldAllowOnlineAccess)
+}
+
+// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
+	c.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
+	c.require(createResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions)
 }
 
 // SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
@@ -9317,6 +9396,7 @@ var (
 	revokeRefreshTokensRequestContentFieldIDs      = big.NewInt(1 << 0)
 	revokeRefreshTokensRequestContentFieldUserID   = big.NewInt(1 << 1)
 	revokeRefreshTokensRequestContentFieldClientID = big.NewInt(1 << 2)
+	revokeRefreshTokensRequestContentFieldAudience = big.NewInt(1 << 3)
 )
 
 type RevokeRefreshTokensRequestContent struct {
@@ -9326,6 +9406,8 @@ type RevokeRefreshTokensRequestContent struct {
 	UserID *string `json:"user_id,omitempty" url:"-"`
 	// Revoke all refresh tokens for this client.
 	ClientID *string `json:"client_id,omitempty" url:"-"`
+	// Resource server identifier (audience) to scope the revocation. Must be used with both `user_id` and `client_id`.
+	Audience *string `json:"audience,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9357,6 +9439,13 @@ func (r *RevokeRefreshTokensRequestContent) SetUserID(userID *string) {
 func (r *RevokeRefreshTokensRequestContent) SetClientID(clientID *string) {
 	r.ClientID = clientID
 	r.require(revokeRefreshTokensRequestContentFieldClientID)
+}
+
+// SetAudience sets the Audience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RevokeRefreshTokensRequestContent) SetAudience(audience *string) {
+	r.Audience = audience
+	r.require(revokeRefreshTokensRequestContentFieldAudience)
 }
 
 func (r *RevokeRefreshTokensRequestContent) UnmarshalJSON(data []byte) error {
@@ -14727,15 +14816,16 @@ var (
 	updateResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 4)
 	updateResourceServerRequestContentFieldAllowOfflineAccess                        = big.NewInt(1 << 5)
 	updateResourceServerRequestContentFieldAllowOnlineAccess                         = big.NewInt(1 << 6)
-	updateResourceServerRequestContentFieldTokenLifetime                             = big.NewInt(1 << 7)
-	updateResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 8)
-	updateResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 9)
-	updateResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 10)
-	updateResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 11)
-	updateResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 12)
-	updateResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 13)
-	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 14)
-	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 15)
+	updateResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 7)
+	updateResourceServerRequestContentFieldTokenLifetime                             = big.NewInt(1 << 8)
+	updateResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 9)
+	updateResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 10)
+	updateResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 11)
+	updateResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 12)
+	updateResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 13)
+	updateResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 14)
+	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 15)
+	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 16)
 )
 
 type UpdateResourceServerRequestContent struct {
@@ -14752,6 +14842,8 @@ type UpdateResourceServerRequestContent struct {
 	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"-"`
 	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
 	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"-"`
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"-"`
 	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
 	TokenLifetime *int                                  `json:"token_lifetime,omitempty" url:"-"`
 	TokenDialect  *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
@@ -14822,6 +14914,13 @@ func (u *UpdateResourceServerRequestContent) SetAllowOfflineAccess(allowOfflineA
 func (u *UpdateResourceServerRequestContent) SetAllowOnlineAccess(allowOnlineAccess *bool) {
 	u.AllowOnlineAccess = allowOnlineAccess
 	u.require(updateResourceServerRequestContentFieldAllowOnlineAccess)
+}
+
+// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
+	u.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
+	u.require(updateResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions)
 }
 
 // SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
