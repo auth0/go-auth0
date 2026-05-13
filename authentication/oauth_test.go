@@ -399,13 +399,14 @@ func TestLoginWithCustomTokenExchange(t *testing.T) {
 		tokenSet, err := authAPI.OAuth.LoginWithCustomTokenExchange(
 			context.Background(),
 			oauth.LoginWithCustomTokenExchangeRequest{
-				SubjectToken:       "test-external-token",
-				SubjectTokenType:   "urn:example:legacy-idp-token",
-				Audience:           "https://my-api.example.com",
-				Scope:              "openid profile offline_access",
-				RequestedTokenType: "urn:ietf:params:oauth:token-type:access_token",
+				SubjectToken:     "test-external-token",
+				SubjectTokenType: "urn:example:legacy-idp-token",
+				Audience:         "https://my-api.example.com",
+				Organization:     "org_test",
+				Scope:            "openid profile offline_access",
 				ExtraParameters: map[string]string{
-					"extra": "value",
+					"extra":                "value",
+					"requested_token_type": "urn:ietf:params:oauth:token-type:access_token",
 				},
 			},
 			oauth.IDTokenValidationOptions{},

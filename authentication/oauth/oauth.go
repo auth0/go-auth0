@@ -165,11 +165,10 @@ type LoginWithCustomTokenExchangeRequest struct {
 	SubjectTokenType string
 	// The unique identifier of the target API you want to access.
 	Audience string
+	// The organization to log the user in to.
+	Organization string
 	// Space-separated list of requested scopes.
 	Scope string
-	// The type of token requested. Defaults to
-	// "urn:ietf:params:oauth:token-type:access_token" when omitted.
-	RequestedTokenType string
 	// Extra parameters to be merged into the request body. Values set here will
 	// override any existing values.
 	ExtraParameters map[string]string

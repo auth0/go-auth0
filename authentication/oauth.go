@@ -193,8 +193,8 @@ func (o *OAuth) LoginWithCustomTokenExchange(ctx context.Context, body oauth.Log
 	}
 
 	addIfNotEmpty("audience", body.Audience, data)
+	addIfNotEmpty("organization", body.Organization, data)
 	addIfNotEmpty("scope", body.Scope, data)
-	addIfNotEmpty("requested_token_type", body.RequestedTokenType, data)
 
 	for k, v := range body.ExtraParameters {
 		data.Set(k, v)
