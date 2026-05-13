@@ -1051,6 +1051,169 @@ func TestDebugTransport(t *testing.T) {
 		assert.Contains(t, logOutput, "GET")
 		assert.NotContains(t, logOutput, "<")
 	})
+
+	t.Run("POST request body is preserved in debug output", func(t *testing.T) {
+		var buf bytes.Buffer
+
+		log.SetOutput(&buf)
+
+		defer log.SetOutput(os.Stderr)
+
+		base := RoundTripFunc(func(req *http.Request) (*http.Response, error) {
+			// Consume the body like a real transport would.
+			if req.Body != nil {
+				_, _ = io.ReadAll(req.Body)
+			}
+
+			return &http.Response{
+				StatusCode: http.StatusCreated,
+				Body:       io.NopCloser(strings.NewReader(`{"id":"123"}`)),
+				Header:     http.Header{"Content-Type": []string{"application/json"}},
+			}, nil
+		})
+
+		transport := DebugTransport(base, true)
+		body := `{"name":"test-client","app_type":"spa"}`
+		req, _ := http.NewRequest("POST", "http://example.com/api/v2/clients", strings.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+
+		resp, err := transport.RoundTrip(req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusCreated, resp.StatusCode)
+
+		logOutput := buf.String()
+		assert.Contains(t, logOutput, "POST /api/v2/clients")
+		assert.Contains(t, logOutput, body, "POST request body should appear in debug output")
+		assert.Contains(t, logOutput, `{"id":"123"}`)
+	})
+
+	t.Run("PATCH request body is preserved in debug output", func(t *testing.T) {
+		var buf bytes.Buffer
+
+		log.SetOutput(&buf)
+
+		defer log.SetOutput(os.Stderr)
+
+		base := RoundTripFunc(func(req *http.Request) (*http.Response, error) {
+			if req.Body != nil {
+				_, _ = io.ReadAll(req.Body)
+			}
+
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Body:       io.NopCloser(strings.NewReader(`{"updated":true}`)),
+				Header:     http.Header{"Content-Type": []string{"application/json"}},
+			}, nil
+		})
+
+		transport := DebugTransport(base, true)
+		body := `{"name":"updated-client"}`
+		req, _ := http.NewRequest("PATCH", "http://example.com/api/v2/clients/123", strings.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+
+		resp, err := transport.RoundTrip(req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+
+		logOutput := buf.String()
+		assert.Contains(t, logOutput, "PATCH /api/v2/clients/123")
+		assert.Contains(t, logOutput, body, "PATCH request body should appear in debug output")
+	})
+
+	t.Run("PUT request body is preserved in debug output", func(t *testing.T) {
+		var buf bytes.Buffer
+
+		log.SetOutput(&buf)
+
+		defer log.SetOutput(os.Stderr)
+
+		base := RoundTripFunc(func(req *http.Request) (*http.Response, error) {
+			if req.Body != nil {
+				_, _ = io.ReadAll(req.Body)
+			}
+
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Body:       io.NopCloser(strings.NewReader(`{"replaced":true}`)),
+				Header:     http.Header{"Content-Type": []string{"application/json"}},
+			}, nil
+		})
+
+		transport := DebugTransport(base, true)
+		body := `{"name":"replaced-client","app_type":"regular_web"}`
+		req, _ := http.NewRequest("PUT", "http://example.com/api/v2/clients/456", strings.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+
+		resp, err := transport.RoundTrip(req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+
+		logOutput := buf.String()
+		assert.Contains(t, logOutput, "PUT /api/v2/clients/456")
+		assert.Contains(t, logOutput, body, "PUT request body should appear in debug output")
+	})
+
+	t.Run("Request body is preserved in debug output even on error", func(t *testing.T) {
+		var buf bytes.Buffer
+
+		log.SetOutput(&buf)
+
+		defer log.SetOutput(os.Stderr)
+
+		expectedErr := fmt.Errorf("connection refused")
+		base := RoundTripFunc(func(req *http.Request) (*http.Response, error) {
+			if req.Body != nil {
+				_, _ = io.ReadAll(req.Body)
+			}
+
+			return nil, expectedErr
+		})
+
+		transport := DebugTransport(base, true)
+		body := `{"name":"test"}`
+		req, _ := http.NewRequest("POST", "http://example.com/api/v2/clients", strings.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+
+		resp, err := transport.RoundTrip(req)
+
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+
+		logOutput := buf.String()
+		assert.Contains(t, logOutput, "POST /api/v2/clients")
+		assert.Contains(t, logOutput, body, "Request body should appear in debug output even when transport returns error")
+	})
+
+	t.Run("GET request with no body still works", func(t *testing.T) {
+		var buf bytes.Buffer
+
+		log.SetOutput(&buf)
+
+		defer log.SetOutput(os.Stderr)
+
+		base := RoundTripFunc(func(_ *http.Request) (*http.Response, error) {
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Body:       io.NopCloser(strings.NewReader(`{"clients":[]}`)),
+				Header:     http.Header{"Content-Type": []string{"application/json"}},
+			}, nil
+		})
+
+		transport := DebugTransport(base, true)
+		req, _ := http.NewRequest("GET", "http://example.com/api/v2/clients", nil)
+
+		resp, err := transport.RoundTrip(req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+
+		logOutput := buf.String()
+		assert.Contains(t, logOutput, "GET /api/v2/clients")
+		assert.Contains(t, logOutput, `{"clients":[]}`)
+	})
 }
 
 func TestWithDebug(t *testing.T) {
