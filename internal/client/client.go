@@ -2,12 +2,14 @@
 package client
 
 import (
+	"bytes"
 	"context"
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"math"
 	"math/rand"
@@ -407,6 +409,23 @@ func DebugTransport(base http.RoundTripper, debug bool) http.RoundTripper {
 	}
 
 	return RoundTripFunc(func(req *http.Request) (*http.Response, error) {
+		// Save body before RoundTrip consumes it.
+		var bodyBytes []byte
+
+		if req.Body != nil {
+			var err error
+
+			bodyBytes, err = io.ReadAll(req.Body)
+
+			_ = req.Body.Close()
+
+			if err != nil {
+				return nil, fmt.Errorf("debug transport: failed to read request body: %w", err)
+			}
+
+			req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+		}
+
 		// Note: We cannot dump the request here because inner transports
 		// (UserAgent, Auth0Client, etc.) haven't modified it yet.
 		// DumpRequestOut creates a wire representation, but transports
@@ -415,6 +434,10 @@ func DebugTransport(base http.RoundTripper, debug bool) http.RoundTripper {
 		// Call the base transport which will trigger all inner transports
 		res, err := base.RoundTrip(req)
 
+		// Restore body for dumping.
+		if bodyBytes != nil {
+			req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+		}
 		// Now dump the request after transports have modified it
 		// We do this before checking error so we can see what was attempted
 		dumpRequest(req)
