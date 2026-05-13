@@ -82,6 +82,14 @@ func TestSettersCreateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowOnlineAccessWithEphemeralSessions", func(t *testing.T) {
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueAllowOnlineAccessWithEphemeralSessions *bool
+		obj.SetAllowOnlineAccessWithEphemeralSessions(fernTestValueAllowOnlineAccessWithEphemeralSessions)
+		assert.Equal(t, fernTestValueAllowOnlineAccessWithEphemeralSessions, obj.AllowOnlineAccessWithEphemeralSessions)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSkipConsentForVerifiableFirstPartyClients", func(t *testing.T) {
 		obj := &CreateResourceServerResponseContent{}
 		var fernTestValueSkipConsentForVerifiableFirstPartyClients *bool
@@ -484,6 +492,40 @@ func TestGettersCreateResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAllowOnlineAccess() // Should return zero value
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var value bool
+		obj.AllowOnlineAccessWithEphemeralSessions = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowOnlineAccessWithEphemeralSessions(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		obj.AllowOnlineAccessWithEphemeralSessions = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowOnlineAccessWithEphemeralSessions(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowOnlineAccessWithEphemeralSessions() // Should return zero value
 	})
 
 	t.Run("GetSkipConsentForVerifiableFirstPartyClients", func(t *testing.T) {
@@ -1175,6 +1217,37 @@ func TestSettersMarkExplicitCreateResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetAllowOnlineAccessWithEphemeralSessions_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueAllowOnlineAccessWithEphemeralSessions *bool
+
+		// Act
+		obj.SetAllowOnlineAccessWithEphemeralSessions(fernTestValueAllowOnlineAccessWithEphemeralSessions)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetSkipConsentForVerifiableFirstPartyClients_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1622,6 +1695,14 @@ func TestSettersGetResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowOnlineAccessWithEphemeralSessions", func(t *testing.T) {
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueAllowOnlineAccessWithEphemeralSessions *bool
+		obj.SetAllowOnlineAccessWithEphemeralSessions(fernTestValueAllowOnlineAccessWithEphemeralSessions)
+		assert.Equal(t, fernTestValueAllowOnlineAccessWithEphemeralSessions, obj.AllowOnlineAccessWithEphemeralSessions)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSkipConsentForVerifiableFirstPartyClients", func(t *testing.T) {
 		obj := &GetResourceServerResponseContent{}
 		var fernTestValueSkipConsentForVerifiableFirstPartyClients *bool
@@ -2024,6 +2105,40 @@ func TestGettersGetResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAllowOnlineAccess() // Should return zero value
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var value bool
+		obj.AllowOnlineAccessWithEphemeralSessions = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowOnlineAccessWithEphemeralSessions(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		obj.AllowOnlineAccessWithEphemeralSessions = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowOnlineAccessWithEphemeralSessions(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowOnlineAccessWithEphemeralSessions() // Should return zero value
 	})
 
 	t.Run("GetSkipConsentForVerifiableFirstPartyClients", func(t *testing.T) {
@@ -2692,6 +2807,37 @@ func TestSettersMarkExplicitGetResourceServerResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetAllowOnlineAccess(fernTestValueAllowOnlineAccess)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowOnlineAccessWithEphemeralSessions_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueAllowOnlineAccessWithEphemeralSessions *bool
+
+		// Act
+		obj.SetAllowOnlineAccessWithEphemeralSessions(fernTestValueAllowOnlineAccessWithEphemeralSessions)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3462,6 +3608,14 @@ func TestSettersResourceServer(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowOnlineAccessWithEphemeralSessions", func(t *testing.T) {
+		obj := &ResourceServer{}
+		var fernTestValueAllowOnlineAccessWithEphemeralSessions *bool
+		obj.SetAllowOnlineAccessWithEphemeralSessions(fernTestValueAllowOnlineAccessWithEphemeralSessions)
+		assert.Equal(t, fernTestValueAllowOnlineAccessWithEphemeralSessions, obj.AllowOnlineAccessWithEphemeralSessions)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSkipConsentForVerifiableFirstPartyClients", func(t *testing.T) {
 		obj := &ResourceServer{}
 		var fernTestValueSkipConsentForVerifiableFirstPartyClients *bool
@@ -3864,6 +4018,40 @@ func TestGettersResourceServer(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAllowOnlineAccess() // Should return zero value
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var value bool
+		obj.AllowOnlineAccessWithEphemeralSessions = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowOnlineAccessWithEphemeralSessions(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		obj.AllowOnlineAccessWithEphemeralSessions = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowOnlineAccessWithEphemeralSessions(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServer
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowOnlineAccessWithEphemeralSessions() // Should return zero value
 	})
 
 	t.Run("GetSkipConsentForVerifiableFirstPartyClients", func(t *testing.T) {
@@ -4532,6 +4720,37 @@ func TestSettersMarkExplicitResourceServer(t *testing.T) {
 
 		// Act
 		obj.SetAllowOnlineAccess(fernTestValueAllowOnlineAccess)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowOnlineAccessWithEphemeralSessions_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var fernTestValueAllowOnlineAccessWithEphemeralSessions *bool
+
+		// Act
+		obj.SetAllowOnlineAccessWithEphemeralSessions(fernTestValueAllowOnlineAccessWithEphemeralSessions)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -6164,6 +6383,14 @@ func TestSettersUpdateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowOnlineAccessWithEphemeralSessions", func(t *testing.T) {
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueAllowOnlineAccessWithEphemeralSessions *bool
+		obj.SetAllowOnlineAccessWithEphemeralSessions(fernTestValueAllowOnlineAccessWithEphemeralSessions)
+		assert.Equal(t, fernTestValueAllowOnlineAccessWithEphemeralSessions, obj.AllowOnlineAccessWithEphemeralSessions)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSkipConsentForVerifiableFirstPartyClients", func(t *testing.T) {
 		obj := &UpdateResourceServerResponseContent{}
 		var fernTestValueSkipConsentForVerifiableFirstPartyClients *bool
@@ -6566,6 +6793,40 @@ func TestGettersUpdateResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAllowOnlineAccess() // Should return zero value
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var value bool
+		obj.AllowOnlineAccessWithEphemeralSessions = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowOnlineAccessWithEphemeralSessions(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		obj.AllowOnlineAccessWithEphemeralSessions = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowOnlineAccessWithEphemeralSessions(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowOnlineAccessWithEphemeralSessions_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowOnlineAccessWithEphemeralSessions() // Should return zero value
 	})
 
 	t.Run("GetSkipConsentForVerifiableFirstPartyClients", func(t *testing.T) {
@@ -7234,6 +7495,37 @@ func TestSettersMarkExplicitUpdateResourceServerResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetAllowOnlineAccess(fernTestValueAllowOnlineAccess)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowOnlineAccessWithEphemeralSessions_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueAllowOnlineAccessWithEphemeralSessions *bool
+
+		// Act
+		obj.SetAllowOnlineAccessWithEphemeralSessions(fernTestValueAllowOnlineAccessWithEphemeralSessions)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
