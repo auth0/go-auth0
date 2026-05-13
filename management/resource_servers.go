@@ -19,18 +19,19 @@ var (
 	createResourceServerResponseContentFieldSigningSecret                             = big.NewInt(1 << 6)
 	createResourceServerResponseContentFieldAllowOfflineAccess                        = big.NewInt(1 << 7)
 	createResourceServerResponseContentFieldAllowOnlineAccess                         = big.NewInt(1 << 8)
-	createResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 9)
-	createResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 10)
-	createResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 11)
-	createResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 12)
-	createResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 13)
-	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 14)
-	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 15)
-	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
-	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 17)
-	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
-	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 20)
+	createResourceServerResponseContentFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 9)
+	createResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 10)
+	createResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 11)
+	createResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
+	createResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
+	createResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 14)
+	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 15)
+	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 16)
+	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
+	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 18)
+	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
+	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
+	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 21)
 )
 
 type CreateResourceServerResponseContent struct {
@@ -51,6 +52,8 @@ type CreateResourceServerResponseContent struct {
 	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"allow_offline_access,omitempty"`
 	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
 	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"allow_online_access,omitempty"`
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"allow_online_access_with_ephemeral_sessions,omitempty"`
 	// Whether to skip user consent for applications flagged as first party (true) or not (false).
 	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"skip_consent_for_verifiable_first_party_clients,omitempty"`
 	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
@@ -137,6 +140,13 @@ func (c *CreateResourceServerResponseContent) GetAllowOnlineAccess() bool {
 		return false
 	}
 	return *c.AllowOnlineAccess
+}
+
+func (c *CreateResourceServerResponseContent) GetAllowOnlineAccessWithEphemeralSessions() bool {
+	if c == nil || c.AllowOnlineAccessWithEphemeralSessions == nil {
+		return false
+	}
+	return *c.AllowOnlineAccessWithEphemeralSessions
 }
 
 func (c *CreateResourceServerResponseContent) GetSkipConsentForVerifiableFirstPartyClients() bool {
@@ -300,6 +310,13 @@ func (c *CreateResourceServerResponseContent) SetAllowOnlineAccess(allowOnlineAc
 	c.require(createResourceServerResponseContentFieldAllowOnlineAccess)
 }
 
+// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
+	c.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
+	c.require(createResourceServerResponseContentFieldAllowOnlineAccessWithEphemeralSessions)
+}
+
 // SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateResourceServerResponseContent) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
@@ -436,18 +453,19 @@ var (
 	getResourceServerResponseContentFieldSigningSecret                             = big.NewInt(1 << 6)
 	getResourceServerResponseContentFieldAllowOfflineAccess                        = big.NewInt(1 << 7)
 	getResourceServerResponseContentFieldAllowOnlineAccess                         = big.NewInt(1 << 8)
-	getResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 9)
-	getResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 10)
-	getResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 11)
-	getResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 12)
-	getResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 13)
-	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 14)
-	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 15)
-	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
-	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 17)
-	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
-	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 20)
+	getResourceServerResponseContentFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 9)
+	getResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 10)
+	getResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 11)
+	getResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
+	getResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
+	getResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 14)
+	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 15)
+	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 16)
+	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
+	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 18)
+	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
+	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
+	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 21)
 )
 
 type GetResourceServerResponseContent struct {
@@ -468,6 +486,8 @@ type GetResourceServerResponseContent struct {
 	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"allow_offline_access,omitempty"`
 	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
 	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"allow_online_access,omitempty"`
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"allow_online_access_with_ephemeral_sessions,omitempty"`
 	// Whether to skip user consent for applications flagged as first party (true) or not (false).
 	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"skip_consent_for_verifiable_first_party_clients,omitempty"`
 	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
@@ -554,6 +574,13 @@ func (g *GetResourceServerResponseContent) GetAllowOnlineAccess() bool {
 		return false
 	}
 	return *g.AllowOnlineAccess
+}
+
+func (g *GetResourceServerResponseContent) GetAllowOnlineAccessWithEphemeralSessions() bool {
+	if g == nil || g.AllowOnlineAccessWithEphemeralSessions == nil {
+		return false
+	}
+	return *g.AllowOnlineAccessWithEphemeralSessions
 }
 
 func (g *GetResourceServerResponseContent) GetSkipConsentForVerifiableFirstPartyClients() bool {
@@ -715,6 +742,13 @@ func (g *GetResourceServerResponseContent) SetAllowOfflineAccess(allowOfflineAcc
 func (g *GetResourceServerResponseContent) SetAllowOnlineAccess(allowOnlineAccess *bool) {
 	g.AllowOnlineAccess = allowOnlineAccess
 	g.require(getResourceServerResponseContentFieldAllowOnlineAccess)
+}
+
+// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
+	g.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
+	g.require(getResourceServerResponseContentFieldAllowOnlineAccessWithEphemeralSessions)
 }
 
 // SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
@@ -985,18 +1019,19 @@ var (
 	resourceServerFieldSigningSecret                             = big.NewInt(1 << 6)
 	resourceServerFieldAllowOfflineAccess                        = big.NewInt(1 << 7)
 	resourceServerFieldAllowOnlineAccess                         = big.NewInt(1 << 8)
-	resourceServerFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 9)
-	resourceServerFieldTokenLifetime                             = big.NewInt(1 << 10)
-	resourceServerFieldTokenLifetimeForWeb                       = big.NewInt(1 << 11)
-	resourceServerFieldEnforcePolicies                           = big.NewInt(1 << 12)
-	resourceServerFieldTokenDialect                              = big.NewInt(1 << 13)
-	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 14)
-	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 15)
-	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 16)
-	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 17)
-	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
-	resourceServerFieldClientID                                  = big.NewInt(1 << 20)
+	resourceServerFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 9)
+	resourceServerFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 10)
+	resourceServerFieldTokenLifetime                             = big.NewInt(1 << 11)
+	resourceServerFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
+	resourceServerFieldEnforcePolicies                           = big.NewInt(1 << 13)
+	resourceServerFieldTokenDialect                              = big.NewInt(1 << 14)
+	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 15)
+	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 16)
+	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 17)
+	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 18)
+	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
+	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
+	resourceServerFieldClientID                                  = big.NewInt(1 << 21)
 )
 
 type ResourceServer struct {
@@ -1017,6 +1052,8 @@ type ResourceServer struct {
 	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"allow_offline_access,omitempty"`
 	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
 	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"allow_online_access,omitempty"`
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"allow_online_access_with_ephemeral_sessions,omitempty"`
 	// Whether to skip user consent for applications flagged as first party (true) or not (false).
 	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"skip_consent_for_verifiable_first_party_clients,omitempty"`
 	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
@@ -1103,6 +1140,13 @@ func (r *ResourceServer) GetAllowOnlineAccess() bool {
 		return false
 	}
 	return *r.AllowOnlineAccess
+}
+
+func (r *ResourceServer) GetAllowOnlineAccessWithEphemeralSessions() bool {
+	if r == nil || r.AllowOnlineAccessWithEphemeralSessions == nil {
+		return false
+	}
+	return *r.AllowOnlineAccessWithEphemeralSessions
 }
 
 func (r *ResourceServer) GetSkipConsentForVerifiableFirstPartyClients() bool {
@@ -1264,6 +1308,13 @@ func (r *ResourceServer) SetAllowOfflineAccess(allowOfflineAccess *bool) {
 func (r *ResourceServer) SetAllowOnlineAccess(allowOnlineAccess *bool) {
 	r.AllowOnlineAccess = allowOnlineAccess
 	r.require(resourceServerFieldAllowOnlineAccess)
+}
+
+// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
+	r.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
+	r.require(resourceServerFieldAllowOnlineAccessWithEphemeralSessions)
 }
 
 // SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
@@ -2442,18 +2493,19 @@ var (
 	updateResourceServerResponseContentFieldSigningSecret                             = big.NewInt(1 << 6)
 	updateResourceServerResponseContentFieldAllowOfflineAccess                        = big.NewInt(1 << 7)
 	updateResourceServerResponseContentFieldAllowOnlineAccess                         = big.NewInt(1 << 8)
-	updateResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 9)
-	updateResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 10)
-	updateResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 11)
-	updateResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 12)
-	updateResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 13)
-	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 14)
-	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 15)
-	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
-	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 17)
-	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
-	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 20)
+	updateResourceServerResponseContentFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 9)
+	updateResourceServerResponseContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 10)
+	updateResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 11)
+	updateResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
+	updateResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
+	updateResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 14)
+	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 15)
+	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 16)
+	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
+	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 18)
+	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
+	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
+	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 21)
 )
 
 type UpdateResourceServerResponseContent struct {
@@ -2474,6 +2526,8 @@ type UpdateResourceServerResponseContent struct {
 	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"allow_offline_access,omitempty"`
 	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
 	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"allow_online_access,omitempty"`
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"allow_online_access_with_ephemeral_sessions,omitempty"`
 	// Whether to skip user consent for applications flagged as first party (true) or not (false).
 	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"skip_consent_for_verifiable_first_party_clients,omitempty"`
 	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
@@ -2560,6 +2614,13 @@ func (u *UpdateResourceServerResponseContent) GetAllowOnlineAccess() bool {
 		return false
 	}
 	return *u.AllowOnlineAccess
+}
+
+func (u *UpdateResourceServerResponseContent) GetAllowOnlineAccessWithEphemeralSessions() bool {
+	if u == nil || u.AllowOnlineAccessWithEphemeralSessions == nil {
+		return false
+	}
+	return *u.AllowOnlineAccessWithEphemeralSessions
 }
 
 func (u *UpdateResourceServerResponseContent) GetSkipConsentForVerifiableFirstPartyClients() bool {
@@ -2721,6 +2782,13 @@ func (u *UpdateResourceServerResponseContent) SetAllowOfflineAccess(allowOffline
 func (u *UpdateResourceServerResponseContent) SetAllowOnlineAccess(allowOnlineAccess *bool) {
 	u.AllowOnlineAccess = allowOnlineAccess
 	u.require(updateResourceServerResponseContentFieldAllowOnlineAccess)
+}
+
+// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
+	u.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
+	u.require(updateResourceServerResponseContentFieldAllowOnlineAccessWithEphemeralSessions)
 }
 
 // SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;

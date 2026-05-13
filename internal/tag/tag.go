@@ -8,7 +8,7 @@ import (
 // Scopes is used to get the list of scopes.
 func Scopes(v interface{}) (scopes []string) {
 	val := reflect.ValueOf(v)
-	if val.Kind() == reflect.Ptr {
+	if val.Kind() == reflect.Pointer {
 		val = val.Elem()
 	}
 
@@ -18,7 +18,7 @@ func Scopes(v interface{}) (scopes []string) {
 		if scope, ok := typ.Field(i).Tag.Lookup("scope"); ok {
 			if scope != "" {
 				field := val.Field(i)
-				if field.Kind() == reflect.Ptr {
+				if field.Kind() == reflect.Pointer {
 					field = field.Elem()
 				}
 
@@ -35,7 +35,7 @@ func Scopes(v interface{}) (scopes []string) {
 // SetScopes is used for setting the scopes.
 func SetScopes(v interface{}, enable bool, scopes ...string) {
 	val := reflect.ValueOf(v)
-	if val.Kind() == reflect.Ptr {
+	if val.Kind() == reflect.Pointer {
 		val = val.Elem()
 	}
 
@@ -57,7 +57,7 @@ func SetScopes(v interface{}, enable bool, scopes ...string) {
 				field := val.Field(i)
 				v := reflect.ValueOf(enable)
 
-				if field.Kind() == reflect.Ptr {
+				if field.Kind() == reflect.Pointer {
 					v = reflect.ValueOf(&enable)
 				}
 
