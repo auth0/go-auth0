@@ -29,3 +29,6 @@ opslevel.yml
 EXAMPLES.md
 MIGRATION_GUIDE.md
 .fern/
+.fern/replay.lock
+.fern/replay.yml
+.gitattributes

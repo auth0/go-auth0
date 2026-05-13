@@ -9746,6 +9746,14 @@ client.RefreshTokens.Revoke(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**audience:** `*string` — Resource server identifier (audience) to scope the revocation. Must be used with both `user_id` and `client_id`.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -10153,6 +10161,14 @@ client.ResourceServers.Create(
 <dl>
 <dd>
 
+**allowOnlineAccessWithEphemeralSessions:** `*bool` — Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **tokenLifetime:** `*int` — Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
     
 </dd>
@@ -10472,6 +10488,14 @@ client.ResourceServers.Update(
 <dd>
 
 **allowOnlineAccess:** `*bool` — Whether Online Refresh Tokens can be issued for this API (true) or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowOnlineAccessWithEphemeralSessions:** `*bool` — Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
     
 </dd>
 </dl>
@@ -12564,7 +12588,7 @@ client.Tickets.ChangePassword(
 <dl>
 <dd>
 
-**resultURL:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
+**resultURL:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using organization_id. May be specified together with client_id when the tenant has a custom password reset page enabled and a password-reset-post-challenge Action bound.
     
 </dd>
 </dl>
@@ -29988,7 +30012,7 @@ client.Users.AuthenticationMethods.Create(
 <dl>
 <dd>
 
-**keyID:** `*string` — Applies to webauthn authentication methods only. The id of the credential.
+**keyID:** `*string` — Applies to webauthn/passkey authentication methods only. The id of the credential.
     
 </dd>
 </dl>
@@ -29996,7 +30020,15 @@ client.Users.AuthenticationMethods.Create(
 <dl>
 <dd>
 
-**publicKey:** `*string` — Applies to webauthn authentication methods only. The public key, which is encoded as base64.
+**publicKey:** `*string` — Applies to webauthn/passkey authentication methods only. The public key, which is encoded as base64.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aaguid:** `*string` — Applies to passkeys only. Authenticator Attestation Globally Unique Identifier
     
 </dd>
 </dl>
@@ -30005,6 +30037,54 @@ client.Users.AuthenticationMethods.Create(
 <dd>
 
 **relyingPartyIdentifier:** `*string` — Applies to webauthn authentication methods only. The relying party identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentialDeviceType:** `*management.CredentialDeviceTypeEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentialBackedUp:** `*bool` — Applies to passkeys only. Whether the credential was backed up.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identityUserID:** `*string` — Applies to passkeys only. The ID of the user identity linked with the authentication method.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userAgent:** `*string` — Applies to passkeys only. The user-agent of the browser used to create the passkey.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userHandle:** `*string` — Applies to passkeys only. The user handle of the user identity.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transports:** `[]string` — Applies to passkeys only. The transports used by clients to communicate with the authenticator.
     
 </dd>
 </dl>
