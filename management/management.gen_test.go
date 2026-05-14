@@ -14625,6 +14625,26 @@ func TestResourceServer_GetAllowOfflineAccess(tt *testing.T) {
 	r.GetAllowOfflineAccess()
 }
 
+func TestResourceServer_GetAllowOnlineAccess(tt *testing.T) {
+	var zeroValue bool
+	r := &ResourceServer{AllowOnlineAccess: &zeroValue}
+	r.GetAllowOnlineAccess()
+	r = &ResourceServer{}
+	r.GetAllowOnlineAccess()
+	r = nil
+	r.GetAllowOnlineAccess()
+}
+
+func TestResourceServer_GetAllowOnlineAccessWithEphemeralSessions(tt *testing.T) {
+	var zeroValue bool
+	r := &ResourceServer{AllowOnlineAccessWithEphemeralSessions: &zeroValue}
+	r.GetAllowOnlineAccessWithEphemeralSessions()
+	r = &ResourceServer{}
+	r.GetAllowOnlineAccessWithEphemeralSessions()
+	r = nil
+	r.GetAllowOnlineAccessWithEphemeralSessions()
+}
+
 func TestResourceServer_GetAuthorizationDetails(tt *testing.T) {
 	var zeroValue []ResourceServerAuthorizationDetails
 	r := &ResourceServer{AuthorizationDetails: &zeroValue}

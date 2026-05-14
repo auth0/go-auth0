@@ -11667,6 +11667,22 @@ func (r *ResourceServer) GetAllowOfflineAccess() bool {
 	return *r.AllowOfflineAccess
 }
 
+// GetAllowOnlineAccess returns the AllowOnlineAccess field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetAllowOnlineAccess() bool {
+	if r == nil || r.AllowOnlineAccess == nil {
+		return false
+	}
+	return *r.AllowOnlineAccess
+}
+
+// GetAllowOnlineAccessWithEphemeralSessions returns the AllowOnlineAccessWithEphemeralSessions field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetAllowOnlineAccessWithEphemeralSessions() bool {
+	if r == nil || r.AllowOnlineAccessWithEphemeralSessions == nil {
+		return false
+	}
+	return *r.AllowOnlineAccessWithEphemeralSessions
+}
+
 // GetAuthorizationDetails returns the AuthorizationDetails field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetAuthorizationDetails() []ResourceServerAuthorizationDetails {
 	if r == nil || r.AuthorizationDetails == nil {
