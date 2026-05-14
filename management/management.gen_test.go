@@ -7006,6 +7006,13 @@ func TestConnectionOptionsOIDC_GetDPoPSigningAlg(tt *testing.T) {
 	c.GetDPoPSigningAlg()
 }
 
+func TestConnectionOptionsOIDC_GetFederatedConnectionsAccessTokens(tt *testing.T) {
+	c := &ConnectionOptionsOIDC{}
+	c.GetFederatedConnectionsAccessTokens()
+	c = nil
+	c.GetFederatedConnectionsAccessTokens()
+}
+
 func TestConnectionOptionsOIDC_GetIDTokenSignedResponseAlgs(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptionsOIDC{IDTokenSignedResponseAlgs: &zeroValue}
@@ -7235,6 +7242,24 @@ func TestConnectionOptionsOIDCConnectionSettings_GetPKCE(tt *testing.T) {
 func TestConnectionOptionsOIDCConnectionSettings_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsOIDCConnectionSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsOIDCFederatedConnectionsAccessTokens_GetActive(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOIDCFederatedConnectionsAccessTokens{Active: &zeroValue}
+	c.GetActive()
+	c = &ConnectionOptionsOIDCFederatedConnectionsAccessTokens{}
+	c.GetActive()
+	c = nil
+	c.GetActive()
+}
+
+func TestConnectionOptionsOIDCFederatedConnectionsAccessTokens_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsOIDCFederatedConnectionsAccessTokens{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
