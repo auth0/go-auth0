@@ -31,6 +31,12 @@ type ResourceServer struct {
 	// Allows issuance of refresh tokens for this entity.
 	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty"`
 
+	// Whether Online Refresh Tokens can be issued for this resource server.
+	AllowOnlineAccess *bool `json:"allow_online_access,omitempty"`
+
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral.
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty"`
+
 	// The amount of time in seconds that the token will be valid after being
 	// issued.
 	TokenLifetime *int `json:"token_lifetime,omitempty"`
