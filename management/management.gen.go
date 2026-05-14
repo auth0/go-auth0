@@ -5674,6 +5674,14 @@ func (c *ConnectionOptionsOIDC) GetDPoPSigningAlg() string {
 	return *c.DPoPSigningAlg
 }
 
+// GetFederatedConnectionsAccessTokens returns the FederatedConnectionsAccessTokens field.
+func (c *ConnectionOptionsOIDC) GetFederatedConnectionsAccessTokens() *ConnectionOptionsOIDCFederatedConnectionsAccessTokens {
+	if c == nil {
+		return nil
+	}
+	return c.FederatedConnectionsAccessTokens
+}
+
 // GetIDTokenSignedResponseAlgs returns the IDTokenSignedResponseAlgs field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOIDC) GetIDTokenSignedResponseAlgs() []string {
 	if c == nil || c.IDTokenSignedResponseAlgs == nil {
@@ -5854,6 +5862,19 @@ func (c *ConnectionOptionsOIDCConnectionSettings) GetPKCE() string {
 
 // String returns a string representation of ConnectionOptionsOIDCConnectionSettings.
 func (c *ConnectionOptionsOIDCConnectionSettings) String() string {
+	return Stringify(c)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDCFederatedConnectionsAccessTokens) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+// String returns a string representation of ConnectionOptionsOIDCFederatedConnectionsAccessTokens.
+func (c *ConnectionOptionsOIDCFederatedConnectionsAccessTokens) String() string {
 	return Stringify(c)
 }
 

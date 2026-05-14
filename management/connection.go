@@ -1287,6 +1287,17 @@ type ConnectionOptionsOIDC struct {
 	// TokenEndpointJwtcaAudFormat specifies the aud claim format in the JWT for client authentication
 	// at the token endpoint. Possible values: "issuer", "token_endpoint".
 	TokenEndpointJwtcaAudFormat *string `json:"token_endpoint_jwtca_aud_format,omitempty"`
+	// FederatedConnectionsAccessTokens enables refresh tokens and access tokens collection for federated connections
+	FederatedConnectionsAccessTokens *ConnectionOptionsOIDCFederatedConnectionsAccessTokens `json:"federated_connections_access_tokens,omitempty"`
+}
+
+// ConnectionOptionsOIDCFederatedConnectionsAccessTokens is used by OIDC Connections to
+// configure the collection of access tokens and refresh tokens for federated connections.
+// When enabled, Auth0 will collect and store access tokens and refresh tokens
+// obtained from federated connections during authentication.
+type ConnectionOptionsOIDCFederatedConnectionsAccessTokens struct {
+	// Enables refresh tokens and access tokens collection for federated connections
+	Active *bool `json:"active,omitempty"`
 }
 
 // ConnectionOptionsOIDCConnectionSettings contains PKCE configuration for the connection.
