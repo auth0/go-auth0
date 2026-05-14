@@ -1,5 +1,18 @@
 # Change Log
 
+## [v2.11.0](https://github.com/auth0/go-auth0/tree/v2.11.0) (2026-05-14)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.10.0...v2.11.0)
+
+**Added**
+- feat: add passkey-related fields (`aaguid`, `credential_device_type`, `credential_backed_up`, `identity_user_id`, `user_agent`, `user_handle`, `transports`) to user authentication method types [\#770](https://github.com/auth0/go-auth0/pull/770) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `CredentialDeviceTypeEnum` with `single_device` and `multi_device` values [\#770](https://github.com/auth0/go-auth0/pull/770) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `allow_online_access_with_ephemeral_sessions` field to resource server types [\#770](https://github.com/auth0/go-auth0/pull/770) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `audience` field to `RevokeRefreshTokensRequestContent` for audience-scoped revocation [\#770](https://github.com/auth0/go-auth0/pull/770) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `LoginWithCustomTokenExchange` method for Custom Token Exchange (RFC 8693) [\#766](https://github.com/auth0/go-auth0/pull/766) ([JohnRoesler](https://github.com/JohnRoesler))
+
+**Fixed**
+- fix: preserve request body in debug output for POST, PATCH, and PUT methods [\#751](https://github.com/auth0/go-auth0/pull/751) ([bkiran6398](https://github.com/bkiran6398))
+
 ## [v2.10.0](https://github.com/auth0/go-auth0/tree/v2.10.0) (2026-04-29)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.9.0...v2.10.0)
 
