@@ -339,6 +339,85 @@ func TestLoginWithClientCredentials(t *testing.T) {
 	})
 }
 
+func TestLoginWithCustomTokenExchange(t *testing.T) {
+	t.Run("Should require SubjectToken and SubjectTokenType", func(t *testing.T) {
+		_, err := authAPI.OAuth.LoginWithCustomTokenExchange(
+			context.Background(),
+			oauth.LoginWithCustomTokenExchangeRequest{},
+			oauth.IDTokenValidationOptions{},
+		)
+
+		assert.ErrorContains(t, err, "missing required fields: SubjectToken, SubjectTokenType")
+	})
+
+	t.Run("Should require SubjectTokenType when only SubjectToken is set", func(t *testing.T) {
+		_, err := authAPI.OAuth.LoginWithCustomTokenExchange(
+			context.Background(),
+			oauth.LoginWithCustomTokenExchangeRequest{
+				SubjectToken: "some-external-token",
+			},
+			oauth.IDTokenValidationOptions{},
+		)
+
+		assert.ErrorContains(t, err, "missing required fields: SubjectTokenType")
+	})
+
+	t.Run("Should require SubjectToken when only SubjectTokenType is set", func(t *testing.T) {
+		_, err := authAPI.OAuth.LoginWithCustomTokenExchange(
+			context.Background(),
+			oauth.LoginWithCustomTokenExchangeRequest{
+				SubjectTokenType: "urn:example:legacy-idp-token",
+			},
+			oauth.IDTokenValidationOptions{},
+		)
+
+		assert.ErrorContains(t, err, "missing required fields: SubjectToken")
+	})
+
+	t.Run("Should return tokens", func(t *testing.T) {
+		skipE2E(t)
+		configureHTTPTestRecordings(t, authAPI)
+
+		tokenSet, err := authAPI.OAuth.LoginWithCustomTokenExchange(
+			context.Background(),
+			oauth.LoginWithCustomTokenExchangeRequest{
+				SubjectToken:     "test-external-token",
+				SubjectTokenType: "urn:example:legacy-idp-token",
+			},
+			oauth.IDTokenValidationOptions{},
+		)
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+
+	t.Run("Should support all optional parameters", func(t *testing.T) {
+		skipE2E(t)
+		configureHTTPTestRecordings(t, authAPI)
+
+		tokenSet, err := authAPI.OAuth.LoginWithCustomTokenExchange(
+			context.Background(),
+			oauth.LoginWithCustomTokenExchangeRequest{
+				SubjectToken:     "test-external-token",
+				SubjectTokenType: "urn:example:legacy-idp-token",
+				Audience:         "https://my-api.example.com",
+				Organization:     "org_test",
+				Scope:            "openid profile offline_access",
+				ExtraParameters: map[string]string{
+					"extra":                "value",
+					"requested_token_type": "urn:ietf:params:oauth:token-type:access_token",
+				},
+			},
+			oauth.IDTokenValidationOptions{},
+		)
+
+		assert.NoError(t, err)
+		assert.NotEmpty(t, tokenSet.AccessToken)
+		assert.Equal(t, "Bearer", tokenSet.TokenType)
+	})
+}
+
 func TestRefreshToken(t *testing.T) {
 	t.Run("Should return tokens", func(t *testing.T) {
 		skipE2E(t)
