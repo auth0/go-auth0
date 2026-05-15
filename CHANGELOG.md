@@ -1,5 +1,14 @@
 # Change Log
 
+## [v1.41.0](https://github.com/auth0/go-auth0/tree/v1.41.0) (2026-05-14)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.40.0...v1.41.0)
+
+**Added**
+- feat: Support `FederatedConnectionsAccessTokens` for OIDC Connections [\#773](https://github.com/auth0/go-auth0/pull/773) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: add `AllowOnlineAccess` and `AllowOnlineAccessWithEphemeralSessions` fields to `ResourceServer` [\#771](https://github.com/auth0/go-auth0/pull/771) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `AllowOnlineAccessWithEphemeralSessions` field to `Client` and `ClientGrant` [\#771](https://github.com/auth0/go-auth0/pull/771) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `EphemeralSessionLifetime` field to `TenantUniversalLogin` [\#771](https://github.com/auth0/go-auth0/pull/771) ([bkiran6398](https://github.com/bkiran6398))
+
 ## [v1.40.0](https://github.com/auth0/go-auth0/tree/v1.40.0) (2026-05-08)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.39.0...v1.40.0)
 
