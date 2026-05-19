@@ -10392,6 +10392,22 @@ func (n *NetworkACLRuleMatch) GetAnonymousProxy() bool {
 	return *n.AnonymousProxy
 }
 
+// GetConnectingIPv4Cidrs returns the ConnectingIPv4Cidrs field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetConnectingIPv4Cidrs() []string {
+	if n == nil || n.ConnectingIPv4Cidrs == nil {
+		return nil
+	}
+	return *n.ConnectingIPv4Cidrs
+}
+
+// GetConnectingIPv6Cidrs returns the ConnectingIPv6Cidrs field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetConnectingIPv6Cidrs() []string {
+	if n == nil || n.ConnectingIPv6Cidrs == nil {
+		return nil
+	}
+	return *n.ConnectingIPv6Cidrs
+}
+
 // GetGeoCountryCodes returns the GeoCountryCodes field if it's non-nil, zero value otherwise.
 func (n *NetworkACLRuleMatch) GetGeoCountryCodes() []string {
 	if n == nil || n.GeoCountryCodes == nil {
@@ -10406,6 +10422,14 @@ func (n *NetworkACLRuleMatch) GetGeoSubdivisionCodes() []string {
 		return nil
 	}
 	return *n.GeoSubdivisionCodes
+}
+
+// GetHostnames returns the Hostnames field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetHostnames() []string {
+	if n == nil || n.Hostnames == nil {
+		return nil
+	}
+	return *n.Hostnames
 }
 
 // GetIPv4Cidrs returns the IPv4Cidrs field if it's non-nil, zero value otherwise.

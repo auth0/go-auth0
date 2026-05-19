@@ -69,6 +69,12 @@ type NetworkACLRuleMatch struct {
 	Ja4Fingerprints *[]string `json:"ja4_fingerprints,omitempty"`
 	// User Agents
 	UserAgents *[]string `json:"user_agents,omitempty"`
+	// Hostnames
+	Hostnames *[]string `json:"hostnames,omitempty"`
+	// Connecting IPv4 CIDRs
+	ConnectingIPv4Cidrs *[]string `json:"connecting_ipv4_cidrs,omitempty"`
+	// Connecting IPv6 CIDRs
+	ConnectingIPv6Cidrs *[]string `json:"connecting_ipv6_cidrs,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaler interface.
