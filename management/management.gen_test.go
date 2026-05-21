@@ -12997,6 +12997,26 @@ func TestNetworkACLRuleMatch_GetAnonymousProxy(tt *testing.T) {
 	n.GetAnonymousProxy()
 }
 
+func TestNetworkACLRuleMatch_GetConnectingIPv4Cidrs(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{ConnectingIPv4Cidrs: &zeroValue}
+	n.GetConnectingIPv4Cidrs()
+	n = &NetworkACLRuleMatch{}
+	n.GetConnectingIPv4Cidrs()
+	n = nil
+	n.GetConnectingIPv4Cidrs()
+}
+
+func TestNetworkACLRuleMatch_GetConnectingIPv6Cidrs(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{ConnectingIPv6Cidrs: &zeroValue}
+	n.GetConnectingIPv6Cidrs()
+	n = &NetworkACLRuleMatch{}
+	n.GetConnectingIPv6Cidrs()
+	n = nil
+	n.GetConnectingIPv6Cidrs()
+}
+
 func TestNetworkACLRuleMatch_GetGeoCountryCodes(tt *testing.T) {
 	var zeroValue []string
 	n := &NetworkACLRuleMatch{GeoCountryCodes: &zeroValue}
@@ -13015,6 +13035,16 @@ func TestNetworkACLRuleMatch_GetGeoSubdivisionCodes(tt *testing.T) {
 	n.GetGeoSubdivisionCodes()
 	n = nil
 	n.GetGeoSubdivisionCodes()
+}
+
+func TestNetworkACLRuleMatch_GetHostnames(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{Hostnames: &zeroValue}
+	n.GetHostnames()
+	n = &NetworkACLRuleMatch{}
+	n.GetHostnames()
+	n = nil
+	n.GetHostnames()
 }
 
 func TestNetworkACLRuleMatch_GetIPv4Cidrs(tt *testing.T) {
