@@ -1702,6 +1702,8 @@ type ConnectionOptionsSAML struct {
 	TenantDomain       *string                             `json:"tenant_domain,omitempty"`
 	DomainAliases      *[]string                           `json:"domain_aliases,omitempty"`
 	SignInEndpoint     *string                             `json:"signInEndpoint,omitempty"`
+	DestinationURL     *string                             `json:"destinationUrl,omitempty"`
+	RecipientURL       *string                             `json:"recipientUrl,omitempty"`
 	SignOutEndpoint    *string                             `json:"signOutEndpoint,omitempty"`
 	DisableSignOut     *bool                               `json:"disableSignout,omitempty"`
 	SignatureAlgorithm *string                             `json:"signatureAlgorithm,omitempty"`

@@ -8071,6 +8071,16 @@ func TestConnectionOptionsSAML_GetDecryptionKey(tt *testing.T) {
 	c.GetDecryptionKey()
 }
 
+func TestConnectionOptionsSAML_GetDestinationURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{DestinationURL: &zeroValue}
+	c.GetDestinationURL()
+	c = &ConnectionOptionsSAML{}
+	c.GetDestinationURL()
+	c = nil
+	c.GetDestinationURL()
+}
+
 func TestConnectionOptionsSAML_GetDigestAglorithm(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsSAML{DigestAglorithm: &zeroValue}
@@ -8226,6 +8236,16 @@ func TestConnectionOptionsSAML_GetProtocolBinding(tt *testing.T) {
 	c.GetProtocolBinding()
 	c = nil
 	c.GetProtocolBinding()
+}
+
+func TestConnectionOptionsSAML_GetRecipientURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{RecipientURL: &zeroValue}
+	c.GetRecipientURL()
+	c = &ConnectionOptionsSAML{}
+	c.GetRecipientURL()
+	c = nil
+	c.GetRecipientURL()
 }
 
 func TestConnectionOptionsSAML_GetRequestTemplate(tt *testing.T) {

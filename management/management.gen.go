@@ -6535,6 +6535,14 @@ func (c *ConnectionOptionsSAML) GetDecryptionKey() *ConnectionOptionsSAMLDecrypt
 	return c.DecryptionKey
 }
 
+// GetDestinationURL returns the DestinationURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetDestinationURL() string {
+	if c == nil || c.DestinationURL == nil {
+		return ""
+	}
+	return *c.DestinationURL
+}
+
 // GetDigestAglorithm returns the DigestAglorithm field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsSAML) GetDigestAglorithm() string {
 	if c == nil || c.DigestAglorithm == nil {
@@ -6661,6 +6669,14 @@ func (c *ConnectionOptionsSAML) GetProtocolBinding() string {
 		return ""
 	}
 	return *c.ProtocolBinding
+}
+
+// GetRecipientURL returns the RecipientURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetRecipientURL() string {
+	if c == nil || c.RecipientURL == nil {
+		return ""
+	}
+	return *c.RecipientURL
 }
 
 // GetRequestTemplate returns the RequestTemplate field if it's non-nil, zero value otherwise.
