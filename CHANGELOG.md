@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.42.0](https://github.com/auth0/go-auth0/tree/v1.42.0) (2026-05-21)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.41.0...v1.42.0)
+
+**Added**
+- feat: add `DestinationUrl` and `RecipientURL` fields to SAML `ConnectionOptions` [\#778](https://github.com/auth0/go-auth0/pull/778) ([ramya18101](https://github.com/ramya18101))
+- feat: Support `Hostname` and `CIDRs` in `NetworkACLRuleMatch` [\#777](https://github.com/auth0/go-auth0/pull/777) ([bkiran6398](https://github.com/bkiran6398))
+
 ## [v1.41.0](https://github.com/auth0/go-auth0/tree/v1.41.0) (2026-05-14)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.40.0...v1.41.0)
 
