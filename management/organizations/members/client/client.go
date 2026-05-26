@@ -10,11 +10,13 @@ import (
 	core "github.com/auth0/go-auth0/v2/management/core"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
+	client "github.com/auth0/go-auth0/v2/management/organizations/members/effectiveroles/client"
 	roles "github.com/auth0/go-auth0/v2/management/organizations/members/roles"
 )
 
 type Client struct {
 	WithRawResponse *RawClient
+	EffectiveRoles  *client.Client
 	Roles           *roles.Client
 
 	options *core.RequestOptions
@@ -24,6 +26,7 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
+		EffectiveRoles:  client.NewClient(options),
 		Roles:           roles.NewClient(options),
 		WithRawResponse: NewRawClient(options),
 		options:         options,

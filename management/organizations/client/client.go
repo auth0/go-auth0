@@ -14,6 +14,7 @@ import (
 	connections "github.com/auth0/go-auth0/v2/management/organizations/connections"
 	discoverydomains "github.com/auth0/go-auth0/v2/management/organizations/discoverydomains"
 	enabledconnections "github.com/auth0/go-auth0/v2/management/organizations/enabledconnections"
+	groupsclient "github.com/auth0/go-auth0/v2/management/organizations/groups/client"
 	invitations "github.com/auth0/go-auth0/v2/management/organizations/invitations"
 	client "github.com/auth0/go-auth0/v2/management/organizations/members/client"
 )
@@ -26,6 +27,7 @@ type Client struct {
 	EnabledConnections *enabledconnections.Client
 	Invitations        *invitations.Client
 	Members            *client.Client
+	Groups             *groupsclient.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -40,6 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 		EnabledConnections: enabledconnections.NewClient(options),
 		Invitations:        invitations.NewClient(options),
 		Members:            client.NewClient(options),
+		Groups:             groupsclient.NewClient(options),
 		WithRawResponse:    NewRawClient(options),
 		options:            options,
 		baseURL:            options.BaseURL,
