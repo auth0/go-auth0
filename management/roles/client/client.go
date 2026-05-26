@@ -35,8 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -44,7 +45,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Retrieve detailed list of user roles created in your tenant.
 //
-// <b>Note</b>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.
+// **Note**: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListRolesRequestParameters,
@@ -85,6 +86,7 @@ func (c *Client) List(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -117,9 +119,9 @@ func (c *Client) List(
 	return pager.GetPage(ctx, &next)
 }
 
-// Create a user role for <a href="https://auth0.com/docs/manage-users/access-control/rbac">Role-Based Access Control</a>.
+// Create a user role for [Role-Based Access Control](https://auth0.com/docs/manage-users/access-control/rbac).
 //
-// <b>Note</b>: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.
+// **Note**: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateRoleRequestContent,
@@ -136,7 +138,7 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Retrieve details about a specific <a href="https://auth0.com/docs/manage-users/access-control/rbac">user role</a> specified by ID.
+// Retrieve details about a specific [user role](https://auth0.com/docs/manage-users/access-control/rbac) specified by ID.
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the role to retrieve.
@@ -154,7 +156,7 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-// Delete a specific <a href="https://auth0.com/docs/manage-users/access-control/rbac">user role</a> from your tenant. Once deleted, it is removed from any user who was previously assigned that role. This action cannot be undone.
+// Delete a specific [user role](https://auth0.com/docs/manage-users/access-control/rbac) from your tenant. Once deleted, it is removed from any user who was previously assigned that role. This action cannot be undone.
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the role to delete.
@@ -172,7 +174,7 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Modify the details of a specific <a href="https://auth0.com/docs/manage-users/access-control/rbac">user role</a> specified by ID.
+// Modify the details of a specific [user role](https://auth0.com/docs/manage-users/access-control/rbac) specified by ID.
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the role to update.

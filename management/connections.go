@@ -723,6 +723,35 @@ func (c *ConnectionCustomScripts) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Algorithm used for DPoP proof JWT signing.
+type ConnectionDpopSigningAlgEnum string
+
+const (
+	ConnectionDpopSigningAlgEnumEs256   ConnectionDpopSigningAlgEnum = "ES256"
+	ConnectionDpopSigningAlgEnumEs384   ConnectionDpopSigningAlgEnum = "ES384"
+	ConnectionDpopSigningAlgEnumEs512   ConnectionDpopSigningAlgEnum = "ES512"
+	ConnectionDpopSigningAlgEnumEd25519 ConnectionDpopSigningAlgEnum = "Ed25519"
+)
+
+func NewConnectionDpopSigningAlgEnumFromString(s string) (ConnectionDpopSigningAlgEnum, error) {
+	switch s {
+	case "ES256":
+		return ConnectionDpopSigningAlgEnumEs256, nil
+	case "ES384":
+		return ConnectionDpopSigningAlgEnumEs384, nil
+	case "ES512":
+		return ConnectionDpopSigningAlgEnumEs512, nil
+	case "Ed25519":
+		return ConnectionDpopSigningAlgEnumEd25519, nil
+	}
+	var t ConnectionDpopSigningAlgEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionDpopSigningAlgEnum) Ptr() *ConnectionDpopSigningAlgEnum {
+	return &c
+}
+
 // Email OTP authentication enablement
 var (
 	connectionEmailOtpAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
@@ -2804,9 +2833,10 @@ var (
 	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
 	connectionPropertiesOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 31)
 	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 32)
-	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
-	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
-	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
+	connectionPropertiesOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 33)
+	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 34)
+	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 35)
+	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 36)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2849,6 +2879,7 @@ type ConnectionPropertiesOptions struct {
 	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
 	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	DpopSigningAlg                   *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
 	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
 	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
@@ -3090,6 +3121,13 @@ func (c *ConnectionPropertiesOptions) GetIDTokenSignedResponseAlgs() ConnectionI
 		return nil
 	}
 	return *c.IDTokenSignedResponseAlgs
+}
+
+func (c *ConnectionPropertiesOptions) GetDpopSigningAlg() ConnectionDpopSigningAlgEnum {
+	if c == nil || c.DpopSigningAlg == nil {
+		return ""
+	}
+	return *c.DpopSigningAlg
 }
 
 func (c *ConnectionPropertiesOptions) GetTokenEndpointAuthMethod() ConnectionTokenEndpointAuthMethodEnum {
@@ -3356,6 +3394,13 @@ func (c *ConnectionPropertiesOptions) SetAssertionDecryptionSettings(assertionDe
 func (c *ConnectionPropertiesOptions) SetIDTokenSignedResponseAlgs(idTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs) {
 	c.IDTokenSignedResponseAlgs = idTokenSignedResponseAlgs
 	c.require(connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs)
+}
+
+// SetDpopSigningAlg sets the DpopSigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetDpopSigningAlg(dpopSigningAlg *ConnectionDpopSigningAlgEnum) {
+	c.DpopSigningAlg = dpopSigningAlg
+	c.require(connectionPropertiesOptionsFieldDpopSigningAlg)
 }
 
 // SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
@@ -5428,9 +5473,10 @@ var (
 	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
 	updateConnectionOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 31)
 	updateConnectionOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 32)
-	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
-	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
-	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
+	updateConnectionOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 33)
+	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 34)
+	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 35)
+	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 36)
 )
 
 type UpdateConnectionOptions struct {
@@ -5473,6 +5519,7 @@ type UpdateConnectionOptions struct {
 	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
 	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	DpopSigningAlg                   *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
 	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
 	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
@@ -5714,6 +5761,13 @@ func (u *UpdateConnectionOptions) GetIDTokenSignedResponseAlgs() ConnectionIDTok
 		return nil
 	}
 	return *u.IDTokenSignedResponseAlgs
+}
+
+func (u *UpdateConnectionOptions) GetDpopSigningAlg() ConnectionDpopSigningAlgEnum {
+	if u == nil || u.DpopSigningAlg == nil {
+		return ""
+	}
+	return *u.DpopSigningAlg
 }
 
 func (u *UpdateConnectionOptions) GetTokenEndpointAuthMethod() ConnectionTokenEndpointAuthMethodEnum {
@@ -5980,6 +6034,13 @@ func (u *UpdateConnectionOptions) SetAssertionDecryptionSettings(assertionDecryp
 func (u *UpdateConnectionOptions) SetIDTokenSignedResponseAlgs(idTokenSignedResponseAlgs *ConnectionIDTokenSignedResponseAlgs) {
 	u.IDTokenSignedResponseAlgs = idTokenSignedResponseAlgs
 	u.require(updateConnectionOptionsFieldIDTokenSignedResponseAlgs)
+}
+
+// SetDpopSigningAlg sets the DpopSigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetDpopSigningAlg(dpopSigningAlg *ConnectionDpopSigningAlgEnum) {
+	u.DpopSigningAlg = dpopSigningAlg
+	u.require(updateConnectionOptionsFieldDpopSigningAlg)
 }
 
 // SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;

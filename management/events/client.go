@@ -27,8 +27,9 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -60,22 +61,25 @@ func (c *Client) Subscribe(
 	)
 	headers.Add("Accept", "text/event-stream")
 	streamer := internal.NewStreamer[management.EventStreamSubscribeEventsResponseContent](c.caller)
-	return streamer.Stream(
+	return streamer.StreamWithReconnect(
 		ctx,
 		&internal.StreamParams{
-			URL:                endpointURL,
-			Method:             http.MethodGet,
-			Headers:            headers,
-			MaxAttempts:        options.MaxAttempts,
-			BodyProperties:     options.BodyProperties,
-			QueryParameters:    options.QueryParameters,
-			Client:             options.HTTPClient,
-			MaxBufSize:         options.MaxBufSize,
-			Prefix:             internal.DefaultSSEDataPrefix,
-			Terminator:         internal.DefaultSSETerminator,
-			Format:             core.StreamFormatSSE,
-			EventDiscriminator: "type",
-			ErrorDecoder:       internal.NewErrorDecoder(management.ErrorCodes),
+			URL:                        endpointURL,
+			Method:                     http.MethodGet,
+			Headers:                    headers,
+			MaxAttempts:                options.MaxAttempts,
+			DisableRetries:             options.DisableRetries,
+			BodyProperties:             options.BodyProperties,
+			QueryParameters:            options.QueryParameters,
+			Client:                     options.HTTPClient,
+			MaxBufSize:                 options.MaxBufSize,
+			MaxStreamReconnectAttempts: options.MaxStreamReconnectAttempts,
+			DisableStreamReconnection:  options.DisableStreamReconnection,
+			Prefix:                     internal.DefaultSSEDataPrefix,
+			Terminator:                 internal.DefaultSSETerminator,
+			Format:                     core.StreamFormatSSE,
+			EventDiscriminator:         "type",
+			ErrorDecoder:               internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)
 }

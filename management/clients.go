@@ -6815,17 +6815,20 @@ func (c ClientExternalMetadataCreatedByEnum) Ptr() *ClientExternalMetadataCreate
 	return &c
 }
 
-// Indicates the type of external metadata used to register the client. This field is omitted for regular clients. The value <code>cimd</code> identifies clients registered via a Client ID Metadata Document.
+// Indicates the type of external metadata used to register the client. This field is omitted for regular clients. The value <code>cimd</code> identifies clients registered via a Client ID Metadata Document. The value <code>dcr</code> identifies clients registered via Dynamic Client Registration.
 type ClientExternalMetadataTypeEnum string
 
 const (
 	ClientExternalMetadataTypeEnumCimd ClientExternalMetadataTypeEnum = "cimd"
+	ClientExternalMetadataTypeEnumDcr  ClientExternalMetadataTypeEnum = "dcr"
 )
 
 func NewClientExternalMetadataTypeEnumFromString(s string) (ClientExternalMetadataTypeEnum, error) {
 	switch s {
 	case "cimd":
 		return ClientExternalMetadataTypeEnumCimd, nil
+	case "dcr":
+		return ClientExternalMetadataTypeEnumDcr, nil
 	}
 	var t ClientExternalMetadataTypeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -11258,6 +11261,177 @@ func (e *ExpressConfigurationOrNull) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+// Configure FedCM login settings for New Universal Login
+var (
+	fedCmLoginFieldGoogle = big.NewInt(1 << 0)
+)
+
+type FedCmLogin struct {
+	Google *FedCmLoginGoogle `json:"google,omitempty" url:"google,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FedCmLogin) GetGoogle() FedCmLoginGoogle {
+	if f == nil || f.Google == nil {
+		return FedCmLoginGoogle{}
+	}
+	return *f.Google
+}
+
+func (f *FedCmLogin) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FedCmLogin) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetGoogle sets the Google field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FedCmLogin) SetGoogle(google *FedCmLoginGoogle) {
+	f.Google = google
+	f.require(fedCmLoginFieldGoogle)
+}
+
+func (f *FedCmLogin) UnmarshalJSON(data []byte) error {
+	type unmarshaler FedCmLogin
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FedCmLogin(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FedCmLogin) MarshalJSON() ([]byte, error) {
+	type embed FedCmLogin
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FedCmLogin) String() string {
+	if f == nil {
+		return "<nil>"
+	}
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+// Google FedCM configuration for this client
+var (
+	fedCmLoginGoogleFieldIsEnabled = big.NewInt(1 << 0)
+)
+
+type FedCmLoginGoogle struct {
+	// When true, shows the Google FedCM prompt on New Universal Login for this client
+	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FedCmLoginGoogle) GetIsEnabled() bool {
+	if f == nil || f.IsEnabled == nil {
+		return false
+	}
+	return *f.IsEnabled
+}
+
+func (f *FedCmLoginGoogle) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FedCmLoginGoogle) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetIsEnabled sets the IsEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FedCmLoginGoogle) SetIsEnabled(isEnabled *bool) {
+	f.IsEnabled = isEnabled
+	f.require(fedCmLoginGoogleFieldIsEnabled)
+}
+
+func (f *FedCmLoginGoogle) UnmarshalJSON(data []byte) error {
+	type unmarshaler FedCmLoginGoogle
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FedCmLoginGoogle(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FedCmLoginGoogle) MarshalJSON() ([]byte, error) {
+	type embed FedCmLoginGoogle
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FedCmLoginGoogle) String() string {
+	if f == nil {
+		return "<nil>"
+	}
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 var (

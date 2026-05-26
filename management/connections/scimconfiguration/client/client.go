@@ -30,8 +30,9 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -76,6 +77,7 @@ func (c *Client) List(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -102,7 +104,7 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
-// Retrieves a scim configuration by its <code>connectionId</code>.
+// Retrieves a scim configuration by its `connectionId`.
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the connection to retrieve its SCIM configuration
@@ -140,7 +142,7 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Deletes a scim configuration by its <code>connectionId</code>.
+// Deletes a scim configuration by its `connectionId`.
 func (c *Client) Delete(
 	ctx context.Context,
 	// The id of the connection to delete its SCIM configuration
@@ -158,7 +160,7 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Update a scim configuration by its <code>connectionId</code>.
+// Update a scim configuration by its `connectionId`.
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the connection to update its SCIM configuration
@@ -178,7 +180,7 @@ func (c *Client) Update(
 	return response.Body, nil
 }
 
-// Retrieves a scim configuration's default mapping by its <code>connectionId</code>.
+// Retrieves a scim configuration's default mapping by its `connectionId`.
 func (c *Client) GetDefaultMapping(
 	ctx context.Context,
 	// The id of the connection to retrieve its default SCIM mapping

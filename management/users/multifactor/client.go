@@ -26,14 +26,15 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
-// Invalidate all remembered browsers across all <a href="https://auth0.com/docs/multifactor-authentication">authentication factors</a> for a user.
+// Invalidate all remembered browsers across all [authentication factors](https://auth0.com/docs/multifactor-authentication) for a user.
 func (c *Client) InvalidateRememberBrowser(
 	ctx context.Context,
 	// ID of the user to invalidate all remembered browsers and authentication factors for.
@@ -51,7 +52,7 @@ func (c *Client) InvalidateRememberBrowser(
 	return nil
 }
 
-// Remove a <a href="https://auth0.com/docs/multifactor-authentication">multifactor</a> authentication configuration from a user's account. This forces the user to manually reconfigure the multi-factor provider.
+// Remove a [multifactor](https://auth0.com/docs/multifactor-authentication) authentication configuration from a user's account. This forces the user to manually reconfigure the multi-factor provider.
 func (c *Client) DeleteProvider(
 	ctx context.Context,
 	// ID of the user to remove a multifactor configuration from.

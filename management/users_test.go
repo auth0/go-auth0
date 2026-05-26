@@ -130,6 +130,14 @@ func TestSettersCreateUserResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetMultifactorLastModified", func(t *testing.T) {
+		obj := &CreateUserResponseContent{}
+		var fernTestValueMultifactorLastModified *UserDateSchema
+		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
+		assert.Equal(t, fernTestValueMultifactorLastModified, obj.MultifactorLastModified)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetLastIP", func(t *testing.T) {
 		obj := &CreateUserResponseContent{}
 		var fernTestValueLastIP *string
@@ -143,6 +151,14 @@ func TestSettersCreateUserResponseContent(t *testing.T) {
 		var fernTestValueLastLogin *UserDateSchema
 		obj.SetLastLogin(fernTestValueLastLogin)
 		assert.Equal(t, fernTestValueLastLogin, obj.LastLogin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetLastPasswordReset", func(t *testing.T) {
+		obj := &CreateUserResponseContent{}
+		var fernTestValueLastPasswordReset *UserDateSchema
+		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
+		assert.Equal(t, fernTestValueLastPasswordReset, obj.LastPasswordReset)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -689,6 +705,40 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		_ = obj.GetMultifactor() // Should return zero value
 	})
 
+	t.Run("GetMultifactorLastModified", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateUserResponseContent{}
+		var value UserDateSchema
+		obj.MultifactorLastModified = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMultifactorLastModified(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMultifactorLastModified_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateUserResponseContent{}
+		obj.MultifactorLastModified = nil
+		var expectedZero UserDateSchema
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMultifactorLastModified(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMultifactorLastModified_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateUserResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMultifactorLastModified() // Should return zero value
+	})
+
 	t.Run("GetLastIP", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -755,6 +805,40 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetLastLogin() // Should return zero value
+	})
+
+	t.Run("GetLastPasswordReset", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateUserResponseContent{}
+		var value UserDateSchema
+		obj.LastPasswordReset = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetLastPasswordReset(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetLastPasswordReset_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateUserResponseContent{}
+		obj.LastPasswordReset = nil
+		var expectedZero UserDateSchema
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetLastPasswordReset(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetLastPasswordReset_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateUserResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetLastPasswordReset() // Should return zero value
 	})
 
 	t.Run("GetLoginsCount", func(t *testing.T) {
@@ -1361,6 +1445,37 @@ func TestSettersMarkExplicitCreateUserResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetMultifactorLastModified_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateUserResponseContent{}
+		var fernTestValueMultifactorLastModified *UserDateSchema
+
+		// Act
+		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetLastIP_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1400,6 +1515,37 @@ func TestSettersMarkExplicitCreateUserResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetLastLogin(fernTestValueLastLogin)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetLastPasswordReset_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateUserResponseContent{}
+		var fernTestValueLastPasswordReset *UserDateSchema
+
+		// Act
+		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1670,6 +1816,14 @@ func TestSettersGetUserResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetMultifactorLastModified", func(t *testing.T) {
+		obj := &GetUserResponseContent{}
+		var fernTestValueMultifactorLastModified *UserDateSchema
+		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
+		assert.Equal(t, fernTestValueMultifactorLastModified, obj.MultifactorLastModified)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetLastIP", func(t *testing.T) {
 		obj := &GetUserResponseContent{}
 		var fernTestValueLastIP *string
@@ -1683,6 +1837,14 @@ func TestSettersGetUserResponseContent(t *testing.T) {
 		var fernTestValueLastLogin *UserDateSchema
 		obj.SetLastLogin(fernTestValueLastLogin)
 		assert.Equal(t, fernTestValueLastLogin, obj.LastLogin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetLastPasswordReset", func(t *testing.T) {
+		obj := &GetUserResponseContent{}
+		var fernTestValueLastPasswordReset *UserDateSchema
+		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
+		assert.Equal(t, fernTestValueLastPasswordReset, obj.LastPasswordReset)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -2229,6 +2391,40 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		_ = obj.GetMultifactor() // Should return zero value
 	})
 
+	t.Run("GetMultifactorLastModified", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetUserResponseContent{}
+		var value UserDateSchema
+		obj.MultifactorLastModified = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMultifactorLastModified(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMultifactorLastModified_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetUserResponseContent{}
+		obj.MultifactorLastModified = nil
+		var expectedZero UserDateSchema
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMultifactorLastModified(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMultifactorLastModified_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetUserResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMultifactorLastModified() // Should return zero value
+	})
+
 	t.Run("GetLastIP", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -2295,6 +2491,40 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetLastLogin() // Should return zero value
+	})
+
+	t.Run("GetLastPasswordReset", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetUserResponseContent{}
+		var value UserDateSchema
+		obj.LastPasswordReset = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetLastPasswordReset(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetLastPasswordReset_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetUserResponseContent{}
+		obj.LastPasswordReset = nil
+		var expectedZero UserDateSchema
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetLastPasswordReset(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetLastPasswordReset_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetUserResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetLastPasswordReset() // Should return zero value
 	})
 
 	t.Run("GetLoginsCount", func(t *testing.T) {
@@ -2901,6 +3131,37 @@ func TestSettersMarkExplicitGetUserResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetMultifactorLastModified_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetUserResponseContent{}
+		var fernTestValueMultifactorLastModified *UserDateSchema
+
+		// Act
+		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetLastIP_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -2940,6 +3201,37 @@ func TestSettersMarkExplicitGetUserResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetLastLogin(fernTestValueLastLogin)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetLastPasswordReset_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetUserResponseContent{}
+		var fernTestValueLastPasswordReset *UserDateSchema
+
+		// Act
+		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3665,6 +3957,14 @@ func TestSettersUpdateUserResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetMultifactorLastModified", func(t *testing.T) {
+		obj := &UpdateUserResponseContent{}
+		var fernTestValueMultifactorLastModified *UserDateSchema
+		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
+		assert.Equal(t, fernTestValueMultifactorLastModified, obj.MultifactorLastModified)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetLastIP", func(t *testing.T) {
 		obj := &UpdateUserResponseContent{}
 		var fernTestValueLastIP *string
@@ -3678,6 +3978,14 @@ func TestSettersUpdateUserResponseContent(t *testing.T) {
 		var fernTestValueLastLogin *UserDateSchema
 		obj.SetLastLogin(fernTestValueLastLogin)
 		assert.Equal(t, fernTestValueLastLogin, obj.LastLogin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetLastPasswordReset", func(t *testing.T) {
+		obj := &UpdateUserResponseContent{}
+		var fernTestValueLastPasswordReset *UserDateSchema
+		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
+		assert.Equal(t, fernTestValueLastPasswordReset, obj.LastPasswordReset)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -4224,6 +4532,40 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		_ = obj.GetMultifactor() // Should return zero value
 	})
 
+	t.Run("GetMultifactorLastModified", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateUserResponseContent{}
+		var value UserDateSchema
+		obj.MultifactorLastModified = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMultifactorLastModified(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMultifactorLastModified_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateUserResponseContent{}
+		obj.MultifactorLastModified = nil
+		var expectedZero UserDateSchema
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMultifactorLastModified(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMultifactorLastModified_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateUserResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMultifactorLastModified() // Should return zero value
+	})
+
 	t.Run("GetLastIP", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -4290,6 +4632,40 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetLastLogin() // Should return zero value
+	})
+
+	t.Run("GetLastPasswordReset", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateUserResponseContent{}
+		var value UserDateSchema
+		obj.LastPasswordReset = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetLastPasswordReset(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetLastPasswordReset_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateUserResponseContent{}
+		obj.LastPasswordReset = nil
+		var expectedZero UserDateSchema
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetLastPasswordReset(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetLastPasswordReset_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateUserResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetLastPasswordReset() // Should return zero value
 	})
 
 	t.Run("GetLoginsCount", func(t *testing.T) {
@@ -4896,6 +5272,37 @@ func TestSettersMarkExplicitUpdateUserResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetMultifactorLastModified_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateUserResponseContent{}
+		var fernTestValueMultifactorLastModified *UserDateSchema
+
+		// Act
+		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetLastIP_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -4935,6 +5342,37 @@ func TestSettersMarkExplicitUpdateUserResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetLastLogin(fernTestValueLastLogin)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetLastPasswordReset_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateUserResponseContent{}
+		var fernTestValueLastPasswordReset *UserDateSchema
+
+		// Act
+		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5857,6 +6295,14 @@ func TestSettersUserResponseSchema(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetMultifactorLastModified", func(t *testing.T) {
+		obj := &UserResponseSchema{}
+		var fernTestValueMultifactorLastModified *UserDateSchema
+		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
+		assert.Equal(t, fernTestValueMultifactorLastModified, obj.MultifactorLastModified)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetLastIP", func(t *testing.T) {
 		obj := &UserResponseSchema{}
 		var fernTestValueLastIP *string
@@ -5870,6 +6316,14 @@ func TestSettersUserResponseSchema(t *testing.T) {
 		var fernTestValueLastLogin *UserDateSchema
 		obj.SetLastLogin(fernTestValueLastLogin)
 		assert.Equal(t, fernTestValueLastLogin, obj.LastLogin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetLastPasswordReset", func(t *testing.T) {
+		obj := &UserResponseSchema{}
+		var fernTestValueLastPasswordReset *UserDateSchema
+		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
+		assert.Equal(t, fernTestValueLastPasswordReset, obj.LastPasswordReset)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -6416,6 +6870,40 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		_ = obj.GetMultifactor() // Should return zero value
 	})
 
+	t.Run("GetMultifactorLastModified", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UserResponseSchema{}
+		var value UserDateSchema
+		obj.MultifactorLastModified = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMultifactorLastModified(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMultifactorLastModified_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UserResponseSchema{}
+		obj.MultifactorLastModified = nil
+		var expectedZero UserDateSchema
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMultifactorLastModified(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMultifactorLastModified_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UserResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMultifactorLastModified() // Should return zero value
+	})
+
 	t.Run("GetLastIP", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -6482,6 +6970,40 @@ func TestGettersUserResponseSchema(t *testing.T) {
 			}
 		}()
 		_ = obj.GetLastLogin() // Should return zero value
+	})
+
+	t.Run("GetLastPasswordReset", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UserResponseSchema{}
+		var value UserDateSchema
+		obj.LastPasswordReset = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetLastPasswordReset(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetLastPasswordReset_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UserResponseSchema{}
+		obj.LastPasswordReset = nil
+		var expectedZero UserDateSchema
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetLastPasswordReset(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetLastPasswordReset_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UserResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetLastPasswordReset() // Should return zero value
 	})
 
 	t.Run("GetLoginsCount", func(t *testing.T) {
@@ -7088,6 +7610,37 @@ func TestSettersMarkExplicitUserResponseSchema(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetMultifactorLastModified_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UserResponseSchema{}
+		var fernTestValueMultifactorLastModified *UserDateSchema
+
+		// Act
+		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetLastIP_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -7127,6 +7680,37 @@ func TestSettersMarkExplicitUserResponseSchema(t *testing.T) {
 
 		// Act
 		obj.SetLastLogin(fernTestValueLastLogin)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetLastPasswordReset_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UserResponseSchema{}
+		var fernTestValueLastPasswordReset *UserDateSchema
+
+		// Act
+		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

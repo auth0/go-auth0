@@ -26,8 +26,9 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -49,34 +50,32 @@ func (c *Client) GetUniversalLogin(
 
 // Update the Universal Login branding template.
 //
-// <p>When <code>content-type</code> header is set to <code>application/json</code>:</p>
-// <pre>
+// When `content-type` header is set to `application/json`:
+//
+// ```json
 //
 //	{
-//	  "template": "&lt;!DOCTYPE html&gt;{% assign resolved_dir = dir | default: "auto" %}&lt;html lang="{{locale}}" dir="{{resolved_dir}}"&gt;&lt;head&gt;{%- auth0:head -%}&lt;/head&gt;&lt;body class="_widget-auto-layout"&gt;{%- auth0:widget -%}&lt;/body&gt;&lt;/html&gt;"
+//	  "template": "<!DOCTYPE html>{% assign resolved_dir = dir | default: \"auto\" %}<html lang=\"{{locale}}\" dir=\"{{resolved_dir}}\"><head>{%- auth0:head -%}</head><body class=\"_widget-auto-layout\">{%- auth0:widget -%}</body></html>"
 //	}
 //
-// </pre>
+// ```
 //
-// <p>
+// When `content-type` header is set to `text/html`:
 //
-//	When <code>content-type</code> header is set to <code>text/html</code>:
-//
-// </p>
-// <pre>
-// &lt!DOCTYPE html&gt;
+// ```html
+// <!DOCTYPE html>
 // {% assign resolved_dir = dir | default: "auto" %}
-// &lt;html lang="{{locale}}" dir="{{resolved_dir}}"&gt;
+// <html lang="{{locale}}" dir="{{resolved_dir}}">
 //
-//	&lt;head&gt;
+//	<head>
 //	  {%- auth0:head -%}
-//	&lt;/head&gt;
-//	&lt;body class="_widget-auto-layout"&gt;
+//	</head>
+//	<body class="_widget-auto-layout">
 //	  {%- auth0:widget -%}
-//	&lt;/body&gt;
+//	</body>
 //
-// &lt;/html&gt;
-// </pre>
+// </html>
+// ```
 func (c *Client) UpdateUniversalLogin(
 	ctx context.Context,
 	request *management.UpdateUniversalLoginTemplateRequestContent,

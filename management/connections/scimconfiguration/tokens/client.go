@@ -26,14 +26,15 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
-// Retrieves all scim tokens by its connection <code>id</code>.
+// Retrieves all scim tokens by its connection `id`.
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the connection to retrieve its SCIM configuration
@@ -71,7 +72,7 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Deletes a scim token by its connection <code>id</code> and <code>tokenId</code>.
+// Deletes a scim token by its connection `id` and `tokenId`.
 func (c *Client) Delete(
 	ctx context.Context,
 	// The connection id that owns the SCIM token to delete

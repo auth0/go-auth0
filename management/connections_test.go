@@ -4615,6 +4615,14 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetDpopSigningAlg", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueDpopSigningAlg *ConnectionDpopSigningAlgEnum
+		obj.SetDpopSigningAlg(fernTestValueDpopSigningAlg)
+		assert.Equal(t, fernTestValueDpopSigningAlg, obj.DpopSigningAlg)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenEndpointAuthMethod", func(t *testing.T) {
 		obj := &ConnectionPropertiesOptions{}
 		var fernTestValueTokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum
@@ -5761,6 +5769,40 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 		_ = obj.GetIDTokenSignedResponseAlgs() // Should return zero value
 	})
 
+	t.Run("GetDpopSigningAlg", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionDpopSigningAlgEnum
+		obj.DpopSigningAlg = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDpopSigningAlg(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDpopSigningAlg_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.DpopSigningAlg = nil
+		var expectedZero ConnectionDpopSigningAlgEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDpopSigningAlg(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDpopSigningAlg_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDpopSigningAlg() // Should return zero value
+	})
+
 	t.Run("GetTokenEndpointAuthMethod", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -6866,6 +6908,37 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 
 		// Act
 		obj.SetIDTokenSignedResponseAlgs(fernTestValueIDTokenSignedResponseAlgs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDpopSigningAlg_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueDpopSigningAlg *ConnectionDpopSigningAlgEnum
+
+		// Act
+		obj.SetDpopSigningAlg(fernTestValueDpopSigningAlg)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -10538,6 +10611,14 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetDpopSigningAlg", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueDpopSigningAlg *ConnectionDpopSigningAlgEnum
+		obj.SetDpopSigningAlg(fernTestValueDpopSigningAlg)
+		assert.Equal(t, fernTestValueDpopSigningAlg, obj.DpopSigningAlg)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenEndpointAuthMethod", func(t *testing.T) {
 		obj := &UpdateConnectionOptions{}
 		var fernTestValueTokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum
@@ -11684,6 +11765,40 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 		_ = obj.GetIDTokenSignedResponseAlgs() // Should return zero value
 	})
 
+	t.Run("GetDpopSigningAlg", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionDpopSigningAlgEnum
+		obj.DpopSigningAlg = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDpopSigningAlg(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDpopSigningAlg_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.DpopSigningAlg = nil
+		var expectedZero ConnectionDpopSigningAlgEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDpopSigningAlg(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDpopSigningAlg_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDpopSigningAlg() // Should return zero value
+	})
+
 	t.Run("GetTokenEndpointAuthMethod", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -12789,6 +12904,37 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetIDTokenSignedResponseAlgs(fernTestValueIDTokenSignedResponseAlgs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDpopSigningAlg_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueDpopSigningAlg *ConnectionDpopSigningAlgEnum
+
+		// Act
+		obj.SetDpopSigningAlg(fernTestValueDpopSigningAlg)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -16429,6 +16575,49 @@ func TestEnumConnectionAssertionDecryptionAlgorithmProfileEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewConnectionAssertionDecryptionAlgorithmProfileEnumFromString("v2026-1")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumConnectionDpopSigningAlgEnum(t *testing.T) {
+	t.Run("NewFromString_ES256", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionDpopSigningAlgEnumFromString("ES256")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionDpopSigningAlgEnum("ES256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ES384", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionDpopSigningAlgEnumFromString("ES384")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionDpopSigningAlgEnum("ES384"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ES512", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionDpopSigningAlgEnumFromString("ES512")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionDpopSigningAlgEnum("ES512"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Ed25519", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionDpopSigningAlgEnumFromString("Ed25519")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionDpopSigningAlgEnum("Ed25519"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewConnectionDpopSigningAlgEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewConnectionDpopSigningAlgEnumFromString("ES256")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
