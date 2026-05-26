@@ -17,6 +17,7 @@ import (
 	"os"
 	"runtime"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -633,6 +634,49 @@ func TestRetries(t *testing.T) {
 
 		assert.GreaterOrEqual(t, elapsed, int64(5000), "Expected wait >= 6000ms, got %dms", elapsed)
 		assert.LessOrEqual(t, elapsed, int64(8000), "Expected wait <= 8000ms, got %dms", elapsed)
+	})
+
+	t.Run("Should be safe for concurrent use under -race", func(t *testing.T) {
+		// The retry transport's delay function is shared across in-flight
+		// requests, so the jitter PRNG it uses must be safe for concurrent access.
+		var seen sync.Map
+
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			id := r.URL.Query().Get("id")
+			if _, loaded := seen.LoadOrStore(id, true); !loaded {
+				w.WriteHeader(http.StatusTooManyRequests)
+				return
+			}
+
+			w.WriteHeader(http.StatusOK)
+		})
+
+		s := httptest.NewServer(h)
+		defer s.Close()
+
+		c := WrapWithTokenSource(s.Client(), StaticToken(""), WithRetries(DefaultRetryOptions))
+
+		const concurrency = 25
+
+		var wg sync.WaitGroup
+
+		for i := range concurrency {
+			wg.Add(1)
+
+			go func(i int) {
+				defer wg.Done()
+
+				resp, err := c.Get(fmt.Sprintf("%s/?id=%d", s.URL, i))
+				assert.NoError(t, err)
+
+				if resp != nil {
+					assert.Equal(t, http.StatusOK, resp.StatusCode)
+					_ = resp.Body.Close()
+				}
+			}(i)
+		}
+
+		wg.Wait()
 	})
 }
 

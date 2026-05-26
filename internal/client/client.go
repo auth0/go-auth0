@@ -157,8 +157,6 @@ func retryErrors(err error) bool {
 
 // backoffDelay implements an exponential backoff with jitter and handles rate limiting.
 func backoffDelay() rehttp.DelayFn {
-	prng := rand.New(rand.NewSource(time.Now().UnixNano())) // #nosec G404: Random generator
-
 	const (
 		minDelay  = 1 * time.Second
 		maxDelay  = 10 * time.Second
@@ -166,9 +164,11 @@ func backoffDelay() rehttp.DelayFn {
 	)
 
 	return func(attempt rehttp.Attempt) time.Duration {
-		// Calculate exponential backoff with jitter
+		// Calculate exponential backoff with jitter. We use the package-global
+		// math/rand source because the returned closure is shared across
+		// concurrent in-flight requests and the global source is lock-protected.
 		expBackoff := time.Duration(float64(baseDelay) * math.Pow(2, float64(attempt.Index)))
-		jitter := time.Duration(prng.Float64() * float64(baseDelay))
+		jitter := time.Duration(rand.Float64() * float64(baseDelay)) // #nosec G404: jitter, not security-sensitive
 		wait := expBackoff + jitter
 
 		// Clamp the delay within min and max bounds
