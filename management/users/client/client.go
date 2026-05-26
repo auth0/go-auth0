@@ -15,6 +15,8 @@ import (
 	authenticationmethods "github.com/auth0/go-auth0/v2/management/users/authenticationmethods"
 	authenticators "github.com/auth0/go-auth0/v2/management/users/authenticators"
 	connectedaccounts "github.com/auth0/go-auth0/v2/management/users/connectedaccounts"
+	client "github.com/auth0/go-auth0/v2/management/users/effectivepermissions/client"
+	effectiverolesclient "github.com/auth0/go-auth0/v2/management/users/effectiveroles/client"
 	enrollments "github.com/auth0/go-auth0/v2/management/users/enrollments"
 	federatedconnectionstokensets "github.com/auth0/go-auth0/v2/management/users/federatedconnectionstokensets"
 	groups "github.com/auth0/go-auth0/v2/management/users/groups"
@@ -34,6 +36,8 @@ type Client struct {
 	AuthenticationMethods         *authenticationmethods.Client
 	Authenticators                *authenticators.Client
 	ConnectedAccounts             *connectedaccounts.Client
+	EffectivePermissions          *client.Client
+	EffectiveRoles                *effectiverolesclient.Client
 	Enrollments                   *enrollments.Client
 	FederatedConnectionsTokensets *federatedconnectionstokensets.Client
 	Groups                        *groups.Client
@@ -57,6 +61,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		AuthenticationMethods:         authenticationmethods.NewClient(options),
 		Authenticators:                authenticators.NewClient(options),
 		ConnectedAccounts:             connectedaccounts.NewClient(options),
+		EffectivePermissions:          client.NewClient(options),
+		EffectiveRoles:                effectiverolesclient.NewClient(options),
 		Enrollments:                   enrollments.NewClient(options),
 		FederatedConnectionsTokensets: federatedconnectionstokensets.NewClient(options),
 		Groups:                        groups.NewClient(options),

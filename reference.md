@@ -28052,6 +28052,438 @@ client.Organizations.Members.Delete(
 </dl>
 </details>
 
+## Organizations Groups
+<details><summary><code>client.Organizations.Groups.List(OrganizationID) -> *management.ListOrganizationGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the groups that are assigned to the specified organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationGroupsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.Groups.List(
+        context.TODO(),
+        "organization_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organizations Groups Roles
+<details><summary><code>client.Organizations.Groups.Roles.List(OrganizationID, GroupID) -> *management.ListOrganizationGroupRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the roles assigned to the specified group in the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationGroupRolesRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.Groups.Roles.List(
+        context.TODO(),
+        "organization_id",
+        "group_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groupID:** `string` — ID of the group
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Groups.Roles.Create(OrganizationID, GroupID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign one or more roles to a specified group in the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationGroupRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Organizations.Groups.Roles.Create(
+        context.TODO(),
+        "organization_id",
+        "group_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groupID:** `string` — ID of the group
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — Array of role IDs to assign to organization group.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Groups.Roles.Delete(OrganizationID, GroupID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Unassign one or more roles from a specified group in the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteOrganizationGroupRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Organizations.Groups.Roles.Delete(
+        context.TODO(),
+        "organization_id",
+        "group_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groupID:** `string` — ID of the group
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — Array of role IDs to delete from organization group.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organizations Members EffectiveRoles
+<details><summary><code>client.Organizations.Members.EffectiveRoles.List(ID, UserID) -> *management.ListOrganizationMemberEffectiveRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the roles assigned to an organization member directly or through group membership.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationMemberEffectiveRolesRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.Members.EffectiveRoles.List(
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to list effective roles for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Organizations Members Roles
 <details><summary><code>client.Organizations.Members.Roles.List(ID, UserID) -> *management.ListOrganizationMemberRolesOffsetPaginatedResponseContent</code></summary>
 <dl>
@@ -28313,6 +28745,108 @@ client.Organizations.Members.Roles.Delete(
 <dd>
 
 **roles:** `[]string` — List of roles IDs associated with the organization member to remove.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organizations Members EffectiveRoles Sources Groups
+<details><summary><code>client.Organizations.Members.EffectiveRoles.Sources.Groups.List(ID, UserID) -> *management.ListOrganizationMemberRoleSourceGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the groups which grant the org member a given role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationMemberRoleSourceGroupsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        RoleID: "role_id",
+    }
+client.Organizations.Members.EffectiveRoles.Sources.Groups.List(
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to list role source groups for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleID:** `string` — The role ID to get group sources for.
     
 </dd>
 </dl>
@@ -29186,6 +29720,234 @@ client.RiskAssessments.Settings.NewDevice.Update(
 <dd>
 
 **rememberFor:** `int` — Length of time to remember devices for, in days.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Roles Groups
+<details><summary><code>client.Roles.Groups.Get(ID) -> *management.ListRoleGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the groups to which the specified role is assigned.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListRoleGroupsParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Roles.Groups.Get(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the role (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Roles.Groups.Create(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign one or more groups to a specified role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AssignRoleGroupsRequestContent{
+        Groups: []string{
+            "groups",
+        },
+    }
+client.Roles.Groups.Create(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the role (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]string` — Array of group IDs to assign to the role.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Roles.Groups.Delete(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Unassign one or more groups from a specified role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteRoleGroupsRequestContent{
+        Groups: []string{
+            "groups",
+        },
+    }
+client.Roles.Groups.Delete(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the role (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]string` — Array of group IDs to remove from the role.
     
 </dd>
 </dl>
@@ -31165,6 +31927,183 @@ client.Users.ConnectedAccounts.List(
 </dl>
 </details>
 
+## Users EffectivePermissions
+<details><summary><code>client.Users.EffectivePermissions.List(ID) -> *management.ListUserEffectivePermissionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the list of effective permissions for a user, taking into account permissions granted directly to the user, as well as those inherited through roles and group memberships.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListUserEffectivePermissionsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        ResourceServerIdentifier: "resource_server_identifier",
+    }
+client.Users.EffectivePermissions.List(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to retrieve the permissions for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resourceServerIdentifier:** `string` — The identifier of the resource server for which to calculate user permissions.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Users EffectiveRoles
+<details><summary><code>client.Users.EffectiveRoles.List(ID) -> *management.ListUserEffectiveRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve detailed list of effective roles for a user, including roles assigned directly and through group memberships.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListUserEffectiveRolesRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Users.EffectiveRoles.List(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to list effective roles for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Users Enrollments
 <details><summary><code>client.Users.Enrollments.Get(ID) -> []*management.UsersEnrollment</code></summary>
 <dl>
@@ -32819,6 +33758,201 @@ client.Users.Sessions.Delete(
 <dd>
 
 **userID:** `string` — ID of the user to get sessions for
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Users EffectivePermissions Sources Roles
+<details><summary><code>client.Users.EffectivePermissions.Sources.Roles.List(ID) -> *management.ListUserEffectivePermissionRoleSourcesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the roles which grant the user a given permission, including roles assigned directly to the user and those inherited through group memberships.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListUserEffectivePermissionRoleSourceRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        ResourceServerIdentifier: "resource_server_identifier",
+        PermissionName: "permission_name",
+    }
+client.Users.EffectivePermissions.Sources.Roles.List(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to retrieve the permissions for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resourceServerIdentifier:** `string` — The identifier of the resource server for which to calculate user permissions.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissionName:** `string` — Name of this permission
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Users EffectiveRoles Sources Groups
+<details><summary><code>client.Users.EffectiveRoles.Sources.Groups.List(ID) -> *management.ListUserRoleSourceGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the groups that grant a user a specific role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListUserRoleSourceGroupsRequestParameters{
+        RoleID: "role_id",
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Users.EffectiveRoles.Sources.Groups.List(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to list role source groups for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleID:** `string` — ID of the role to get source groups for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
     
 </dd>
 </dl>
