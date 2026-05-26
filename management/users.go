@@ -10,27 +10,29 @@ import (
 )
 
 var (
-	createUserResponseContentFieldUserID        = big.NewInt(1 << 0)
-	createUserResponseContentFieldEmail         = big.NewInt(1 << 1)
-	createUserResponseContentFieldEmailVerified = big.NewInt(1 << 2)
-	createUserResponseContentFieldUsername      = big.NewInt(1 << 3)
-	createUserResponseContentFieldPhoneNumber   = big.NewInt(1 << 4)
-	createUserResponseContentFieldPhoneVerified = big.NewInt(1 << 5)
-	createUserResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
-	createUserResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
-	createUserResponseContentFieldIdentities    = big.NewInt(1 << 8)
-	createUserResponseContentFieldAppMetadata   = big.NewInt(1 << 9)
-	createUserResponseContentFieldUserMetadata  = big.NewInt(1 << 10)
-	createUserResponseContentFieldPicture       = big.NewInt(1 << 11)
-	createUserResponseContentFieldName          = big.NewInt(1 << 12)
-	createUserResponseContentFieldNickname      = big.NewInt(1 << 13)
-	createUserResponseContentFieldMultifactor   = big.NewInt(1 << 14)
-	createUserResponseContentFieldLastIP        = big.NewInt(1 << 15)
-	createUserResponseContentFieldLastLogin     = big.NewInt(1 << 16)
-	createUserResponseContentFieldLoginsCount   = big.NewInt(1 << 17)
-	createUserResponseContentFieldBlocked       = big.NewInt(1 << 18)
-	createUserResponseContentFieldGivenName     = big.NewInt(1 << 19)
-	createUserResponseContentFieldFamilyName    = big.NewInt(1 << 20)
+	createUserResponseContentFieldUserID                  = big.NewInt(1 << 0)
+	createUserResponseContentFieldEmail                   = big.NewInt(1 << 1)
+	createUserResponseContentFieldEmailVerified           = big.NewInt(1 << 2)
+	createUserResponseContentFieldUsername                = big.NewInt(1 << 3)
+	createUserResponseContentFieldPhoneNumber             = big.NewInt(1 << 4)
+	createUserResponseContentFieldPhoneVerified           = big.NewInt(1 << 5)
+	createUserResponseContentFieldCreatedAt               = big.NewInt(1 << 6)
+	createUserResponseContentFieldUpdatedAt               = big.NewInt(1 << 7)
+	createUserResponseContentFieldIdentities              = big.NewInt(1 << 8)
+	createUserResponseContentFieldAppMetadata             = big.NewInt(1 << 9)
+	createUserResponseContentFieldUserMetadata            = big.NewInt(1 << 10)
+	createUserResponseContentFieldPicture                 = big.NewInt(1 << 11)
+	createUserResponseContentFieldName                    = big.NewInt(1 << 12)
+	createUserResponseContentFieldNickname                = big.NewInt(1 << 13)
+	createUserResponseContentFieldMultifactor             = big.NewInt(1 << 14)
+	createUserResponseContentFieldMultifactorLastModified = big.NewInt(1 << 15)
+	createUserResponseContentFieldLastIP                  = big.NewInt(1 << 16)
+	createUserResponseContentFieldLastLogin               = big.NewInt(1 << 17)
+	createUserResponseContentFieldLastPasswordReset       = big.NewInt(1 << 18)
+	createUserResponseContentFieldLoginsCount             = big.NewInt(1 << 19)
+	createUserResponseContentFieldBlocked                 = big.NewInt(1 << 20)
+	createUserResponseContentFieldGivenName               = big.NewInt(1 << 21)
+	createUserResponseContentFieldFamilyName              = big.NewInt(1 << 22)
 )
 
 type CreateUserResponseContent struct {
@@ -59,10 +61,12 @@ type CreateUserResponseContent struct {
 	// Preferred nickname or alias of this user.
 	Nickname *string `json:"nickname,omitempty" url:"nickname,omitempty"`
 	// List of multi-factor authentication providers with which this user has enrolled.
-	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	Multifactor             []string        `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	MultifactorLastModified *UserDateSchema `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LastIP            *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastLogin         *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LastPasswordReset *UserDateSchema `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
 	// Whether this user was blocked by an administrator (true) or is not (false).
@@ -185,6 +189,13 @@ func (c *CreateUserResponseContent) GetMultifactor() []string {
 	return c.Multifactor
 }
 
+func (c *CreateUserResponseContent) GetMultifactorLastModified() UserDateSchema {
+	if c == nil || c.MultifactorLastModified == nil {
+		return UserDateSchema{}
+	}
+	return *c.MultifactorLastModified
+}
+
 func (c *CreateUserResponseContent) GetLastIP() string {
 	if c == nil || c.LastIP == nil {
 		return ""
@@ -197,6 +208,13 @@ func (c *CreateUserResponseContent) GetLastLogin() UserDateSchema {
 		return UserDateSchema{}
 	}
 	return *c.LastLogin
+}
+
+func (c *CreateUserResponseContent) GetLastPasswordReset() UserDateSchema {
+	if c == nil || c.LastPasswordReset == nil {
+		return UserDateSchema{}
+	}
+	return *c.LastPasswordReset
 }
 
 func (c *CreateUserResponseContent) GetLoginsCount() int {
@@ -346,6 +364,13 @@ func (c *CreateUserResponseContent) SetMultifactor(multifactor []string) {
 	c.require(createUserResponseContentFieldMultifactor)
 }
 
+// SetMultifactorLastModified sets the MultifactorLastModified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetMultifactorLastModified(multifactorLastModified *UserDateSchema) {
+	c.MultifactorLastModified = multifactorLastModified
+	c.require(createUserResponseContentFieldMultifactorLastModified)
+}
+
 // SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateUserResponseContent) SetLastIP(lastIP *string) {
@@ -358,6 +383,13 @@ func (c *CreateUserResponseContent) SetLastIP(lastIP *string) {
 func (c *CreateUserResponseContent) SetLastLogin(lastLogin *UserDateSchema) {
 	c.LastLogin = lastLogin
 	c.require(createUserResponseContentFieldLastLogin)
+}
+
+// SetLastPasswordReset sets the LastPasswordReset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserResponseContent) SetLastPasswordReset(lastPasswordReset *UserDateSchema) {
+	c.LastPasswordReset = lastPasswordReset
+	c.require(createUserResponseContentFieldLastPasswordReset)
 }
 
 // SetLoginsCount sets the LoginsCount field and marks it as non-optional;
@@ -435,27 +467,29 @@ func (c *CreateUserResponseContent) String() string {
 }
 
 var (
-	getUserResponseContentFieldUserID        = big.NewInt(1 << 0)
-	getUserResponseContentFieldEmail         = big.NewInt(1 << 1)
-	getUserResponseContentFieldEmailVerified = big.NewInt(1 << 2)
-	getUserResponseContentFieldUsername      = big.NewInt(1 << 3)
-	getUserResponseContentFieldPhoneNumber   = big.NewInt(1 << 4)
-	getUserResponseContentFieldPhoneVerified = big.NewInt(1 << 5)
-	getUserResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
-	getUserResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
-	getUserResponseContentFieldIdentities    = big.NewInt(1 << 8)
-	getUserResponseContentFieldAppMetadata   = big.NewInt(1 << 9)
-	getUserResponseContentFieldUserMetadata  = big.NewInt(1 << 10)
-	getUserResponseContentFieldPicture       = big.NewInt(1 << 11)
-	getUserResponseContentFieldName          = big.NewInt(1 << 12)
-	getUserResponseContentFieldNickname      = big.NewInt(1 << 13)
-	getUserResponseContentFieldMultifactor   = big.NewInt(1 << 14)
-	getUserResponseContentFieldLastIP        = big.NewInt(1 << 15)
-	getUserResponseContentFieldLastLogin     = big.NewInt(1 << 16)
-	getUserResponseContentFieldLoginsCount   = big.NewInt(1 << 17)
-	getUserResponseContentFieldBlocked       = big.NewInt(1 << 18)
-	getUserResponseContentFieldGivenName     = big.NewInt(1 << 19)
-	getUserResponseContentFieldFamilyName    = big.NewInt(1 << 20)
+	getUserResponseContentFieldUserID                  = big.NewInt(1 << 0)
+	getUserResponseContentFieldEmail                   = big.NewInt(1 << 1)
+	getUserResponseContentFieldEmailVerified           = big.NewInt(1 << 2)
+	getUserResponseContentFieldUsername                = big.NewInt(1 << 3)
+	getUserResponseContentFieldPhoneNumber             = big.NewInt(1 << 4)
+	getUserResponseContentFieldPhoneVerified           = big.NewInt(1 << 5)
+	getUserResponseContentFieldCreatedAt               = big.NewInt(1 << 6)
+	getUserResponseContentFieldUpdatedAt               = big.NewInt(1 << 7)
+	getUserResponseContentFieldIdentities              = big.NewInt(1 << 8)
+	getUserResponseContentFieldAppMetadata             = big.NewInt(1 << 9)
+	getUserResponseContentFieldUserMetadata            = big.NewInt(1 << 10)
+	getUserResponseContentFieldPicture                 = big.NewInt(1 << 11)
+	getUserResponseContentFieldName                    = big.NewInt(1 << 12)
+	getUserResponseContentFieldNickname                = big.NewInt(1 << 13)
+	getUserResponseContentFieldMultifactor             = big.NewInt(1 << 14)
+	getUserResponseContentFieldMultifactorLastModified = big.NewInt(1 << 15)
+	getUserResponseContentFieldLastIP                  = big.NewInt(1 << 16)
+	getUserResponseContentFieldLastLogin               = big.NewInt(1 << 17)
+	getUserResponseContentFieldLastPasswordReset       = big.NewInt(1 << 18)
+	getUserResponseContentFieldLoginsCount             = big.NewInt(1 << 19)
+	getUserResponseContentFieldBlocked                 = big.NewInt(1 << 20)
+	getUserResponseContentFieldGivenName               = big.NewInt(1 << 21)
+	getUserResponseContentFieldFamilyName              = big.NewInt(1 << 22)
 )
 
 type GetUserResponseContent struct {
@@ -484,10 +518,12 @@ type GetUserResponseContent struct {
 	// Preferred nickname or alias of this user.
 	Nickname *string `json:"nickname,omitempty" url:"nickname,omitempty"`
 	// List of multi-factor authentication providers with which this user has enrolled.
-	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	Multifactor             []string        `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	MultifactorLastModified *UserDateSchema `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LastIP            *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastLogin         *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LastPasswordReset *UserDateSchema `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
 	// Whether this user was blocked by an administrator (true) or is not (false).
@@ -610,6 +646,13 @@ func (g *GetUserResponseContent) GetMultifactor() []string {
 	return g.Multifactor
 }
 
+func (g *GetUserResponseContent) GetMultifactorLastModified() UserDateSchema {
+	if g == nil || g.MultifactorLastModified == nil {
+		return UserDateSchema{}
+	}
+	return *g.MultifactorLastModified
+}
+
 func (g *GetUserResponseContent) GetLastIP() string {
 	if g == nil || g.LastIP == nil {
 		return ""
@@ -622,6 +665,13 @@ func (g *GetUserResponseContent) GetLastLogin() UserDateSchema {
 		return UserDateSchema{}
 	}
 	return *g.LastLogin
+}
+
+func (g *GetUserResponseContent) GetLastPasswordReset() UserDateSchema {
+	if g == nil || g.LastPasswordReset == nil {
+		return UserDateSchema{}
+	}
+	return *g.LastPasswordReset
 }
 
 func (g *GetUserResponseContent) GetLoginsCount() int {
@@ -771,6 +821,13 @@ func (g *GetUserResponseContent) SetMultifactor(multifactor []string) {
 	g.require(getUserResponseContentFieldMultifactor)
 }
 
+// SetMultifactorLastModified sets the MultifactorLastModified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetMultifactorLastModified(multifactorLastModified *UserDateSchema) {
+	g.MultifactorLastModified = multifactorLastModified
+	g.require(getUserResponseContentFieldMultifactorLastModified)
+}
+
 // SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetUserResponseContent) SetLastIP(lastIP *string) {
@@ -783,6 +840,13 @@ func (g *GetUserResponseContent) SetLastIP(lastIP *string) {
 func (g *GetUserResponseContent) SetLastLogin(lastLogin *UserDateSchema) {
 	g.LastLogin = lastLogin
 	g.require(getUserResponseContentFieldLastLogin)
+}
+
+// SetLastPasswordReset sets the LastPasswordReset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserResponseContent) SetLastPasswordReset(lastPasswordReset *UserDateSchema) {
+	g.LastPasswordReset = lastPasswordReset
+	g.require(getUserResponseContentFieldLastPasswordReset)
 }
 
 // SetLoginsCount sets the LoginsCount field and marks it as non-optional;
@@ -1124,27 +1188,29 @@ func (s SearchEngineVersionsEnum) Ptr() *SearchEngineVersionsEnum {
 }
 
 var (
-	updateUserResponseContentFieldUserID        = big.NewInt(1 << 0)
-	updateUserResponseContentFieldEmail         = big.NewInt(1 << 1)
-	updateUserResponseContentFieldEmailVerified = big.NewInt(1 << 2)
-	updateUserResponseContentFieldUsername      = big.NewInt(1 << 3)
-	updateUserResponseContentFieldPhoneNumber   = big.NewInt(1 << 4)
-	updateUserResponseContentFieldPhoneVerified = big.NewInt(1 << 5)
-	updateUserResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
-	updateUserResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
-	updateUserResponseContentFieldIdentities    = big.NewInt(1 << 8)
-	updateUserResponseContentFieldAppMetadata   = big.NewInt(1 << 9)
-	updateUserResponseContentFieldUserMetadata  = big.NewInt(1 << 10)
-	updateUserResponseContentFieldPicture       = big.NewInt(1 << 11)
-	updateUserResponseContentFieldName          = big.NewInt(1 << 12)
-	updateUserResponseContentFieldNickname      = big.NewInt(1 << 13)
-	updateUserResponseContentFieldMultifactor   = big.NewInt(1 << 14)
-	updateUserResponseContentFieldLastIP        = big.NewInt(1 << 15)
-	updateUserResponseContentFieldLastLogin     = big.NewInt(1 << 16)
-	updateUserResponseContentFieldLoginsCount   = big.NewInt(1 << 17)
-	updateUserResponseContentFieldBlocked       = big.NewInt(1 << 18)
-	updateUserResponseContentFieldGivenName     = big.NewInt(1 << 19)
-	updateUserResponseContentFieldFamilyName    = big.NewInt(1 << 20)
+	updateUserResponseContentFieldUserID                  = big.NewInt(1 << 0)
+	updateUserResponseContentFieldEmail                   = big.NewInt(1 << 1)
+	updateUserResponseContentFieldEmailVerified           = big.NewInt(1 << 2)
+	updateUserResponseContentFieldUsername                = big.NewInt(1 << 3)
+	updateUserResponseContentFieldPhoneNumber             = big.NewInt(1 << 4)
+	updateUserResponseContentFieldPhoneVerified           = big.NewInt(1 << 5)
+	updateUserResponseContentFieldCreatedAt               = big.NewInt(1 << 6)
+	updateUserResponseContentFieldUpdatedAt               = big.NewInt(1 << 7)
+	updateUserResponseContentFieldIdentities              = big.NewInt(1 << 8)
+	updateUserResponseContentFieldAppMetadata             = big.NewInt(1 << 9)
+	updateUserResponseContentFieldUserMetadata            = big.NewInt(1 << 10)
+	updateUserResponseContentFieldPicture                 = big.NewInt(1 << 11)
+	updateUserResponseContentFieldName                    = big.NewInt(1 << 12)
+	updateUserResponseContentFieldNickname                = big.NewInt(1 << 13)
+	updateUserResponseContentFieldMultifactor             = big.NewInt(1 << 14)
+	updateUserResponseContentFieldMultifactorLastModified = big.NewInt(1 << 15)
+	updateUserResponseContentFieldLastIP                  = big.NewInt(1 << 16)
+	updateUserResponseContentFieldLastLogin               = big.NewInt(1 << 17)
+	updateUserResponseContentFieldLastPasswordReset       = big.NewInt(1 << 18)
+	updateUserResponseContentFieldLoginsCount             = big.NewInt(1 << 19)
+	updateUserResponseContentFieldBlocked                 = big.NewInt(1 << 20)
+	updateUserResponseContentFieldGivenName               = big.NewInt(1 << 21)
+	updateUserResponseContentFieldFamilyName              = big.NewInt(1 << 22)
 )
 
 type UpdateUserResponseContent struct {
@@ -1173,10 +1239,12 @@ type UpdateUserResponseContent struct {
 	// Preferred nickname or alias of this user.
 	Nickname *string `json:"nickname,omitempty" url:"nickname,omitempty"`
 	// List of multi-factor authentication providers with which this user has enrolled.
-	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	Multifactor             []string        `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	MultifactorLastModified *UserDateSchema `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LastIP            *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastLogin         *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LastPasswordReset *UserDateSchema `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
 	// Whether this user was blocked by an administrator (true) or is not (false).
@@ -1299,6 +1367,13 @@ func (u *UpdateUserResponseContent) GetMultifactor() []string {
 	return u.Multifactor
 }
 
+func (u *UpdateUserResponseContent) GetMultifactorLastModified() UserDateSchema {
+	if u == nil || u.MultifactorLastModified == nil {
+		return UserDateSchema{}
+	}
+	return *u.MultifactorLastModified
+}
+
 func (u *UpdateUserResponseContent) GetLastIP() string {
 	if u == nil || u.LastIP == nil {
 		return ""
@@ -1311,6 +1386,13 @@ func (u *UpdateUserResponseContent) GetLastLogin() UserDateSchema {
 		return UserDateSchema{}
 	}
 	return *u.LastLogin
+}
+
+func (u *UpdateUserResponseContent) GetLastPasswordReset() UserDateSchema {
+	if u == nil || u.LastPasswordReset == nil {
+		return UserDateSchema{}
+	}
+	return *u.LastPasswordReset
 }
 
 func (u *UpdateUserResponseContent) GetLoginsCount() int {
@@ -1460,6 +1542,13 @@ func (u *UpdateUserResponseContent) SetMultifactor(multifactor []string) {
 	u.require(updateUserResponseContentFieldMultifactor)
 }
 
+// SetMultifactorLastModified sets the MultifactorLastModified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetMultifactorLastModified(multifactorLastModified *UserDateSchema) {
+	u.MultifactorLastModified = multifactorLastModified
+	u.require(updateUserResponseContentFieldMultifactorLastModified)
+}
+
 // SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateUserResponseContent) SetLastIP(lastIP *string) {
@@ -1472,6 +1561,13 @@ func (u *UpdateUserResponseContent) SetLastIP(lastIP *string) {
 func (u *UpdateUserResponseContent) SetLastLogin(lastLogin *UserDateSchema) {
 	u.LastLogin = lastLogin
 	u.require(updateUserResponseContentFieldLastLogin)
+}
+
+// SetLastPasswordReset sets the LastPasswordReset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserResponseContent) SetLastPasswordReset(lastPasswordReset *UserDateSchema) {
+	u.LastPasswordReset = lastPasswordReset
+	u.require(updateUserResponseContentFieldLastPasswordReset)
 }
 
 // SetLoginsCount sets the LoginsCount field and marks it as non-optional;
@@ -1821,27 +1917,29 @@ func (u *UserIdentitySchema) String() string {
 type UserMetadataSchema = map[string]any
 
 var (
-	userResponseSchemaFieldUserID        = big.NewInt(1 << 0)
-	userResponseSchemaFieldEmail         = big.NewInt(1 << 1)
-	userResponseSchemaFieldEmailVerified = big.NewInt(1 << 2)
-	userResponseSchemaFieldUsername      = big.NewInt(1 << 3)
-	userResponseSchemaFieldPhoneNumber   = big.NewInt(1 << 4)
-	userResponseSchemaFieldPhoneVerified = big.NewInt(1 << 5)
-	userResponseSchemaFieldCreatedAt     = big.NewInt(1 << 6)
-	userResponseSchemaFieldUpdatedAt     = big.NewInt(1 << 7)
-	userResponseSchemaFieldIdentities    = big.NewInt(1 << 8)
-	userResponseSchemaFieldAppMetadata   = big.NewInt(1 << 9)
-	userResponseSchemaFieldUserMetadata  = big.NewInt(1 << 10)
-	userResponseSchemaFieldPicture       = big.NewInt(1 << 11)
-	userResponseSchemaFieldName          = big.NewInt(1 << 12)
-	userResponseSchemaFieldNickname      = big.NewInt(1 << 13)
-	userResponseSchemaFieldMultifactor   = big.NewInt(1 << 14)
-	userResponseSchemaFieldLastIP        = big.NewInt(1 << 15)
-	userResponseSchemaFieldLastLogin     = big.NewInt(1 << 16)
-	userResponseSchemaFieldLoginsCount   = big.NewInt(1 << 17)
-	userResponseSchemaFieldBlocked       = big.NewInt(1 << 18)
-	userResponseSchemaFieldGivenName     = big.NewInt(1 << 19)
-	userResponseSchemaFieldFamilyName    = big.NewInt(1 << 20)
+	userResponseSchemaFieldUserID                  = big.NewInt(1 << 0)
+	userResponseSchemaFieldEmail                   = big.NewInt(1 << 1)
+	userResponseSchemaFieldEmailVerified           = big.NewInt(1 << 2)
+	userResponseSchemaFieldUsername                = big.NewInt(1 << 3)
+	userResponseSchemaFieldPhoneNumber             = big.NewInt(1 << 4)
+	userResponseSchemaFieldPhoneVerified           = big.NewInt(1 << 5)
+	userResponseSchemaFieldCreatedAt               = big.NewInt(1 << 6)
+	userResponseSchemaFieldUpdatedAt               = big.NewInt(1 << 7)
+	userResponseSchemaFieldIdentities              = big.NewInt(1 << 8)
+	userResponseSchemaFieldAppMetadata             = big.NewInt(1 << 9)
+	userResponseSchemaFieldUserMetadata            = big.NewInt(1 << 10)
+	userResponseSchemaFieldPicture                 = big.NewInt(1 << 11)
+	userResponseSchemaFieldName                    = big.NewInt(1 << 12)
+	userResponseSchemaFieldNickname                = big.NewInt(1 << 13)
+	userResponseSchemaFieldMultifactor             = big.NewInt(1 << 14)
+	userResponseSchemaFieldMultifactorLastModified = big.NewInt(1 << 15)
+	userResponseSchemaFieldLastIP                  = big.NewInt(1 << 16)
+	userResponseSchemaFieldLastLogin               = big.NewInt(1 << 17)
+	userResponseSchemaFieldLastPasswordReset       = big.NewInt(1 << 18)
+	userResponseSchemaFieldLoginsCount             = big.NewInt(1 << 19)
+	userResponseSchemaFieldBlocked                 = big.NewInt(1 << 20)
+	userResponseSchemaFieldGivenName               = big.NewInt(1 << 21)
+	userResponseSchemaFieldFamilyName              = big.NewInt(1 << 22)
 )
 
 type UserResponseSchema struct {
@@ -1870,10 +1968,12 @@ type UserResponseSchema struct {
 	// Preferred nickname or alias of this user.
 	Nickname *string `json:"nickname,omitempty" url:"nickname,omitempty"`
 	// List of multi-factor authentication providers with which this user has enrolled.
-	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	Multifactor             []string        `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	MultifactorLastModified *UserDateSchema `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP    *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	LastLogin *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LastIP            *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	LastLogin         *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
+	LastPasswordReset *UserDateSchema `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
 	// Whether this user was blocked by an administrator (true) or is not (false).
@@ -1996,6 +2096,13 @@ func (u *UserResponseSchema) GetMultifactor() []string {
 	return u.Multifactor
 }
 
+func (u *UserResponseSchema) GetMultifactorLastModified() UserDateSchema {
+	if u == nil || u.MultifactorLastModified == nil {
+		return UserDateSchema{}
+	}
+	return *u.MultifactorLastModified
+}
+
 func (u *UserResponseSchema) GetLastIP() string {
 	if u == nil || u.LastIP == nil {
 		return ""
@@ -2008,6 +2115,13 @@ func (u *UserResponseSchema) GetLastLogin() UserDateSchema {
 		return UserDateSchema{}
 	}
 	return *u.LastLogin
+}
+
+func (u *UserResponseSchema) GetLastPasswordReset() UserDateSchema {
+	if u == nil || u.LastPasswordReset == nil {
+		return UserDateSchema{}
+	}
+	return *u.LastPasswordReset
 }
 
 func (u *UserResponseSchema) GetLoginsCount() int {
@@ -2157,6 +2271,13 @@ func (u *UserResponseSchema) SetMultifactor(multifactor []string) {
 	u.require(userResponseSchemaFieldMultifactor)
 }
 
+// SetMultifactorLastModified sets the MultifactorLastModified field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetMultifactorLastModified(multifactorLastModified *UserDateSchema) {
+	u.MultifactorLastModified = multifactorLastModified
+	u.require(userResponseSchemaFieldMultifactorLastModified)
+}
+
 // SetLastIP sets the LastIP field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UserResponseSchema) SetLastIP(lastIP *string) {
@@ -2169,6 +2290,13 @@ func (u *UserResponseSchema) SetLastIP(lastIP *string) {
 func (u *UserResponseSchema) SetLastLogin(lastLogin *UserDateSchema) {
 	u.LastLogin = lastLogin
 	u.require(userResponseSchemaFieldLastLogin)
+}
+
+// SetLastPasswordReset sets the LastPasswordReset field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserResponseSchema) SetLastPasswordReset(lastPasswordReset *UserDateSchema) {
+	u.LastPasswordReset = lastPasswordReset
+	u.require(userResponseSchemaFieldLastPasswordReset)
 }
 
 // SetLoginsCount sets the LoginsCount field and marks it as non-optional;

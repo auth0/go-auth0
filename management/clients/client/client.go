@@ -35,8 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -117,6 +118,7 @@ func (c *Client) List(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -200,7 +202,19 @@ func (c *Client) PreviewCimdMetadata(
 
 // Idempotent registration for Client ID Metadata Document (CIMD) clients.
 // Uses external_client_id as the unique identifier for upsert operations.
-// **Create:** Returns 201 when a new client is created (requires \
+//
+// <strong>Create:</strong> Returns 201 when a new client is created (requires <code>create:clients</code> scope).
+// <strong>Update:</strong> Returns 200 when an existing client is updated (requires <code>update:clients</code> scope).
+//
+// This endpoint automatically:
+// <ul>
+//
+//	<li>Fetches and validates the metadata document</li>
+//	<li>Maps CIMD fields to Auth0 client configuration</li>
+//	<li>Creates/rotates credentials from the JWKS</li>
+//	<li>Enforces CIMD security policies (HTTPS-only, no shared secrets)</li>
+//
+// </ul>
 func (c *Client) RegisterCimdClient(
 	ctx context.Context,
 	request *management.RegisterCimdClientRequestContent,

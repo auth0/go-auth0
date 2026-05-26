@@ -32,6 +32,7 @@ import (
 	option "github.com/auth0/go-auth0/v2/management/option"
 	organizationsclient "github.com/auth0/go-auth0/v2/management/organizations/client"
 	promptsclient "github.com/auth0/go-auth0/v2/management/prompts/client"
+	ratelimitpolicies "github.com/auth0/go-auth0/v2/management/ratelimitpolicies"
 	refreshtokens "github.com/auth0/go-auth0/v2/management/refreshtokens"
 	resourceservers "github.com/auth0/go-auth0/v2/management/resourceservers"
 	riskassessmentsclient "github.com/auth0/go-auth0/v2/management/riskassessments/client"
@@ -75,6 +76,7 @@ type Management struct {
 	NetworkACLs           *networkacls.Client
 	Organizations         *organizationsclient.Client
 	Prompts               *promptsclient.Client
+	RateLimitPolicies     *ratelimitpolicies.Client
 	RefreshTokens         *refreshtokens.Client
 	ResourceServers       *resourceservers.Client
 	Roles                 *rolesclient.Client
@@ -128,6 +130,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		NetworkACLs:           networkacls.NewClient(options),
 		Organizations:         organizationsclient.NewClient(options),
 		Prompts:               promptsclient.NewClient(options),
+		RateLimitPolicies:     ratelimitpolicies.NewClient(options),
 		RefreshTokens:         refreshtokens.NewClient(options),
 		ResourceServers:       resourceservers.NewClient(options),
 		Roles:                 rolesclient.NewClient(options),
@@ -154,8 +157,9 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		baseURL:               options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}

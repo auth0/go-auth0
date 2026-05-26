@@ -339,9 +339,9 @@ func (b BrandingLoginDisplayEnum) Ptr() *BrandingLoginDisplayEnum {
 }
 
 // Page Background Color or Gradient.
-// Property contains either <code>null</code> to unset, a solid color as a string value <code>#FFFFFF</code>, or a gradient as an object.
+// Property contains either `null` to unset, a solid color as a string value `#FFFFFF`, or a gradient as an object.
 //
-// <pre><code>
+// ```js
 //
 //	{
 //	  type: 'linear-gradient',
@@ -350,7 +350,7 @@ func (b BrandingLoginDisplayEnum) Ptr() *BrandingLoginDisplayEnum {
 //	  angle_deg: 35
 //	}
 //
-// </code></pre>
+// ```
 type BrandingPageBackground struct {
 	StringOptional           *string
 	StringUnknownMapOptional map[string]any
@@ -1048,9 +1048,9 @@ func (u UpdateBrandingLoginDisplayEnum) Ptr() *UpdateBrandingLoginDisplayEnum {
 }
 
 // Page Background Color or Gradient.
-// Property contains either <code>null</code> to unset, a solid color as a string value <code>#FFFFFF</code>, or a gradient as an object.
+// Property contains either `null` to unset, a solid color as a string value `#FFFFFF`, or a gradient as an object.
 //
-// <pre><code>
+// ```js
 //
 //	{
 //	  type: 'linear-gradient',
@@ -1059,7 +1059,7 @@ func (u UpdateBrandingLoginDisplayEnum) Ptr() *UpdateBrandingLoginDisplayEnum {
 //	  angle_deg: 35
 //	}
 //
-// </code></pre>
+// ```
 type UpdateBrandingPageBackground struct {
 	StringOptional           *string
 	StringUnknownMapOptional map[string]any

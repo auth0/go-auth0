@@ -25299,6 +25299,170 @@ func TestSettersMarkExplicitExpressConfigurationOrNull(t *testing.T) {
 
 }
 
+func TestSettersFedCmLogin(t *testing.T) {
+	t.Run("SetGoogle", func(t *testing.T) {
+		obj := &FedCmLogin{}
+		var fernTestValueGoogle *FedCmLoginGoogle
+		obj.SetGoogle(fernTestValueGoogle)
+		assert.Equal(t, fernTestValueGoogle, obj.Google)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersFedCmLogin(t *testing.T) {
+	t.Run("GetGoogle", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FedCmLogin{}
+		var value FedCmLoginGoogle
+		obj.Google = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogle(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogle_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FedCmLogin{}
+		obj.Google = nil
+		var expectedZero FedCmLoginGoogle
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogle(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogle_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FedCmLogin
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogle() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitFedCmLogin(t *testing.T) {
+	t.Run("SetGoogle_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FedCmLogin{}
+		var fernTestValueGoogle *FedCmLoginGoogle
+
+		// Act
+		obj.SetGoogle(fernTestValueGoogle)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersFedCmLoginGoogle(t *testing.T) {
+	t.Run("SetIsEnabled", func(t *testing.T) {
+		obj := &FedCmLoginGoogle{}
+		var fernTestValueIsEnabled *bool
+		obj.SetIsEnabled(fernTestValueIsEnabled)
+		assert.Equal(t, fernTestValueIsEnabled, obj.IsEnabled)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersFedCmLoginGoogle(t *testing.T) {
+	t.Run("GetIsEnabled", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FedCmLoginGoogle{}
+		var value bool
+		obj.IsEnabled = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIsEnabled(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIsEnabled_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FedCmLoginGoogle{}
+		obj.IsEnabled = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIsEnabled(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIsEnabled_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FedCmLoginGoogle
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIsEnabled() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitFedCmLoginGoogle(t *testing.T) {
+	t.Run("SetIsEnabled_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FedCmLoginGoogle{}
+		var fernTestValueIsEnabled *bool
+
+		// Act
+		obj.SetIsEnabled(fernTestValueIsEnabled)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersGetClientResponseContent(t *testing.T) {
 	t.Run("SetClientID", func(t *testing.T) {
 		obj := &GetClientResponseContent{}
@@ -42684,6 +42848,72 @@ func TestJSONMarshalingExpressConfigurationOrNull(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingFedCmLogin(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FedCmLogin{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled FedCmLogin
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj FedCmLogin
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj FedCmLogin
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingFedCmLoginGoogle(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FedCmLoginGoogle{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled FedCmLoginGoogle
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj FedCmLoginGoogle
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj FedCmLoginGoogle
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingGetClientResponseContent(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -44169,6 +44399,38 @@ func TestStringExpressConfigurationOrNull(t *testing.T) {
 	})
 }
 
+func TestStringFedCmLogin(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &FedCmLogin{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FedCmLogin
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringFedCmLoginGoogle(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &FedCmLoginGoogle{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FedCmLoginGoogle
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringGetClientResponseContent(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -44725,6 +44987,13 @@ func TestEnumClientExternalMetadataTypeEnum(t *testing.T) {
 		val, err := NewClientExternalMetadataTypeEnumFromString("cimd")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, ClientExternalMetadataTypeEnum("cimd"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_dcr", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientExternalMetadataTypeEnumFromString("dcr")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientExternalMetadataTypeEnum("dcr"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
@@ -46982,6 +47251,52 @@ func TestExtraPropertiesExpressConfigurationOrNull(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ExpressConfigurationOrNull
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesFedCmLogin(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &FedCmLogin{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FedCmLogin
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesFedCmLoginGoogle(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &FedCmLoginGoogle{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FedCmLoginGoogle
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

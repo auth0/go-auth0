@@ -29,14 +29,15 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
-// Retrieve a filtered list of <a href="https://auth0.com/docs/rules">rules</a>. Accepts a list of fields to include or exclude.
+// Retrieve a filtered list of [rules](https://auth0.com/docs/rules). Accepts a list of fields to include or exclude.
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListRulesRequestParameters,
@@ -77,6 +78,7 @@ func (c *Client) List(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -109,9 +111,9 @@ func (c *Client) List(
 	return pager.GetPage(ctx, &next)
 }
 
-// Create a <a href="https://auth0.com/docs/rules#create-a-new-rule-using-the-management-api">new rule</a>.
+// Create a [new rule](https://auth0.com/docs/rules#create-a-new-rule-using-the-management-api).
 //
-// Note: Changing a rule's stage of execution from the default <code>login_success</code> can change the rule's function signature to have user omitted.
+// Note: Changing a rule's stage of execution from the default `login_success` can change the rule's function signature to have user omitted.
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateRuleRequestContent,
@@ -128,7 +130,7 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Retrieve <a href="https://auth0.com/docs/rules">rule</a> details. Accepts a list of fields to include or exclude in the result.
+// Retrieve [rule](https://auth0.com/docs/rules) details. Accepts a list of fields to include or exclude in the result.
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the rule to retrieve.

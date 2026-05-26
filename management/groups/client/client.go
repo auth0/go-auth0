@@ -9,6 +9,7 @@ import (
 	management "github.com/auth0/go-auth0/v2/management"
 	core "github.com/auth0/go-auth0/v2/management/core"
 	members "github.com/auth0/go-auth0/v2/management/groups/members"
+	roles "github.com/auth0/go-auth0/v2/management/groups/roles"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	option "github.com/auth0/go-auth0/v2/management/option"
 )
@@ -16,6 +17,7 @@ import (
 type Client struct {
 	WithRawResponse *RawClient
 	Members         *members.Client
+	Roles           *roles.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -25,13 +27,15 @@ type Client struct {
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		Members:         members.NewClient(options),
+		Roles:           roles.NewClient(options),
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -76,6 +80,7 @@ func (c *Client) List(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
