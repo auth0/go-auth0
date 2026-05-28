@@ -1,5 +1,25 @@
 # Change Log
 
+## [v2.12.0](https://github.com/auth0/go-auth0/tree/v2.12.0) (2026-05-28)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.11.0...v2.12.0)
+
+**Added**
+- feat: add tenant `country_codes` setting for phone identifier filtering with `allow`/`deny` modes [\#785](https://github.com/auth0/go-auth0/pull/785) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Stream.LastRetryMs()` accessor exposing the most recent SSE `retry:` interval [\#785](https://github.com/auth0/go-auth0/pull/785) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add organization groups API (`Management.Organizations.Groups`) for listing groups assigned to an organization [\#784](https://github.com/auth0/go-auth0/pull/784) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add organization group roles API (`Management.Organizations.Groups.Roles`) for assigning, listing, and unassigning roles on a group [\#784](https://github.com/auth0/go-auth0/pull/784) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add organization member effective roles API (`Management.Organizations.Members.EffectiveRoles`) with group source drill-down [\#784](https://github.com/auth0/go-auth0/pull/784) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add user effective roles API (`Management.Users.EffectiveRoles`) with group source drill-down [\#784](https://github.com/auth0/go-auth0/pull/784) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add user effective permissions API (`Management.Users.EffectivePermissions`) with role source drill-down [\#784](https://github.com/auth0/go-auth0/pull/784) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add tenant role groups API (`Management.Roles.Groups`) for assigning, listing, and unassigning groups on a role [\#784](https://github.com/auth0/go-auth0/pull/784) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add groups roles API (`Management.Groups.Roles`) for assigning, listing, and unassigning roles on a group [\#783](https://github.com/auth0/go-auth0/pull/783) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add rate limit policies API (`Management.RateLimitPolicies`) with full CRUD support [\#783](https://github.com/auth0/go-auth0/pull/783) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: stream endpoints (`Management.Events.Subscribe`) now auto-reconnect by default on mid-stream disconnects, preserving `Last-Event-ID` and honoring server-sent `retry:` directives, with a 5-attempt budget and a 30s backoff ceiling [\#783](https://github.com/auth0/go-auth0/pull/783) ([developerkunal](https://github.com/developerkunal))
+- feat: add `option.WithMaxStreamReconnectAttempts` to tune the reconnect budget and `option.WithoutStreamReconnection` to opt out of auto-reconnect [\#783](https://github.com/auth0/go-auth0/pull/783) ([developerkunal](https://github.com/developerkunal))
+- feat: add `option.WithoutRetries` to disable HTTP-level retries on a request [\#783](https://github.com/auth0/go-auth0/pull/783) ([developerkunal](https://github.com/developerkunal))
+- feat: add `MultifactorLastModified` field on `User` response types [\#783](https://github.com/auth0/go-auth0/pull/783) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `FedCmLogin` and `FedCmLoginGoogle` types [\#783](https://github.com/auth0/go-auth0/pull/783) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.11.0](https://github.com/auth0/go-auth0/tree/v2.11.0) (2026-05-14)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.10.0...v2.11.0)
 
