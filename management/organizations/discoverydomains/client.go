@@ -192,7 +192,7 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The <code>status</code> field must be either <code>pending</code> or <code>verified</code>. The <code>use_for_organization_discovery</code> field can be <code>true</code> or <code>false</code> (default: <code>true</code>).
+// Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The `status` field must be either `pending` or `verified`. The `use_for_organization_discovery` field can be `true` or `false` (default: `true`).
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the organization.

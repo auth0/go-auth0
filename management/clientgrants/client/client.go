@@ -38,7 +38,7 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Retrieve a list of <a href="https://auth0.com/docs/get-started/applications/application-access-to-apis-client-grants">client grants</a>, including the scopes associated with the application/API pair.
+// Retrieve a list of [client grants](https://auth0.com/docs/get-started/applications/application-access-to-apis-client-grants), including the scopes associated with the application/API pair.
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListClientGrantsRequestParameters,
@@ -104,7 +104,7 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
-// Create a client grant for a machine-to-machine login flow. To learn more, read <a href="https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">Client Credential Flow</a>.
+// Create a client grant for a machine-to-machine login flow. To learn more, read [Client Credential Flow](https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow).
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateClientGrantRequestContent,
@@ -121,7 +121,7 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Retrieve a single <a href="https://auth0.com/docs/get-started/applications/application-access-to-apis-client-grants">client grant</a>, including the
+// Retrieve a single [client grant](https://auth0.com/docs/get-started/applications/application-access-to-apis-client-grants), including the
 // scopes associated with the application/API pair.
 func (c *Client) Get(
 	ctx context.Context,
@@ -140,7 +140,7 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-// Delete the <a href="https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">Client Credential Flow</a> from your machine-to-machine application.
+// Delete the [Client Credential Flow](https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow) from your machine-to-machine application.
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the client grant to delete.

@@ -59,22 +59,20 @@ func NewClient(options *core.RequestOptions) *Client {
 // Retrieve detailed list of all Organizations available in your tenant. For more information, see Auth0 Organizations.
 //
 // This endpoint supports two types of pagination:
-// <ul>
-// <li>Offset pagination</li>
-// <li>Checkpoint pagination</li>
-// </ul>
+//
+// - Offset pagination
+// - Checkpoint pagination
 //
 // Checkpoint pagination must be used if you need to retrieve more than 1000 organizations.
 //
-// <h2>Checkpoint Pagination</h2>
+// **Checkpoint Pagination**
 //
 // To search by checkpoint, use the following parameters:
-// <ul>
-// <li><code>from</code>: Optional id from which to start selection.</li>
-// <li><code>take</code>: The total number of entries to retrieve when using the <code>from</code> parameter. Defaults to 50.</li>
-// </ul>
 //
-// <b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.
+// - `from`: Optional id from which to start selection.
+// - `take`: The total number of entries to retrieve when using the `from` parameter. Defaults to 50.
+//
+// **Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListOrganizationsRequestParameters,
@@ -140,7 +138,7 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
-// Create a new Organization within your tenant.  To learn more about Organization settings, behavior, and configuration options, review <a href="https://auth0.com/docs/manage-users/organizations/create-first-organization">Create Your First Organization</a>.
+// Create a new Organization within your tenant.  To learn more about Organization settings, behavior, and configuration options, review [Create Your First Organization](https://auth0.com/docs/manage-users/organizations/create-first-organization).
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateOrganizationRequestContent,
@@ -195,7 +193,7 @@ func (c *Client) Get(
 
 // Remove an Organization from your tenant.  This action cannot be undone.
 //
-// <b>Note</b>: Members are automatically disassociated from an Organization when it is deleted. However, this action does <b>not</b> delete these users from your tenant.
+// **Note**: Members are automatically disassociated from an Organization when it is deleted. However, this action does **not** delete these users from your tenant.
 func (c *Client) Delete(
 	ctx context.Context,
 	// Organization identifier.
@@ -213,7 +211,7 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Update the details of a specific <a href="https://auth0.com/docs/manage-users/organizations/configure-organizations/create-organizations">Organization</a>, such as name and display name, branding options, and metadata.
+// Update the details of a specific [Organization](https://auth0.com/docs/manage-users/organizations/configure-organizations/create-organizations), such as name and display name, branding options, and metadata.
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the organization to update.
