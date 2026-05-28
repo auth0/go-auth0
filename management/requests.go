@@ -12698,6 +12698,7 @@ var (
 	updateTenantSettingsRequestContentFieldEnableAiGuide                                  = big.NewInt(1 << 33)
 	updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 34)
 	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 35)
+	updateTenantSettingsRequestContentFieldCountryCodes                                   = big.NewInt(1 << 36)
 )
 
 type UpdateTenantSettingsRequestContent struct {
@@ -12764,6 +12765,7 @@ type UpdateTenantSettingsRequestContent struct {
 	// Whether Phone Consolidated Experience is enabled for this tenant.
 	PhoneConsolidatedExperience           *bool                                                `json:"phone_consolidated_experience,omitempty" url:"-"`
 	DynamicClientRegistrationSecurityMode *TenantSettingsDynamicClientRegistrationSecurityMode `json:"dynamic_client_registration_security_mode,omitempty" url:"-"`
+	CountryCodes                          *TenantSettingsCountryCodes                          `json:"country_codes,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -13026,6 +13028,13 @@ func (u *UpdateTenantSettingsRequestContent) SetPhoneConsolidatedExperience(phon
 func (u *UpdateTenantSettingsRequestContent) SetDynamicClientRegistrationSecurityMode(dynamicClientRegistrationSecurityMode *TenantSettingsDynamicClientRegistrationSecurityMode) {
 	u.DynamicClientRegistrationSecurityMode = dynamicClientRegistrationSecurityMode
 	u.require(updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode)
+}
+
+// SetCountryCodes sets the CountryCodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetCountryCodes(countryCodes *TenantSettingsCountryCodes) {
+	u.CountryCodes = countryCodes
+	u.require(updateTenantSettingsRequestContentFieldCountryCodes)
 }
 
 func (u *UpdateTenantSettingsRequestContent) UnmarshalJSON(data []byte) error {
