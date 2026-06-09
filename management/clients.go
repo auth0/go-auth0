@@ -7373,6 +7373,7 @@ var (
 	clientMyOrganizationPatchConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
 	clientMyOrganizationPatchConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
 	clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
+	clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 4)
 )
 
 type ClientMyOrganizationPatchConfiguration struct {
@@ -7383,6 +7384,8 @@ type ClientMyOrganizationPatchConfiguration struct {
 	// The allowed connection strategies for the My Organization Configuration.
 	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
+	// The client ID this client uses while creating invitations through My Organization API.
+	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7417,6 +7420,13 @@ func (c *ClientMyOrganizationPatchConfiguration) GetConnectionDeletionBehavior()
 		return ""
 	}
 	return c.ConnectionDeletionBehavior
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetInvitationLandingClientID() string {
+	if c == nil || c.InvitationLandingClientID == nil {
+		return ""
+	}
+	return *c.InvitationLandingClientID
 }
 
 func (c *ClientMyOrganizationPatchConfiguration) GetExtraProperties() map[string]interface{} {
@@ -7459,6 +7469,13 @@ func (c *ClientMyOrganizationPatchConfiguration) SetAllowedStrategies(allowedStr
 func (c *ClientMyOrganizationPatchConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
 	c.ConnectionDeletionBehavior = connectionDeletionBehavior
 	c.require(clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior)
+}
+
+// SetInvitationLandingClientID sets the InvitationLandingClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetInvitationLandingClientID(invitationLandingClientID *string) {
+	c.InvitationLandingClientID = invitationLandingClientID
+	c.require(clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID)
 }
 
 func (c *ClientMyOrganizationPatchConfiguration) UnmarshalJSON(data []byte) error {
@@ -7509,6 +7526,7 @@ var (
 	clientMyOrganizationPostConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
 	clientMyOrganizationPostConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
 	clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
+	clientMyOrganizationPostConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 4)
 )
 
 type ClientMyOrganizationPostConfiguration struct {
@@ -7519,6 +7537,8 @@ type ClientMyOrganizationPostConfiguration struct {
 	// The allowed connection strategies for the My Organization Configuration.
 	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
+	// The client ID this client uses while creating invitations through My Organization API.
+	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7553,6 +7573,13 @@ func (c *ClientMyOrganizationPostConfiguration) GetConnectionDeletionBehavior() 
 		return ""
 	}
 	return c.ConnectionDeletionBehavior
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetInvitationLandingClientID() string {
+	if c == nil || c.InvitationLandingClientID == nil {
+		return ""
+	}
+	return *c.InvitationLandingClientID
 }
 
 func (c *ClientMyOrganizationPostConfiguration) GetExtraProperties() map[string]interface{} {
@@ -7595,6 +7622,13 @@ func (c *ClientMyOrganizationPostConfiguration) SetAllowedStrategies(allowedStra
 func (c *ClientMyOrganizationPostConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
 	c.ConnectionDeletionBehavior = connectionDeletionBehavior
 	c.require(clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior)
+}
+
+// SetInvitationLandingClientID sets the InvitationLandingClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetInvitationLandingClientID(invitationLandingClientID *string) {
+	c.InvitationLandingClientID = invitationLandingClientID
+	c.require(clientMyOrganizationPostConfigurationFieldInvitationLandingClientID)
 }
 
 func (c *ClientMyOrganizationPostConfiguration) UnmarshalJSON(data []byte) error {
@@ -7645,6 +7679,7 @@ var (
 	clientMyOrganizationResponseConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
 	clientMyOrganizationResponseConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
 	clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
+	clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 4)
 )
 
 type ClientMyOrganizationResponseConfiguration struct {
@@ -7655,6 +7690,8 @@ type ClientMyOrganizationResponseConfiguration struct {
 	// The allowed connection strategies for the My Organization Configuration.
 	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
+	// The client ID this client uses while creating invitations through My Organization API.
+	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7689,6 +7726,13 @@ func (c *ClientMyOrganizationResponseConfiguration) GetConnectionDeletionBehavio
 		return ""
 	}
 	return c.ConnectionDeletionBehavior
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetInvitationLandingClientID() string {
+	if c == nil || c.InvitationLandingClientID == nil {
+		return ""
+	}
+	return *c.InvitationLandingClientID
 }
 
 func (c *ClientMyOrganizationResponseConfiguration) GetExtraProperties() map[string]interface{} {
@@ -7731,6 +7775,13 @@ func (c *ClientMyOrganizationResponseConfiguration) SetAllowedStrategies(allowed
 func (c *ClientMyOrganizationResponseConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
 	c.ConnectionDeletionBehavior = connectionDeletionBehavior
 	c.require(clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior)
+}
+
+// SetInvitationLandingClientID sets the InvitationLandingClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetInvitationLandingClientID(invitationLandingClientID *string) {
+	c.InvitationLandingClientID = invitationLandingClientID
+	c.require(clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID)
 }
 
 func (c *ClientMyOrganizationResponseConfiguration) UnmarshalJSON(data []byte) error {

@@ -1083,6 +1083,9 @@ func (c *ConnectionGatewayAuthentication) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Indicates whether the identity provider supports session expiry via the id_token. If true, the system will use the session_expiry claim in the id_token to determine session expiry.
+type ConnectionIDTokenSessionExpirySupported = bool
+
 // Algorithm allowed to verify the ID tokens.
 type ConnectionIDTokenSignedResponseAlgEnum string
 
@@ -2837,6 +2840,7 @@ var (
 	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 34)
 	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 35)
 	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 36)
+	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 37)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2883,6 +2887,7 @@ type ConnectionPropertiesOptions struct {
 	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
 	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3149,6 +3154,13 @@ func (c *ConnectionPropertiesOptions) GetTokenEndpointJwtcaAudFormat() Connectio
 		return ""
 	}
 	return *c.TokenEndpointJwtcaAudFormat
+}
+
+func (c *ConnectionPropertiesOptions) GetIDTokenSessionExpirySupported() ConnectionIDTokenSessionExpirySupported {
+	if c == nil || c.IDTokenSessionExpirySupported == nil {
+		return false
+	}
+	return *c.IDTokenSessionExpirySupported
 }
 
 func (c *ConnectionPropertiesOptions) GetExtraProperties() map[string]interface{} {
@@ -3422,6 +3434,13 @@ func (c *ConnectionPropertiesOptions) SetTokenEndpointAuthSigningAlg(tokenEndpoi
 func (c *ConnectionPropertiesOptions) SetTokenEndpointJwtcaAudFormat(tokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc) {
 	c.TokenEndpointJwtcaAudFormat = tokenEndpointJwtcaAudFormat
 	c.require(connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat)
+}
+
+// SetIDTokenSessionExpirySupported sets the IDTokenSessionExpirySupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetIDTokenSessionExpirySupported(idTokenSessionExpirySupported *ConnectionIDTokenSessionExpirySupported) {
+	c.IDTokenSessionExpirySupported = idTokenSessionExpirySupported
+	c.require(connectionPropertiesOptionsFieldIDTokenSessionExpirySupported)
 }
 
 func (c *ConnectionPropertiesOptions) UnmarshalJSON(data []byte) error {
@@ -5477,6 +5496,7 @@ var (
 	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 34)
 	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 35)
 	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 36)
+	updateConnectionOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 37)
 )
 
 type UpdateConnectionOptions struct {
@@ -5523,6 +5543,7 @@ type UpdateConnectionOptions struct {
 	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
 	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -5789,6 +5810,13 @@ func (u *UpdateConnectionOptions) GetTokenEndpointJwtcaAudFormat() ConnectionTok
 		return ""
 	}
 	return *u.TokenEndpointJwtcaAudFormat
+}
+
+func (u *UpdateConnectionOptions) GetIDTokenSessionExpirySupported() ConnectionIDTokenSessionExpirySupported {
+	if u == nil || u.IDTokenSessionExpirySupported == nil {
+		return false
+	}
+	return *u.IDTokenSessionExpirySupported
 }
 
 func (u *UpdateConnectionOptions) GetExtraProperties() map[string]interface{} {
@@ -6062,6 +6090,13 @@ func (u *UpdateConnectionOptions) SetTokenEndpointAuthSigningAlg(tokenEndpointAu
 func (u *UpdateConnectionOptions) SetTokenEndpointJwtcaAudFormat(tokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc) {
 	u.TokenEndpointJwtcaAudFormat = tokenEndpointJwtcaAudFormat
 	u.require(updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat)
+}
+
+// SetIDTokenSessionExpirySupported sets the IDTokenSessionExpirySupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetIDTokenSessionExpirySupported(idTokenSessionExpirySupported *ConnectionIDTokenSessionExpirySupported) {
+	u.IDTokenSessionExpirySupported = idTokenSessionExpirySupported
+	u.require(updateConnectionOptionsFieldIDTokenSessionExpirySupported)
 }
 
 func (u *UpdateConnectionOptions) UnmarshalJSON(data []byte) error {

@@ -595,7 +595,7 @@ var (
 type PatchRateLimitPolicyConfigurationRequestContentAction struct {
 	// Determines the action to take when the rate limit is exceeded.
 	Action PatchRateLimitPolicyConfigurationRequestContentActionAction `json:"action" url:"action"`
-	// The maximum number of requests allowed in a single refresh window.
+	// The maximum number of requests allowed per second.
 	Limit int `json:"limit" url:"limit"`
 	// The HTTPS URI to redirect to when the rate limit is exceeded.
 	RedirectURI string `json:"redirect_uri" url:"redirect_uri"`
@@ -733,7 +733,7 @@ var (
 type PatchRateLimitPolicyConfigurationRequestContentOne struct {
 	// Determines the action to take when the rate limit is exceeded.
 	Action PatchRateLimitPolicyConfigurationRequestContentOneAction `json:"action" url:"action"`
-	// The maximum number of requests allowed in a single refresh window.
+	// The maximum number of requests allowed per second.
 	Limit int `json:"limit" url:"limit"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -1244,7 +1244,7 @@ var (
 type RateLimitPolicyConfigurationAction struct {
 	// Determines the action to take when the rate limit is exceeded.
 	Action RateLimitPolicyConfigurationActionAction `json:"action" url:"action"`
-	// The maximum number of requests allowed in a single refresh window.
+	// The maximum number of requests allowed per second.
 	Limit int `json:"limit" url:"limit"`
 	// The HTTPS URI to redirect to when the rate limit is exceeded.
 	RedirectURI string `json:"redirect_uri" url:"redirect_uri"`
@@ -1382,7 +1382,7 @@ var (
 type RateLimitPolicyConfigurationOne struct {
 	// Determines the action to take when the rate limit is exceeded.
 	Action RateLimitPolicyConfigurationOneAction `json:"action" url:"action"`
-	// The maximum number of requests allowed in a single refresh window.
+	// The maximum number of requests allowed per second.
 	Limit int `json:"limit" url:"limit"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
