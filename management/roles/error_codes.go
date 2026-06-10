@@ -24,13 +24,13 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 			APIError: apiError,
 		}
 	},
-	429: func(apiError *core.APIError) error {
-		return &management.TooManyRequestsError{
+	404: func(apiError *core.APIError) error {
+		return &management.NotFoundError{
 			APIError: apiError,
 		}
 	},
-	404: func(apiError *core.APIError) error {
-		return &management.NotFoundError{
+	429: func(apiError *core.APIError) error {
+		return &management.TooManyRequestsError{
 			APIError: apiError,
 		}
 	},

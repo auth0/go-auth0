@@ -10245,7 +10245,7 @@ type RevokeRefreshTokensRequestContent struct {
 	IDs []string `json:"ids,omitempty" url:"-"`
 	// Revoke all refresh tokens for this user.
 	UserID *string `json:"user_id,omitempty" url:"-"`
-	// Revoke all refresh tokens for this client.
+	// Revoke refresh tokens for this client. Must be paired with `user_id`; optionally narrowed further with `audience`.
 	ClientID *string `json:"client_id,omitempty" url:"-"`
 	// Resource server identifier (audience) to scope the revocation. Must be used with both `user_id` and `client_id`.
 	Audience *string `json:"audience,omitempty" url:"-"`
@@ -12676,29 +12676,35 @@ var (
 	updateTenantSettingsRequestContentFieldSupportURL                                     = big.NewInt(1 << 11)
 	updateTenantSettingsRequestContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
 	updateTenantSettingsRequestContentFieldSessionLifetime                                = big.NewInt(1 << 13)
-	updateTenantSettingsRequestContentFieldIdleSessionLifetime                            = big.NewInt(1 << 14)
-	updateTenantSettingsRequestContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 15)
-	updateTenantSettingsRequestContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 16)
-	updateTenantSettingsRequestContentFieldSandboxVersion                                 = big.NewInt(1 << 17)
-	updateTenantSettingsRequestContentFieldLegacySandboxVersion                           = big.NewInt(1 << 18)
-	updateTenantSettingsRequestContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 19)
-	updateTenantSettingsRequestContentFieldEnabledLocales                                 = big.NewInt(1 << 20)
-	updateTenantSettingsRequestContentFieldSessionCookie                                  = big.NewInt(1 << 21)
-	updateTenantSettingsRequestContentFieldSessions                                       = big.NewInt(1 << 22)
-	updateTenantSettingsRequestContentFieldOidcLogout                                     = big.NewInt(1 << 23)
-	updateTenantSettingsRequestContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 24)
-	updateTenantSettingsRequestContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 25)
-	updateTenantSettingsRequestContentFieldAcrValuesSupported                             = big.NewInt(1 << 26)
-	updateTenantSettingsRequestContentFieldMtls                                           = big.NewInt(1 << 27)
-	updateTenantSettingsRequestContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 28)
-	updateTenantSettingsRequestContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 29)
-	updateTenantSettingsRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 30)
-	updateTenantSettingsRequestContentFieldResourceParameterProfile                       = big.NewInt(1 << 31)
-	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 32)
-	updateTenantSettingsRequestContentFieldEnableAiGuide                                  = big.NewInt(1 << 33)
-	updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 34)
-	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 35)
-	updateTenantSettingsRequestContentFieldCountryCodes                                   = big.NewInt(1 << 36)
+	updateTenantSettingsRequestContentFieldSessionLifetimeInMinutes                       = big.NewInt(1 << 14)
+	updateTenantSettingsRequestContentFieldIdleSessionLifetime                            = big.NewInt(1 << 15)
+	updateTenantSettingsRequestContentFieldIdleSessionLifetimeInMinutes                   = big.NewInt(1 << 16)
+	updateTenantSettingsRequestContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 17)
+	updateTenantSettingsRequestContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 18)
+	updateTenantSettingsRequestContentFieldEphemeralSessionLifetimeInMinutes              = big.NewInt(1 << 19)
+	updateTenantSettingsRequestContentFieldIdleEphemeralSessionLifetimeInMinutes          = big.NewInt(1 << 20)
+	updateTenantSettingsRequestContentFieldSandboxVersion                                 = big.NewInt(1 << 21)
+	updateTenantSettingsRequestContentFieldLegacySandboxVersion                           = big.NewInt(1 << 22)
+	updateTenantSettingsRequestContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 23)
+	updateTenantSettingsRequestContentFieldEnabledLocales                                 = big.NewInt(1 << 24)
+	updateTenantSettingsRequestContentFieldSecurityHeaders                                = big.NewInt(1 << 25)
+	updateTenantSettingsRequestContentFieldSessionCookie                                  = big.NewInt(1 << 26)
+	updateTenantSettingsRequestContentFieldSessions                                       = big.NewInt(1 << 27)
+	updateTenantSettingsRequestContentFieldOidcLogout                                     = big.NewInt(1 << 28)
+	updateTenantSettingsRequestContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 29)
+	updateTenantSettingsRequestContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 30)
+	updateTenantSettingsRequestContentFieldAcrValuesSupported                             = big.NewInt(1 << 31)
+	updateTenantSettingsRequestContentFieldMtls                                           = big.NewInt(1 << 32)
+	updateTenantSettingsRequestContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 33)
+	updateTenantSettingsRequestContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 34)
+	updateTenantSettingsRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 35)
+	updateTenantSettingsRequestContentFieldResourceParameterProfile                       = big.NewInt(1 << 36)
+	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 37)
+	updateTenantSettingsRequestContentFieldEnableAiGuide                                  = big.NewInt(1 << 38)
+	updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 39)
+	updateTenantSettingsRequestContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 40)
+	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 41)
+	updateTenantSettingsRequestContentFieldCountryCodes                                   = big.NewInt(1 << 42)
 )
 
 type UpdateTenantSettingsRequestContent struct {
@@ -12725,12 +12731,20 @@ type UpdateTenantSettingsRequestContent struct {
 	AllowedLogoutURLs []string `json:"allowed_logout_urls,omitempty" url:"-"`
 	// Number of hours a session will stay valid.
 	SessionLifetime *int `json:"session_lifetime,omitempty" url:"-"`
+	// Number of minutes a session will stay valid. Cannot be specified together with `session_lifetime`.
+	SessionLifetimeInMinutes *int `json:"session_lifetime_in_minutes,omitempty" url:"-"`
 	// Number of hours for which a session can be inactive before the user must log in again.
 	IdleSessionLifetime *int `json:"idle_session_lifetime,omitempty" url:"-"`
+	// Number of minutes a session can be inactive before the user must log in again. Cannot be specified together with `idle_session_lifetime`.
+	IdleSessionLifetimeInMinutes *int `json:"idle_session_lifetime_in_minutes,omitempty" url:"-"`
 	// Number of hours an ephemeral (non-persistent) session will stay valid.
 	EphemeralSessionLifetime *int `json:"ephemeral_session_lifetime,omitempty" url:"-"`
 	// Number of hours for which an ephemeral (non-persistent) session can be inactive before the user must log in again.
 	IdleEphemeralSessionLifetime *int `json:"idle_ephemeral_session_lifetime,omitempty" url:"-"`
+	// Number of minutes an ephemeral (non-persistent) session will stay valid. Cannot be specified together with `ephemeral_session_lifetime`.
+	EphemeralSessionLifetimeInMinutes *int `json:"ephemeral_session_lifetime_in_minutes,omitempty" url:"-"`
+	// Number of minutes an ephemeral (non-persistent) session can be inactive before the user must log in again. Cannot be specified together with `idle_ephemeral_session_lifetime`.
+	IdleEphemeralSessionLifetimeInMinutes *int `json:"idle_ephemeral_session_lifetime_in_minutes,omitempty" url:"-"`
 	// Selected sandbox version for the extensibility environment
 	SandboxVersion *string `json:"sandbox_version,omitempty" url:"-"`
 	// Selected legacy sandbox version for the extensibility environment
@@ -12738,10 +12752,11 @@ type UpdateTenantSettingsRequestContent struct {
 	// The default absolute redirection uri, must be https
 	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"-"`
 	// Supported locales for the user interface
-	EnabledLocales []TenantSettingsSupportedLocalesEnum `json:"enabled_locales,omitempty" url:"-"`
-	SessionCookie  *SessionCookieSchema                 `json:"session_cookie,omitempty" url:"-"`
-	Sessions       *TenantSettingsSessions              `json:"sessions,omitempty" url:"-"`
-	OidcLogout     *TenantOidcLogoutSettings            `json:"oidc_logout,omitempty" url:"-"`
+	EnabledLocales  []TenantSettingsSupportedLocalesEnum   `json:"enabled_locales,omitempty" url:"-"`
+	SecurityHeaders *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"-"`
+	SessionCookie   *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"-"`
+	Sessions        *TenantSettingsSessions                `json:"sessions,omitempty" url:"-"`
+	OidcLogout      *TenantOidcLogoutSettings              `json:"oidc_logout,omitempty" url:"-"`
 	// Whether to enable flexible factors for MFA in the PostLogin action
 	CustomizeMfaInPostloginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty" url:"-"`
 	// Whether to accept an organization name instead of an ID on auth endpoints
@@ -12763,7 +12778,9 @@ type UpdateTenantSettingsRequestContent struct {
 	// Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
 	EnableAiGuide *bool `json:"enable_ai_guide,omitempty" url:"-"`
 	// Whether Phone Consolidated Experience is enabled for this tenant.
-	PhoneConsolidatedExperience           *bool                                                `json:"phone_consolidated_experience,omitempty" url:"-"`
+	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty" url:"-"`
+	// Whether session metadata is included in specific tenant logs (slo, oidc_backchannel_logout_failed, oidc_backchannel_logout_succeeded).
+	IncludeSessionMetadataInTenantLogs    *bool                                                `json:"include_session_metadata_in_tenant_logs,omitempty" url:"-"`
 	DynamicClientRegistrationSecurityMode *TenantSettingsDynamicClientRegistrationSecurityMode `json:"dynamic_client_registration_security_mode,omitempty" url:"-"`
 	CountryCodes                          *TenantSettingsCountryCodes                          `json:"country_codes,omitempty" url:"-"`
 
@@ -12876,11 +12893,25 @@ func (u *UpdateTenantSettingsRequestContent) SetSessionLifetime(sessionLifetime 
 	u.require(updateTenantSettingsRequestContentFieldSessionLifetime)
 }
 
+// SetSessionLifetimeInMinutes sets the SessionLifetimeInMinutes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetSessionLifetimeInMinutes(sessionLifetimeInMinutes *int) {
+	u.SessionLifetimeInMinutes = sessionLifetimeInMinutes
+	u.require(updateTenantSettingsRequestContentFieldSessionLifetimeInMinutes)
+}
+
 // SetIdleSessionLifetime sets the IdleSessionLifetime field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateTenantSettingsRequestContent) SetIdleSessionLifetime(idleSessionLifetime *int) {
 	u.IdleSessionLifetime = idleSessionLifetime
 	u.require(updateTenantSettingsRequestContentFieldIdleSessionLifetime)
+}
+
+// SetIdleSessionLifetimeInMinutes sets the IdleSessionLifetimeInMinutes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetIdleSessionLifetimeInMinutes(idleSessionLifetimeInMinutes *int) {
+	u.IdleSessionLifetimeInMinutes = idleSessionLifetimeInMinutes
+	u.require(updateTenantSettingsRequestContentFieldIdleSessionLifetimeInMinutes)
 }
 
 // SetEphemeralSessionLifetime sets the EphemeralSessionLifetime field and marks it as non-optional;
@@ -12895,6 +12926,20 @@ func (u *UpdateTenantSettingsRequestContent) SetEphemeralSessionLifetime(ephemer
 func (u *UpdateTenantSettingsRequestContent) SetIdleEphemeralSessionLifetime(idleEphemeralSessionLifetime *int) {
 	u.IdleEphemeralSessionLifetime = idleEphemeralSessionLifetime
 	u.require(updateTenantSettingsRequestContentFieldIdleEphemeralSessionLifetime)
+}
+
+// SetEphemeralSessionLifetimeInMinutes sets the EphemeralSessionLifetimeInMinutes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetEphemeralSessionLifetimeInMinutes(ephemeralSessionLifetimeInMinutes *int) {
+	u.EphemeralSessionLifetimeInMinutes = ephemeralSessionLifetimeInMinutes
+	u.require(updateTenantSettingsRequestContentFieldEphemeralSessionLifetimeInMinutes)
+}
+
+// SetIdleEphemeralSessionLifetimeInMinutes sets the IdleEphemeralSessionLifetimeInMinutes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetIdleEphemeralSessionLifetimeInMinutes(idleEphemeralSessionLifetimeInMinutes *int) {
+	u.IdleEphemeralSessionLifetimeInMinutes = idleEphemeralSessionLifetimeInMinutes
+	u.require(updateTenantSettingsRequestContentFieldIdleEphemeralSessionLifetimeInMinutes)
 }
 
 // SetSandboxVersion sets the SandboxVersion field and marks it as non-optional;
@@ -12923,6 +12968,13 @@ func (u *UpdateTenantSettingsRequestContent) SetDefaultRedirectionURI(defaultRed
 func (u *UpdateTenantSettingsRequestContent) SetEnabledLocales(enabledLocales []TenantSettingsSupportedLocalesEnum) {
 	u.EnabledLocales = enabledLocales
 	u.require(updateTenantSettingsRequestContentFieldEnabledLocales)
+}
+
+// SetSecurityHeaders sets the SecurityHeaders field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetSecurityHeaders(securityHeaders *TenantSettingsNullableSecurityHeaders) {
+	u.SecurityHeaders = securityHeaders
+	u.require(updateTenantSettingsRequestContentFieldSecurityHeaders)
 }
 
 // SetSessionCookie sets the SessionCookie field and marks it as non-optional;
@@ -13021,6 +13073,13 @@ func (u *UpdateTenantSettingsRequestContent) SetEnableAiGuide(enableAiGuide *boo
 func (u *UpdateTenantSettingsRequestContent) SetPhoneConsolidatedExperience(phoneConsolidatedExperience *bool) {
 	u.PhoneConsolidatedExperience = phoneConsolidatedExperience
 	u.require(updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience)
+}
+
+// SetIncludeSessionMetadataInTenantLogs sets the IncludeSessionMetadataInTenantLogs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetIncludeSessionMetadataInTenantLogs(includeSessionMetadataInTenantLogs *bool) {
+	u.IncludeSessionMetadataInTenantLogs = includeSessionMetadataInTenantLogs
+	u.require(updateTenantSettingsRequestContentFieldIncludeSessionMetadataInTenantLogs)
 }
 
 // SetDynamicClientRegistrationSecurityMode sets the DynamicClientRegistrationSecurityMode field and marks it as non-optional;
@@ -13150,11 +13209,10 @@ func (u *UpdateVerifiableCredentialTemplateRequestContent) MarshalJSON() ([]byte
 }
 
 var (
-	updateBrandingRequestContentFieldColors      = big.NewInt(1 << 0)
-	updateBrandingRequestContentFieldFaviconURL  = big.NewInt(1 << 1)
-	updateBrandingRequestContentFieldLogoURL     = big.NewInt(1 << 2)
-	updateBrandingRequestContentFieldIdentifiers = big.NewInt(1 << 3)
-	updateBrandingRequestContentFieldFont        = big.NewInt(1 << 4)
+	updateBrandingRequestContentFieldColors     = big.NewInt(1 << 0)
+	updateBrandingRequestContentFieldFaviconURL = big.NewInt(1 << 1)
+	updateBrandingRequestContentFieldLogoURL    = big.NewInt(1 << 2)
+	updateBrandingRequestContentFieldFont       = big.NewInt(1 << 3)
 )
 
 type UpdateBrandingRequestContent struct {
@@ -13162,9 +13220,8 @@ type UpdateBrandingRequestContent struct {
 	// URL for the favicon. Must use HTTPS.
 	FaviconURL *string `json:"favicon_url,omitempty" url:"-"`
 	// URL for the logo. Must use HTTPS.
-	LogoURL     *string                    `json:"logo_url,omitempty" url:"-"`
-	Identifiers *UpdateBrandingIdentifiers `json:"identifiers,omitempty" url:"-"`
-	Font        *UpdateBrandingFont        `json:"font,omitempty" url:"-"`
+	LogoURL *string             `json:"logo_url,omitempty" url:"-"`
+	Font    *UpdateBrandingFont `json:"font,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -13196,13 +13253,6 @@ func (u *UpdateBrandingRequestContent) SetFaviconURL(faviconURL *string) {
 func (u *UpdateBrandingRequestContent) SetLogoURL(logoURL *string) {
 	u.LogoURL = logoURL
 	u.require(updateBrandingRequestContentFieldLogoURL)
-}
-
-// SetIdentifiers sets the Identifiers field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateBrandingRequestContent) SetIdentifiers(identifiers *UpdateBrandingIdentifiers) {
-	u.Identifiers = identifiers
-	u.require(updateBrandingRequestContentFieldIdentifiers)
 }
 
 // SetFont sets the Font field and marks it as non-optional;
