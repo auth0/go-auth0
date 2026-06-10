@@ -1,5 +1,18 @@
 # Change Log
 
+## [v2.13.0](https://github.com/auth0/go-auth0/tree/v2.13.0) (2026-06-10)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.12.0...v2.13.0)
+
+**Breaking Changes**
+- Removed branding `identifiers` configuration: the `Identifiers` field on `GetBrandingResponseContent`, `UpdateBrandingResponseContent`, and `UpdateBrandingRequestContent`, along with the `BrandingIdentifiers`, `UpdateBrandingIdentifiers`, `BrandingPhoneDisplay`, `UpdateBrandingPhoneDisplay` types and the `BrandingLoginDisplayEnum`, `BrandingPhoneMaskingEnum`, `BrandingPhoneFormattingEnum` (and their `UpdateBranding` counterparts) enums [\#788](https://github.com/auth0/go-auth0/pull/788) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Changed `SetID` signature on phone template types (`PhoneTemplate`, `CreatePhoneTemplateResponseContent`, `GetPhoneTemplateResponseContent`, `UpdatePhoneTemplateResponseContent`, `ResetPhoneTemplateResponseContent`) from `SetID(id string)` to `SetID(id *string)` [\#788](https://github.com/auth0/go-auth0/pull/788) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Added**
+- feat: add tenant security headers configuration (`TenantSettings.SecurityHeaders`) with Content Security Policy (`ContentSecurityPolicyConfig`, `CspPolicy`, `CspDirectives`, `CspReportTo`, reporting endpoints) and XSS protection (`XSSProtectionConfig`) support [\#788](https://github.com/auth0/go-auth0/pull/788) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add minute-based session lifetime fields (`SessionLifetimeInMinutes`, `IdleSessionLifetimeInMinutes`, `EphemeralSessionLifetimeInMinutes`, `IdleEphemeralSessionLifetimeInMinutes`) to `UpdateTenantSettingsRequestContent` [\#788](https://github.com/auth0/go-auth0/pull/788) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `id_token_session_expiry_supported` field to connection types [\#788](https://github.com/auth0/go-auth0/pull/788) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `invitation_landing_client_id` field to client my-organization configuration types [\#788](https://github.com/auth0/go-auth0/pull/788) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.12.0](https://github.com/auth0/go-auth0/tree/v2.12.0) (2026-05-28)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.11.0...v2.12.0)
 
