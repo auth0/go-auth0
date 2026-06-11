@@ -101,7 +101,7 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
-// Revoke refresh tokens in bulk by ID list, user, user+client, or client.
+// Revoke refresh tokens in bulk by ID list, user, user+client, or user+client+audience.
 func (c *Client) Revoke(
 	ctx context.Context,
 	request *management.RevokeRefreshTokensRequestContent,
