@@ -1,5 +1,11 @@
 # Change Log
 
+## [v1.42.1](https://github.com/auth0/go-auth0/tree/v1.42.1) (2026-06-10)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.42.0...v1.42.1)
+
+**Fixed**
+- fix(client): make retry backoff jitter safe for concurrent use [\#782](https://github.com/auth0/go-auth0/pull/782) ([developerkunal](https://github.com/developerkunal))
+
 ## [v1.42.0](https://github.com/auth0/go-auth0/tree/v1.42.0) (2026-05-21)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.41.0...v1.42.0)
 
