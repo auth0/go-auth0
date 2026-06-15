@@ -612,6 +612,30 @@ func TestUserManager_ListConnectedAccounts(t *testing.T) {
 	assert.Equal(t, len(connectedAccounts.ConnectedAccounts), 0, "Expected no connected accounts for the user")
 }
 
+func TestUserConnectedAccount_UnmarshalNewFields(t *testing.T) {
+	body := `{
+		"connected_accounts": [{
+			"id": "ca_001",
+			"connection": "test-connection",
+			"connection_id": "con_abc123",
+			"strategy": "google-oauth2",
+			"access_type": "offline",
+			"scopes": ["email", "profile"],
+			"created_at": "2025-09-24T12:00:00.000Z",
+			"organization_id": "org_xyz789"
+		}]
+	}`
+
+	var list UserConnectedAccountList
+	require.NoError(t, json.Unmarshal([]byte(body), &list))
+	require.Len(t, list.ConnectedAccounts, 1)
+
+	account := list.ConnectedAccounts[0]
+	assert.Equal(t, "con_abc123", account.GetConnectionID())
+	assert.Equal(t, "google-oauth2", account.GetStrategy())
+	assert.Equal(t, "org_xyz789", account.GetOrganizationID())
+}
+
 func givenAUser(t *testing.T) *User {
 	t.Helper()
 
@@ -664,6 +688,36 @@ func retrieveRefreshTokens(t *testing.T) *RefreshTokenList {
 	require.NoError(t, err)
 
 	return tokens
+}
+
+func TestUserConnectedAccount_GetConnectionID(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{ConnectionID: &zeroValue}
+	u.GetConnectionID()
+	u = &UserConnectedAccount{}
+	u.GetConnectionID()
+	u = nil
+	u.GetConnectionID()
+}
+
+func TestUserConnectedAccount_GetStrategy(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{Strategy: &zeroValue}
+	u.GetStrategy()
+	u = &UserConnectedAccount{}
+	u.GetStrategy()
+	u = nil
+	u.GetStrategy()
+}
+
+func TestUserConnectedAccount_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{OrganizationID: &zeroValue}
+	u.GetOrganizationID()
+	u = &UserConnectedAccount{}
+	u.GetOrganizationID()
+	u = nil
+	u.GetOrganizationID()
 }
 
 func cleanupUser(t *testing.T, userID string) {
