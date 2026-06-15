@@ -12817,6 +12817,16 @@ func TestMyOrganizationConfiguration_GetConnectionProfileID(tt *testing.T) {
 	m.GetConnectionProfileID()
 }
 
+func TestMyOrganizationConfiguration_GetInvitationLandingClientID(tt *testing.T) {
+	var zeroValue string
+	m := &MyOrganizationConfiguration{InvitationLandingClientID: &zeroValue}
+	m.GetInvitationLandingClientID()
+	m = &MyOrganizationConfiguration{}
+	m.GetInvitationLandingClientID()
+	m = nil
+	m.GetInvitationLandingClientID()
+}
+
 func TestMyOrganizationConfiguration_GetUserAttributeProfileID(tt *testing.T) {
 	var zeroValue string
 	m := &MyOrganizationConfiguration{UserAttributeProfileID: &zeroValue}
