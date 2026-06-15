@@ -310,6 +310,10 @@ type MyOrganizationConfiguration struct {
 	// associated with organizations for this client.
 	// Possible values: "allow", "allow_if_empty".
 	ConnectionDeletionBehavior *string `json:"connection_deletion_behavior,omitempty"`
+
+	// InvitationLandingClientID is the client ID used as the invitation landing page
+	// when creating invitations through the My Organization API.
+	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty"`
 }
 
 // ClientTokenExchange allows configuration for token exchange.

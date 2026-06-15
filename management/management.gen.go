@@ -10244,6 +10244,14 @@ func (m *MyOrganizationConfiguration) GetConnectionProfileID() string {
 	return *m.ConnectionProfileID
 }
 
+// GetInvitationLandingClientID returns the InvitationLandingClientID field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationConfiguration) GetInvitationLandingClientID() string {
+	if m == nil || m.InvitationLandingClientID == nil {
+		return ""
+	}
+	return *m.InvitationLandingClientID
+}
+
 // GetUserAttributeProfileID returns the UserAttributeProfileID field if it's non-nil, zero value otherwise.
 func (m *MyOrganizationConfiguration) GetUserAttributeProfileID() string {
 	if m == nil || m.UserAttributeProfileID == nil {
