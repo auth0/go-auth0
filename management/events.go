@@ -30587,6 +30587,8 @@ type EventStreamSubscribeEventsResponseContent struct {
 	UserUpdated                    *EventStreamCloudEventUserUpdated
 	Error                          *EventStreamCloudEventErrorMessage
 	OffsetOnly                     *EventStreamCloudEventOffsetOnlyMessage
+
+	rawJSON json.RawMessage
 }
 
 func (e *EventStreamSubscribeEventsResponseContent) GetType() string {
@@ -30921,6 +30923,7 @@ func (e *EventStreamSubscribeEventsResponseContent) UnmarshalJSON(data []byte) e
 		}
 		e.OffsetOnly = value
 	}
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -30999,6 +31002,9 @@ func (e EventStreamSubscribeEventsResponseContent) MarshalJSON() ([]byte, error)
 	}
 	if e.OffsetOnly != nil {
 		return internal.MarshalJSONWithExtraProperty(e.OffsetOnly, "type", "offset-only")
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
@@ -31185,6 +31191,9 @@ func (e *EventStreamSubscribeEventsResponseContent) validate() error {
 	}
 	if len(fields) == 0 {
 		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
 		}
 		return fmt.Errorf("type %T is empty", e)

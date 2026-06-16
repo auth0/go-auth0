@@ -896,30 +896,32 @@ var (
 	clientFieldClientMetadata                                 = big.NewInt(1 << 33)
 	clientFieldMobile                                         = big.NewInt(1 << 34)
 	clientFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	clientFieldRefreshToken                                   = big.NewInt(1 << 36)
-	clientFieldDefaultOrganization                            = big.NewInt(1 << 37)
-	clientFieldOrganizationUsage                              = big.NewInt(1 << 38)
-	clientFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
-	clientFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
-	clientFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
-	clientFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
-	clientFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
-	clientFieldSignedRequestObject                            = big.NewInt(1 << 44)
-	clientFieldComplianceLevel                                = big.NewInt(1 << 45)
-	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	clientFieldTokenExchange                                  = big.NewInt(1 << 47)
-	clientFieldParRequestExpiry                               = big.NewInt(1 << 48)
-	clientFieldTokenQuota                                     = big.NewInt(1 << 49)
-	clientFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
-	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
-	clientFieldRedirectionPolicy                              = big.NewInt(1 << 53)
-	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
-	clientFieldExternalMetadataType                           = big.NewInt(1 << 56)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
-	clientFieldExternalClientID                               = big.NewInt(1 << 58)
-	clientFieldJwksURI                                        = big.NewInt(1 << 59)
+	clientFieldNativeSocialLogin                              = big.NewInt(1 << 36)
+	clientFieldFedcmLogin                                     = big.NewInt(1 << 37)
+	clientFieldRefreshToken                                   = big.NewInt(1 << 38)
+	clientFieldDefaultOrganization                            = big.NewInt(1 << 39)
+	clientFieldOrganizationUsage                              = big.NewInt(1 << 40)
+	clientFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
+	clientFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
+	clientFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
+	clientFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
+	clientFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
+	clientFieldSignedRequestObject                            = big.NewInt(1 << 46)
+	clientFieldComplianceLevel                                = big.NewInt(1 << 47)
+	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
+	clientFieldTokenExchange                                  = big.NewInt(1 << 49)
+	clientFieldParRequestExpiry                               = big.NewInt(1 << 50)
+	clientFieldTokenQuota                                     = big.NewInt(1 << 51)
+	clientFieldExpressConfiguration                           = big.NewInt(1 << 52)
+	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
+	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
+	clientFieldRedirectionPolicy                              = big.NewInt(1 << 55)
+	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
+	clientFieldExternalMetadataType                           = big.NewInt(1 << 58)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
+	clientFieldExternalClientID                               = big.NewInt(1 << 60)
+	clientFieldJwksURI                                        = big.NewInt(1 << 61)
 )
 
 type Client struct {
@@ -985,6 +987,8 @@ type Client struct {
 	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
+	NativeSocialLogin           *NativeSocialLogin                     `json:"native_social_login,omitempty" url:"native_social_login,omitempty"`
+	FedcmLogin                  *FedCmLogin                            `json:"fedcm_login,omitempty" url:"fedcm_login,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 	DefaultOrganization         *ClientDefaultOrganization             `json:"default_organization,omitempty" url:"default_organization,omitempty"`
 	OrganizationUsage           *ClientOrganizationUsageEnum           `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
@@ -1278,6 +1282,20 @@ func (c *Client) GetInitiateLoginURI() string {
 		return ""
 	}
 	return *c.InitiateLoginURI
+}
+
+func (c *Client) GetNativeSocialLogin() NativeSocialLogin {
+	if c == nil || c.NativeSocialLogin == nil {
+		return NativeSocialLogin{}
+	}
+	return *c.NativeSocialLogin
+}
+
+func (c *Client) GetFedcmLogin() FedCmLogin {
+	if c == nil || c.FedcmLogin == nil {
+		return FedCmLogin{}
+	}
+	return *c.FedcmLogin
 }
 
 func (c *Client) GetRefreshToken() ClientRefreshTokenConfiguration {
@@ -1712,6 +1730,20 @@ func (c *Client) SetMobile(mobile *ClientMobile) {
 func (c *Client) SetInitiateLoginURI(initiateLoginURI *string) {
 	c.InitiateLoginURI = initiateLoginURI
 	c.require(clientFieldInitiateLoginURI)
+}
+
+// SetNativeSocialLogin sets the NativeSocialLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetNativeSocialLogin(nativeSocialLogin *NativeSocialLogin) {
+	c.NativeSocialLogin = nativeSocialLogin
+	c.require(clientFieldNativeSocialLogin)
+}
+
+// SetFedcmLogin sets the FedcmLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetFedcmLogin(fedcmLogin *FedCmLogin) {
+	c.FedcmLogin = fedcmLogin
+	c.require(clientFieldFedcmLogin)
 }
 
 // SetRefreshToken sets the RefreshToken field and marks it as non-optional;
@@ -9753,30 +9785,32 @@ var (
 	createClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
 	createClientResponseContentFieldMobile                                         = big.NewInt(1 << 34)
 	createClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	createClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 36)
-	createClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 37)
-	createClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 38)
-	createClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
-	createClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
-	createClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
-	createClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
-	createClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
-	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
-	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
-	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 47)
-	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
-	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
-	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
-	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
-	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 53)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 56)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 58)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 59)
+	createClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 36)
+	createClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 37)
+	createClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 38)
+	createClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 39)
+	createClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 40)
+	createClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
+	createClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
+	createClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
+	createClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
+	createClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
+	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
+	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 47)
+	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
+	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 49)
+	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 50)
+	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 51)
+	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 52)
+	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
+	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 58)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 60)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 61)
 )
 
 type CreateClientResponseContent struct {
@@ -9842,6 +9876,8 @@ type CreateClientResponseContent struct {
 	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
+	NativeSocialLogin           *NativeSocialLogin                     `json:"native_social_login,omitempty" url:"native_social_login,omitempty"`
+	FedcmLogin                  *FedCmLogin                            `json:"fedcm_login,omitempty" url:"fedcm_login,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 	DefaultOrganization         *ClientDefaultOrganization             `json:"default_organization,omitempty" url:"default_organization,omitempty"`
 	OrganizationUsage           *ClientOrganizationUsageEnum           `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
@@ -10135,6 +10171,20 @@ func (c *CreateClientResponseContent) GetInitiateLoginURI() string {
 		return ""
 	}
 	return *c.InitiateLoginURI
+}
+
+func (c *CreateClientResponseContent) GetNativeSocialLogin() NativeSocialLogin {
+	if c == nil || c.NativeSocialLogin == nil {
+		return NativeSocialLogin{}
+	}
+	return *c.NativeSocialLogin
+}
+
+func (c *CreateClientResponseContent) GetFedcmLogin() FedCmLogin {
+	if c == nil || c.FedcmLogin == nil {
+		return FedCmLogin{}
+	}
+	return *c.FedcmLogin
 }
 
 func (c *CreateClientResponseContent) GetRefreshToken() ClientRefreshTokenConfiguration {
@@ -10569,6 +10619,20 @@ func (c *CreateClientResponseContent) SetMobile(mobile *ClientMobile) {
 func (c *CreateClientResponseContent) SetInitiateLoginURI(initiateLoginURI *string) {
 	c.InitiateLoginURI = initiateLoginURI
 	c.require(createClientResponseContentFieldInitiateLoginURI)
+}
+
+// SetNativeSocialLogin sets the NativeSocialLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetNativeSocialLogin(nativeSocialLogin *NativeSocialLogin) {
+	c.NativeSocialLogin = nativeSocialLogin
+	c.require(createClientResponseContentFieldNativeSocialLogin)
+}
+
+// SetFedcmLogin sets the FedcmLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetFedcmLogin(fedcmLogin *FedCmLogin) {
+	c.FedcmLogin = fedcmLogin
+	c.require(createClientResponseContentFieldFedcmLogin)
 }
 
 // SetRefreshToken sets the RefreshToken field and marks it as non-optional;
@@ -11485,6 +11549,177 @@ func (f *FedCmLoginGoogle) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+// Google FedCM configuration for this client
+var (
+	fedCmLoginGooglePatchFieldIsEnabled = big.NewInt(1 << 0)
+)
+
+type FedCmLoginGooglePatch struct {
+	// When true, shows the Google FedCM prompt on New Universal Login for this client
+	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FedCmLoginGooglePatch) GetIsEnabled() bool {
+	if f == nil || f.IsEnabled == nil {
+		return false
+	}
+	return *f.IsEnabled
+}
+
+func (f *FedCmLoginGooglePatch) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FedCmLoginGooglePatch) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetIsEnabled sets the IsEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FedCmLoginGooglePatch) SetIsEnabled(isEnabled *bool) {
+	f.IsEnabled = isEnabled
+	f.require(fedCmLoginGooglePatchFieldIsEnabled)
+}
+
+func (f *FedCmLoginGooglePatch) UnmarshalJSON(data []byte) error {
+	type unmarshaler FedCmLoginGooglePatch
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FedCmLoginGooglePatch(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FedCmLoginGooglePatch) MarshalJSON() ([]byte, error) {
+	type embed FedCmLoginGooglePatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FedCmLoginGooglePatch) String() string {
+	if f == nil {
+		return "<nil>"
+	}
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+// Configure FedCM login settings for New Universal Login
+var (
+	fedCmLoginPatchFieldGoogle = big.NewInt(1 << 0)
+)
+
+type FedCmLoginPatch struct {
+	Google *FedCmLoginGooglePatch `json:"google,omitempty" url:"google,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FedCmLoginPatch) GetGoogle() FedCmLoginGooglePatch {
+	if f == nil || f.Google == nil {
+		return FedCmLoginGooglePatch{}
+	}
+	return *f.Google
+}
+
+func (f *FedCmLoginPatch) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FedCmLoginPatch) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetGoogle sets the Google field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FedCmLoginPatch) SetGoogle(google *FedCmLoginGooglePatch) {
+	f.Google = google
+	f.require(fedCmLoginPatchFieldGoogle)
+}
+
+func (f *FedCmLoginPatch) UnmarshalJSON(data []byte) error {
+	type unmarshaler FedCmLoginPatch
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FedCmLoginPatch(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FedCmLoginPatch) MarshalJSON() ([]byte, error) {
+	type embed FedCmLoginPatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FedCmLoginPatch) String() string {
+	if f == nil {
+		return "<nil>"
+	}
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
 var (
 	getClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
 	getClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
@@ -11522,30 +11757,32 @@ var (
 	getClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
 	getClientResponseContentFieldMobile                                         = big.NewInt(1 << 34)
 	getClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	getClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 36)
-	getClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 37)
-	getClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 38)
-	getClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
-	getClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
-	getClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
-	getClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
-	getClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
-	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
-	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
-	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 47)
-	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
-	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
-	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
-	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
-	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 53)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 56)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 58)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 59)
+	getClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 36)
+	getClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 37)
+	getClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 38)
+	getClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 39)
+	getClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 40)
+	getClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
+	getClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
+	getClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
+	getClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
+	getClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
+	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
+	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 47)
+	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
+	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 49)
+	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 50)
+	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 51)
+	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 52)
+	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
+	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 58)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 60)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 61)
 )
 
 type GetClientResponseContent struct {
@@ -11611,6 +11848,8 @@ type GetClientResponseContent struct {
 	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
+	NativeSocialLogin           *NativeSocialLogin                     `json:"native_social_login,omitempty" url:"native_social_login,omitempty"`
+	FedcmLogin                  *FedCmLogin                            `json:"fedcm_login,omitempty" url:"fedcm_login,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 	DefaultOrganization         *ClientDefaultOrganization             `json:"default_organization,omitempty" url:"default_organization,omitempty"`
 	OrganizationUsage           *ClientOrganizationUsageEnum           `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
@@ -11904,6 +12143,20 @@ func (g *GetClientResponseContent) GetInitiateLoginURI() string {
 		return ""
 	}
 	return *g.InitiateLoginURI
+}
+
+func (g *GetClientResponseContent) GetNativeSocialLogin() NativeSocialLogin {
+	if g == nil || g.NativeSocialLogin == nil {
+		return NativeSocialLogin{}
+	}
+	return *g.NativeSocialLogin
+}
+
+func (g *GetClientResponseContent) GetFedcmLogin() FedCmLogin {
+	if g == nil || g.FedcmLogin == nil {
+		return FedCmLogin{}
+	}
+	return *g.FedcmLogin
 }
 
 func (g *GetClientResponseContent) GetRefreshToken() ClientRefreshTokenConfiguration {
@@ -12338,6 +12591,20 @@ func (g *GetClientResponseContent) SetMobile(mobile *ClientMobile) {
 func (g *GetClientResponseContent) SetInitiateLoginURI(initiateLoginURI *string) {
 	g.InitiateLoginURI = initiateLoginURI
 	g.require(getClientResponseContentFieldInitiateLoginURI)
+}
+
+// SetNativeSocialLogin sets the NativeSocialLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetNativeSocialLogin(nativeSocialLogin *NativeSocialLogin) {
+	g.NativeSocialLogin = nativeSocialLogin
+	g.require(getClientResponseContentFieldNativeSocialLogin)
+}
+
+// SetFedcmLogin sets the FedcmLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetFedcmLogin(fedcmLogin *FedCmLogin) {
+	g.FedcmLogin = fedcmLogin
+	g.require(getClientResponseContentFieldFedcmLogin)
 }
 
 // SetRefreshToken sets the RefreshToken field and marks it as non-optional;
@@ -12975,6 +13242,92 @@ func (n *NativeSocialLoginApple) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Native Social Login support for the Apple connection
+var (
+	nativeSocialLoginApplePatchFieldEnabled = big.NewInt(1 << 0)
+)
+
+type NativeSocialLoginApplePatch struct {
+	// Determine whether or not to allow signing in natively using an Apple authorization code
+	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NativeSocialLoginApplePatch) GetEnabled() bool {
+	if n == nil || n.Enabled == nil {
+		return false
+	}
+	return *n.Enabled
+}
+
+func (n *NativeSocialLoginApplePatch) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NativeSocialLoginApplePatch) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NativeSocialLoginApplePatch) SetEnabled(enabled *bool) {
+	n.Enabled = enabled
+	n.require(nativeSocialLoginApplePatchFieldEnabled)
+}
+
+func (n *NativeSocialLoginApplePatch) UnmarshalJSON(data []byte) error {
+	type unmarshaler NativeSocialLoginApplePatch
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NativeSocialLoginApplePatch(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NativeSocialLoginApplePatch) MarshalJSON() ([]byte, error) {
+	type embed NativeSocialLoginApplePatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NativeSocialLoginApplePatch) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
 // Native Social Login support for the Facebook connection
 var (
 	nativeSocialLoginFacebookFieldEnabled = big.NewInt(1 << 0)
@@ -13061,6 +13414,92 @@ func (n *NativeSocialLoginFacebook) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Native Social Login support for the Facebook connection
+var (
+	nativeSocialLoginFacebookPatchFieldEnabled = big.NewInt(1 << 0)
+)
+
+type NativeSocialLoginFacebookPatch struct {
+	// Determine whether or not to allow signing in natively using Facebook
+	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NativeSocialLoginFacebookPatch) GetEnabled() bool {
+	if n == nil || n.Enabled == nil {
+		return false
+	}
+	return *n.Enabled
+}
+
+func (n *NativeSocialLoginFacebookPatch) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NativeSocialLoginFacebookPatch) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NativeSocialLoginFacebookPatch) SetEnabled(enabled *bool) {
+	n.Enabled = enabled
+	n.require(nativeSocialLoginFacebookPatchFieldEnabled)
+}
+
+func (n *NativeSocialLoginFacebookPatch) UnmarshalJSON(data []byte) error {
+	type unmarshaler NativeSocialLoginFacebookPatch
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NativeSocialLoginFacebookPatch(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NativeSocialLoginFacebookPatch) MarshalJSON() ([]byte, error) {
+	type embed NativeSocialLoginFacebookPatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NativeSocialLoginFacebookPatch) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
 // Native Social Login support for the google-oauth2 connection
 var (
 	nativeSocialLoginGoogleFieldEnabled = big.NewInt(1 << 0)
@@ -13133,6 +13572,209 @@ func (n *NativeSocialLoginGoogle) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NativeSocialLoginGoogle) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+// Native Social Login support for the google-oauth2 connection
+var (
+	nativeSocialLoginGooglePatchFieldEnabled = big.NewInt(1 << 0)
+)
+
+type NativeSocialLoginGooglePatch struct {
+	// Determine whether or not to allow signing in natively using a Google ID token
+	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NativeSocialLoginGooglePatch) GetEnabled() bool {
+	if n == nil || n.Enabled == nil {
+		return false
+	}
+	return *n.Enabled
+}
+
+func (n *NativeSocialLoginGooglePatch) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NativeSocialLoginGooglePatch) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NativeSocialLoginGooglePatch) SetEnabled(enabled *bool) {
+	n.Enabled = enabled
+	n.require(nativeSocialLoginGooglePatchFieldEnabled)
+}
+
+func (n *NativeSocialLoginGooglePatch) UnmarshalJSON(data []byte) error {
+	type unmarshaler NativeSocialLoginGooglePatch
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NativeSocialLoginGooglePatch(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NativeSocialLoginGooglePatch) MarshalJSON() ([]byte, error) {
+	type embed NativeSocialLoginGooglePatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NativeSocialLoginGooglePatch) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+// Configure native social settings
+var (
+	nativeSocialLoginPatchFieldApple    = big.NewInt(1 << 0)
+	nativeSocialLoginPatchFieldFacebook = big.NewInt(1 << 1)
+	nativeSocialLoginPatchFieldGoogle   = big.NewInt(1 << 2)
+)
+
+type NativeSocialLoginPatch struct {
+	Apple    *NativeSocialLoginApplePatch    `json:"apple,omitempty" url:"apple,omitempty"`
+	Facebook *NativeSocialLoginFacebookPatch `json:"facebook,omitempty" url:"facebook,omitempty"`
+	Google   *NativeSocialLoginGooglePatch   `json:"google,omitempty" url:"google,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NativeSocialLoginPatch) GetApple() NativeSocialLoginApplePatch {
+	if n == nil || n.Apple == nil {
+		return NativeSocialLoginApplePatch{}
+	}
+	return *n.Apple
+}
+
+func (n *NativeSocialLoginPatch) GetFacebook() NativeSocialLoginFacebookPatch {
+	if n == nil || n.Facebook == nil {
+		return NativeSocialLoginFacebookPatch{}
+	}
+	return *n.Facebook
+}
+
+func (n *NativeSocialLoginPatch) GetGoogle() NativeSocialLoginGooglePatch {
+	if n == nil || n.Google == nil {
+		return NativeSocialLoginGooglePatch{}
+	}
+	return *n.Google
+}
+
+func (n *NativeSocialLoginPatch) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NativeSocialLoginPatch) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetApple sets the Apple field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NativeSocialLoginPatch) SetApple(apple *NativeSocialLoginApplePatch) {
+	n.Apple = apple
+	n.require(nativeSocialLoginPatchFieldApple)
+}
+
+// SetFacebook sets the Facebook field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NativeSocialLoginPatch) SetFacebook(facebook *NativeSocialLoginFacebookPatch) {
+	n.Facebook = facebook
+	n.require(nativeSocialLoginPatchFieldFacebook)
+}
+
+// SetGoogle sets the Google field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NativeSocialLoginPatch) SetGoogle(google *NativeSocialLoginGooglePatch) {
+	n.Google = google
+	n.require(nativeSocialLoginPatchFieldGoogle)
+}
+
+func (n *NativeSocialLoginPatch) UnmarshalJSON(data []byte) error {
+	type unmarshaler NativeSocialLoginPatch
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NativeSocialLoginPatch(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NativeSocialLoginPatch) MarshalJSON() ([]byte, error) {
+	type embed NativeSocialLoginPatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NativeSocialLoginPatch) String() string {
 	if n == nil {
 		return "<nil>"
 	}
@@ -13705,30 +14347,32 @@ var (
 	rotateClientSecretResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
 	rotateClientSecretResponseContentFieldMobile                                         = big.NewInt(1 << 34)
 	rotateClientSecretResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	rotateClientSecretResponseContentFieldRefreshToken                                   = big.NewInt(1 << 36)
-	rotateClientSecretResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 37)
-	rotateClientSecretResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 38)
-	rotateClientSecretResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
-	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
-	rotateClientSecretResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
-	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
-	rotateClientSecretResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
-	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
-	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
-	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 47)
-	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
-	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
-	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
-	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
-	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 53)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 56)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 58)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(1 << 59)
+	rotateClientSecretResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 36)
+	rotateClientSecretResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 37)
+	rotateClientSecretResponseContentFieldRefreshToken                                   = big.NewInt(1 << 38)
+	rotateClientSecretResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 39)
+	rotateClientSecretResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 40)
+	rotateClientSecretResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
+	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
+	rotateClientSecretResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
+	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
+	rotateClientSecretResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
+	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
+	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 47)
+	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
+	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 49)
+	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 50)
+	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 51)
+	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 52)
+	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
+	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 58)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 60)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(1 << 61)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -13794,6 +14438,8 @@ type RotateClientSecretResponseContent struct {
 	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
+	NativeSocialLogin           *NativeSocialLogin                     `json:"native_social_login,omitempty" url:"native_social_login,omitempty"`
+	FedcmLogin                  *FedCmLogin                            `json:"fedcm_login,omitempty" url:"fedcm_login,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 	DefaultOrganization         *ClientDefaultOrganization             `json:"default_organization,omitempty" url:"default_organization,omitempty"`
 	OrganizationUsage           *ClientOrganizationUsageEnum           `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
@@ -14087,6 +14733,20 @@ func (r *RotateClientSecretResponseContent) GetInitiateLoginURI() string {
 		return ""
 	}
 	return *r.InitiateLoginURI
+}
+
+func (r *RotateClientSecretResponseContent) GetNativeSocialLogin() NativeSocialLogin {
+	if r == nil || r.NativeSocialLogin == nil {
+		return NativeSocialLogin{}
+	}
+	return *r.NativeSocialLogin
+}
+
+func (r *RotateClientSecretResponseContent) GetFedcmLogin() FedCmLogin {
+	if r == nil || r.FedcmLogin == nil {
+		return FedCmLogin{}
+	}
+	return *r.FedcmLogin
 }
 
 func (r *RotateClientSecretResponseContent) GetRefreshToken() ClientRefreshTokenConfiguration {
@@ -14523,6 +15183,20 @@ func (r *RotateClientSecretResponseContent) SetInitiateLoginURI(initiateLoginURI
 	r.require(rotateClientSecretResponseContentFieldInitiateLoginURI)
 }
 
+// SetNativeSocialLogin sets the NativeSocialLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetNativeSocialLogin(nativeSocialLogin *NativeSocialLogin) {
+	r.NativeSocialLogin = nativeSocialLogin
+	r.require(rotateClientSecretResponseContentFieldNativeSocialLogin)
+}
+
+// SetFedcmLogin sets the FedcmLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetFedcmLogin(fedcmLogin *FedCmLogin) {
+	r.FedcmLogin = fedcmLogin
+	r.require(rotateClientSecretResponseContentFieldFedcmLogin)
+}
+
 // SetRefreshToken sets the RefreshToken field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetRefreshToken(refreshToken *ClientRefreshTokenConfiguration) {
@@ -14774,30 +15448,32 @@ var (
 	updateClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
 	updateClientResponseContentFieldMobile                                         = big.NewInt(1 << 34)
 	updateClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	updateClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 36)
-	updateClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 37)
-	updateClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 38)
-	updateClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
-	updateClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
-	updateClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
-	updateClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
-	updateClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
-	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
-	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 45)
-	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
-	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 47)
-	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
-	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 49)
-	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
-	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 52)
-	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 53)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 54)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 56)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 57)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 58)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 59)
+	updateClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 36)
+	updateClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 37)
+	updateClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 38)
+	updateClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 39)
+	updateClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 40)
+	updateClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
+	updateClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
+	updateClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
+	updateClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
+	updateClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
+	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
+	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 47)
+	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
+	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 49)
+	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 50)
+	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 51)
+	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 52)
+	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
+	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 58)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 60)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 61)
 )
 
 type UpdateClientResponseContent struct {
@@ -14863,6 +15539,8 @@ type UpdateClientResponseContent struct {
 	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
 	// Initiate login uri, must be https
 	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
+	NativeSocialLogin           *NativeSocialLogin                     `json:"native_social_login,omitempty" url:"native_social_login,omitempty"`
+	FedcmLogin                  *FedCmLogin                            `json:"fedcm_login,omitempty" url:"fedcm_login,omitempty"`
 	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 	DefaultOrganization         *ClientDefaultOrganization             `json:"default_organization,omitempty" url:"default_organization,omitempty"`
 	OrganizationUsage           *ClientOrganizationUsageEnum           `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
@@ -15156,6 +15834,20 @@ func (u *UpdateClientResponseContent) GetInitiateLoginURI() string {
 		return ""
 	}
 	return *u.InitiateLoginURI
+}
+
+func (u *UpdateClientResponseContent) GetNativeSocialLogin() NativeSocialLogin {
+	if u == nil || u.NativeSocialLogin == nil {
+		return NativeSocialLogin{}
+	}
+	return *u.NativeSocialLogin
+}
+
+func (u *UpdateClientResponseContent) GetFedcmLogin() FedCmLogin {
+	if u == nil || u.FedcmLogin == nil {
+		return FedCmLogin{}
+	}
+	return *u.FedcmLogin
 }
 
 func (u *UpdateClientResponseContent) GetRefreshToken() ClientRefreshTokenConfiguration {
@@ -15590,6 +16282,20 @@ func (u *UpdateClientResponseContent) SetMobile(mobile *ClientMobile) {
 func (u *UpdateClientResponseContent) SetInitiateLoginURI(initiateLoginURI *string) {
 	u.InitiateLoginURI = initiateLoginURI
 	u.require(updateClientResponseContentFieldInitiateLoginURI)
+}
+
+// SetNativeSocialLogin sets the NativeSocialLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetNativeSocialLogin(nativeSocialLogin *NativeSocialLogin) {
+	u.NativeSocialLogin = nativeSocialLogin
+	u.require(updateClientResponseContentFieldNativeSocialLogin)
+}
+
+// SetFedcmLogin sets the FedcmLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetFedcmLogin(fedcmLogin *FedCmLogin) {
+	u.FedcmLogin = fedcmLogin
+	u.require(updateClientResponseContentFieldFedcmLogin)
 }
 
 // SetRefreshToken sets the RefreshToken field and marks it as non-optional;
