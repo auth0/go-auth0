@@ -105,7 +105,18 @@ jobs:
         name: Generate release notes
         shell: bash
         run: |
-          MSG=$(git log -1 --pretty='%B' HEAD)
+          # Read the notes from the merged PR's own squash commit, not from
+          # `beta` HEAD. Concurrency serializes release runs but does not stop a
+          # second PR merging while the first run is in flight; by the time this
+          # run checks out `beta`, the tip may already be the first run's
+          # "Release ..." commit, which has no BETA/STABLE markers. Pinning to
+          # merge_commit_sha keeps each release tied to its own change set.
+          # Falls back to HEAD for the workflow_dispatch manual backup.
+          if [ -n "${MERGE_SHA}" ]; then
+            MSG=$(git log -1 --pretty='%B' "${MERGE_SHA}")
+          else
+            MSG=$(git log -1 --pretty='%B' HEAD)
+          fi
 
           extract() { # $1=open marker  $2=close marker
             printf '%s\n' "${MSG}" | awk -v o="$1" -v c="$2" '
@@ -146,6 +157,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
         env:
           VERSION: ${{ steps.get_version.outputs.version }}
+          MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
 
       # Stamp the version into .version and meta.go and prepend the CHANGELOG.md
       # entry. This only edits files on disk; the commit is created separately

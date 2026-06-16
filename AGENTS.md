@@ -178,7 +178,7 @@ The `beta` branch is **regenerated** from the stable spec plus the beta-only spe
 
 ### Versioning
 
-Beta = the next stable minor + `-beta.N`, derived from git tags. Latest stable `v2.13.0` -> beta `v2.14.0-beta.N`; `-beta.N` auto-increments; once stable `v2.14.0` ships, beta rolls to `v2.15.0-beta.1`. No state file.
+Beta = the next stable minor + `-beta.N`, derived from git tags. Latest stable `v2.13.0` -> beta `v2.14.0-beta.N`; `-beta.N` starts at 0 per base and auto-increments; once stable `v2.14.0` ships, beta rolls to `v2.15.0-beta.0`. No state file.
 
 ### When merging a beta regeneration PR
 

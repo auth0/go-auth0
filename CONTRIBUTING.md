@@ -43,7 +43,7 @@ Consumers opt into beta explicitly; a plain `go get` never selects it:
 go get github.com/auth0/go-auth0/v2
 
 # Beta: explicit prerelease pin.
-go get github.com/auth0/go-auth0/v2@v2.14.0-beta.1
+go get github.com/auth0/go-auth0/v2@v2.14.0-beta.0
 ```
 
 ### How beta stays a superset of stable
@@ -64,11 +64,11 @@ Beta always carries the **next** stable minor with a `-beta.N` suffix, derived
 entirely from the git tags (no state file):
 
 - Latest stable `v2.13.0` -> beta is `v2.14.0-beta.N`.
-- `-beta.N` auto-increments on each beta release.
+- `-beta.N` starts at 0 for each new base and auto-increments on each beta release.
 - The moment stable `v2.14.0` is tagged, the next beta automatically becomes
-  `v2.15.0-beta.1`.
+  `v2.15.0-beta.0`.
 
-Because `v2.14.0-beta.3` sorts before `v2.14.0` in semver, beta is never picked
+Because `v2.14.0-beta.2` sorts before `v2.14.0` in semver, beta is never picked
 up by `go get` unless pinned.
 
 ### Merging a beta regeneration PR
