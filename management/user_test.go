@@ -627,6 +627,7 @@ func TestUserConnectedAccount_UnmarshalNewFields(t *testing.T) {
 	}`
 
 	var list UserConnectedAccountList
+
 	require.NoError(t, json.Unmarshal([]byte(body), &list))
 	require.Len(t, list.ConnectedAccounts, 1)
 
@@ -690,7 +691,7 @@ func retrieveRefreshTokens(t *testing.T) *RefreshTokenList {
 	return tokens
 }
 
-func TestUserConnectedAccount_GetConnectionID(tt *testing.T) {
+func TestUserConnectedAccount_GetConnectionID(_ *testing.T) {
 	var zeroValue string
 	u := &UserConnectedAccount{ConnectionID: &zeroValue}
 	u.GetConnectionID()
@@ -700,7 +701,7 @@ func TestUserConnectedAccount_GetConnectionID(tt *testing.T) {
 	u.GetConnectionID()
 }
 
-func TestUserConnectedAccount_GetStrategy(tt *testing.T) {
+func TestUserConnectedAccount_GetStrategy(_ *testing.T) {
 	var zeroValue string
 	u := &UserConnectedAccount{Strategy: &zeroValue}
 	u.GetStrategy()
@@ -710,7 +711,7 @@ func TestUserConnectedAccount_GetStrategy(tt *testing.T) {
 	u.GetStrategy()
 }
 
-func TestUserConnectedAccount_GetOrganizationID(tt *testing.T) {
+func TestUserConnectedAccount_GetOrganizationID(_ *testing.T) {
 	var zeroValue string
 	u := &UserConnectedAccount{OrganizationID: &zeroValue}
 	u.GetOrganizationID()

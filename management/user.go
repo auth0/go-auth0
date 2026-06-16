@@ -509,6 +509,7 @@ func (u *UserConnectedAccount) GetConnectionID() string {
 	if u == nil || u.ConnectionID == nil {
 		return ""
 	}
+
 	return *u.ConnectionID
 }
 
@@ -517,6 +518,7 @@ func (u *UserConnectedAccount) GetStrategy() string {
 	if u == nil || u.Strategy == nil {
 		return ""
 	}
+
 	return *u.Strategy
 }
 
@@ -525,6 +527,7 @@ func (u *UserConnectedAccount) GetOrganizationID() string {
 	if u == nil || u.OrganizationID == nil {
 		return ""
 	}
+
 	return *u.OrganizationID
 }
 
