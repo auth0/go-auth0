@@ -39,6 +39,17 @@ This library follows the [same support policy as Go](https://go.dev/doc/devel/re
 go get github.com/auth0/go-auth0/v2
 ```
 
+### Beta SDK
+
+Alongside the stable releases, we publish a beta track that is a strict superset of stable: it contains every stable (EA/GA) endpoint plus early-access endpoints that are still being finalized. Both tracks share the same module path, so you opt into beta purely by pinning a prerelease version.
+
+```shell
+# Beta: explicit, version-pinned opt-in.
+go get github.com/auth0/go-auth0/v2@v2.14.0-beta.1
+```
+
+Beta versions carry a `-beta.N` suffix (for example `v2.14.0-beta.1`). Because they are prereleases, `go get` without an explicit version will never pick them up, so beta is always strictly opt-in. Beta endpoints are still being finalized and may change or be removed at any time, so we recommend using the beta track only for evaluation and not in production.
+
 ### Usage
 
 #### Authentication API Client
