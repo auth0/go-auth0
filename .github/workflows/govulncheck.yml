@@ -6,7 +6,7 @@ on:
       - opened
       - synchronize
   push:
-    branches: [main, v2]
+    branches: [main, v2, beta]
   schedule:
     - cron: "30 0 1,15 * *"
 

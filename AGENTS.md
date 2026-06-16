@@ -165,6 +165,50 @@ make test-record   # Record new HTTP interactions
 make test-e2e      # Run tests against real Auth0 tenant
 ```
 
+## Beta Track Releases
+
+> Applies only when working on the `beta` branch.
+
+This SDK ships two tracks from one module path (`github.com/auth0/go-auth0/v2`):
+
+- **Stable** (`main`): EA/GA endpoints only. Released by a maintainer via a `release/*` branch.
+- **Beta** (`beta`): a superset of stable plus beta-only endpoints. Released automatically when a PR is merged into `beta`.
+
+The `beta` branch is **regenerated** from the stable spec plus the beta-only spec files; it is never produced by merging `main` into `beta`. It receives one combined regeneration PR (stable + beta) as a single squash commit. The beta-only versus stable-mirrored split cannot be detected from code or file paths, so it must be recorded in the squash commit message.
+
+### Versioning
+
+Beta = the next stable minor + `-beta.N`, derived from git tags. Latest stable `v2.13.0` -> beta `v2.14.0-beta.N`; `-beta.N` auto-increments; once stable `v2.14.0` ships, beta rolls to `v2.15.0-beta.1`. No state file.
+
+### When merging a beta regeneration PR
+
+Squash and merge with a commit message that marks each group:
+
+```
+Regenerate SDK (stable + beta) (#<pr-number>)
+
+<!-- BETA -->
+- feat: add `Management.Sandbox` preview API (Beta)
+<!-- /BETA -->
+
+<!-- STABLE -->
+- feat: add tenant security headers configuration
+<!-- /STABLE -->
+```
+
+- Beta-only changes go inside the `BETA` markers; stable-mirrored changes go inside the `STABLE` markers.
+- The `<!-- ... -->` markers are HTML comments and stay invisible in GitHub's rendered view.
+- Omitting a section renders a "No ... changes in this release." note; omitting both falls back to the raw commit subject. Always prefer the structured form.
+- Everything reaches `beta` through a PR. Never push directly to `beta` (a direct push will not trigger a release).
+
+### Do not hand-edit release files on `beta`
+
+The Beta Auto-Release workflow (`.github/workflows/beta-autorelease.yml`) owns versioning. When a PR is merged into `beta` it computes the next `vX.Y.0-beta.N`, aborts if that tag already exists, stamps `.version` and `meta.go`, prepends a `CHANGELOG.md` entry with separate **Beta** and **Stable (from main)** sections, creates the release commit **through the GitHub API** (so it is signed/Verified, no GPG key), tags it, and publishes a prerelease. Never manually bump `.version`, `meta.go`, or `CHANGELOG.md` on `beta`.
+
+### Hand-written code
+
+The `authentication/` package is hand-written and is **not** regenerated on `beta`. A fix on `main` does not reach `beta` automatically, so hand-written changes must be PR'd to **both** `main` and `beta`.
+
 ## Important Notes for Agents
 
 - **Never modify auto-generated code** in the `management/` package unless explicitly asked
@@ -175,3 +219,4 @@ make test-e2e      # Run tests against real Auth0 tenant
 - The SDK uses pointer fields extensively - use safe getters to avoid nil panics
 - Authentication package is hand-written and can be modified carefully
 - Follow existing code patterns, especially in the authentication package
+- On the `beta` branch, never hand-edit `.version`, `meta.go`, or `CHANGELOG.md`; mark beta vs. stable changes in the squash commit message (see "Beta Track Releases")
