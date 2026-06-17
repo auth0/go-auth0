@@ -19036,6 +19036,16 @@ func TestUserConnectedAccount_GetConnection(tt *testing.T) {
 	u.GetConnection()
 }
 
+func TestUserConnectedAccount_GetConnectionID(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{ConnectionID: &zeroValue}
+	u.GetConnectionID()
+	u = &UserConnectedAccount{}
+	u.GetConnectionID()
+	u = nil
+	u.GetConnectionID()
+}
+
 func TestUserConnectedAccount_GetCreatedAt(tt *testing.T) {
 	var zeroValue time.Time
 	u := &UserConnectedAccount{CreatedAt: &zeroValue}
@@ -19066,6 +19076,16 @@ func TestUserConnectedAccount_GetID(tt *testing.T) {
 	u.GetID()
 }
 
+func TestUserConnectedAccount_GetOrganizationID(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{OrganizationID: &zeroValue}
+	u.GetOrganizationID()
+	u = &UserConnectedAccount{}
+	u.GetOrganizationID()
+	u = nil
+	u.GetOrganizationID()
+}
+
 func TestUserConnectedAccount_GetScopes(tt *testing.T) {
 	var zeroValue []string
 	u := &UserConnectedAccount{Scopes: &zeroValue}
@@ -19074,6 +19094,16 @@ func TestUserConnectedAccount_GetScopes(tt *testing.T) {
 	u.GetScopes()
 	u = nil
 	u.GetScopes()
+}
+
+func TestUserConnectedAccount_GetStrategy(tt *testing.T) {
+	var zeroValue string
+	u := &UserConnectedAccount{Strategy: &zeroValue}
+	u.GetStrategy()
+	u = &UserConnectedAccount{}
+	u.GetStrategy()
+	u = nil
+	u.GetStrategy()
 }
 
 func TestUserConnectedAccount_String(t *testing.T) {

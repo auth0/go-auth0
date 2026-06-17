@@ -488,6 +488,10 @@ type UserConnectedAccount struct {
 	ID *string `json:"id,omitempty"`
 	// Connection is the name of the connection associated with the account.
 	Connection *string `json:"connection,omitempty"`
+	// ConnectionID is the unique identifier of the connection associated with the account.
+	ConnectionID *string `json:"connection_id,omitempty"`
+	// Strategy is the authentication strategy used by the connection.
+	Strategy *string `json:"strategy,omitempty"`
 	// AccessType is the access type for to the connected account.
 	AccessType *UserConnectedAccountAccessType `json:"access_type,omitempty"`
 	// Scopes are the scopes granted for this connected account.
@@ -496,6 +500,8 @@ type UserConnectedAccount struct {
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// ExpiresAt is the ISO 8601 timestamp when the connected account expires.
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
+	// OrganizationID is the identifier of the organization associated with the connected account.
+	OrganizationID *string `json:"organization_id,omitempty"`
 }
 
 // UserManager manages Auth0 User resources.
