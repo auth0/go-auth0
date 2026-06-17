@@ -5,6 +5,7 @@
 
 **Added**
 - feat: Add InvitationLandingClientID in MyOrganizationConfiguration [\#793](https://github.com/auth0/go-auth0/pull/793) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add support for missing fields in connected_accounts [\#794](https://github.com/auth0/go-auth0/pull/794) ([KartikJha](https://github.com/KartikJha))
 
 ## [v1.42.1](https://github.com/auth0/go-auth0/tree/v1.42.1) (2026-06-10)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.42.0...v1.42.1)
