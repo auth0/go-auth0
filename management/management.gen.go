@@ -15173,6 +15173,14 @@ func (u *UserConnectedAccount) GetConnection() string {
 	return *u.Connection
 }
 
+// GetConnectionID returns the ConnectionID field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetConnectionID() string {
+	if u == nil || u.ConnectionID == nil {
+		return ""
+	}
+	return *u.ConnectionID
+}
+
 // GetCreatedAt returns the CreatedAt field if it's non-nil, zero value otherwise.
 func (u *UserConnectedAccount) GetCreatedAt() time.Time {
 	if u == nil || u.CreatedAt == nil {
@@ -15197,12 +15205,28 @@ func (u *UserConnectedAccount) GetID() string {
 	return *u.ID
 }
 
+// GetOrganizationID returns the OrganizationID field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetOrganizationID() string {
+	if u == nil || u.OrganizationID == nil {
+		return ""
+	}
+	return *u.OrganizationID
+}
+
 // GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
 func (u *UserConnectedAccount) GetScopes() []string {
 	if u == nil || u.Scopes == nil {
 		return nil
 	}
 	return *u.Scopes
+}
+
+// GetStrategy returns the Strategy field if it's non-nil, zero value otherwise.
+func (u *UserConnectedAccount) GetStrategy() string {
+	if u == nil || u.Strategy == nil {
+		return ""
+	}
+	return *u.Strategy
 }
 
 // String returns a string representation of UserConnectedAccount.
