@@ -45,10 +45,10 @@ Alongside the stable releases, we publish a beta track that is a strict superset
 
 ```shell
 # Beta: explicit, version-pinned opt-in.
-go get github.com/auth0/go-auth0/v2@v2.14.0-beta.1
+go get github.com/auth0/go-auth0/v2@v2.14.0-beta.0
 ```
 
-Beta versions carry a `-beta.N` suffix (for example `v2.14.0-beta.1`). Because they are prereleases, `go get` without an explicit version will never pick them up, so beta is always strictly opt-in. Beta endpoints are still being finalized and may change or be removed at any time, so we recommend using the beta track only for evaluation and not in production.
+Beta versions carry a `-beta.N` suffix (for example `v2.14.0-beta.0`). Because they are prereleases, `go get` without an explicit version will never pick them up, so beta is always strictly opt-in. Beta endpoints are still being finalized and may change or be removed at any time, so we recommend using the beta track only for evaluation and not in production.
 
 ### Usage
 

@@ -6,7 +6,8 @@ name: Compute the next version for a release track
 #
 #   - stable: next minor after the latest stable tag (vX.Y.0 -> vX.(Y+1).0)
 #   - beta:   vX.(Y+1).0-beta.N, where the base is the next minor after the
-#             latest stable tag and N auto-increments from existing beta tags.
+#             latest stable tag and N auto-increments from existing beta tags,
+#             starting at 0 for the first prerelease of a base (SemVer style).
 #
 # Because the beta base is always derived from the latest stable tag, the
 # moment a stable release is tagged the next beta computation rolls forward
@@ -49,8 +50,10 @@ runs:
           echo "::notice::compute-next-version (stable): latest_stable=${LATEST_STABLE} -> ${VERSION}"
         elif [ "${TRACK}" = "beta" ]; then
           # Only beta tags whose base is exactly BASE, with a numeric suffix.
+          # The counter starts at 0 (SemVer style: vX.Y.0-beta.0 is the first
+          # prerelease for a base), so default to -1 when no beta tag exists yet.
           LAST_N=$(git tag --list | grep -E "^${BASE}-beta\.[0-9]+$" | sed -E 's/.*-beta\.//' | sort -n | tail -1)
-          N=$(( ${LAST_N:-0} + 1 ))
+          N=$(( ${LAST_N:--1} + 1 ))
           VERSION="${BASE}-beta.${N}"
           echo "::notice::compute-next-version (beta): latest_stable=${LATEST_STABLE} base=${BASE} last_beta_n=${LAST_N:-<none>} -> ${VERSION}"
         else
