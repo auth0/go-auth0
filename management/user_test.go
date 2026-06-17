@@ -691,36 +691,6 @@ func retrieveRefreshTokens(t *testing.T) *RefreshTokenList {
 	return tokens
 }
 
-func TestUserConnectedAccount_GetConnectionID(_ *testing.T) {
-	var zeroValue string
-	u := &UserConnectedAccount{ConnectionID: &zeroValue}
-	u.GetConnectionID()
-	u = &UserConnectedAccount{}
-	u.GetConnectionID()
-	u = nil
-	u.GetConnectionID()
-}
-
-func TestUserConnectedAccount_GetStrategy(_ *testing.T) {
-	var zeroValue string
-	u := &UserConnectedAccount{Strategy: &zeroValue}
-	u.GetStrategy()
-	u = &UserConnectedAccount{}
-	u.GetStrategy()
-	u = nil
-	u.GetStrategy()
-}
-
-func TestUserConnectedAccount_GetOrganizationID(_ *testing.T) {
-	var zeroValue string
-	u := &UserConnectedAccount{OrganizationID: &zeroValue}
-	u.GetOrganizationID()
-	u = &UserConnectedAccount{}
-	u.GetOrganizationID()
-	u = nil
-	u.GetOrganizationID()
-}
-
 func cleanupUser(t *testing.T, userID string) {
 	t.Helper()
 

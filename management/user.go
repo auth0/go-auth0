@@ -504,33 +504,6 @@ type UserConnectedAccount struct {
 	OrganizationID *string `json:"organization_id,omitempty"`
 }
 
-// GetConnectionID returns the ConnectionID field if set, otherwise an empty string.
-func (u *UserConnectedAccount) GetConnectionID() string {
-	if u == nil || u.ConnectionID == nil {
-		return ""
-	}
-
-	return *u.ConnectionID
-}
-
-// GetStrategy returns the Strategy field if set, otherwise an empty string.
-func (u *UserConnectedAccount) GetStrategy() string {
-	if u == nil || u.Strategy == nil {
-		return ""
-	}
-
-	return *u.Strategy
-}
-
-// GetOrganizationID returns the OrganizationID field if set, otherwise an empty string.
-func (u *UserConnectedAccount) GetOrganizationID() string {
-	if u == nil || u.OrganizationID == nil {
-		return ""
-	}
-
-	return *u.OrganizationID
-}
-
 // UserManager manages Auth0 User resources.
 type UserManager manager
 
