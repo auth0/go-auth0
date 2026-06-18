@@ -5998,6 +5998,14 @@ func (c *ConnectionOptionsOkta) GetScope() string {
 	return *c.Scope
 }
 
+// GetSendBackChannelNonce returns the SendBackChannelNonce field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetSendBackChannelNonce() bool {
+	if c == nil || c.SendBackChannelNonce == nil {
+		return false
+	}
+	return *c.SendBackChannelNonce
+}
+
 // GetSetUserAttributes returns the SetUserAttributes field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOkta) GetSetUserAttributes() string {
 	if c == nil || c.SetUserAttributes == nil {
@@ -6036,6 +6044,14 @@ func (c *ConnectionOptionsOkta) GetTokenEndpointJwtcaAudFormat() string {
 		return ""
 	}
 	return *c.TokenEndpointJwtcaAudFormat
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetType() string {
+	if c == nil || c.Type == nil {
+		return ""
+	}
+	return *c.Type
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.

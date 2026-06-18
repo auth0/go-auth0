@@ -7409,6 +7409,16 @@ func TestConnectionOptionsOkta_GetScope(tt *testing.T) {
 	c.GetScope()
 }
 
+func TestConnectionOptionsOkta_GetSendBackChannelNonce(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOkta{SendBackChannelNonce: &zeroValue}
+	c.GetSendBackChannelNonce()
+	c = &ConnectionOptionsOkta{}
+	c.GetSendBackChannelNonce()
+	c = nil
+	c.GetSendBackChannelNonce()
+}
+
 func TestConnectionOptionsOkta_GetSetUserAttributes(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsOkta{SetUserAttributes: &zeroValue}
@@ -7457,6 +7467,16 @@ func TestConnectionOptionsOkta_GetTokenEndpointJwtcaAudFormat(tt *testing.T) {
 	c.GetTokenEndpointJwtcaAudFormat()
 	c = nil
 	c.GetTokenEndpointJwtcaAudFormat()
+}
+
+func TestConnectionOptionsOkta_GetType(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsOkta{Type: &zeroValue}
+	c.GetType()
+	c = &ConnectionOptionsOkta{}
+	c.GetType()
+	c = nil
+	c.GetType()
 }
 
 func TestConnectionOptionsOkta_GetUpstreamParams(tt *testing.T) {
