@@ -18,6 +18,7 @@ import (
 	emailtemplates "github.com/auth0/go-auth0/v2/management/emailtemplates"
 	events "github.com/auth0/go-auth0/v2/management/events"
 	eventstreamsclient "github.com/auth0/go-auth0/v2/management/eventstreams/client"
+	experimentationclient "github.com/auth0/go-auth0/v2/management/experimentation/client"
 	flowsclient "github.com/auth0/go-auth0/v2/management/flows/client"
 	forms "github.com/auth0/go-auth0/v2/management/forms"
 	groupsclient "github.com/auth0/go-auth0/v2/management/groups/client"
@@ -94,6 +95,7 @@ type Management struct {
 	Anomaly               *anomalyclient.Client
 	AttackProtection      *attackprotectionclient.Client
 	Emails                *emailsclient.Client
+	Experimentation       *experimentationclient.Client
 	Guardian              *guardianclient.Client
 	Keys                  *keysclient.Client
 	RiskAssessments       *riskassessmentsclient.Client
@@ -148,6 +150,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Anomaly:               anomalyclient.NewClient(options),
 		AttackProtection:      attackprotectionclient.NewClient(options),
 		Emails:                emailsclient.NewClient(options),
+		Experimentation:       experimentationclient.NewClient(options),
 		Guardian:              guardianclient.NewClient(options),
 		Keys:                  keysclient.NewClient(options),
 		RiskAssessments:       riskassessmentsclient.NewClient(options),
