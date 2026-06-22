@@ -2401,6 +2401,13 @@ func TestClient_GetExternalMetadataType(tt *testing.T) {
 	c.GetExternalMetadataType()
 }
 
+func TestClient_GetFedCMLogin(tt *testing.T) {
+	c := &Client{}
+	c.GetFedCMLogin()
+	c = nil
+	c.GetFedCMLogin()
+}
+
 func TestClient_GetFormTemplate(tt *testing.T) {
 	var zeroValue string
 	c := &Client{FormTemplate: &zeroValue}
@@ -10803,6 +10810,39 @@ func TestExpressConfiguration_GetUserAttributeProfileID(tt *testing.T) {
 func TestExpressConfiguration_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ExpressConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFedCMLogin_GetGoogle(tt *testing.T) {
+	f := &FedCMLogin{}
+	f.GetGoogle()
+	f = nil
+	f.GetGoogle()
+}
+
+func TestFedCMLogin_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FedCMLogin{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestFedCMLoginGoogle_GetIsEnabled(tt *testing.T) {
+	var zeroValue bool
+	f := &FedCMLoginGoogle{IsEnabled: &zeroValue}
+	f.GetIsEnabled()
+	f = &FedCMLoginGoogle{}
+	f.GetIsEnabled()
+	f = nil
+	f.GetIsEnabled()
+}
+
+func TestFedCMLoginGoogle_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &FedCMLoginGoogle{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
