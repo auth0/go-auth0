@@ -37,7 +37,9 @@ runs:
         # The strict anchored regex excludes other majors (v1.*), any prerelease
         # suffix (-beta/-alpha/-rc/...), and stray non-release tags. `sort -V`
         # orders by semver so double-digit minors (v2.10.0 > v2.9.0) sort right.
-        LATEST_STABLE=$(git tag --list | grep -E '^v2\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+        # `|| true` keeps a no-match grep (exit 1) from aborting the step under
+        # `set -euo pipefail`; the explicit emptiness check below handles it.
+        LATEST_STABLE=$(git tag --list | grep -E '^v2\.[0-9]+\.[0-9]+$' | sort -V | tail -1 || true)
         if [ -z "${LATEST_STABLE}" ]; then
           echo "::error::No stable v2.MINOR.PATCH tag found; cannot compute next version." >&2
           exit 1
@@ -52,7 +54,9 @@ runs:
           # Only beta tags whose base is exactly BASE, with a numeric suffix.
           # The counter starts at 0 (SemVer style: vX.Y.0-beta.0 is the first
           # prerelease for a base), so default to -1 when no beta tag exists yet.
-          LAST_N=$(git tag --list | grep -E "^${BASE}-beta\.[0-9]+$" | sed -E 's/.*-beta\.//' | sort -n | tail -1)
+          # `|| true` keeps the no-match grep on the first beta (exit 1) from
+          # aborting the step under `set -euo pipefail`.
+          LAST_N=$(git tag --list | grep -E "^${BASE}-beta\.[0-9]+$" | sed -E 's/.*-beta\.//' | sort -n | tail -1 || true)
           N=$(( ${LAST_N:--1} + 1 ))
           VERSION="${BASE}-beta.${N}"
           echo "::notice::compute-next-version (beta): latest_stable=${LATEST_STABLE} base=${BASE} last_beta_n=${LAST_N:-<none>} -> ${VERSION}"

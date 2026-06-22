@@ -111,11 +111,14 @@ jobs:
           # run checks out `beta`, the tip may already be the first run's
           # "Release ..." commit, which has no BETA/STABLE markers. Pinning to
           # merge_commit_sha keeps each release tied to its own change set.
-          # Falls back to HEAD for the workflow_dispatch manual backup.
           if [ -n "${MERGE_SHA}" ]; then
             MSG=$(git log -1 --pretty='%B' "${MERGE_SHA}")
           else
-            MSG=$(git log -1 --pretty='%B' HEAD)
+            # workflow_dispatch (manual / recovery): HEAD may be a "Release ..."
+            # or tooling commit with no markers, so pick the newest commit that
+            # actually carries the BETA/STABLE markers, falling back to HEAD.
+            SHA=$(git log -50 --pretty='%H' --grep='<!-- BETA -->' --grep='<!-- STABLE -->' | head -1 || true)
+            MSG=$(git log -1 --pretty='%B' "${SHA:-HEAD}")
           fi
 
           extract() { # $1=open marker  $2=close marker
