@@ -1,5 +1,19 @@
 # Change Log
 
+## [v2.14.0-beta.0](https://github.com/auth0/go-auth0/tree/v2.14.0-beta.0) (2026-06-22)
+
+**Beta**
+- feat: add Experimentation Management API (`Management.Experimentation`) grouping experiments, feature flags, and segments [\#795](https://github.com/auth0/go-auth0/pull/795) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add experiments API (`Management.Experimentation.Experiments`) with `List`, `Create`, `Get`, `Update`, `Delete`, and `UpdateStatus` for A/B test experiments and their traffic allocations [\#795](https://github.com/auth0/go-auth0/pull/795) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add feature flags API (`Management.Experimentation.FeatureFlags`) with full CRUD and `UpdateStatus` lifecycle transitions [\#795](https://github.com/auth0/go-auth0/pull/795) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add feature flag variations API (`Management.Experimentation.FeatureFlags.Variations`) with full CRUD for parameter-override variations [\#795](https://github.com/auth0/go-auth0/pull/795) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add segments API (`Management.Experimentation.Segments`) with full CRUD for rule-based audience targeting [\#795](https://github.com/auth0/go-auth0/pull/795) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Stable (from main)**
+- feat: add `NativeSocialLogin` and `FedcmLogin` configuration fields to client application types, with patch variants (`NativeSocialLoginApplePatch`, `NativeSocialLoginFacebookPatch`, `NativeSocialLoginGooglePatch`, `FedCmLoginPatch`, `FedCmLoginGooglePatch`) [\#795](https://github.com/auth0/go-auth0/pull/795) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add typed `ConflictError` (HTTP 409) decoding to the self-service profiles client [\#795](https://github.com/auth0/go-auth0/pull/795) ([fern-api[bot]](https://github.com/apps/fern-api))
+- fix: preserve the raw JSON payload of unrecognized `EventStreamSubscribeEventsResponseContent` union variants so unknown event stream types no longer fail to unmarshal, marshal, or validate [\#795](https://github.com/auth0/go-auth0/pull/795) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.13.0](https://github.com/auth0/go-auth0/tree/v2.13.0) (2026-06-10)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.12.0...v2.13.0)
 
