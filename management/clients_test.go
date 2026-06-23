@@ -1987,6 +1987,14 @@ func TestSettersClient(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		obj := &Client{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
+		assert.Equal(t, fernTestValueTokenVaultPrivilegedAccess, obj.TokenVaultPrivilegedAccess)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetComplianceLevel", func(t *testing.T) {
 		obj := &Client{}
 		var fernTestValueComplianceLevel *ClientComplianceLevelEnum
@@ -3698,6 +3706,40 @@ func TestGettersClient(t *testing.T) {
 			}
 		}()
 		_ = obj.GetSignedRequestObject() // Should return zero value
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var value ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.TokenVaultPrivilegedAccess = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenVaultPrivilegedAccess(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		obj.TokenVaultPrivilegedAccess = nil
+		var expectedZero ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenVaultPrivilegedAccess(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Client
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenVaultPrivilegedAccess() // Should return zero value
 	})
 
 	t.Run("GetComplianceLevel", func(t *testing.T) {
@@ -5647,6 +5689,37 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 
 		// Act
 		obj.SetSignedRequestObject(fernTestValueSignedRequestObject)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenVaultPrivilegedAccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -19965,6 +20038,312 @@ func TestSettersMarkExplicitClientTokenExchangeConfigurationOrNull(t *testing.T)
 
 }
 
+func TestSettersClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
+	t.Run("SetCredentials", func(t *testing.T) {
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		var fernTestValueCredentials []*CredentialID
+		obj.SetCredentials(fernTestValueCredentials)
+		assert.Equal(t, fernTestValueCredentials, obj.Credentials)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIPAllowlist", func(t *testing.T) {
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		var fernTestValueIPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry
+		obj.SetIPAllowlist(fernTestValueIPAllowlist)
+		assert.Equal(t, fernTestValueIPAllowlist, obj.IPAllowlist)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
+	t.Run("GetCredentials", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		var expected []*CredentialID
+		obj.Credentials = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetCredentials(), "getter should return the property value")
+	})
+
+	t.Run("GetCredentials_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		obj.Credentials = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetCredentials(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetCredentials_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithCredentialID
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCredentials() // Should return zero value
+	})
+
+	t.Run("GetIPAllowlist", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		var expected []TokenVaultPrivilegedAccessIPAllowlistEntry
+		obj.IPAllowlist = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetIPAllowlist(), "getter should return the property value")
+	})
+
+	t.Run("GetIPAllowlist_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		obj.IPAllowlist = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetIPAllowlist(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetIPAllowlist_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithCredentialID
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIPAllowlist() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
+	t.Run("SetCredentials_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		var fernTestValueCredentials []*CredentialID
+
+		// Act
+		obj.SetCredentials(fernTestValueCredentials)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIPAllowlist_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		var fernTestValueIPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry
+
+		// Act
+		obj.SetIPAllowlist(fernTestValueIPAllowlist)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
+	t.Run("SetCredentials", func(t *testing.T) {
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		var fernTestValueCredentials []*PublicKeyCredential
+		obj.SetCredentials(fernTestValueCredentials)
+		assert.Equal(t, fernTestValueCredentials, obj.Credentials)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIPAllowlist", func(t *testing.T) {
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		var fernTestValueIPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry
+		obj.SetIPAllowlist(fernTestValueIPAllowlist)
+		assert.Equal(t, fernTestValueIPAllowlist, obj.IPAllowlist)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
+	t.Run("GetCredentials", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		var expected []*PublicKeyCredential
+		obj.Credentials = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetCredentials(), "getter should return the property value")
+	})
+
+	t.Run("GetCredentials_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		obj.Credentials = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetCredentials(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetCredentials_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithPublicKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCredentials() // Should return zero value
+	})
+
+	t.Run("GetIPAllowlist", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		var expected []TokenVaultPrivilegedAccessIPAllowlistEntry
+		obj.IPAllowlist = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetIPAllowlist(), "getter should return the property value")
+	})
+
+	t.Run("GetIPAllowlist_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		obj.IPAllowlist = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetIPAllowlist(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetIPAllowlist_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithPublicKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIPAllowlist() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
+	t.Run("SetCredentials_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		var fernTestValueCredentials []*PublicKeyCredential
+
+		// Act
+		obj.SetCredentials(fernTestValueCredentials)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIPAllowlist_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		var fernTestValueIPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry
+
+		// Act
+		obj.SetIPAllowlist(fernTestValueIPAllowlist)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersCreateClientAuthenticationMethodSelfSignedTLSClientAuth(t *testing.T) {
 	t.Run("SetCredentials", func(t *testing.T) {
 		obj := &CreateClientAuthenticationMethodSelfSignedTLSClientAuth{}
@@ -20410,6 +20789,14 @@ func TestSettersCreateClientResponseContent(t *testing.T) {
 		var fernTestValueSignedRequestObject *ClientSignedRequestObjectWithCredentialID
 		obj.SetSignedRequestObject(fernTestValueSignedRequestObject)
 		assert.Equal(t, fernTestValueSignedRequestObject, obj.SignedRequestObject)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		obj := &CreateClientResponseContent{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
+		assert.Equal(t, fernTestValueTokenVaultPrivilegedAccess, obj.TokenVaultPrivilegedAccess)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -22124,6 +22511,40 @@ func TestGettersCreateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetSignedRequestObject() // Should return zero value
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var value ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.TokenVaultPrivilegedAccess = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenVaultPrivilegedAccess(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		obj.TokenVaultPrivilegedAccess = nil
+		var expectedZero ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenVaultPrivilegedAccess(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenVaultPrivilegedAccess() // Should return zero value
 	})
 
 	t.Run("GetComplianceLevel", func(t *testing.T) {
@@ -24073,6 +24494,37 @@ func TestSettersMarkExplicitCreateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetSignedRequestObject(fernTestValueSignedRequestObject)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenVaultPrivilegedAccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -26515,6 +26967,14 @@ func TestSettersGetClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		obj := &GetClientResponseContent{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
+		assert.Equal(t, fernTestValueTokenVaultPrivilegedAccess, obj.TokenVaultPrivilegedAccess)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetComplianceLevel", func(t *testing.T) {
 		obj := &GetClientResponseContent{}
 		var fernTestValueComplianceLevel *ClientComplianceLevelEnum
@@ -28226,6 +28686,40 @@ func TestGettersGetClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetSignedRequestObject() // Should return zero value
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var value ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.TokenVaultPrivilegedAccess = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenVaultPrivilegedAccess(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		obj.TokenVaultPrivilegedAccess = nil
+		var expectedZero ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenVaultPrivilegedAccess(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenVaultPrivilegedAccess() // Should return zero value
 	})
 
 	t.Run("GetComplianceLevel", func(t *testing.T) {
@@ -30175,6 +30669,37 @@ func TestSettersMarkExplicitGetClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetSignedRequestObject(fernTestValueSignedRequestObject)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenVaultPrivilegedAccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -33374,6 +33899,14 @@ func TestSettersRotateClientSecretResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
+		assert.Equal(t, fernTestValueTokenVaultPrivilegedAccess, obj.TokenVaultPrivilegedAccess)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetComplianceLevel", func(t *testing.T) {
 		obj := &RotateClientSecretResponseContent{}
 		var fernTestValueComplianceLevel *ClientComplianceLevelEnum
@@ -35085,6 +35618,40 @@ func TestGettersRotateClientSecretResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetSignedRequestObject() // Should return zero value
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var value ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.TokenVaultPrivilegedAccess = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenVaultPrivilegedAccess(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		obj.TokenVaultPrivilegedAccess = nil
+		var expectedZero ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenVaultPrivilegedAccess(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *RotateClientSecretResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenVaultPrivilegedAccess() // Should return zero value
 	})
 
 	t.Run("GetComplianceLevel", func(t *testing.T) {
@@ -37057,6 +37624,37 @@ func TestSettersMarkExplicitRotateClientSecretResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetTokenVaultPrivilegedAccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetComplianceLevel_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -37898,6 +38496,14 @@ func TestSettersUpdateClientResponseContent(t *testing.T) {
 		var fernTestValueSignedRequestObject *ClientSignedRequestObjectWithCredentialID
 		obj.SetSignedRequestObject(fernTestValueSignedRequestObject)
 		assert.Equal(t, fernTestValueSignedRequestObject, obj.SignedRequestObject)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
+		assert.Equal(t, fernTestValueTokenVaultPrivilegedAccess, obj.TokenVaultPrivilegedAccess)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -39612,6 +40218,40 @@ func TestGettersUpdateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetSignedRequestObject() // Should return zero value
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var value ClientTokenVaultPrivilegedAccessWithCredentialID
+		obj.TokenVaultPrivilegedAccess = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTokenVaultPrivilegedAccess(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		obj.TokenVaultPrivilegedAccess = nil
+		var expectedZero ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTokenVaultPrivilegedAccess(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTokenVaultPrivilegedAccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokenVaultPrivilegedAccess() // Should return zero value
 	})
 
 	t.Run("GetComplianceLevel", func(t *testing.T) {
@@ -41561,6 +42201,37 @@ func TestSettersMarkExplicitUpdateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetSignedRequestObject(fernTestValueSignedRequestObject)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTokenVaultPrivilegedAccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueTokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID
+
+		// Act
+		obj.SetTokenVaultPrivilegedAccess(fernTestValueTokenVaultPrivilegedAccess)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -44270,6 +44941,72 @@ func TestJSONMarshalingClientTokenExchangeConfigurationOrNull(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ClientTokenVaultPrivilegedAccessWithCredentialID
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientTokenVaultPrivilegedAccessWithCredentialID
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientTokenVaultPrivilegedAccessWithCredentialID
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ClientTokenVaultPrivilegedAccessWithPublicKey
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientTokenVaultPrivilegedAccessWithPublicKey
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientTokenVaultPrivilegedAccessWithPublicKey
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingCreateClientAuthenticationMethodSelfSignedTLSClientAuth(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -46099,6 +46836,38 @@ func TestStringClientTokenExchangeConfigurationOrNull(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ClientTokenExchangeConfigurationOrNull
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithCredentialID
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithPublicKey
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -49017,6 +49786,52 @@ func TestExtraPropertiesClientTokenExchangeConfigurationOrNull(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ClientTokenExchangeConfigurationOrNull
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithCredentialID
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithPublicKey
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -907,21 +907,22 @@ var (
 	clientFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
 	clientFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
 	clientFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	clientFieldComplianceLevel                                = big.NewInt(1 << 47)
-	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
-	clientFieldTokenExchange                                  = big.NewInt(1 << 49)
-	clientFieldParRequestExpiry                               = big.NewInt(1 << 50)
-	clientFieldTokenQuota                                     = big.NewInt(1 << 51)
-	clientFieldExpressConfiguration                           = big.NewInt(1 << 52)
-	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
-	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
-	clientFieldRedirectionPolicy                              = big.NewInt(1 << 55)
-	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
-	clientFieldExternalMetadataType                           = big.NewInt(1 << 58)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
-	clientFieldExternalClientID                               = big.NewInt(1 << 60)
-	clientFieldJwksURI                                        = big.NewInt(1 << 61)
+	clientFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
+	clientFieldComplianceLevel                                = big.NewInt(1 << 48)
+	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
+	clientFieldTokenExchange                                  = big.NewInt(1 << 50)
+	clientFieldParRequestExpiry                               = big.NewInt(1 << 51)
+	clientFieldTokenQuota                                     = big.NewInt(1 << 52)
+	clientFieldExpressConfiguration                           = big.NewInt(1 << 53)
+	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
+	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
+	clientFieldRedirectionPolicy                              = big.NewInt(1 << 56)
+	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
+	clientFieldExternalMetadataType                           = big.NewInt(1 << 59)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
+	clientFieldExternalClientID                               = big.NewInt(1 << 61)
+	clientFieldJwksURI                                        = big.NewInt(1 << 62)
 )
 
 type Client struct {
@@ -999,9 +1000,10 @@ type Client struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -1359,6 +1361,13 @@ func (c *Client) GetSignedRequestObject() ClientSignedRequestObjectWithCredentia
 		return ClientSignedRequestObjectWithCredentialID{}
 	}
 	return *c.SignedRequestObject
+}
+
+func (c *Client) GetTokenVaultPrivilegedAccess() ClientTokenVaultPrivilegedAccessWithCredentialID {
+	if c == nil || c.TokenVaultPrivilegedAccess == nil {
+		return ClientTokenVaultPrivilegedAccessWithCredentialID{}
+	}
+	return *c.TokenVaultPrivilegedAccess
 }
 
 func (c *Client) GetComplianceLevel() ClientComplianceLevelEnum {
@@ -1807,6 +1816,13 @@ func (c *Client) SetRequireProofOfPossession(requireProofOfPossession *bool) {
 func (c *Client) SetSignedRequestObject(signedRequestObject *ClientSignedRequestObjectWithCredentialID) {
 	c.SignedRequestObject = signedRequestObject
 	c.require(clientFieldSignedRequestObject)
+}
+
+// SetTokenVaultPrivilegedAccess sets the TokenVaultPrivilegedAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetTokenVaultPrivilegedAccess(tokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID) {
+	c.TokenVaultPrivilegedAccess = tokenVaultPrivilegedAccess
+	c.require(clientFieldTokenVaultPrivilegedAccess)
 }
 
 // SetComplianceLevel sets the ComplianceLevel field and marks it as non-optional;
@@ -9660,6 +9676,208 @@ func (c ClientTokenExchangeTypeEnum) Ptr() *ClientTokenExchangeTypeEnum {
 	return &c
 }
 
+// Settings for Token Vault Privileged Access.
+var (
+	clientTokenVaultPrivilegedAccessWithCredentialIDFieldCredentials = big.NewInt(1 << 0)
+	clientTokenVaultPrivilegedAccessWithCredentialIDFieldIPAllowlist = big.NewInt(1 << 1)
+)
+
+type ClientTokenVaultPrivilegedAccessWithCredentialID struct {
+	Credentials []*CredentialID                              `json:"credentials" url:"credentials"`
+	IPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry `json:"ip_allowlist,omitempty" url:"ip_allowlist,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) GetCredentials() []*CredentialID {
+	if c == nil {
+		return nil
+	}
+	return c.Credentials
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) GetIPAllowlist() []TokenVaultPrivilegedAccessIPAllowlistEntry {
+	if c == nil || c.IPAllowlist == nil {
+		return nil
+	}
+	return c.IPAllowlist
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCredentials sets the Credentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) SetCredentials(credentials []*CredentialID) {
+	c.Credentials = credentials
+	c.require(clientTokenVaultPrivilegedAccessWithCredentialIDFieldCredentials)
+}
+
+// SetIPAllowlist sets the IPAllowlist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) SetIPAllowlist(ipAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry) {
+	c.IPAllowlist = ipAllowlist
+	c.require(clientTokenVaultPrivilegedAccessWithCredentialIDFieldIPAllowlist)
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientTokenVaultPrivilegedAccessWithCredentialID
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientTokenVaultPrivilegedAccessWithCredentialID(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) MarshalJSON() ([]byte, error) {
+	type embed ClientTokenVaultPrivilegedAccessWithCredentialID
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Settings for Token Vault Privileged Access.
+var (
+	clientTokenVaultPrivilegedAccessWithPublicKeyFieldCredentials = big.NewInt(1 << 0)
+	clientTokenVaultPrivilegedAccessWithPublicKeyFieldIPAllowlist = big.NewInt(1 << 1)
+)
+
+type ClientTokenVaultPrivilegedAccessWithPublicKey struct {
+	Credentials []*PublicKeyCredential                       `json:"credentials" url:"credentials"`
+	IPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry `json:"ip_allowlist,omitempty" url:"ip_allowlist,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) GetCredentials() []*PublicKeyCredential {
+	if c == nil {
+		return nil
+	}
+	return c.Credentials
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) GetIPAllowlist() []TokenVaultPrivilegedAccessIPAllowlistEntry {
+	if c == nil || c.IPAllowlist == nil {
+		return nil
+	}
+	return c.IPAllowlist
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCredentials sets the Credentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) SetCredentials(credentials []*PublicKeyCredential) {
+	c.Credentials = credentials
+	c.require(clientTokenVaultPrivilegedAccessWithPublicKeyFieldCredentials)
+}
+
+// SetIPAllowlist sets the IPAllowlist field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) SetIPAllowlist(ipAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry) {
+	c.IPAllowlist = ipAllowlist
+	c.require(clientTokenVaultPrivilegedAccessWithPublicKeyFieldIPAllowlist)
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientTokenVaultPrivilegedAccessWithPublicKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientTokenVaultPrivilegedAccessWithPublicKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) MarshalJSON() ([]byte, error) {
+	type embed ClientTokenVaultPrivilegedAccessWithPublicKey
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 // Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
 var (
 	createClientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
@@ -9796,21 +10014,22 @@ var (
 	createClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
 	createClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
 	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 47)
-	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
-	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 49)
-	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 50)
-	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 51)
-	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 52)
-	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
-	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
-	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 58)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 60)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 61)
+	createClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
+	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 48)
+	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
+	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 50)
+	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
+	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
+	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
+	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
+	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 56)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 59)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 61)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 62)
 )
 
 type CreateClientResponseContent struct {
@@ -9888,9 +10107,10 @@ type CreateClientResponseContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -10248,6 +10468,13 @@ func (c *CreateClientResponseContent) GetSignedRequestObject() ClientSignedReque
 		return ClientSignedRequestObjectWithCredentialID{}
 	}
 	return *c.SignedRequestObject
+}
+
+func (c *CreateClientResponseContent) GetTokenVaultPrivilegedAccess() ClientTokenVaultPrivilegedAccessWithCredentialID {
+	if c == nil || c.TokenVaultPrivilegedAccess == nil {
+		return ClientTokenVaultPrivilegedAccessWithCredentialID{}
+	}
+	return *c.TokenVaultPrivilegedAccess
 }
 
 func (c *CreateClientResponseContent) GetComplianceLevel() ClientComplianceLevelEnum {
@@ -10696,6 +10923,13 @@ func (c *CreateClientResponseContent) SetRequireProofOfPossession(requireProofOf
 func (c *CreateClientResponseContent) SetSignedRequestObject(signedRequestObject *ClientSignedRequestObjectWithCredentialID) {
 	c.SignedRequestObject = signedRequestObject
 	c.require(createClientResponseContentFieldSignedRequestObject)
+}
+
+// SetTokenVaultPrivilegedAccess sets the TokenVaultPrivilegedAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetTokenVaultPrivilegedAccess(tokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID) {
+	c.TokenVaultPrivilegedAccess = tokenVaultPrivilegedAccess
+	c.require(createClientResponseContentFieldTokenVaultPrivilegedAccess)
 }
 
 // SetComplianceLevel sets the ComplianceLevel field and marks it as non-optional;
@@ -11768,21 +12002,22 @@ var (
 	getClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
 	getClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
 	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 47)
-	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
-	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 49)
-	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 50)
-	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 51)
-	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 52)
-	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
-	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
-	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 58)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 60)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 61)
+	getClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
+	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 48)
+	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
+	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 50)
+	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
+	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
+	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
+	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
+	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 56)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 59)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 61)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 62)
 )
 
 type GetClientResponseContent struct {
@@ -11860,9 +12095,10 @@ type GetClientResponseContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -12220,6 +12456,13 @@ func (g *GetClientResponseContent) GetSignedRequestObject() ClientSignedRequestO
 		return ClientSignedRequestObjectWithCredentialID{}
 	}
 	return *g.SignedRequestObject
+}
+
+func (g *GetClientResponseContent) GetTokenVaultPrivilegedAccess() ClientTokenVaultPrivilegedAccessWithCredentialID {
+	if g == nil || g.TokenVaultPrivilegedAccess == nil {
+		return ClientTokenVaultPrivilegedAccessWithCredentialID{}
+	}
+	return *g.TokenVaultPrivilegedAccess
 }
 
 func (g *GetClientResponseContent) GetComplianceLevel() ClientComplianceLevelEnum {
@@ -12668,6 +12911,13 @@ func (g *GetClientResponseContent) SetRequireProofOfPossession(requireProofOfPos
 func (g *GetClientResponseContent) SetSignedRequestObject(signedRequestObject *ClientSignedRequestObjectWithCredentialID) {
 	g.SignedRequestObject = signedRequestObject
 	g.require(getClientResponseContentFieldSignedRequestObject)
+}
+
+// SetTokenVaultPrivilegedAccess sets the TokenVaultPrivilegedAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetTokenVaultPrivilegedAccess(tokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID) {
+	g.TokenVaultPrivilegedAccess = tokenVaultPrivilegedAccess
+	g.require(getClientResponseContentFieldTokenVaultPrivilegedAccess)
 }
 
 // SetComplianceLevel sets the ComplianceLevel field and marks it as non-optional;
@@ -14358,21 +14608,22 @@ var (
 	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
 	rotateClientSecretResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
 	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 47)
-	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
-	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 49)
-	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 50)
-	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 51)
-	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 52)
-	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
-	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
-	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 58)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 60)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(1 << 61)
+	rotateClientSecretResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
+	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 48)
+	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
+	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 50)
+	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
+	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
+	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
+	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
+	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 56)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 59)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 61)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(1 << 62)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -14450,9 +14701,10 @@ type RotateClientSecretResponseContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -14810,6 +15062,13 @@ func (r *RotateClientSecretResponseContent) GetSignedRequestObject() ClientSigne
 		return ClientSignedRequestObjectWithCredentialID{}
 	}
 	return *r.SignedRequestObject
+}
+
+func (r *RotateClientSecretResponseContent) GetTokenVaultPrivilegedAccess() ClientTokenVaultPrivilegedAccessWithCredentialID {
+	if r == nil || r.TokenVaultPrivilegedAccess == nil {
+		return ClientTokenVaultPrivilegedAccessWithCredentialID{}
+	}
+	return *r.TokenVaultPrivilegedAccess
 }
 
 func (r *RotateClientSecretResponseContent) GetComplianceLevel() ClientComplianceLevelEnum {
@@ -15260,6 +15519,13 @@ func (r *RotateClientSecretResponseContent) SetSignedRequestObject(signedRequest
 	r.require(rotateClientSecretResponseContentFieldSignedRequestObject)
 }
 
+// SetTokenVaultPrivilegedAccess sets the TokenVaultPrivilegedAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetTokenVaultPrivilegedAccess(tokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID) {
+	r.TokenVaultPrivilegedAccess = tokenVaultPrivilegedAccess
+	r.require(rotateClientSecretResponseContentFieldTokenVaultPrivilegedAccess)
+}
+
 // SetComplianceLevel sets the ComplianceLevel field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetComplianceLevel(complianceLevel *ClientComplianceLevelEnum) {
@@ -15411,6 +15677,8 @@ func (r *RotateClientSecretResponseContent) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+type TokenVaultPrivilegedAccessIPAllowlistEntry = string
+
 var (
 	updateClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
 	updateClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
@@ -15459,21 +15727,22 @@ var (
 	updateClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
 	updateClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
 	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 47)
-	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
-	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 49)
-	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 50)
-	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 51)
-	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 52)
-	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
-	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
-	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 56)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 58)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 59)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 60)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 61)
+	updateClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
+	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 48)
+	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
+	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 50)
+	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
+	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
+	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
+	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
+	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 56)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 59)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 61)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 62)
 )
 
 type UpdateClientResponseContent struct {
@@ -15551,9 +15820,10 @@ type UpdateClientResponseContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession *bool                                      `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject      *ClientSignedRequestObjectWithCredentialID `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	ComplianceLevel          *ClientComplianceLevelEnum                 `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -15911,6 +16181,13 @@ func (u *UpdateClientResponseContent) GetSignedRequestObject() ClientSignedReque
 		return ClientSignedRequestObjectWithCredentialID{}
 	}
 	return *u.SignedRequestObject
+}
+
+func (u *UpdateClientResponseContent) GetTokenVaultPrivilegedAccess() ClientTokenVaultPrivilegedAccessWithCredentialID {
+	if u == nil || u.TokenVaultPrivilegedAccess == nil {
+		return ClientTokenVaultPrivilegedAccessWithCredentialID{}
+	}
+	return *u.TokenVaultPrivilegedAccess
 }
 
 func (u *UpdateClientResponseContent) GetComplianceLevel() ClientComplianceLevelEnum {
@@ -16359,6 +16636,13 @@ func (u *UpdateClientResponseContent) SetRequireProofOfPossession(requireProofOf
 func (u *UpdateClientResponseContent) SetSignedRequestObject(signedRequestObject *ClientSignedRequestObjectWithCredentialID) {
 	u.SignedRequestObject = signedRequestObject
 	u.require(updateClientResponseContentFieldSignedRequestObject)
+}
+
+// SetTokenVaultPrivilegedAccess sets the TokenVaultPrivilegedAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetTokenVaultPrivilegedAccess(tokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID) {
+	u.TokenVaultPrivilegedAccess = tokenVaultPrivilegedAccess
+	u.require(updateClientResponseContentFieldTokenVaultPrivilegedAccess)
 }
 
 // SetComplianceLevel sets the ComplianceLevel field and marks it as non-optional;
