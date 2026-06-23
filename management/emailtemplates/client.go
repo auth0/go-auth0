@@ -51,10 +51,10 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Retrieve an email template by pre-defined name. These names are `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, and `async_approval`. The names `change_password`, and `password_reset` are also supported for legacy scenarios.
+// Retrieve an email template by pre-defined name. These names are `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, and `async_approval`. The names `change_password`, and `password_reset` are also supported for legacy scenarios.
 func (c *Client) Get(
 	ctx context.Context,
-	// Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
+	// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 	templateName *management.EmailTemplateNameEnum,
 	opts ...option.RequestOption,
 ) (*management.GetEmailTemplateResponseContent, error) {
@@ -72,7 +72,7 @@ func (c *Client) Get(
 // Update an email template.
 func (c *Client) Set(
 	ctx context.Context,
-	// Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
+	// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 	templateName *management.EmailTemplateNameEnum,
 	request *management.SetEmailTemplateRequestContent,
 	opts ...option.RequestOption,
@@ -92,7 +92,7 @@ func (c *Client) Set(
 // Modify an email template.
 func (c *Client) Update(
 	ctx context.Context,
-	// Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
+	// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 	templateName *management.EmailTemplateNameEnum,
 	request *management.UpdateEmailTemplateRequestContent,
 	opts ...option.RequestOption,

@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v2/management/internal"
 	big "math/big"
+	time "time"
 )
 
 var (
@@ -47,9 +48,11 @@ type CreateUserResponseContent struct {
 	// Phone number for this user. Follows the <a href="https://en.wikipedia.org/wiki/E.164">E.164 recommendation</a>.
 	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
 	// Whether this phone number has been verified (true) or not (false).
-	PhoneVerified *bool           `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
-	CreatedAt     *UserDateSchema `json:"created_at,omitempty" url:"created_at,omitempty"`
-	UpdatedAt     *UserDateSchema `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	PhoneVerified *bool `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	// Date and time when this user was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Date and time when this user was last updated/modified.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// Array of user identity objects when accounts are linked.
 	Identities   []*UserIdentitySchema  `json:"identities,omitempty" url:"identities,omitempty"`
 	AppMetadata  *UserAppMetadataSchema `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
@@ -61,12 +64,15 @@ type CreateUserResponseContent struct {
 	// Preferred nickname or alias of this user.
 	Nickname *string `json:"nickname,omitempty" url:"nickname,omitempty"`
 	// List of multi-factor authentication providers with which this user has enrolled.
-	Multifactor             []string        `json:"multifactor,omitempty" url:"multifactor,omitempty"`
-	MultifactorLastModified *UserDateSchema `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
+	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	// Last date and time this user's multi-factor authentication providers were updated.
+	MultifactorLastModified *time.Time `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP            *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	LastLogin         *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
-	LastPasswordReset *UserDateSchema `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
+	LastIP *string `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	// Last date and time this user logged in.
+	LastLogin *time.Time `json:"last_login,omitempty" url:"last_login,omitempty"`
+	// Last date and time this user had their password reset.
+	LastPasswordReset *time.Time `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
 	// Whether this user was blocked by an administrator (true) or is not (false).
@@ -126,16 +132,16 @@ func (c *CreateUserResponseContent) GetPhoneVerified() bool {
 	return *c.PhoneVerified
 }
 
-func (c *CreateUserResponseContent) GetCreatedAt() UserDateSchema {
+func (c *CreateUserResponseContent) GetCreatedAt() time.Time {
 	if c == nil || c.CreatedAt == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *c.CreatedAt
 }
 
-func (c *CreateUserResponseContent) GetUpdatedAt() UserDateSchema {
+func (c *CreateUserResponseContent) GetUpdatedAt() time.Time {
 	if c == nil || c.UpdatedAt == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *c.UpdatedAt
 }
@@ -189,9 +195,9 @@ func (c *CreateUserResponseContent) GetMultifactor() []string {
 	return c.Multifactor
 }
 
-func (c *CreateUserResponseContent) GetMultifactorLastModified() UserDateSchema {
+func (c *CreateUserResponseContent) GetMultifactorLastModified() time.Time {
 	if c == nil || c.MultifactorLastModified == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *c.MultifactorLastModified
 }
@@ -203,16 +209,16 @@ func (c *CreateUserResponseContent) GetLastIP() string {
 	return *c.LastIP
 }
 
-func (c *CreateUserResponseContent) GetLastLogin() UserDateSchema {
+func (c *CreateUserResponseContent) GetLastLogin() time.Time {
 	if c == nil || c.LastLogin == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *c.LastLogin
 }
 
-func (c *CreateUserResponseContent) GetLastPasswordReset() UserDateSchema {
+func (c *CreateUserResponseContent) GetLastPasswordReset() time.Time {
 	if c == nil || c.LastPasswordReset == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *c.LastPasswordReset
 }
@@ -303,14 +309,14 @@ func (c *CreateUserResponseContent) SetPhoneVerified(phoneVerified *bool) {
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserResponseContent) SetCreatedAt(createdAt *UserDateSchema) {
+func (c *CreateUserResponseContent) SetCreatedAt(createdAt *time.Time) {
 	c.CreatedAt = createdAt
 	c.require(createUserResponseContentFieldCreatedAt)
 }
 
 // SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserResponseContent) SetUpdatedAt(updatedAt *UserDateSchema) {
+func (c *CreateUserResponseContent) SetUpdatedAt(updatedAt *time.Time) {
 	c.UpdatedAt = updatedAt
 	c.require(createUserResponseContentFieldUpdatedAt)
 }
@@ -366,7 +372,7 @@ func (c *CreateUserResponseContent) SetMultifactor(multifactor []string) {
 
 // SetMultifactorLastModified sets the MultifactorLastModified field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserResponseContent) SetMultifactorLastModified(multifactorLastModified *UserDateSchema) {
+func (c *CreateUserResponseContent) SetMultifactorLastModified(multifactorLastModified *time.Time) {
 	c.MultifactorLastModified = multifactorLastModified
 	c.require(createUserResponseContentFieldMultifactorLastModified)
 }
@@ -380,14 +386,14 @@ func (c *CreateUserResponseContent) SetLastIP(lastIP *string) {
 
 // SetLastLogin sets the LastLogin field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserResponseContent) SetLastLogin(lastLogin *UserDateSchema) {
+func (c *CreateUserResponseContent) SetLastLogin(lastLogin *time.Time) {
 	c.LastLogin = lastLogin
 	c.require(createUserResponseContentFieldLastLogin)
 }
 
 // SetLastPasswordReset sets the LastPasswordReset field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserResponseContent) SetLastPasswordReset(lastPasswordReset *UserDateSchema) {
+func (c *CreateUserResponseContent) SetLastPasswordReset(lastPasswordReset *time.Time) {
 	c.LastPasswordReset = lastPasswordReset
 	c.require(createUserResponseContentFieldLastPasswordReset)
 }
@@ -424,6 +430,11 @@ func (c *CreateUserResponseContent) UnmarshalJSON(data []byte) error {
 	type embed CreateUserResponseContent
 	var unmarshaler = struct {
 		embed
+		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
+		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
+		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
+		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
 		embed: embed(*c),
 	}
@@ -431,6 +442,11 @@ func (c *CreateUserResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = CreateUserResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	c.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	c.MultifactorLastModified = unmarshaler.MultifactorLastModified.TimePtr()
+	c.LastLogin = unmarshaler.LastLogin.TimePtr()
+	c.LastPasswordReset = unmarshaler.LastPasswordReset.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
@@ -444,8 +460,18 @@ func (c *CreateUserResponseContent) MarshalJSON() ([]byte, error) {
 	type embed CreateUserResponseContent
 	var marshaler = struct {
 		embed
+		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
+		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
+		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
+		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
-		embed: embed(*c),
+		embed:                   embed(*c),
+		CreatedAt:               internal.NewOptionalDateTime(c.CreatedAt),
+		UpdatedAt:               internal.NewOptionalDateTime(c.UpdatedAt),
+		MultifactorLastModified: internal.NewOptionalDateTime(c.MultifactorLastModified),
+		LastLogin:               internal.NewOptionalDateTime(c.LastLogin),
+		LastPasswordReset:       internal.NewOptionalDateTime(c.LastPasswordReset),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
@@ -504,9 +530,11 @@ type GetUserResponseContent struct {
 	// Phone number for this user. Follows the <a href="https://en.wikipedia.org/wiki/E.164">E.164 recommendation</a>.
 	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
 	// Whether this phone number has been verified (true) or not (false).
-	PhoneVerified *bool           `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
-	CreatedAt     *UserDateSchema `json:"created_at,omitempty" url:"created_at,omitempty"`
-	UpdatedAt     *UserDateSchema `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	PhoneVerified *bool `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	// Date and time when this user was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Date and time when this user was last updated/modified.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// Array of user identity objects when accounts are linked.
 	Identities   []*UserIdentitySchema  `json:"identities,omitempty" url:"identities,omitempty"`
 	AppMetadata  *UserAppMetadataSchema `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
@@ -518,12 +546,15 @@ type GetUserResponseContent struct {
 	// Preferred nickname or alias of this user.
 	Nickname *string `json:"nickname,omitempty" url:"nickname,omitempty"`
 	// List of multi-factor authentication providers with which this user has enrolled.
-	Multifactor             []string        `json:"multifactor,omitempty" url:"multifactor,omitempty"`
-	MultifactorLastModified *UserDateSchema `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
+	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	// Last date and time this user's multi-factor authentication providers were updated.
+	MultifactorLastModified *time.Time `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP            *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	LastLogin         *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
-	LastPasswordReset *UserDateSchema `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
+	LastIP *string `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	// Last date and time this user logged in.
+	LastLogin *time.Time `json:"last_login,omitempty" url:"last_login,omitempty"`
+	// Last date and time this user had their password reset.
+	LastPasswordReset *time.Time `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
 	// Whether this user was blocked by an administrator (true) or is not (false).
@@ -583,16 +614,16 @@ func (g *GetUserResponseContent) GetPhoneVerified() bool {
 	return *g.PhoneVerified
 }
 
-func (g *GetUserResponseContent) GetCreatedAt() UserDateSchema {
+func (g *GetUserResponseContent) GetCreatedAt() time.Time {
 	if g == nil || g.CreatedAt == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *g.CreatedAt
 }
 
-func (g *GetUserResponseContent) GetUpdatedAt() UserDateSchema {
+func (g *GetUserResponseContent) GetUpdatedAt() time.Time {
 	if g == nil || g.UpdatedAt == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *g.UpdatedAt
 }
@@ -646,9 +677,9 @@ func (g *GetUserResponseContent) GetMultifactor() []string {
 	return g.Multifactor
 }
 
-func (g *GetUserResponseContent) GetMultifactorLastModified() UserDateSchema {
+func (g *GetUserResponseContent) GetMultifactorLastModified() time.Time {
 	if g == nil || g.MultifactorLastModified == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *g.MultifactorLastModified
 }
@@ -660,16 +691,16 @@ func (g *GetUserResponseContent) GetLastIP() string {
 	return *g.LastIP
 }
 
-func (g *GetUserResponseContent) GetLastLogin() UserDateSchema {
+func (g *GetUserResponseContent) GetLastLogin() time.Time {
 	if g == nil || g.LastLogin == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *g.LastLogin
 }
 
-func (g *GetUserResponseContent) GetLastPasswordReset() UserDateSchema {
+func (g *GetUserResponseContent) GetLastPasswordReset() time.Time {
 	if g == nil || g.LastPasswordReset == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *g.LastPasswordReset
 }
@@ -760,14 +791,14 @@ func (g *GetUserResponseContent) SetPhoneVerified(phoneVerified *bool) {
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserResponseContent) SetCreatedAt(createdAt *UserDateSchema) {
+func (g *GetUserResponseContent) SetCreatedAt(createdAt *time.Time) {
 	g.CreatedAt = createdAt
 	g.require(getUserResponseContentFieldCreatedAt)
 }
 
 // SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserResponseContent) SetUpdatedAt(updatedAt *UserDateSchema) {
+func (g *GetUserResponseContent) SetUpdatedAt(updatedAt *time.Time) {
 	g.UpdatedAt = updatedAt
 	g.require(getUserResponseContentFieldUpdatedAt)
 }
@@ -823,7 +854,7 @@ func (g *GetUserResponseContent) SetMultifactor(multifactor []string) {
 
 // SetMultifactorLastModified sets the MultifactorLastModified field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserResponseContent) SetMultifactorLastModified(multifactorLastModified *UserDateSchema) {
+func (g *GetUserResponseContent) SetMultifactorLastModified(multifactorLastModified *time.Time) {
 	g.MultifactorLastModified = multifactorLastModified
 	g.require(getUserResponseContentFieldMultifactorLastModified)
 }
@@ -837,14 +868,14 @@ func (g *GetUserResponseContent) SetLastIP(lastIP *string) {
 
 // SetLastLogin sets the LastLogin field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserResponseContent) SetLastLogin(lastLogin *UserDateSchema) {
+func (g *GetUserResponseContent) SetLastLogin(lastLogin *time.Time) {
 	g.LastLogin = lastLogin
 	g.require(getUserResponseContentFieldLastLogin)
 }
 
 // SetLastPasswordReset sets the LastPasswordReset field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserResponseContent) SetLastPasswordReset(lastPasswordReset *UserDateSchema) {
+func (g *GetUserResponseContent) SetLastPasswordReset(lastPasswordReset *time.Time) {
 	g.LastPasswordReset = lastPasswordReset
 	g.require(getUserResponseContentFieldLastPasswordReset)
 }
@@ -881,6 +912,11 @@ func (g *GetUserResponseContent) UnmarshalJSON(data []byte) error {
 	type embed GetUserResponseContent
 	var unmarshaler = struct {
 		embed
+		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
+		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
+		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
+		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
 		embed: embed(*g),
 	}
@@ -888,6 +924,11 @@ func (g *GetUserResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*g = GetUserResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	g.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	g.MultifactorLastModified = unmarshaler.MultifactorLastModified.TimePtr()
+	g.LastLogin = unmarshaler.LastLogin.TimePtr()
+	g.LastPasswordReset = unmarshaler.LastPasswordReset.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
@@ -901,8 +942,18 @@ func (g *GetUserResponseContent) MarshalJSON() ([]byte, error) {
 	type embed GetUserResponseContent
 	var marshaler = struct {
 		embed
+		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
+		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
+		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
+		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
-		embed: embed(*g),
+		embed:                   embed(*g),
+		CreatedAt:               internal.NewOptionalDateTime(g.CreatedAt),
+		UpdatedAt:               internal.NewOptionalDateTime(g.UpdatedAt),
+		MultifactorLastModified: internal.NewOptionalDateTime(g.MultifactorLastModified),
+		LastLogin:               internal.NewOptionalDateTime(g.LastLogin),
+		LastPasswordReset:       internal.NewOptionalDateTime(g.LastPasswordReset),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
@@ -1225,9 +1276,11 @@ type UpdateUserResponseContent struct {
 	// Phone number for this user. Follows the <a href="https://en.wikipedia.org/wiki/E.164">E.164 recommendation</a>.
 	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
 	// Whether this phone number has been verified (true) or not (false).
-	PhoneVerified *bool           `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
-	CreatedAt     *UserDateSchema `json:"created_at,omitempty" url:"created_at,omitempty"`
-	UpdatedAt     *UserDateSchema `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	PhoneVerified *bool `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	// Date and time when this user was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Date and time when this user was last updated/modified.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// Array of user identity objects when accounts are linked.
 	Identities   []*UserIdentitySchema  `json:"identities,omitempty" url:"identities,omitempty"`
 	AppMetadata  *UserAppMetadataSchema `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
@@ -1239,12 +1292,15 @@ type UpdateUserResponseContent struct {
 	// Preferred nickname or alias of this user.
 	Nickname *string `json:"nickname,omitempty" url:"nickname,omitempty"`
 	// List of multi-factor authentication providers with which this user has enrolled.
-	Multifactor             []string        `json:"multifactor,omitempty" url:"multifactor,omitempty"`
-	MultifactorLastModified *UserDateSchema `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
+	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	// Last date and time this user's multi-factor authentication providers were updated.
+	MultifactorLastModified *time.Time `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP            *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	LastLogin         *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
-	LastPasswordReset *UserDateSchema `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
+	LastIP *string `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	// Last date and time this user logged in.
+	LastLogin *time.Time `json:"last_login,omitempty" url:"last_login,omitempty"`
+	// Last date and time this user had their password reset.
+	LastPasswordReset *time.Time `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
 	// Whether this user was blocked by an administrator (true) or is not (false).
@@ -1304,16 +1360,16 @@ func (u *UpdateUserResponseContent) GetPhoneVerified() bool {
 	return *u.PhoneVerified
 }
 
-func (u *UpdateUserResponseContent) GetCreatedAt() UserDateSchema {
+func (u *UpdateUserResponseContent) GetCreatedAt() time.Time {
 	if u == nil || u.CreatedAt == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.CreatedAt
 }
 
-func (u *UpdateUserResponseContent) GetUpdatedAt() UserDateSchema {
+func (u *UpdateUserResponseContent) GetUpdatedAt() time.Time {
 	if u == nil || u.UpdatedAt == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.UpdatedAt
 }
@@ -1367,9 +1423,9 @@ func (u *UpdateUserResponseContent) GetMultifactor() []string {
 	return u.Multifactor
 }
 
-func (u *UpdateUserResponseContent) GetMultifactorLastModified() UserDateSchema {
+func (u *UpdateUserResponseContent) GetMultifactorLastModified() time.Time {
 	if u == nil || u.MultifactorLastModified == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.MultifactorLastModified
 }
@@ -1381,16 +1437,16 @@ func (u *UpdateUserResponseContent) GetLastIP() string {
 	return *u.LastIP
 }
 
-func (u *UpdateUserResponseContent) GetLastLogin() UserDateSchema {
+func (u *UpdateUserResponseContent) GetLastLogin() time.Time {
 	if u == nil || u.LastLogin == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.LastLogin
 }
 
-func (u *UpdateUserResponseContent) GetLastPasswordReset() UserDateSchema {
+func (u *UpdateUserResponseContent) GetLastPasswordReset() time.Time {
 	if u == nil || u.LastPasswordReset == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.LastPasswordReset
 }
@@ -1481,14 +1537,14 @@ func (u *UpdateUserResponseContent) SetPhoneVerified(phoneVerified *bool) {
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserResponseContent) SetCreatedAt(createdAt *UserDateSchema) {
+func (u *UpdateUserResponseContent) SetCreatedAt(createdAt *time.Time) {
 	u.CreatedAt = createdAt
 	u.require(updateUserResponseContentFieldCreatedAt)
 }
 
 // SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserResponseContent) SetUpdatedAt(updatedAt *UserDateSchema) {
+func (u *UpdateUserResponseContent) SetUpdatedAt(updatedAt *time.Time) {
 	u.UpdatedAt = updatedAt
 	u.require(updateUserResponseContentFieldUpdatedAt)
 }
@@ -1544,7 +1600,7 @@ func (u *UpdateUserResponseContent) SetMultifactor(multifactor []string) {
 
 // SetMultifactorLastModified sets the MultifactorLastModified field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserResponseContent) SetMultifactorLastModified(multifactorLastModified *UserDateSchema) {
+func (u *UpdateUserResponseContent) SetMultifactorLastModified(multifactorLastModified *time.Time) {
 	u.MultifactorLastModified = multifactorLastModified
 	u.require(updateUserResponseContentFieldMultifactorLastModified)
 }
@@ -1558,14 +1614,14 @@ func (u *UpdateUserResponseContent) SetLastIP(lastIP *string) {
 
 // SetLastLogin sets the LastLogin field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserResponseContent) SetLastLogin(lastLogin *UserDateSchema) {
+func (u *UpdateUserResponseContent) SetLastLogin(lastLogin *time.Time) {
 	u.LastLogin = lastLogin
 	u.require(updateUserResponseContentFieldLastLogin)
 }
 
 // SetLastPasswordReset sets the LastPasswordReset field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserResponseContent) SetLastPasswordReset(lastPasswordReset *UserDateSchema) {
+func (u *UpdateUserResponseContent) SetLastPasswordReset(lastPasswordReset *time.Time) {
 	u.LastPasswordReset = lastPasswordReset
 	u.require(updateUserResponseContentFieldLastPasswordReset)
 }
@@ -1602,6 +1658,11 @@ func (u *UpdateUserResponseContent) UnmarshalJSON(data []byte) error {
 	type embed UpdateUserResponseContent
 	var unmarshaler = struct {
 		embed
+		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
+		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
+		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
+		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
 		embed: embed(*u),
 	}
@@ -1609,6 +1670,11 @@ func (u *UpdateUserResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UpdateUserResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	u.MultifactorLastModified = unmarshaler.MultifactorLastModified.TimePtr()
+	u.LastLogin = unmarshaler.LastLogin.TimePtr()
+	u.LastPasswordReset = unmarshaler.LastPasswordReset.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -1622,8 +1688,18 @@ func (u *UpdateUserResponseContent) MarshalJSON() ([]byte, error) {
 	type embed UpdateUserResponseContent
 	var marshaler = struct {
 		embed
+		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
+		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
+		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
+		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
-		embed: embed(*u),
+		embed:                   embed(*u),
+		CreatedAt:               internal.NewOptionalDateTime(u.CreatedAt),
+		UpdatedAt:               internal.NewOptionalDateTime(u.UpdatedAt),
+		MultifactorLastModified: internal.NewOptionalDateTime(u.MultifactorLastModified),
+		LastLogin:               internal.NewOptionalDateTime(u.LastLogin),
+		LastPasswordReset:       internal.NewOptionalDateTime(u.LastPasswordReset),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
@@ -1647,70 +1723,6 @@ func (u *UpdateUserResponseContent) String() string {
 // User metadata to which this user has read-only access.
 type UserAppMetadataSchema = map[string]any
 
-type UserDateSchema struct {
-	// Date and time when this user was created (ISO_8601 format).
-	String string
-	// Date and time when this user was created (ISO_8601 format).
-	StringUnknownMap map[string]any
-
-	typ string
-}
-
-func (u *UserDateSchema) GetString() string {
-	if u == nil {
-		return ""
-	}
-	return u.String
-}
-
-func (u *UserDateSchema) GetStringUnknownMap() map[string]any {
-	if u == nil {
-		return nil
-	}
-	return u.StringUnknownMap
-}
-
-func (u *UserDateSchema) UnmarshalJSON(data []byte) error {
-	var valueString string
-	if err := json.Unmarshal(data, &valueString); err == nil {
-		u.typ = "String"
-		u.String = valueString
-		return nil
-	}
-	var valueStringUnknownMap map[string]any
-	if err := json.Unmarshal(data, &valueStringUnknownMap); err == nil {
-		u.typ = "StringUnknownMap"
-		u.StringUnknownMap = valueStringUnknownMap
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
-}
-
-func (u UserDateSchema) MarshalJSON() ([]byte, error) {
-	if u.typ == "String" || u.String != "" {
-		return json.Marshal(u.String)
-	}
-	if u.typ == "StringUnknownMap" || u.StringUnknownMap != nil {
-		return json.Marshal(u.StringUnknownMap)
-	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
-}
-
-type UserDateSchemaVisitor interface {
-	VisitString(string) error
-	VisitStringUnknownMap(map[string]any) error
-}
-
-func (u *UserDateSchema) Accept(visitor UserDateSchemaVisitor) error {
-	if u.typ == "String" || u.String != "" {
-		return visitor.VisitString(u.String)
-	}
-	if u.typ == "StringUnknownMap" || u.StringUnknownMap != nil {
-		return visitor.VisitStringUnknownMap(u.StringUnknownMap)
-	}
-	return fmt.Errorf("type %T does not include a non-empty union type", u)
-}
-
 var (
 	userIdentitySchemaFieldConnection        = big.NewInt(1 << 0)
 	userIdentitySchemaFieldUserID            = big.NewInt(1 << 1)
@@ -1724,10 +1736,9 @@ var (
 
 type UserIdentitySchema struct {
 	// Name of the connection containing this identity.
-	Connection *string `json:"connection,omitempty" url:"connection,omitempty"`
-	// Unique identifier of the user user for this identity.
-	UserID   *string                   `json:"user_id,omitempty" url:"user_id,omitempty"`
-	Provider *UserIdentityProviderEnum `json:"provider,omitempty" url:"provider,omitempty"`
+	Connection *string                   `json:"connection,omitempty" url:"connection,omitempty"`
+	UserID     *UserID                   `json:"user_id,omitempty" url:"user_id,omitempty"`
+	Provider   *UserIdentityProviderEnum `json:"provider,omitempty" url:"provider,omitempty"`
 	// Whether this identity is from a social provider (true) or not (false).
 	IsSocial *bool `json:"isSocial,omitempty" url:"isSocial,omitempty"`
 	// IDP access token returned only if scope read:user_idp_tokens is defined.
@@ -1752,9 +1763,9 @@ func (u *UserIdentitySchema) GetConnection() string {
 	return *u.Connection
 }
 
-func (u *UserIdentitySchema) GetUserID() string {
+func (u *UserIdentitySchema) GetUserID() UserID {
 	if u == nil || u.UserID == nil {
-		return ""
+		return UserID{}
 	}
 	return *u.UserID
 }
@@ -1824,7 +1835,7 @@ func (u *UserIdentitySchema) SetConnection(connection *string) {
 
 // SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetUserID(userID *string) {
+func (u *UserIdentitySchema) SetUserID(userID *UserID) {
 	u.UserID = userID
 	u.require(userIdentitySchemaFieldUserID)
 }
@@ -1954,9 +1965,11 @@ type UserResponseSchema struct {
 	// Phone number for this user. Follows the <a href="https://en.wikipedia.org/wiki/E.164">E.164 recommendation</a>.
 	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
 	// Whether this phone number has been verified (true) or not (false).
-	PhoneVerified *bool           `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
-	CreatedAt     *UserDateSchema `json:"created_at,omitempty" url:"created_at,omitempty"`
-	UpdatedAt     *UserDateSchema `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	PhoneVerified *bool `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
+	// Date and time when this user was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Date and time when this user was last updated/modified.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// Array of user identity objects when accounts are linked.
 	Identities   []*UserIdentitySchema  `json:"identities,omitempty" url:"identities,omitempty"`
 	AppMetadata  *UserAppMetadataSchema `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
@@ -1968,12 +1981,15 @@ type UserResponseSchema struct {
 	// Preferred nickname or alias of this user.
 	Nickname *string `json:"nickname,omitempty" url:"nickname,omitempty"`
 	// List of multi-factor authentication providers with which this user has enrolled.
-	Multifactor             []string        `json:"multifactor,omitempty" url:"multifactor,omitempty"`
-	MultifactorLastModified *UserDateSchema `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
+	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
+	// Last date and time this user's multi-factor authentication providers were updated.
+	MultifactorLastModified *time.Time `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
 	// Last IP address from which this user logged in.
-	LastIP            *string         `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	LastLogin         *UserDateSchema `json:"last_login,omitempty" url:"last_login,omitempty"`
-	LastPasswordReset *UserDateSchema `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
+	LastIP *string `json:"last_ip,omitempty" url:"last_ip,omitempty"`
+	// Last date and time this user logged in.
+	LastLogin *time.Time `json:"last_login,omitempty" url:"last_login,omitempty"`
+	// Last date and time this user had their password reset.
+	LastPasswordReset *time.Time `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
 	// Total number of logins this user has performed.
 	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
 	// Whether this user was blocked by an administrator (true) or is not (false).
@@ -2033,16 +2049,16 @@ func (u *UserResponseSchema) GetPhoneVerified() bool {
 	return *u.PhoneVerified
 }
 
-func (u *UserResponseSchema) GetCreatedAt() UserDateSchema {
+func (u *UserResponseSchema) GetCreatedAt() time.Time {
 	if u == nil || u.CreatedAt == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.CreatedAt
 }
 
-func (u *UserResponseSchema) GetUpdatedAt() UserDateSchema {
+func (u *UserResponseSchema) GetUpdatedAt() time.Time {
 	if u == nil || u.UpdatedAt == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.UpdatedAt
 }
@@ -2096,9 +2112,9 @@ func (u *UserResponseSchema) GetMultifactor() []string {
 	return u.Multifactor
 }
 
-func (u *UserResponseSchema) GetMultifactorLastModified() UserDateSchema {
+func (u *UserResponseSchema) GetMultifactorLastModified() time.Time {
 	if u == nil || u.MultifactorLastModified == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.MultifactorLastModified
 }
@@ -2110,16 +2126,16 @@ func (u *UserResponseSchema) GetLastIP() string {
 	return *u.LastIP
 }
 
-func (u *UserResponseSchema) GetLastLogin() UserDateSchema {
+func (u *UserResponseSchema) GetLastLogin() time.Time {
 	if u == nil || u.LastLogin == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.LastLogin
 }
 
-func (u *UserResponseSchema) GetLastPasswordReset() UserDateSchema {
+func (u *UserResponseSchema) GetLastPasswordReset() time.Time {
 	if u == nil || u.LastPasswordReset == nil {
-		return UserDateSchema{}
+		return time.Time{}
 	}
 	return *u.LastPasswordReset
 }
@@ -2210,14 +2226,14 @@ func (u *UserResponseSchema) SetPhoneVerified(phoneVerified *bool) {
 
 // SetCreatedAt sets the CreatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetCreatedAt(createdAt *UserDateSchema) {
+func (u *UserResponseSchema) SetCreatedAt(createdAt *time.Time) {
 	u.CreatedAt = createdAt
 	u.require(userResponseSchemaFieldCreatedAt)
 }
 
 // SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetUpdatedAt(updatedAt *UserDateSchema) {
+func (u *UserResponseSchema) SetUpdatedAt(updatedAt *time.Time) {
 	u.UpdatedAt = updatedAt
 	u.require(userResponseSchemaFieldUpdatedAt)
 }
@@ -2273,7 +2289,7 @@ func (u *UserResponseSchema) SetMultifactor(multifactor []string) {
 
 // SetMultifactorLastModified sets the MultifactorLastModified field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetMultifactorLastModified(multifactorLastModified *UserDateSchema) {
+func (u *UserResponseSchema) SetMultifactorLastModified(multifactorLastModified *time.Time) {
 	u.MultifactorLastModified = multifactorLastModified
 	u.require(userResponseSchemaFieldMultifactorLastModified)
 }
@@ -2287,14 +2303,14 @@ func (u *UserResponseSchema) SetLastIP(lastIP *string) {
 
 // SetLastLogin sets the LastLogin field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetLastLogin(lastLogin *UserDateSchema) {
+func (u *UserResponseSchema) SetLastLogin(lastLogin *time.Time) {
 	u.LastLogin = lastLogin
 	u.require(userResponseSchemaFieldLastLogin)
 }
 
 // SetLastPasswordReset sets the LastPasswordReset field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetLastPasswordReset(lastPasswordReset *UserDateSchema) {
+func (u *UserResponseSchema) SetLastPasswordReset(lastPasswordReset *time.Time) {
 	u.LastPasswordReset = lastPasswordReset
 	u.require(userResponseSchemaFieldLastPasswordReset)
 }
@@ -2331,6 +2347,11 @@ func (u *UserResponseSchema) UnmarshalJSON(data []byte) error {
 	type embed UserResponseSchema
 	var unmarshaler = struct {
 		embed
+		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
+		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
+		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
+		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
 		embed: embed(*u),
 	}
@@ -2338,6 +2359,11 @@ func (u *UserResponseSchema) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserResponseSchema(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	u.MultifactorLastModified = unmarshaler.MultifactorLastModified.TimePtr()
+	u.LastLogin = unmarshaler.LastLogin.TimePtr()
+	u.LastPasswordReset = unmarshaler.LastPasswordReset.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -2351,8 +2377,18 @@ func (u *UserResponseSchema) MarshalJSON() ([]byte, error) {
 	type embed UserResponseSchema
 	var marshaler = struct {
 		embed
+		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
+		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
+		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
+		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
-		embed: embed(*u),
+		embed:                   embed(*u),
+		CreatedAt:               internal.NewOptionalDateTime(u.CreatedAt),
+		UpdatedAt:               internal.NewOptionalDateTime(u.UpdatedAt),
+		MultifactorLastModified: internal.NewOptionalDateTime(u.MultifactorLastModified),
+		LastLogin:               internal.NewOptionalDateTime(u.LastLogin),
+		LastPasswordReset:       internal.NewOptionalDateTime(u.LastPasswordReset),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)

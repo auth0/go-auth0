@@ -229,12 +229,13 @@ func (c *CreateEmailTemplateResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
+// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 type EmailTemplateNameEnum string
 
 const (
 	EmailTemplateNameEnumVerifyEmail       EmailTemplateNameEnum = "verify_email"
 	EmailTemplateNameEnumVerifyEmailByCode EmailTemplateNameEnum = "verify_email_by_code"
+	EmailTemplateNameEnumAuthEmailByCode   EmailTemplateNameEnum = "auth_email_by_code"
 	EmailTemplateNameEnumResetEmail        EmailTemplateNameEnum = "reset_email"
 	EmailTemplateNameEnumResetEmailByCode  EmailTemplateNameEnum = "reset_email_by_code"
 	EmailTemplateNameEnumWelcomeEmail      EmailTemplateNameEnum = "welcome_email"
@@ -254,6 +255,8 @@ func NewEmailTemplateNameEnumFromString(s string) (EmailTemplateNameEnum, error)
 		return EmailTemplateNameEnumVerifyEmail, nil
 	case "verify_email_by_code":
 		return EmailTemplateNameEnumVerifyEmailByCode, nil
+	case "auth_email_by_code":
+		return EmailTemplateNameEnumAuthEmailByCode, nil
 	case "reset_email":
 		return EmailTemplateNameEnumResetEmail, nil
 	case "reset_email_by_code":

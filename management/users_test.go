@@ -7,6 +7,7 @@ import (
 	assert "github.com/stretchr/testify/assert"
 	require "github.com/stretchr/testify/require"
 	testing "testing"
+	time "time"
 )
 
 func TestSettersCreateUserResponseContent(t *testing.T) {
@@ -60,7 +61,7 @@ func TestSettersCreateUserResponseContent(t *testing.T) {
 
 	t.Run("SetCreatedAt", func(t *testing.T) {
 		obj := &CreateUserResponseContent{}
-		var fernTestValueCreatedAt *UserDateSchema
+		var fernTestValueCreatedAt *time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
 		assert.NotNil(t, obj.explicitFields)
@@ -68,7 +69,7 @@ func TestSettersCreateUserResponseContent(t *testing.T) {
 
 	t.Run("SetUpdatedAt", func(t *testing.T) {
 		obj := &CreateUserResponseContent{}
-		var fernTestValueUpdatedAt *UserDateSchema
+		var fernTestValueUpdatedAt *time.Time
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
 		assert.Equal(t, fernTestValueUpdatedAt, obj.UpdatedAt)
 		assert.NotNil(t, obj.explicitFields)
@@ -132,7 +133,7 @@ func TestSettersCreateUserResponseContent(t *testing.T) {
 
 	t.Run("SetMultifactorLastModified", func(t *testing.T) {
 		obj := &CreateUserResponseContent{}
-		var fernTestValueMultifactorLastModified *UserDateSchema
+		var fernTestValueMultifactorLastModified *time.Time
 		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
 		assert.Equal(t, fernTestValueMultifactorLastModified, obj.MultifactorLastModified)
 		assert.NotNil(t, obj.explicitFields)
@@ -148,7 +149,7 @@ func TestSettersCreateUserResponseContent(t *testing.T) {
 
 	t.Run("SetLastLogin", func(t *testing.T) {
 		obj := &CreateUserResponseContent{}
-		var fernTestValueLastLogin *UserDateSchema
+		var fernTestValueLastLogin *time.Time
 		obj.SetLastLogin(fernTestValueLastLogin)
 		assert.Equal(t, fernTestValueLastLogin, obj.LastLogin)
 		assert.NotNil(t, obj.explicitFields)
@@ -156,7 +157,7 @@ func TestSettersCreateUserResponseContent(t *testing.T) {
 
 	t.Run("SetLastPasswordReset", func(t *testing.T) {
 		obj := &CreateUserResponseContent{}
-		var fernTestValueLastPasswordReset *UserDateSchema
+		var fernTestValueLastPasswordReset *time.Time
 		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
 		assert.Equal(t, fernTestValueLastPasswordReset, obj.LastPasswordReset)
 		assert.NotNil(t, obj.explicitFields)
@@ -405,7 +406,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.CreatedAt = &value
 
 		// Act & Assert
@@ -417,7 +418,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &CreateUserResponseContent{}
 		obj.CreatedAt = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetCreatedAt(), "getter should return zero value when property is nil")
@@ -439,7 +440,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.UpdatedAt = &value
 
 		// Act & Assert
@@ -451,7 +452,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &CreateUserResponseContent{}
 		obj.UpdatedAt = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetUpdatedAt(), "getter should return zero value when property is nil")
@@ -709,7 +710,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.MultifactorLastModified = &value
 
 		// Act & Assert
@@ -721,7 +722,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &CreateUserResponseContent{}
 		obj.MultifactorLastModified = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetMultifactorLastModified(), "getter should return zero value when property is nil")
@@ -777,7 +778,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.LastLogin = &value
 
 		// Act & Assert
@@ -789,7 +790,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &CreateUserResponseContent{}
 		obj.LastLogin = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetLastLogin(), "getter should return zero value when property is nil")
@@ -811,7 +812,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.LastPasswordReset = &value
 
 		// Act & Assert
@@ -823,7 +824,7 @@ func TestGettersCreateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &CreateUserResponseContent{}
 		obj.LastPasswordReset = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetLastPasswordReset(), "getter should return zero value when property is nil")
@@ -1170,7 +1171,7 @@ func TestSettersMarkExplicitCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var fernTestValueCreatedAt *UserDateSchema
+		var fernTestValueCreatedAt *time.Time
 
 		// Act
 		obj.SetCreatedAt(fernTestValueCreatedAt)
@@ -1201,7 +1202,7 @@ func TestSettersMarkExplicitCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var fernTestValueUpdatedAt *UserDateSchema
+		var fernTestValueUpdatedAt *time.Time
 
 		// Act
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
@@ -1449,7 +1450,7 @@ func TestSettersMarkExplicitCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var fernTestValueMultifactorLastModified *UserDateSchema
+		var fernTestValueMultifactorLastModified *time.Time
 
 		// Act
 		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
@@ -1511,7 +1512,7 @@ func TestSettersMarkExplicitCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var fernTestValueLastLogin *UserDateSchema
+		var fernTestValueLastLogin *time.Time
 
 		// Act
 		obj.SetLastLogin(fernTestValueLastLogin)
@@ -1542,7 +1543,7 @@ func TestSettersMarkExplicitCreateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateUserResponseContent{}
-		var fernTestValueLastPasswordReset *UserDateSchema
+		var fernTestValueLastPasswordReset *time.Time
 
 		// Act
 		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
@@ -1746,7 +1747,7 @@ func TestSettersGetUserResponseContent(t *testing.T) {
 
 	t.Run("SetCreatedAt", func(t *testing.T) {
 		obj := &GetUserResponseContent{}
-		var fernTestValueCreatedAt *UserDateSchema
+		var fernTestValueCreatedAt *time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
 		assert.NotNil(t, obj.explicitFields)
@@ -1754,7 +1755,7 @@ func TestSettersGetUserResponseContent(t *testing.T) {
 
 	t.Run("SetUpdatedAt", func(t *testing.T) {
 		obj := &GetUserResponseContent{}
-		var fernTestValueUpdatedAt *UserDateSchema
+		var fernTestValueUpdatedAt *time.Time
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
 		assert.Equal(t, fernTestValueUpdatedAt, obj.UpdatedAt)
 		assert.NotNil(t, obj.explicitFields)
@@ -1818,7 +1819,7 @@ func TestSettersGetUserResponseContent(t *testing.T) {
 
 	t.Run("SetMultifactorLastModified", func(t *testing.T) {
 		obj := &GetUserResponseContent{}
-		var fernTestValueMultifactorLastModified *UserDateSchema
+		var fernTestValueMultifactorLastModified *time.Time
 		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
 		assert.Equal(t, fernTestValueMultifactorLastModified, obj.MultifactorLastModified)
 		assert.NotNil(t, obj.explicitFields)
@@ -1834,7 +1835,7 @@ func TestSettersGetUserResponseContent(t *testing.T) {
 
 	t.Run("SetLastLogin", func(t *testing.T) {
 		obj := &GetUserResponseContent{}
-		var fernTestValueLastLogin *UserDateSchema
+		var fernTestValueLastLogin *time.Time
 		obj.SetLastLogin(fernTestValueLastLogin)
 		assert.Equal(t, fernTestValueLastLogin, obj.LastLogin)
 		assert.NotNil(t, obj.explicitFields)
@@ -1842,7 +1843,7 @@ func TestSettersGetUserResponseContent(t *testing.T) {
 
 	t.Run("SetLastPasswordReset", func(t *testing.T) {
 		obj := &GetUserResponseContent{}
-		var fernTestValueLastPasswordReset *UserDateSchema
+		var fernTestValueLastPasswordReset *time.Time
 		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
 		assert.Equal(t, fernTestValueLastPasswordReset, obj.LastPasswordReset)
 		assert.NotNil(t, obj.explicitFields)
@@ -2091,7 +2092,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.CreatedAt = &value
 
 		// Act & Assert
@@ -2103,7 +2104,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &GetUserResponseContent{}
 		obj.CreatedAt = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetCreatedAt(), "getter should return zero value when property is nil")
@@ -2125,7 +2126,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.UpdatedAt = &value
 
 		// Act & Assert
@@ -2137,7 +2138,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &GetUserResponseContent{}
 		obj.UpdatedAt = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetUpdatedAt(), "getter should return zero value when property is nil")
@@ -2395,7 +2396,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.MultifactorLastModified = &value
 
 		// Act & Assert
@@ -2407,7 +2408,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &GetUserResponseContent{}
 		obj.MultifactorLastModified = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetMultifactorLastModified(), "getter should return zero value when property is nil")
@@ -2463,7 +2464,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.LastLogin = &value
 
 		// Act & Assert
@@ -2475,7 +2476,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &GetUserResponseContent{}
 		obj.LastLogin = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetLastLogin(), "getter should return zero value when property is nil")
@@ -2497,7 +2498,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.LastPasswordReset = &value
 
 		// Act & Assert
@@ -2509,7 +2510,7 @@ func TestGettersGetUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &GetUserResponseContent{}
 		obj.LastPasswordReset = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetLastPasswordReset(), "getter should return zero value when property is nil")
@@ -2856,7 +2857,7 @@ func TestSettersMarkExplicitGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var fernTestValueCreatedAt *UserDateSchema
+		var fernTestValueCreatedAt *time.Time
 
 		// Act
 		obj.SetCreatedAt(fernTestValueCreatedAt)
@@ -2887,7 +2888,7 @@ func TestSettersMarkExplicitGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var fernTestValueUpdatedAt *UserDateSchema
+		var fernTestValueUpdatedAt *time.Time
 
 		// Act
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
@@ -3135,7 +3136,7 @@ func TestSettersMarkExplicitGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var fernTestValueMultifactorLastModified *UserDateSchema
+		var fernTestValueMultifactorLastModified *time.Time
 
 		// Act
 		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
@@ -3197,7 +3198,7 @@ func TestSettersMarkExplicitGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var fernTestValueLastLogin *UserDateSchema
+		var fernTestValueLastLogin *time.Time
 
 		// Act
 		obj.SetLastLogin(fernTestValueLastLogin)
@@ -3228,7 +3229,7 @@ func TestSettersMarkExplicitGetUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserResponseContent{}
-		var fernTestValueLastPasswordReset *UserDateSchema
+		var fernTestValueLastPasswordReset *time.Time
 
 		// Act
 		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
@@ -3887,7 +3888,7 @@ func TestSettersUpdateUserResponseContent(t *testing.T) {
 
 	t.Run("SetCreatedAt", func(t *testing.T) {
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueCreatedAt *UserDateSchema
+		var fernTestValueCreatedAt *time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
 		assert.NotNil(t, obj.explicitFields)
@@ -3895,7 +3896,7 @@ func TestSettersUpdateUserResponseContent(t *testing.T) {
 
 	t.Run("SetUpdatedAt", func(t *testing.T) {
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueUpdatedAt *UserDateSchema
+		var fernTestValueUpdatedAt *time.Time
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
 		assert.Equal(t, fernTestValueUpdatedAt, obj.UpdatedAt)
 		assert.NotNil(t, obj.explicitFields)
@@ -3959,7 +3960,7 @@ func TestSettersUpdateUserResponseContent(t *testing.T) {
 
 	t.Run("SetMultifactorLastModified", func(t *testing.T) {
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueMultifactorLastModified *UserDateSchema
+		var fernTestValueMultifactorLastModified *time.Time
 		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
 		assert.Equal(t, fernTestValueMultifactorLastModified, obj.MultifactorLastModified)
 		assert.NotNil(t, obj.explicitFields)
@@ -3975,7 +3976,7 @@ func TestSettersUpdateUserResponseContent(t *testing.T) {
 
 	t.Run("SetLastLogin", func(t *testing.T) {
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueLastLogin *UserDateSchema
+		var fernTestValueLastLogin *time.Time
 		obj.SetLastLogin(fernTestValueLastLogin)
 		assert.Equal(t, fernTestValueLastLogin, obj.LastLogin)
 		assert.NotNil(t, obj.explicitFields)
@@ -3983,7 +3984,7 @@ func TestSettersUpdateUserResponseContent(t *testing.T) {
 
 	t.Run("SetLastPasswordReset", func(t *testing.T) {
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueLastPasswordReset *UserDateSchema
+		var fernTestValueLastPasswordReset *time.Time
 		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
 		assert.Equal(t, fernTestValueLastPasswordReset, obj.LastPasswordReset)
 		assert.NotNil(t, obj.explicitFields)
@@ -4232,7 +4233,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.CreatedAt = &value
 
 		// Act & Assert
@@ -4244,7 +4245,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &UpdateUserResponseContent{}
 		obj.CreatedAt = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetCreatedAt(), "getter should return zero value when property is nil")
@@ -4266,7 +4267,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.UpdatedAt = &value
 
 		// Act & Assert
@@ -4278,7 +4279,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &UpdateUserResponseContent{}
 		obj.UpdatedAt = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetUpdatedAt(), "getter should return zero value when property is nil")
@@ -4536,7 +4537,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.MultifactorLastModified = &value
 
 		// Act & Assert
@@ -4548,7 +4549,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &UpdateUserResponseContent{}
 		obj.MultifactorLastModified = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetMultifactorLastModified(), "getter should return zero value when property is nil")
@@ -4604,7 +4605,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.LastLogin = &value
 
 		// Act & Assert
@@ -4616,7 +4617,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &UpdateUserResponseContent{}
 		obj.LastLogin = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetLastLogin(), "getter should return zero value when property is nil")
@@ -4638,7 +4639,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var value UserDateSchema
+		var value time.Time
 		obj.LastPasswordReset = &value
 
 		// Act & Assert
@@ -4650,7 +4651,7 @@ func TestGettersUpdateUserResponseContent(t *testing.T) {
 		// Arrange
 		obj := &UpdateUserResponseContent{}
 		obj.LastPasswordReset = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetLastPasswordReset(), "getter should return zero value when property is nil")
@@ -4997,7 +4998,7 @@ func TestSettersMarkExplicitUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueCreatedAt *UserDateSchema
+		var fernTestValueCreatedAt *time.Time
 
 		// Act
 		obj.SetCreatedAt(fernTestValueCreatedAt)
@@ -5028,7 +5029,7 @@ func TestSettersMarkExplicitUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueUpdatedAt *UserDateSchema
+		var fernTestValueUpdatedAt *time.Time
 
 		// Act
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
@@ -5276,7 +5277,7 @@ func TestSettersMarkExplicitUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueMultifactorLastModified *UserDateSchema
+		var fernTestValueMultifactorLastModified *time.Time
 
 		// Act
 		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
@@ -5338,7 +5339,7 @@ func TestSettersMarkExplicitUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueLastLogin *UserDateSchema
+		var fernTestValueLastLogin *time.Time
 
 		// Act
 		obj.SetLastLogin(fernTestValueLastLogin)
@@ -5369,7 +5370,7 @@ func TestSettersMarkExplicitUpdateUserResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateUserResponseContent{}
-		var fernTestValueLastPasswordReset *UserDateSchema
+		var fernTestValueLastPasswordReset *time.Time
 
 		// Act
 		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
@@ -5522,65 +5523,6 @@ func TestSettersMarkExplicitUpdateUserResponseContent(t *testing.T) {
 
 }
 
-func TestGettersUserDateSchema(t *testing.T) {
-	t.Run("GetString", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UserDateSchema{}
-		var expected string
-		obj.String = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetString(), "getter should return the property value")
-	})
-
-	t.Run("GetString_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *UserDateSchema
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetString() // Should return zero value
-	})
-
-	t.Run("GetStringUnknownMap", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UserDateSchema{}
-		var expected map[string]any
-		obj.StringUnknownMap = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStringUnknownMap(), "getter should return the property value")
-	})
-
-	t.Run("GetStringUnknownMap_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UserDateSchema{}
-		obj.StringUnknownMap = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetStringUnknownMap(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetStringUnknownMap_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *UserDateSchema
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStringUnknownMap() // Should return zero value
-	})
-
-}
-
 func TestSettersUserIdentitySchema(t *testing.T) {
 	t.Run("SetConnection", func(t *testing.T) {
 		obj := &UserIdentitySchema{}
@@ -5592,7 +5534,7 @@ func TestSettersUserIdentitySchema(t *testing.T) {
 
 	t.Run("SetUserID", func(t *testing.T) {
 		obj := &UserIdentitySchema{}
-		var fernTestValueUserID *string
+		var fernTestValueUserID *UserID
 		obj.SetUserID(fernTestValueUserID)
 		assert.Equal(t, fernTestValueUserID, obj.UserID)
 		assert.NotNil(t, obj.explicitFields)
@@ -5687,7 +5629,7 @@ func TestGettersUserIdentitySchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserIdentitySchema{}
-		var value string
+		var value UserID
 		obj.UserID = &value
 
 		// Act & Assert
@@ -5699,7 +5641,7 @@ func TestGettersUserIdentitySchema(t *testing.T) {
 		// Arrange
 		obj := &UserIdentitySchema{}
 		obj.UserID = nil
-		var expectedZero string
+		var expectedZero UserID
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetUserID(), "getter should return zero value when property is nil")
@@ -5959,7 +5901,7 @@ func TestSettersMarkExplicitUserIdentitySchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserIdentitySchema{}
-		var fernTestValueUserID *string
+		var fernTestValueUserID *UserID
 
 		// Act
 		obj.SetUserID(fernTestValueUserID)
@@ -6225,7 +6167,7 @@ func TestSettersUserResponseSchema(t *testing.T) {
 
 	t.Run("SetCreatedAt", func(t *testing.T) {
 		obj := &UserResponseSchema{}
-		var fernTestValueCreatedAt *UserDateSchema
+		var fernTestValueCreatedAt *time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
 		assert.NotNil(t, obj.explicitFields)
@@ -6233,7 +6175,7 @@ func TestSettersUserResponseSchema(t *testing.T) {
 
 	t.Run("SetUpdatedAt", func(t *testing.T) {
 		obj := &UserResponseSchema{}
-		var fernTestValueUpdatedAt *UserDateSchema
+		var fernTestValueUpdatedAt *time.Time
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
 		assert.Equal(t, fernTestValueUpdatedAt, obj.UpdatedAt)
 		assert.NotNil(t, obj.explicitFields)
@@ -6297,7 +6239,7 @@ func TestSettersUserResponseSchema(t *testing.T) {
 
 	t.Run("SetMultifactorLastModified", func(t *testing.T) {
 		obj := &UserResponseSchema{}
-		var fernTestValueMultifactorLastModified *UserDateSchema
+		var fernTestValueMultifactorLastModified *time.Time
 		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
 		assert.Equal(t, fernTestValueMultifactorLastModified, obj.MultifactorLastModified)
 		assert.NotNil(t, obj.explicitFields)
@@ -6313,7 +6255,7 @@ func TestSettersUserResponseSchema(t *testing.T) {
 
 	t.Run("SetLastLogin", func(t *testing.T) {
 		obj := &UserResponseSchema{}
-		var fernTestValueLastLogin *UserDateSchema
+		var fernTestValueLastLogin *time.Time
 		obj.SetLastLogin(fernTestValueLastLogin)
 		assert.Equal(t, fernTestValueLastLogin, obj.LastLogin)
 		assert.NotNil(t, obj.explicitFields)
@@ -6321,7 +6263,7 @@ func TestSettersUserResponseSchema(t *testing.T) {
 
 	t.Run("SetLastPasswordReset", func(t *testing.T) {
 		obj := &UserResponseSchema{}
-		var fernTestValueLastPasswordReset *UserDateSchema
+		var fernTestValueLastPasswordReset *time.Time
 		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
 		assert.Equal(t, fernTestValueLastPasswordReset, obj.LastPasswordReset)
 		assert.NotNil(t, obj.explicitFields)
@@ -6570,7 +6512,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var value UserDateSchema
+		var value time.Time
 		obj.CreatedAt = &value
 
 		// Act & Assert
@@ -6582,7 +6524,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		// Arrange
 		obj := &UserResponseSchema{}
 		obj.CreatedAt = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetCreatedAt(), "getter should return zero value when property is nil")
@@ -6604,7 +6546,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var value UserDateSchema
+		var value time.Time
 		obj.UpdatedAt = &value
 
 		// Act & Assert
@@ -6616,7 +6558,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		// Arrange
 		obj := &UserResponseSchema{}
 		obj.UpdatedAt = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetUpdatedAt(), "getter should return zero value when property is nil")
@@ -6874,7 +6816,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var value UserDateSchema
+		var value time.Time
 		obj.MultifactorLastModified = &value
 
 		// Act & Assert
@@ -6886,7 +6828,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		// Arrange
 		obj := &UserResponseSchema{}
 		obj.MultifactorLastModified = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetMultifactorLastModified(), "getter should return zero value when property is nil")
@@ -6942,7 +6884,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var value UserDateSchema
+		var value time.Time
 		obj.LastLogin = &value
 
 		// Act & Assert
@@ -6954,7 +6896,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		// Arrange
 		obj := &UserResponseSchema{}
 		obj.LastLogin = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetLastLogin(), "getter should return zero value when property is nil")
@@ -6976,7 +6918,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var value UserDateSchema
+		var value time.Time
 		obj.LastPasswordReset = &value
 
 		// Act & Assert
@@ -6988,7 +6930,7 @@ func TestGettersUserResponseSchema(t *testing.T) {
 		// Arrange
 		obj := &UserResponseSchema{}
 		obj.LastPasswordReset = nil
-		var expectedZero UserDateSchema
+		var expectedZero time.Time
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetLastPasswordReset(), "getter should return zero value when property is nil")
@@ -7335,7 +7277,7 @@ func TestSettersMarkExplicitUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var fernTestValueCreatedAt *UserDateSchema
+		var fernTestValueCreatedAt *time.Time
 
 		// Act
 		obj.SetCreatedAt(fernTestValueCreatedAt)
@@ -7366,7 +7308,7 @@ func TestSettersMarkExplicitUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var fernTestValueUpdatedAt *UserDateSchema
+		var fernTestValueUpdatedAt *time.Time
 
 		// Act
 		obj.SetUpdatedAt(fernTestValueUpdatedAt)
@@ -7614,7 +7556,7 @@ func TestSettersMarkExplicitUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var fernTestValueMultifactorLastModified *UserDateSchema
+		var fernTestValueMultifactorLastModified *time.Time
 
 		// Act
 		obj.SetMultifactorLastModified(fernTestValueMultifactorLastModified)
@@ -7676,7 +7618,7 @@ func TestSettersMarkExplicitUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var fernTestValueLastLogin *UserDateSchema
+		var fernTestValueLastLogin *time.Time
 
 		// Act
 		obj.SetLastLogin(fernTestValueLastLogin)
@@ -7707,7 +7649,7 @@ func TestSettersMarkExplicitUserResponseSchema(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UserResponseSchema{}
-		var fernTestValueLastPasswordReset *UserDateSchema
+		var fernTestValueLastPasswordReset *time.Time
 
 		// Act
 		obj.SetLastPasswordReset(fernTestValueLastPasswordReset)
