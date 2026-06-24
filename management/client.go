@@ -565,12 +565,24 @@ type BackChannelLogoutInitiators struct {
 
 // SessionTransfer Transfer defines the setting to allow Native to Web SSO session transfer.
 type SessionTransfer struct {
-	CanCreateSessionTransferToken *bool     `json:"can_create_session_transfer_token,omitempty"`
-	AllowedAuthenticationMethods  *[]string `json:"allowed_authentication_methods,omitempty"`
-	EnforceDeviceBinding          *string   `json:"enforce_device_binding,omitempty"`
-	AllowRefreshToken             *bool     `json:"allow_refresh_token,omitempty"`
-	EnforceOnlineRefreshTokens    *bool     `json:"enforce_online_refresh_tokens,omitempty"`
-	EnforceCascadeRevocation      *bool     `json:"enforce_cascade_revocation,omitempty"`
+	CanCreateSessionTransferToken *bool                      `json:"can_create_session_transfer_token,omitempty"`
+	AllowedAuthenticationMethods  *[]string                  `json:"allowed_authentication_methods,omitempty"`
+	EnforceDeviceBinding          *string                    `json:"enforce_device_binding,omitempty"`
+	AllowRefreshToken             *bool                      `json:"allow_refresh_token,omitempty"`
+	EnforceOnlineRefreshTokens    *bool                      `json:"enforce_online_refresh_tokens,omitempty"`
+	EnforceCascadeRevocation      *bool                      `json:"enforce_cascade_revocation,omitempty"`
+	Delegation                    *SessionTransferDelegation `json:"delegation,omitempty"`
+}
+
+// SessionTransferDelegation holds configuration for delegation (impersonation) access using Session Transfer Tokens
+type SessionTransferDelegation struct {
+	// AllowDelegatedAccess indicates whether delegation (impersonation) access is allowed using Session Transfer Tokens.
+	// Default value is false.
+	AllowDelegatedAccess *bool `json:"allow_delegated_access,omitempty"`
+	// EnforceDeviceBinding indicates the device binding enforcement for delegation (impersonation) access. 
+	// If set to 'ip', device binding is enforced by IP. If set to 'asn', device binding is enforced by ASN. 
+	// Default value is ip.
+	EnforceDeviceBinding *string `json:"enforce_device_binding,omitempty"`
 }
 
 // FedCMLogin defines the Federated Credential Management login configuration.
