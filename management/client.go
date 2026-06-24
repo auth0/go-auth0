@@ -574,13 +574,13 @@ type SessionTransfer struct {
 	Delegation                    *SessionTransferDelegation `json:"delegation,omitempty"`
 }
 
-// SessionTransferDelegation holds configuration for delegation (impersonation) access using Session Transfer Tokens
+// SessionTransferDelegation holds configuration for delegation (impersonation) access using Session Transfer Tokens.
 type SessionTransferDelegation struct {
 	// AllowDelegatedAccess indicates whether delegation (impersonation) access is allowed using Session Transfer Tokens.
 	// Default value is false.
 	AllowDelegatedAccess *bool `json:"allow_delegated_access,omitempty"`
-	// EnforceDeviceBinding indicates the device binding enforcement for delegation (impersonation) access. 
-	// If set to 'ip', device binding is enforced by IP. If set to 'asn', device binding is enforced by ASN. 
+	// EnforceDeviceBinding indicates the device binding enforcement for delegation (impersonation) access.
+	// If set to 'ip', device binding is enforced by IP. If set to 'asn', device binding is enforced by ASN.
 	// Default value is ip.
 	EnforceDeviceBinding *string `json:"enforce_device_binding,omitempty"`
 }
