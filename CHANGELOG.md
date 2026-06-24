@@ -1,5 +1,25 @@
 # Change Log
 
+## [v2.14.0](https://github.com/auth0/go-auth0/tree/v2.14.0) (2026-06-24)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.13.0...v2.14.0)
+
+**Breaking Changes**
+- Changed user date fields (`CreatedAt`, `UpdatedAt`, `LastLogin`, `LastPasswordReset`, `MultifactorLastModified`) on `CreateUserResponseContent`, `GetUserResponseContent`, `UpdateUserResponseContent`, and `UserResponseSchema` from `*UserDateSchema` to `*time.Time`, and removed the `UserDateSchema` type and `UserDateSchemaVisitor` interface [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Changed identity `UserID` fields on `UserIdentitySchema` and `DeleteUserIdentityResponseContentItem` to the string-or-integer `UserID` union (from `*string`/`string`) [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Changed `UpdateClientRequestContent` `NativeSocialLogin` to `*NativeSocialLoginPatch` and `FedcmLogin` to `*FedCmLoginPatch` [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Added**
+- feat: add phone provider protection API (`Management.AttackProtection.PhoneProviderProtection`) with `Get` and `Patch` methods and the `PhoneProviderProtectionBackoffStrategyEnum` [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add native social login configuration types (`NativeSocialLoginPatch`, `NativeSocialLoginApplePatch`, `NativeSocialLoginFacebookPatch`, `NativeSocialLoginGooglePatch`) and FedCM login configuration types (`FedCmLoginPatch`, `FedCmLoginGooglePatch`) [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add token vault privileged access types (`ClientTokenVaultPrivilegedAccessWithCredentialID`, `ClientTokenVaultPrivilegedAccessWithPublicKey`, `TokenVaultPrivilegedAccessIPAllowlistEntry`) [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `CrossAppAccessRequestingApp` field and type to `CreateConnectionResponseContent` and `GetConnectionResponseContent` [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `PhoneVerified`, `Multifactor`, `MultifactorLastModified`, `LastIP`, `LastLogin`, and `LastPasswordReset` fields to user response types [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `auth_email_by_code` value to `EmailTemplateNameEnum` [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Fixed**
+- fix: map HTTP `409` responses on self-service profiles to `ConflictError` [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+- fix: preserve the raw JSON payload on `EventStreamSubscribeEventsResponseContent` so unknown union members round-trip through marshal/unmarshal and validation [\#801](https://github.com/auth0/go-auth0/pull/801) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.13.0](https://github.com/auth0/go-auth0/tree/v2.13.0) (2026-06-10)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.12.0...v2.13.0)
 
