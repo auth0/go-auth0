@@ -1801,6 +1801,14 @@ client.Clients.Create(
 <dl>
 <dd>
 
+**tokenVaultPrivilegedAccess:** `*management.ClientTokenVaultPrivilegedAccessWithPublicKey` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **complianceLevel:** `*management.ClientComplianceLevelEnum` 
     
 </dd>
@@ -2614,6 +2622,14 @@ client.Clients.Update(
 <dd>
 
 **signedRequestObject:** `*management.ClientSignedRequestObjectWithCredentialID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tokenVaultPrivilegedAccess:** `*management.ClientTokenVaultPrivilegedAccessWithCredentialID` 
     
 </dd>
 </dl>
@@ -3534,6 +3550,14 @@ client.Connections.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**crossAppAccessRequestingApp:** `*management.CrossAppAccessRequestingApp` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -3808,6 +3832,14 @@ client.Connections.Update(
 <dd>
 
 **connectedAccounts:** `*management.ConnectionConnectedAccountsPurpose` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**crossAppAccessRequestingApp:** `*management.CrossAppAccessRequestingApp` 
     
 </dd>
 </dl>
@@ -4994,7 +5026,7 @@ client.EmailTemplates.Create(
 <dl>
 <dd>
 
-Retrieve an email template by pre-defined name. These names are `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, and `async_approval`. The names `change_password`, and `password_reset` are also supported for legacy scenarios.
+Retrieve an email template by pre-defined name. These names are `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, and `async_approval`. The names `change_password`, and `password_reset` are also supported for legacy scenarios.
 </dd>
 </dl>
 </dd>
@@ -5028,7 +5060,7 @@ client.EmailTemplates.Get(
 <dl>
 <dd>
 
-**templateName:** `*management.EmailTemplateNameEnum` — Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
+**templateName:** `*management.EmailTemplateNameEnum` — Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
     
 </dd>
 </dl>
@@ -5090,7 +5122,7 @@ client.EmailTemplates.Set(
 <dl>
 <dd>
 
-**templateName:** `*management.EmailTemplateNameEnum` — Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
+**templateName:** `*management.EmailTemplateNameEnum` — Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
     
 </dd>
 </dl>
@@ -5222,7 +5254,7 @@ client.EmailTemplates.Update(
 <dl>
 <dd>
 
-**templateName:** `*management.EmailTemplateNameEnum` — Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
+**templateName:** `*management.EmailTemplateNameEnum` — Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
     
 </dd>
 </dl>
@@ -17027,6 +17059,110 @@ client.AttackProtection.Captcha.Update(
 <dd>
 
 **simpleCaptcha:** `*management.AttackProtectionCaptchaSimpleCaptchaResponseContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AttackProtection PhoneProviderProtection
+<details><summary><code>client.AttackProtection.PhoneProviderProtection.Get() -> *management.GetPhoneProviderProtectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the phone provider protection configuration for a tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.PhoneProviderProtection.Get(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.PhoneProviderProtection.Patch(request) -> *management.PatchPhoneProviderProtectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the phone provider protection configuration for a tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.PatchPhoneProviderProtectionRequestContent{
+        Type: management.PhoneProviderProtectionBackoffStrategyEnumExponential,
+    }
+client.AttackProtection.PhoneProviderProtection.Patch(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type_:** `*management.PhoneProviderProtectionBackoffStrategyEnum` 
     
 </dd>
 </dl>
@@ -34231,7 +34367,7 @@ client.Users.Identities.Link(
 <dl>
 <dd>
 
-**userID:** `*management.UserID` 
+**userID:** `*management.UserID` — user_id of the secondary user account being linked.
     
 </dd>
 </dl>

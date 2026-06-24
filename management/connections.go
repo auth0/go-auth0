@@ -4093,18 +4093,19 @@ func (c *ConnectionValidationOptions) String() string {
 }
 
 var (
-	createConnectionResponseContentFieldName               = big.NewInt(1 << 0)
-	createConnectionResponseContentFieldDisplayName        = big.NewInt(1 << 1)
-	createConnectionResponseContentFieldOptions            = big.NewInt(1 << 2)
-	createConnectionResponseContentFieldID                 = big.NewInt(1 << 3)
-	createConnectionResponseContentFieldStrategy           = big.NewInt(1 << 4)
-	createConnectionResponseContentFieldRealms             = big.NewInt(1 << 5)
-	createConnectionResponseContentFieldEnabledClients     = big.NewInt(1 << 6)
-	createConnectionResponseContentFieldIsDomainConnection = big.NewInt(1 << 7)
-	createConnectionResponseContentFieldShowAsButton       = big.NewInt(1 << 8)
-	createConnectionResponseContentFieldMetadata           = big.NewInt(1 << 9)
-	createConnectionResponseContentFieldAuthentication     = big.NewInt(1 << 10)
-	createConnectionResponseContentFieldConnectedAccounts  = big.NewInt(1 << 11)
+	createConnectionResponseContentFieldName                        = big.NewInt(1 << 0)
+	createConnectionResponseContentFieldDisplayName                 = big.NewInt(1 << 1)
+	createConnectionResponseContentFieldOptions                     = big.NewInt(1 << 2)
+	createConnectionResponseContentFieldID                          = big.NewInt(1 << 3)
+	createConnectionResponseContentFieldStrategy                    = big.NewInt(1 << 4)
+	createConnectionResponseContentFieldRealms                      = big.NewInt(1 << 5)
+	createConnectionResponseContentFieldEnabledClients              = big.NewInt(1 << 6)
+	createConnectionResponseContentFieldIsDomainConnection          = big.NewInt(1 << 7)
+	createConnectionResponseContentFieldShowAsButton                = big.NewInt(1 << 8)
+	createConnectionResponseContentFieldMetadata                    = big.NewInt(1 << 9)
+	createConnectionResponseContentFieldAuthentication              = big.NewInt(1 << 10)
+	createConnectionResponseContentFieldConnectedAccounts           = big.NewInt(1 << 11)
+	createConnectionResponseContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 12)
 )
 
 type CreateConnectionResponseContent struct {
@@ -4124,10 +4125,11 @@ type CreateConnectionResponseContent struct {
 	// True if the connection is domain level
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD.
-	ShowAsButton      *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Metadata          *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
-	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	ShowAsButton                *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata                    *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4218,6 +4220,13 @@ func (c *CreateConnectionResponseContent) GetConnectedAccounts() ConnectionConne
 		return ConnectionConnectedAccountsPurpose{}
 	}
 	return *c.ConnectedAccounts
+}
+
+func (c *CreateConnectionResponseContent) GetCrossAppAccessRequestingApp() CrossAppAccessRequestingApp {
+	if c == nil || c.CrossAppAccessRequestingApp == nil {
+		return CrossAppAccessRequestingApp{}
+	}
+	return *c.CrossAppAccessRequestingApp
 }
 
 func (c *CreateConnectionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -4316,6 +4325,13 @@ func (c *CreateConnectionResponseContent) SetAuthentication(authentication *Conn
 func (c *CreateConnectionResponseContent) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
 	c.ConnectedAccounts = connectedAccounts
 	c.require(createConnectionResponseContentFieldConnectedAccounts)
+}
+
+// SetCrossAppAccessRequestingApp sets the CrossAppAccessRequestingApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionResponseContent) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
+	c.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
+	c.require(createConnectionResponseContentFieldCrossAppAccessRequestingApp)
 }
 
 func (c *CreateConnectionResponseContent) UnmarshalJSON(data []byte) error {
@@ -4535,18 +4551,19 @@ func (e *EmailAttribute) String() string {
 }
 
 var (
-	getConnectionResponseContentFieldName               = big.NewInt(1 << 0)
-	getConnectionResponseContentFieldDisplayName        = big.NewInt(1 << 1)
-	getConnectionResponseContentFieldOptions            = big.NewInt(1 << 2)
-	getConnectionResponseContentFieldID                 = big.NewInt(1 << 3)
-	getConnectionResponseContentFieldStrategy           = big.NewInt(1 << 4)
-	getConnectionResponseContentFieldRealms             = big.NewInt(1 << 5)
-	getConnectionResponseContentFieldEnabledClients     = big.NewInt(1 << 6)
-	getConnectionResponseContentFieldIsDomainConnection = big.NewInt(1 << 7)
-	getConnectionResponseContentFieldShowAsButton       = big.NewInt(1 << 8)
-	getConnectionResponseContentFieldMetadata           = big.NewInt(1 << 9)
-	getConnectionResponseContentFieldAuthentication     = big.NewInt(1 << 10)
-	getConnectionResponseContentFieldConnectedAccounts  = big.NewInt(1 << 11)
+	getConnectionResponseContentFieldName                        = big.NewInt(1 << 0)
+	getConnectionResponseContentFieldDisplayName                 = big.NewInt(1 << 1)
+	getConnectionResponseContentFieldOptions                     = big.NewInt(1 << 2)
+	getConnectionResponseContentFieldID                          = big.NewInt(1 << 3)
+	getConnectionResponseContentFieldStrategy                    = big.NewInt(1 << 4)
+	getConnectionResponseContentFieldRealms                      = big.NewInt(1 << 5)
+	getConnectionResponseContentFieldEnabledClients              = big.NewInt(1 << 6)
+	getConnectionResponseContentFieldIsDomainConnection          = big.NewInt(1 << 7)
+	getConnectionResponseContentFieldShowAsButton                = big.NewInt(1 << 8)
+	getConnectionResponseContentFieldMetadata                    = big.NewInt(1 << 9)
+	getConnectionResponseContentFieldAuthentication              = big.NewInt(1 << 10)
+	getConnectionResponseContentFieldConnectedAccounts           = big.NewInt(1 << 11)
+	getConnectionResponseContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 12)
 )
 
 type GetConnectionResponseContent struct {
@@ -4566,10 +4583,11 @@ type GetConnectionResponseContent struct {
 	// True if the connection is domain level
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD.
-	ShowAsButton      *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Metadata          *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
-	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	ShowAsButton                *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata                    *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4660,6 +4678,13 @@ func (g *GetConnectionResponseContent) GetConnectedAccounts() ConnectionConnecte
 		return ConnectionConnectedAccountsPurpose{}
 	}
 	return *g.ConnectedAccounts
+}
+
+func (g *GetConnectionResponseContent) GetCrossAppAccessRequestingApp() CrossAppAccessRequestingApp {
+	if g == nil || g.CrossAppAccessRequestingApp == nil {
+		return CrossAppAccessRequestingApp{}
+	}
+	return *g.CrossAppAccessRequestingApp
 }
 
 func (g *GetConnectionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -4758,6 +4783,13 @@ func (g *GetConnectionResponseContent) SetAuthentication(authentication *Connect
 func (g *GetConnectionResponseContent) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
 	g.ConnectedAccounts = connectedAccounts
 	g.require(getConnectionResponseContentFieldConnectedAccounts)
+}
+
+// SetCrossAppAccessRequestingApp sets the CrossAppAccessRequestingApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionResponseContent) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
+	g.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
+	g.require(getConnectionResponseContentFieldCrossAppAccessRequestingApp)
 }
 
 func (g *GetConnectionResponseContent) UnmarshalJSON(data []byte) error {
@@ -6146,18 +6178,19 @@ func (u *UpdateConnectionOptions) String() string {
 }
 
 var (
-	updateConnectionResponseContentFieldName               = big.NewInt(1 << 0)
-	updateConnectionResponseContentFieldDisplayName        = big.NewInt(1 << 1)
-	updateConnectionResponseContentFieldOptions            = big.NewInt(1 << 2)
-	updateConnectionResponseContentFieldID                 = big.NewInt(1 << 3)
-	updateConnectionResponseContentFieldStrategy           = big.NewInt(1 << 4)
-	updateConnectionResponseContentFieldRealms             = big.NewInt(1 << 5)
-	updateConnectionResponseContentFieldEnabledClients     = big.NewInt(1 << 6)
-	updateConnectionResponseContentFieldIsDomainConnection = big.NewInt(1 << 7)
-	updateConnectionResponseContentFieldShowAsButton       = big.NewInt(1 << 8)
-	updateConnectionResponseContentFieldMetadata           = big.NewInt(1 << 9)
-	updateConnectionResponseContentFieldAuthentication     = big.NewInt(1 << 10)
-	updateConnectionResponseContentFieldConnectedAccounts  = big.NewInt(1 << 11)
+	updateConnectionResponseContentFieldName                        = big.NewInt(1 << 0)
+	updateConnectionResponseContentFieldDisplayName                 = big.NewInt(1 << 1)
+	updateConnectionResponseContentFieldOptions                     = big.NewInt(1 << 2)
+	updateConnectionResponseContentFieldID                          = big.NewInt(1 << 3)
+	updateConnectionResponseContentFieldStrategy                    = big.NewInt(1 << 4)
+	updateConnectionResponseContentFieldRealms                      = big.NewInt(1 << 5)
+	updateConnectionResponseContentFieldEnabledClients              = big.NewInt(1 << 6)
+	updateConnectionResponseContentFieldIsDomainConnection          = big.NewInt(1 << 7)
+	updateConnectionResponseContentFieldShowAsButton                = big.NewInt(1 << 8)
+	updateConnectionResponseContentFieldMetadata                    = big.NewInt(1 << 9)
+	updateConnectionResponseContentFieldAuthentication              = big.NewInt(1 << 10)
+	updateConnectionResponseContentFieldConnectedAccounts           = big.NewInt(1 << 11)
+	updateConnectionResponseContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 12)
 )
 
 type UpdateConnectionResponseContent struct {
@@ -6177,10 +6210,11 @@ type UpdateConnectionResponseContent struct {
 	// True if the connection is domain level
 	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD.
-	ShowAsButton      *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
-	Metadata          *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
-	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	ShowAsButton                *bool                               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata                    *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
+	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -6271,6 +6305,13 @@ func (u *UpdateConnectionResponseContent) GetConnectedAccounts() ConnectionConne
 		return ConnectionConnectedAccountsPurpose{}
 	}
 	return *u.ConnectedAccounts
+}
+
+func (u *UpdateConnectionResponseContent) GetCrossAppAccessRequestingApp() CrossAppAccessRequestingApp {
+	if u == nil || u.CrossAppAccessRequestingApp == nil {
+		return CrossAppAccessRequestingApp{}
+	}
+	return *u.CrossAppAccessRequestingApp
 }
 
 func (u *UpdateConnectionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -6369,6 +6410,13 @@ func (u *UpdateConnectionResponseContent) SetAuthentication(authentication *Conn
 func (u *UpdateConnectionResponseContent) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
 	u.ConnectedAccounts = connectedAccounts
 	u.require(updateConnectionResponseContentFieldConnectedAccounts)
+}
+
+// SetCrossAppAccessRequestingApp sets the CrossAppAccessRequestingApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionResponseContent) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
+	u.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
+	u.require(updateConnectionResponseContentFieldCrossAppAccessRequestingApp)
 }
 
 func (u *UpdateConnectionResponseContent) UnmarshalJSON(data []byte) error {

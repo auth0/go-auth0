@@ -2862,6 +2862,13 @@ func TestEnumEmailTemplateNameEnum(t *testing.T) {
 		assert.Equal(t, EmailTemplateNameEnum("verify_email_by_code"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_auth_email_by_code", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEmailTemplateNameEnumFromString("auth_email_by_code")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EmailTemplateNameEnum("auth_email_by_code"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_reset_email", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewEmailTemplateNameEnumFromString("reset_email")
