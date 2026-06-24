@@ -1,5 +1,19 @@
 # Change Log
 
+## [v2.15.0-beta.0](https://github.com/auth0/go-auth0/tree/v2.15.0-beta.0) (2026-06-24)
+
+**Beta**
+- No beta-only changes in this release.
+
+**Stable (from main)**
+- feat: add `client.AttackProtection.PhoneProviderProtection` Get and Patch endpoints
+- feat: add token vault privileged access types (`ClientTokenVaultPrivilegedAccessWithCredentialID`, `ClientTokenVaultPrivilegedAccessWithPublicKey`, `TokenVaultPrivilegedAccessIPAllowlistEntry`)
+- feat: add `CrossAppAccessRequestingApp` to connection response types
+- feat: add `PhoneVerified`, `Multifactor`, `MultifactorLastModified`, `LastIP`, `LastLogin`, and `LastPasswordReset` user fields
+- feat: add `auth_email_by_code` email template name
+- fix: change user date fields (`CreatedAt`, `UpdatedAt`, `LastLogin`, `LastPasswordReset`, `MultifactorLastModified`) from `UserDateSchema` to `time.Time` (BREAKING)
+- fix: change identity `UserID` fields to a string-or-integer `UserID` union (BREAKING)
+
 ## [v2.14.0-beta.0](https://github.com/auth0/go-auth0/tree/v2.14.0-beta.0) (2026-06-22)
 
 **Beta**
