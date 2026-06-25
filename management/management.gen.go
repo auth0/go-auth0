@@ -1895,6 +1895,14 @@ func (c *Client) GetExternalMetadataType() string {
 	return *c.ExternalMetadataType
 }
 
+// GetFedCMLogin returns the FedCMLogin field.
+func (c *Client) GetFedCMLogin() *FedCMLogin {
+	if c == nil {
+		return nil
+	}
+	return c.FedCMLogin
+}
+
 // GetFormTemplate returns the FormTemplate field if it's non-nil, zero value otherwise.
 func (c *Client) GetFormTemplate() string {
 	if c == nil || c.FormTemplate == nil {
@@ -8699,6 +8707,32 @@ func (e *ExpressConfiguration) GetUserAttributeProfileID() string {
 // String returns a string representation of ExpressConfiguration.
 func (e *ExpressConfiguration) String() string {
 	return Stringify(e)
+}
+
+// GetGoogle returns the Google field.
+func (f *FedCMLogin) GetGoogle() *FedCMLoginGoogle {
+	if f == nil {
+		return nil
+	}
+	return f.Google
+}
+
+// String returns a string representation of FedCMLogin.
+func (f *FedCMLogin) String() string {
+	return Stringify(f)
+}
+
+// GetIsEnabled returns the IsEnabled field if it's non-nil, zero value otherwise.
+func (f *FedCMLoginGoogle) GetIsEnabled() bool {
+	if f == nil || f.IsEnabled == nil {
+		return false
+	}
+	return *f.IsEnabled
+}
+
+// String returns a string representation of FedCMLoginGoogle.
+func (f *FedCMLoginGoogle) String() string {
+	return Stringify(f)
 }
 
 // GetClientEmail returns the ClientEmail field if it's non-nil, zero value otherwise.

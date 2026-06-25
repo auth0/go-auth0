@@ -257,6 +257,9 @@ type Client struct {
 	// Values: "allow_always" or "open_redirect_protection".
 	// Only applies when is_first_party is false and third_party_security_mode is strict.
 	RedirectionPolicy *string `json:"redirection_policy,omitempty"`
+
+	// FedCMLogin holds the Federated Credential Management login configuration.
+	FedCMLogin *FedCMLogin `json:"fedcm_login,omitempty"`
 }
 
 // ExpressConfiguration represents the OIN Express Configuration settings for a client.
@@ -568,6 +571,18 @@ type SessionTransfer struct {
 	AllowRefreshToken             *bool     `json:"allow_refresh_token,omitempty"`
 	EnforceOnlineRefreshTokens    *bool     `json:"enforce_online_refresh_tokens,omitempty"`
 	EnforceCascadeRevocation      *bool     `json:"enforce_cascade_revocation,omitempty"`
+}
+
+// FedCMLogin defines the Federated Credential Management login configuration.
+type FedCMLogin struct {
+	// Google holds the Google FedCM configuration.
+	Google *FedCMLoginGoogle `json:"google,omitempty"`
+}
+
+// FedCMLoginGoogle defines the Google FedCM configuration.
+type FedCMLoginGoogle struct {
+	// IsEnabled shows the Google FedCM prompt on New Universal Login when true.
+	IsEnabled *bool `json:"is_enabled,omitempty"`
 }
 
 // ClientAddons defines the `addons` settings for a Client.
