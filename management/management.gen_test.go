@@ -16803,6 +16803,13 @@ func TestSessionTransfer_GetCanCreateSessionTransferToken(tt *testing.T) {
 	s.GetCanCreateSessionTransferToken()
 }
 
+func TestSessionTransfer_GetDelegation(tt *testing.T) {
+	s := &SessionTransfer{}
+	s.GetDelegation()
+	s = nil
+	s.GetDelegation()
+}
+
 func TestSessionTransfer_GetEnforceCascadeRevocation(tt *testing.T) {
 	var zeroValue bool
 	s := &SessionTransfer{EnforceCascadeRevocation: &zeroValue}
@@ -16836,6 +16843,34 @@ func TestSessionTransfer_GetEnforceOnlineRefreshTokens(tt *testing.T) {
 func TestSessionTransfer_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &SessionTransfer{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestSessionTransferDelegation_GetAllowDelegatedAccess(tt *testing.T) {
+	var zeroValue bool
+	s := &SessionTransferDelegation{AllowDelegatedAccess: &zeroValue}
+	s.GetAllowDelegatedAccess()
+	s = &SessionTransferDelegation{}
+	s.GetAllowDelegatedAccess()
+	s = nil
+	s.GetAllowDelegatedAccess()
+}
+
+func TestSessionTransferDelegation_GetEnforceDeviceBinding(tt *testing.T) {
+	var zeroValue string
+	s := &SessionTransferDelegation{EnforceDeviceBinding: &zeroValue}
+	s.GetEnforceDeviceBinding()
+	s = &SessionTransferDelegation{}
+	s.GetEnforceDeviceBinding()
+	s = nil
+	s.GetEnforceDeviceBinding()
+}
+
+func TestSessionTransferDelegation_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &SessionTransferDelegation{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

@@ -13384,6 +13384,14 @@ func (s *SessionTransfer) GetCanCreateSessionTransferToken() bool {
 	return *s.CanCreateSessionTransferToken
 }
 
+// GetDelegation returns the Delegation field.
+func (s *SessionTransfer) GetDelegation() *SessionTransferDelegation {
+	if s == nil {
+		return nil
+	}
+	return s.Delegation
+}
+
 // GetEnforceCascadeRevocation returns the EnforceCascadeRevocation field if it's non-nil, zero value otherwise.
 func (s *SessionTransfer) GetEnforceCascadeRevocation() bool {
 	if s == nil || s.EnforceCascadeRevocation == nil {
@@ -13410,6 +13418,27 @@ func (s *SessionTransfer) GetEnforceOnlineRefreshTokens() bool {
 
 // String returns a string representation of SessionTransfer.
 func (s *SessionTransfer) String() string {
+	return Stringify(s)
+}
+
+// GetAllowDelegatedAccess returns the AllowDelegatedAccess field if it's non-nil, zero value otherwise.
+func (s *SessionTransferDelegation) GetAllowDelegatedAccess() bool {
+	if s == nil || s.AllowDelegatedAccess == nil {
+		return false
+	}
+	return *s.AllowDelegatedAccess
+}
+
+// GetEnforceDeviceBinding returns the EnforceDeviceBinding field if it's non-nil, zero value otherwise.
+func (s *SessionTransferDelegation) GetEnforceDeviceBinding() string {
+	if s == nil || s.EnforceDeviceBinding == nil {
+		return ""
+	}
+	return *s.EnforceDeviceBinding
+}
+
+// String returns a string representation of SessionTransferDelegation.
+func (s *SessionTransferDelegation) String() string {
 	return Stringify(s)
 }
 
