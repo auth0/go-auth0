@@ -772,6 +772,13 @@ type ConnectionOptionsOkta struct {
 	//  }
 	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
 
+	Type *string `json:"type,omitempty"`
+
+	// When true and type is 'back_channel',
+	// includes a cryptographic nonce in authorization requests to prevent replay attacks.
+	// The identity provider must include this nonce in the ID token for validation.
+	SendBackChannelNonce *bool `json:"send_back_channel_nonce,omitempty"`
+
 	// DPoPSigningAlg is the algorithm used to sign the DPoP proof. Currently allowed values: ES256, Ed25519.
 	DPoPSigningAlg *string `json:"dpop_signing_alg,omitempty"`
 
@@ -1240,7 +1247,7 @@ type ConnectionOptionsOIDC struct {
 	AuthorizationEndpoint *string `json:"authorization_endpoint"`
 	Issuer                *string `json:"issuer"`
 	JWKSURI               *string `json:"jwks_uri"`
-	Type                  *string `json:"type"`
+	Type                  *string `json:"type,omitempty"`
 	UserInfoEndpoint      *string `json:"userinfo_endpoint"`
 	TokenEndpoint         *string `json:"token_endpoint"`
 	Scope                 *string `json:"scope,omitempty"`
