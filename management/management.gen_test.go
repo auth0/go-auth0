@@ -7020,6 +7020,16 @@ func TestConnectionOptionsOIDC_GetFederatedConnectionsAccessTokens(tt *testing.T
 	c.GetFederatedConnectionsAccessTokens()
 }
 
+func TestConnectionOptionsOIDC_GetIDTokenSessionExpirySupported(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOIDC{IDTokenSessionExpirySupported: &zeroValue}
+	c.GetIDTokenSessionExpirySupported()
+	c = &ConnectionOptionsOIDC{}
+	c.GetIDTokenSessionExpirySupported()
+	c = nil
+	c.GetIDTokenSessionExpirySupported()
+}
+
 func TestConnectionOptionsOIDC_GetIDTokenSignedResponseAlgs(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptionsOIDC{IDTokenSignedResponseAlgs: &zeroValue}
@@ -7344,6 +7354,16 @@ func TestConnectionOptionsOkta_GetDPoPSigningAlg(tt *testing.T) {
 	c.GetDPoPSigningAlg()
 	c = nil
 	c.GetDPoPSigningAlg()
+}
+
+func TestConnectionOptionsOkta_GetIDTokenSessionExpirySupported(tt *testing.T) {
+	var zeroValue bool
+	c := &ConnectionOptionsOkta{IDTokenSessionExpirySupported: &zeroValue}
+	c.GetIDTokenSessionExpirySupported()
+	c = &ConnectionOptionsOkta{}
+	c.GetIDTokenSessionExpirySupported()
+	c = nil
+	c.GetIDTokenSessionExpirySupported()
 }
 
 func TestConnectionOptionsOkta_GetIDTokenSignedResponseAlgs(tt *testing.T) {

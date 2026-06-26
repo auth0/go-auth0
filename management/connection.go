@@ -785,6 +785,8 @@ type ConnectionOptionsOkta struct {
 	// TokenEndpointJwtcaAudFormat specifies the aud claim format in the JWT for client authentication
 	// at the token endpoint. Possible values: "issuer", "token_endpoint".
 	TokenEndpointJwtcaAudFormat *string `json:"token_endpoint_jwtca_aud_format,omitempty"`
+	// IDTokenSessionExpirySupported indicates whether the connection supports session expiry via ID token claims.
+	IDTokenSessionExpirySupported *bool `json:"id_token_session_expiry_supported,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsOkta.
@@ -1296,6 +1298,8 @@ type ConnectionOptionsOIDC struct {
 	TokenEndpointJwtcaAudFormat *string `json:"token_endpoint_jwtca_aud_format,omitempty"`
 	// FederatedConnectionsAccessTokens enables refresh tokens and access tokens collection for federated connections
 	FederatedConnectionsAccessTokens *ConnectionOptionsOIDCFederatedConnectionsAccessTokens `json:"federated_connections_access_tokens,omitempty"`
+	// IDTokenSessionExpirySupported indicates whether the connection supports session expiry via ID token claims.
+	IDTokenSessionExpirySupported *bool `json:"id_token_session_expiry_supported,omitempty"`
 }
 
 // ConnectionOptionsOIDCFederatedConnectionsAccessTokens is used by OIDC Connections to
