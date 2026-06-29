@@ -1982,3 +1982,136 @@ func TestConnectionManager_TokenEndpointJwtcaAudFormatForOktaAndOIDC(t *testing.
 	assert.Equal(t, "issuer", oktaOpts.GetTokenEndpointJwtcaAudFormat())
 	assert.Equal(t, "token_endpoint", oidcOpts.GetTokenEndpointJwtcaAudFormat())
 }
+
+func TestConnectionManager_IDTokenSessionExpirySupportedForOktaAndOIDC(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	// Case 1: setting true — API echoes true.
+	t.Run("It sets id_token_session_expiry_supported to true for Okta and OIDC", func(t *testing.T) {
+		oktaConnection := givenAConnection(t, connectionTestCase{
+			connection: Connection{
+				Name:     auth0.Stringf("Test-Okta-Connection-%d", time.Now().Unix()),
+				Strategy: auth0.String("okta"),
+			},
+			options: &ConnectionOptionsOkta{
+				ClientID:                      auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+				ClientSecret:                  auth0.String("mySecret"),
+				Scope:                         auth0.String("openid"),
+				Domain:                        auth0.String("domain.okta.com"),
+				Issuer:                        auth0.String("https://example.com"),
+				AuthorizationEndpoint:         auth0.String("https://example.com"),
+				JWKSURI:                       auth0.String("https://example.com/jwks"),
+				IDTokenSessionExpirySupported: auth0.Bool(true),
+			},
+		})
+
+		oidcConnection := givenAConnection(t, connectionTestCase{
+			connection: Connection{
+				Name:     auth0.Stringf("Test-OIDC-Connection-%d", time.Now().Unix()),
+				Strategy: auth0.String("oidc"),
+			},
+			options: &ConnectionOptionsOIDC{
+				ClientID:                      auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+				ClientSecret:                  auth0.String("mySecret"),
+				Scope:                         auth0.String("openid"),
+				TenantDomain:                  auth0.String("domain.okta.com"),
+				Issuer:                        auth0.String("https://example.com"),
+				AuthorizationEndpoint:         auth0.String("https://example.com"),
+				JWKSURI:                       auth0.String("https://example.com/jwks"),
+				IDTokenSessionExpirySupported: auth0.Bool(true),
+			},
+		})
+
+		oktaOpts := oktaConnection.Options.(*ConnectionOptionsOkta)
+		oidcOpts := oidcConnection.Options.(*ConnectionOptionsOIDC)
+
+		assert.Equal(t, true, oktaOpts.GetIDTokenSessionExpirySupported())
+		assert.Equal(t, true, oidcOpts.GetIDTokenSessionExpirySupported())
+	})
+
+	// Case 2: setting false — API echoes false explicitly (does not omit the field).
+	t.Run("It sets id_token_session_expiry_supported to false for Okta and OIDC", func(t *testing.T) {
+		oktaConnection := givenAConnection(t, connectionTestCase{
+			connection: Connection{
+				Name:     auth0.Stringf("Test-Okta-Connection-%d", time.Now().Unix()),
+				Strategy: auth0.String("okta"),
+			},
+			options: &ConnectionOptionsOkta{
+				ClientID:                      auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+				ClientSecret:                  auth0.String("mySecret"),
+				Scope:                         auth0.String("openid"),
+				Domain:                        auth0.String("domain.okta.com"),
+				Issuer:                        auth0.String("https://example.com"),
+				AuthorizationEndpoint:         auth0.String("https://example.com"),
+				JWKSURI:                       auth0.String("https://example.com/jwks"),
+				IDTokenSessionExpirySupported: auth0.Bool(false),
+			},
+		})
+
+		oidcConnection := givenAConnection(t, connectionTestCase{
+			connection: Connection{
+				Name:     auth0.Stringf("Test-OIDC-Connection-%d", time.Now().Unix()),
+				Strategy: auth0.String("oidc"),
+			},
+			options: &ConnectionOptionsOIDC{
+				ClientID:                      auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+				ClientSecret:                  auth0.String("mySecret"),
+				Scope:                         auth0.String("openid"),
+				TenantDomain:                  auth0.String("domain.okta.com"),
+				Issuer:                        auth0.String("https://example.com"),
+				AuthorizationEndpoint:         auth0.String("https://example.com"),
+				JWKSURI:                       auth0.String("https://example.com/jwks"),
+				IDTokenSessionExpirySupported: auth0.Bool(false),
+			},
+		})
+
+		oktaOpts := oktaConnection.Options.(*ConnectionOptionsOkta)
+		oidcOpts := oidcConnection.Options.(*ConnectionOptionsOIDC)
+
+		assert.Equal(t, false, oktaOpts.GetIDTokenSessionExpirySupported())
+		assert.Equal(t, false, oidcOpts.GetIDTokenSessionExpirySupported())
+	})
+
+	// Case 3: clearing the field (nil / omitted) — omitempty means field is absent from the
+	// PATCH body, which causes the API to clear its stored value. The returned options must
+	// not carry the field (getter returns zero value false).
+	t.Run("It clears id_token_session_expiry_supported when set to nil for Okta and OIDC", func(t *testing.T) {
+		oktaConnection := givenAConnection(t, connectionTestCase{
+			connection: Connection{
+				Name:     auth0.Stringf("Test-Okta-Connection-%d", time.Now().Unix()),
+				Strategy: auth0.String("okta"),
+			},
+			options: &ConnectionOptionsOkta{
+				ClientID:              auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+				ClientSecret:          auth0.String("mySecret"),
+				Scope:                 auth0.String("openid"),
+				Domain:                auth0.String("domain.okta.com"),
+				Issuer:                auth0.String("https://example.com"),
+				AuthorizationEndpoint: auth0.String("https://example.com"),
+				JWKSURI:               auth0.String("https://example.com/jwks"),
+			},
+		})
+
+		oidcConnection := givenAConnection(t, connectionTestCase{
+			connection: Connection{
+				Name:     auth0.Stringf("Test-OIDC-Connection-%d", time.Now().Unix()),
+				Strategy: auth0.String("oidc"),
+			},
+			options: &ConnectionOptionsOIDC{
+				ClientID:              auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
+				ClientSecret:          auth0.String("mySecret"),
+				Scope:                 auth0.String("openid"),
+				TenantDomain:          auth0.String("domain.okta.com"),
+				Issuer:                auth0.String("https://example.com"),
+				AuthorizationEndpoint: auth0.String("https://example.com"),
+				JWKSURI:               auth0.String("https://example.com/jwks"),
+			},
+		})
+
+		oktaOpts := oktaConnection.Options.(*ConnectionOptionsOkta)
+		oidcOpts := oidcConnection.Options.(*ConnectionOptionsOIDC)
+
+		assert.Nil(t, oktaOpts.IDTokenSessionExpirySupported)
+		assert.Nil(t, oidcOpts.IDTokenSessionExpirySupported)
+	})
+}

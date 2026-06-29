@@ -5690,6 +5690,14 @@ func (c *ConnectionOptionsOIDC) GetFederatedConnectionsAccessTokens() *Connectio
 	return c.FederatedConnectionsAccessTokens
 }
 
+// GetIDTokenSessionExpirySupported returns the IDTokenSessionExpirySupported field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOIDC) GetIDTokenSessionExpirySupported() bool {
+	if c == nil || c.IDTokenSessionExpirySupported == nil {
+		return false
+	}
+	return *c.IDTokenSessionExpirySupported
+}
+
 // GetIDTokenSignedResponseAlgs returns the IDTokenSignedResponseAlgs field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsOIDC) GetIDTokenSignedResponseAlgs() []string {
 	if c == nil || c.IDTokenSignedResponseAlgs == nil {
@@ -5948,6 +5956,14 @@ func (c *ConnectionOptionsOkta) GetDPoPSigningAlg() string {
 		return ""
 	}
 	return *c.DPoPSigningAlg
+}
+
+// GetIDTokenSessionExpirySupported returns the IDTokenSessionExpirySupported field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOkta) GetIDTokenSessionExpirySupported() bool {
+	if c == nil || c.IDTokenSessionExpirySupported == nil {
+		return false
+	}
+	return *c.IDTokenSessionExpirySupported
 }
 
 // GetIDTokenSignedResponseAlgs returns the IDTokenSignedResponseAlgs field if it's non-nil, zero value otherwise.

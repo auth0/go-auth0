@@ -1,5 +1,10 @@
 # Change Log
 
+## [Unreleased]
+
+### Added
+- Add `IDTokenSessionExpirySupported` field to `ConnectionOptionsOkta` and `ConnectionOptionsOIDC` to control session expiry via ID token claims.
+
 ## [v1.43.0](https://github.com/auth0/go-auth0/tree/v1.43.0) (2026-06-17)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.42.1...v1.43.0)
 
