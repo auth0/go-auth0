@@ -4,10 +4,10 @@
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.43.0...v1.44.0)
 
 **Added**
-- feat: added support for id_token_session_expiry_supported flag on connection options [\#805](https://github.com/auth0/go-auth0/pull/805) ([KartikJha](https://github.com/KartikJha))
-- feat: add delegation configuration and access methods to client session-transfer [\#803](https://github.com/auth0/go-auth0/pull/803) ([bkiran6398](https://github.com/bkiran6398))
-- feat: add FedCMLogin configuration and related methods to client [\#799](https://github.com/auth0/go-auth0/pull/799) ([bkiran6398](https://github.com/bkiran6398))
-- feat: add SendBackChannelNonce and Type fields to connection [\#797](https://github.com/auth0/go-auth0/pull/797) ([bkiran6398](https://github.com/bkiran6398))
+- feat: Add IDTokenSessionExpirySupported field to connection options [\#805](https://github.com/auth0/go-auth0/pull/805) ([KartikJha](https://github.com/KartikJha))
+- feat: Add Delegation configuration to client SessionTransfer [\#803](https://github.com/auth0/go-auth0/pull/803) ([bkiran6398](https://github.com/bkiran6398))
+- feat: Add FedCMLogin configuration to client [\#799](https://github.com/auth0/go-auth0/pull/799) ([bkiran6398](https://github.com/bkiran6398))
+- feat: Add SendBackChannelNonce and Type fields to connection options [\#797](https://github.com/auth0/go-auth0/pull/797) ([bkiran6398](https://github.com/bkiran6398))
 
 ## [v1.43.0](https://github.com/auth0/go-auth0/tree/v1.43.0) (2026-06-17)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.42.1...v1.43.0)
