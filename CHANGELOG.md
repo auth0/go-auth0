@@ -1,9 +1,13 @@
 # Change Log
 
-## [Unreleased]
+## [v1.44.0](https://github.com/auth0/go-auth0/tree/v1.44.0) (2026-06-30)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.43.0...v1.44.0)
 
-### Added
-- Add `IDTokenSessionExpirySupported` field to `ConnectionOptionsOkta` and `ConnectionOptionsOIDC` to control session expiry via ID token claims.
+**Added**
+- feat: Add IDTokenSessionExpirySupported field to connection options [\#805](https://github.com/auth0/go-auth0/pull/805) ([KartikJha](https://github.com/KartikJha))
+- feat: Add Delegation configuration to client SessionTransfer [\#803](https://github.com/auth0/go-auth0/pull/803) ([bkiran6398](https://github.com/bkiran6398))
+- feat: Add FedCMLogin configuration to client [\#799](https://github.com/auth0/go-auth0/pull/799) ([bkiran6398](https://github.com/bkiran6398))
+- feat: Add SendBackChannelNonce and Type fields to connection options [\#797](https://github.com/auth0/go-auth0/pull/797) ([bkiran6398](https://github.com/bkiran6398))
 
 ## [v1.43.0](https://github.com/auth0/go-auth0/tree/v1.43.0) (2026-06-17)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.42.1...v1.43.0)
