@@ -2102,7 +2102,7 @@
       },
       "response": {
         "status": 202,
-        "body": "{\n  \"id\": \"id\",\n  \"event_stream_id\": \"event_stream_id\",\n  \"status\": \"failed\",\n  \"event_type\": \"group.created\",\n  \"attempts\": [\n    {\n      \"status\": \"failed\",\n      \"timestamp\": \"2024-01-15T09:30:00Z\",\n      \"error_message\": \"error_message\"\n    }\n  ],\n  \"event\": {\n    \"id\": \"id\",\n    \"source\": \"source\",\n    \"specversion\": \"specversion\",\n    \"type\": \"type\",\n    \"time\": \"2024-01-15T09:30:00Z\",\n    \"data\": \"data\"\n  }\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"event_stream_id\": \"event_stream_id\",\n  \"status\": \"failed\",\n  \"event_type\": \"connection.created\",\n  \"attempts\": [\n    {\n      \"status\": \"failed\",\n      \"timestamp\": \"2024-01-15T09:30:00Z\",\n      \"error_message\": \"error_message\"\n    }\n  ],\n  \"event\": {\n    \"id\": \"id\",\n    \"source\": \"source\",\n    \"specversion\": \"specversion\",\n    \"type\": \"type\",\n    \"time\": \"2024-01-15T09:30:00Z\",\n    \"data\": \"data\"\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -2140,7 +2140,7 @@
           "event_type": {
             "hasExactly": [
               {
-                "equalTo": "group.created"
+                "equalTo": "connection.created"
               }
             ]
           }
@@ -2148,7 +2148,7 @@
       },
       "response": {
         "status": 200,
-        "body": "event: message\ndata: {\"offset\":\"offset\",\"event\":{\"specversion\":\"specversion\",\"type\":\"group.created\",\"source\":\"source\",\"id\":\"id\",\"time\":\"2024-01-15T09:30:00Z\",\"data\":{\"object\":{\"id\":\"id\",\"name\":\"name\",\"created_at\":\"2024-01-15T09:30:00Z\",\"type\":\"connection\",\"connection_id\":\"connection_id\"},\"context\":{\"tenant\":{\"tenant_id\":\"tenant_id\"}}},\"a0tenant\":\"a0tenant\",\"a0stream\":\"a0stream\",\"a0purpose\":\"test\"},\"type\":\"group.created\"}\n",
+        "body": "event: message\ndata: {\"offset\":\"offset\",\"event\":{\"specversion\":\"1.0\",\"type\":\"connection.created\",\"source\":\"source\",\"id\":\"id\",\"time\":\"2024-01-15T09:30:00Z\",\"data\":{\"object\":{\"id\":\"id\",\"name\":\"name\",\"strategy\":\"oidc\"},\"context\":{\"tenant\":{\"tenant_id\":\"tenant_id\"}}},\"a0tenant\":\"a0tenant\",\"a0stream\":\"a0stream\",\"a0purpose\":\"test\"},\"type\":\"connection.created\"}\n",
         "headers": {
           "Content-Type": "text/event-stream"
         }
@@ -9485,7 +9485,7 @@
       },
       "response": {
         "status": 200,
-        "body": "[\n  {\n    \"id\": \"id\",\n    \"event_stream_id\": \"event_stream_id\",\n    \"status\": \"failed\",\n    \"event_type\": \"group.created\",\n    \"attempts\": [\n      {\n        \"status\": \"failed\",\n        \"timestamp\": \"2024-01-15T09:30:00Z\"\n      }\n    ],\n    \"event\": {\n      \"id\": \"id\",\n      \"source\": \"source\",\n      \"specversion\": \"specversion\",\n      \"type\": \"type\",\n      \"time\": \"2024-01-15T09:30:00Z\",\n      \"data\": \"data\"\n    }\n  }\n]",
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"event_stream_id\": \"event_stream_id\",\n    \"status\": \"failed\",\n    \"event_type\": \"connection.created\",\n    \"attempts\": [\n      {\n        \"status\": \"failed\",\n        \"timestamp\": \"2024-01-15T09:30:00Z\"\n      }\n    ],\n    \"event\": {\n      \"id\": \"id\",\n      \"source\": \"source\",\n      \"specversion\": \"specversion\",\n      \"type\": \"type\",\n      \"time\": \"2024-01-15T09:30:00Z\",\n      \"data\": \"data\"\n    }\n  }\n]",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -9524,7 +9524,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"event_stream_id\": \"event_stream_id\",\n  \"status\": \"failed\",\n  \"event_type\": \"group.created\",\n  \"attempts\": [\n    {\n      \"status\": \"failed\",\n      \"timestamp\": \"2024-01-15T09:30:00Z\",\n      \"error_message\": \"error_message\"\n    }\n  ],\n  \"event\": {\n    \"id\": \"id\",\n    \"source\": \"source\",\n    \"specversion\": \"specversion\",\n    \"type\": \"type\",\n    \"time\": \"2024-01-15T09:30:00Z\",\n    \"data\": \"data\"\n  }\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"event_stream_id\": \"event_stream_id\",\n  \"status\": \"failed\",\n  \"event_type\": \"connection.created\",\n  \"attempts\": [\n    {\n      \"status\": \"failed\",\n      \"timestamp\": \"2024-01-15T09:30:00Z\",\n      \"error_message\": \"error_message\"\n    }\n  ],\n  \"event\": {\n    \"id\": \"id\",\n    \"source\": \"source\",\n    \"specversion\": \"specversion\",\n    \"type\": \"type\",\n    \"time\": \"2024-01-15T09:30:00Z\",\n    \"data\": \"data\"\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -9560,7 +9560,7 @@
       },
       "response": {
         "status": 202,
-        "body": "{\n  \"date_from\": \"2024-01-15T09:30:00Z\",\n  \"date_to\": \"2024-01-15T09:30:00Z\",\n  \"statuses\": [\n    \"failed\"\n  ],\n  \"event_types\": [\n    \"group.created\"\n  ]\n}",
+        "body": "{\n  \"date_from\": \"2024-01-15T09:30:00Z\",\n  \"date_to\": \"2024-01-15T09:30:00Z\",\n  \"statuses\": [\n    \"failed\"\n  ],\n  \"event_types\": [\n    \"connection.created\"\n  ]\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -9679,7 +9679,7 @@
       },
       "response": {
         "status": 201,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"feature_flag_id\": \"feature_flag_id\",\n  \"authentication_flow\": \"authentication_flow\",\n  \"allocation_strategy\": \"percentage\",\n  \"assignment_config\": {\n    \"subject\": \"device\"\n  },\n  \"status\": \"draft\",\n  \"is_valid\": true,\n  \"allocations\": [\n    {\n      \"variation_id\": \"variation_id\",\n      \"segment_id\": \"segment_id\",\n      \"weight\": 1.1,\n      \"priority\": 1,\n      \"is_control\": true,\n      \"is_fallback\": true\n    }\n  ],\n  \"started_at\": \"2024-01-15T09:30:00Z\",\n  \"ended_at\": \"2024-01-15T09:30:00Z\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"feature_flag_id\": \"feature_flag_id\",\n  \"authentication_flow\": \"authentication_flow\",\n  \"allocation_strategy\": \"percentage\",\n  \"assignment_config\": {\n    \"subject\": \"device\"\n  },\n  \"status\": \"draft\",\n  \"is_valid\": true,\n  \"allocations\": [\n    {\n      \"variation_id\": \"variation_id\",\n      \"segment_id\": \"segment_id\",\n      \"weight\": 1,\n      \"priority\": 1,\n      \"is_control\": true,\n      \"is_fallback\": true\n    }\n  ],\n  \"started_at\": \"2024-01-15T09:30:00Z\",\n  \"ended_at\": \"2024-01-15T09:30:00Z\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -9715,7 +9715,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"feature_flag_id\": \"feature_flag_id\",\n  \"authentication_flow\": \"authentication_flow\",\n  \"allocation_strategy\": \"percentage\",\n  \"assignment_config\": {\n    \"subject\": \"device\"\n  },\n  \"status\": \"draft\",\n  \"is_valid\": true,\n  \"allocations\": [\n    {\n      \"variation_id\": \"variation_id\",\n      \"segment_id\": \"segment_id\",\n      \"weight\": 1.1,\n      \"priority\": 1,\n      \"is_control\": true,\n      \"is_fallback\": true\n    }\n  ],\n  \"started_at\": \"2024-01-15T09:30:00Z\",\n  \"ended_at\": \"2024-01-15T09:30:00Z\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"feature_flag_id\": \"feature_flag_id\",\n  \"authentication_flow\": \"authentication_flow\",\n  \"allocation_strategy\": \"percentage\",\n  \"assignment_config\": {\n    \"subject\": \"device\"\n  },\n  \"status\": \"draft\",\n  \"is_valid\": true,\n  \"allocations\": [\n    {\n      \"variation_id\": \"variation_id\",\n      \"segment_id\": \"segment_id\",\n      \"weight\": 1,\n      \"priority\": 1,\n      \"is_control\": true,\n      \"is_fallback\": true\n    }\n  ],\n  \"started_at\": \"2024-01-15T09:30:00Z\",\n  \"ended_at\": \"2024-01-15T09:30:00Z\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -9787,7 +9787,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"feature_flag_id\": \"feature_flag_id\",\n  \"authentication_flow\": \"authentication_flow\",\n  \"allocation_strategy\": \"percentage\",\n  \"assignment_config\": {\n    \"subject\": \"device\"\n  },\n  \"status\": \"draft\",\n  \"is_valid\": true,\n  \"allocations\": [\n    {\n      \"variation_id\": \"variation_id\",\n      \"segment_id\": \"segment_id\",\n      \"weight\": 1.1,\n      \"priority\": 1,\n      \"is_control\": true,\n      \"is_fallback\": true\n    }\n  ],\n  \"started_at\": \"2024-01-15T09:30:00Z\",\n  \"ended_at\": \"2024-01-15T09:30:00Z\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"feature_flag_id\": \"feature_flag_id\",\n  \"authentication_flow\": \"authentication_flow\",\n  \"allocation_strategy\": \"percentage\",\n  \"assignment_config\": {\n    \"subject\": \"device\"\n  },\n  \"status\": \"draft\",\n  \"is_valid\": true,\n  \"allocations\": [\n    {\n      \"variation_id\": \"variation_id\",\n      \"segment_id\": \"segment_id\",\n      \"weight\": 1,\n      \"priority\": 1,\n      \"is_control\": true,\n      \"is_fallback\": true\n    }\n  ],\n  \"started_at\": \"2024-01-15T09:30:00Z\",\n  \"ended_at\": \"2024-01-15T09:30:00Z\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -9823,7 +9823,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"feature_flag_id\": \"feature_flag_id\",\n  \"authentication_flow\": \"authentication_flow\",\n  \"allocation_strategy\": \"percentage\",\n  \"assignment_config\": {\n    \"subject\": \"device\"\n  },\n  \"status\": \"draft\",\n  \"is_valid\": true,\n  \"allocations\": [\n    {\n      \"variation_id\": \"variation_id\",\n      \"segment_id\": \"segment_id\",\n      \"weight\": 1.1,\n      \"priority\": 1,\n      \"is_control\": true,\n      \"is_fallback\": true\n    }\n  ],\n  \"started_at\": \"2024-01-15T09:30:00Z\",\n  \"ended_at\": \"2024-01-15T09:30:00Z\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"feature_flag_id\": \"feature_flag_id\",\n  \"authentication_flow\": \"authentication_flow\",\n  \"allocation_strategy\": \"percentage\",\n  \"assignment_config\": {\n    \"subject\": \"device\"\n  },\n  \"status\": \"draft\",\n  \"is_valid\": true,\n  \"allocations\": [\n    {\n      \"variation_id\": \"variation_id\",\n      \"segment_id\": \"segment_id\",\n      \"weight\": 1,\n      \"priority\": 1,\n      \"is_control\": true,\n      \"is_fallback\": true\n    }\n  ],\n  \"started_at\": \"2024-01-15T09:30:00Z\",\n  \"ended_at\": \"2024-01-15T09:30:00Z\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -14311,6 +14311,59 @@
       }
     },
     {
+      "id": "ffccd1de-fe6a-40b4-830b-54a8b73f173c",
+      "name": "Get the members assigned to an organization role - default",
+      "request": {
+        "urlPathTemplate": "/organizations/{id}/roles/{role_id}/members",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          },
+          "role_id": {
+            "equalTo": "role_id"
+          }
+        },
+        "queryParameters": {
+          "from": {
+            "equalTo": "from"
+          },
+          "take": {
+            "equalTo": "1"
+          },
+          "fields": {
+            "equalTo": "fields"
+          },
+          "include_fields": {
+            "equalTo": "true"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"members\": [\n    {\n      \"user_id\": \"user_id\",\n      \"picture\": \"picture\",\n      \"name\": \"name\",\n      \"email\": \"email\"\n    }\n  ],\n  \"next\": \"next\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ffccd1de-fe6a-40b4-830b-54a8b73f173c",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "f02cb8dc-cee0-4470-b69b-596e4d0653f9",
       "name": "Get render setting configurations for all screens - default",
       "request": {
@@ -16864,6 +16917,6 @@
     }
   ],
   "meta": {
-    "total": 452
+    "total": 453
   }
 }
