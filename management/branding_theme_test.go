@@ -309,6 +309,104 @@ func givenABrandingTheme(t *testing.T) *BrandingTheme {
 	return theme
 }
 
+func TestBrandingThemeManager_Update_Identifiers(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedTheme := givenABrandingTheme(t)
+
+	actualTheme := &BrandingTheme{
+		Borders: BrandingThemeBorders{
+			ButtonBorderRadius: 2,
+			ButtonBorderWeight: 2,
+			ButtonsStyle:       "pill",
+			InputBorderRadius:  2,
+			InputBorderWeight:  2,
+			InputsStyle:        "pill",
+			ShowWidgetShadow:   true,
+			WidgetBorderWeight: 2,
+			WidgetCornerRadius: 2,
+		},
+		Colors: BrandingThemeColors{
+			BodyText:                "#00FF00",
+			Error:                   "#00FF00",
+			CaptchaWidgetTheme:      "auto",
+			Header:                  "#00FF00",
+			Icons:                   "#00FF00",
+			InputBackground:         "#00FF00",
+			InputBorder:             "#00FF00",
+			InputFilledText:         "#00FF00",
+			InputLabelsPlaceholders: "#00FF00",
+			LinksFocusedComponents:  "#00FF00",
+			PrimaryButton:           "#00FF00",
+			PrimaryButtonLabel:      "#00FF00",
+			SecondaryButtonBorder:   "#00FF00",
+			SecondaryButtonLabel:    "#00FF00",
+			Success:                 "#00FF00",
+			WidgetBackground:        "#00FF00",
+			WidgetBorder:            "#00FF00",
+		},
+		Fonts: BrandingThemeFonts{
+			BodyText: BrandingThemeText{
+				Bold: true,
+				Size: 100,
+			},
+			ButtonsText: BrandingThemeText{
+				Bold: true,
+				Size: 100,
+			},
+			FontURL: "https://google.com/font.woff",
+			InputLabels: BrandingThemeText{
+				Bold: true,
+				Size: 100,
+			},
+			Links: BrandingThemeText{
+				Bold: true,
+				Size: 100,
+			},
+			LinksStyle:        "normal",
+			ReferenceTextSize: 12,
+			Subtitle: BrandingThemeText{
+				Bold: true,
+				Size: 100,
+			},
+			Title: BrandingThemeText{
+				Bold: true,
+				Size: 100,
+			},
+		},
+		PageBackground: BrandingThemePageBackground{
+			BackgroundColor:    "#000000",
+			BackgroundImageURL: "https://google.com/background.png",
+			PageLayout:         "center",
+		},
+		Widget: BrandingThemeWidget{
+			HeaderTextAlignment: "center",
+			LogoHeight:          55,
+			LogoPosition:        "center",
+			LogoURL:             "https://google.com/logo.png",
+			SocialButtonsLayout: "top",
+		},
+		Identifiers: &BrandingThemeIdentifiers{
+			LoginDisplay:    "unified",
+			OTPAutocomplete: true,
+			PhoneDisplay: BrandingThemePhoneDisplay{
+				Formatting: "international",
+				Masking:    "mask_digits",
+			},
+		},
+	}
+
+	err := api.BrandingTheme.Update(context.Background(), expectedTheme.GetID(), actualTheme)
+	assert.NoError(t, err)
+
+	updatedTheme, err := api.BrandingTheme.Read(context.Background(), expectedTheme.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, "unified", updatedTheme.GetIdentifiers().LoginDisplay)
+	assert.True(t, updatedTheme.GetIdentifiers().OTPAutocomplete)
+	assert.Equal(t, "international", updatedTheme.GetIdentifiers().PhoneDisplay.Formatting)
+	assert.Equal(t, "mask_digits", updatedTheme.GetIdentifiers().PhoneDisplay.Masking)
+}
+
 func cleanupBrandingTheme(t *testing.T, themeID string) {
 	t.Helper()
 

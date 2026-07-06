@@ -1399,6 +1399,14 @@ func (b *BrandingTheme) GetID() string {
 	return *b.ID
 }
 
+// GetIdentifiers returns the Identifiers field.
+func (b *BrandingTheme) GetIdentifiers() *BrandingThemeIdentifiers {
+	if b == nil {
+		return nil
+	}
+	return b.Identifiers
+}
+
 // String returns a string representation of BrandingTheme.
 func (b *BrandingTheme) String() string {
 	return Stringify(b)
@@ -1435,8 +1443,18 @@ func (b *BrandingThemeFonts) String() string {
 	return Stringify(b)
 }
 
+// String returns a string representation of BrandingThemeIdentifiers.
+func (b *BrandingThemeIdentifiers) String() string {
+	return Stringify(b)
+}
+
 // String returns a string representation of BrandingThemePageBackground.
 func (b *BrandingThemePageBackground) String() string {
+	return Stringify(b)
+}
+
+// String returns a string representation of BrandingThemePhoneDisplay.
+func (b *BrandingThemePhoneDisplay) String() string {
 	return Stringify(b)
 }
 
@@ -13796,6 +13814,14 @@ func (t *Tenant) GetClientIDMetadataDocumentSupported() bool {
 	return *t.ClientIDMetadataDocumentSupported
 }
 
+// GetCountryCodes returns the CountryCodes field.
+func (t *Tenant) GetCountryCodes() *TenantCountryCodes {
+	if t == nil {
+		return nil
+	}
+	return t.CountryCodes
+}
+
 // GetCustomizeMFAInPostLoginAction returns the CustomizeMFAInPostLoginAction field if it's non-nil, zero value otherwise.
 func (t *Tenant) GetCustomizeMFAInPostLoginAction() bool {
 	if t == nil || t.CustomizeMFAInPostLoginAction == nil {
@@ -14059,6 +14085,11 @@ func (t *TenantChangePassword) GetHTML() string {
 
 // String returns a string representation of TenantChangePassword.
 func (t *TenantChangePassword) String() string {
+	return Stringify(t)
+}
+
+// String returns a string representation of TenantCountryCodes.
+func (t *TenantCountryCodes) String() string {
 	return Stringify(t)
 }
 

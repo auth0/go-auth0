@@ -15,6 +15,7 @@ type BrandingTheme struct {
 	Fonts          BrandingThemeFonts          `json:"fonts"`
 	PageBackground BrandingThemePageBackground `json:"page_background"`
 	Widget         BrandingThemeWidget         `json:"widget"`
+	Identifiers    *BrandingThemeIdentifiers   `json:"identifiers,omitempty"`
 }
 
 // BrandingThemeBorders contains borders settings for the BrandingTheme.
@@ -88,6 +89,20 @@ type BrandingThemeWidget struct {
 	LogoPosition        string  `json:"logo_position"`
 	LogoURL             string  `json:"logo_url"`
 	SocialButtonsLayout string  `json:"social_buttons_layout"`
+}
+
+// BrandingThemeIdentifiers contains identifier input display settings for the BrandingTheme.
+type BrandingThemeIdentifiers struct {
+	LoginDisplay    string                    `json:"login_display"`
+	OTPAutocomplete bool                      `json:"otp_autocomplete"`
+	PhoneDisplay    BrandingThemePhoneDisplay `json:"phone_display"`
+}
+
+// BrandingThemePhoneDisplay contains phone number display settings
+// for the BrandingThemeIdentifiers.
+type BrandingThemePhoneDisplay struct {
+	Formatting string `json:"formatting"`
+	Masking    string `json:"masking"`
 }
 
 // BrandingThemeManager manages Auth0 BrandingTheme resources.
