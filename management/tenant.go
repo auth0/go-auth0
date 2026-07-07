@@ -170,6 +170,19 @@ type Tenant struct {
 	// "permissive" can only be configured by customers with pre-existing third-party client usage before April 2026.
 	// See https://auth0.com/docs/get-started/applications/third-party-applications/permissive-mode#who-can-use-permissive-mode for more details.
 	DynamicClientRegistrationSecurityMode *string `json:"dynamic_client_registration_security_mode,omitempty"`
+
+	// CountryCodes configures phone identifier country code filtering for the tenant.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/tenants/settings
+	// {
+	//   "country_codes": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	CountryCodes *TenantCountryCodes `json:"country_codes,omitempty"`
 }
 
 // TenantDefaultTokenQuota holds settings for the default token quota.
@@ -202,6 +215,15 @@ type TokenQuotaClientCredentials struct {
 type TenantMTLSConfiguration struct {
 	// If true, enables mTLS endpoint aliases
 	EnableEndpointAliases *bool `json:"enable_endpoint_aliases,omitempty"`
+}
+
+// TenantCountryCodes holds settings for phone identifier country code filtering.
+type TenantCountryCodes struct {
+	// List of ISO 3166-1 alpha-2 country codes.
+	List []string `json:"list"`
+
+	// Mode determines whether List is used as an allow-list or deny-list. Values: "allow" or "deny".
+	Mode string `json:"mode"`
 }
 
 // MarshalJSON is a custom serializer for the Tenant type.

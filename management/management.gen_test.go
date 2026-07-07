@@ -1774,6 +1774,13 @@ func TestBrandingTheme_GetID(tt *testing.T) {
 	b.GetID()
 }
 
+func TestBrandingTheme_GetIdentifiers(tt *testing.T) {
+	b := &BrandingTheme{}
+	b.GetIdentifiers()
+	b = nil
+	b.GetIdentifiers()
+}
+
 func TestBrandingTheme_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BrandingTheme{}
@@ -1826,9 +1833,25 @@ func TestBrandingThemeFonts_String(t *testing.T) {
 	}
 }
 
+func TestBrandingThemeIdentifiers_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingThemeIdentifiers{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBrandingThemePageBackground_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BrandingThemePageBackground{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestBrandingThemePhoneDisplay_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &BrandingThemePhoneDisplay{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -17321,6 +17344,13 @@ func TestTenant_GetClientIDMetadataDocumentSupported(tt *testing.T) {
 	t.GetClientIDMetadataDocumentSupported()
 }
 
+func TestTenant_GetCountryCodes(tt *testing.T) {
+	t := &Tenant{}
+	t.GetCountryCodes()
+	t = nil
+	t.GetCountryCodes()
+}
+
 func TestTenant_GetCustomizeMFAInPostLoginAction(tt *testing.T) {
 	var zeroValue bool
 	t := &Tenant{CustomizeMFAInPostLoginAction: &zeroValue}
@@ -17622,6 +17652,14 @@ func TestTenantChangePassword_GetHTML(tt *testing.T) {
 func TestTenantChangePassword_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantChangePassword{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTenantCountryCodes_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TenantCountryCodes{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

@@ -199,6 +199,63 @@ func TestTenantManager_NullableFields(t *testing.T) {
 	assert.Nil(t, actualTenantSettings.GetDefaultTokenQuota())
 }
 
+func TestTenantManager_CountryCodes(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	initialSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+
+	t.Cleanup(func() {
+		initialSettings.SandboxVersionAvailable = nil
+		initialSettings.UniversalLogin = nil
+		initialSettings.Flags = nil
+		err := api.Tenant.Update(context.Background(), initialSettings)
+		require.NoError(t, err)
+	})
+
+	newTenantSettings := &Tenant{
+		CountryCodes: &TenantCountryCodes{
+			List: []string{"US", "GB"},
+			Mode: "allow",
+		},
+	}
+	err = api.Tenant.Update(context.Background(), newTenantSettings)
+	assert.NoError(t, err)
+
+	actualTenantSettings, err := api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, "allow", actualTenantSettings.GetCountryCodes().Mode)
+	assert.ElementsMatch(t, []string{"US", "GB"}, actualTenantSettings.GetCountryCodes().List)
+
+	// Update to deny-list.
+	updatedTenantSettings := &Tenant{
+		CountryCodes: &TenantCountryCodes{
+			List: []string{"FR"},
+			Mode: "deny",
+		},
+	}
+	err = api.Tenant.Update(context.Background(), updatedTenantSettings)
+	assert.NoError(t, err)
+
+	actualTenantSettings, err = api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Equal(t, "deny", actualTenantSettings.GetCountryCodes().Mode)
+	assert.ElementsMatch(t, []string{"FR"}, actualTenantSettings.GetCountryCodes().List)
+
+	// Clear country_codes explicitly via nullable field mechanism.
+	type CustomTenant struct {
+		CountryCodes *TenantCountryCodes `json:"country_codes"`
+	}
+
+	nullableTenantSettings := &CustomTenant{CountryCodes: nil}
+	err = api.Request(context.Background(), http.MethodPatch, api.URI("tenants", "settings"), nullableTenantSettings)
+	assert.NoError(t, err)
+
+	actualTenantSettings, err = api.Tenant.Read(context.Background())
+	assert.NoError(t, err)
+	assert.Nil(t, actualTenantSettings.GetCountryCodes())
+}
+
 func TestTenantManager_CIMDAndResourceParameterProfile(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
