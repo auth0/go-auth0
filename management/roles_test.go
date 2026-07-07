@@ -468,7 +468,7 @@ func TestSettersMarkExplicitGetRoleResponseContent(t *testing.T) {
 func TestSettersListRolesOffsetPaginatedResponseContent(t *testing.T) {
 	t.Run("SetStart", func(t *testing.T) {
 		obj := &ListRolesOffsetPaginatedResponseContent{}
-		var fernTestValueStart *float64
+		var fernTestValueStart float64
 		obj.SetStart(fernTestValueStart)
 		assert.Equal(t, fernTestValueStart, obj.Start)
 		assert.NotNil(t, obj.explicitFields)
@@ -476,7 +476,7 @@ func TestSettersListRolesOffsetPaginatedResponseContent(t *testing.T) {
 
 	t.Run("SetLimit", func(t *testing.T) {
 		obj := &ListRolesOffsetPaginatedResponseContent{}
-		var fernTestValueLimit *float64
+		var fernTestValueLimit float64
 		obj.SetLimit(fernTestValueLimit)
 		assert.Equal(t, fernTestValueLimit, obj.Limit)
 		assert.NotNil(t, obj.explicitFields)
@@ -484,7 +484,7 @@ func TestSettersListRolesOffsetPaginatedResponseContent(t *testing.T) {
 
 	t.Run("SetTotal", func(t *testing.T) {
 		obj := &ListRolesOffsetPaginatedResponseContent{}
-		var fernTestValueTotal *float64
+		var fernTestValueTotal float64
 		obj.SetTotal(fernTestValueTotal)
 		assert.Equal(t, fernTestValueTotal, obj.Total)
 		assert.NotNil(t, obj.explicitFields)
@@ -505,22 +505,11 @@ func TestGettersListRolesOffsetPaginatedResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ListRolesOffsetPaginatedResponseContent{}
-		var value float64
-		obj.Start = &value
+		var expected float64
+		obj.Start = expected
 
 		// Act & Assert
-		assert.Equal(t, value, obj.GetStart(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetStart_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ListRolesOffsetPaginatedResponseContent{}
-		obj.Start = nil
-		var expectedZero float64
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetStart(), "getter should return zero value when property is nil")
+		assert.Equal(t, expected, obj.GetStart(), "getter should return the property value")
 	})
 
 	t.Run("GetStart_NilReceiver", func(t *testing.T) {
@@ -539,22 +528,11 @@ func TestGettersListRolesOffsetPaginatedResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ListRolesOffsetPaginatedResponseContent{}
-		var value float64
-		obj.Limit = &value
+		var expected float64
+		obj.Limit = expected
 
 		// Act & Assert
-		assert.Equal(t, value, obj.GetLimit(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetLimit_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ListRolesOffsetPaginatedResponseContent{}
-		obj.Limit = nil
-		var expectedZero float64
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetLimit(), "getter should return zero value when property is nil")
+		assert.Equal(t, expected, obj.GetLimit(), "getter should return the property value")
 	})
 
 	t.Run("GetLimit_NilReceiver", func(t *testing.T) {
@@ -573,22 +551,11 @@ func TestGettersListRolesOffsetPaginatedResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ListRolesOffsetPaginatedResponseContent{}
-		var value float64
-		obj.Total = &value
+		var expected float64
+		obj.Total = expected
 
 		// Act & Assert
-		assert.Equal(t, value, obj.GetTotal(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetTotal_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ListRolesOffsetPaginatedResponseContent{}
-		obj.Total = nil
-		var expectedZero float64
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetTotal(), "getter should return zero value when property is nil")
+		assert.Equal(t, expected, obj.GetTotal(), "getter should return the property value")
 	})
 
 	t.Run("GetTotal_NilReceiver", func(t *testing.T) {
@@ -643,7 +610,7 @@ func TestSettersMarkExplicitListRolesOffsetPaginatedResponseContent(t *testing.T
 		t.Parallel()
 		// Arrange
 		obj := &ListRolesOffsetPaginatedResponseContent{}
-		var fernTestValueStart *float64
+		var fernTestValueStart float64
 
 		// Act
 		obj.SetStart(fernTestValueStart)
@@ -674,7 +641,7 @@ func TestSettersMarkExplicitListRolesOffsetPaginatedResponseContent(t *testing.T
 		t.Parallel()
 		// Arrange
 		obj := &ListRolesOffsetPaginatedResponseContent{}
-		var fernTestValueLimit *float64
+		var fernTestValueLimit float64
 
 		// Act
 		obj.SetLimit(fernTestValueLimit)
@@ -705,7 +672,7 @@ func TestSettersMarkExplicitListRolesOffsetPaginatedResponseContent(t *testing.T
 		t.Parallel()
 		// Arrange
 		obj := &ListRolesOffsetPaginatedResponseContent{}
-		var fernTestValueTotal *float64
+		var fernTestValueTotal float64
 
 		// Act
 		obj.SetTotal(fernTestValueTotal)

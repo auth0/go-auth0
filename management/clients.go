@@ -9680,11 +9680,13 @@ func (c ClientTokenExchangeTypeEnum) Ptr() *ClientTokenExchangeTypeEnum {
 var (
 	clientTokenVaultPrivilegedAccessWithCredentialIDFieldCredentials = big.NewInt(1 << 0)
 	clientTokenVaultPrivilegedAccessWithCredentialIDFieldIPAllowlist = big.NewInt(1 << 1)
+	clientTokenVaultPrivilegedAccessWithCredentialIDFieldGrants      = big.NewInt(1 << 2)
 )
 
 type ClientTokenVaultPrivilegedAccessWithCredentialID struct {
 	Credentials []*CredentialID                              `json:"credentials" url:"credentials"`
 	IPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry `json:"ip_allowlist,omitempty" url:"ip_allowlist,omitempty"`
+	Grants      []*TokenVaultPrivilegedAccessGrant           `json:"grants,omitempty" url:"grants,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9705,6 +9707,13 @@ func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) GetIPAllowlist() []To
 		return nil
 	}
 	return c.IPAllowlist
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) GetGrants() []*TokenVaultPrivilegedAccessGrant {
+	if c == nil || c.Grants == nil {
+		return nil
+	}
+	return c.Grants
 }
 
 func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) GetExtraProperties() map[string]interface{} {
@@ -9733,6 +9742,13 @@ func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) SetCredentials(creden
 func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) SetIPAllowlist(ipAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry) {
 	c.IPAllowlist = ipAllowlist
 	c.require(clientTokenVaultPrivilegedAccessWithCredentialIDFieldIPAllowlist)
+}
+
+// SetGrants sets the Grants field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) SetGrants(grants []*TokenVaultPrivilegedAccessGrant) {
+	c.Grants = grants
+	c.require(clientTokenVaultPrivilegedAccessWithCredentialIDFieldGrants)
 }
 
 func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) UnmarshalJSON(data []byte) error {
@@ -9781,11 +9797,13 @@ func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) String() string {
 var (
 	clientTokenVaultPrivilegedAccessWithPublicKeyFieldCredentials = big.NewInt(1 << 0)
 	clientTokenVaultPrivilegedAccessWithPublicKeyFieldIPAllowlist = big.NewInt(1 << 1)
+	clientTokenVaultPrivilegedAccessWithPublicKeyFieldGrants      = big.NewInt(1 << 2)
 )
 
 type ClientTokenVaultPrivilegedAccessWithPublicKey struct {
 	Credentials []*PublicKeyCredential                       `json:"credentials" url:"credentials"`
 	IPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry `json:"ip_allowlist,omitempty" url:"ip_allowlist,omitempty"`
+	Grants      []*TokenVaultPrivilegedAccessGrant           `json:"grants,omitempty" url:"grants,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9806,6 +9824,13 @@ func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) GetIPAllowlist() []Token
 		return nil
 	}
 	return c.IPAllowlist
+}
+
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) GetGrants() []*TokenVaultPrivilegedAccessGrant {
+	if c == nil || c.Grants == nil {
+		return nil
+	}
+	return c.Grants
 }
 
 func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) GetExtraProperties() map[string]interface{} {
@@ -9834,6 +9859,13 @@ func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) SetCredentials(credentia
 func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) SetIPAllowlist(ipAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry) {
 	c.IPAllowlist = ipAllowlist
 	c.require(clientTokenVaultPrivilegedAccessWithPublicKeyFieldIPAllowlist)
+}
+
+// SetGrants sets the Grants field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) SetGrants(grants []*TokenVaultPrivilegedAccessGrant) {
+	c.Grants = grants
+	c.require(clientTokenVaultPrivilegedAccessWithPublicKeyFieldGrants)
 }
 
 func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) UnmarshalJSON(data []byte) error {
@@ -15675,6 +15707,106 @@ func (r *RotateClientSecretResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	tokenVaultPrivilegedAccessGrantFieldConnection = big.NewInt(1 << 0)
+	tokenVaultPrivilegedAccessGrantFieldScopes     = big.NewInt(1 << 1)
+)
+
+type TokenVaultPrivilegedAccessGrant struct {
+	Connection string   `json:"connection" url:"connection"`
+	Scopes     []string `json:"scopes" url:"scopes"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TokenVaultPrivilegedAccessGrant) GetConnection() string {
+	if t == nil {
+		return ""
+	}
+	return t.Connection
+}
+
+func (t *TokenVaultPrivilegedAccessGrant) GetScopes() []string {
+	if t == nil {
+		return nil
+	}
+	return t.Scopes
+}
+
+func (t *TokenVaultPrivilegedAccessGrant) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TokenVaultPrivilegedAccessGrant) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenVaultPrivilegedAccessGrant) SetConnection(connection string) {
+	t.Connection = connection
+	t.require(tokenVaultPrivilegedAccessGrantFieldConnection)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenVaultPrivilegedAccessGrant) SetScopes(scopes []string) {
+	t.Scopes = scopes
+	t.require(tokenVaultPrivilegedAccessGrantFieldScopes)
+}
+
+func (t *TokenVaultPrivilegedAccessGrant) UnmarshalJSON(data []byte) error {
+	type unmarshaler TokenVaultPrivilegedAccessGrant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TokenVaultPrivilegedAccessGrant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TokenVaultPrivilegedAccessGrant) MarshalJSON() ([]byte, error) {
+	type embed TokenVaultPrivilegedAccessGrant
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TokenVaultPrivilegedAccessGrant) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type TokenVaultPrivilegedAccessIPAllowlistEntry = string

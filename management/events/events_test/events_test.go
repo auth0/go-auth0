@@ -96,7 +96,7 @@ func TestEventsSubscribeWithWireMock(
 			"from_timestamp",
 		),
 		EventType: []*management.EventStreamSubscribeEventsEventTypeEnum{
-			management.EventStreamSubscribeEventsEventTypeEnumGroupCreated.Ptr(),
+			management.EventStreamSubscribeEventsEventTypeEnumConnectionCreated.Ptr(),
 		},
 	}
 	_, invocationErr := client.Events.Subscribe(
@@ -108,5 +108,5 @@ func TestEventsSubscribeWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEventsSubscribeWithWireMock", "GET", "/events", map[string]interface{}{"from": "from", "from_timestamp": "from_timestamp", "event_type": "group.created"}, 1)
+	VerifyRequestCount(t, "TestEventsSubscribeWithWireMock", "GET", "/events", map[string]interface{}{"from": "from", "from_timestamp": "from_timestamp", "event_type": "connection.created"}, 1)
 }

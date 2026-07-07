@@ -5639,7 +5639,7 @@ client.EventStreams.Update(
 
 ```go
 request := &management.CreateEventStreamTestEventRequestContent{
-        EventType: management.EventStreamTestEventTypeEnumGroupCreated,
+        EventType: management.EventStreamTestEventTypeEnumConnectionCreated,
     }
 client.EventStreams.Test(
         context.TODO(),
@@ -5725,7 +5725,7 @@ request := &management.SubscribeEventsRequestParameters{
             "from_timestamp",
         ),
         EventType: []*management.EventStreamSubscribeEventsEventTypeEnum{
-            management.EventStreamSubscribeEventsEventTypeEnumGroupCreated.Ptr(),
+            management.EventStreamSubscribeEventsEventTypeEnumConnectionCreated.Ptr(),
         },
     }
 client.Events.Subscribe(
@@ -9192,6 +9192,14 @@ client.Organizations.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**thirdPartyClientAccess:** `*management.OrganizationThirdPartyClientAccessEnum` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -9465,6 +9473,14 @@ client.Organizations.Update(
 <dd>
 
 **tokenQuota:** `*management.UpdateTokenQuota` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thirdPartyClientAccess:** `*management.OrganizationThirdPartyClientAccessEnum` 
     
 </dd>
 </dl>
@@ -28935,6 +28951,121 @@ client.Organizations.Members.EffectiveRoles.Sources.Groups.List(
 <dd>
 
 **roleID:** `string` — The role ID to get group sources for.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organizations Roles Members
+<details><summary><code>client.Organizations.Roles.Members.List(ID, RoleID) -> *management.ListOrganizationRoleMembersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the organization members assigned a specific role within the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationRoleMembersRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.Roles.Members.List(
+        context.TODO(),
+        "id",
+        "role_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleID:** `string` — ID of the role to retrieve the assigned members for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50. Values above the maximum permitted size are capped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
     
 </dd>
 </dl>
