@@ -1420,16 +1420,24 @@ type ConnectionOptionsOAuth2 struct {
 
 // UnmarshalJSON implements the json.Unmarshaler interface for ConnectionOptionsOAuth2.
 // It is required to handle differences in the scope field, which can
-// be an array of strings or a single string.
+// be an array of strings or a single string, and to handle the customHeaders
+// field, which legacy Auth0 tenants may return as a JSON-encoded string instead
+// of a map[string]string object.
 func (c *ConnectionOptionsOAuth2) UnmarshalJSON(data []byte) error {
 	type connectionOptionsOAuth2 ConnectionOptionsOAuth2
 
+	// RawCustomHeaders shadows the embedded CustomHeaders *map[string]string field
+	// so that encoding/json places the raw value here (as interface{}) rather than
+	// attempting to decode it directly into *map[string]string. This prevents a
+	// "cannot unmarshal string into Go struct field ... of type map[string]string"
+	// error for connections whose customHeaders were stored in a legacy format.
 	type connectionOptionsOAuth2Wrapper struct {
 		*connectionOptionsOAuth2
-		RawScope interface{} `json:"scope,omitempty"`
+		RawScope         interface{} `json:"scope,omitempty"`
+		RawCustomHeaders interface{} `json:"customHeaders,omitempty"`
 	}
 
-	alias := &connectionOptionsOAuth2Wrapper{(*connectionOptionsOAuth2)(c), nil}
+	alias := &connectionOptionsOAuth2Wrapper{(*connectionOptionsOAuth2)(c), nil, nil}
 
 	err := json.Unmarshal(data, alias)
 	if err != nil {
@@ -1449,6 +1457,29 @@ func (c *ConnectionOptionsOAuth2) UnmarshalJSON(data []byte) error {
 			c.Scope = auth0.String(rawScope)
 		default:
 			return fmt.Errorf("unexpected type for field scope: %T", alias.RawScope)
+		}
+	}
+
+	// Normalise customHeaders: accept both the current map[string]interface{} form
+	// and the legacy string form (a JSON-encoded value from an older schema version).
+	// In the legacy string case we discard the value — it cannot be reliably decoded
+	// without knowing the original structure — so custom_headers will appear empty
+	// and can be set manually in the Terraform config.
+	if alias.RawCustomHeaders != nil {
+		switch v := alias.RawCustomHeaders.(type) {
+		case map[string]interface{}:
+			headers := make(map[string]string, len(v))
+			for key, val := range v {
+				if s, ok := val.(string); ok {
+					headers[key] = s
+				}
+			}
+			if len(headers) > 0 {
+				c.CustomHeaders = &headers
+			}
+		case string:
+			// Legacy format: discard. The provider will surface custom_headers as
+			// empty; the operator can restore the values in their Terraform config.
 		}
 	}
 

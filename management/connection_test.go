@@ -1630,12 +1630,32 @@ func TestOAuth2Connection_UnmarshalJSON(t *testing.T) {
 		`{"scope":null}`:                {Scope: nil},
 		`{}`:                            {},
 		`{"scope":[]}`:                  {Scope: auth0.String("")},
+		`{"customHeaders":{"X-Foo":"bar","X-Baz":"qux"}}`: {
+			CustomHeaders: &map[string]string{"X-Foo": "bar", "X-Baz": "qux"},
+		},
 	} {
 		var actual *ConnectionOptionsOAuth2
 		err := json.Unmarshal([]byte(expectedAsString), &actual)
 		assert.NoError(t, err)
 		assert.Equal(t, expected, actual)
 	}
+
+	t.Run("It handles a legacy string-encoded customHeaders value without error", func(t *testing.T) {
+		// Some older Auth0 tenants stored customHeaders as a JSON-encoded string
+		// rather than a map. The unmarshaler must not return an error in this case;
+		// instead it discards the value so the caller can restore it via config.
+		var actual *ConnectionOptionsOAuth2
+		err := json.Unmarshal([]byte(`{"customHeaders":"{\"X-Foo\":\"bar\"}"}`), &actual)
+		assert.NoError(t, err)
+		assert.Nil(t, actual.CustomHeaders)
+	})
+
+	t.Run("It handles a null customHeaders value without error", func(t *testing.T) {
+		var actual *ConnectionOptionsOAuth2
+		err := json.Unmarshal([]byte(`{"customHeaders":null}`), &actual)
+		assert.NoError(t, err)
+		assert.Nil(t, actual.CustomHeaders)
+	})
 }
 
 func TestGoogleOauth2Connection_MarshalJSON(t *testing.T) {
