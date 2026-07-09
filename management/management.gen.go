@@ -10701,6 +10701,14 @@ func (o *Organization) GetName() string {
 	return *o.Name
 }
 
+// GetThirdPartyClientAccess returns the ThirdPartyClientAccess field if it's non-nil, zero value otherwise.
+func (o *Organization) GetThirdPartyClientAccess() string {
+	if o == nil || o.ThirdPartyClientAccess == nil {
+		return ""
+	}
+	return *o.ThirdPartyClientAccess
+}
+
 // GetTokenQuota returns the TokenQuota field.
 func (o *Organization) GetTokenQuota() *TokenQuota {
 	if o == nil {
