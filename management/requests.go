@@ -2292,12 +2292,13 @@ func (c *CreateBrandingThemeRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createOrganizationRequestContentFieldName               = big.NewInt(1 << 0)
-	createOrganizationRequestContentFieldDisplayName        = big.NewInt(1 << 1)
-	createOrganizationRequestContentFieldBranding           = big.NewInt(1 << 2)
-	createOrganizationRequestContentFieldMetadata           = big.NewInt(1 << 3)
-	createOrganizationRequestContentFieldEnabledConnections = big.NewInt(1 << 4)
-	createOrganizationRequestContentFieldTokenQuota         = big.NewInt(1 << 5)
+	createOrganizationRequestContentFieldName                   = big.NewInt(1 << 0)
+	createOrganizationRequestContentFieldDisplayName            = big.NewInt(1 << 1)
+	createOrganizationRequestContentFieldBranding               = big.NewInt(1 << 2)
+	createOrganizationRequestContentFieldMetadata               = big.NewInt(1 << 3)
+	createOrganizationRequestContentFieldEnabledConnections     = big.NewInt(1 << 4)
+	createOrganizationRequestContentFieldTokenQuota             = big.NewInt(1 << 5)
+	createOrganizationRequestContentFieldThirdPartyClientAccess = big.NewInt(1 << 6)
 )
 
 type CreateOrganizationRequestContent struct {
@@ -2308,8 +2309,9 @@ type CreateOrganizationRequestContent struct {
 	Branding    *OrganizationBranding `json:"branding,omitempty" url:"-"`
 	Metadata    *OrganizationMetadata `json:"metadata,omitempty" url:"-"`
 	// Connections that will be enabled for this organization. See POST enabled_connections endpoint for the object format. (Max of 10 connections allowed)
-	EnabledConnections []*ConnectionForOrganization `json:"enabled_connections,omitempty" url:"-"`
-	TokenQuota         *CreateTokenQuota            `json:"token_quota,omitempty" url:"-"`
+	EnabledConnections     []*ConnectionForOrganization            `json:"enabled_connections,omitempty" url:"-"`
+	TokenQuota             *CreateTokenQuota                       `json:"token_quota,omitempty" url:"-"`
+	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2362,6 +2364,13 @@ func (c *CreateOrganizationRequestContent) SetEnabledConnections(enabledConnecti
 func (c *CreateOrganizationRequestContent) SetTokenQuota(tokenQuota *CreateTokenQuota) {
 	c.TokenQuota = tokenQuota
 	c.require(createOrganizationRequestContentFieldTokenQuota)
+}
+
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationRequestContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
+	c.ThirdPartyClientAccess = thirdPartyClientAccess
+	c.require(createOrganizationRequestContentFieldThirdPartyClientAccess)
 }
 
 func (c *CreateOrganizationRequestContent) UnmarshalJSON(data []byte) error {
@@ -8113,49 +8122,79 @@ func (l *ListEventStreamsRequestParameters) SetTake(take *int) {
 }
 
 var (
-	listOrganizationMemberRolesRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listOrganizationMemberRolesRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listOrganizationMemberRolesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+	listConnectionsQueryParametersFieldFrom          = big.NewInt(1 << 0)
+	listConnectionsQueryParametersFieldTake          = big.NewInt(1 << 1)
+	listConnectionsQueryParametersFieldStrategy      = big.NewInt(1 << 2)
+	listConnectionsQueryParametersFieldName          = big.NewInt(1 << 3)
+	listConnectionsQueryParametersFieldFields        = big.NewInt(1 << 4)
+	listConnectionsQueryParametersFieldIncludeFields = big.NewInt(1 << 5)
 )
 
-type ListOrganizationMemberRolesRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
+type ListConnectionsQueryParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
 	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	Take *int `json:"-" url:"take,omitempty"`
+	// Provide strategies to only retrieve connections with such strategies
+	Strategy []*ConnectionStrategyEnum `json:"-" url:"strategy,omitempty"`
+	// Provide the name of the connection to retrieve
+	Name *string `json:"-" url:"name,omitempty"`
+	// A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// <code>true</code> if the fields specified are to be included in the result, <code>false</code> otherwise (defaults to <code>true</code>)
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListOrganizationMemberRolesRequestParameters) require(field *big.Int) {
+func (l *ListConnectionsQueryParameters) require(field *big.Int) {
 	if l.explicitFields == nil {
 		l.explicitFields = big.NewInt(0)
 	}
 	l.explicitFields.Or(l.explicitFields, field)
 }
 
-// SetPage sets the Page field and marks it as non-optional;
+// SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationMemberRolesRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listOrganizationMemberRolesRequestParametersFieldPage)
+func (l *ListConnectionsQueryParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listConnectionsQueryParametersFieldFrom)
 }
 
-// SetPerPage sets the PerPage field and marks it as non-optional;
+// SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationMemberRolesRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listOrganizationMemberRolesRequestParametersFieldPerPage)
+func (l *ListConnectionsQueryParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listConnectionsQueryParametersFieldTake)
 }
 
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// SetStrategy sets the Strategy field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationMemberRolesRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listOrganizationMemberRolesRequestParametersFieldIncludeTotals)
+func (l *ListConnectionsQueryParameters) SetStrategy(strategy []*ConnectionStrategyEnum) {
+	l.Strategy = strategy
+	l.require(listConnectionsQueryParametersFieldStrategy)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetName(name *string) {
+	l.Name = name
+	l.require(listConnectionsQueryParametersFieldName)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listConnectionsQueryParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetIncludeFields(includeFields *bool) {
+	l.IncludeFields = includeFields
+	l.require(listConnectionsQueryParametersFieldIncludeFields)
 }
 
 var (
@@ -9707,6 +9746,52 @@ func (l *ListAculsRequestParameters) SetRenderingMode(renderingMode *AculRenderi
 }
 
 var (
+	listOrganizationMemberRolesRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listOrganizationMemberRolesRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listOrganizationMemberRolesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+)
+
+type ListOrganizationMemberRolesRequestParameters struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page. Defaults to 50.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListOrganizationMemberRolesRequestParameters) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberRolesRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listOrganizationMemberRolesRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberRolesRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listOrganizationMemberRolesRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberRolesRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listOrganizationMemberRolesRequestParametersFieldIncludeTotals)
+}
+
+var (
 	listOrganizationMemberRoleSourceGroupsRequestParametersFieldFrom   = big.NewInt(1 << 0)
 	listOrganizationMemberRoleSourceGroupsRequestParametersFieldTake   = big.NewInt(1 << 1)
 	listOrganizationMemberRoleSourceGroupsRequestParametersFieldRoleID = big.NewInt(1 << 2)
@@ -9786,82 +9871,6 @@ func (l *ListOrganizationMemberEffectiveRolesRequestParameters) SetFrom(from *st
 func (l *ListOrganizationMemberEffectiveRolesRequestParameters) SetTake(take *int) {
 	l.Take = take
 	l.require(listOrganizationMemberEffectiveRolesRequestParametersFieldTake)
-}
-
-var (
-	listConnectionsQueryParametersFieldFrom          = big.NewInt(1 << 0)
-	listConnectionsQueryParametersFieldTake          = big.NewInt(1 << 1)
-	listConnectionsQueryParametersFieldStrategy      = big.NewInt(1 << 2)
-	listConnectionsQueryParametersFieldName          = big.NewInt(1 << 3)
-	listConnectionsQueryParametersFieldFields        = big.NewInt(1 << 4)
-	listConnectionsQueryParametersFieldIncludeFields = big.NewInt(1 << 5)
-)
-
-type ListConnectionsQueryParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-	// Provide strategies to only retrieve connections with such strategies
-	Strategy []*ConnectionStrategyEnum `json:"-" url:"strategy,omitempty"`
-	// Provide the name of the connection to retrieve
-	Name *string `json:"-" url:"name,omitempty"`
-	// A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// <code>true</code> if the fields specified are to be included in the result, <code>false</code> otherwise (defaults to <code>true</code>)
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListConnectionsQueryParameters) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
-	}
-	l.explicitFields.Or(l.explicitFields, field)
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listConnectionsQueryParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listConnectionsQueryParametersFieldTake)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetStrategy(strategy []*ConnectionStrategyEnum) {
-	l.Strategy = strategy
-	l.require(listConnectionsQueryParametersFieldStrategy)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetName(name *string) {
-	l.Name = name
-	l.require(listConnectionsQueryParametersFieldName)
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetFields(fields *string) {
-	l.Fields = fields
-	l.require(listConnectionsQueryParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetIncludeFields(includeFields *bool) {
-	l.IncludeFields = includeFields
-	l.require(listConnectionsQueryParametersFieldIncludeFields)
 }
 
 var (
@@ -9954,6 +9963,62 @@ func (l *ListDirectoryProvisioningsRequestParameters) SetFrom(from *string) {
 func (l *ListDirectoryProvisioningsRequestParameters) SetTake(take *int) {
 	l.Take = take
 	l.require(listDirectoryProvisioningsRequestParametersFieldTake)
+}
+
+var (
+	listOrganizationRoleMembersRequestParametersFieldFrom          = big.NewInt(1 << 0)
+	listOrganizationRoleMembersRequestParametersFieldTake          = big.NewInt(1 << 1)
+	listOrganizationRoleMembersRequestParametersFieldFields        = big.NewInt(1 << 2)
+	listOrganizationRoleMembersRequestParametersFieldIncludeFields = big.NewInt(1 << 3)
+)
+
+type ListOrganizationRoleMembersRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50. Values above the maximum permitted size are capped.
+	Take *int `json:"-" url:"take,omitempty"`
+	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Whether specified fields are to be included (true) or excluded (false). Defaults to true.
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListOrganizationRoleMembersRequestParameters) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleMembersRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listOrganizationRoleMembersRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleMembersRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listOrganizationRoleMembersRequestParametersFieldTake)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleMembersRequestParameters) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listOrganizationRoleMembersRequestParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleMembersRequestParameters) SetIncludeFields(includeFields *bool) {
+	l.IncludeFields = includeFields
+	l.require(listOrganizationRoleMembersRequestParametersFieldIncludeFields)
 }
 
 var (
@@ -13225,128 +13290,87 @@ func (u *UpdateBrandingRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateConnectionRequestContentFieldDisplayName                 = big.NewInt(1 << 0)
-	updateConnectionRequestContentFieldOptions                     = big.NewInt(1 << 1)
-	updateConnectionRequestContentFieldEnabledClients              = big.NewInt(1 << 2)
-	updateConnectionRequestContentFieldIsDomainConnection          = big.NewInt(1 << 3)
-	updateConnectionRequestContentFieldShowAsButton                = big.NewInt(1 << 4)
-	updateConnectionRequestContentFieldRealms                      = big.NewInt(1 << 5)
-	updateConnectionRequestContentFieldMetadata                    = big.NewInt(1 << 6)
-	updateConnectionRequestContentFieldAuthentication              = big.NewInt(1 << 7)
-	updateConnectionRequestContentFieldConnectedAccounts           = big.NewInt(1 << 8)
-	updateConnectionRequestContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 9)
+	updateConnectionProfileRequestContentFieldName                         = big.NewInt(1 << 0)
+	updateConnectionProfileRequestContentFieldOrganization                 = big.NewInt(1 << 1)
+	updateConnectionProfileRequestContentFieldConnectionNamePrefixTemplate = big.NewInt(1 << 2)
+	updateConnectionProfileRequestContentFieldEnabledFeatures              = big.NewInt(1 << 3)
+	updateConnectionProfileRequestContentFieldConnectionConfig             = big.NewInt(1 << 4)
+	updateConnectionProfileRequestContentFieldStrategyOverrides            = big.NewInt(1 << 5)
 )
 
-type UpdateConnectionRequestContent struct {
-	// The connection name used in the new universal login experience. If display_name is not included in the request, the field will be overwritten with the name value.
-	DisplayName *string                  `json:"display_name,omitempty" url:"-"`
-	Options     *UpdateConnectionOptions `json:"options,omitempty" url:"-"`
-	// DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable or disable the connection for any clients.
-	EnabledClients []string `json:"enabled_clients,omitempty" url:"-"`
-	// <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
-	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"-"`
-	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
-	ShowAsButton *bool `json:"show_as_button,omitempty" url:"-"`
-	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-	Realms                      []string                            `json:"realms,omitempty" url:"-"`
-	Metadata                    *ConnectionsMetadata                `json:"metadata,omitempty" url:"-"`
-	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"-"`
-	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"-"`
-	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"-"`
+type UpdateConnectionProfileRequestContent struct {
+	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"-"`
+	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"-"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"-"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"-"`
+	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"-"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateConnectionRequestContent) require(field *big.Int) {
+func (u *UpdateConnectionProfileRequestContent) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetDisplayName(displayName *string) {
-	u.DisplayName = displayName
-	u.require(updateConnectionRequestContentFieldDisplayName)
+func (u *UpdateConnectionProfileRequestContent) SetName(name *ConnectionProfileName) {
+	u.Name = name
+	u.require(updateConnectionProfileRequestContentFieldName)
 }
 
-// SetOptions sets the Options field and marks it as non-optional;
+// SetOrganization sets the Organization field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetOptions(options *UpdateConnectionOptions) {
-	u.Options = options
-	u.require(updateConnectionRequestContentFieldOptions)
+func (u *UpdateConnectionProfileRequestContent) SetOrganization(organization *ConnectionProfileOrganization) {
+	u.Organization = organization
+	u.require(updateConnectionProfileRequestContentFieldOrganization)
 }
 
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// SetConnectionNamePrefixTemplate sets the ConnectionNamePrefixTemplate field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetEnabledClients(enabledClients []string) {
-	u.EnabledClients = enabledClients
-	u.require(updateConnectionRequestContentFieldEnabledClients)
+func (u *UpdateConnectionProfileRequestContent) SetConnectionNamePrefixTemplate(connectionNamePrefixTemplate *ConnectionNamePrefixTemplate) {
+	u.ConnectionNamePrefixTemplate = connectionNamePrefixTemplate
+	u.require(updateConnectionProfileRequestContentFieldConnectionNamePrefixTemplate)
 }
 
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// SetEnabledFeatures sets the EnabledFeatures field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetIsDomainConnection(isDomainConnection *bool) {
-	u.IsDomainConnection = isDomainConnection
-	u.require(updateConnectionRequestContentFieldIsDomainConnection)
+func (u *UpdateConnectionProfileRequestContent) SetEnabledFeatures(enabledFeatures *ConnectionProfileEnabledFeatures) {
+	u.EnabledFeatures = enabledFeatures
+	u.require(updateConnectionProfileRequestContentFieldEnabledFeatures)
 }
 
-// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// SetConnectionConfig sets the ConnectionConfig field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetShowAsButton(showAsButton *bool) {
-	u.ShowAsButton = showAsButton
-	u.require(updateConnectionRequestContentFieldShowAsButton)
+func (u *UpdateConnectionProfileRequestContent) SetConnectionConfig(connectionConfig *ConnectionProfileConfig) {
+	u.ConnectionConfig = connectionConfig
+	u.require(updateConnectionProfileRequestContentFieldConnectionConfig)
 }
 
-// SetRealms sets the Realms field and marks it as non-optional;
+// SetStrategyOverrides sets the StrategyOverrides field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetRealms(realms []string) {
-	u.Realms = realms
-	u.require(updateConnectionRequestContentFieldRealms)
+func (u *UpdateConnectionProfileRequestContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
+	u.StrategyOverrides = strategyOverrides
+	u.require(updateConnectionProfileRequestContentFieldStrategyOverrides)
 }
 
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetMetadata(metadata *ConnectionsMetadata) {
-	u.Metadata = metadata
-	u.require(updateConnectionRequestContentFieldMetadata)
-}
-
-// SetAuthentication sets the Authentication field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
-	u.Authentication = authentication
-	u.require(updateConnectionRequestContentFieldAuthentication)
-}
-
-// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
-	u.ConnectedAccounts = connectedAccounts
-	u.require(updateConnectionRequestContentFieldConnectedAccounts)
-}
-
-// SetCrossAppAccessRequestingApp sets the CrossAppAccessRequestingApp field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionRequestContent) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
-	u.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
-	u.require(updateConnectionRequestContentFieldCrossAppAccessRequestingApp)
-}
-
-func (u *UpdateConnectionRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateConnectionRequestContent
+func (u *UpdateConnectionProfileRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateConnectionProfileRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateConnectionRequestContent(body)
+	*u = UpdateConnectionProfileRequestContent(body)
 	return nil
 }
 
-func (u *UpdateConnectionRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateConnectionRequestContent
+func (u *UpdateConnectionProfileRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateConnectionProfileRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -14155,21 +14179,23 @@ func (u *UpdateBruteForceSettingsRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateOrganizationRequestContentFieldDisplayName = big.NewInt(1 << 0)
-	updateOrganizationRequestContentFieldName        = big.NewInt(1 << 1)
-	updateOrganizationRequestContentFieldBranding    = big.NewInt(1 << 2)
-	updateOrganizationRequestContentFieldMetadata    = big.NewInt(1 << 3)
-	updateOrganizationRequestContentFieldTokenQuota  = big.NewInt(1 << 4)
+	updateOrganizationRequestContentFieldDisplayName            = big.NewInt(1 << 0)
+	updateOrganizationRequestContentFieldName                   = big.NewInt(1 << 1)
+	updateOrganizationRequestContentFieldBranding               = big.NewInt(1 << 2)
+	updateOrganizationRequestContentFieldMetadata               = big.NewInt(1 << 3)
+	updateOrganizationRequestContentFieldTokenQuota             = big.NewInt(1 << 4)
+	updateOrganizationRequestContentFieldThirdPartyClientAccess = big.NewInt(1 << 5)
 )
 
 type UpdateOrganizationRequestContent struct {
 	// Friendly name of this organization.
 	DisplayName *string `json:"display_name,omitempty" url:"-"`
 	// The name of this organization.
-	Name       *string               `json:"name,omitempty" url:"-"`
-	Branding   *OrganizationBranding `json:"branding,omitempty" url:"-"`
-	Metadata   *OrganizationMetadata `json:"metadata,omitempty" url:"-"`
-	TokenQuota *UpdateTokenQuota     `json:"token_quota,omitempty" url:"-"`
+	Name                   *string                                 `json:"name,omitempty" url:"-"`
+	Branding               *OrganizationBranding                   `json:"branding,omitempty" url:"-"`
+	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"-"`
+	TokenQuota             *UpdateTokenQuota                       `json:"token_quota,omitempty" url:"-"`
+	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -14215,6 +14241,13 @@ func (u *UpdateOrganizationRequestContent) SetMetadata(metadata *OrganizationMet
 func (u *UpdateOrganizationRequestContent) SetTokenQuota(tokenQuota *UpdateTokenQuota) {
 	u.TokenQuota = tokenQuota
 	u.require(updateOrganizationRequestContentFieldTokenQuota)
+}
+
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationRequestContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
+	u.ThirdPartyClientAccess = thirdPartyClientAccess
+	u.require(updateOrganizationRequestContentFieldThirdPartyClientAccess)
 }
 
 func (u *UpdateOrganizationRequestContent) UnmarshalJSON(data []byte) error {
@@ -15467,87 +15500,128 @@ func (u *UpdateResourceServerRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateConnectionProfileRequestContentFieldName                         = big.NewInt(1 << 0)
-	updateConnectionProfileRequestContentFieldOrganization                 = big.NewInt(1 << 1)
-	updateConnectionProfileRequestContentFieldConnectionNamePrefixTemplate = big.NewInt(1 << 2)
-	updateConnectionProfileRequestContentFieldEnabledFeatures              = big.NewInt(1 << 3)
-	updateConnectionProfileRequestContentFieldConnectionConfig             = big.NewInt(1 << 4)
-	updateConnectionProfileRequestContentFieldStrategyOverrides            = big.NewInt(1 << 5)
+	updateConnectionRequestContentFieldDisplayName                 = big.NewInt(1 << 0)
+	updateConnectionRequestContentFieldOptions                     = big.NewInt(1 << 1)
+	updateConnectionRequestContentFieldEnabledClients              = big.NewInt(1 << 2)
+	updateConnectionRequestContentFieldIsDomainConnection          = big.NewInt(1 << 3)
+	updateConnectionRequestContentFieldShowAsButton                = big.NewInt(1 << 4)
+	updateConnectionRequestContentFieldRealms                      = big.NewInt(1 << 5)
+	updateConnectionRequestContentFieldMetadata                    = big.NewInt(1 << 6)
+	updateConnectionRequestContentFieldAuthentication              = big.NewInt(1 << 7)
+	updateConnectionRequestContentFieldConnectedAccounts           = big.NewInt(1 << 8)
+	updateConnectionRequestContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 9)
 )
 
-type UpdateConnectionProfileRequestContent struct {
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"-"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"-"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"-"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"-"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"-"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"-"`
+type UpdateConnectionRequestContent struct {
+	// The connection name used in the new universal login experience. If display_name is not included in the request, the field will be overwritten with the name value.
+	DisplayName *string                  `json:"display_name,omitempty" url:"-"`
+	Options     *UpdateConnectionOptions `json:"options,omitempty" url:"-"`
+	// DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable or disable the connection for any clients.
+	EnabledClients []string `json:"enabled_clients,omitempty" url:"-"`
+	// <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
+	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"-"`
+	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"-"`
+	// Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
+	Realms                      []string                            `json:"realms,omitempty" url:"-"`
+	Metadata                    *ConnectionsMetadata                `json:"metadata,omitempty" url:"-"`
+	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"-"`
+	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"-"`
+	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateConnectionProfileRequestContent) require(field *big.Int) {
+func (u *UpdateConnectionRequestContent) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetName sets the Name field and marks it as non-optional;
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionProfileRequestContent) SetName(name *ConnectionProfileName) {
-	u.Name = name
-	u.require(updateConnectionProfileRequestContentFieldName)
+func (u *UpdateConnectionRequestContent) SetDisplayName(displayName *string) {
+	u.DisplayName = displayName
+	u.require(updateConnectionRequestContentFieldDisplayName)
 }
 
-// SetOrganization sets the Organization field and marks it as non-optional;
+// SetOptions sets the Options field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionProfileRequestContent) SetOrganization(organization *ConnectionProfileOrganization) {
-	u.Organization = organization
-	u.require(updateConnectionProfileRequestContentFieldOrganization)
+func (u *UpdateConnectionRequestContent) SetOptions(options *UpdateConnectionOptions) {
+	u.Options = options
+	u.require(updateConnectionRequestContentFieldOptions)
 }
 
-// SetConnectionNamePrefixTemplate sets the ConnectionNamePrefixTemplate field and marks it as non-optional;
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionProfileRequestContent) SetConnectionNamePrefixTemplate(connectionNamePrefixTemplate *ConnectionNamePrefixTemplate) {
-	u.ConnectionNamePrefixTemplate = connectionNamePrefixTemplate
-	u.require(updateConnectionProfileRequestContentFieldConnectionNamePrefixTemplate)
+func (u *UpdateConnectionRequestContent) SetEnabledClients(enabledClients []string) {
+	u.EnabledClients = enabledClients
+	u.require(updateConnectionRequestContentFieldEnabledClients)
 }
 
-// SetEnabledFeatures sets the EnabledFeatures field and marks it as non-optional;
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionProfileRequestContent) SetEnabledFeatures(enabledFeatures *ConnectionProfileEnabledFeatures) {
-	u.EnabledFeatures = enabledFeatures
-	u.require(updateConnectionProfileRequestContentFieldEnabledFeatures)
+func (u *UpdateConnectionRequestContent) SetIsDomainConnection(isDomainConnection *bool) {
+	u.IsDomainConnection = isDomainConnection
+	u.require(updateConnectionRequestContentFieldIsDomainConnection)
 }
 
-// SetConnectionConfig sets the ConnectionConfig field and marks it as non-optional;
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionProfileRequestContent) SetConnectionConfig(connectionConfig *ConnectionProfileConfig) {
-	u.ConnectionConfig = connectionConfig
-	u.require(updateConnectionProfileRequestContentFieldConnectionConfig)
+func (u *UpdateConnectionRequestContent) SetShowAsButton(showAsButton *bool) {
+	u.ShowAsButton = showAsButton
+	u.require(updateConnectionRequestContentFieldShowAsButton)
 }
 
-// SetStrategyOverrides sets the StrategyOverrides field and marks it as non-optional;
+// SetRealms sets the Realms field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionProfileRequestContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
-	u.StrategyOverrides = strategyOverrides
-	u.require(updateConnectionProfileRequestContentFieldStrategyOverrides)
+func (u *UpdateConnectionRequestContent) SetRealms(realms []string) {
+	u.Realms = realms
+	u.require(updateConnectionRequestContentFieldRealms)
 }
 
-func (u *UpdateConnectionProfileRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateConnectionProfileRequestContent
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionRequestContent) SetMetadata(metadata *ConnectionsMetadata) {
+	u.Metadata = metadata
+	u.require(updateConnectionRequestContentFieldMetadata)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionRequestContent) SetAuthentication(authentication *ConnectionAuthenticationPurpose) {
+	u.Authentication = authentication
+	u.require(updateConnectionRequestContentFieldAuthentication)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionRequestContent) SetConnectedAccounts(connectedAccounts *ConnectionConnectedAccountsPurpose) {
+	u.ConnectedAccounts = connectedAccounts
+	u.require(updateConnectionRequestContentFieldConnectedAccounts)
+}
+
+// SetCrossAppAccessRequestingApp sets the CrossAppAccessRequestingApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionRequestContent) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
+	u.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
+	u.require(updateConnectionRequestContentFieldCrossAppAccessRequestingApp)
+}
+
+func (u *UpdateConnectionRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateConnectionRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateConnectionProfileRequestContent(body)
+	*u = UpdateConnectionRequestContent(body)
 	return nil
 }
 
-func (u *UpdateConnectionProfileRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateConnectionProfileRequestContent
+func (u *UpdateConnectionRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateConnectionRequestContent
 	var marshaler = struct {
 		embed
 	}{

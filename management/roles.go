@@ -255,10 +255,10 @@ var (
 )
 
 type ListRolesOffsetPaginatedResponseContent struct {
-	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
-	Limit *float64 `json:"limit,omitempty" url:"limit,omitempty"`
-	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
-	Roles []*Role  `json:"roles,omitempty" url:"roles,omitempty"`
+	Start float64 `json:"start" url:"start"`
+	Limit float64 `json:"limit" url:"limit"`
+	Total float64 `json:"total" url:"total"`
+	Roles []*Role `json:"roles,omitempty" url:"roles,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -268,24 +268,24 @@ type ListRolesOffsetPaginatedResponseContent struct {
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) GetStart() float64 {
-	if l == nil || l.Start == nil {
+	if l == nil {
 		return 0
 	}
-	return *l.Start
+	return l.Start
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) GetLimit() float64 {
-	if l == nil || l.Limit == nil {
+	if l == nil {
 		return 0
 	}
-	return *l.Limit
+	return l.Limit
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) GetTotal() float64 {
-	if l == nil || l.Total == nil {
+	if l == nil {
 		return 0
 	}
-	return *l.Total
+	return l.Total
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) GetRoles() []*Role {
@@ -311,21 +311,21 @@ func (l *ListRolesOffsetPaginatedResponseContent) require(field *big.Int) {
 
 // SetStart sets the Start field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolesOffsetPaginatedResponseContent) SetStart(start *float64) {
+func (l *ListRolesOffsetPaginatedResponseContent) SetStart(start float64) {
 	l.Start = start
 	l.require(listRolesOffsetPaginatedResponseContentFieldStart)
 }
 
 // SetLimit sets the Limit field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolesOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+func (l *ListRolesOffsetPaginatedResponseContent) SetLimit(limit float64) {
 	l.Limit = limit
 	l.require(listRolesOffsetPaginatedResponseContentFieldLimit)
 }
 
 // SetTotal sets the Total field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolesOffsetPaginatedResponseContent) SetTotal(total *float64) {
+func (l *ListRolesOffsetPaginatedResponseContent) SetTotal(total float64) {
 	l.Total = total
 	l.require(listRolesOffsetPaginatedResponseContentFieldTotal)
 }

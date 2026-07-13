@@ -154,107 +154,6 @@ func (c *ConnectionAssertionDecryptionSettings) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-var (
-	connectionAttributeIdentifierFieldActive        = big.NewInt(1 << 0)
-	connectionAttributeIdentifierFieldDefaultMethod = big.NewInt(1 << 1)
-)
-
-type ConnectionAttributeIdentifier struct {
-	// Determines if the attribute is used for identification
-	Active        *bool                             `json:"active,omitempty" url:"active,omitempty"`
-	DefaultMethod *DefaultMethodEmailIdentifierEnum `json:"default_method,omitempty" url:"default_method,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *ConnectionAttributeIdentifier) GetActive() bool {
-	if c == nil || c.Active == nil {
-		return false
-	}
-	return *c.Active
-}
-
-func (c *ConnectionAttributeIdentifier) GetDefaultMethod() DefaultMethodEmailIdentifierEnum {
-	if c == nil || c.DefaultMethod == nil {
-		return ""
-	}
-	return *c.DefaultMethod
-}
-
-func (c *ConnectionAttributeIdentifier) GetExtraProperties() map[string]interface{} {
-	if c == nil {
-		return nil
-	}
-	return c.extraProperties
-}
-
-func (c *ConnectionAttributeIdentifier) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
-	}
-	c.explicitFields.Or(c.explicitFields, field)
-}
-
-// SetActive sets the Active field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionAttributeIdentifier) SetActive(active *bool) {
-	c.Active = active
-	c.require(connectionAttributeIdentifierFieldActive)
-}
-
-// SetDefaultMethod sets the DefaultMethod field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionAttributeIdentifier) SetDefaultMethod(defaultMethod *DefaultMethodEmailIdentifierEnum) {
-	c.DefaultMethod = defaultMethod
-	c.require(connectionAttributeIdentifierFieldDefaultMethod)
-}
-
-func (c *ConnectionAttributeIdentifier) UnmarshalJSON(data []byte) error {
-	type unmarshaler ConnectionAttributeIdentifier
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = ConnectionAttributeIdentifier(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *ConnectionAttributeIdentifier) MarshalJSON() ([]byte, error) {
-	type embed ConnectionAttributeIdentifier
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (c *ConnectionAttributeIdentifier) String() string {
-	if c == nil {
-		return "<nil>"
-	}
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
 // Attribute configuration
 var (
 	connectionAttributesFieldEmail       = big.NewInt(1 << 0)
@@ -2841,6 +2740,8 @@ var (
 	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 35)
 	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 36)
 	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 37)
+	connectionPropertiesOptionsFieldDiscoveryURL                     = big.NewInt(1 << 38)
+	connectionPropertiesOptionsFieldOidcMetadata                     = big.NewInt(1 << 39)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2888,6 +2789,8 @@ type ConnectionPropertiesOptions struct {
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
 	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	DiscoveryURL                     *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata                     *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3161,6 +3064,20 @@ func (c *ConnectionPropertiesOptions) GetIDTokenSessionExpirySupported() Connect
 		return false
 	}
 	return *c.IDTokenSessionExpirySupported
+}
+
+func (c *ConnectionPropertiesOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
+	if c == nil || c.DiscoveryURL == nil {
+		return nil
+	}
+	return *c.DiscoveryURL
+}
+
+func (c *ConnectionPropertiesOptions) GetOidcMetadata() ConnectionsOidcMetadata {
+	if c == nil || c.OidcMetadata == nil {
+		return ConnectionsOidcMetadata{}
+	}
+	return *c.OidcMetadata
 }
 
 func (c *ConnectionPropertiesOptions) GetExtraProperties() map[string]interface{} {
@@ -3441,6 +3358,20 @@ func (c *ConnectionPropertiesOptions) SetTokenEndpointJwtcaAudFormat(tokenEndpoi
 func (c *ConnectionPropertiesOptions) SetIDTokenSessionExpirySupported(idTokenSessionExpirySupported *ConnectionIDTokenSessionExpirySupported) {
 	c.IDTokenSessionExpirySupported = idTokenSessionExpirySupported
 	c.require(connectionPropertiesOptionsFieldIDTokenSessionExpirySupported)
+}
+
+// SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetDiscoveryURL(discoveryURL *ConnectionsDiscoveryURL) {
+	c.DiscoveryURL = discoveryURL
+	c.require(connectionPropertiesOptionsFieldDiscoveryURL)
+}
+
+// SetOidcMetadata sets the OidcMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetOidcMetadata(oidcMetadata *ConnectionsOidcMetadata) {
+	c.OidcMetadata = oidcMetadata
+	c.require(connectionPropertiesOptionsFieldOidcMetadata)
 }
 
 func (c *ConnectionPropertiesOptions) UnmarshalJSON(data []byte) error {
@@ -4092,6 +4023,712 @@ func (c *ConnectionValidationOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// URL of the identity provider's OIDC Discovery endpoint (/.well-known/openid-configuration). When provided and oidc_metadata is empty, Auth0 automatically retrieves the provider's configuration including endpoints and supported features. Only applicable when strategy=oidc, okta, or samlp.
+type ConnectionsDiscoveryURL = *string
+
+// Additional OIDC metadata to include in the discovery document. Only applicable when strategy=oidc, okta, or samlp.
+var (
+	connectionsOidcMetadataFieldIssuer                                     = big.NewInt(1 << 0)
+	connectionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
+	connectionsOidcMetadataFieldTokenEndpoint                              = big.NewInt(1 << 2)
+	connectionsOidcMetadataFieldUserinfoEndpoint                           = big.NewInt(1 << 3)
+	connectionsOidcMetadataFieldJwksURI                                    = big.NewInt(1 << 4)
+	connectionsOidcMetadataFieldRegistrationEndpoint                       = big.NewInt(1 << 5)
+	connectionsOidcMetadataFieldScopesSupported                            = big.NewInt(1 << 6)
+	connectionsOidcMetadataFieldResponseModesSupported                     = big.NewInt(1 << 7)
+	connectionsOidcMetadataFieldResponseTypesSupported                     = big.NewInt(1 << 8)
+	connectionsOidcMetadataFieldGrantTypesSupported                        = big.NewInt(1 << 9)
+	connectionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 10)
+	connectionsOidcMetadataFieldSubjectTypesSupported                      = big.NewInt(1 << 11)
+	connectionsOidcMetadataFieldIDTokenSigningAlgValuesSupported           = big.NewInt(1 << 12)
+	connectionsOidcMetadataFieldIDTokenEncryptionAlgValuesSupported        = big.NewInt(1 << 13)
+	connectionsOidcMetadataFieldIDTokenEncryptionEncValuesSupported        = big.NewInt(1 << 14)
+	connectionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 15)
+	connectionsOidcMetadataFieldUserinfoEncryptionAlgValuesSupported       = big.NewInt(1 << 16)
+	connectionsOidcMetadataFieldUserinfoEncryptionEncValuesSupported       = big.NewInt(1 << 17)
+	connectionsOidcMetadataFieldRequestObjectSigningAlgValuesSupported     = big.NewInt(1 << 18)
+	connectionsOidcMetadataFieldRequestObjectEncryptionAlgValuesSupported  = big.NewInt(1 << 19)
+	connectionsOidcMetadataFieldRequestObjectEncryptionEncValuesSupported  = big.NewInt(1 << 20)
+	connectionsOidcMetadataFieldTokenEndpointAuthMethodsSupported          = big.NewInt(1 << 21)
+	connectionsOidcMetadataFieldTokenEndpointAuthSigningAlgValuesSupported = big.NewInt(1 << 22)
+	connectionsOidcMetadataFieldDisplayValuesSupported                     = big.NewInt(1 << 23)
+	connectionsOidcMetadataFieldClaimTypesSupported                        = big.NewInt(1 << 24)
+	connectionsOidcMetadataFieldClaimsSupported                            = big.NewInt(1 << 25)
+	connectionsOidcMetadataFieldServiceDocumentation                       = big.NewInt(1 << 26)
+	connectionsOidcMetadataFieldClaimsLocalesSupported                     = big.NewInt(1 << 27)
+	connectionsOidcMetadataFieldUILocalesSupported                         = big.NewInt(1 << 28)
+	connectionsOidcMetadataFieldClaimsParameterSupported                   = big.NewInt(1 << 29)
+	connectionsOidcMetadataFieldRequestParameterSupported                  = big.NewInt(1 << 30)
+	connectionsOidcMetadataFieldRequestURIParameterSupported               = big.NewInt(1 << 31)
+	connectionsOidcMetadataFieldRequireRequestURIRegistration              = big.NewInt(1 << 32)
+	connectionsOidcMetadataFieldOpPolicyURI                                = big.NewInt(1 << 33)
+	connectionsOidcMetadataFieldOpTosURI                                   = big.NewInt(1 << 34)
+	connectionsOidcMetadataFieldEndSessionEndpoint                         = big.NewInt(1 << 35)
+	connectionsOidcMetadataFieldDpopSigningAlgValuesSupported              = big.NewInt(1 << 36)
+)
+
+type ConnectionsOidcMetadata struct {
+	// The identity provider's unique issuer identifier URL (e.g., https://accounts.google.com). Must match the 'iss' claim in ID tokens from the identity provider.
+	Issuer *string `json:"issuer,omitempty" url:"issuer,omitempty"`
+	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
+	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
+	// URL of the identity provider's OAuth 2.0 token endpoint where authorization codes are exchanged for access tokens. Must be a valid HTTPS URL. Required for authorization code flow but optional for implicit flow.
+	TokenEndpoint *string `json:"token_endpoint,omitempty" url:"token_endpoint,omitempty"`
+	// Optional URL of the identity provider's UserInfo endpoint. When configured with attribute mapping, Auth0 calls this endpoint to retrieve additional user profile claims using the access token.
+	UserinfoEndpoint *string `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
+	// URL of the identity provider's JSON Web Key Set (JWKS) endpoint containing public keys for signature verification. Auth0 retrieves these keys to validate ID token signatures.
+	JwksURI *string `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
+	// URL of the OPs Dynamic Client Registration Endpoint. RECOMMENDED but not REQUIRED. https://openid.net/specs/openid-connect-discovery-1_0.html#OpenID.Registration
+	RegistrationEndpoint *string `json:"registration_endpoint,omitempty" url:"registration_endpoint,omitempty"`
+	// A list of the OAuth 2.0 [RFC6749] scope values that this server supports. The server MUST support the openid scope value. Servers MAY choose not to advertise some supported scope values even when this parameter is used, although those defined in [OpenID.Core] SHOULD be listed, if supported. RECOMMENDED but not REQUIRED
+	ScopesSupported []string `json:"scopes_supported,omitempty" url:"scopes_supported,omitempty"`
+	// A list of the OAuth 2.0 response_mode values that this OP supports. If omitted, the default for Dynamic OpenID Providers is ["query", "fragment"]
+	ResponseModesSupported []string `json:"response_modes_supported,omitempty" url:"response_modes_supported,omitempty"`
+	// A list of the OAuth 2.0 response_type values that this OP supports. Dynamic OpenID Providers MUST support the code, id_token, and the token id_token Response Type values
+	ResponseTypesSupported []string `json:"response_types_supported,omitempty" url:"response_types_supported,omitempty"`
+	// A list of the OAuth 2.0 Grant Type values that this OP supports. Dynamic OpenID Providers MUST support the authorization_code and implicit Grant Type values and MAY support other Grant Types. If omitted, the default value is ["authorization_code", "implicit"].
+	GrantTypesSupported []string `json:"grant_types_supported,omitempty" url:"grant_types_supported,omitempty"`
+	// A list of the Authentication Context Class References that this OP supports
+	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
+	// A list of the Subject Identifier types that this OP supports. Valid types include pairwise and public
+	SubjectTypesSupported []string `json:"subject_types_supported,omitempty" url:"subject_types_supported,omitempty"`
+	// A list of the JWS signing algorithms (alg values) supported by the OP for the ID Token to encode the Claims in a JWT. The algorithm RS256 MUST be included. The value none MAY be supported, but MUST NOT be used unless the Response Type used returns no ID Token from the Authorization Endpoint (such as when using the Authorization Code Flow). https://datatracker.ietf.org/doc/html/rfc7518
+	IDTokenSigningAlgValuesSupported []string `json:"id_token_signing_alg_values_supported,omitempty" url:"id_token_signing_alg_values_supported,omitempty"`
+	// JSON array containing a list of the JWE encryption algorithms (alg values) supported by the OP for the ID Token to encode the Claims in a JWT
+	IDTokenEncryptionAlgValuesSupported []string `json:"id_token_encryption_alg_values_supported,omitempty" url:"id_token_encryption_alg_values_supported,omitempty"`
+	// JSON array containing a list of the JWE encryption algorithms (enc values) supported by the OP for the ID Token to encode the Claims in a JWT [JWT].
+	IDTokenEncryptionEncValuesSupported []string `json:"id_token_encryption_enc_values_supported,omitempty" url:"id_token_encryption_enc_values_supported,omitempty"`
+	// JSON array containing a list of the JWS [JWS] signing algorithms (alg values) [JWA] supported by the UserInfo Endpoint to encode the Claims in a JWT [JWT]. The value none MAY be included.
+	UserinfoSigningAlgValuesSupported []string `json:"userinfo_signing_alg_values_supported,omitempty" url:"userinfo_signing_alg_values_supported,omitempty"`
+	// JSON array containing a list of the JWE [JWE] encryption algorithms (alg values) [JWA] supported by the UserInfo Endpoint to encode the Claims in a JWT [JWT].
+	UserinfoEncryptionAlgValuesSupported []string `json:"userinfo_encryption_alg_values_supported,omitempty" url:"userinfo_encryption_alg_values_supported,omitempty"`
+	// JSON array containing a list of the JWE encryption algorithms (enc values) [JWA] supported by the UserInfo Endpoint to encode the Claims in a JWT [JWT].
+	UserinfoEncryptionEncValuesSupported []string `json:"userinfo_encryption_enc_values_supported,omitempty" url:"userinfo_encryption_enc_values_supported,omitempty"`
+	// JSON array containing a list of the JWS signing algorithms (alg values) supported by the OP for Request Objects, which are described in Section 6.1 of OpenID Connect Core 1.0 [OpenID.Core]. These algorithms are used both when the Request Object is passed by value (using the request parameter) and when it is passed by reference (using the request_uri parameter). Servers SHOULD support none and RS256.
+	RequestObjectSigningAlgValuesSupported []string `json:"request_object_signing_alg_values_supported,omitempty" url:"request_object_signing_alg_values_supported,omitempty"`
+	// JSON array containing a list of the JWE encryption algorithms (alg values) supported by the OP for Request Objects. These algorithms are used both when the Request Object is passed by value and when it is passed by reference.
+	RequestObjectEncryptionAlgValuesSupported []string `json:"request_object_encryption_alg_values_supported,omitempty" url:"request_object_encryption_alg_values_supported,omitempty"`
+	// JSON array containing a list of the JWE encryption algorithms (enc values) supported by the OP for Request Objects. These algorithms are used both when the Request Object is passed by value and when it is passed by reference.
+	RequestObjectEncryptionEncValuesSupported []string `json:"request_object_encryption_enc_values_supported,omitempty" url:"request_object_encryption_enc_values_supported,omitempty"`
+	// JSON array containing a list of Client Authentication methods supported by this Token Endpoint. The options are client_secret_post, client_secret_basic, client_secret_jwt, and private_key_jwt, as described in Section 9 of OpenID Connect Core 1.0 [OpenID.Core]. Other authentication methods MAY be defined by extensions. If omitted, the default is client_secret_basic -- the HTTP Basic Authentication Scheme specified in Section 2.3.1 of OAuth 2.0 [RFC6749].
+	TokenEndpointAuthMethodsSupported []string `json:"token_endpoint_auth_methods_supported,omitempty" url:"token_endpoint_auth_methods_supported,omitempty"`
+	// JSON array containing a list of the JWS signing algorithms (alg values) supported by the Token Endpoint for the signature on the JWT [JWT] used to authenticate the Client at the Token Endpoint for the private_key_jwt and client_secret_jwt authentication methods. Servers SHOULD support RS256. The value none MUST NOT be used.
+	TokenEndpointAuthSigningAlgValuesSupported []string `json:"token_endpoint_auth_signing_alg_values_supported,omitempty" url:"token_endpoint_auth_signing_alg_values_supported,omitempty"`
+	// JSON array containing a list of the display parameter values that the OpenID Provider supports. These values are described in Section 3.1.2.1 of OpenID Connect Core 1.0 [OpenID.Core]
+	DisplayValuesSupported []string `json:"display_values_supported,omitempty" url:"display_values_supported,omitempty"`
+	// JSON array containing a list of the Claim Types that the OpenID Provider supports. These Claim Types are described in Section 5.6 of OpenID Connect Core 1.0 [OpenID.Core]. If omitted, the implementation supports only normal Claims.
+	ClaimTypesSupported []string `json:"claim_types_supported,omitempty" url:"claim_types_supported,omitempty"`
+	// JSON array containing a list of the Claim Names of the Claims that the OpenID Provider MAY be able to supply values for. Note that for privacy or other reasons, this might not be an exhaustive list.
+	ClaimsSupported []string `json:"claims_supported,omitempty" url:"claims_supported,omitempty"`
+	// URL of a page containing human-readable information that developers might want or need to know when using the OpenID Provider. In particular, if the OpenID Provider does not support Dynamic Client Registration, then information on how to register Clients needs to be provided in this documentation.
+	ServiceDocumentation *string `json:"service_documentation,omitempty" url:"service_documentation,omitempty"`
+	// Languages and scripts supported for values in Claims being returned, represented as a JSON array of BCP47 [RFC5646] language tag values. Not all languages and scripts are necessarily supported for all Claim values.
+	ClaimsLocalesSupported []string `json:"claims_locales_supported,omitempty" url:"claims_locales_supported,omitempty"`
+	// Languages and scripts supported for the user interface, represented as a JSON array of BCP47 [RFC5646] language tag values.
+	UILocalesSupported []string `json:"ui_locales_supported,omitempty" url:"ui_locales_supported,omitempty"`
+	// Boolean value specifying whether the OP supports use of the claims parameter, with true indicating support. If omitted, the default value is false.
+	ClaimsParameterSupported *bool `json:"claims_parameter_supported,omitempty" url:"claims_parameter_supported,omitempty"`
+	// Boolean value specifying whether the OP supports use of the request parameter, with true indicating support. If omitted, the default value is false.
+	RequestParameterSupported *bool `json:"request_parameter_supported,omitempty" url:"request_parameter_supported,omitempty"`
+	// Boolean value specifying whether the OP supports use of the request_uri parameter, with true indicating support. If omitted, the default value is false.
+	RequestURIParameterSupported *bool `json:"request_uri_parameter_supported,omitempty" url:"request_uri_parameter_supported,omitempty"`
+	// Boolean value specifying whether the OP requires use of the request_uri parameter. If omitted, the default value is false.
+	RequireRequestURIRegistration *bool `json:"require_request_uri_registration,omitempty" url:"require_request_uri_registration,omitempty"`
+	// URL that the OpenID Provider provides to the person registering the Client to read about the OPs requirements on how the Relying Party can use the data provided by the OP. The registration process SHOULD display this URL to the person registering the Client if it is given.
+	OpPolicyURI *string `json:"op_policy_uri,omitempty" url:"op_policy_uri,omitempty"`
+	// URL that the OpenID Provider provides to the person registering the Client to read about OpenID Providers terms of service. The registration process SHOULD display this URL to the person registering the Client if it is given.
+	OpTosURI *string `json:"op_tos_uri,omitempty" url:"op_tos_uri,omitempty"`
+	// URL of the identity provider's logout/end session endpoint. When configured as a static URL, users are redirected here after logging out from Auth0. Must use HTTPS scheme.
+	EndSessionEndpoint *string `json:"end_session_endpoint,omitempty" url:"end_session_endpoint,omitempty"`
+	// JSON array containing a list of the JWS signing algorithms (alg values) supported for DPoP proof JWT signing.
+	DpopSigningAlgValuesSupported []string `json:"dpop_signing_alg_values_supported,omitempty" url:"dpop_signing_alg_values_supported,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ConnectionsOidcMetadata) GetIssuer() string {
+	if c == nil || c.Issuer == nil {
+		return ""
+	}
+	return *c.Issuer
+}
+
+func (c *ConnectionsOidcMetadata) GetAuthorizationEndpoint() string {
+	if c == nil || c.AuthorizationEndpoint == nil {
+		return ""
+	}
+	return *c.AuthorizationEndpoint
+}
+
+func (c *ConnectionsOidcMetadata) GetTokenEndpoint() string {
+	if c == nil || c.TokenEndpoint == nil {
+		return ""
+	}
+	return *c.TokenEndpoint
+}
+
+func (c *ConnectionsOidcMetadata) GetUserinfoEndpoint() string {
+	if c == nil || c.UserinfoEndpoint == nil {
+		return ""
+	}
+	return *c.UserinfoEndpoint
+}
+
+func (c *ConnectionsOidcMetadata) GetJwksURI() string {
+	if c == nil || c.JwksURI == nil {
+		return ""
+	}
+	return *c.JwksURI
+}
+
+func (c *ConnectionsOidcMetadata) GetRegistrationEndpoint() string {
+	if c == nil || c.RegistrationEndpoint == nil {
+		return ""
+	}
+	return *c.RegistrationEndpoint
+}
+
+func (c *ConnectionsOidcMetadata) GetScopesSupported() []string {
+	if c == nil || c.ScopesSupported == nil {
+		return nil
+	}
+	return c.ScopesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetResponseModesSupported() []string {
+	if c == nil || c.ResponseModesSupported == nil {
+		return nil
+	}
+	return c.ResponseModesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetResponseTypesSupported() []string {
+	if c == nil || c.ResponseTypesSupported == nil {
+		return nil
+	}
+	return c.ResponseTypesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetGrantTypesSupported() []string {
+	if c == nil || c.GrantTypesSupported == nil {
+		return nil
+	}
+	return c.GrantTypesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetAcrValuesSupported() []string {
+	if c == nil || c.AcrValuesSupported == nil {
+		return nil
+	}
+	return c.AcrValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetSubjectTypesSupported() []string {
+	if c == nil || c.SubjectTypesSupported == nil {
+		return nil
+	}
+	return c.SubjectTypesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetIDTokenSigningAlgValuesSupported() []string {
+	if c == nil || c.IDTokenSigningAlgValuesSupported == nil {
+		return nil
+	}
+	return c.IDTokenSigningAlgValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetIDTokenEncryptionAlgValuesSupported() []string {
+	if c == nil || c.IDTokenEncryptionAlgValuesSupported == nil {
+		return nil
+	}
+	return c.IDTokenEncryptionAlgValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetIDTokenEncryptionEncValuesSupported() []string {
+	if c == nil || c.IDTokenEncryptionEncValuesSupported == nil {
+		return nil
+	}
+	return c.IDTokenEncryptionEncValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetUserinfoSigningAlgValuesSupported() []string {
+	if c == nil || c.UserinfoSigningAlgValuesSupported == nil {
+		return nil
+	}
+	return c.UserinfoSigningAlgValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetUserinfoEncryptionAlgValuesSupported() []string {
+	if c == nil || c.UserinfoEncryptionAlgValuesSupported == nil {
+		return nil
+	}
+	return c.UserinfoEncryptionAlgValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetUserinfoEncryptionEncValuesSupported() []string {
+	if c == nil || c.UserinfoEncryptionEncValuesSupported == nil {
+		return nil
+	}
+	return c.UserinfoEncryptionEncValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetRequestObjectSigningAlgValuesSupported() []string {
+	if c == nil || c.RequestObjectSigningAlgValuesSupported == nil {
+		return nil
+	}
+	return c.RequestObjectSigningAlgValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetRequestObjectEncryptionAlgValuesSupported() []string {
+	if c == nil || c.RequestObjectEncryptionAlgValuesSupported == nil {
+		return nil
+	}
+	return c.RequestObjectEncryptionAlgValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetRequestObjectEncryptionEncValuesSupported() []string {
+	if c == nil || c.RequestObjectEncryptionEncValuesSupported == nil {
+		return nil
+	}
+	return c.RequestObjectEncryptionEncValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetTokenEndpointAuthMethodsSupported() []string {
+	if c == nil || c.TokenEndpointAuthMethodsSupported == nil {
+		return nil
+	}
+	return c.TokenEndpointAuthMethodsSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetTokenEndpointAuthSigningAlgValuesSupported() []string {
+	if c == nil || c.TokenEndpointAuthSigningAlgValuesSupported == nil {
+		return nil
+	}
+	return c.TokenEndpointAuthSigningAlgValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetDisplayValuesSupported() []string {
+	if c == nil || c.DisplayValuesSupported == nil {
+		return nil
+	}
+	return c.DisplayValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetClaimTypesSupported() []string {
+	if c == nil || c.ClaimTypesSupported == nil {
+		return nil
+	}
+	return c.ClaimTypesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetClaimsSupported() []string {
+	if c == nil || c.ClaimsSupported == nil {
+		return nil
+	}
+	return c.ClaimsSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetServiceDocumentation() string {
+	if c == nil || c.ServiceDocumentation == nil {
+		return ""
+	}
+	return *c.ServiceDocumentation
+}
+
+func (c *ConnectionsOidcMetadata) GetClaimsLocalesSupported() []string {
+	if c == nil || c.ClaimsLocalesSupported == nil {
+		return nil
+	}
+	return c.ClaimsLocalesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetUILocalesSupported() []string {
+	if c == nil || c.UILocalesSupported == nil {
+		return nil
+	}
+	return c.UILocalesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetClaimsParameterSupported() bool {
+	if c == nil || c.ClaimsParameterSupported == nil {
+		return false
+	}
+	return *c.ClaimsParameterSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetRequestParameterSupported() bool {
+	if c == nil || c.RequestParameterSupported == nil {
+		return false
+	}
+	return *c.RequestParameterSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetRequestURIParameterSupported() bool {
+	if c == nil || c.RequestURIParameterSupported == nil {
+		return false
+	}
+	return *c.RequestURIParameterSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetRequireRequestURIRegistration() bool {
+	if c == nil || c.RequireRequestURIRegistration == nil {
+		return false
+	}
+	return *c.RequireRequestURIRegistration
+}
+
+func (c *ConnectionsOidcMetadata) GetOpPolicyURI() string {
+	if c == nil || c.OpPolicyURI == nil {
+		return ""
+	}
+	return *c.OpPolicyURI
+}
+
+func (c *ConnectionsOidcMetadata) GetOpTosURI() string {
+	if c == nil || c.OpTosURI == nil {
+		return ""
+	}
+	return *c.OpTosURI
+}
+
+func (c *ConnectionsOidcMetadata) GetEndSessionEndpoint() string {
+	if c == nil || c.EndSessionEndpoint == nil {
+		return ""
+	}
+	return *c.EndSessionEndpoint
+}
+
+func (c *ConnectionsOidcMetadata) GetDpopSigningAlgValuesSupported() []string {
+	if c == nil || c.DpopSigningAlgValuesSupported == nil {
+		return nil
+	}
+	return c.DpopSigningAlgValuesSupported
+}
+
+func (c *ConnectionsOidcMetadata) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *ConnectionsOidcMetadata) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetIssuer sets the Issuer field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetIssuer(issuer *string) {
+	c.Issuer = issuer
+	c.require(connectionsOidcMetadataFieldIssuer)
+}
+
+// SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetAuthorizationEndpoint(authorizationEndpoint *string) {
+	c.AuthorizationEndpoint = authorizationEndpoint
+	c.require(connectionsOidcMetadataFieldAuthorizationEndpoint)
+}
+
+// SetTokenEndpoint sets the TokenEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetTokenEndpoint(tokenEndpoint *string) {
+	c.TokenEndpoint = tokenEndpoint
+	c.require(connectionsOidcMetadataFieldTokenEndpoint)
+}
+
+// SetUserinfoEndpoint sets the UserinfoEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetUserinfoEndpoint(userinfoEndpoint *string) {
+	c.UserinfoEndpoint = userinfoEndpoint
+	c.require(connectionsOidcMetadataFieldUserinfoEndpoint)
+}
+
+// SetJwksURI sets the JwksURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetJwksURI(jwksURI *string) {
+	c.JwksURI = jwksURI
+	c.require(connectionsOidcMetadataFieldJwksURI)
+}
+
+// SetRegistrationEndpoint sets the RegistrationEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetRegistrationEndpoint(registrationEndpoint *string) {
+	c.RegistrationEndpoint = registrationEndpoint
+	c.require(connectionsOidcMetadataFieldRegistrationEndpoint)
+}
+
+// SetScopesSupported sets the ScopesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetScopesSupported(scopesSupported []string) {
+	c.ScopesSupported = scopesSupported
+	c.require(connectionsOidcMetadataFieldScopesSupported)
+}
+
+// SetResponseModesSupported sets the ResponseModesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetResponseModesSupported(responseModesSupported []string) {
+	c.ResponseModesSupported = responseModesSupported
+	c.require(connectionsOidcMetadataFieldResponseModesSupported)
+}
+
+// SetResponseTypesSupported sets the ResponseTypesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetResponseTypesSupported(responseTypesSupported []string) {
+	c.ResponseTypesSupported = responseTypesSupported
+	c.require(connectionsOidcMetadataFieldResponseTypesSupported)
+}
+
+// SetGrantTypesSupported sets the GrantTypesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetGrantTypesSupported(grantTypesSupported []string) {
+	c.GrantTypesSupported = grantTypesSupported
+	c.require(connectionsOidcMetadataFieldGrantTypesSupported)
+}
+
+// SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetAcrValuesSupported(acrValuesSupported []string) {
+	c.AcrValuesSupported = acrValuesSupported
+	c.require(connectionsOidcMetadataFieldAcrValuesSupported)
+}
+
+// SetSubjectTypesSupported sets the SubjectTypesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetSubjectTypesSupported(subjectTypesSupported []string) {
+	c.SubjectTypesSupported = subjectTypesSupported
+	c.require(connectionsOidcMetadataFieldSubjectTypesSupported)
+}
+
+// SetIDTokenSigningAlgValuesSupported sets the IDTokenSigningAlgValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetIDTokenSigningAlgValuesSupported(idTokenSigningAlgValuesSupported []string) {
+	c.IDTokenSigningAlgValuesSupported = idTokenSigningAlgValuesSupported
+	c.require(connectionsOidcMetadataFieldIDTokenSigningAlgValuesSupported)
+}
+
+// SetIDTokenEncryptionAlgValuesSupported sets the IDTokenEncryptionAlgValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetIDTokenEncryptionAlgValuesSupported(idTokenEncryptionAlgValuesSupported []string) {
+	c.IDTokenEncryptionAlgValuesSupported = idTokenEncryptionAlgValuesSupported
+	c.require(connectionsOidcMetadataFieldIDTokenEncryptionAlgValuesSupported)
+}
+
+// SetIDTokenEncryptionEncValuesSupported sets the IDTokenEncryptionEncValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetIDTokenEncryptionEncValuesSupported(idTokenEncryptionEncValuesSupported []string) {
+	c.IDTokenEncryptionEncValuesSupported = idTokenEncryptionEncValuesSupported
+	c.require(connectionsOidcMetadataFieldIDTokenEncryptionEncValuesSupported)
+}
+
+// SetUserinfoSigningAlgValuesSupported sets the UserinfoSigningAlgValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetUserinfoSigningAlgValuesSupported(userinfoSigningAlgValuesSupported []string) {
+	c.UserinfoSigningAlgValuesSupported = userinfoSigningAlgValuesSupported
+	c.require(connectionsOidcMetadataFieldUserinfoSigningAlgValuesSupported)
+}
+
+// SetUserinfoEncryptionAlgValuesSupported sets the UserinfoEncryptionAlgValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetUserinfoEncryptionAlgValuesSupported(userinfoEncryptionAlgValuesSupported []string) {
+	c.UserinfoEncryptionAlgValuesSupported = userinfoEncryptionAlgValuesSupported
+	c.require(connectionsOidcMetadataFieldUserinfoEncryptionAlgValuesSupported)
+}
+
+// SetUserinfoEncryptionEncValuesSupported sets the UserinfoEncryptionEncValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetUserinfoEncryptionEncValuesSupported(userinfoEncryptionEncValuesSupported []string) {
+	c.UserinfoEncryptionEncValuesSupported = userinfoEncryptionEncValuesSupported
+	c.require(connectionsOidcMetadataFieldUserinfoEncryptionEncValuesSupported)
+}
+
+// SetRequestObjectSigningAlgValuesSupported sets the RequestObjectSigningAlgValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetRequestObjectSigningAlgValuesSupported(requestObjectSigningAlgValuesSupported []string) {
+	c.RequestObjectSigningAlgValuesSupported = requestObjectSigningAlgValuesSupported
+	c.require(connectionsOidcMetadataFieldRequestObjectSigningAlgValuesSupported)
+}
+
+// SetRequestObjectEncryptionAlgValuesSupported sets the RequestObjectEncryptionAlgValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetRequestObjectEncryptionAlgValuesSupported(requestObjectEncryptionAlgValuesSupported []string) {
+	c.RequestObjectEncryptionAlgValuesSupported = requestObjectEncryptionAlgValuesSupported
+	c.require(connectionsOidcMetadataFieldRequestObjectEncryptionAlgValuesSupported)
+}
+
+// SetRequestObjectEncryptionEncValuesSupported sets the RequestObjectEncryptionEncValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetRequestObjectEncryptionEncValuesSupported(requestObjectEncryptionEncValuesSupported []string) {
+	c.RequestObjectEncryptionEncValuesSupported = requestObjectEncryptionEncValuesSupported
+	c.require(connectionsOidcMetadataFieldRequestObjectEncryptionEncValuesSupported)
+}
+
+// SetTokenEndpointAuthMethodsSupported sets the TokenEndpointAuthMethodsSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetTokenEndpointAuthMethodsSupported(tokenEndpointAuthMethodsSupported []string) {
+	c.TokenEndpointAuthMethodsSupported = tokenEndpointAuthMethodsSupported
+	c.require(connectionsOidcMetadataFieldTokenEndpointAuthMethodsSupported)
+}
+
+// SetTokenEndpointAuthSigningAlgValuesSupported sets the TokenEndpointAuthSigningAlgValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetTokenEndpointAuthSigningAlgValuesSupported(tokenEndpointAuthSigningAlgValuesSupported []string) {
+	c.TokenEndpointAuthSigningAlgValuesSupported = tokenEndpointAuthSigningAlgValuesSupported
+	c.require(connectionsOidcMetadataFieldTokenEndpointAuthSigningAlgValuesSupported)
+}
+
+// SetDisplayValuesSupported sets the DisplayValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetDisplayValuesSupported(displayValuesSupported []string) {
+	c.DisplayValuesSupported = displayValuesSupported
+	c.require(connectionsOidcMetadataFieldDisplayValuesSupported)
+}
+
+// SetClaimTypesSupported sets the ClaimTypesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetClaimTypesSupported(claimTypesSupported []string) {
+	c.ClaimTypesSupported = claimTypesSupported
+	c.require(connectionsOidcMetadataFieldClaimTypesSupported)
+}
+
+// SetClaimsSupported sets the ClaimsSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetClaimsSupported(claimsSupported []string) {
+	c.ClaimsSupported = claimsSupported
+	c.require(connectionsOidcMetadataFieldClaimsSupported)
+}
+
+// SetServiceDocumentation sets the ServiceDocumentation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetServiceDocumentation(serviceDocumentation *string) {
+	c.ServiceDocumentation = serviceDocumentation
+	c.require(connectionsOidcMetadataFieldServiceDocumentation)
+}
+
+// SetClaimsLocalesSupported sets the ClaimsLocalesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetClaimsLocalesSupported(claimsLocalesSupported []string) {
+	c.ClaimsLocalesSupported = claimsLocalesSupported
+	c.require(connectionsOidcMetadataFieldClaimsLocalesSupported)
+}
+
+// SetUILocalesSupported sets the UILocalesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetUILocalesSupported(uiLocalesSupported []string) {
+	c.UILocalesSupported = uiLocalesSupported
+	c.require(connectionsOidcMetadataFieldUILocalesSupported)
+}
+
+// SetClaimsParameterSupported sets the ClaimsParameterSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetClaimsParameterSupported(claimsParameterSupported *bool) {
+	c.ClaimsParameterSupported = claimsParameterSupported
+	c.require(connectionsOidcMetadataFieldClaimsParameterSupported)
+}
+
+// SetRequestParameterSupported sets the RequestParameterSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetRequestParameterSupported(requestParameterSupported *bool) {
+	c.RequestParameterSupported = requestParameterSupported
+	c.require(connectionsOidcMetadataFieldRequestParameterSupported)
+}
+
+// SetRequestURIParameterSupported sets the RequestURIParameterSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetRequestURIParameterSupported(requestURIParameterSupported *bool) {
+	c.RequestURIParameterSupported = requestURIParameterSupported
+	c.require(connectionsOidcMetadataFieldRequestURIParameterSupported)
+}
+
+// SetRequireRequestURIRegistration sets the RequireRequestURIRegistration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetRequireRequestURIRegistration(requireRequestURIRegistration *bool) {
+	c.RequireRequestURIRegistration = requireRequestURIRegistration
+	c.require(connectionsOidcMetadataFieldRequireRequestURIRegistration)
+}
+
+// SetOpPolicyURI sets the OpPolicyURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetOpPolicyURI(opPolicyURI *string) {
+	c.OpPolicyURI = opPolicyURI
+	c.require(connectionsOidcMetadataFieldOpPolicyURI)
+}
+
+// SetOpTosURI sets the OpTosURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetOpTosURI(opTosURI *string) {
+	c.OpTosURI = opTosURI
+	c.require(connectionsOidcMetadataFieldOpTosURI)
+}
+
+// SetEndSessionEndpoint sets the EndSessionEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetEndSessionEndpoint(endSessionEndpoint *string) {
+	c.EndSessionEndpoint = endSessionEndpoint
+	c.require(connectionsOidcMetadataFieldEndSessionEndpoint)
+}
+
+// SetDpopSigningAlgValuesSupported sets the DpopSigningAlgValuesSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetDpopSigningAlgValuesSupported(dpopSigningAlgValuesSupported []string) {
+	c.DpopSigningAlgValuesSupported = dpopSigningAlgValuesSupported
+	c.require(connectionsOidcMetadataFieldDpopSigningAlgValuesSupported)
+}
+
+func (c *ConnectionsOidcMetadata) UnmarshalJSON(data []byte) error {
+	type embed ConnectionsOidcMetadata
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ConnectionsOidcMetadata(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionsOidcMetadata) MarshalJSON() ([]byte, error) {
+	type embed ConnectionsOidcMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *ConnectionsOidcMetadata) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	createConnectionResponseContentFieldName                        = big.NewInt(1 << 0)
 	createConnectionResponseContentFieldDisplayName                 = big.NewInt(1 << 1)
@@ -4399,6 +5036,29 @@ func (d DefaultMethodEmailIdentifierEnum) Ptr() *DefaultMethodEmailIdentifierEnu
 	return &d
 }
 
+// Default authentication method for phone_number identifier
+type DefaultMethodPhoneNumberIdentifierEnum string
+
+const (
+	DefaultMethodPhoneNumberIdentifierEnumPassword DefaultMethodPhoneNumberIdentifierEnum = "password"
+	DefaultMethodPhoneNumberIdentifierEnumPhoneOtp DefaultMethodPhoneNumberIdentifierEnum = "phone_otp"
+)
+
+func NewDefaultMethodPhoneNumberIdentifierEnumFromString(s string) (DefaultMethodPhoneNumberIdentifierEnum, error) {
+	switch s {
+	case "password":
+		return DefaultMethodPhoneNumberIdentifierEnumPassword, nil
+	case "phone_otp":
+		return DefaultMethodPhoneNumberIdentifierEnumPhoneOtp, nil
+	}
+	var t DefaultMethodPhoneNumberIdentifierEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (d DefaultMethodPhoneNumberIdentifierEnum) Ptr() *DefaultMethodPhoneNumberIdentifierEnum {
+	return &d
+}
+
 // Configuration for the email attribute for users.
 var (
 	emailAttributeFieldIdentifier         = big.NewInt(1 << 0)
@@ -4409,7 +5069,7 @@ var (
 )
 
 type EmailAttribute struct {
-	Identifier *ConnectionAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
+	Identifier *EmailAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// Determines if the attribute is unique in a given connection
 	Unique *bool `json:"unique,omitempty" url:"unique,omitempty"`
 	// Determines if property should be required for users
@@ -4424,9 +5084,9 @@ type EmailAttribute struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EmailAttribute) GetIdentifier() ConnectionAttributeIdentifier {
+func (e *EmailAttribute) GetIdentifier() EmailAttributeIdentifier {
 	if e == nil || e.Identifier == nil {
-		return ConnectionAttributeIdentifier{}
+		return EmailAttributeIdentifier{}
 	}
 	return *e.Identifier
 }
@@ -4475,7 +5135,7 @@ func (e *EmailAttribute) require(field *big.Int) {
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EmailAttribute) SetIdentifier(identifier *ConnectionAttributeIdentifier) {
+func (e *EmailAttribute) SetIdentifier(identifier *EmailAttributeIdentifier) {
 	e.Identifier = identifier
 	e.require(emailAttributeFieldIdentifier)
 }
@@ -4536,6 +5196,107 @@ func (e *EmailAttribute) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EmailAttribute) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+var (
+	emailAttributeIdentifierFieldActive        = big.NewInt(1 << 0)
+	emailAttributeIdentifierFieldDefaultMethod = big.NewInt(1 << 1)
+)
+
+type EmailAttributeIdentifier struct {
+	// Determines if the attribute is used for identification
+	Active        *bool                             `json:"active,omitempty" url:"active,omitempty"`
+	DefaultMethod *DefaultMethodEmailIdentifierEnum `json:"default_method,omitempty" url:"default_method,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *EmailAttributeIdentifier) GetActive() bool {
+	if e == nil || e.Active == nil {
+		return false
+	}
+	return *e.Active
+}
+
+func (e *EmailAttributeIdentifier) GetDefaultMethod() DefaultMethodEmailIdentifierEnum {
+	if e == nil || e.DefaultMethod == nil {
+		return ""
+	}
+	return *e.DefaultMethod
+}
+
+func (e *EmailAttributeIdentifier) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *EmailAttributeIdentifier) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EmailAttributeIdentifier) SetActive(active *bool) {
+	e.Active = active
+	e.require(emailAttributeIdentifierFieldActive)
+}
+
+// SetDefaultMethod sets the DefaultMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EmailAttributeIdentifier) SetDefaultMethod(defaultMethod *DefaultMethodEmailIdentifierEnum) {
+	e.DefaultMethod = defaultMethod
+	e.require(emailAttributeIdentifierFieldDefaultMethod)
+}
+
+func (e *EmailAttributeIdentifier) UnmarshalJSON(data []byte) error {
+	type unmarshaler EmailAttributeIdentifier
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = EmailAttributeIdentifier(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *EmailAttributeIdentifier) MarshalJSON() ([]byte, error) {
+	type embed EmailAttributeIdentifier
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *EmailAttributeIdentifier) String() string {
 	if e == nil {
 		return "<nil>"
 	}
@@ -5086,7 +5847,7 @@ var (
 )
 
 type PhoneAttribute struct {
-	Identifier *ConnectionAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
+	Identifier *PhoneAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// Determines if property should be required for users
 	ProfileRequired *bool           `json:"profile_required,omitempty" url:"profile_required,omitempty"`
 	Signup          *SignupVerified `json:"signup,omitempty" url:"signup,omitempty"`
@@ -5098,9 +5859,9 @@ type PhoneAttribute struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *PhoneAttribute) GetIdentifier() ConnectionAttributeIdentifier {
+func (p *PhoneAttribute) GetIdentifier() PhoneAttributeIdentifier {
 	if p == nil || p.Identifier == nil {
-		return ConnectionAttributeIdentifier{}
+		return PhoneAttributeIdentifier{}
 	}
 	return *p.Identifier
 }
@@ -5135,7 +5896,7 @@ func (p *PhoneAttribute) require(field *big.Int) {
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PhoneAttribute) SetIdentifier(identifier *ConnectionAttributeIdentifier) {
+func (p *PhoneAttribute) SetIdentifier(identifier *PhoneAttributeIdentifier) {
 	p.Identifier = identifier
 	p.require(phoneAttributeFieldIdentifier)
 }
@@ -5182,6 +5943,107 @@ func (p *PhoneAttribute) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PhoneAttribute) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
+	phoneAttributeIdentifierFieldActive        = big.NewInt(1 << 0)
+	phoneAttributeIdentifierFieldDefaultMethod = big.NewInt(1 << 1)
+)
+
+type PhoneAttributeIdentifier struct {
+	// Determines if the attribute is used for identification
+	Active        *bool                                   `json:"active,omitempty" url:"active,omitempty"`
+	DefaultMethod *DefaultMethodPhoneNumberIdentifierEnum `json:"default_method,omitempty" url:"default_method,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PhoneAttributeIdentifier) GetActive() bool {
+	if p == nil || p.Active == nil {
+		return false
+	}
+	return *p.Active
+}
+
+func (p *PhoneAttributeIdentifier) GetDefaultMethod() DefaultMethodPhoneNumberIdentifierEnum {
+	if p == nil || p.DefaultMethod == nil {
+		return ""
+	}
+	return *p.DefaultMethod
+}
+
+func (p *PhoneAttributeIdentifier) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PhoneAttributeIdentifier) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneAttributeIdentifier) SetActive(active *bool) {
+	p.Active = active
+	p.require(phoneAttributeIdentifierFieldActive)
+}
+
+// SetDefaultMethod sets the DefaultMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneAttributeIdentifier) SetDefaultMethod(defaultMethod *DefaultMethodPhoneNumberIdentifierEnum) {
+	p.DefaultMethod = defaultMethod
+	p.require(phoneAttributeIdentifierFieldDefaultMethod)
+}
+
+func (p *PhoneAttributeIdentifier) UnmarshalJSON(data []byte) error {
+	type unmarshaler PhoneAttributeIdentifier
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PhoneAttributeIdentifier(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PhoneAttributeIdentifier) MarshalJSON() ([]byte, error) {
+	type embed PhoneAttributeIdentifier
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PhoneAttributeIdentifier) String() string {
 	if p == nil {
 		return "<nil>"
 	}
@@ -5529,6 +6391,8 @@ var (
 	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 35)
 	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 36)
 	updateConnectionOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 37)
+	updateConnectionOptionsFieldDiscoveryURL                     = big.NewInt(1 << 38)
+	updateConnectionOptionsFieldOidcMetadata                     = big.NewInt(1 << 39)
 )
 
 type UpdateConnectionOptions struct {
@@ -5576,6 +6440,8 @@ type UpdateConnectionOptions struct {
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
 	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	DiscoveryURL                     *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata                     *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -5849,6 +6715,20 @@ func (u *UpdateConnectionOptions) GetIDTokenSessionExpirySupported() ConnectionI
 		return false
 	}
 	return *u.IDTokenSessionExpirySupported
+}
+
+func (u *UpdateConnectionOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
+	if u == nil || u.DiscoveryURL == nil {
+		return nil
+	}
+	return *u.DiscoveryURL
+}
+
+func (u *UpdateConnectionOptions) GetOidcMetadata() ConnectionsOidcMetadata {
+	if u == nil || u.OidcMetadata == nil {
+		return ConnectionsOidcMetadata{}
+	}
+	return *u.OidcMetadata
 }
 
 func (u *UpdateConnectionOptions) GetExtraProperties() map[string]interface{} {
@@ -6129,6 +7009,20 @@ func (u *UpdateConnectionOptions) SetTokenEndpointJwtcaAudFormat(tokenEndpointJw
 func (u *UpdateConnectionOptions) SetIDTokenSessionExpirySupported(idTokenSessionExpirySupported *ConnectionIDTokenSessionExpirySupported) {
 	u.IDTokenSessionExpirySupported = idTokenSessionExpirySupported
 	u.require(updateConnectionOptionsFieldIDTokenSessionExpirySupported)
+}
+
+// SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetDiscoveryURL(discoveryURL *ConnectionsDiscoveryURL) {
+	u.DiscoveryURL = discoveryURL
+	u.require(updateConnectionOptionsFieldDiscoveryURL)
+}
+
+// SetOidcMetadata sets the OidcMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetOidcMetadata(oidcMetadata *ConnectionsOidcMetadata) {
+	u.OidcMetadata = oidcMetadata
+	u.require(updateConnectionOptionsFieldOidcMetadata)
 }
 
 func (u *UpdateConnectionOptions) UnmarshalJSON(data []byte) error {
@@ -6570,7 +7464,7 @@ var (
 )
 
 type UsernameAttribute struct {
-	Identifier *ConnectionAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
+	Identifier *UsernameAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// Determines if property should be required for users
 	ProfileRequired *bool               `json:"profile_required,omitempty" url:"profile_required,omitempty"`
 	Signup          *SignupSchema       `json:"signup,omitempty" url:"signup,omitempty"`
@@ -6583,9 +7477,9 @@ type UsernameAttribute struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UsernameAttribute) GetIdentifier() ConnectionAttributeIdentifier {
+func (u *UsernameAttribute) GetIdentifier() UsernameAttributeIdentifier {
 	if u == nil || u.Identifier == nil {
-		return ConnectionAttributeIdentifier{}
+		return UsernameAttributeIdentifier{}
 	}
 	return *u.Identifier
 }
@@ -6627,7 +7521,7 @@ func (u *UsernameAttribute) require(field *big.Int) {
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UsernameAttribute) SetIdentifier(identifier *ConnectionAttributeIdentifier) {
+func (u *UsernameAttribute) SetIdentifier(identifier *UsernameAttributeIdentifier) {
 	u.Identifier = identifier
 	u.require(usernameAttributeFieldIdentifier)
 }
@@ -6681,6 +7575,91 @@ func (u *UsernameAttribute) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UsernameAttribute) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	usernameAttributeIdentifierFieldActive = big.NewInt(1 << 0)
+)
+
+type UsernameAttributeIdentifier struct {
+	// Determines if the attribute is used for identification
+	Active *bool `json:"active,omitempty" url:"active,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UsernameAttributeIdentifier) GetActive() bool {
+	if u == nil || u.Active == nil {
+		return false
+	}
+	return *u.Active
+}
+
+func (u *UsernameAttributeIdentifier) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UsernameAttributeIdentifier) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsernameAttributeIdentifier) SetActive(active *bool) {
+	u.Active = active
+	u.require(usernameAttributeIdentifierFieldActive)
+}
+
+func (u *UsernameAttributeIdentifier) UnmarshalJSON(data []byte) error {
+	type unmarshaler UsernameAttributeIdentifier
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UsernameAttributeIdentifier(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UsernameAttributeIdentifier) MarshalJSON() ([]byte, error) {
+	type embed UsernameAttributeIdentifier
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UsernameAttributeIdentifier) String() string {
 	if u == nil {
 		return "<nil>"
 	}

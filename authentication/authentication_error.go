@@ -17,7 +17,6 @@ type Error struct {
 
 func newError(response *http.Response) error {
 	apiError := &Error{}
-
 	if err := json.NewDecoder(response.Body).Decode(apiError); err != nil {
 		return &Error{
 			StatusCode: response.StatusCode,

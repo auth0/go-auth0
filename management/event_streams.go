@@ -1882,6 +1882,9 @@ func (e *EventStreamSubscription) String() string {
 type EventStreamTestEventTypeEnum string
 
 const (
+	EventStreamTestEventTypeEnumConnectionCreated              EventStreamTestEventTypeEnum = "connection.created"
+	EventStreamTestEventTypeEnumConnectionDeleted              EventStreamTestEventTypeEnum = "connection.deleted"
+	EventStreamTestEventTypeEnumConnectionUpdated              EventStreamTestEventTypeEnum = "connection.updated"
 	EventStreamTestEventTypeEnumGroupCreated                   EventStreamTestEventTypeEnum = "group.created"
 	EventStreamTestEventTypeEnumGroupDeleted                   EventStreamTestEventTypeEnum = "group.deleted"
 	EventStreamTestEventTypeEnumGroupMemberAdded               EventStreamTestEventTypeEnum = "group.member.added"
@@ -1908,6 +1911,12 @@ const (
 
 func NewEventStreamTestEventTypeEnumFromString(s string) (EventStreamTestEventTypeEnum, error) {
 	switch s {
+	case "connection.created":
+		return EventStreamTestEventTypeEnumConnectionCreated, nil
+	case "connection.deleted":
+		return EventStreamTestEventTypeEnumConnectionDeleted, nil
+	case "connection.updated":
+		return EventStreamTestEventTypeEnumConnectionUpdated, nil
 	case "group.created":
 		return EventStreamTestEventTypeEnumGroupCreated, nil
 	case "group.deleted":

@@ -348,6 +348,14 @@ func TestSettersCreateOrganizationResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetThirdPartyClientAccess", func(t *testing.T) {
+		obj := &CreateOrganizationResponseContent{}
+		var fernTestValueThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum
+		obj.SetThirdPartyClientAccess(fernTestValueThirdPartyClientAccess)
+		assert.Equal(t, fernTestValueThirdPartyClientAccess, obj.ThirdPartyClientAccess)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetEnabledConnections", func(t *testing.T) {
 		obj := &CreateOrganizationResponseContent{}
 		var fernTestValueEnabledConnections []*OrganizationEnabledConnection
@@ -561,6 +569,40 @@ func TestGettersCreateOrganizationResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetTokenQuota() // Should return zero value
+	})
+
+	t.Run("GetThirdPartyClientAccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateOrganizationResponseContent{}
+		var value OrganizationThirdPartyClientAccessEnum
+		obj.ThirdPartyClientAccess = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetThirdPartyClientAccess(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetThirdPartyClientAccess_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateOrganizationResponseContent{}
+		obj.ThirdPartyClientAccess = nil
+		var expectedZero OrganizationThirdPartyClientAccessEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetThirdPartyClientAccess(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetThirdPartyClientAccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateOrganizationResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetThirdPartyClientAccess() // Should return zero value
 	})
 
 	t.Run("GetEnabledConnections", func(t *testing.T) {
@@ -785,6 +827,37 @@ func TestSettersMarkExplicitCreateOrganizationResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetThirdPartyClientAccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateOrganizationResponseContent{}
+		var fernTestValueThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum
+
+		// Act
+		obj.SetThirdPartyClientAccess(fernTestValueThirdPartyClientAccess)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetEnabledConnections_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -864,6 +937,14 @@ func TestSettersGetOrganizationByNameResponseContent(t *testing.T) {
 		var fernTestValueTokenQuota *TokenQuota
 		obj.SetTokenQuota(fernTestValueTokenQuota)
 		assert.Equal(t, fernTestValueTokenQuota, obj.TokenQuota)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetThirdPartyClientAccess", func(t *testing.T) {
+		obj := &GetOrganizationByNameResponseContent{}
+		var fernTestValueThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum
+		obj.SetThirdPartyClientAccess(fernTestValueThirdPartyClientAccess)
+		assert.Equal(t, fernTestValueThirdPartyClientAccess, obj.ThirdPartyClientAccess)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1074,6 +1155,40 @@ func TestGettersGetOrganizationByNameResponseContent(t *testing.T) {
 		_ = obj.GetTokenQuota() // Should return zero value
 	})
 
+	t.Run("GetThirdPartyClientAccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetOrganizationByNameResponseContent{}
+		var value OrganizationThirdPartyClientAccessEnum
+		obj.ThirdPartyClientAccess = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetThirdPartyClientAccess(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetThirdPartyClientAccess_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetOrganizationByNameResponseContent{}
+		obj.ThirdPartyClientAccess = nil
+		var expectedZero OrganizationThirdPartyClientAccessEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetThirdPartyClientAccess(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetThirdPartyClientAccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetOrganizationByNameResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetThirdPartyClientAccess() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitGetOrganizationByNameResponseContent(t *testing.T) {
@@ -1263,6 +1378,37 @@ func TestSettersMarkExplicitGetOrganizationByNameResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetThirdPartyClientAccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetOrganizationByNameResponseContent{}
+		var fernTestValueThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum
+
+		// Act
+		obj.SetThirdPartyClientAccess(fernTestValueThirdPartyClientAccess)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersGetOrganizationResponseContent(t *testing.T) {
@@ -1311,6 +1457,14 @@ func TestSettersGetOrganizationResponseContent(t *testing.T) {
 		var fernTestValueTokenQuota *TokenQuota
 		obj.SetTokenQuota(fernTestValueTokenQuota)
 		assert.Equal(t, fernTestValueTokenQuota, obj.TokenQuota)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetThirdPartyClientAccess", func(t *testing.T) {
+		obj := &GetOrganizationResponseContent{}
+		var fernTestValueThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum
+		obj.SetThirdPartyClientAccess(fernTestValueThirdPartyClientAccess)
+		assert.Equal(t, fernTestValueThirdPartyClientAccess, obj.ThirdPartyClientAccess)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1521,6 +1675,40 @@ func TestGettersGetOrganizationResponseContent(t *testing.T) {
 		_ = obj.GetTokenQuota() // Should return zero value
 	})
 
+	t.Run("GetThirdPartyClientAccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetOrganizationResponseContent{}
+		var value OrganizationThirdPartyClientAccessEnum
+		obj.ThirdPartyClientAccess = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetThirdPartyClientAccess(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetThirdPartyClientAccess_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetOrganizationResponseContent{}
+		obj.ThirdPartyClientAccess = nil
+		var expectedZero OrganizationThirdPartyClientAccessEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetThirdPartyClientAccess(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetThirdPartyClientAccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetOrganizationResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetThirdPartyClientAccess() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitGetOrganizationResponseContent(t *testing.T) {
@@ -1687,6 +1875,37 @@ func TestSettersMarkExplicitGetOrganizationResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetTokenQuota(fernTestValueTokenQuota)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetThirdPartyClientAccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetOrganizationResponseContent{}
+		var fernTestValueThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum
+
+		// Act
+		obj.SetThirdPartyClientAccess(fernTestValueThirdPartyClientAccess)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2289,6 +2508,14 @@ func TestSettersUpdateOrganizationResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetThirdPartyClientAccess", func(t *testing.T) {
+		obj := &UpdateOrganizationResponseContent{}
+		var fernTestValueThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum
+		obj.SetThirdPartyClientAccess(fernTestValueThirdPartyClientAccess)
+		assert.Equal(t, fernTestValueThirdPartyClientAccess, obj.ThirdPartyClientAccess)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersUpdateOrganizationResponseContent(t *testing.T) {
@@ -2496,6 +2723,40 @@ func TestGettersUpdateOrganizationResponseContent(t *testing.T) {
 		_ = obj.GetTokenQuota() // Should return zero value
 	})
 
+	t.Run("GetThirdPartyClientAccess", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateOrganizationResponseContent{}
+		var value OrganizationThirdPartyClientAccessEnum
+		obj.ThirdPartyClientAccess = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetThirdPartyClientAccess(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetThirdPartyClientAccess_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateOrganizationResponseContent{}
+		obj.ThirdPartyClientAccess = nil
+		var expectedZero OrganizationThirdPartyClientAccessEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetThirdPartyClientAccess(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetThirdPartyClientAccess_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateOrganizationResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetThirdPartyClientAccess() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitUpdateOrganizationResponseContent(t *testing.T) {
@@ -2662,6 +2923,37 @@ func TestSettersMarkExplicitUpdateOrganizationResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetTokenQuota(fernTestValueTokenQuota)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetThirdPartyClientAccess_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateOrganizationResponseContent{}
+		var fernTestValueThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum
+
+		// Act
+		obj.SetThirdPartyClientAccess(fernTestValueThirdPartyClientAccess)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

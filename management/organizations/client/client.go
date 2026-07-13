@@ -17,6 +17,7 @@ import (
 	groupsclient "github.com/auth0/go-auth0/v2/management/organizations/groups/client"
 	invitations "github.com/auth0/go-auth0/v2/management/organizations/invitations"
 	client "github.com/auth0/go-auth0/v2/management/organizations/members/client"
+	rolesclient "github.com/auth0/go-auth0/v2/management/organizations/roles/client"
 )
 
 type Client struct {
@@ -28,6 +29,7 @@ type Client struct {
 	Invitations        *invitations.Client
 	Members            *client.Client
 	Groups             *groupsclient.Client
+	Roles              *rolesclient.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -43,6 +45,7 @@ func NewClient(options *core.RequestOptions) *Client {
 		Invitations:        invitations.NewClient(options),
 		Members:            client.NewClient(options),
 		Groups:             groupsclient.NewClient(options),
+		Roles:              rolesclient.NewClient(options),
 		WithRawResponse:    NewRawClient(options),
 		options:            options,
 		baseURL:            options.BaseURL,
