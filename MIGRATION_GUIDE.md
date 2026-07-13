@@ -19,6 +19,7 @@ v3 is a compatible evolution of the v2 client. The client initialization, packag
 
 - [Connection Attribute Identifier Types](#connection-attribute-identifier-types)
 - [Role Pagination Field Types](#role-pagination-field-types)
+- [Phone Provider Protection Backoff Strategy Enum](#phone-provider-protection-backoff-strategy-enum)
 
 ### Connection Attribute Identifier Types
 
@@ -75,7 +76,44 @@ attributes := &management.ConnectionAttributes{
 </tr>
 </table>
 
-The `DefaultMethod` field is now typed per attribute as well. `EmailAttributeIdentifier` and `PhoneAttributeIdentifier` expose a `DefaultMethod` field (`*DefaultMethodEmailIdentifierEnum` and `*DefaultMethodPhoneNumberIdentifierEnum` respectively), while `UsernameAttributeIdentifier` only carries `Active`.
+The `DefaultMethod` field is now typed per attribute as well. In v2 every attribute shared the `DefaultMethodEmailIdentifierEnum` type on its `DefaultMethod` field, so the phone attribute was incorrectly limited to the email enum values. In v3 each attribute uses the enum that matches it:
+
+| Attribute identifier | v2 `DefaultMethod` type | v3 `DefaultMethod` type | v3 enum values |
+| --- | --- | --- | --- |
+| `EmailAttributeIdentifier` | `*DefaultMethodEmailIdentifierEnum` | `*DefaultMethodEmailIdentifierEnum` | `password`, `email_otp` |
+| `PhoneAttributeIdentifier` | `*DefaultMethodEmailIdentifierEnum` | `*DefaultMethodPhoneNumberIdentifierEnum` | `password`, `phone_otp` |
+| `UsernameAttributeIdentifier` | n/a | n/a (only `Active`) | n/a |
+
+The new `DefaultMethodPhoneNumberIdentifierEnum` exposes `DefaultMethodPhoneNumberIdentifierEnumPassword` (`"password"`) and `DefaultMethodPhoneNumberIdentifierEnumPhoneOtp` (`"phone_otp"`), along with the usual `NewDefaultMethodPhoneNumberIdentifierEnumFromString` constructor and `Ptr` helper. If you set a default method on a phone identifier, switch from the email enum to the phone enum.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+Identifier: &management.ConnectionAttributeIdentifier{
+    Active:        auth0.Bool(true),
+    DefaultMethod: management.DefaultMethodEmailIdentifierEnumPassword.Ptr(),
+}
+```
+
+</td>
+<td>
+
+```go
+Identifier: &management.PhoneAttributeIdentifier{
+    Active:        auth0.Bool(true),
+    DefaultMethod: management.DefaultMethodPhoneNumberIdentifierEnumPassword.Ptr(),
+}
+```
+
+</td>
+</tr>
+</table>
 
 ### Role Pagination Field Types
 
@@ -118,12 +156,42 @@ func (l *ListRolesOffsetPaginatedResponseContent) SetTotal(total float64)
 
 If you read these fields directly, drop the pointer dereference. The `GetStart`, `GetLimit`, and `GetTotal` accessors continue to return `float64`, so code using the accessors needs no change.
 
+### Phone Provider Protection Backoff Strategy Enum
+
+On `PhoneProviderProtectionBackoffStrategyEnum`, the `None` value (`"none"`) has been removed and replaced with `Default` (`"default"`). The `Exponential` value is unchanged.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+strategy := management.PhoneProviderProtectionBackoffStrategyEnumNone // "none"
+```
+
+</td>
+<td>
+
+```go
+strategy := management.PhoneProviderProtectionBackoffStrategyEnumDefault // "default"
+```
+
+</td>
+</tr>
+</table>
+
+Replace any use of `PhoneProviderProtectionBackoffStrategyEnumNone` with `PhoneProviderProtectionBackoffStrategyEnumDefault`. `NewPhoneProviderProtectionBackoffStrategyEnumFromString` no longer accepts `"none"`.
+
 ## v3 Migration Steps
 
 1. Update the dependency to the v3 major and update your import paths if you pin to a specific version.
 2. Search your codebase for `ConnectionAttributeIdentifier` and replace each occurrence with the identifier type that matches the enclosing attribute (`EmailAttributeIdentifier`, `PhoneAttributeIdentifier`, or `UsernameAttributeIdentifier`).
 3. Remove pointer dereferences on the `Start`, `Limit`, and `Total` fields of `ListRolesOffsetPaginatedResponseContent` if you read them directly.
-4. Build and run your tests to catch any remaining type mismatches.
+4. Replace `PhoneProviderProtectionBackoffStrategyEnumNone` with `PhoneProviderProtectionBackoffStrategyEnumDefault`.
+5. Build and run your tests to catch any remaining type mismatches.
 
 ---
 
