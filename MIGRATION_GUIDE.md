@@ -1,6 +1,135 @@
-# Auth0 Go SDK v1 to v2 Migration Guide
+# Auth0 Go SDK Migration Guide
 
-**Please review this guide thoroughly to understand the changes required to migrate from go-auth0 v1 to go-auth0 v2**
+This document covers the changes required to move between major versions of go-auth0.
+
+- [Migrating from v2 to v3](#migrating-from-v2-to-v3)
+- [Migrating from v1 to v2](#migrating-from-v1-to-v2)
+
+---
+
+# Migrating from v2 to v3
+
+**Please review this section thoroughly to understand the changes required to migrate from go-auth0 v2 to go-auth0 v3.**
+
+## Overview
+
+v3 is a compatible evolution of the v2 client. The client initialization, package layout, and option pattern introduced in v2 all stay the same. The breaking changes are focused on a small number of request and response types where field types were tightened for correctness. Most applications will only need to update the specific call sites that touch the types listed below.
+
+## v3 Breaking Changes
+
+- [Connection Attribute Identifier Types](#connection-attribute-identifier-types)
+- [Role Pagination Field Types](#role-pagination-field-types)
+
+### Connection Attribute Identifier Types
+
+The single `ConnectionAttributeIdentifier` type has been replaced with dedicated per-attribute identifier types. Each connection attribute now has its own identifier type, which allows the SDK to model the attribute-specific `default_method` values correctly.
+
+| Attribute | v2 identifier type | v3 identifier type |
+| --- | --- | --- |
+| `EmailAttribute` | `ConnectionAttributeIdentifier` | `EmailAttributeIdentifier` |
+| `PhoneAttribute` | `ConnectionAttributeIdentifier` | `PhoneAttributeIdentifier` |
+| `UsernameAttribute` | `ConnectionAttributeIdentifier` | `UsernameAttributeIdentifier` |
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+attributes := &management.ConnectionAttributes{
+    Email: &management.EmailAttribute{
+        Identifier: &management.ConnectionAttributeIdentifier{
+            Active: auth0.Bool(true),
+        },
+    },
+    Username: &management.UsernameAttribute{
+        Identifier: &management.ConnectionAttributeIdentifier{
+            Active: auth0.Bool(true),
+        },
+    },
+}
+```
+
+</td>
+<td>
+
+```go
+attributes := &management.ConnectionAttributes{
+    Email: &management.EmailAttribute{
+        Identifier: &management.EmailAttributeIdentifier{
+            Active: auth0.Bool(true),
+        },
+    },
+    Username: &management.UsernameAttribute{
+        Identifier: &management.UsernameAttributeIdentifier{
+            Active: auth0.Bool(true),
+        },
+    },
+}
+```
+
+</td>
+</tr>
+</table>
+
+The `DefaultMethod` field is now typed per attribute as well. `EmailAttributeIdentifier` and `PhoneAttributeIdentifier` expose a `DefaultMethod` field (`*DefaultMethodEmailIdentifierEnum` and `*DefaultMethodPhoneNumberIdentifierEnum` respectively), while `UsernameAttributeIdentifier` only carries `Active`.
+
+### Role Pagination Field Types
+
+On `ListRolesOffsetPaginatedResponseContent`, the pagination fields changed from optional pointers to non-pointer values, since the API always returns them.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+Start *float64
+Limit *float64
+Total *float64
+
+func (l *ListRolesOffsetPaginatedResponseContent) SetStart(start *float64)
+func (l *ListRolesOffsetPaginatedResponseContent) SetLimit(limit *float64)
+func (l *ListRolesOffsetPaginatedResponseContent) SetTotal(total *float64)
+```
+
+</td>
+<td>
+
+```go
+Start float64
+Limit float64
+Total float64
+
+func (l *ListRolesOffsetPaginatedResponseContent) SetStart(start float64)
+func (l *ListRolesOffsetPaginatedResponseContent) SetLimit(limit float64)
+func (l *ListRolesOffsetPaginatedResponseContent) SetTotal(total float64)
+```
+
+</td>
+</tr>
+</table>
+
+If you read these fields directly, drop the pointer dereference. The `GetStart`, `GetLimit`, and `GetTotal` accessors continue to return `float64`, so code using the accessors needs no change.
+
+## v3 Migration Steps
+
+1. Update the dependency to the v3 major and update your import paths if you pin to a specific version.
+2. Search your codebase for `ConnectionAttributeIdentifier` and replace each occurrence with the identifier type that matches the enclosing attribute (`EmailAttributeIdentifier`, `PhoneAttributeIdentifier`, or `UsernameAttributeIdentifier`).
+3. Remove pointer dereferences on the `Start`, `Limit`, and `Total` fields of `ListRolesOffsetPaginatedResponseContent` if you read them directly.
+4. Build and run your tests to catch any remaining type mismatches.
+
+---
+
+# Migrating from v1 to v2
+
+**Please review this section thoroughly to understand the changes required to migrate from go-auth0 v1 to go-auth0 v2**
 
 ## Table of Contents
 
