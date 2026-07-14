@@ -3521,6 +3521,13 @@ func TestConnection_GetConnectedAccounts(tt *testing.T) {
 	c.GetConnectedAccounts()
 }
 
+func TestConnection_GetCrossAppAccessRequestingApp(tt *testing.T) {
+	c := &Connection{}
+	c.GetCrossAppAccessRequestingApp()
+	c = nil
+	c.GetCrossAppAccessRequestingApp()
+}
+
 func TestConnection_GetDisplayName(tt *testing.T) {
 	var zeroValue string
 	c := &Connection{DisplayName: &zeroValue}
@@ -9187,6 +9194,24 @@ func TestCredential_GetUpdatedAt(tt *testing.T) {
 func TestCredential_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Credential{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestCrossAppAccessRequestingApp_GetActive(tt *testing.T) {
+	var zeroValue bool
+	c := &CrossAppAccessRequestingApp{Active: &zeroValue}
+	c.GetActive()
+	c = &CrossAppAccessRequestingApp{}
+	c.GetActive()
+	c = nil
+	c.GetActive()
+}
+
+func TestCrossAppAccessRequestingApp_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CrossAppAccessRequestingApp{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

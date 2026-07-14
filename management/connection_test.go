@@ -432,6 +432,9 @@ ZsUkLw2I7zI/dNlWdB8Xp7v+3w9sX5N3J/WuJ1KOO5m26kRlHQo7EzT3974g
 		connection: Connection{
 			Name:     auth0.Stringf("Test-OIDC-Connection-%d", time.Now().Unix()),
 			Strategy: auth0.String("oidc"),
+			CrossAppAccessRequestingApp: &CrossAppAccessRequestingApp{
+				Active: auth0.Bool(true),
+			},
 		},
 		options: &ConnectionOptionsOIDC{
 			ClientID:                  auth0.String("4ef8d976-71bd-4473-a7ce-087d3f0fafd8"),
@@ -574,6 +577,14 @@ func TestConnectionManager_Create(t *testing.T) {
 			assert.NoError(t, err)
 			assert.NotEmpty(t, expectedConnection.GetID())
 			assert.IsType(t, testCase.options, expectedConnection.Options)
+
+			if testCase.connection.CrossAppAccessRequestingApp != nil {
+				assert.Equal(
+					t,
+					testCase.connection.GetCrossAppAccessRequestingApp().GetActive(),
+					expectedConnection.GetCrossAppAccessRequestingApp().GetActive(),
+				)
+			}
 
 			t.Cleanup(func() {
 				cleanupConnection(t, expectedConnection.GetID())
