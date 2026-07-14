@@ -372,24 +372,29 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 		assert.Equal(t, "age=0&enabled=false&name=", values.Encode())
 	})
 
-	t.Run("nil input returns empty values", func(t *testing.T) {
+	t.Run("nil input applies defaults", func(t *testing.T) {
 		defaults := map[string]any{
 			"name": "default-name",
 			"age":  25,
 		}
 
-		// Test with nil
+		// Test with nil interface. Even though there is no struct to inspect,
+		// the defaults must still be applied so callers relying on default query
+		// parameters (e.g. include_totals=true for paginated endpoints) behave
+		// correctly when passing a nil request.
 		values, err := QueryValuesWithDefaults(nil, defaults)
 		require.NoError(t, err)
-		assert.Empty(t, values)
+		assert.Equal(t, "default-name", values.Get("name"))
+		assert.Equal(t, "25", values.Get("age"))
 
-		// Test with nil pointer
+		// Test with nil pointer.
 		type example struct {
 			Name string `json:"name" url:"name"`
 		}
 		var nilPtr *example
 		values, err = QueryValuesWithDefaults(nilPtr, defaults)
 		require.NoError(t, err)
-		assert.Empty(t, values)
+		assert.Equal(t, "default-name", values.Get("name"))
+		assert.Equal(t, "25", values.Get("age"))
 	})
 }
