@@ -491,20 +491,22 @@ type NetworkACLActionRedirectEnum = bool
 
 var (
 	networkACLMatchFieldAsns                = big.NewInt(1 << 0)
-	networkACLMatchFieldGeoCountryCodes     = big.NewInt(1 << 1)
-	networkACLMatchFieldGeoSubdivisionCodes = big.NewInt(1 << 2)
-	networkACLMatchFieldIpv4Cidrs           = big.NewInt(1 << 3)
-	networkACLMatchFieldIpv6Cidrs           = big.NewInt(1 << 4)
-	networkACLMatchFieldJa3Fingerprints     = big.NewInt(1 << 5)
-	networkACLMatchFieldJa4Fingerprints     = big.NewInt(1 << 6)
-	networkACLMatchFieldUserAgents          = big.NewInt(1 << 7)
-	networkACLMatchFieldHostnames           = big.NewInt(1 << 8)
-	networkACLMatchFieldConnectingIpv4Cidrs = big.NewInt(1 << 9)
-	networkACLMatchFieldConnectingIpv6Cidrs = big.NewInt(1 << 10)
+	networkACLMatchFieldAuth0Managed        = big.NewInt(1 << 1)
+	networkACLMatchFieldGeoCountryCodes     = big.NewInt(1 << 2)
+	networkACLMatchFieldGeoSubdivisionCodes = big.NewInt(1 << 3)
+	networkACLMatchFieldIpv4Cidrs           = big.NewInt(1 << 4)
+	networkACLMatchFieldIpv6Cidrs           = big.NewInt(1 << 5)
+	networkACLMatchFieldJa3Fingerprints     = big.NewInt(1 << 6)
+	networkACLMatchFieldJa4Fingerprints     = big.NewInt(1 << 7)
+	networkACLMatchFieldUserAgents          = big.NewInt(1 << 8)
+	networkACLMatchFieldHostnames           = big.NewInt(1 << 9)
+	networkACLMatchFieldConnectingIpv4Cidrs = big.NewInt(1 << 10)
+	networkACLMatchFieldConnectingIpv6Cidrs = big.NewInt(1 << 11)
 )
 
 type NetworkACLMatch struct {
 	Asns                []int                               `json:"asns,omitempty" url:"asns,omitempty"`
+	Auth0Managed        []string                            `json:"auth0_managed,omitempty" url:"auth0_managed,omitempty"`
 	GeoCountryCodes     []string                            `json:"geo_country_codes,omitempty" url:"geo_country_codes,omitempty"`
 	GeoSubdivisionCodes []string                            `json:"geo_subdivision_codes,omitempty" url:"geo_subdivision_codes,omitempty"`
 	Ipv4Cidrs           []NetworkACLMatchIpv4Cidr           `json:"ipv4_cidrs,omitempty" url:"ipv4_cidrs,omitempty"`
@@ -528,6 +530,13 @@ func (n *NetworkACLMatch) GetAsns() []int {
 		return nil
 	}
 	return n.Asns
+}
+
+func (n *NetworkACLMatch) GetAuth0Managed() []string {
+	if n == nil || n.Auth0Managed == nil {
+		return nil
+	}
+	return n.Auth0Managed
 }
 
 func (n *NetworkACLMatch) GetGeoCountryCodes() []string {
@@ -619,6 +628,13 @@ func (n *NetworkACLMatch) require(field *big.Int) {
 func (n *NetworkACLMatch) SetAsns(asns []int) {
 	n.Asns = asns
 	n.require(networkACLMatchFieldAsns)
+}
+
+// SetAuth0Managed sets the Auth0Managed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLMatch) SetAuth0Managed(auth0Managed []string) {
+	n.Auth0Managed = auth0Managed
+	n.require(networkACLMatchFieldAuth0Managed)
 }
 
 // SetGeoCountryCodes sets the GeoCountryCodes field and marks it as non-optional;
