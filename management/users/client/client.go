@@ -18,7 +18,6 @@ import (
 	client "github.com/auth0/go-auth0/v2/management/users/effectivepermissions/client"
 	effectiverolesclient "github.com/auth0/go-auth0/v2/management/users/effectiveroles/client"
 	enrollments "github.com/auth0/go-auth0/v2/management/users/enrollments"
-	federatedconnectionstokensets "github.com/auth0/go-auth0/v2/management/users/federatedconnectionstokensets"
 	groups "github.com/auth0/go-auth0/v2/management/users/groups"
 	identities "github.com/auth0/go-auth0/v2/management/users/identities"
 	logs "github.com/auth0/go-auth0/v2/management/users/logs"
@@ -32,24 +31,23 @@ import (
 )
 
 type Client struct {
-	WithRawResponse               *RawClient
-	AuthenticationMethods         *authenticationmethods.Client
-	Authenticators                *authenticators.Client
-	ConnectedAccounts             *connectedaccounts.Client
-	EffectivePermissions          *client.Client
-	EffectiveRoles                *effectiverolesclient.Client
-	Enrollments                   *enrollments.Client
-	FederatedConnectionsTokensets *federatedconnectionstokensets.Client
-	Groups                        *groups.Client
-	Identities                    *identities.Client
-	Logs                          *logs.Client
-	Multifactor                   *multifactor.Client
-	Organizations                 *organizations.Client
-	Permissions                   *permissions.Client
-	RiskAssessments               *riskassessments.Client
-	Roles                         *roles.Client
-	RefreshToken                  *refreshtoken.Client
-	Sessions                      *sessions.Client
+	WithRawResponse       *RawClient
+	AuthenticationMethods *authenticationmethods.Client
+	Authenticators        *authenticators.Client
+	ConnectedAccounts     *connectedaccounts.Client
+	EffectivePermissions  *client.Client
+	EffectiveRoles        *effectiverolesclient.Client
+	Enrollments           *enrollments.Client
+	Groups                *groups.Client
+	Identities            *identities.Client
+	Logs                  *logs.Client
+	Multifactor           *multifactor.Client
+	Organizations         *organizations.Client
+	Permissions           *permissions.Client
+	RiskAssessments       *riskassessments.Client
+	Roles                 *roles.Client
+	RefreshToken          *refreshtoken.Client
+	Sessions              *sessions.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -58,26 +56,25 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		AuthenticationMethods:         authenticationmethods.NewClient(options),
-		Authenticators:                authenticators.NewClient(options),
-		ConnectedAccounts:             connectedaccounts.NewClient(options),
-		EffectivePermissions:          client.NewClient(options),
-		EffectiveRoles:                effectiverolesclient.NewClient(options),
-		Enrollments:                   enrollments.NewClient(options),
-		FederatedConnectionsTokensets: federatedconnectionstokensets.NewClient(options),
-		Groups:                        groups.NewClient(options),
-		Identities:                    identities.NewClient(options),
-		Logs:                          logs.NewClient(options),
-		Multifactor:                   multifactor.NewClient(options),
-		Organizations:                 organizations.NewClient(options),
-		Permissions:                   permissions.NewClient(options),
-		RiskAssessments:               riskassessments.NewClient(options),
-		Roles:                         roles.NewClient(options),
-		RefreshToken:                  refreshtoken.NewClient(options),
-		Sessions:                      sessions.NewClient(options),
-		WithRawResponse:               NewRawClient(options),
-		options:                       options,
-		baseURL:                       options.BaseURL,
+		AuthenticationMethods: authenticationmethods.NewClient(options),
+		Authenticators:        authenticators.NewClient(options),
+		ConnectedAccounts:     connectedaccounts.NewClient(options),
+		EffectivePermissions:  client.NewClient(options),
+		EffectiveRoles:        effectiverolesclient.NewClient(options),
+		Enrollments:           enrollments.NewClient(options),
+		Groups:                groups.NewClient(options),
+		Identities:            identities.NewClient(options),
+		Logs:                  logs.NewClient(options),
+		Multifactor:           multifactor.NewClient(options),
+		Organizations:         organizations.NewClient(options),
+		Permissions:           permissions.NewClient(options),
+		RiskAssessments:       riskassessments.NewClient(options),
+		Roles:                 roles.NewClient(options),
+		RefreshToken:          refreshtoken.NewClient(options),
+		Sessions:              sessions.NewClient(options),
+		WithRawResponse:       NewRawClient(options),
+		options:               options,
+		baseURL:               options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:         options.HTTPClient,

@@ -1429,88 +1429,6 @@ func TestSettersMarkExplicitConnectionEmailOtpAuthenticationMethod(t *testing.T)
 
 }
 
-func TestSettersConnectionFederatedConnectionsAccessTokens(t *testing.T) {
-	t.Run("SetActive", func(t *testing.T) {
-		obj := &ConnectionFederatedConnectionsAccessTokens{}
-		var fernTestValueActive *bool
-		obj.SetActive(fernTestValueActive)
-		assert.Equal(t, fernTestValueActive, obj.Active)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersConnectionFederatedConnectionsAccessTokens(t *testing.T) {
-	t.Run("GetActive", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ConnectionFederatedConnectionsAccessTokens{}
-		var value bool
-		obj.Active = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetActive(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetActive_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ConnectionFederatedConnectionsAccessTokens{}
-		obj.Active = nil
-		var expectedZero bool
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetActive(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetActive_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *ConnectionFederatedConnectionsAccessTokens
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetActive() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitConnectionFederatedConnectionsAccessTokens(t *testing.T) {
-	t.Run("SetActive_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ConnectionFederatedConnectionsAccessTokens{}
-		var fernTestValueActive *bool
-
-		// Act
-		obj.SetActive(fernTestValueActive)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
 func TestSettersConnectionGatewayAuthentication(t *testing.T) {
 	t.Run("SetMethod", func(t *testing.T) {
 		obj := &ConnectionGatewayAuthentication{}
@@ -4428,14 +4346,6 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetFederatedConnectionsAccessTokens", func(t *testing.T) {
-		obj := &ConnectionPropertiesOptions{}
-		var fernTestValueFederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens
-		obj.SetFederatedConnectionsAccessTokens(fernTestValueFederatedConnectionsAccessTokens)
-		assert.Equal(t, fernTestValueFederatedConnectionsAccessTokens, obj.FederatedConnectionsAccessTokens)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetPasswordOptions", func(t *testing.T) {
 		obj := &ConnectionPropertiesOptions{}
 		var fernTestValuePasswordOptions *ConnectionPasswordOptions
@@ -5500,40 +5410,6 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 			}
 		}()
 		_ = obj.GetGatewayAuthentication() // Should return zero value
-	})
-
-	t.Run("GetFederatedConnectionsAccessTokens", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ConnectionPropertiesOptions{}
-		var value ConnectionFederatedConnectionsAccessTokens
-		obj.FederatedConnectionsAccessTokens = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetFederatedConnectionsAccessTokens(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetFederatedConnectionsAccessTokens_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ConnectionPropertiesOptions{}
-		obj.FederatedConnectionsAccessTokens = nil
-		var expectedZero ConnectionFederatedConnectionsAccessTokens
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetFederatedConnectionsAccessTokens(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetFederatedConnectionsAccessTokens_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *ConnectionPropertiesOptions
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetFederatedConnectionsAccessTokens() // Should return zero value
 	})
 
 	t.Run("GetPasswordOptions", func(t *testing.T) {
@@ -6755,37 +6631,6 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 
 		// Act
 		obj.SetGatewayAuthentication(fernTestValueGatewayAuthentication)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetFederatedConnectionsAccessTokens_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ConnectionPropertiesOptions{}
-		var fernTestValueFederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens
-
-		// Act
-		obj.SetFederatedConnectionsAccessTokens(fernTestValueFederatedConnectionsAccessTokens)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -13786,14 +13631,6 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetFederatedConnectionsAccessTokens", func(t *testing.T) {
-		obj := &UpdateConnectionOptions{}
-		var fernTestValueFederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens
-		obj.SetFederatedConnectionsAccessTokens(fernTestValueFederatedConnectionsAccessTokens)
-		assert.Equal(t, fernTestValueFederatedConnectionsAccessTokens, obj.FederatedConnectionsAccessTokens)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetPasswordOptions", func(t *testing.T) {
 		obj := &UpdateConnectionOptions{}
 		var fernTestValuePasswordOptions *ConnectionPasswordOptions
@@ -14858,40 +14695,6 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 			}
 		}()
 		_ = obj.GetGatewayAuthentication() // Should return zero value
-	})
-
-	t.Run("GetFederatedConnectionsAccessTokens", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UpdateConnectionOptions{}
-		var value ConnectionFederatedConnectionsAccessTokens
-		obj.FederatedConnectionsAccessTokens = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetFederatedConnectionsAccessTokens(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetFederatedConnectionsAccessTokens_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UpdateConnectionOptions{}
-		obj.FederatedConnectionsAccessTokens = nil
-		var expectedZero ConnectionFederatedConnectionsAccessTokens
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetFederatedConnectionsAccessTokens(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetFederatedConnectionsAccessTokens_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *UpdateConnectionOptions
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetFederatedConnectionsAccessTokens() // Should return zero value
 	})
 
 	t.Run("GetPasswordOptions", func(t *testing.T) {
@@ -16113,37 +15916,6 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetGatewayAuthentication(fernTestValueGatewayAuthentication)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetFederatedConnectionsAccessTokens_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UpdateConnectionOptions{}
-		var fernTestValueFederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens
-
-		// Act
-		obj.SetFederatedConnectionsAccessTokens(fernTestValueFederatedConnectionsAccessTokens)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -18366,39 +18138,6 @@ func TestJSONMarshalingConnectionEmailOtpAuthenticationMethod(t *testing.T) {
 	})
 }
 
-func TestJSONMarshalingConnectionFederatedConnectionsAccessTokens(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &ConnectionFederatedConnectionsAccessTokens{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled ConnectionFederatedConnectionsAccessTokens
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionFederatedConnectionsAccessTokens
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionFederatedConnectionsAccessTokens
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
 func TestJSONMarshalingConnectionGatewayAuthentication(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -19662,22 +19401,6 @@ func TestStringConnectionEmailOtpAuthenticationMethod(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionEmailOtpAuthenticationMethod
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringConnectionFederatedConnectionsAccessTokens(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &ConnectionFederatedConnectionsAccessTokens{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *ConnectionFederatedConnectionsAccessTokens
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -21646,29 +21369,6 @@ func TestExtraPropertiesConnectionEmailOtpAuthenticationMethod(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionEmailOtpAuthenticationMethod
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesConnectionFederatedConnectionsAccessTokens(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &ConnectionFederatedConnectionsAccessTokens{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *ConnectionFederatedConnectionsAccessTokens
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

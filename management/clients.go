@@ -9026,20 +9026,17 @@ func (c *ClientSessionTransferDelegationConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Indicates the device binding enforcement for delegation (impersonation) access. If set to 'ip', device binding is enforced by IP. If set to 'asn', device binding is enforced by ASN. Default value is `ip`.
+// Indicates the device binding enforcement for delegation (impersonation) access. The only supported value is `ip`, which enforces device binding by IP, meaning consumption of the Session Transfer Token must be done from the same IP as the issuer.
 type ClientSessionTransferDelegationDeviceBindingEnum string
 
 const (
-	ClientSessionTransferDelegationDeviceBindingEnumIP  ClientSessionTransferDelegationDeviceBindingEnum = "ip"
-	ClientSessionTransferDelegationDeviceBindingEnumAsn ClientSessionTransferDelegationDeviceBindingEnum = "asn"
+	ClientSessionTransferDelegationDeviceBindingEnumIP ClientSessionTransferDelegationDeviceBindingEnum = "ip"
 )
 
 func NewClientSessionTransferDelegationDeviceBindingEnumFromString(s string) (ClientSessionTransferDelegationDeviceBindingEnum, error) {
 	switch s {
 	case "ip":
 		return ClientSessionTransferDelegationDeviceBindingEnumIP, nil
-	case "asn":
-		return ClientSessionTransferDelegationDeviceBindingEnumAsn, nil
 	}
 	var t ClientSessionTransferDelegationDeviceBindingEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
