@@ -6,20 +6,20 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 1190
+        content_length: 1290
         transfer_encoding: []
         trailer: {}
         host: go-auth0-dev.eu.auth0.com
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test-OIDC-Connection-1757700921","strategy":"oidc","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://example.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com/authorize","issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","type":"front_channel","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid profile email","upstream_params":{"screen_name":{"alias":"login_hint"}},"oidc_metadata":{"authorization_endpoint":"https://example.com/authorize","claims_supported":["sub","iss","aud","exp","iat","name","email"],"grant_types_supported":["authorization_code","implicit","refresh_token"],"id_token_signing_alg_values_supported":["RS256"],"issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","response_types_supported":["code","id_token","token","code id_token"],"scopes_supported":["openid","profile","email"],"subject_types_supported":["public"],"token_endpoint":"https://example.com/oauth/token","token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post"],"userinfo_endpoint":"https://example.com/userinfo"}}}
+            {"name":"Test-OIDC-Connection-1784053679","strategy":"oidc","cross_app_access_requesting_app":{"active":true},"options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://example.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com/authorize","issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","type":"front_channel","userinfo_endpoint":null,"token_endpoint":null,"scope":"openid profile email","upstream_params":{"screen_name":{"alias":"login_hint"}},"id_token_signed_response_algs":["RS256","PS256"],"oidc_metadata":{"authorization_endpoint":"https://example.com/authorize","claims_supported":["sub","iss","aud","exp","iat","name","email"],"grant_types_supported":["authorization_code","implicit","refresh_token"],"id_token_signing_alg_values_supported":["RS256"],"issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","response_types_supported":["code","id_token","token","code id_token"],"scopes_supported":["openid","profile","email"],"subject_types_supported":["public"],"token_endpoint":"https://example.com/oauth/token","token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post"],"userinfo_endpoint":"https://example.com/userinfo"}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.28.0
+                - Go-Auth0/1.44.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/connections
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"id":"con_S6e3XARphqilWTZJ","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://example.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com/authorize","issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","type":"front_channel","userinfo_endpoint":"https://example.com/userinfo","token_endpoint":"https://example.com/oauth/token","scope":"openid profile email","upstream_params":{"screen_name":{"alias":"login_hint"}},"oidc_metadata":{"authorization_endpoint":"https://example.com/authorize","claims_supported":["sub","iss","aud","exp","iat","name","email"],"grant_types_supported":["authorization_code","implicit","refresh_token"],"id_token_signing_alg_values_supported":["RS256"],"issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","response_types_supported":["code","id_token","token","code id_token"],"scopes_supported":["openid","profile","email"],"subject_types_supported":["public"],"token_endpoint":"https://example.com/oauth/token","token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post"],"userinfo_endpoint":"https://example.com/userinfo","claims_parameter_supported":false,"request_parameter_supported":false,"request_uri_parameter_supported":false,"require_request_uri_registration":false},"schema_version":"oidc-V4","attribute_map":{"mapping_mode":"bind_all"},"connection_settings":{"pkce":"auto"}},"strategy":"oidc","name":"Test-OIDC-Connection-1757700921","is_domain_connection":false,"show_as_button":false,"display_name":"Test-OIDC-Connection-1757700921","enabled_clients":[],"realms":["Test-OIDC-Connection-1757700921"]}'
+        body: '{"id":"con_TXbqvSVEpHu4l5ZY","options":{"client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","discovery_url":"https://example.com/.well-known/openid-configuration","authorization_endpoint":"https://example.com/authorize","issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","type":"front_channel","userinfo_endpoint":"https://example.com/userinfo","token_endpoint":"https://example.com/oauth/token","scope":"openid profile email","upstream_params":{"screen_name":{"alias":"login_hint"}},"id_token_signed_response_algs":["RS256","PS256"],"oidc_metadata":{"authorization_endpoint":"https://example.com/authorize","claims_supported":["sub","iss","aud","exp","iat","name","email"],"grant_types_supported":["authorization_code","implicit","refresh_token"],"id_token_signing_alg_values_supported":["RS256"],"issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","response_types_supported":["code","id_token","token","code id_token"],"scopes_supported":["openid","profile","email"],"subject_types_supported":["public"],"token_endpoint":"https://example.com/oauth/token","token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post"],"userinfo_endpoint":"https://example.com/userinfo","claims_parameter_supported":false,"request_parameter_supported":false,"request_uri_parameter_supported":false,"require_request_uri_registration":false},"schema_version":"oidc-V4","attribute_map":{"mapping_mode":"bind_all"},"connection_settings":{"pkce":"auto"}},"strategy":"oidc","name":"Test-OIDC-Connection-1784053679","is_domain_connection":false,"show_as_button":false,"authentication":{"active":true},"connected_accounts":{"active":false},"cross_app_access_requesting_app":{"active":true},"display_name":"Test-OIDC-Connection-1784053679","enabled_clients":[],"realms":["Test-OIDC-Connection-1784053679"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 932.781ms
+        duration: 1.114904666s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -52,8 +52,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_S6e3XARphqilWTZJ
+                - Go-Auth0/1.44.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_TXbqvSVEpHu4l5ZY
         method: GET
       response:
         proto: HTTP/2.0
@@ -63,13 +63,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"con_S6e3XARphqilWTZJ","options":{"type":"front_channel","scope":"openid profile email","issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","attribute_map":{"mapping_mode":"bind_all"},"discovery_url":"https://example.com/.well-known/openid-configuration","oidc_metadata":{"issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","token_endpoint":"https://example.com/oauth/token","claims_supported":["sub","iss","aud","exp","iat","name","email"],"scopes_supported":["openid","profile","email"],"userinfo_endpoint":"https://example.com/userinfo","grant_types_supported":["authorization_code","implicit","refresh_token"],"authorization_endpoint":"https://example.com/authorize","subject_types_supported":["public"],"response_types_supported":["code","id_token","token","code id_token"],"claims_parameter_supported":false,"request_parameter_supported":false,"request_uri_parameter_supported":false,"require_request_uri_registration":false,"id_token_signing_alg_values_supported":["RS256"],"token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post"]},"schema_version":"oidc-V4","token_endpoint":"https://example.com/oauth/token","upstream_params":{"screen_name":{"alias":"login_hint"}},"userinfo_endpoint":"https://example.com/userinfo","connection_settings":{"pkce":"auto"},"authorization_endpoint":"https://example.com/authorize"},"strategy":"oidc","name":"Test-OIDC-Connection-1757700921","is_domain_connection":false,"show_as_button":false,"display_name":"Test-OIDC-Connection-1757700921","enabled_clients":[],"realms":["Test-OIDC-Connection-1757700921"]}'
+        body: '{"id":"con_TXbqvSVEpHu4l5ZY","options":{"type":"front_channel","scope":"openid profile email","issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","client_id":"4ef8d976-71bd-4473-a7ce-087d3f0fafd8","attribute_map":{"mapping_mode":"bind_all"},"discovery_url":"https://example.com/.well-known/openid-configuration","oidc_metadata":{"issuer":"https://example.com","jwks_uri":"https://example.com/.well-known/jwks.json","token_endpoint":"https://example.com/oauth/token","claims_supported":["sub","iss","aud","exp","iat","name","email"],"scopes_supported":["openid","profile","email"],"userinfo_endpoint":"https://example.com/userinfo","grant_types_supported":["authorization_code","implicit","refresh_token"],"authorization_endpoint":"https://example.com/authorize","subject_types_supported":["public"],"response_types_supported":["code","id_token","token","code id_token"],"claims_parameter_supported":false,"request_parameter_supported":false,"request_uri_parameter_supported":false,"require_request_uri_registration":false,"id_token_signing_alg_values_supported":["RS256"],"token_endpoint_auth_methods_supported":["client_secret_basic","client_secret_post"]},"schema_version":"oidc-V4","token_endpoint":"https://example.com/oauth/token","upstream_params":{"screen_name":{"alias":"login_hint"}},"userinfo_endpoint":"https://example.com/userinfo","connection_settings":{"pkce":"auto"},"authorization_endpoint":"https://example.com/authorize","id_token_signed_response_algs":["RS256","PS256"]},"strategy":"oidc","name":"Test-OIDC-Connection-1784053679","is_domain_connection":false,"show_as_button":false,"authentication":{"active":true},"connected_accounts":{"active":false},"cross_app_access_requesting_app":{"active":true},"display_name":"Test-OIDC-Connection-1784053679","enabled_clients":[],"realms":["Test-OIDC-Connection-1784053679"]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 406.237209ms
+        duration: 314.780042ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -85,8 +85,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_S6e3XARphqilWTZJ
+                - Go-Auth0/1.44.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_TXbqvSVEpHu4l5ZY
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -96,13 +96,13 @@ interactions:
         trailer: {}
         content_length: 41
         uncompressed: false
-        body: '{"deleted_at":"2025-09-12T18:15:23.175Z"}'
+        body: '{"deleted_at":"2026-07-14T18:28:01.088Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 202 Accepted
         code: 202
-        duration: 360.573791ms
+        duration: 765.079792ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -118,8 +118,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.28.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_S6e3XARphqilWTZJ
+                - Go-Auth0/1.44.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/connections/con_TXbqvSVEpHu4l5ZY
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -127,12 +127,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 0
+        content_length: 41
         uncompressed: false
-        body: ""
+        body: '{"deleted_at":"2026-07-14T18:28:01.088Z"}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
-        status: 204 No Content
-        code: 204
-        duration: 345.058333ms
+        status: 202 Accepted
+        code: 202
+        duration: 285.7535ms

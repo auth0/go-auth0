@@ -165,6 +165,9 @@ type Connection struct {
 
 	// ConnectedAccounts is used for configuring the purpose of a connection to be used for connected accounts and Token Vault.
 	ConnectedAccounts *ConnectedAccounts `json:"connected_accounts,omitempty"`
+
+	// CrossAppAccessRequestingApp is used for configuring the purpose of a connection to be used as a Cross-App Access requesting application authorization server.
+	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp `json:"cross_app_access_requesting_app,omitempty"`
 }
 
 // Authentication is used for configuring the purpose of a Connection for login with Universal Login and displaying the connection.
@@ -174,6 +177,11 @@ type Authentication struct {
 
 // ConnectedAccounts is used for configuring the purpose of a connection to be used for connected accounts and Token Vault.
 type ConnectedAccounts struct {
+	Active *bool `json:"active,omitempty"`
+}
+
+// CrossAppAccessRequestingApp is used for configuring the purpose of a connection to be used as a Cross-App Access requesting application authorization server.
+type CrossAppAccessRequestingApp struct {
 	Active *bool `json:"active,omitempty"`
 }
 
