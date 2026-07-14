@@ -20,6 +20,9 @@ v3 is a compatible evolution of the v2 client. The client initialization, packag
 - [Connection Attribute Identifier Types](#connection-attribute-identifier-types)
 - [Role Pagination Field Types](#role-pagination-field-types)
 - [Phone Provider Protection Backoff Strategy Enum](#phone-provider-protection-backoff-strategy-enum)
+- [Federated Connections Tokensets Removed](#federated-connections-tokensets-removed)
+- [Federated Connections Access Tokens Removed](#federated-connections-access-tokens-removed)
+- [Session Transfer Delegation Device Binding Enum](#session-transfer-delegation-device-binding-enum)
 
 ### Connection Attribute Identifier Types
 
@@ -185,13 +188,116 @@ strategy := management.PhoneProviderProtectionBackoffStrategyEnumDefault // "def
 
 Replace any use of `PhoneProviderProtectionBackoffStrategyEnumNone` with `PhoneProviderProtectionBackoffStrategyEnumDefault`. `NewPhoneProviderProtectionBackoffStrategyEnumFromString` no longer accepts `"none"`.
 
+### Federated Connections Tokensets Removed
+
+The `Users.FederatedConnectionsTokensets` sub-client has been removed, along with its `List` and `Delete` methods and the `FederatedConnectionTokenSet` type. The underlying `/users/{id}/federated-connections-tokensets` endpoints are no longer part of the SDK.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+tokensets, err := client.Users.FederatedConnectionsTokensets.List(context.TODO(), userID)
+err = client.Users.FederatedConnectionsTokensets.Delete(context.TODO(), userID, tokensetID)
+```
+
+</td>
+<td>
+
+```go
+// No replacement. Remove any calls to Users.FederatedConnectionsTokensets.
+```
+
+</td>
+</tr>
+</table>
+
+### Federated Connections Access Tokens Removed
+
+The `ConnectionFederatedConnectionsAccessTokens` type has been removed, along with the `FederatedConnectionsAccessTokens` field (and its getter and setter) on the connection options types, including `ConnectionPropertiesOptions` (used by `CreateConnectionRequestContent`) and `UpdateConnectionOptions` (used by `UpdateConnectionRequestContent`).
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+req := &management.CreateConnectionRequestContent{
+    Name:     "my-connection",
+    Strategy: management.ConnectionIdentityProviderEnumOidc,
+    Options: &management.ConnectionPropertiesOptions{
+        ImportMode: auth0.Bool(false),
+        FederatedConnectionsAccessTokens: &management.ConnectionFederatedConnectionsAccessTokens{
+            Active: auth0.Bool(true),
+        },
+    },
+}
+```
+
+</td>
+<td>
+
+```go
+// Drop the FederatedConnectionsAccessTokens field; the rest is unchanged.
+req := &management.CreateConnectionRequestContent{
+    Name:     "my-connection",
+    Strategy: management.ConnectionIdentityProviderEnumOidc,
+    Options: &management.ConnectionPropertiesOptions{
+        ImportMode: auth0.Bool(false),
+    },
+}
+```
+
+</td>
+</tr>
+</table>
+
+### Session Transfer Delegation Device Binding Enum
+
+On `ClientSessionTransferDelegationDeviceBindingEnum`, the `Asn` value (`"asn"`) has been removed. The only supported value is now `IP` (`"ip"`), which enforces device binding by IP, meaning the Session Transfer Token must be consumed from the same IP as the issuer.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+binding := management.ClientSessionTransferDelegationDeviceBindingEnumAsn // "asn"
+```
+
+</td>
+<td>
+
+```go
+binding := management.ClientSessionTransferDelegationDeviceBindingEnumIP // "ip"
+```
+
+</td>
+</tr>
+</table>
+
+Replace any use of `ClientSessionTransferDelegationDeviceBindingEnumAsn` with `ClientSessionTransferDelegationDeviceBindingEnumIP`. `NewClientSessionTransferDelegationDeviceBindingEnumFromString` no longer accepts `"asn"`. This applies only to the delegation (impersonation) enum; the unrelated `ClientSessionTransferDeviceBindingEnum` still supports `ip`, `asn`, and `none`.
+
 ## v3 Migration Steps
 
 1. Update the dependency to the v3 major and update your import paths if you pin to a specific version.
 2. Search your codebase for `ConnectionAttributeIdentifier` and replace each occurrence with the identifier type that matches the enclosing attribute (`EmailAttributeIdentifier`, `PhoneAttributeIdentifier`, or `UsernameAttributeIdentifier`).
 3. Remove pointer dereferences on the `Start`, `Limit`, and `Total` fields of `ListRolesOffsetPaginatedResponseContent` if you read them directly.
 4. Replace `PhoneProviderProtectionBackoffStrategyEnumNone` with `PhoneProviderProtectionBackoffStrategyEnumDefault`.
-5. Build and run your tests to catch any remaining type mismatches.
+5. Remove any calls to `Users.FederatedConnectionsTokensets` and any use of the `FederatedConnectionTokenSet` type.
+6. Remove the `FederatedConnectionsAccessTokens` field from connection options and drop any use of the `ConnectionFederatedConnectionsAccessTokens` type.
+7. Replace `ClientSessionTransferDelegationDeviceBindingEnumAsn` with `ClientSessionTransferDelegationDeviceBindingEnumIP`.
+8. Build and run your tests to catch any remaining type mismatches.
 
 ---
 
