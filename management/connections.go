@@ -737,92 +737,6 @@ func (c *ConnectionEmailOtpAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Federated Connections Access Tokens
-var (
-	connectionFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
-)
-
-type ConnectionFederatedConnectionsAccessTokens struct {
-	// Enables refresh tokens and access tokens collection for federated connections
-	Active *bool `json:"active,omitempty" url:"active,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (c *ConnectionFederatedConnectionsAccessTokens) GetActive() bool {
-	if c == nil || c.Active == nil {
-		return false
-	}
-	return *c.Active
-}
-
-func (c *ConnectionFederatedConnectionsAccessTokens) GetExtraProperties() map[string]interface{} {
-	if c == nil {
-		return nil
-	}
-	return c.extraProperties
-}
-
-func (c *ConnectionFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
-	}
-	c.explicitFields.Or(c.explicitFields, field)
-}
-
-// SetActive sets the Active field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionFederatedConnectionsAccessTokens) SetActive(active *bool) {
-	c.Active = active
-	c.require(connectionFederatedConnectionsAccessTokensFieldActive)
-}
-
-func (c *ConnectionFederatedConnectionsAccessTokens) UnmarshalJSON(data []byte) error {
-	type unmarshaler ConnectionFederatedConnectionsAccessTokens
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*c = ConnectionFederatedConnectionsAccessTokens(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *c)
-	if err != nil {
-		return err
-	}
-	c.extraProperties = extraProperties
-	c.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (c *ConnectionFederatedConnectionsAccessTokens) MarshalJSON() ([]byte, error) {
-	type embed ConnectionFederatedConnectionsAccessTokens
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (c *ConnectionFederatedConnectionsAccessTokens) String() string {
-	if c == nil {
-		return "<nil>"
-	}
-	if len(c.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(c); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", c)
-}
-
 // Token-based authentication settings to be applied when connection is using an sms strategy.
 var (
 	connectionGatewayAuthenticationFieldMethod              = big.NewInt(1 << 0)
@@ -2731,17 +2645,16 @@ var (
 	connectionPropertiesOptionsFieldUpstreamParams                   = big.NewInt(1 << 26)
 	connectionPropertiesOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 27)
 	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
-	connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 29)
-	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
-	connectionPropertiesOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 31)
-	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 32)
-	connectionPropertiesOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 33)
-	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 34)
-	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 35)
-	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 36)
-	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 37)
-	connectionPropertiesOptionsFieldDiscoveryURL                     = big.NewInt(1 << 38)
-	connectionPropertiesOptionsFieldOidcMetadata                     = big.NewInt(1 << 39)
+	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
+	connectionPropertiesOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 30)
+	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
+	connectionPropertiesOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 32)
+	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
+	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
+	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
+	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 36)
+	connectionPropertiesOptionsFieldDiscoveryURL                     = big.NewInt(1 << 37)
+	connectionPropertiesOptionsFieldOidcMetadata                     = big.NewInt(1 << 38)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2780,7 +2693,6 @@ type ConnectionPropertiesOptions struct {
 	UpstreamParams                   *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
 	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
-	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens    `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
 	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
 	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
@@ -3001,13 +2913,6 @@ func (c *ConnectionPropertiesOptions) GetGatewayAuthentication() ConnectionGatew
 		return ConnectionGatewayAuthentication{}
 	}
 	return *c.GatewayAuthentication
-}
-
-func (c *ConnectionPropertiesOptions) GetFederatedConnectionsAccessTokens() ConnectionFederatedConnectionsAccessTokens {
-	if c == nil || c.FederatedConnectionsAccessTokens == nil {
-		return ConnectionFederatedConnectionsAccessTokens{}
-	}
-	return *c.FederatedConnectionsAccessTokens
 }
 
 func (c *ConnectionPropertiesOptions) GetPasswordOptions() ConnectionPasswordOptions {
@@ -3295,13 +3200,6 @@ func (c *ConnectionPropertiesOptions) SetSetUserRootAttributes(setUserRootAttrib
 func (c *ConnectionPropertiesOptions) SetGatewayAuthentication(gatewayAuthentication *ConnectionGatewayAuthentication) {
 	c.GatewayAuthentication = gatewayAuthentication
 	c.require(connectionPropertiesOptionsFieldGatewayAuthentication)
-}
-
-// SetFederatedConnectionsAccessTokens sets the FederatedConnectionsAccessTokens field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionPropertiesOptions) SetFederatedConnectionsAccessTokens(federatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens) {
-	c.FederatedConnectionsAccessTokens = federatedConnectionsAccessTokens
-	c.require(connectionPropertiesOptionsFieldFederatedConnectionsAccessTokens)
 }
 
 // SetPasswordOptions sets the PasswordOptions field and marks it as non-optional;
@@ -6382,17 +6280,16 @@ var (
 	updateConnectionOptionsFieldUpstreamParams                   = big.NewInt(1 << 26)
 	updateConnectionOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 27)
 	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
-	updateConnectionOptionsFieldFederatedConnectionsAccessTokens = big.NewInt(1 << 29)
-	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 30)
-	updateConnectionOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 31)
-	updateConnectionOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 32)
-	updateConnectionOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 33)
-	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 34)
-	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 35)
-	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 36)
-	updateConnectionOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 37)
-	updateConnectionOptionsFieldDiscoveryURL                     = big.NewInt(1 << 38)
-	updateConnectionOptionsFieldOidcMetadata                     = big.NewInt(1 << 39)
+	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
+	updateConnectionOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 30)
+	updateConnectionOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
+	updateConnectionOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 32)
+	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
+	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
+	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
+	updateConnectionOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 36)
+	updateConnectionOptionsFieldDiscoveryURL                     = big.NewInt(1 << 37)
+	updateConnectionOptionsFieldOidcMetadata                     = big.NewInt(1 << 38)
 )
 
 type UpdateConnectionOptions struct {
@@ -6431,7 +6328,6 @@ type UpdateConnectionOptions struct {
 	UpstreamParams                   *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
 	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
-	FederatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens    `json:"federated_connections_access_tokens,omitempty" url:"federated_connections_access_tokens,omitempty"`
 	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
 	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
@@ -6652,13 +6548,6 @@ func (u *UpdateConnectionOptions) GetGatewayAuthentication() ConnectionGatewayAu
 		return ConnectionGatewayAuthentication{}
 	}
 	return *u.GatewayAuthentication
-}
-
-func (u *UpdateConnectionOptions) GetFederatedConnectionsAccessTokens() ConnectionFederatedConnectionsAccessTokens {
-	if u == nil || u.FederatedConnectionsAccessTokens == nil {
-		return ConnectionFederatedConnectionsAccessTokens{}
-	}
-	return *u.FederatedConnectionsAccessTokens
 }
 
 func (u *UpdateConnectionOptions) GetPasswordOptions() ConnectionPasswordOptions {
@@ -6946,13 +6835,6 @@ func (u *UpdateConnectionOptions) SetSetUserRootAttributes(setUserRootAttributes
 func (u *UpdateConnectionOptions) SetGatewayAuthentication(gatewayAuthentication *ConnectionGatewayAuthentication) {
 	u.GatewayAuthentication = gatewayAuthentication
 	u.require(updateConnectionOptionsFieldGatewayAuthentication)
-}
-
-// SetFederatedConnectionsAccessTokens sets the FederatedConnectionsAccessTokens field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateConnectionOptions) SetFederatedConnectionsAccessTokens(federatedConnectionsAccessTokens *ConnectionFederatedConnectionsAccessTokens) {
-	u.FederatedConnectionsAccessTokens = federatedConnectionsAccessTokens
-	u.require(updateConnectionOptionsFieldFederatedConnectionsAccessTokens)
 }
 
 // SetPasswordOptions sets the PasswordOptions field and marks it as non-optional;

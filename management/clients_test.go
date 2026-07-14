@@ -48435,13 +48435,6 @@ func TestEnumClientSessionTransferDelegationDeviceBindingEnum(t *testing.T) {
 		assert.Equal(t, ClientSessionTransferDelegationDeviceBindingEnum("ip"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_asn", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewClientSessionTransferDelegationDeviceBindingEnumFromString("asn")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ClientSessionTransferDelegationDeviceBindingEnum("asn"), val, "enum value should match expected wire value")
-	})
-
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewClientSessionTransferDelegationDeviceBindingEnumFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)
