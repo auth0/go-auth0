@@ -14979,81 +14979,6 @@
       }
     },
     {
-      "id": "7df16d6a-51ec-415e-a605-f161474b5a60",
-      "name": "Get tokensets for a user - default",
-      "request": {
-        "urlPathTemplate": "/users/{id}/federated-connections-tokensets",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "id": {
-            "equalTo": "id"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "[\n  {\n    \"id\": \"id\",\n    \"connection\": \"connection\",\n    \"scope\": \"scope\",\n    \"expires_at\": \"2024-01-15T09:30:00Z\",\n    \"issued_at\": \"2024-01-15T09:30:00Z\",\n    \"last_used_at\": \"2024-01-15T09:30:00Z\"\n  }\n]",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "7df16d6a-51ec-415e-a605-f161474b5a60",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "2dd7f5e1-dfec-4564-8331-8dd9d7ecfa93",
-      "name": "Deletes a tokenset for federated connections by id. - default",
-      "request": {
-        "urlPathTemplate": "/users/{id}/federated-connections-tokensets/{tokenset_id}",
-        "method": "DELETE",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "id": {
-            "equalTo": "id"
-          },
-          "tokenset_id": {
-            "equalTo": "tokenset_id"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "\"\"",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "2dd7f5e1-dfec-4564-8331-8dd9d7ecfa93",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
       "id": "10f1d36a-08fb-4d1c-9ae0-7e3a75f996ee",
       "name": "Get user's groups - default",
       "request": {
@@ -16065,6 +15990,6 @@
     }
   ],
   "meta": {
-    "total": 430
+    "total": 428
   }
 }
