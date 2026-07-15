@@ -8,14 +8,14 @@ import (
 	http "net/http"
 	strconv "strconv"
 
-	management "github.com/auth0/go-auth0/v2/management"
-	executions "github.com/auth0/go-auth0/v2/management/actions/executions"
-	client "github.com/auth0/go-auth0/v2/management/actions/modules/client"
-	triggersclient "github.com/auth0/go-auth0/v2/management/actions/triggers/client"
-	versions "github.com/auth0/go-auth0/v2/management/actions/versions"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v3/management"
+	executions "github.com/auth0/go-auth0/v3/management/actions/executions"
+	client "github.com/auth0/go-auth0/v3/management/actions/modules/client"
+	triggersclient "github.com/auth0/go-auth0/v3/management/actions/triggers/client"
+	versions "github.com/auth0/go-auth0/v3/management/actions/versions"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
 )
 
 type Client struct {

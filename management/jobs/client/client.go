@@ -5,14 +5,14 @@ package client
 import (
 	context "context"
 
-	management "github.com/auth0/go-auth0/v2/management"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	errors "github.com/auth0/go-auth0/v2/management/jobs/errors"
-	usersexports "github.com/auth0/go-auth0/v2/management/jobs/usersexports"
-	usersimports "github.com/auth0/go-auth0/v2/management/jobs/usersimports"
-	verificationemail "github.com/auth0/go-auth0/v2/management/jobs/verificationemail"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v3/management"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	errors "github.com/auth0/go-auth0/v3/management/jobs/errors"
+	usersexports "github.com/auth0/go-auth0/v3/management/jobs/usersexports"
+	usersimports "github.com/auth0/go-auth0/v3/management/jobs/usersimports"
+	verificationemail "github.com/auth0/go-auth0/v3/management/jobs/verificationemail"
+	option "github.com/auth0/go-auth0/v3/management/option"
 )
 
 type Client struct {

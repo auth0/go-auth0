@@ -22,9 +22,9 @@ The SDK v2 provides several ways to authenticate with Auth0 using OAuth client c
 ```go
 import (
     "context"
-    "github.com/auth0/go-auth0/v2/management"
-    "github.com/auth0/go-auth0/v2/management/client"
-    "github.com/auth0/go-auth0/v2/management/option"
+    "github.com/auth0/go-auth0/v3/management"
+    "github.com/auth0/go-auth0/v3/management/client"
+    "github.com/auth0/go-auth0/v3/management/option"
     "golang.org/x/oauth2"
 )
 
@@ -100,7 +100,7 @@ mgmt, err := client.New(
 ```go
 import (
     "context"
-    "github.com/auth0/go-auth0/v2/authentication"
+    "github.com/auth0/go-auth0/v3/authentication"
 )
 
 // With client secret authentication
@@ -520,9 +520,9 @@ import (
     "fmt"
     "log"
 
-    "github.com/auth0/go-auth0/v2/management"
-    "github.com/auth0/go-auth0/v2/management/client"
-    "github.com/auth0/go-auth0/v2/management/option"
+    "github.com/auth0/go-auth0/v3/management"
+    "github.com/auth0/go-auth0/v3/management/client"
+    "github.com/auth0/go-auth0/v3/management/option"
 )
 
 func main() {
@@ -625,9 +625,9 @@ import (
     "fmt"
     "log"
 
-    "github.com/auth0/go-auth0/v2/management"
-    "github.com/auth0/go-auth0/v2/management/client"
-    "github.com/auth0/go-auth0/v2/management/option"
+    "github.com/auth0/go-auth0/v3/management"
+    "github.com/auth0/go-auth0/v3/management/client"
+    "github.com/auth0/go-auth0/v3/management/option"
 )
 
 func main() {

@@ -3,9 +3,9 @@
 package client
 
 import (
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	groups "github.com/auth0/go-auth0/v2/management/organizations/members/effectiveroles/sources/groups"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	groups "github.com/auth0/go-auth0/v3/management/organizations/members/effectiveroles/sources/groups"
 )
 
 type Client struct {
