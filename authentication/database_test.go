@@ -10,10 +10,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0/v2"
+	"github.com/auth0/go-auth0/v3"
 
-	"github.com/auth0/go-auth0/v2/authentication/database"
-	"github.com/auth0/go-auth0/v2/management"
+	"github.com/auth0/go-auth0/v3/authentication/database"
+	"github.com/auth0/go-auth0/v3/management"
 )
 
 // TestDatabaseSignUp_RequiresUsername tests the Database.Signup method with a connection that requires a username.

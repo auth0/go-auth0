@@ -10,7 +10,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
 
-	internal "github.com/auth0/go-auth0/v2/internal/client"
+	internal "github.com/auth0/go-auth0/v3/internal/client"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.

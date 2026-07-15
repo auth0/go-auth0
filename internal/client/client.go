@@ -25,7 +25,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
 
-	"github.com/auth0/go-auth0/v2"
+	"github.com/auth0/go-auth0/v3"
 )
 
 // UserAgent is the default user agent string.

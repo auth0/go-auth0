@@ -31,7 +31,7 @@ This SDK is auto-generated from Auth0's OpenAPI specifications. Most of the mana
 > This section applies only on the `beta` branch.
 
 The SDK ships two parallel tracks from one Go module path
-(`github.com/auth0/go-auth0/v2`):
+(`github.com/auth0/go-auth0/v3`):
 
 - **Stable** (`main` branch): EA/GA endpoints only. Released the usual way, by a maintainer, through a `release/*` branch.
 - **Beta** (`beta` branch): a superset that contains everything in stable **plus** beta-only endpoints. Released automatically whenever a PR is merged into `beta`.
@@ -40,10 +40,10 @@ Consumers opt into beta explicitly; a plain `go get` never selects it:
 
 ```sh
 # Stable (default): always resolves to the latest stable release.
-go get github.com/auth0/go-auth0/v2
+go get github.com/auth0/go-auth0/v3
 
 # Beta: explicit prerelease pin.
-go get github.com/auth0/go-auth0/v2@v2.14.0-beta.1
+go get github.com/auth0/go-auth0/v3@v2.14.0-beta.1
 ```
 
 ### How beta stays a superset of stable

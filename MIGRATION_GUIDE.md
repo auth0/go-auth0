@@ -13,16 +13,56 @@ This document covers the changes required to move between major versions of go-a
 
 ## Overview
 
-v3 is a compatible evolution of the v2 client. The client initialization, package layout, and option pattern introduced in v2 all stay the same. The breaking changes are focused on a small number of request and response types where field types were tightened for correctness. Most applications will only need to update the specific call sites that touch the types listed below.
+v3 keeps the client initialization, package layout, and option pattern introduced in v2. The one change every application must make is the module import path, which moves from `github.com/auth0/go-auth0/v2` to `github.com/auth0/go-auth0/v3` as required for a Go major version. Beyond that, the breaking changes are focused on a small number of request and response types where field types were tightened for correctness or removed. Most applications will only need to update their import paths and the specific call sites that touch the types listed below.
 
 ## v3 Breaking Changes
 
+- [Module Import Path](#module-import-path)
 - [Connection Attribute Identifier Types](#connection-attribute-identifier-types)
 - [Role Pagination Field Types](#role-pagination-field-types)
 - [Phone Provider Protection Backoff Strategy Enum](#phone-provider-protection-backoff-strategy-enum)
 - [Federated Connections Tokensets Removed](#federated-connections-tokensets-removed)
 - [Federated Connections Access Tokens Removed](#federated-connections-access-tokens-removed)
 - [Session Transfer Delegation Device Binding Enum](#session-transfer-delegation-device-binding-enum)
+
+### Module Import Path
+
+The module path changes from `github.com/auth0/go-auth0/v2` to `github.com/auth0/go-auth0/v3`. Update your `go get` command and every import in your codebase.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+// go get github.com/auth0/go-auth0/v2
+
+import (
+    "github.com/auth0/go-auth0/v2/management"
+    management "github.com/auth0/go-auth0/v2/management/client"
+)
+```
+
+</td>
+<td>
+
+```go
+// go get github.com/auth0/go-auth0/v3
+
+import (
+    "github.com/auth0/go-auth0/v3/management"
+    management "github.com/auth0/go-auth0/v3/management/client"
+)
+```
+
+</td>
+</tr>
+</table>
+
+The quickest way to update an existing codebase is a find-and-replace of `github.com/auth0/go-auth0/v2` with `github.com/auth0/go-auth0/v3` across your Go files, followed by `go mod tidy`.
 
 ### Connection Attribute Identifier Types
 
@@ -290,7 +330,7 @@ Replace any use of `ClientSessionTransferDelegationDeviceBindingEnumAsn` with `C
 
 ## v3 Migration Steps
 
-1. Update the dependency to the v3 major and update your import paths if you pin to a specific version.
+1. Update the module path: run `go get github.com/auth0/go-auth0/v3`, replace every `github.com/auth0/go-auth0/v2` import with `github.com/auth0/go-auth0/v3`, and run `go mod tidy`.
 2. Search your codebase for `ConnectionAttributeIdentifier` and replace each occurrence with the identifier type that matches the enclosing attribute (`EmailAttributeIdentifier`, `PhoneAttributeIdentifier`, or `UsernameAttributeIdentifier`).
 3. Remove pointer dereferences on the `Start`, `Limit`, and `Total` fields of `ListRolesOffsetPaginatedResponseContent` if you read them directly.
 4. Replace `PhoneProviderProtectionBackoffStrategyEnumNone` with `PhoneProviderProtectionBackoffStrategyEnumDefault`.

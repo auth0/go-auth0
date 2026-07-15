@@ -169,7 +169,7 @@ make test-e2e      # Run tests against real Auth0 tenant
 
 > Applies only when working on the `beta` branch.
 
-This SDK ships two tracks from one module path (`github.com/auth0/go-auth0/v2`):
+This SDK ships two tracks from one module path (`github.com/auth0/go-auth0/v3`):
 
 - **Stable** (`main`): EA/GA endpoints only. Released by a maintainer via a `release/*` branch.
 - **Beta** (`beta`): a superset of stable plus beta-only endpoints. Released automatically when a PR is merged into `beta`.

@@ -1,5 +1,33 @@
 # Change Log
 
+## [v3.0.0](https://github.com/auth0/go-auth0/tree/v3.0.0) (2026-07-15)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v2.14.0...v3.0.0)
+
+**⚠️ BREAKING CHANGES**
+
+This is the v3.0.0 major release. The module path changes from `github.com/auth0/go-auth0/v2` to `github.com/auth0/go-auth0/v3`, which every application must update. Please review the [Migration Guide](./MIGRATION_GUIDE.md) for detailed upgrade instructions.
+
+**Breaking Changes**
+- **BREAKING**: Module path changed from `github.com/auth0/go-auth0/v2` to `github.com/auth0/go-auth0/v3`. Update your `go get` command and all imports.
+- Removed the `Users.FederatedConnectionsTokensets` sub-client (its `List` and `Delete` methods) and the `FederatedConnectionTokenSet` type [\#823](https://github.com/auth0/go-auth0/pull/823) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Removed the `ConnectionFederatedConnectionsAccessTokens` type and the `FederatedConnectionsAccessTokens` field from `ConnectionPropertiesOptions`, `UpdateConnectionOptions`, `ConnectionOptionsAzureAd`, and `ConnectionOptionsCommonOidc` [\#823](https://github.com/auth0/go-auth0/pull/823) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Removed the `asn` value from `ClientSessionTransferDelegationDeviceBindingEnum`; the only supported value is now `ip` [\#823](https://github.com/auth0/go-auth0/pull/823) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Changed `ListRolesOffsetPaginatedResponseContent` `Start`, `Limit`, and `Total` fields from `*float64` to `float64` (JSON tags drop `omitempty`), so the setter signatures change accordingly [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Replaced the shared `ConnectionAttributeIdentifier` type with per-attribute `EmailAttributeIdentifier`, `PhoneAttributeIdentifier`, and `UsernameAttributeIdentifier` types, changing the `Identifier` field type and `GetIdentifier`/`SetIdentifier` signatures on `EmailAttribute`, `PhoneAttribute`, and `UsernameAttribute` [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Replaced `PhoneProviderProtectionBackoffStrategyEnumNone` (`"none"`) with `PhoneProviderProtectionBackoffStrategyEnumDefault` (`"default"`) [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Added**
+- feat: add organization role members endpoint (`Organizations.Roles.Members.List`) with cursor pagination and the `RoleMember`, `ListOrganizationRoleMembersResponseContent`, and `ListOrganizationRoleMembersRequestParameters` types [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add organization third-party client access via the `ThirdPartyClientAccess` field (`OrganizationThirdPartyClientAccessEnum`) on organization request and response types [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `OrganizationID` field to `UserGrant` [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add token vault privileged access `Grants` field and the `TokenVaultPrivilegedAccessGrant` type on `ClientTokenVaultPrivilegedAccessWithCredentialID` and `ClientTokenVaultPrivilegedAccessWithPublicKey` [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add connection OIDC discovery via `DiscoveryURL` and `OidcMetadata` fields (and the `ConnectionsOidcMetadata` type) on `ConnectionPropertiesOptions` and `UpdateConnectionOptions` [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `DefaultMethodPhoneNumberIdentifierEnum` (`password`, `phone_otp`) for the phone attribute identifier default method [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add connection event stream events (`connection.created`, `connection.deleted`, `connection.updated`) to the event stream enums with their CloudEvent type enums [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Auth0Managed` field to `NetworkACLMatch` (available in both `match` and `not_match`) [\#822](https://github.com/auth0/go-auth0/pull/822) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `confirmation` value to `PartialGroupsEnum` [\#822](https://github.com/auth0/go-auth0/pull/822) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `NotFoundErrorBody` and `TooManyRequestsErrorBody` types and their error-code definitions [\#814](https://github.com/auth0/go-auth0/pull/814) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v2.14.0](https://github.com/auth0/go-auth0/tree/v2.14.0) (2026-06-24)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.13.0...v2.14.0)
 
