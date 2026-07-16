@@ -13381,6 +13381,16 @@ func TestOrganization_GetName(tt *testing.T) {
 	o.GetName()
 }
 
+func TestOrganization_GetThirdPartyClientAccess(tt *testing.T) {
+	var zeroValue string
+	o := &Organization{ThirdPartyClientAccess: &zeroValue}
+	o.GetThirdPartyClientAccess()
+	o = &Organization{}
+	o.GetThirdPartyClientAccess()
+	o = nil
+	o.GetThirdPartyClientAccess()
+}
+
 func TestOrganization_GetTokenQuota(tt *testing.T) {
 	o := &Organization{}
 	o.GetTokenQuota()
