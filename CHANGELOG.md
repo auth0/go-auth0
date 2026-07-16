@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.45.0](https://github.com/auth0/go-auth0/tree/v1.45.0) (2026-07-16)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.44.0...v1.45.0)
+
+**Added**
+- feat: add third_party_client_access field in organization [\#818](https://github.com/auth0/go-auth0/pull/818) ([bkiran6398](https://github.com/bkiran6398))
+- feat: added support for identifiers in branding_theme, country_codes in tenant structs [\#811](https://github.com/auth0/go-auth0/pull/811) ([KartikJha](https://github.com/KartikJha))
+
 ## [v1.44.0](https://github.com/auth0/go-auth0/tree/v1.44.0) (2026-06-30)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.43.0...v1.44.0)
 
