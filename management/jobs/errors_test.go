@@ -3,7 +3,7 @@
 package jobs
 
 import (
-	management "github.com/auth0/go-auth0/v2/management"
+	management "github.com/auth0/go-auth0/v3/management"
 	assert "github.com/stretchr/testify/assert"
 	testing "testing"
 )

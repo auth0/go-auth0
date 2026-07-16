@@ -1,6 +1,349 @@
-# Auth0 Go SDK v1 to v2 Migration Guide
+# Auth0 Go SDK Migration Guide
 
-**Please review this guide thoroughly to understand the changes required to migrate from go-auth0 v1 to go-auth0 v2**
+This document covers the changes required to move between major versions of go-auth0.
+
+- [Migrating from v2 to v3](#migrating-from-v2-to-v3)
+- [Migrating from v1 to v2](#migrating-from-v1-to-v2)
+
+---
+
+# Migrating from v2 to v3
+
+**Please review this section thoroughly to understand the changes required to migrate from go-auth0 v2 to go-auth0 v3.**
+
+## Overview
+
+v3 keeps the client initialization, package layout, and option pattern introduced in v2. The one change every application must make is the module import path, which moves from `github.com/auth0/go-auth0/v2` to `github.com/auth0/go-auth0/v3` as required for a Go major version. Beyond that, the breaking changes are focused on a small number of request and response types where field types were tightened for correctness or removed. Most applications will only need to update their import paths and the specific call sites that touch the types listed below.
+
+## v3 Breaking Changes
+
+- [Module Import Path](#module-import-path)
+- [Connection Attribute Identifier Types](#connection-attribute-identifier-types)
+- [Role Pagination Field Types](#role-pagination-field-types)
+- [Phone Provider Protection Backoff Strategy Enum](#phone-provider-protection-backoff-strategy-enum)
+- [Federated Connections Tokensets Removed](#federated-connections-tokensets-removed)
+- [Federated Connections Access Tokens Removed](#federated-connections-access-tokens-removed)
+- [Session Transfer Delegation Device Binding Enum](#session-transfer-delegation-device-binding-enum)
+
+### Module Import Path
+
+The module path changes from `github.com/auth0/go-auth0/v2` to `github.com/auth0/go-auth0/v3`. Update your `go get` command and every import in your codebase.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+// go get github.com/auth0/go-auth0/v2
+
+import (
+    "github.com/auth0/go-auth0/v2/management"
+    management "github.com/auth0/go-auth0/v2/management/client"
+)
+```
+
+</td>
+<td>
+
+```go
+// go get github.com/auth0/go-auth0/v3
+
+import (
+    "github.com/auth0/go-auth0/v3/management"
+    management "github.com/auth0/go-auth0/v3/management/client"
+)
+```
+
+</td>
+</tr>
+</table>
+
+The quickest way to update an existing codebase is a find-and-replace of `github.com/auth0/go-auth0/v2` with `github.com/auth0/go-auth0/v3` across your Go files, followed by `go mod tidy`.
+
+### Connection Attribute Identifier Types
+
+The single `ConnectionAttributeIdentifier` type has been replaced with dedicated per-attribute identifier types. Each connection attribute now has its own identifier type, which allows the SDK to model the attribute-specific `default_method` values correctly.
+
+| Attribute | v2 identifier type | v3 identifier type |
+| --- | --- | --- |
+| `EmailAttribute` | `ConnectionAttributeIdentifier` | `EmailAttributeIdentifier` |
+| `PhoneAttribute` | `ConnectionAttributeIdentifier` | `PhoneAttributeIdentifier` |
+| `UsernameAttribute` | `ConnectionAttributeIdentifier` | `UsernameAttributeIdentifier` |
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+attributes := &management.ConnectionAttributes{
+    Email: &management.EmailAttribute{
+        Identifier: &management.ConnectionAttributeIdentifier{
+            Active: auth0.Bool(true),
+        },
+    },
+    Username: &management.UsernameAttribute{
+        Identifier: &management.ConnectionAttributeIdentifier{
+            Active: auth0.Bool(true),
+        },
+    },
+}
+```
+
+</td>
+<td>
+
+```go
+attributes := &management.ConnectionAttributes{
+    Email: &management.EmailAttribute{
+        Identifier: &management.EmailAttributeIdentifier{
+            Active: auth0.Bool(true),
+        },
+    },
+    Username: &management.UsernameAttribute{
+        Identifier: &management.UsernameAttributeIdentifier{
+            Active: auth0.Bool(true),
+        },
+    },
+}
+```
+
+</td>
+</tr>
+</table>
+
+The `DefaultMethod` field is now typed per attribute as well. In v2 every attribute shared the `DefaultMethodEmailIdentifierEnum` type on its `DefaultMethod` field, so the phone attribute was incorrectly limited to the email enum values. In v3 each attribute uses the enum that matches it:
+
+| Attribute identifier | v2 `DefaultMethod` type | v3 `DefaultMethod` type | v3 enum values |
+| --- | --- | --- | --- |
+| `EmailAttributeIdentifier` | `*DefaultMethodEmailIdentifierEnum` | `*DefaultMethodEmailIdentifierEnum` | `password`, `email_otp` |
+| `PhoneAttributeIdentifier` | `*DefaultMethodEmailIdentifierEnum` | `*DefaultMethodPhoneNumberIdentifierEnum` | `password`, `phone_otp` |
+| `UsernameAttributeIdentifier` | n/a | n/a (only `Active`) | n/a |
+
+The new `DefaultMethodPhoneNumberIdentifierEnum` exposes `DefaultMethodPhoneNumberIdentifierEnumPassword` (`"password"`) and `DefaultMethodPhoneNumberIdentifierEnumPhoneOtp` (`"phone_otp"`), along with the usual `NewDefaultMethodPhoneNumberIdentifierEnumFromString` constructor and `Ptr` helper. If you set a default method on a phone identifier, switch from the email enum to the phone enum.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+Identifier: &management.ConnectionAttributeIdentifier{
+    Active:        auth0.Bool(true),
+    DefaultMethod: management.DefaultMethodEmailIdentifierEnumPassword.Ptr(),
+}
+```
+
+</td>
+<td>
+
+```go
+Identifier: &management.PhoneAttributeIdentifier{
+    Active:        auth0.Bool(true),
+    DefaultMethod: management.DefaultMethodPhoneNumberIdentifierEnumPassword.Ptr(),
+}
+```
+
+</td>
+</tr>
+</table>
+
+### Role Pagination Field Types
+
+On `ListRolesOffsetPaginatedResponseContent`, the pagination fields changed from optional pointers to non-pointer values, since the API always returns them.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+Start *float64
+Limit *float64
+Total *float64
+
+func (l *ListRolesOffsetPaginatedResponseContent) SetStart(start *float64)
+func (l *ListRolesOffsetPaginatedResponseContent) SetLimit(limit *float64)
+func (l *ListRolesOffsetPaginatedResponseContent) SetTotal(total *float64)
+```
+
+</td>
+<td>
+
+```go
+Start float64
+Limit float64
+Total float64
+
+func (l *ListRolesOffsetPaginatedResponseContent) SetStart(start float64)
+func (l *ListRolesOffsetPaginatedResponseContent) SetLimit(limit float64)
+func (l *ListRolesOffsetPaginatedResponseContent) SetTotal(total float64)
+```
+
+</td>
+</tr>
+</table>
+
+If you read these fields directly, drop the pointer dereference. The `GetStart`, `GetLimit`, and `GetTotal` accessors continue to return `float64`, so code using the accessors needs no change.
+
+### Phone Provider Protection Backoff Strategy Enum
+
+On `PhoneProviderProtectionBackoffStrategyEnum`, the `None` value (`"none"`) has been removed and replaced with `Default` (`"default"`). The `Exponential` value is unchanged.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+strategy := management.PhoneProviderProtectionBackoffStrategyEnumNone // "none"
+```
+
+</td>
+<td>
+
+```go
+strategy := management.PhoneProviderProtectionBackoffStrategyEnumDefault // "default"
+```
+
+</td>
+</tr>
+</table>
+
+Replace any use of `PhoneProviderProtectionBackoffStrategyEnumNone` with `PhoneProviderProtectionBackoffStrategyEnumDefault`. `NewPhoneProviderProtectionBackoffStrategyEnumFromString` no longer accepts `"none"`.
+
+### Federated Connections Tokensets Removed
+
+The `Users.FederatedConnectionsTokensets` sub-client has been removed, along with its `List` and `Delete` methods and the `FederatedConnectionTokenSet` type. The underlying `/users/{id}/federated-connections-tokensets` endpoints are no longer part of the SDK.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+tokensets, err := client.Users.FederatedConnectionsTokensets.List(context.TODO(), userID)
+err = client.Users.FederatedConnectionsTokensets.Delete(context.TODO(), userID, tokensetID)
+```
+
+</td>
+<td>
+
+```go
+// No replacement. Remove any calls to Users.FederatedConnectionsTokensets.
+```
+
+</td>
+</tr>
+</table>
+
+### Federated Connections Access Tokens Removed
+
+The `ConnectionFederatedConnectionsAccessTokens` type has been removed, along with the `FederatedConnectionsAccessTokens` field (and its getter and setter) on the connection options types, including `ConnectionPropertiesOptions` (used by `CreateConnectionRequestContent`) and `UpdateConnectionOptions` (used by `UpdateConnectionRequestContent`).
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+req := &management.CreateConnectionRequestContent{
+    Name:     "my-connection",
+    Strategy: management.ConnectionIdentityProviderEnumOidc,
+    Options: &management.ConnectionPropertiesOptions{
+        ImportMode: auth0.Bool(false),
+        FederatedConnectionsAccessTokens: &management.ConnectionFederatedConnectionsAccessTokens{
+            Active: auth0.Bool(true),
+        },
+    },
+}
+```
+
+</td>
+<td>
+
+```go
+// Drop the FederatedConnectionsAccessTokens field; the rest is unchanged.
+req := &management.CreateConnectionRequestContent{
+    Name:     "my-connection",
+    Strategy: management.ConnectionIdentityProviderEnumOidc,
+    Options: &management.ConnectionPropertiesOptions{
+        ImportMode: auth0.Bool(false),
+    },
+}
+```
+
+</td>
+</tr>
+</table>
+
+### Session Transfer Delegation Device Binding Enum
+
+On `ClientSessionTransferDelegationDeviceBindingEnum`, the `Asn` value (`"asn"`) has been removed. The only supported value is now `IP` (`"ip"`), which enforces device binding by IP, meaning the Session Transfer Token must be consumed from the same IP as the issuer.
+
+<table>
+<tr>
+<th>v2</th>
+<th>v3</th>
+</tr>
+<tr>
+<td>
+
+```go
+binding := management.ClientSessionTransferDelegationDeviceBindingEnumAsn // "asn"
+```
+
+</td>
+<td>
+
+```go
+binding := management.ClientSessionTransferDelegationDeviceBindingEnumIP // "ip"
+```
+
+</td>
+</tr>
+</table>
+
+Replace any use of `ClientSessionTransferDelegationDeviceBindingEnumAsn` with `ClientSessionTransferDelegationDeviceBindingEnumIP`. `NewClientSessionTransferDelegationDeviceBindingEnumFromString` no longer accepts `"asn"`. This applies only to the delegation (impersonation) enum; the unrelated `ClientSessionTransferDeviceBindingEnum` still supports `ip`, `asn`, and `none`.
+
+## v3 Migration Steps
+
+1. Update the module path: run `go get github.com/auth0/go-auth0/v3`, replace every `github.com/auth0/go-auth0/v2` import with `github.com/auth0/go-auth0/v3`, and run `go mod tidy`.
+2. Search your codebase for `ConnectionAttributeIdentifier` and replace each occurrence with the identifier type that matches the enclosing attribute (`EmailAttributeIdentifier`, `PhoneAttributeIdentifier`, or `UsernameAttributeIdentifier`).
+3. Remove pointer dereferences on the `Start`, `Limit`, and `Total` fields of `ListRolesOffsetPaginatedResponseContent` if you read them directly.
+4. Replace `PhoneProviderProtectionBackoffStrategyEnumNone` with `PhoneProviderProtectionBackoffStrategyEnumDefault`.
+5. Remove any calls to `Users.FederatedConnectionsTokensets` and any use of the `FederatedConnectionTokenSet` type.
+6. Remove the `FederatedConnectionsAccessTokens` field from connection options and drop any use of the `ConnectionFederatedConnectionsAccessTokens` type.
+7. Replace `ClientSessionTransferDelegationDeviceBindingEnumAsn` with `ClientSessionTransferDelegationDeviceBindingEnumIP`.
+8. Build and run your tests to catch any remaining type mismatches.
+
+---
+
+# Migrating from v1 to v2
+
+**Please review this section thoroughly to understand the changes required to migrate from go-auth0 v1 to go-auth0 v2**
 
 ## Table of Contents
 

@@ -3,7 +3,7 @@
 package client
 
 import (
-	option "github.com/auth0/go-auth0/v2/management/option"
+	option "github.com/auth0/go-auth0/v3/management/option"
 	assert "github.com/stretchr/testify/assert"
 	http "net/http"
 	testing "testing"

@@ -3,9 +3,9 @@
 package client
 
 import (
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
-	templates "github.com/auth0/go-auth0/v2/management/verifiablecredentials/verification/templates"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
+	templates "github.com/auth0/go-auth0/v3/management/verifiablecredentials/verification/templates"
 )
 
 type Client struct {
