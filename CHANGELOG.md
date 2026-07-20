@@ -1,5 +1,10 @@
 # Change Log
 
+## [Unreleased]
+
+**Added**
+- feat: add `Auth0Managed` curated blocklist support to `NetworkACLRuleMatch`
+
 ## [v1.45.0](https://github.com/auth0/go-auth0/tree/v1.45.0) (2026-07-16)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.44.0...v1.45.0)
 
