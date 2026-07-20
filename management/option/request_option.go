@@ -109,6 +109,14 @@ func WithToken(token string) *core.TokenOption {
 	}
 }
 
+// WithTenantDomain sets the "tenantDomain" server URL variable, which is
+// substituted into the base URL template at construction time.
+func WithTenantDomain(tenantDomain string) *core.TenantDomainOption {
+	return &core.TenantDomainOption{
+		TenantDomain: tenantDomain,
+	}
+}
+
 // WithClientCredentials configures OAuth2 client credentials authentication
 // using a client ID and secret. The SDK will automatically fetch and refresh
 // tokens from the Auth0 token endpoint.

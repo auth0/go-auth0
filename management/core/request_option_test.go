@@ -405,3 +405,8 @@ func TestClientCredentialsPrivateKeyJwtAndAudienceOption_TokenURL(t *testing.T) 
 		})
 	}
 }
+
+func TestTenantDomainOption(t *testing.T) {
+	options := NewRequestOptions(&TenantDomainOption{TenantDomain: "acme.us.auth0.com"})
+	assert.Equal(t, "acme.us.auth0.com", options.TenantDomain)
+}
