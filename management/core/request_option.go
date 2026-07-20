@@ -48,6 +48,10 @@ type RequestOptions struct {
 	// CustomDomainHeader is the custom domain to be sent in the "Auth0-Custom-Domain" header
 	// for whitelisted API endpoints
 	CustomDomainHeader string
+
+	// TenantDomain is the "tenantDomain" server URL variable, substituted into
+	// the base URL template at construction time.
+	TenantDomain string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -196,6 +200,15 @@ type WithoutRetriesOption struct{}
 
 func (w *WithoutRetriesOption) applyRequestOptions(opts *RequestOptions) {
 	opts.DisableRetries = true
+}
+
+// TenantDomainOption implements the RequestOption interface.
+type TenantDomainOption struct {
+	TenantDomain string
+}
+
+func (t *TenantDomainOption) applyRequestOptions(opts *RequestOptions) {
+	opts.TenantDomain = t.TenantDomain
 }
 
 // TokenOption implements the RequestOption interface.
