@@ -10500,6 +10500,14 @@ func (n *NetworkACLRuleMatch) GetAnonymousProxy() bool {
 	return *n.AnonymousProxy
 }
 
+// GetAuth0Managed returns the Auth0Managed field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRuleMatch) GetAuth0Managed() []string {
+	if n == nil || n.Auth0Managed == nil {
+		return nil
+	}
+	return *n.Auth0Managed
+}
+
 // GetConnectingIPv4Cidrs returns the ConnectingIPv4Cidrs field if it's non-nil, zero value otherwise.
 func (n *NetworkACLRuleMatch) GetConnectingIPv4Cidrs() []string {
 	if n == nil || n.ConnectingIPv4Cidrs == nil {

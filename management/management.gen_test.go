@@ -13130,6 +13130,16 @@ func TestNetworkACLRuleMatch_GetAnonymousProxy(tt *testing.T) {
 	n.GetAnonymousProxy()
 }
 
+func TestNetworkACLRuleMatch_GetAuth0Managed(tt *testing.T) {
+	var zeroValue []string
+	n := &NetworkACLRuleMatch{Auth0Managed: &zeroValue}
+	n.GetAuth0Managed()
+	n = &NetworkACLRuleMatch{}
+	n.GetAuth0Managed()
+	n = nil
+	n.GetAuth0Managed()
+}
+
 func TestNetworkACLRuleMatch_GetConnectingIPv4Cidrs(tt *testing.T) {
 	var zeroValue []string
 	n := &NetworkACLRuleMatch{ConnectingIPv4Cidrs: &zeroValue}

@@ -55,6 +55,8 @@ type NetworkACLRuleMatch struct {
 	AnonymousProxy *bool `json:"anonymous_proxy,omitempty"`
 	// ASNs
 	Asns []int `json:"asns,omitempty"`
+	// Auth0 Managed curated blocklist categories
+	Auth0Managed *[]string `json:"auth0_managed,omitempty"`
 	// Geo Country Codes
 	GeoCountryCodes *[]string `json:"geo_country_codes,omitempty"`
 	// Geo Subdivision Codes
