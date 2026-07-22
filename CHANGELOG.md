@@ -1,5 +1,16 @@
 # Change Log
 
+## [v3.1.0](https://github.com/auth0/go-auth0/tree/v3.1.0) (2026-07-22)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.0.0...v3.1.0)
+
+**Added**
+- feat: add connection cross-app access resource app support via the `CrossAppAccessResourceApp` field (with `CreateCrossAppAccessResourceApp`, `UpdateCrossAppAccessResourceApp`, and `ConnectionCrossAppAccessResourceApp` types and status enums) on the connection create and update requests [\#834](https://github.com/auth0/go-auth0/pull/834) ([developerkunal](https://github.com/developerkunal))
+- feat: add client identity assertion authorization grant support via the `IdentityAssertionAuthorizationGrant` field (`CreateIdentityAssertionAuthorizationGrant`, `UpdateIdentityAssertionAuthorizationGrant` types) on the client requests [\#834](https://github.com/auth0/go-auth0/pull/834) ([developerkunal](https://github.com/developerkunal))
+- feat: add self-service profile `ThirdPartyClientAccessConfig` type and `ThirdPartyClientAccessConfig` field on the SSO ticket request [\#834](https://github.com/auth0/go-auth0/pull/834) ([developerkunal](https://github.com/developerkunal))
+- feat: add branding theme `Identifiers` field and the `BrandingThemeIdentifiers` type with login display, phone display formatting, and phone display masking enums [\#834](https://github.com/auth0/go-auth0/pull/834) ([developerkunal](https://github.com/developerkunal))
+- feat: add session `Actor` field with the `SessionActorMetadata` type and the `SessionActorClaimValue` union (`SessionActorClaimValueVisitor`) [\#834](https://github.com/auth0/go-auth0/pull/834) ([developerkunal](https://github.com/developerkunal))
+- feat: add `SuspiciousIPThrottlingPreCustomTokenExchangeStage` to the suspicious IP throttling attack protection stages [\#834](https://github.com/auth0/go-auth0/pull/834) ([developerkunal](https://github.com/developerkunal))
+
 ## [v3.0.0](https://github.com/auth0/go-auth0/tree/v3.0.0) (2026-07-15)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v2.14.0...v3.0.0)
 
