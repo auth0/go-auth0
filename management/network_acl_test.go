@@ -40,6 +40,37 @@ func TestNetworkACLManager_Create(t *testing.T) {
 	assert.Equal(t, expectedNetworkACL, actualNetworkACL)
 }
 
+func TestNetworkACLManager_CreateWithAuth0Managed(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedNetworkACL := &NetworkACL{
+		Description: auth0.String("some-description"),
+		Active:      auth0.Bool(true),
+		Priority:    auth0.Int(1),
+		Rule: &NetworkACLRule{
+			Action: &NetworkACLRuleAction{
+				Block: auth0.Bool(true),
+			},
+			Match: &NetworkACLRuleMatch{
+				Auth0Managed: &[]string{"auth0.icloud_relay_proxy"},
+			},
+			Scope: auth0.String("authentication"),
+		},
+	}
+
+	err := api.NetworkACL.Create(context.Background(), expectedNetworkACL)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedNetworkACL.GetID())
+	t.Cleanup(func() {
+		cleanupNetworkACL(t, expectedNetworkACL.GetID())
+	})
+
+	actualNetworkACL, err := api.NetworkACL.Read(context.Background(), expectedNetworkACL.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, expectedNetworkACL, actualNetworkACL)
+	assert.Equal(t, []string{"auth0.icloud_relay_proxy"}, actualNetworkACL.Rule.Match.GetAuth0Managed())
+}
+
 func TestNetworkACLManager_List(t *testing.T) {
 	configureHTTPTestRecordings(t)
 	expectedNetworkACL := givenANetworkACL(t)
