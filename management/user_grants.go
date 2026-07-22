@@ -5,7 +5,7 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
 )
 
@@ -142,11 +142,12 @@ func (l *ListUserGrantsOffsetPaginatedResponseContent) String() string {
 }
 
 var (
-	userGrantFieldID       = big.NewInt(1 << 0)
-	userGrantFieldClientID = big.NewInt(1 << 1)
-	userGrantFieldUserID   = big.NewInt(1 << 2)
-	userGrantFieldAudience = big.NewInt(1 << 3)
-	userGrantFieldScope    = big.NewInt(1 << 4)
+	userGrantFieldID             = big.NewInt(1 << 0)
+	userGrantFieldClientID       = big.NewInt(1 << 1)
+	userGrantFieldUserID         = big.NewInt(1 << 2)
+	userGrantFieldAudience       = big.NewInt(1 << 3)
+	userGrantFieldScope          = big.NewInt(1 << 4)
+	userGrantFieldOrganizationID = big.NewInt(1 << 5)
 )
 
 type UserGrant struct {
@@ -160,6 +161,8 @@ type UserGrant struct {
 	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
 	// Scopes included in this grant.
 	Scope []string `json:"scope,omitempty" url:"scope,omitempty"`
+	// ID of the organization associated with the grant.
+	OrganizationID *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -201,6 +204,13 @@ func (u *UserGrant) GetScope() []string {
 		return nil
 	}
 	return u.Scope
+}
+
+func (u *UserGrant) GetOrganizationID() string {
+	if u == nil || u.OrganizationID == nil {
+		return ""
+	}
+	return *u.OrganizationID
 }
 
 func (u *UserGrant) GetExtraProperties() map[string]interface{} {
@@ -250,6 +260,13 @@ func (u *UserGrant) SetAudience(audience *string) {
 func (u *UserGrant) SetScope(scope []string) {
 	u.Scope = scope
 	u.require(userGrantFieldScope)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGrant) SetOrganizationID(organizationID *string) {
+	u.OrganizationID = organizationID
+	u.require(userGrantFieldOrganizationID)
 }
 
 func (u *UserGrant) UnmarshalJSON(data []byte) error {

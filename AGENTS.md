@@ -169,7 +169,7 @@ make test-e2e      # Run tests against real Auth0 tenant
 
 > Applies only when working on the `beta` branch.
 
-This SDK ships two tracks from one module path (`github.com/auth0/go-auth0/v2`):
+This SDK ships two tracks from one module path (`github.com/auth0/go-auth0/v3`):
 
 - **Stable** (`main`): EA/GA endpoints only. Released by a maintainer via a `release/*` branch.
 - **Beta** (`beta`): a superset of stable plus beta-only endpoints. Released automatically when a PR is merged into `beta`.
@@ -178,7 +178,7 @@ The `beta` branch is **regenerated** from the stable spec plus the beta-only spe
 
 ### Versioning
 
-Beta = the next stable minor + `-beta.N`, derived from git tags. Latest stable `v2.13.0` -> beta `v2.14.0-beta.N`; `-beta.N` starts at 0 per base and auto-increments; once stable `v2.14.0` ships, beta rolls to `v2.15.0-beta.0`. No state file.
+Beta = the next stable minor + `-beta.N`, derived from git tags. Latest stable `v3.1.0` -> beta `v3.2.0-beta.N`; `-beta.N` starts at 0 per base and auto-increments; once stable `v3.2.0` ships, beta rolls to `v3.3.0-beta.0`. No state file.
 
 ### When merging a beta regeneration PR
 

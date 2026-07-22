@@ -5,7 +5,7 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
 	time "time"
 )
@@ -1882,6 +1882,9 @@ func (e *EventStreamSubscription) String() string {
 type EventStreamTestEventTypeEnum string
 
 const (
+	EventStreamTestEventTypeEnumConnectionCreated              EventStreamTestEventTypeEnum = "connection.created"
+	EventStreamTestEventTypeEnumConnectionDeleted              EventStreamTestEventTypeEnum = "connection.deleted"
+	EventStreamTestEventTypeEnumConnectionUpdated              EventStreamTestEventTypeEnum = "connection.updated"
 	EventStreamTestEventTypeEnumGroupCreated                   EventStreamTestEventTypeEnum = "group.created"
 	EventStreamTestEventTypeEnumGroupDeleted                   EventStreamTestEventTypeEnum = "group.deleted"
 	EventStreamTestEventTypeEnumGroupMemberAdded               EventStreamTestEventTypeEnum = "group.member.added"
@@ -1908,6 +1911,12 @@ const (
 
 func NewEventStreamTestEventTypeEnumFromString(s string) (EventStreamTestEventTypeEnum, error) {
 	switch s {
+	case "connection.created":
+		return EventStreamTestEventTypeEnumConnectionCreated, nil
+	case "connection.deleted":
+		return EventStreamTestEventTypeEnumConnectionDeleted, nil
+	case "connection.updated":
+		return EventStreamTestEventTypeEnumConnectionUpdated, nil
 	case "group.created":
 		return EventStreamTestEventTypeEnumGroupCreated, nil
 	case "group.deleted":

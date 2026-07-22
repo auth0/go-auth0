@@ -3,8 +3,8 @@
 package management
 
 import (
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 )
 
 var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{

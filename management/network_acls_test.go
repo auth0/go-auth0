@@ -1212,6 +1212,14 @@ func TestSettersNetworkACLMatch(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAuth0Managed", func(t *testing.T) {
+		obj := &NetworkACLMatch{}
+		var fernTestValueAuth0Managed []string
+		obj.SetAuth0Managed(fernTestValueAuth0Managed)
+		assert.Equal(t, fernTestValueAuth0Managed, obj.Auth0Managed)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetGeoCountryCodes", func(t *testing.T) {
 		obj := &NetworkACLMatch{}
 		var fernTestValueGeoCountryCodes []string
@@ -1326,6 +1334,39 @@ func TestGettersNetworkACLMatch(t *testing.T) {
 			}
 		}()
 		_ = obj.GetAsns() // Should return zero value
+	})
+
+	t.Run("GetAuth0Managed", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var expected []string
+		obj.Auth0Managed = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAuth0Managed(), "getter should return the property value")
+	})
+
+	t.Run("GetAuth0Managed_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		obj.Auth0Managed = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAuth0Managed(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAuth0Managed_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAuth0Managed() // Should return zero value
 	})
 
 	t.Run("GetGeoCountryCodes", func(t *testing.T) {
@@ -1669,6 +1710,37 @@ func TestSettersMarkExplicitNetworkACLMatch(t *testing.T) {
 
 		// Act
 		obj.SetAsns(fernTestValueAsns)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAuth0Managed_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var fernTestValueAuth0Managed []string
+
+		// Act
+		obj.SetAuth0Managed(fernTestValueAuth0Managed)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

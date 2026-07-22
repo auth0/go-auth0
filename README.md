@@ -2,12 +2,12 @@
 
 <div align="center">
 
-[![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0/v2.svg)](https://pkg.go.dev/github.com/auth0/go-auth0/v2)
-[![Go Report Card](https://goreportcard.com/badge/github.com/auth0/go-auth0/v2?style=flat-square)](https://goreportcard.com/report/github.com/auth0/go-auth0/v2)
+[![GoDoc](https://pkg.go.dev/badge/github.com/auth0/go-auth0/v3.svg)](https://pkg.go.dev/github.com/auth0/go-auth0/v3)
+[![Go Report Card](https://goreportcard.com/badge/github.com/auth0/go-auth0/v3?style=flat-square)](https://goreportcard.com/report/github.com/auth0/go-auth0/v3)
 [![Release](https://img.shields.io/github/v/release/auth0/go-auth0?include_prereleases&style=flat-square)](https://github.com/auth0/go-auth0/releases)
-[![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/v2/LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=v2&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Av2)
-[![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0/v2?style=flat-square)](https://codecov.io/gh/auth0/go-auth0/tree/v2)
+[![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/main/LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=main&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Amain)
+[![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0/main?style=flat-square)](https://codecov.io/gh/auth0/go-auth0/tree/main)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0?ref=badge_shield)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/auth0/go-auth0)
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fauth0%2Fgo-auth0)
@@ -20,7 +20,7 @@
 
 ## Documentation
 
-- [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0/v2) - explore the Go SDK documentation.
+- [Godoc](https://pkg.go.dev/github.com/auth0/go-auth0/v3) - explore the Go SDK documentation.
 - [Docs site](https://www.auth0.com/docs) — explore our docs site and learn more about Auth0.
 - [Examples](./EXAMPLES.md) - Further examples around usage of the SDK.
 - [API Reference](./reference.md) - Complete API reference documentation.
@@ -36,7 +36,7 @@ This library follows the [same support policy as Go](https://go.dev/doc/devel/re
 ### Installation
 
 ```shell
-go get github.com/auth0/go-auth0/v2
+go get github.com/auth0/go-auth0/v3
 ```
 
 ### Beta SDK
@@ -45,10 +45,10 @@ Alongside the stable releases, we publish a beta track that is a strict superset
 
 ```shell
 # Beta: explicit, version-pinned opt-in.
-go get github.com/auth0/go-auth0/v2@v2.14.0-beta.0
+go get github.com/auth0/go-auth0/v3@v3.2.0-beta.0
 ```
 
-Beta versions carry a `-beta.N` suffix (for example `v2.14.0-beta.0`). Because they are prereleases, `go get` without an explicit version will never pick them up, so beta is always strictly opt-in. Beta endpoints are still being finalized and may change or be removed at any time, so we recommend using the beta track only for evaluation and not in production.
+Beta versions carry a `-beta.N` suffix (for example `v3.2.0-beta.0`). Because they are prereleases, `go get` without an explicit version will never pick them up, so beta is always strictly opt-in. Beta endpoints are still being finalized and may change or be removed at any time, so we recommend using the beta track only for evaluation and not in production.
 
 ### Usage
 
@@ -63,9 +63,9 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0/v2/authentication"
-	"github.com/auth0/go-auth0/v2/authentication/database"
-	"github.com/auth0/go-auth0/v2/authentication/oauth"
+	"github.com/auth0/go-auth0/v3/authentication"
+	"github.com/auth0/go-auth0/v3/authentication/database"
+	"github.com/auth0/go-auth0/v3/authentication/oauth"
 )
 
 func main() {
@@ -126,8 +126,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0/v2/management/option"
-	management "github.com/auth0/go-auth0/v2/management/client"
+	"github.com/auth0/go-auth0/v3/management/option"
+	management "github.com/auth0/go-auth0/v3/management/client"
 )
 
 func main() {
@@ -147,8 +147,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/auth0/go-auth0/v2/management/option"
-	management "github.com/auth0/go-auth0/v2/management/client"
+	"github.com/auth0/go-auth0/v3/management/option"
+	management "github.com/auth0/go-auth0/v3/management/client"
 )
 
 func main() {
@@ -165,8 +165,8 @@ Or use a custom token source for advanced token management (e.g., shared caching
 package main
 
 import (
-	"github.com/auth0/go-auth0/v2/management/option"
-	management "github.com/auth0/go-auth0/v2/management/client"
+	"github.com/auth0/go-auth0/v3/management/option"
+	management "github.com/auth0/go-auth0/v3/management/client"
 	"golang.org/x/oauth2"
 )
 

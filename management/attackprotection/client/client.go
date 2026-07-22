@@ -3,14 +3,14 @@
 package client
 
 import (
-	botdetection "github.com/auth0/go-auth0/v2/management/attackprotection/botdetection"
-	breachedpassworddetection "github.com/auth0/go-auth0/v2/management/attackprotection/breachedpassworddetection"
-	bruteforceprotection "github.com/auth0/go-auth0/v2/management/attackprotection/bruteforceprotection"
-	captcha "github.com/auth0/go-auth0/v2/management/attackprotection/captcha"
-	phoneproviderprotection "github.com/auth0/go-auth0/v2/management/attackprotection/phoneproviderprotection"
-	suspiciousipthrottling "github.com/auth0/go-auth0/v2/management/attackprotection/suspiciousipthrottling"
-	core "github.com/auth0/go-auth0/v2/management/core"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	botdetection "github.com/auth0/go-auth0/v3/management/attackprotection/botdetection"
+	breachedpassworddetection "github.com/auth0/go-auth0/v3/management/attackprotection/breachedpassworddetection"
+	bruteforceprotection "github.com/auth0/go-auth0/v3/management/attackprotection/bruteforceprotection"
+	captcha "github.com/auth0/go-auth0/v3/management/attackprotection/captcha"
+	phoneproviderprotection "github.com/auth0/go-auth0/v3/management/attackprotection/phoneproviderprotection"
+	suspiciousipthrottling "github.com/auth0/go-auth0/v3/management/attackprotection/suspiciousipthrottling"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 )
 
 type Client struct {

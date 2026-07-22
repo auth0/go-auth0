@@ -1,6 +1,6 @@
 # Examples
 
-This guide provides comprehensive examples for using the Auth0 Go SDK v2, covering authentication, management operations, pagination, and advanced usage patterns.
+This guide provides comprehensive examples for using the Auth0 Go SDK v3, covering authentication, management operations, pagination, and advanced usage patterns.
 
 ## Table of Contents
 
@@ -15,16 +15,16 @@ This guide provides comprehensive examples for using the Auth0 Go SDK v2, coveri
 
 ## Client Credentials Authentication
 
-The SDK v2 provides several ways to authenticate with Auth0 using OAuth client credentials through the options pattern.
+The SDK v3 provides several ways to authenticate with Auth0 using OAuth client credentials through the options pattern.
 
 ### Management API Initialization
 
 ```go
 import (
     "context"
-    "github.com/auth0/go-auth0/v2/management"
-    "github.com/auth0/go-auth0/v2/management/client"
-    "github.com/auth0/go-auth0/v2/management/option"
+    "github.com/auth0/go-auth0/v3/management"
+    "github.com/auth0/go-auth0/v3/management/client"
+    "github.com/auth0/go-auth0/v3/management/option"
     "golang.org/x/oauth2"
 )
 
@@ -100,7 +100,7 @@ mgmt, err := client.New(
 ```go
 import (
     "context"
-    "github.com/auth0/go-auth0/v2/authentication"
+    "github.com/auth0/go-auth0/v3/authentication"
 )
 
 // With client secret authentication
@@ -122,7 +122,7 @@ auth, err := authentication.New(
 
 ## Request Options
 
-v2 provides fine-grained configuration through request options that can be applied to individual requests.
+v3 provides fine-grained configuration through request options that can be applied to individual requests.
 
 ### Basic Request Options
 
@@ -208,7 +208,7 @@ connections, err := mgmt.Connections.List(ctx, connectionListRequest)
 
 ## Pagination
 
-The SDK v2 uses a `Page` type for pagination with built-in iterator support.
+The SDK v3 uses a `Page` type for pagination with built-in iterator support.
 
 ### Page-based Pagination
 
@@ -520,9 +520,9 @@ import (
     "fmt"
     "log"
 
-    "github.com/auth0/go-auth0/v2/management"
-    "github.com/auth0/go-auth0/v2/management/client"
-    "github.com/auth0/go-auth0/v2/management/option"
+    "github.com/auth0/go-auth0/v3/management"
+    "github.com/auth0/go-auth0/v3/management/client"
+    "github.com/auth0/go-auth0/v3/management/option"
 )
 
 func main() {
@@ -543,7 +543,7 @@ func main() {
 
     // Create a new client application
     createRequest := &management.CreateClientRequestContent{
-        Name:    "My Go SDK v2 App",
+        Name:    "My Go SDK v3 App",
         AppType: &management.ClientAppTypeEnumSpa,
         Callbacks: []string{
             "http://localhost:3000/callback",
@@ -625,9 +625,9 @@ import (
     "fmt"
     "log"
 
-    "github.com/auth0/go-auth0/v2/management"
-    "github.com/auth0/go-auth0/v2/management/client"
-    "github.com/auth0/go-auth0/v2/management/option"
+    "github.com/auth0/go-auth0/v3/management"
+    "github.com/auth0/go-auth0/v3/management/client"
+    "github.com/auth0/go-auth0/v3/management/option"
 )
 
 func main() {
@@ -714,4 +714,4 @@ func main() {
 }
 ```
 
-These examples demonstrate the key patterns for using the Auth0 Go SDK v2 effectively. The SDK's type-safe approach and built-in pagination support make it easier to work with Auth0's Management API while providing flexibility for advanced use cases.
+These examples demonstrate the key patterns for using the Auth0 Go SDK v3 effectively. The SDK's type-safe approach and built-in pagination support make it easier to work with Auth0's Management API while providing flexibility for advanced use cases.
