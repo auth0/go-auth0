@@ -1,5 +1,35 @@
 # Change Log
 
+## [v3.2.0-beta.0](https://github.com/auth0/go-auth0/tree/v3.2.0-beta.0) (2026-07-22)
+
+**Beta**
+- feat: add B2B integration configuration via the `b2b_integration_configuration` field (`B2BIntegrationConfiguration` type with `sso_profiles`, max one SSO profile ID) on the client and client create/update requests
+
+**Stable (from main)**
+- **BREAKING**: change module path from `github.com/auth0/go-auth0/v2` to `github.com/auth0/go-auth0/v3`; update your `go get` command and all imports
+- **BREAKING**: remove the `Users.FederatedConnectionsTokensets` sub-client (`List`, `Delete`) and the `FederatedConnectionTokenSet` type
+- **BREAKING**: remove the `ConnectionFederatedConnectionsAccessTokens` type and the `FederatedConnectionsAccessTokens` field from `ConnectionPropertiesOptions`, `UpdateConnectionOptions`, `ConnectionOptionsAzureAd`, and `ConnectionOptionsCommonOidc`
+- **BREAKING**: remove the `asn` value from `ClientSessionTransferDelegationDeviceBindingEnum` (only `ip` remains)
+- **BREAKING**: change `ListRolesOffsetPaginatedResponseContent` `Start`/`Limit`/`Total` from `*float64` to `float64` (setter signatures change)
+- **BREAKING**: replace the shared `ConnectionAttributeIdentifier` with per-attribute `EmailAttributeIdentifier`, `PhoneAttributeIdentifier`, and `UsernameAttributeIdentifier` types
+- **BREAKING**: replace `PhoneProviderProtectionBackoffStrategyEnumNone` (`"none"`) with `PhoneProviderProtectionBackoffStrategyEnumDefault` (`"default"`)
+- feat: add organization role members endpoint (`Organizations.Roles.Members.List`) with cursor pagination and the `RoleMember`, `ListOrganizationRoleMembersResponseContent`, `ListOrganizationRoleMembersRequestParameters` types
+- feat: add organization third-party client access via the `ThirdPartyClientAccess` field (`OrganizationThirdPartyClientAccessEnum`)
+- feat: add `OrganizationID` field to `UserGrant`
+- feat: add token vault privileged access `Grants` field and the `TokenVaultPrivilegedAccessGrant` type
+- feat: add connection OIDC discovery via `DiscoveryURL` and `OidcMetadata` fields (and the `ConnectionsOidcMetadata` type)
+- feat: add `DefaultMethodPhoneNumberIdentifierEnum` (`password`, `phone_otp`)
+- feat: add connection event stream events (`connection.created`, `connection.deleted`, `connection.updated`) with their CloudEvent type enums
+- feat: add `Auth0Managed` field to `NetworkACLMatch`
+- feat: add `confirmation` value to `PartialGroupsEnum`
+- feat: add `NotFoundErrorBody` and `TooManyRequestsErrorBody` types and their error-code definitions
+- feat: add connection cross-app access resource app via the `CrossAppAccessResourceApp` field (`CreateCrossAppAccessResourceApp`, `UpdateCrossAppAccessResourceApp`, `ConnectionCrossAppAccessResourceApp` types and status enums)
+- feat: add client identity assertion authorization grant via the `IdentityAssertionAuthorizationGrant` field (`CreateIdentityAssertionAuthorizationGrant`, `UpdateIdentityAssertionAuthorizationGrant` types)
+- feat: add self-service profile `ThirdPartyClientAccessConfig` type and field on the SSO ticket request
+- feat: add branding theme `Identifiers` field and the `BrandingThemeIdentifiers` type with login display, phone display formatting, and phone display masking enums
+- feat: add session `Actor` field with the `SessionActorMetadata` type and the `SessionActorClaimValue` union
+- feat: add `SuspiciousIPThrottlingPreCustomTokenExchangeStage` to the suspicious IP throttling stages
+
 ## [v2.15.0-beta.0](https://github.com/auth0/go-auth0/tree/v2.15.0-beta.0) (2026-06-24)
 
 **Beta**
