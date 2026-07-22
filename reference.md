@@ -1375,7 +1375,7 @@ client.Clients.List(
 <dl>
 <dd>
 
-**externalClientID:** `*string` — Optional filter by the <a href="https://www.ietf.org/archive/id/draft-ietf-oauth-client-id-metadata-document-04.html">Client ID Metadata Document</a> URI for CIMD-registered clients.
+**externalClientID:** `*string` — Optional filter by the <a href="https://drafts.oauth.net/draft-ietf-oauth-client-id-metadata-document/draft-ietf-oauth-client-id-metadata-document.html">Client ID Metadata Document</a> URI for CIMD-registered clients.
     
 </dd>
 </dl>
@@ -1861,6 +1861,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dl>
 <dd>
 
+**identityAssertionAuthorizationGrant:** `*management.CreateIdentityAssertionAuthorizationGrant` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **thirdPartySecurityMode:** `*management.ClientThirdPartySecurityModeEnum` 
     
 </dd>
@@ -1878,6 +1886,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **expressConfiguration:** `*management.ExpressConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**b2BIntegrationConfiguration:** `*management.B2BIntegrationConfiguration` 
     
 </dd>
 </dl>
@@ -2501,6 +2517,14 @@ client.Clients.Update(
 <dl>
 <dd>
 
+**identityAssertionAuthorizationGrant:** `*management.UpdateIdentityAssertionAuthorizationGrant` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **formTemplate:** `*string` — Form template for WS-Federation protocol
     
 </dd>
@@ -2674,6 +2698,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **expressConfiguration:** `*management.ExpressConfigurationOrNull` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**b2BIntegrationConfiguration:** `*management.B2BIntegrationConfigurationOrNull` 
     
 </dd>
 </dl>
@@ -3558,6 +3590,14 @@ client.Connections.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**crossAppAccessResourceApp:** `*management.CreateCrossAppAccessResourceApp` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -3840,6 +3880,14 @@ client.Connections.Update(
 <dd>
 
 **crossAppAccessRequestingApp:** `*management.CrossAppAccessRequestingApp` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**crossAppAccessResourceApp:** `*management.UpdateCrossAppAccessResourceApp` 
     
 </dd>
 </dl>
@@ -5639,7 +5687,7 @@ client.EventStreams.Update(
 
 ```go
 request := &management.CreateEventStreamTestEventRequestContent{
-        EventType: management.EventStreamTestEventTypeEnumGroupCreated,
+        EventType: management.EventStreamTestEventTypeEnumConnectionCreated,
     }
 client.EventStreams.Test(
         context.TODO(),
@@ -5725,7 +5773,7 @@ request := &management.SubscribeEventsRequestParameters{
             "from_timestamp",
         ),
         EventType: []*management.EventStreamSubscribeEventsEventTypeEnum{
-            management.EventStreamSubscribeEventsEventTypeEnumGroupCreated.Ptr(),
+            management.EventStreamSubscribeEventsEventTypeEnumConnectionCreated.Ptr(),
         },
     }
 client.Events.Subscribe(
@@ -9192,6 +9240,14 @@ client.Organizations.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**thirdPartyClientAccess:** `*management.OrganizationThirdPartyClientAccessEnum` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -9465,6 +9521,14 @@ client.Organizations.Update(
 <dd>
 
 **tokenQuota:** `*management.UpdateTokenQuota` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thirdPartyClientAccess:** `*management.OrganizationThirdPartyClientAccessEnum` 
     
 </dd>
 </dl>
@@ -17595,6 +17659,14 @@ client.Branding.Themes.Create(
 <dl>
 <dd>
 
+**identifiers:** `*management.BrandingThemeIdentifiers` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **pageBackground:** `*management.BrandingThemePageBackground` 
     
 </dd>
@@ -17925,6 +17997,14 @@ client.Branding.Themes.Update(
 <dd>
 
 **fonts:** `*management.BrandingThemeFonts` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identifiers:** `*management.BrandingThemeIdentifiers` 
     
 </dd>
 </dl>
@@ -30687,6 +30767,121 @@ client.Organizations.Members.EffectiveRoles.Sources.Groups.List(
 </dl>
 </details>
 
+## Organizations Roles Members
+<details><summary><code>client.Organizations.Roles.Members.List(ID, RoleID) -> *management.ListOrganizationRoleMembersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the organization members assigned a specific role within the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationRoleMembersRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.Roles.Members.List(
+        context.TODO(),
+        "id",
+        "role_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleID:** `string` — ID of the role to retrieve the assigned members for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50. Values above the maximum permitted size are capped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Prompts Rendering
 <details><summary><code>client.Prompts.Rendering.List() -> *management.ListAculsOffsetPaginatedResponseContent</code></summary>
 <dl>
@@ -32493,6 +32688,14 @@ client.SelfServiceProfiles.SSOTicket.Create(
 <dl>
 <dd>
 
+**thirdPartyClientAccessConfig:** `*management.ThirdPartyClientAccessConfig` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **enabledFeatures:** `*management.SelfServiceProfileSSOTicketEnabledFeatures` 
     
 </dd>
@@ -34037,118 +34240,6 @@ client.Users.Enrollments.Get(
 <dd>
 
 **id:** `string` — ID of the user to list enrollments for.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users FederatedConnectionsTokensets
-<details><summary><code>client.Users.FederatedConnectionsTokensets.List(ID) -> []*management.FederatedConnectionTokenSet</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List active federated connections tokensets for a provided user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.FederatedConnectionsTokensets.List(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — User identifier
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.FederatedConnectionsTokensets.Delete(ID, TokensetID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.FederatedConnectionsTokensets.Delete(
-        context.TODO(),
-        "id",
-        "tokenset_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Id of the user that owns the tokenset
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tokensetID:** `string` — The tokenset id
     
 </dd>
 </dl>

@@ -10,9 +10,9 @@ import (
 	os "os"
 	testing "testing"
 
-	management "github.com/auth0/go-auth0/v2/management"
-	client "github.com/auth0/go-auth0/v2/management/client"
-	option "github.com/auth0/go-auth0/v2/management/option"
+	management "github.com/auth0/go-auth0/v3/management"
+	client "github.com/auth0/go-auth0/v3/management/client"
+	option "github.com/auth0/go-auth0/v3/management/option"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -230,7 +230,7 @@ func TestEventStreamsTestWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.CreateEventStreamTestEventRequestContent{
-		EventType: management.EventStreamTestEventTypeEnumGroupCreated,
+		EventType: management.EventStreamTestEventTypeEnumConnectionCreated,
 	}
 	_, invocationErr := client.EventStreams.Test(
 		context.TODO(),

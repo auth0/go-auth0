@@ -114,6 +114,14 @@ func TestSettersGetSessionResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetActor", func(t *testing.T) {
+		obj := &GetSessionResponseContent{}
+		var fernTestValueActor *SessionActorMetadata
+		obj.SetActor(fernTestValueActor)
+		assert.Equal(t, fernTestValueActor, obj.Actor)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersGetSessionResponseContent(t *testing.T) {
@@ -558,6 +566,40 @@ func TestGettersGetSessionResponseContent(t *testing.T) {
 		_ = obj.GetSessionMetadata() // Should return zero value
 	})
 
+	t.Run("GetActor", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetSessionResponseContent{}
+		var value SessionActorMetadata
+		obj.Actor = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetActor(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetActor_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetSessionResponseContent{}
+		obj.Actor = nil
+		var expectedZero SessionActorMetadata
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetActor(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetActor_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetSessionResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActor() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitGetSessionResponseContent(t *testing.T) {
@@ -964,6 +1006,37 @@ func TestSettersMarkExplicitGetSessionResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetActor_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetSessionResponseContent{}
+		var fernTestValueActor *SessionActorMetadata
+
+		// Act
+		obj.SetActor(fernTestValueActor)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersUpdateSessionResponseContent(t *testing.T) {
@@ -1068,6 +1141,14 @@ func TestSettersUpdateSessionResponseContent(t *testing.T) {
 		var fernTestValueSessionMetadata *SessionMetadata
 		obj.SetSessionMetadata(fernTestValueSessionMetadata)
 		assert.Equal(t, fernTestValueSessionMetadata, obj.SessionMetadata)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetActor", func(t *testing.T) {
+		obj := &UpdateSessionResponseContent{}
+		var fernTestValueActor *SessionActorMetadata
+		obj.SetActor(fernTestValueActor)
+		assert.Equal(t, fernTestValueActor, obj.Actor)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1515,6 +1596,40 @@ func TestGettersUpdateSessionResponseContent(t *testing.T) {
 		_ = obj.GetSessionMetadata() // Should return zero value
 	})
 
+	t.Run("GetActor", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateSessionResponseContent{}
+		var value SessionActorMetadata
+		obj.Actor = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetActor(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetActor_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateSessionResponseContent{}
+		obj.Actor = nil
+		var expectedZero SessionActorMetadata
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetActor(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetActor_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateSessionResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActor() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitUpdateSessionResponseContent(t *testing.T) {
@@ -1898,6 +2013,37 @@ func TestSettersMarkExplicitUpdateSessionResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetSessionMetadata(fernTestValueSessionMetadata)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetActor_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateSessionResponseContent{}
+		var fernTestValueActor *SessionActorMetadata
+
+		// Act
+		obj.SetActor(fernTestValueActor)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

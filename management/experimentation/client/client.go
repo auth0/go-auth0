@@ -3,11 +3,11 @@
 package client
 
 import (
-	core "github.com/auth0/go-auth0/v2/management/core"
-	experiments "github.com/auth0/go-auth0/v2/management/experimentation/experiments"
-	client "github.com/auth0/go-auth0/v2/management/experimentation/featureflags/client"
-	segments "github.com/auth0/go-auth0/v2/management/experimentation/segments"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	core "github.com/auth0/go-auth0/v3/management/core"
+	experiments "github.com/auth0/go-auth0/v3/management/experimentation/experiments"
+	client "github.com/auth0/go-auth0/v3/management/experimentation/featureflags/client"
+	segments "github.com/auth0/go-auth0/v3/management/experimentation/segments"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 )
 
 type Client struct {

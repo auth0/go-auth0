@@ -10,6 +10,168 @@ import (
 	time "time"
 )
 
+func TestSettersB2BIntegrationConfiguration(t *testing.T) {
+	t.Run("SetSSOProfiles", func(t *testing.T) {
+		obj := &B2BIntegrationConfiguration{}
+		var fernTestValueSSOProfiles []string
+		obj.SetSSOProfiles(fernTestValueSSOProfiles)
+		assert.Equal(t, fernTestValueSSOProfiles, obj.SSOProfiles)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersB2BIntegrationConfiguration(t *testing.T) {
+	t.Run("GetSSOProfiles", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &B2BIntegrationConfiguration{}
+		var expected []string
+		obj.SSOProfiles = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSSOProfiles(), "getter should return the property value")
+	})
+
+	t.Run("GetSSOProfiles_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &B2BIntegrationConfiguration{}
+		obj.SSOProfiles = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSSOProfiles(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSSOProfiles_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *B2BIntegrationConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSSOProfiles() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitB2BIntegrationConfiguration(t *testing.T) {
+	t.Run("SetSSOProfiles_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &B2BIntegrationConfiguration{}
+		var fernTestValueSSOProfiles []string
+
+		// Act
+		obj.SetSSOProfiles(fernTestValueSSOProfiles)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersB2BIntegrationConfigurationOrNull(t *testing.T) {
+	t.Run("SetSSOProfiles", func(t *testing.T) {
+		obj := &B2BIntegrationConfigurationOrNull{}
+		var fernTestValueSSOProfiles []string
+		obj.SetSSOProfiles(fernTestValueSSOProfiles)
+		assert.Equal(t, fernTestValueSSOProfiles, obj.SSOProfiles)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersB2BIntegrationConfigurationOrNull(t *testing.T) {
+	t.Run("GetSSOProfiles", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &B2BIntegrationConfigurationOrNull{}
+		var expected []string
+		obj.SSOProfiles = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSSOProfiles(), "getter should return the property value")
+	})
+
+	t.Run("GetSSOProfiles_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &B2BIntegrationConfigurationOrNull{}
+		obj.SSOProfiles = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetSSOProfiles(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetSSOProfiles_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *B2BIntegrationConfigurationOrNull
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSSOProfiles() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitB2BIntegrationConfigurationOrNull(t *testing.T) {
+	t.Run("SetSSOProfiles_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &B2BIntegrationConfigurationOrNull{}
+		var fernTestValueSSOProfiles []string
+
+		// Act
+		obj.SetSSOProfiles(fernTestValueSSOProfiles)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersCertificateSubjectDnCredential(t *testing.T) {
 	t.Run("SetCredentialType", func(t *testing.T) {
 		obj := &CertificateSubjectDnCredential{}
@@ -2043,11 +2205,27 @@ func TestSettersClient(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetB2BIntegrationConfiguration", func(t *testing.T) {
+		obj := &Client{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+		assert.Equal(t, fernTestValueB2BIntegrationConfiguration, obj.B2BIntegrationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetMyOrganizationConfiguration", func(t *testing.T) {
 		obj := &Client{}
 		var fernTestValueMyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
 		assert.Equal(t, fernTestValueMyOrganizationConfiguration, obj.MyOrganizationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		obj := &Client{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
+		assert.Equal(t, fernTestValueIdentityAssertionAuthorizationGrant, obj.IdentityAssertionAuthorizationGrant)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -3946,6 +4124,40 @@ func TestGettersClient(t *testing.T) {
 		_ = obj.GetExpressConfiguration() // Should return zero value
 	})
 
+	t.Run("GetB2BIntegrationConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var value B2BIntegrationConfiguration
+		obj.B2BIntegrationConfiguration = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetB2BIntegrationConfiguration(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		obj.B2BIntegrationConfiguration = nil
+		var expectedZero B2BIntegrationConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetB2BIntegrationConfiguration(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Client
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetB2BIntegrationConfiguration() // Should return zero value
+	})
+
 	t.Run("GetMyOrganizationConfiguration", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -3978,6 +4190,40 @@ func TestGettersClient(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var value IdentityAssertionAuthorizationGrant
+		obj.IdentityAssertionAuthorizationGrant = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIdentityAssertionAuthorizationGrant(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		obj.IdentityAssertionAuthorizationGrant = nil
+		var expectedZero IdentityAssertionAuthorizationGrant
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIdentityAssertionAuthorizationGrant(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Client
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIdentityAssertionAuthorizationGrant() // Should return zero value
 	})
 
 	t.Run("GetThirdPartySecurityMode", func(t *testing.T) {
@@ -5929,6 +6175,37 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetB2BIntegrationConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+
+		// Act
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetMyOrganizationConfiguration_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -5937,6 +6214,37 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 
 		// Act
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+
+		// Act
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -20055,6 +20363,14 @@ func TestSettersClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetGrants", func(t *testing.T) {
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		var fernTestValueGrants []*TokenVaultPrivilegedAccessGrant
+		obj.SetGrants(fernTestValueGrants)
+		assert.Equal(t, fernTestValueGrants, obj.Grants)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
@@ -20124,6 +20440,39 @@ func TestGettersClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
 		_ = obj.GetIPAllowlist() // Should return zero value
 	})
 
+	t.Run("GetGrants", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		var expected []*TokenVaultPrivilegedAccessGrant
+		obj.Grants = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetGrants(), "getter should return the property value")
+	})
+
+	t.Run("GetGrants_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		obj.Grants = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetGrants(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetGrants_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithCredentialID
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGrants() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitClientTokenVaultPrivilegedAccessWithCredentialID(t *testing.T) {
@@ -20189,6 +20538,37 @@ func TestSettersMarkExplicitClientTokenVaultPrivilegedAccessWithCredentialID(t *
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetGrants_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithCredentialID{}
+		var fernTestValueGrants []*TokenVaultPrivilegedAccessGrant
+
+		// Act
+		obj.SetGrants(fernTestValueGrants)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
@@ -20205,6 +20585,14 @@ func TestSettersClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
 		var fernTestValueIPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry
 		obj.SetIPAllowlist(fernTestValueIPAllowlist)
 		assert.Equal(t, fernTestValueIPAllowlist, obj.IPAllowlist)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetGrants", func(t *testing.T) {
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		var fernTestValueGrants []*TokenVaultPrivilegedAccessGrant
+		obj.SetGrants(fernTestValueGrants)
+		assert.Equal(t, fernTestValueGrants, obj.Grants)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -20277,6 +20665,39 @@ func TestGettersClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
 		_ = obj.GetIPAllowlist() // Should return zero value
 	})
 
+	t.Run("GetGrants", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		var expected []*TokenVaultPrivilegedAccessGrant
+		obj.Grants = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetGrants(), "getter should return the property value")
+	})
+
+	t.Run("GetGrants_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		obj.Grants = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetGrants(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetGrants_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientTokenVaultPrivilegedAccessWithPublicKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGrants() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitClientTokenVaultPrivilegedAccessWithPublicKey(t *testing.T) {
@@ -20319,6 +20740,37 @@ func TestSettersMarkExplicitClientTokenVaultPrivilegedAccessWithPublicKey(t *tes
 
 		// Act
 		obj.SetIPAllowlist(fernTestValueIPAllowlist)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetGrants_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientTokenVaultPrivilegedAccessWithPublicKey{}
+		var fernTestValueGrants []*TokenVaultPrivilegedAccessGrant
+
+		// Act
+		obj.SetGrants(fernTestValueGrants)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -20848,11 +21300,27 @@ func TestSettersCreateClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetB2BIntegrationConfiguration", func(t *testing.T) {
+		obj := &CreateClientResponseContent{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+		assert.Equal(t, fernTestValueB2BIntegrationConfiguration, obj.B2BIntegrationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetMyOrganizationConfiguration", func(t *testing.T) {
 		obj := &CreateClientResponseContent{}
 		var fernTestValueMyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
 		assert.Equal(t, fernTestValueMyOrganizationConfiguration, obj.MyOrganizationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		obj := &CreateClientResponseContent{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
+		assert.Equal(t, fernTestValueIdentityAssertionAuthorizationGrant, obj.IdentityAssertionAuthorizationGrant)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -22751,6 +23219,40 @@ func TestGettersCreateClientResponseContent(t *testing.T) {
 		_ = obj.GetExpressConfiguration() // Should return zero value
 	})
 
+	t.Run("GetB2BIntegrationConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var value B2BIntegrationConfiguration
+		obj.B2BIntegrationConfiguration = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetB2BIntegrationConfiguration(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		obj.B2BIntegrationConfiguration = nil
+		var expectedZero B2BIntegrationConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetB2BIntegrationConfiguration(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetB2BIntegrationConfiguration() // Should return zero value
+	})
+
 	t.Run("GetMyOrganizationConfiguration", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -22783,6 +23285,40 @@ func TestGettersCreateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var value IdentityAssertionAuthorizationGrant
+		obj.IdentityAssertionAuthorizationGrant = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIdentityAssertionAuthorizationGrant(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		obj.IdentityAssertionAuthorizationGrant = nil
+		var expectedZero IdentityAssertionAuthorizationGrant
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIdentityAssertionAuthorizationGrant(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIdentityAssertionAuthorizationGrant() // Should return zero value
 	})
 
 	t.Run("GetThirdPartySecurityMode", func(t *testing.T) {
@@ -24734,6 +25270,37 @@ func TestSettersMarkExplicitCreateClientResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetB2BIntegrationConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+
+		// Act
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetMyOrganizationConfiguration_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -24742,6 +25309,37 @@ func TestSettersMarkExplicitCreateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+
+		// Act
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -24990,6 +25588,77 @@ func TestSettersMarkExplicitCreateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetJwksURI(fernTestValueJwksURI)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCreateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("SetActive", func(t *testing.T) {
+		obj := &CreateIdentityAssertionAuthorizationGrant{}
+		var fernTestValueActive bool
+		obj.SetActive(fernTestValueActive)
+		assert.Equal(t, fernTestValueActive, obj.Active)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCreateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("GetActive", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateIdentityAssertionAuthorizationGrant{}
+		var expected bool
+		obj.Active = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetActive(), "getter should return the property value")
+	})
+
+	t.Run("GetActive_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateIdentityAssertionAuthorizationGrant
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActive() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCreateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("SetActive_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateIdentityAssertionAuthorizationGrant{}
+		var fernTestValueActive bool
+
+		// Act
+		obj.SetActive(fernTestValueActive)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -27023,11 +27692,27 @@ func TestSettersGetClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetB2BIntegrationConfiguration", func(t *testing.T) {
+		obj := &GetClientResponseContent{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+		assert.Equal(t, fernTestValueB2BIntegrationConfiguration, obj.B2BIntegrationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetMyOrganizationConfiguration", func(t *testing.T) {
 		obj := &GetClientResponseContent{}
 		var fernTestValueMyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
 		assert.Equal(t, fernTestValueMyOrganizationConfiguration, obj.MyOrganizationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		obj := &GetClientResponseContent{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
+		assert.Equal(t, fernTestValueIdentityAssertionAuthorizationGrant, obj.IdentityAssertionAuthorizationGrant)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -28926,6 +29611,40 @@ func TestGettersGetClientResponseContent(t *testing.T) {
 		_ = obj.GetExpressConfiguration() // Should return zero value
 	})
 
+	t.Run("GetB2BIntegrationConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var value B2BIntegrationConfiguration
+		obj.B2BIntegrationConfiguration = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetB2BIntegrationConfiguration(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		obj.B2BIntegrationConfiguration = nil
+		var expectedZero B2BIntegrationConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetB2BIntegrationConfiguration(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetB2BIntegrationConfiguration() // Should return zero value
+	})
+
 	t.Run("GetMyOrganizationConfiguration", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -28958,6 +29677,40 @@ func TestGettersGetClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var value IdentityAssertionAuthorizationGrant
+		obj.IdentityAssertionAuthorizationGrant = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIdentityAssertionAuthorizationGrant(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		obj.IdentityAssertionAuthorizationGrant = nil
+		var expectedZero IdentityAssertionAuthorizationGrant
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIdentityAssertionAuthorizationGrant(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIdentityAssertionAuthorizationGrant() // Should return zero value
 	})
 
 	t.Run("GetThirdPartySecurityMode", func(t *testing.T) {
@@ -30909,6 +31662,37 @@ func TestSettersMarkExplicitGetClientResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetB2BIntegrationConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+
+		// Act
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetMyOrganizationConfiguration_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -30917,6 +31701,37 @@ func TestSettersMarkExplicitGetClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+
+		// Act
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -31165,6 +31980,77 @@ func TestSettersMarkExplicitGetClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetJwksURI(fernTestValueJwksURI)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("SetActive", func(t *testing.T) {
+		obj := &IdentityAssertionAuthorizationGrant{}
+		var fernTestValueActive bool
+		obj.SetActive(fernTestValueActive)
+		assert.Equal(t, fernTestValueActive, obj.Active)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("GetActive", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &IdentityAssertionAuthorizationGrant{}
+		var expected bool
+		obj.Active = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetActive(), "getter should return the property value")
+	})
+
+	t.Run("GetActive_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *IdentityAssertionAuthorizationGrant
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActive() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("SetActive_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &IdentityAssertionAuthorizationGrant{}
+		var fernTestValueActive bool
+
+		// Act
+		obj.SetActive(fernTestValueActive)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -33955,11 +34841,27 @@ func TestSettersRotateClientSecretResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetB2BIntegrationConfiguration", func(t *testing.T) {
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+		assert.Equal(t, fernTestValueB2BIntegrationConfiguration, obj.B2BIntegrationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetMyOrganizationConfiguration", func(t *testing.T) {
 		obj := &RotateClientSecretResponseContent{}
 		var fernTestValueMyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
 		assert.Equal(t, fernTestValueMyOrganizationConfiguration, obj.MyOrganizationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
+		assert.Equal(t, fernTestValueIdentityAssertionAuthorizationGrant, obj.IdentityAssertionAuthorizationGrant)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -35858,6 +36760,40 @@ func TestGettersRotateClientSecretResponseContent(t *testing.T) {
 		_ = obj.GetExpressConfiguration() // Should return zero value
 	})
 
+	t.Run("GetB2BIntegrationConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var value B2BIntegrationConfiguration
+		obj.B2BIntegrationConfiguration = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetB2BIntegrationConfiguration(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		obj.B2BIntegrationConfiguration = nil
+		var expectedZero B2BIntegrationConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetB2BIntegrationConfiguration(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *RotateClientSecretResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetB2BIntegrationConfiguration() // Should return zero value
+	})
+
 	t.Run("GetMyOrganizationConfiguration", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -35890,6 +36826,40 @@ func TestGettersRotateClientSecretResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var value IdentityAssertionAuthorizationGrant
+		obj.IdentityAssertionAuthorizationGrant = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIdentityAssertionAuthorizationGrant(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		obj.IdentityAssertionAuthorizationGrant = nil
+		var expectedZero IdentityAssertionAuthorizationGrant
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIdentityAssertionAuthorizationGrant(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *RotateClientSecretResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIdentityAssertionAuthorizationGrant() // Should return zero value
 	})
 
 	t.Run("GetThirdPartySecurityMode", func(t *testing.T) {
@@ -37841,6 +38811,37 @@ func TestSettersMarkExplicitRotateClientSecretResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetB2BIntegrationConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+
+		// Act
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetMyOrganizationConfiguration_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -37849,6 +38850,37 @@ func TestSettersMarkExplicitRotateClientSecretResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+
+		// Act
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -38097,6 +39129,149 @@ func TestSettersMarkExplicitRotateClientSecretResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetJwksURI(fernTestValueJwksURI)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersTokenVaultPrivilegedAccessGrant(t *testing.T) {
+	t.Run("SetConnection", func(t *testing.T) {
+		obj := &TokenVaultPrivilegedAccessGrant{}
+		var fernTestValueConnection string
+		obj.SetConnection(fernTestValueConnection)
+		assert.Equal(t, fernTestValueConnection, obj.Connection)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetScopes", func(t *testing.T) {
+		obj := &TokenVaultPrivilegedAccessGrant{}
+		var fernTestValueScopes []string
+		obj.SetScopes(fernTestValueScopes)
+		assert.Equal(t, fernTestValueScopes, obj.Scopes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersTokenVaultPrivilegedAccessGrant(t *testing.T) {
+	t.Run("GetConnection", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &TokenVaultPrivilegedAccessGrant{}
+		var expected string
+		obj.Connection = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
+	})
+
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *TokenVaultPrivilegedAccessGrant
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetConnection() // Should return zero value
+	})
+
+	t.Run("GetScopes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &TokenVaultPrivilegedAccessGrant{}
+		var expected []string
+		obj.Scopes = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetScopes(), "getter should return the property value")
+	})
+
+	t.Run("GetScopes_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &TokenVaultPrivilegedAccessGrant{}
+		obj.Scopes = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetScopes(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetScopes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *TokenVaultPrivilegedAccessGrant
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetScopes() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitTokenVaultPrivilegedAccessGrant(t *testing.T) {
+	t.Run("SetConnection_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &TokenVaultPrivilegedAccessGrant{}
+		var fernTestValueConnection string
+
+		// Act
+		obj.SetConnection(fernTestValueConnection)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetScopes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &TokenVaultPrivilegedAccessGrant{}
+		var fernTestValueScopes []string
+
+		// Act
+		obj.SetScopes(fernTestValueScopes)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -38555,11 +39730,27 @@ func TestSettersUpdateClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetB2BIntegrationConfiguration", func(t *testing.T) {
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+		assert.Equal(t, fernTestValueB2BIntegrationConfiguration, obj.B2BIntegrationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetMyOrganizationConfiguration", func(t *testing.T) {
 		obj := &UpdateClientResponseContent{}
 		var fernTestValueMyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
 		assert.Equal(t, fernTestValueMyOrganizationConfiguration, obj.MyOrganizationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
+		assert.Equal(t, fernTestValueIdentityAssertionAuthorizationGrant, obj.IdentityAssertionAuthorizationGrant)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -40458,6 +41649,40 @@ func TestGettersUpdateClientResponseContent(t *testing.T) {
 		_ = obj.GetExpressConfiguration() // Should return zero value
 	})
 
+	t.Run("GetB2BIntegrationConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var value B2BIntegrationConfiguration
+		obj.B2BIntegrationConfiguration = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetB2BIntegrationConfiguration(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		obj.B2BIntegrationConfiguration = nil
+		var expectedZero B2BIntegrationConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetB2BIntegrationConfiguration(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetB2BIntegrationConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetB2BIntegrationConfiguration() // Should return zero value
+	})
+
 	t.Run("GetMyOrganizationConfiguration", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -40490,6 +41715,40 @@ func TestGettersUpdateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var value IdentityAssertionAuthorizationGrant
+		obj.IdentityAssertionAuthorizationGrant = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIdentityAssertionAuthorizationGrant(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		obj.IdentityAssertionAuthorizationGrant = nil
+		var expectedZero IdentityAssertionAuthorizationGrant
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIdentityAssertionAuthorizationGrant(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIdentityAssertionAuthorizationGrant_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIdentityAssertionAuthorizationGrant() // Should return zero value
 	})
 
 	t.Run("GetThirdPartySecurityMode", func(t *testing.T) {
@@ -42441,6 +43700,37 @@ func TestSettersMarkExplicitUpdateClientResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetB2BIntegrationConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueB2BIntegrationConfiguration *B2BIntegrationConfiguration
+
+		// Act
+		obj.SetB2BIntegrationConfiguration(fernTestValueB2BIntegrationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetMyOrganizationConfiguration_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -42449,6 +43739,37 @@ func TestSettersMarkExplicitUpdateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetIdentityAssertionAuthorizationGrant_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
+
+		// Act
+		obj.SetIdentityAssertionAuthorizationGrant(fernTestValueIdentityAssertionAuthorizationGrant)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -42722,6 +44043,77 @@ func TestSettersMarkExplicitUpdateClientResponseContent(t *testing.T) {
 
 }
 
+func TestSettersUpdateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("SetActive", func(t *testing.T) {
+		obj := &UpdateIdentityAssertionAuthorizationGrant{}
+		var fernTestValueActive bool
+		obj.SetActive(fernTestValueActive)
+		assert.Equal(t, fernTestValueActive, obj.Active)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersUpdateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("GetActive", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateIdentityAssertionAuthorizationGrant{}
+		var expected bool
+		obj.Active = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetActive(), "getter should return the property value")
+	})
+
+	t.Run("GetActive_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateIdentityAssertionAuthorizationGrant
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActive() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitUpdateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("SetActive_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateIdentityAssertionAuthorizationGrant{}
+		var fernTestValueActive bool
+
+		// Act
+		obj.SetActive(fernTestValueActive)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersX509CertificateCredential(t *testing.T) {
 	t.Run("SetCredentialType", func(t *testing.T) {
 		obj := &X509CertificateCredential{}
@@ -42926,6 +44318,72 @@ func TestSettersMarkExplicitX509CertificateCredential(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+}
+
+func TestJSONMarshalingB2BIntegrationConfiguration(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &B2BIntegrationConfiguration{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled B2BIntegrationConfiguration
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj B2BIntegrationConfiguration
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj B2BIntegrationConfiguration
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingB2BIntegrationConfigurationOrNull(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &B2BIntegrationConfigurationOrNull{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled B2BIntegrationConfigurationOrNull
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj B2BIntegrationConfigurationOrNull
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj B2BIntegrationConfigurationOrNull
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
 }
 
 func TestJSONMarshalingCertificateSubjectDnCredential(t *testing.T) {
@@ -45073,6 +46531,39 @@ func TestJSONMarshalingCreateClientResponseContent(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingCreateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateIdentityAssertionAuthorizationGrant{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CreateIdentityAssertionAuthorizationGrant
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CreateIdentityAssertionAuthorizationGrant
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CreateIdentityAssertionAuthorizationGrant
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingCredentialID(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -45332,6 +46823,39 @@ func TestJSONMarshalingGetClientResponseContent(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj GetClientResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &IdentityAssertionAuthorizationGrant{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled IdentityAssertionAuthorizationGrant
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj IdentityAssertionAuthorizationGrant
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj IdentityAssertionAuthorizationGrant
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -45799,6 +47323,39 @@ func TestJSONMarshalingRotateClientSecretResponseContent(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingTokenVaultPrivilegedAccessGrant(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &TokenVaultPrivilegedAccessGrant{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled TokenVaultPrivilegedAccessGrant
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj TokenVaultPrivilegedAccessGrant
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj TokenVaultPrivilegedAccessGrant
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingUpdateClientResponseContent(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -45827,6 +47384,39 @@ func TestJSONMarshalingUpdateClientResponseContent(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj UpdateClientResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingUpdateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateIdentityAssertionAuthorizationGrant{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled UpdateIdentityAssertionAuthorizationGrant
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj UpdateIdentityAssertionAuthorizationGrant
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj UpdateIdentityAssertionAuthorizationGrant
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -45862,6 +47452,38 @@ func TestJSONMarshalingX509CertificateCredential(t *testing.T) {
 		var obj X509CertificateCredential
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestStringB2BIntegrationConfiguration(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &B2BIntegrationConfiguration{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *B2BIntegrationConfiguration
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringB2BIntegrationConfigurationOrNull(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &B2BIntegrationConfigurationOrNull{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *B2BIntegrationConfigurationOrNull
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
 }
 
@@ -46905,6 +48527,22 @@ func TestStringCreateClientResponseContent(t *testing.T) {
 	})
 }
 
+func TestStringCreateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CreateIdentityAssertionAuthorizationGrant{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateIdentityAssertionAuthorizationGrant
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringCredentialID(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -47028,6 +48666,22 @@ func TestStringGetClientResponseContent(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetClientResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &IdentityAssertionAuthorizationGrant{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *IdentityAssertionAuthorizationGrant
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -47257,6 +48911,22 @@ func TestStringRotateClientSecretResponseContent(t *testing.T) {
 	})
 }
 
+func TestStringTokenVaultPrivilegedAccessGrant(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &TokenVaultPrivilegedAccessGrant{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *TokenVaultPrivilegedAccessGrant
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringUpdateClientResponseContent(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -47268,6 +48938,22 @@ func TestStringUpdateClientResponseContent(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateClientResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringUpdateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &UpdateIdentityAssertionAuthorizationGrant{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateIdentityAssertionAuthorizationGrant
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -47381,6 +49067,13 @@ func TestEnumClientAppTypeEnum(t *testing.T) {
 		val, err := NewClientAppTypeEnumFromString("express_configuration")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, ClientAppTypeEnum("express_configuration"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_b2b_integration", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientAppTypeEnumFromString("b2b_integration")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientAppTypeEnum("b2b_integration"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_rms", func(t *testing.T) {
@@ -48099,13 +49792,6 @@ func TestEnumClientSessionTransferDelegationDeviceBindingEnum(t *testing.T) {
 		assert.Equal(t, ClientSessionTransferDelegationDeviceBindingEnum("ip"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_asn", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewClientSessionTransferDelegationDeviceBindingEnumFromString("asn")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ClientSessionTransferDelegationDeviceBindingEnum("asn"), val, "enum value should match expected wire value")
-	})
-
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewClientSessionTransferDelegationDeviceBindingEnumFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)
@@ -48385,6 +50071,52 @@ func TestEnumX509CertificateCredentialTypeEnum(t *testing.T) {
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
 		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestExtraPropertiesB2BIntegrationConfiguration(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &B2BIntegrationConfiguration{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *B2BIntegrationConfiguration
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesB2BIntegrationConfigurationOrNull(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &B2BIntegrationConfigurationOrNull{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *B2BIntegrationConfigurationOrNull
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
 }
 
@@ -49883,6 +51615,29 @@ func TestExtraPropertiesCreateClientResponseContent(t *testing.T) {
 	})
 }
 
+func TestExtraPropertiesCreateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CreateIdentityAssertionAuthorizationGrant{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateIdentityAssertionAuthorizationGrant
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesCredentialID(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -50062,6 +51817,29 @@ func TestExtraPropertiesGetClientResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetClientResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &IdentityAssertionAuthorizationGrant{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *IdentityAssertionAuthorizationGrant
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
@@ -50389,6 +52167,29 @@ func TestExtraPropertiesRotateClientSecretResponseContent(t *testing.T) {
 	})
 }
 
+func TestExtraPropertiesTokenVaultPrivilegedAccessGrant(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &TokenVaultPrivilegedAccessGrant{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *TokenVaultPrivilegedAccessGrant
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesUpdateClientResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -50407,6 +52208,29 @@ func TestExtraPropertiesUpdateClientResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateClientResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesUpdateIdentityAssertionAuthorizationGrant(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &UpdateIdentityAssertionAuthorizationGrant{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateIdentityAssertionAuthorizationGrant
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
