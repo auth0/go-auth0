@@ -23,6 +23,7 @@ var (
 	getSessionResponseContentFieldAuthentication   = big.NewInt(1 << 10)
 	getSessionResponseContentFieldCookie           = big.NewInt(1 << 11)
 	getSessionResponseContentFieldSessionMetadata  = big.NewInt(1 << 12)
+	getSessionResponseContentFieldActor            = big.NewInt(1 << 13)
 )
 
 type GetSessionResponseContent struct {
@@ -42,6 +43,7 @@ type GetSessionResponseContent struct {
 	Authentication  *SessionAuthenticationSignals `json:"authentication,omitempty" url:"authentication,omitempty"`
 	Cookie          *SessionCookieMetadata        `json:"cookie,omitempty" url:"cookie,omitempty"`
 	SessionMetadata *SessionMetadata              `json:"session_metadata,omitempty" url:"session_metadata,omitempty"`
+	Actor           *SessionActorMetadata         `json:"actor,omitempty" url:"actor,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -140,6 +142,13 @@ func (g *GetSessionResponseContent) GetSessionMetadata() SessionMetadata {
 		return nil
 	}
 	return *g.SessionMetadata
+}
+
+func (g *GetSessionResponseContent) GetActor() SessionActorMetadata {
+	if g == nil || g.Actor == nil {
+		return SessionActorMetadata{}
+	}
+	return *g.Actor
 }
 
 func (g *GetSessionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -247,6 +256,13 @@ func (g *GetSessionResponseContent) SetSessionMetadata(sessionMetadata *SessionM
 	g.require(getSessionResponseContentFieldSessionMetadata)
 }
 
+// SetActor sets the Actor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSessionResponseContent) SetActor(actor *SessionActorMetadata) {
+	g.Actor = actor
+	g.require(getSessionResponseContentFieldActor)
+}
+
 func (g *GetSessionResponseContent) UnmarshalJSON(data []byte) error {
 	type embed GetSessionResponseContent
 	var unmarshaler = struct {
@@ -307,6 +323,7 @@ var (
 	updateSessionResponseContentFieldAuthentication   = big.NewInt(1 << 10)
 	updateSessionResponseContentFieldCookie           = big.NewInt(1 << 11)
 	updateSessionResponseContentFieldSessionMetadata  = big.NewInt(1 << 12)
+	updateSessionResponseContentFieldActor            = big.NewInt(1 << 13)
 )
 
 type UpdateSessionResponseContent struct {
@@ -326,6 +343,7 @@ type UpdateSessionResponseContent struct {
 	Authentication  *SessionAuthenticationSignals `json:"authentication,omitempty" url:"authentication,omitempty"`
 	Cookie          *SessionCookieMetadata        `json:"cookie,omitempty" url:"cookie,omitempty"`
 	SessionMetadata *SessionMetadata              `json:"session_metadata,omitempty" url:"session_metadata,omitempty"`
+	Actor           *SessionActorMetadata         `json:"actor,omitempty" url:"actor,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -424,6 +442,13 @@ func (u *UpdateSessionResponseContent) GetSessionMetadata() SessionMetadata {
 		return nil
 	}
 	return *u.SessionMetadata
+}
+
+func (u *UpdateSessionResponseContent) GetActor() SessionActorMetadata {
+	if u == nil || u.Actor == nil {
+		return SessionActorMetadata{}
+	}
+	return *u.Actor
 }
 
 func (u *UpdateSessionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -529,6 +554,13 @@ func (u *UpdateSessionResponseContent) SetCookie(cookie *SessionCookieMetadata) 
 func (u *UpdateSessionResponseContent) SetSessionMetadata(sessionMetadata *SessionMetadata) {
 	u.SessionMetadata = sessionMetadata
 	u.require(updateSessionResponseContentFieldSessionMetadata)
+}
+
+// SetActor sets the Actor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSessionResponseContent) SetActor(actor *SessionActorMetadata) {
+	u.Actor = actor
+	u.require(updateSessionResponseContentFieldActor)
 }
 
 func (u *UpdateSessionResponseContent) UnmarshalJSON(data []byte) error {
