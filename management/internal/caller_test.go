@@ -14,7 +14,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/auth0/go-auth0/v2/management/core"
+	"github.com/auth0/go-auth0/v3/management/core"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

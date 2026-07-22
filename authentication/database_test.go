@@ -10,10 +10,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/auth0/go-auth0/v2"
+	"github.com/auth0/go-auth0/v3"
 
-	"github.com/auth0/go-auth0/v2/authentication/database"
-	"github.com/auth0/go-auth0/v2/management"
+	"github.com/auth0/go-auth0/v3/authentication/database"
+	"github.com/auth0/go-auth0/v3/management"
 )
 
 // TestDatabaseSignUp_RequiresUsername tests the Database.Signup method with a connection that requires a username.
@@ -47,7 +47,7 @@ func TestDatabaseSignUp_WithEmailIdentifier(t *testing.T) {
 	connectionOptions := &management.ConnectionPropertiesOptions{
 		Attributes: &management.ConnectionAttributes{
 			Email: &management.EmailAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.EmailAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -83,7 +83,7 @@ func TestDatabaseSignUp_WithUsernameIdentifier(t *testing.T) {
 	connectionOptions := &management.ConnectionPropertiesOptions{
 		Attributes: &management.ConnectionAttributes{
 			Username: &management.UsernameAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.UsernameAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -116,7 +116,7 @@ func TestDatabaseSignUp_WithUsernameAndEmailIdentifiers(t *testing.T) {
 	connectionOptions := &management.ConnectionPropertiesOptions{
 		Attributes: &management.ConnectionAttributes{
 			Username: &management.UsernameAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.UsernameAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -125,7 +125,7 @@ func TestDatabaseSignUp_WithUsernameAndEmailIdentifiers(t *testing.T) {
 				},
 			},
 			Email: &management.EmailAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.EmailAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -163,7 +163,7 @@ func TestDatabaseSignUp_WithPhoneNumberIdentifier(t *testing.T) {
 	connectionOptions := &management.ConnectionPropertiesOptions{
 		Attributes: &management.ConnectionAttributes{
 			PhoneNumber: &management.PhoneAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.PhoneAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -199,7 +199,7 @@ func TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers(t *testing.T) {
 	connectionOptions := &management.ConnectionPropertiesOptions{
 		Attributes: &management.ConnectionAttributes{
 			Username: &management.UsernameAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.UsernameAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -208,7 +208,7 @@ func TestDatabaseSignUp_WithUsernameAndPhoneNumberIdentifiers(t *testing.T) {
 				},
 			},
 			PhoneNumber: &management.PhoneAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.PhoneAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -246,7 +246,7 @@ func TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers(t *testing.T)
 	connectionOptions := &management.ConnectionPropertiesOptions{
 		Attributes: &management.ConnectionAttributes{
 			Username: &management.UsernameAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.UsernameAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -255,7 +255,7 @@ func TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers(t *testing.T)
 				},
 			},
 			Email: &management.EmailAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.EmailAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),
@@ -267,7 +267,7 @@ func TestDatabaseSignUp_WithUsernameEmailAndPhoneNumberIdentifiers(t *testing.T)
 				},
 			},
 			PhoneNumber: &management.PhoneAttribute{
-				Identifier: &management.ConnectionAttributeIdentifier{
+				Identifier: &management.PhoneAttributeIdentifier{
 					Active: auth0.Bool(true),
 				},
 				ProfileRequired: auth0.Bool(true),

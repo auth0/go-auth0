@@ -3,10 +3,10 @@
 // # Usage
 //
 //	import (
-//		"github.com/auth0/go-auth0/v2"
-//		"github.com/auth0/go-auth0/v2/authentication"
-//		"github.com/auth0/go-auth0/v2/authentication/database"
-//		"github.com/auth0/go-auth0/v2/authentication/oauth"
+//		"github.com/auth0/go-auth0/v3"
+//		"github.com/auth0/go-auth0/v3/authentication"
+//		"github.com/auth0/go-auth0/v3/authentication/database"
+//		"github.com/auth0/go-auth0/v3/authentication/oauth"
 //	)
 //	a, err := authentication.New(
 //		context.TODO(),

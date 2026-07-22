@@ -1,7 +1,7 @@
 // Package passwordless provides types for the Auth0 passwordless authentication endpoints.
 package passwordless
 
-import "github.com/auth0/go-auth0/v2/authentication/oauth"
+import "github.com/auth0/go-auth0/v3/authentication/oauth"
 
 // SendEmailRequest defines the request body for starting a passwordless flow via email.
 type SendEmailRequest struct {

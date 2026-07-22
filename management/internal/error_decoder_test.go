@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/auth0/go-auth0/v2/management/core"
+	"github.com/auth0/go-auth0/v3/management/core"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -13,6 +13,10 @@ name: Compute the next version for a release track
 # moment a stable release is tagged the next beta computation rolls forward
 # automatically. No shared state file is needed.
 #
+# The major version (vX) is read from the module path in go.mod, so a major
+# bump (for example the /v2 -> /v3 module move) needs no change here: whatever
+# major the module declares is the major this action releases against.
+#
 
 inputs:
   track:
@@ -33,15 +37,23 @@ runs:
         set -euo pipefail
         git fetch --tags --quiet
 
-        # Only consider clean stable tags on the current major line (v2.MINOR.PATCH).
-        # The strict anchored regex excludes other majors (v1.*), any prerelease
-        # suffix (-beta/-alpha/-rc/...), and stray non-release tags. `sort -V`
-        # orders by semver so double-digit minors (v2.10.0 > v2.9.0) sort right.
-        # `|| true` keeps a no-match grep (exit 1) from aborting the step under
+        # Derive the current major (vX) from the module path in go.mod so this
+        # action never needs editing across a major bump. A go.mod path ends in
+        # `/vN` from v2 onward; a v0/v1 module has no suffix, which maps to v1.
+        MODULE=$(awk '/^module / {print $2; exit}' go.mod)
+        MAJOR=$(printf '%s\n' "${MODULE}" | grep -oE '/v[0-9]+$' | tr -d '/v' || true)
+        MAJOR=${MAJOR:-1}
+        echo "::notice::compute-next-version: module=${MODULE} major=v${MAJOR}"
+
+        # Only consider clean stable tags on the current major line (vX.MINOR.PATCH).
+        # The strict anchored regex excludes other majors, any prerelease suffix
+        # (-beta/-alpha/-rc/...), and stray non-release tags. `sort -V` orders by
+        # semver so double-digit minors (vX.10.0 > vX.9.0) sort right. `|| true`
+        # keeps a no-match grep (exit 1) from aborting the step under
         # `set -euo pipefail`; the explicit emptiness check below handles it.
-        LATEST_STABLE=$(git tag --list | grep -E '^v2\.[0-9]+\.[0-9]+$' | sort -V | tail -1 || true)
+        LATEST_STABLE=$(git tag --list | grep -E "^v${MAJOR}\.[0-9]+\.[0-9]+$" | sort -V | tail -1 || true)
         if [ -z "${LATEST_STABLE}" ]; then
-          echo "::error::No stable v2.MINOR.PATCH tag found; cannot compute next version." >&2
+          echo "::error::No stable v${MAJOR}.MINOR.PATCH tag found; cannot compute next version." >&2
           exit 1
         fi
 

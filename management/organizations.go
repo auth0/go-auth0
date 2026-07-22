@@ -5,7 +5,7 @@ package management
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/auth0/go-auth0/v2/management/internal"
+	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
 )
 
@@ -147,13 +147,14 @@ func (c *ConnectionForOrganization) String() string {
 }
 
 var (
-	createOrganizationResponseContentFieldID                 = big.NewInt(1 << 0)
-	createOrganizationResponseContentFieldName               = big.NewInt(1 << 1)
-	createOrganizationResponseContentFieldDisplayName        = big.NewInt(1 << 2)
-	createOrganizationResponseContentFieldBranding           = big.NewInt(1 << 3)
-	createOrganizationResponseContentFieldMetadata           = big.NewInt(1 << 4)
-	createOrganizationResponseContentFieldTokenQuota         = big.NewInt(1 << 5)
-	createOrganizationResponseContentFieldEnabledConnections = big.NewInt(1 << 6)
+	createOrganizationResponseContentFieldID                     = big.NewInt(1 << 0)
+	createOrganizationResponseContentFieldName                   = big.NewInt(1 << 1)
+	createOrganizationResponseContentFieldDisplayName            = big.NewInt(1 << 2)
+	createOrganizationResponseContentFieldBranding               = big.NewInt(1 << 3)
+	createOrganizationResponseContentFieldMetadata               = big.NewInt(1 << 4)
+	createOrganizationResponseContentFieldTokenQuota             = big.NewInt(1 << 5)
+	createOrganizationResponseContentFieldThirdPartyClientAccess = big.NewInt(1 << 6)
+	createOrganizationResponseContentFieldEnabledConnections     = big.NewInt(1 << 7)
 )
 
 type CreateOrganizationResponseContent struct {
@@ -162,11 +163,12 @@ type CreateOrganizationResponseContent struct {
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
-	DisplayName        *string                          `json:"display_name,omitempty" url:"display_name,omitempty"`
-	Branding           *OrganizationBranding            `json:"branding,omitempty" url:"branding,omitempty"`
-	Metadata           *OrganizationMetadata            `json:"metadata,omitempty" url:"metadata,omitempty"`
-	TokenQuota         *TokenQuota                      `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	EnabledConnections []*OrganizationEnabledConnection `json:"enabled_connections,omitempty" url:"enabled_connections,omitempty"`
+	DisplayName            *string                                 `json:"display_name,omitempty" url:"display_name,omitempty"`
+	Branding               *OrganizationBranding                   `json:"branding,omitempty" url:"branding,omitempty"`
+	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
+	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
+	EnabledConnections     []*OrganizationEnabledConnection        `json:"enabled_connections,omitempty" url:"enabled_connections,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -216,6 +218,13 @@ func (c *CreateOrganizationResponseContent) GetTokenQuota() TokenQuota {
 		return TokenQuota{}
 	}
 	return *c.TokenQuota
+}
+
+func (c *CreateOrganizationResponseContent) GetThirdPartyClientAccess() OrganizationThirdPartyClientAccessEnum {
+	if c == nil || c.ThirdPartyClientAccess == nil {
+		return ""
+	}
+	return *c.ThirdPartyClientAccess
 }
 
 func (c *CreateOrganizationResponseContent) GetEnabledConnections() []*OrganizationEnabledConnection {
@@ -281,6 +290,13 @@ func (c *CreateOrganizationResponseContent) SetTokenQuota(tokenQuota *TokenQuota
 	c.require(createOrganizationResponseContentFieldTokenQuota)
 }
 
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
+	c.ThirdPartyClientAccess = thirdPartyClientAccess
+	c.require(createOrganizationResponseContentFieldThirdPartyClientAccess)
+}
+
 // SetEnabledConnections sets the EnabledConnections field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateOrganizationResponseContent) SetEnabledConnections(enabledConnections []*OrganizationEnabledConnection) {
@@ -335,12 +351,13 @@ func (c *CreateOrganizationResponseContent) String() string {
 }
 
 var (
-	getOrganizationByNameResponseContentFieldID          = big.NewInt(1 << 0)
-	getOrganizationByNameResponseContentFieldName        = big.NewInt(1 << 1)
-	getOrganizationByNameResponseContentFieldDisplayName = big.NewInt(1 << 2)
-	getOrganizationByNameResponseContentFieldBranding    = big.NewInt(1 << 3)
-	getOrganizationByNameResponseContentFieldMetadata    = big.NewInt(1 << 4)
-	getOrganizationByNameResponseContentFieldTokenQuota  = big.NewInt(1 << 5)
+	getOrganizationByNameResponseContentFieldID                     = big.NewInt(1 << 0)
+	getOrganizationByNameResponseContentFieldName                   = big.NewInt(1 << 1)
+	getOrganizationByNameResponseContentFieldDisplayName            = big.NewInt(1 << 2)
+	getOrganizationByNameResponseContentFieldBranding               = big.NewInt(1 << 3)
+	getOrganizationByNameResponseContentFieldMetadata               = big.NewInt(1 << 4)
+	getOrganizationByNameResponseContentFieldTokenQuota             = big.NewInt(1 << 5)
+	getOrganizationByNameResponseContentFieldThirdPartyClientAccess = big.NewInt(1 << 6)
 )
 
 type GetOrganizationByNameResponseContent struct {
@@ -349,10 +366,11 @@ type GetOrganizationByNameResponseContent struct {
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
-	DisplayName *string               `json:"display_name,omitempty" url:"display_name,omitempty"`
-	Branding    *OrganizationBranding `json:"branding,omitempty" url:"branding,omitempty"`
-	Metadata    *OrganizationMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
-	TokenQuota  *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	DisplayName            *string                                 `json:"display_name,omitempty" url:"display_name,omitempty"`
+	Branding               *OrganizationBranding                   `json:"branding,omitempty" url:"branding,omitempty"`
+	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
+	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -402,6 +420,13 @@ func (g *GetOrganizationByNameResponseContent) GetTokenQuota() TokenQuota {
 		return TokenQuota{}
 	}
 	return *g.TokenQuota
+}
+
+func (g *GetOrganizationByNameResponseContent) GetThirdPartyClientAccess() OrganizationThirdPartyClientAccessEnum {
+	if g == nil || g.ThirdPartyClientAccess == nil {
+		return ""
+	}
+	return *g.ThirdPartyClientAccess
 }
 
 func (g *GetOrganizationByNameResponseContent) GetExtraProperties() map[string]interface{} {
@@ -460,6 +485,13 @@ func (g *GetOrganizationByNameResponseContent) SetTokenQuota(tokenQuota *TokenQu
 	g.require(getOrganizationByNameResponseContentFieldTokenQuota)
 }
 
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationByNameResponseContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
+	g.ThirdPartyClientAccess = thirdPartyClientAccess
+	g.require(getOrganizationByNameResponseContentFieldThirdPartyClientAccess)
+}
+
 func (g *GetOrganizationByNameResponseContent) UnmarshalJSON(data []byte) error {
 	type embed GetOrganizationByNameResponseContent
 	var unmarshaler = struct {
@@ -507,12 +539,13 @@ func (g *GetOrganizationByNameResponseContent) String() string {
 }
 
 var (
-	getOrganizationResponseContentFieldID          = big.NewInt(1 << 0)
-	getOrganizationResponseContentFieldName        = big.NewInt(1 << 1)
-	getOrganizationResponseContentFieldDisplayName = big.NewInt(1 << 2)
-	getOrganizationResponseContentFieldBranding    = big.NewInt(1 << 3)
-	getOrganizationResponseContentFieldMetadata    = big.NewInt(1 << 4)
-	getOrganizationResponseContentFieldTokenQuota  = big.NewInt(1 << 5)
+	getOrganizationResponseContentFieldID                     = big.NewInt(1 << 0)
+	getOrganizationResponseContentFieldName                   = big.NewInt(1 << 1)
+	getOrganizationResponseContentFieldDisplayName            = big.NewInt(1 << 2)
+	getOrganizationResponseContentFieldBranding               = big.NewInt(1 << 3)
+	getOrganizationResponseContentFieldMetadata               = big.NewInt(1 << 4)
+	getOrganizationResponseContentFieldTokenQuota             = big.NewInt(1 << 5)
+	getOrganizationResponseContentFieldThirdPartyClientAccess = big.NewInt(1 << 6)
 )
 
 type GetOrganizationResponseContent struct {
@@ -521,10 +554,11 @@ type GetOrganizationResponseContent struct {
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
-	DisplayName *string               `json:"display_name,omitempty" url:"display_name,omitempty"`
-	Branding    *OrganizationBranding `json:"branding,omitempty" url:"branding,omitempty"`
-	Metadata    *OrganizationMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
-	TokenQuota  *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	DisplayName            *string                                 `json:"display_name,omitempty" url:"display_name,omitempty"`
+	Branding               *OrganizationBranding                   `json:"branding,omitempty" url:"branding,omitempty"`
+	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
+	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -574,6 +608,13 @@ func (g *GetOrganizationResponseContent) GetTokenQuota() TokenQuota {
 		return TokenQuota{}
 	}
 	return *g.TokenQuota
+}
+
+func (g *GetOrganizationResponseContent) GetThirdPartyClientAccess() OrganizationThirdPartyClientAccessEnum {
+	if g == nil || g.ThirdPartyClientAccess == nil {
+		return ""
+	}
+	return *g.ThirdPartyClientAccess
 }
 
 func (g *GetOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
@@ -630,6 +671,13 @@ func (g *GetOrganizationResponseContent) SetMetadata(metadata *OrganizationMetad
 func (g *GetOrganizationResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 	g.TokenQuota = tokenQuota
 	g.require(getOrganizationResponseContentFieldTokenQuota)
+}
+
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationResponseContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
+	g.ThirdPartyClientAccess = thirdPartyClientAccess
+	g.require(getOrganizationResponseContentFieldThirdPartyClientAccess)
 }
 
 func (g *GetOrganizationResponseContent) UnmarshalJSON(data []byte) error {
@@ -936,12 +984,13 @@ func (o *OrganizationEnabledConnection) String() string {
 }
 
 var (
-	updateOrganizationResponseContentFieldID          = big.NewInt(1 << 0)
-	updateOrganizationResponseContentFieldName        = big.NewInt(1 << 1)
-	updateOrganizationResponseContentFieldDisplayName = big.NewInt(1 << 2)
-	updateOrganizationResponseContentFieldBranding    = big.NewInt(1 << 3)
-	updateOrganizationResponseContentFieldMetadata    = big.NewInt(1 << 4)
-	updateOrganizationResponseContentFieldTokenQuota  = big.NewInt(1 << 5)
+	updateOrganizationResponseContentFieldID                     = big.NewInt(1 << 0)
+	updateOrganizationResponseContentFieldName                   = big.NewInt(1 << 1)
+	updateOrganizationResponseContentFieldDisplayName            = big.NewInt(1 << 2)
+	updateOrganizationResponseContentFieldBranding               = big.NewInt(1 << 3)
+	updateOrganizationResponseContentFieldMetadata               = big.NewInt(1 << 4)
+	updateOrganizationResponseContentFieldTokenQuota             = big.NewInt(1 << 5)
+	updateOrganizationResponseContentFieldThirdPartyClientAccess = big.NewInt(1 << 6)
 )
 
 type UpdateOrganizationResponseContent struct {
@@ -950,10 +999,11 @@ type UpdateOrganizationResponseContent struct {
 	// The name of this organization.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Friendly name of this organization.
-	DisplayName *string               `json:"display_name,omitempty" url:"display_name,omitempty"`
-	Branding    *OrganizationBranding `json:"branding,omitempty" url:"branding,omitempty"`
-	Metadata    *OrganizationMetadata `json:"metadata,omitempty" url:"metadata,omitempty"`
-	TokenQuota  *TokenQuota           `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	DisplayName            *string                                 `json:"display_name,omitempty" url:"display_name,omitempty"`
+	Branding               *OrganizationBranding                   `json:"branding,omitempty" url:"branding,omitempty"`
+	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
+	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1003,6 +1053,13 @@ func (u *UpdateOrganizationResponseContent) GetTokenQuota() TokenQuota {
 		return TokenQuota{}
 	}
 	return *u.TokenQuota
+}
+
+func (u *UpdateOrganizationResponseContent) GetThirdPartyClientAccess() OrganizationThirdPartyClientAccessEnum {
+	if u == nil || u.ThirdPartyClientAccess == nil {
+		return ""
+	}
+	return *u.ThirdPartyClientAccess
 }
 
 func (u *UpdateOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1059,6 +1116,13 @@ func (u *UpdateOrganizationResponseContent) SetMetadata(metadata *OrganizationMe
 func (u *UpdateOrganizationResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 	u.TokenQuota = tokenQuota
 	u.require(updateOrganizationResponseContentFieldTokenQuota)
+}
+
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationResponseContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
+	u.ThirdPartyClientAccess = thirdPartyClientAccess
+	u.require(updateOrganizationResponseContentFieldThirdPartyClientAccess)
 }
 
 func (u *UpdateOrganizationResponseContent) UnmarshalJSON(data []byte) error {

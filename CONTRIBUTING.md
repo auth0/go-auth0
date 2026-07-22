@@ -31,7 +31,7 @@ This SDK is auto-generated from Auth0's OpenAPI specifications. Most of the mana
 > This section applies only on the `beta` branch.
 
 The SDK ships two parallel tracks from one Go module path
-(`github.com/auth0/go-auth0/v2`):
+(`github.com/auth0/go-auth0/v3`):
 
 - **Stable** (`main` branch): EA/GA endpoints only. Released the usual way, by a maintainer, through a `release/*` branch.
 - **Beta** (`beta` branch): a superset that contains everything in stable **plus** beta-only endpoints. Released automatically whenever a PR is merged into `beta`.
@@ -40,10 +40,10 @@ Consumers opt into beta explicitly; a plain `go get` never selects it:
 
 ```sh
 # Stable (default): always resolves to the latest stable release.
-go get github.com/auth0/go-auth0/v2
+go get github.com/auth0/go-auth0/v3
 
 # Beta: explicit prerelease pin.
-go get github.com/auth0/go-auth0/v2@v2.14.0-beta.0
+go get github.com/auth0/go-auth0/v3@v3.2.0-beta.0
 ```
 
 ### How beta stays a superset of stable
@@ -63,12 +63,12 @@ be opened as separate PRs to **both** `main` and `beta`.
 Beta always carries the **next** stable minor with a `-beta.N` suffix, derived
 entirely from the git tags (no state file):
 
-- Latest stable `v2.13.0` -> beta is `v2.14.0-beta.N`.
+- Latest stable `v3.1.0` -> beta is `v3.2.0-beta.N`.
 - `-beta.N` starts at 0 for each new base and auto-increments on each beta release.
-- The moment stable `v2.14.0` is tagged, the next beta automatically becomes
-  `v2.15.0-beta.0`.
+- The moment stable `v3.2.0` is tagged, the next beta automatically becomes
+  `v3.3.0-beta.0`.
 
-Because `v2.14.0-beta.2` sorts before `v2.14.0` in semver, beta is never picked
+Because `v3.2.0-beta.2` sorts before `v3.2.0` in semver, beta is never picked
 up by `go get` unless pinned.
 
 ### Merging a beta regeneration PR
