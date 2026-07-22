@@ -915,14 +915,15 @@ var (
 	clientFieldTokenQuota                                     = big.NewInt(1 << 52)
 	clientFieldExpressConfiguration                           = big.NewInt(1 << 53)
 	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
-	clientFieldRedirectionPolicy                              = big.NewInt(1 << 56)
-	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
-	clientFieldExternalMetadataType                           = big.NewInt(1 << 59)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
-	clientFieldExternalClientID                               = big.NewInt(1 << 61)
-	clientFieldJwksURI                                        = big.NewInt(1 << 62)
+	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
+	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
+	clientFieldRedirectionPolicy                              = big.NewInt(1 << 57)
+	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
+	clientFieldExternalMetadataType                           = big.NewInt(1 << 60)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
+	clientFieldExternalClientID                               = big.NewInt(1 << 62)
+	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
 )
 
 type Client struct {
@@ -1010,12 +1011,13 @@ type Client struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -1417,6 +1419,13 @@ func (c *Client) GetMyOrganizationConfiguration() ClientMyOrganizationResponseCo
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *c.MyOrganizationConfiguration
+}
+
+func (c *Client) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
+	if c == nil || c.IdentityAssertionAuthorizationGrant == nil {
+		return IdentityAssertionAuthorizationGrant{}
+	}
+	return *c.IdentityAssertionAuthorizationGrant
 }
 
 func (c *Client) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
@@ -1872,6 +1881,13 @@ func (c *Client) SetExpressConfiguration(expressConfiguration *ExpressConfigurat
 func (c *Client) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
 	c.MyOrganizationConfiguration = myOrganizationConfiguration
 	c.require(clientFieldMyOrganizationConfiguration)
+}
+
+// SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
+	c.IdentityAssertionAuthorizationGrant = identityAssertionAuthorizationGrant
+	c.require(clientFieldIdentityAssertionAuthorizationGrant)
 }
 
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
@@ -5799,6 +5815,7 @@ const (
 	ClientAppTypeEnumNonInteractive       ClientAppTypeEnum = "non_interactive"
 	ClientAppTypeEnumResourceServer       ClientAppTypeEnum = "resource_server"
 	ClientAppTypeEnumExpressConfiguration ClientAppTypeEnum = "express_configuration"
+	ClientAppTypeEnumB2BIntegration       ClientAppTypeEnum = "b2b_integration"
 	ClientAppTypeEnumRms                  ClientAppTypeEnum = "rms"
 	ClientAppTypeEnumBox                  ClientAppTypeEnum = "box"
 	ClientAppTypeEnumCloudbees            ClientAppTypeEnum = "cloudbees"
@@ -5834,6 +5851,8 @@ func NewClientAppTypeEnumFromString(s string) (ClientAppTypeEnum, error) {
 		return ClientAppTypeEnumResourceServer, nil
 	case "express_configuration":
 		return ClientAppTypeEnumExpressConfiguration, nil
+	case "b2b_integration":
+		return ClientAppTypeEnumB2BIntegration, nil
 	case "rms":
 		return ClientAppTypeEnumRms, nil
 	case "box":
@@ -10051,14 +10070,15 @@ var (
 	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
 	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
 	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
-	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 56)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 59)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 61)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 62)
+	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
+	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 57)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 60)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 62)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
 )
 
 type CreateClientResponseContent struct {
@@ -10146,12 +10166,13 @@ type CreateClientResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -10553,6 +10574,13 @@ func (c *CreateClientResponseContent) GetMyOrganizationConfiguration() ClientMyO
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *c.MyOrganizationConfiguration
+}
+
+func (c *CreateClientResponseContent) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
+	if c == nil || c.IdentityAssertionAuthorizationGrant == nil {
+		return IdentityAssertionAuthorizationGrant{}
+	}
+	return *c.IdentityAssertionAuthorizationGrant
 }
 
 func (c *CreateClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
@@ -11010,6 +11038,13 @@ func (c *CreateClientResponseContent) SetMyOrganizationConfiguration(myOrganizat
 	c.require(createClientResponseContentFieldMyOrganizationConfiguration)
 }
 
+// SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
+	c.IdentityAssertionAuthorizationGrant = identityAssertionAuthorizationGrant
+	c.require(createClientResponseContentFieldIdentityAssertionAuthorizationGrant)
+}
+
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
@@ -11098,6 +11133,92 @@ func (c *CreateClientResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateClientResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Configuration on the use of ID-JAGs for Cross App Access.
+var (
+	createIdentityAssertionAuthorizationGrantFieldActive = big.NewInt(1 << 0)
+)
+
+type CreateIdentityAssertionAuthorizationGrant struct {
+	// If set to true, the client can exchange ID-JAGs for access tokens.
+	Active bool `json:"active" url:"active"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateIdentityAssertionAuthorizationGrant) GetActive() bool {
+	if c == nil {
+		return false
+	}
+	return c.Active
+}
+
+func (c *CreateIdentityAssertionAuthorizationGrant) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateIdentityAssertionAuthorizationGrant) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateIdentityAssertionAuthorizationGrant) SetActive(active bool) {
+	c.Active = active
+	c.require(createIdentityAssertionAuthorizationGrantFieldActive)
+}
+
+func (c *CreateIdentityAssertionAuthorizationGrant) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateIdentityAssertionAuthorizationGrant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateIdentityAssertionAuthorizationGrant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateIdentityAssertionAuthorizationGrant) MarshalJSON() ([]byte, error) {
+	type embed CreateIdentityAssertionAuthorizationGrant
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateIdentityAssertionAuthorizationGrant) String() string {
 	if c == nil {
 		return "<nil>"
 	}
@@ -12039,14 +12160,15 @@ var (
 	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
 	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
 	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
-	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 56)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 59)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 61)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 62)
+	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
+	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 57)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 60)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 62)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
 )
 
 type GetClientResponseContent struct {
@@ -12134,12 +12256,13 @@ type GetClientResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -12541,6 +12664,13 @@ func (g *GetClientResponseContent) GetMyOrganizationConfiguration() ClientMyOrga
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *g.MyOrganizationConfiguration
+}
+
+func (g *GetClientResponseContent) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
+	if g == nil || g.IdentityAssertionAuthorizationGrant == nil {
+		return IdentityAssertionAuthorizationGrant{}
+	}
+	return *g.IdentityAssertionAuthorizationGrant
 }
 
 func (g *GetClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
@@ -12998,6 +13128,13 @@ func (g *GetClientResponseContent) SetMyOrganizationConfiguration(myOrganization
 	g.require(getClientResponseContentFieldMyOrganizationConfiguration)
 }
 
+// SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
+	g.IdentityAssertionAuthorizationGrant = identityAssertionAuthorizationGrant
+	g.require(getClientResponseContentFieldIdentityAssertionAuthorizationGrant)
+}
+
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
@@ -13098,6 +13235,92 @@ func (g *GetClientResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
+}
+
+// Configuration on the use of ID-JAGs for Cross App Access.
+var (
+	identityAssertionAuthorizationGrantFieldActive = big.NewInt(1 << 0)
+)
+
+type IdentityAssertionAuthorizationGrant struct {
+	// If set to true, the client can exchange ID-JAGs for access tokens.
+	Active bool `json:"active" url:"active"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (i *IdentityAssertionAuthorizationGrant) GetActive() bool {
+	if i == nil {
+		return false
+	}
+	return i.Active
+}
+
+func (i *IdentityAssertionAuthorizationGrant) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *IdentityAssertionAuthorizationGrant) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IdentityAssertionAuthorizationGrant) SetActive(active bool) {
+	i.Active = active
+	i.require(identityAssertionAuthorizationGrantFieldActive)
+}
+
+func (i *IdentityAssertionAuthorizationGrant) UnmarshalJSON(data []byte) error {
+	type unmarshaler IdentityAssertionAuthorizationGrant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = IdentityAssertionAuthorizationGrant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (i *IdentityAssertionAuthorizationGrant) MarshalJSON() ([]byte, error) {
+	type embed IdentityAssertionAuthorizationGrant
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (i *IdentityAssertionAuthorizationGrant) String() string {
+	if i == nil {
+		return "<nil>"
+	}
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
 }
 
 // Configuration for linked clients in the OIN Express Configuration feature.
@@ -14645,14 +14868,15 @@ var (
 	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
 	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
 	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
-	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 56)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 59)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 61)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(1 << 62)
+	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
+	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 57)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 60)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 62)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -14740,12 +14964,13 @@ type RotateClientSecretResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -15147,6 +15372,13 @@ func (r *RotateClientSecretResponseContent) GetMyOrganizationConfiguration() Cli
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *r.MyOrganizationConfiguration
+}
+
+func (r *RotateClientSecretResponseContent) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
+	if r == nil || r.IdentityAssertionAuthorizationGrant == nil {
+		return IdentityAssertionAuthorizationGrant{}
+	}
+	return *r.IdentityAssertionAuthorizationGrant
 }
 
 func (r *RotateClientSecretResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
@@ -15604,6 +15836,13 @@ func (r *RotateClientSecretResponseContent) SetMyOrganizationConfiguration(myOrg
 	r.require(rotateClientSecretResponseContentFieldMyOrganizationConfiguration)
 }
 
+// SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
+	r.IdentityAssertionAuthorizationGrant = identityAssertionAuthorizationGrant
+	r.require(rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant)
+}
+
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
@@ -15864,14 +16103,15 @@ var (
 	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
 	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
 	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 55)
-	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 56)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 57)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 59)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 60)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 61)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(1 << 62)
+	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
+	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 57)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 60)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 62)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
 )
 
 type UpdateClientResponseContent struct {
@@ -15959,12 +16199,13 @@ type UpdateClientResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry            *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                  *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration        *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	MyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	ThirdPartySecurityMode      *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy           *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
@@ -16366,6 +16607,13 @@ func (u *UpdateClientResponseContent) GetMyOrganizationConfiguration() ClientMyO
 		return ClientMyOrganizationResponseConfiguration{}
 	}
 	return *u.MyOrganizationConfiguration
+}
+
+func (u *UpdateClientResponseContent) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
+	if u == nil || u.IdentityAssertionAuthorizationGrant == nil {
+		return IdentityAssertionAuthorizationGrant{}
+	}
+	return *u.IdentityAssertionAuthorizationGrant
 }
 
 func (u *UpdateClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
@@ -16823,6 +17071,13 @@ func (u *UpdateClientResponseContent) SetMyOrganizationConfiguration(myOrganizat
 	u.require(updateClientResponseContentFieldMyOrganizationConfiguration)
 }
 
+// SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
+	u.IdentityAssertionAuthorizationGrant = identityAssertionAuthorizationGrant
+	u.require(updateClientResponseContentFieldIdentityAssertionAuthorizationGrant)
+}
+
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
@@ -16911,6 +17166,92 @@ func (u *UpdateClientResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateClientResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Configuration on the use of ID-JAGs for Cross App Access.
+var (
+	updateIdentityAssertionAuthorizationGrantFieldActive = big.NewInt(1 << 0)
+)
+
+type UpdateIdentityAssertionAuthorizationGrant struct {
+	// If set to true, the client can exchange ID-JAGs for access tokens.
+	Active bool `json:"active" url:"active"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateIdentityAssertionAuthorizationGrant) GetActive() bool {
+	if u == nil {
+		return false
+	}
+	return u.Active
+}
+
+func (u *UpdateIdentityAssertionAuthorizationGrant) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateIdentityAssertionAuthorizationGrant) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateIdentityAssertionAuthorizationGrant) SetActive(active bool) {
+	u.Active = active
+	u.require(updateIdentityAssertionAuthorizationGrantFieldActive)
+}
+
+func (u *UpdateIdentityAssertionAuthorizationGrant) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateIdentityAssertionAuthorizationGrant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateIdentityAssertionAuthorizationGrant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateIdentityAssertionAuthorizationGrant) MarshalJSON() ([]byte, error) {
+	type embed UpdateIdentityAssertionAuthorizationGrant
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateIdentityAssertionAuthorizationGrant) String() string {
 	if u == nil {
 		return "<nil>"
 	}

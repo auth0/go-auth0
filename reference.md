@@ -1375,7 +1375,7 @@ client.Clients.List(
 <dl>
 <dd>
 
-**externalClientID:** `*string` — Optional filter by the <a href="https://www.ietf.org/archive/id/draft-ietf-oauth-client-id-metadata-document-04.html">Client ID Metadata Document</a> URI for CIMD-registered clients.
+**externalClientID:** `*string` — Optional filter by the <a href="https://drafts.oauth.net/draft-ietf-oauth-client-id-metadata-document/draft-ietf-oauth-client-id-metadata-document.html">Client ID Metadata Document</a> URI for CIMD-registered clients.
     
 </dd>
 </dl>
@@ -1854,6 +1854,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **resourceServerIdentifier:** `*string` — The identifier of the resource server that this client is linked to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identityAssertionAuthorizationGrant:** `*management.CreateIdentityAssertionAuthorizationGrant` 
     
 </dd>
 </dl>
@@ -2494,6 +2502,14 @@ client.Clients.Update(
 <dd>
 
 **tokenQuota:** `*management.UpdateTokenQuota` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identityAssertionAuthorizationGrant:** `*management.UpdateIdentityAssertionAuthorizationGrant` 
     
 </dd>
 </dl>
@@ -3558,6 +3574,14 @@ client.Connections.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**crossAppAccessResourceApp:** `*management.CreateCrossAppAccessResourceApp` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -3840,6 +3864,14 @@ client.Connections.Update(
 <dd>
 
 **crossAppAccessRequestingApp:** `*management.CrossAppAccessRequestingApp` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**crossAppAccessResourceApp:** `*management.UpdateCrossAppAccessResourceApp` 
     
 </dd>
 </dl>
@@ -17611,6 +17643,14 @@ client.Branding.Themes.Create(
 <dl>
 <dd>
 
+**identifiers:** `*management.BrandingThemeIdentifiers` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **pageBackground:** `*management.BrandingThemePageBackground` 
     
 </dd>
@@ -17941,6 +17981,14 @@ client.Branding.Themes.Update(
 <dd>
 
 **fonts:** `*management.BrandingThemeFonts` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identifiers:** `*management.BrandingThemeIdentifiers` 
     
 </dd>
 </dl>
@@ -30876,6 +30924,14 @@ client.SelfServiceProfiles.SSOTicket.Create(
 <dd>
 
 **useForOrganizationDiscovery:** `*bool` — Indicates whether a verified domain should be used for organization discovery during authentication.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thirdPartyClientAccessConfig:** `*management.ThirdPartyClientAccessConfig` 
     
 </dd>
 </dl>

@@ -4641,6 +4641,7 @@ var (
 	createConnectionResponseContentFieldAuthentication              = big.NewInt(1 << 10)
 	createConnectionResponseContentFieldConnectedAccounts           = big.NewInt(1 << 11)
 	createConnectionResponseContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 12)
+	createConnectionResponseContentFieldCrossAppAccessResourceApp   = big.NewInt(1 << 13)
 )
 
 type CreateConnectionResponseContent struct {
@@ -4665,6 +4666,7 @@ type CreateConnectionResponseContent struct {
 	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
+	CrossAppAccessResourceApp   *CrossAppAccessResourceApp          `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4762,6 +4764,13 @@ func (c *CreateConnectionResponseContent) GetCrossAppAccessRequestingApp() Cross
 		return CrossAppAccessRequestingApp{}
 	}
 	return *c.CrossAppAccessRequestingApp
+}
+
+func (c *CreateConnectionResponseContent) GetCrossAppAccessResourceApp() CrossAppAccessResourceApp {
+	if c == nil || c.CrossAppAccessResourceApp == nil {
+		return CrossAppAccessResourceApp{}
+	}
+	return *c.CrossAppAccessResourceApp
 }
 
 func (c *CreateConnectionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -4869,6 +4878,13 @@ func (c *CreateConnectionResponseContent) SetCrossAppAccessRequestingApp(crossAp
 	c.require(createConnectionResponseContentFieldCrossAppAccessRequestingApp)
 }
 
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionResponseContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *CrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(createConnectionResponseContentFieldCrossAppAccessResourceApp)
+}
+
 func (c *CreateConnectionResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateConnectionResponseContent
 	var value unmarshaler
@@ -4897,6 +4913,91 @@ func (c *CreateConnectionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateConnectionResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Cross App Access - Resource App settings that apply to this connection.
+var (
+	createCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
+)
+
+type CreateCrossAppAccessResourceApp struct {
+	Status CrossAppAccessResourceAppStatusEnum `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateCrossAppAccessResourceApp) GetStatus() CrossAppAccessResourceAppStatusEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Status
+}
+
+func (c *CreateCrossAppAccessResourceApp) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateCrossAppAccessResourceApp) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCrossAppAccessResourceApp) SetStatus(status CrossAppAccessResourceAppStatusEnum) {
+	c.Status = status
+	c.require(createCrossAppAccessResourceAppFieldStatus)
+}
+
+func (c *CreateCrossAppAccessResourceApp) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateCrossAppAccessResourceApp
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateCrossAppAccessResourceApp(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateCrossAppAccessResourceApp) MarshalJSON() ([]byte, error) {
+	type embed CreateCrossAppAccessResourceApp
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateCrossAppAccessResourceApp) String() string {
 	if c == nil {
 		return "<nil>"
 	}
@@ -5223,6 +5324,7 @@ var (
 	getConnectionResponseContentFieldAuthentication              = big.NewInt(1 << 10)
 	getConnectionResponseContentFieldConnectedAccounts           = big.NewInt(1 << 11)
 	getConnectionResponseContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 12)
+	getConnectionResponseContentFieldCrossAppAccessResourceApp   = big.NewInt(1 << 13)
 )
 
 type GetConnectionResponseContent struct {
@@ -5247,6 +5349,7 @@ type GetConnectionResponseContent struct {
 	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
+	CrossAppAccessResourceApp   *CrossAppAccessResourceApp          `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -5344,6 +5447,13 @@ func (g *GetConnectionResponseContent) GetCrossAppAccessRequestingApp() CrossApp
 		return CrossAppAccessRequestingApp{}
 	}
 	return *g.CrossAppAccessRequestingApp
+}
+
+func (g *GetConnectionResponseContent) GetCrossAppAccessResourceApp() CrossAppAccessResourceApp {
+	if g == nil || g.CrossAppAccessResourceApp == nil {
+		return CrossAppAccessResourceApp{}
+	}
+	return *g.CrossAppAccessResourceApp
 }
 
 func (g *GetConnectionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -5449,6 +5559,13 @@ func (g *GetConnectionResponseContent) SetConnectedAccounts(connectedAccounts *C
 func (g *GetConnectionResponseContent) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
 	g.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
 	g.require(getConnectionResponseContentFieldCrossAppAccessRequestingApp)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionResponseContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *CrossAppAccessResourceApp) {
+	g.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	g.require(getConnectionResponseContentFieldCrossAppAccessResourceApp)
 }
 
 func (g *GetConnectionResponseContent) UnmarshalJSON(data []byte) error {
@@ -6967,6 +7084,7 @@ var (
 	updateConnectionResponseContentFieldAuthentication              = big.NewInt(1 << 10)
 	updateConnectionResponseContentFieldConnectedAccounts           = big.NewInt(1 << 11)
 	updateConnectionResponseContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 12)
+	updateConnectionResponseContentFieldCrossAppAccessResourceApp   = big.NewInt(1 << 13)
 )
 
 type UpdateConnectionResponseContent struct {
@@ -6991,6 +7109,7 @@ type UpdateConnectionResponseContent struct {
 	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
+	CrossAppAccessResourceApp   *CrossAppAccessResourceApp          `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7088,6 +7207,13 @@ func (u *UpdateConnectionResponseContent) GetCrossAppAccessRequestingApp() Cross
 		return CrossAppAccessRequestingApp{}
 	}
 	return *u.CrossAppAccessRequestingApp
+}
+
+func (u *UpdateConnectionResponseContent) GetCrossAppAccessResourceApp() CrossAppAccessResourceApp {
+	if u == nil || u.CrossAppAccessResourceApp == nil {
+		return CrossAppAccessResourceApp{}
+	}
+	return *u.CrossAppAccessResourceApp
 }
 
 func (u *UpdateConnectionResponseContent) GetExtraProperties() map[string]interface{} {
@@ -7195,6 +7321,13 @@ func (u *UpdateConnectionResponseContent) SetCrossAppAccessRequestingApp(crossAp
 	u.require(updateConnectionResponseContentFieldCrossAppAccessRequestingApp)
 }
 
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionResponseContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *CrossAppAccessResourceApp) {
+	u.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	u.require(updateConnectionResponseContentFieldCrossAppAccessResourceApp)
+}
+
 func (u *UpdateConnectionResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler UpdateConnectionResponseContent
 	var value unmarshaler
@@ -7223,6 +7356,91 @@ func (u *UpdateConnectionResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateConnectionResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Cross App Access - Resource App settings that apply to this connection.
+var (
+	updateCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
+)
+
+type UpdateCrossAppAccessResourceApp struct {
+	Status CrossAppAccessResourceAppStatusEnum `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateCrossAppAccessResourceApp) GetStatus() CrossAppAccessResourceAppStatusEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Status
+}
+
+func (u *UpdateCrossAppAccessResourceApp) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateCrossAppAccessResourceApp) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCrossAppAccessResourceApp) SetStatus(status CrossAppAccessResourceAppStatusEnum) {
+	u.Status = status
+	u.require(updateCrossAppAccessResourceAppFieldStatus)
+}
+
+func (u *UpdateCrossAppAccessResourceApp) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateCrossAppAccessResourceApp
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateCrossAppAccessResourceApp(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateCrossAppAccessResourceApp) MarshalJSON() ([]byte, error) {
+	type embed UpdateCrossAppAccessResourceApp
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateCrossAppAccessResourceApp) String() string {
 	if u == nil {
 		return "<nil>"
 	}

@@ -3757,6 +3757,13 @@ func TestEnumClientGrantSubjectTypeEnum(t *testing.T) {
 		assert.Equal(t, ClientGrantSubjectTypeEnum("user"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_anonymous_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientGrantSubjectTypeEnumFromString("anonymous_user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientGrantSubjectTypeEnum("anonymous_user"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewClientGrantSubjectTypeEnumFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)

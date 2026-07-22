@@ -10206,6 +10206,14 @@ func TestSettersCreateConnectionResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
+		obj := &CreateConnectionResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *CrossAppAccessResourceApp
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+		assert.Equal(t, fernTestValueCrossAppAccessResourceApp, obj.CrossAppAccessResourceApp)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersCreateConnectionResponseContent(t *testing.T) {
@@ -10649,6 +10657,40 @@ func TestGettersCreateConnectionResponseContent(t *testing.T) {
 		_ = obj.GetCrossAppAccessRequestingApp() // Should return zero value
 	})
 
+	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionResponseContent{}
+		var value CrossAppAccessResourceApp
+		obj.CrossAppAccessResourceApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessResourceApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionResponseContent{}
+		obj.CrossAppAccessResourceApp = nil
+		var expectedZero CrossAppAccessResourceApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessResourceApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateConnectionResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessResourceApp() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitCreateConnectionResponseContent(t *testing.T) {
@@ -11032,6 +11074,108 @@ func TestSettersMarkExplicitCreateConnectionResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetCrossAppAccessRequestingApp(fernTestValueCrossAppAccessRequestingApp)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessResourceApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *CrossAppAccessResourceApp
+
+		// Act
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCreateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("SetStatus", func(t *testing.T) {
+		obj := &CreateCrossAppAccessResourceApp{}
+		var fernTestValueStatus CrossAppAccessResourceAppStatusEnum
+		obj.SetStatus(fernTestValueStatus)
+		assert.Equal(t, fernTestValueStatus, obj.Status)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCreateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("GetStatus", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateCrossAppAccessResourceApp{}
+		var expected CrossAppAccessResourceAppStatusEnum
+		obj.Status = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStatus(), "getter should return the property value")
+	})
+
+	t.Run("GetStatus_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateCrossAppAccessResourceApp
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStatus() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCreateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("SetStatus_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateCrossAppAccessResourceApp{}
+		var fernTestValueStatus CrossAppAccessResourceAppStatusEnum
+
+		// Act
+		obj.SetStatus(fernTestValueStatus)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -11691,6 +11835,14 @@ func TestSettersGetConnectionResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
+		obj := &GetConnectionResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *CrossAppAccessResourceApp
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+		assert.Equal(t, fernTestValueCrossAppAccessResourceApp, obj.CrossAppAccessResourceApp)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersGetConnectionResponseContent(t *testing.T) {
@@ -12134,6 +12286,40 @@ func TestGettersGetConnectionResponseContent(t *testing.T) {
 		_ = obj.GetCrossAppAccessRequestingApp() // Should return zero value
 	})
 
+	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetConnectionResponseContent{}
+		var value CrossAppAccessResourceApp
+		obj.CrossAppAccessResourceApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessResourceApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetConnectionResponseContent{}
+		obj.CrossAppAccessResourceApp = nil
+		var expectedZero CrossAppAccessResourceApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessResourceApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetConnectionResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessResourceApp() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitGetConnectionResponseContent(t *testing.T) {
@@ -12517,6 +12703,37 @@ func TestSettersMarkExplicitGetConnectionResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetCrossAppAccessRequestingApp(fernTestValueCrossAppAccessRequestingApp)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessResourceApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetConnectionResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *CrossAppAccessResourceApp
+
+		// Act
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -16356,6 +16573,14 @@ func TestSettersUpdateConnectionResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
+		obj := &UpdateConnectionResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *CrossAppAccessResourceApp
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+		assert.Equal(t, fernTestValueCrossAppAccessResourceApp, obj.CrossAppAccessResourceApp)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersUpdateConnectionResponseContent(t *testing.T) {
@@ -16799,6 +17024,40 @@ func TestGettersUpdateConnectionResponseContent(t *testing.T) {
 		_ = obj.GetCrossAppAccessRequestingApp() // Should return zero value
 	})
 
+	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionResponseContent{}
+		var value CrossAppAccessResourceApp
+		obj.CrossAppAccessResourceApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessResourceApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionResponseContent{}
+		obj.CrossAppAccessResourceApp = nil
+		var expectedZero CrossAppAccessResourceApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessResourceApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessResourceApp() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitUpdateConnectionResponseContent(t *testing.T) {
@@ -17182,6 +17441,108 @@ func TestSettersMarkExplicitUpdateConnectionResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetCrossAppAccessRequestingApp(fernTestValueCrossAppAccessRequestingApp)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessResourceApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *CrossAppAccessResourceApp
+
+		// Act
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersUpdateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("SetStatus", func(t *testing.T) {
+		obj := &UpdateCrossAppAccessResourceApp{}
+		var fernTestValueStatus CrossAppAccessResourceAppStatusEnum
+		obj.SetStatus(fernTestValueStatus)
+		assert.Equal(t, fernTestValueStatus, obj.Status)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersUpdateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("GetStatus", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateCrossAppAccessResourceApp{}
+		var expected CrossAppAccessResourceAppStatusEnum
+		obj.Status = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStatus(), "getter should return the property value")
+	})
+
+	t.Run("GetStatus_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateCrossAppAccessResourceApp
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStatus() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitUpdateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("SetStatus_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateCrossAppAccessResourceApp{}
+		var fernTestValueStatus CrossAppAccessResourceAppStatusEnum
+
+		// Act
+		obj.SetStatus(fernTestValueStatus)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -18831,6 +19192,39 @@ func TestJSONMarshalingCreateConnectionResponseContent(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingCreateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateCrossAppAccessResourceApp{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CreateCrossAppAccessResourceApp
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CreateCrossAppAccessResourceApp
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CreateCrossAppAccessResourceApp
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingEmailAttribute(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -19189,6 +19583,39 @@ func TestJSONMarshalingUpdateConnectionResponseContent(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj UpdateConnectionResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingUpdateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateCrossAppAccessResourceApp{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled UpdateCrossAppAccessResourceApp
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj UpdateCrossAppAccessResourceApp
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj UpdateCrossAppAccessResourceApp
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -19742,6 +20169,22 @@ func TestStringCreateConnectionResponseContent(t *testing.T) {
 	})
 }
 
+func TestStringCreateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CreateCrossAppAccessResourceApp{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateCrossAppAccessResourceApp
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringEmailAttribute(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -19913,6 +20356,22 @@ func TestStringUpdateConnectionResponseContent(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateConnectionResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringUpdateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &UpdateCrossAppAccessResourceApp{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateCrossAppAccessResourceApp
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -21857,6 +22316,29 @@ func TestExtraPropertiesCreateConnectionResponseContent(t *testing.T) {
 	})
 }
 
+func TestExtraPropertiesCreateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CreateCrossAppAccessResourceApp{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateCrossAppAccessResourceApp
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesEmailAttribute(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -22105,6 +22587,29 @@ func TestExtraPropertiesUpdateConnectionResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateConnectionResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesUpdateCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &UpdateCrossAppAccessResourceApp{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateCrossAppAccessResourceApp
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

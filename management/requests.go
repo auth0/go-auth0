@@ -1003,6 +1003,7 @@ var (
 	createConnectionRequestContentFieldAuthentication              = big.NewInt(1 << 9)
 	createConnectionRequestContentFieldConnectedAccounts           = big.NewInt(1 << 10)
 	createConnectionRequestContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 11)
+	createConnectionRequestContentFieldCrossAppAccessResourceApp   = big.NewInt(1 << 12)
 )
 
 type CreateConnectionRequestContent struct {
@@ -1024,6 +1025,7 @@ type CreateConnectionRequestContent struct {
 	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"-"`
 	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"-"`
 	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"-"`
+	CrossAppAccessResourceApp   *CreateCrossAppAccessResourceApp    `json:"cross_app_access_resource_app,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1118,6 +1120,13 @@ func (c *CreateConnectionRequestContent) SetConnectedAccounts(connectedAccounts 
 func (c *CreateConnectionRequestContent) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
 	c.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
 	c.require(createConnectionRequestContentFieldCrossAppAccessRequestingApp)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *CreateCrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(createConnectionRequestContentFieldCrossAppAccessResourceApp)
 }
 
 func (c *CreateConnectionRequestContent) UnmarshalJSON(data []byte) error {
@@ -1667,15 +1676,16 @@ func (c *CreateEmailProviderRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createSelfServiceProfileSSOTicketRequestContentFieldConnectionID                = big.NewInt(1 << 0)
-	createSelfServiceProfileSSOTicketRequestContentFieldConnectionConfig            = big.NewInt(1 << 1)
-	createSelfServiceProfileSSOTicketRequestContentFieldEnabledClients              = big.NewInt(1 << 2)
-	createSelfServiceProfileSSOTicketRequestContentFieldEnabledOrganizations        = big.NewInt(1 << 3)
-	createSelfServiceProfileSSOTicketRequestContentFieldTTLSec                      = big.NewInt(1 << 4)
-	createSelfServiceProfileSSOTicketRequestContentFieldDomainAliasesConfig         = big.NewInt(1 << 5)
-	createSelfServiceProfileSSOTicketRequestContentFieldProvisioningConfig          = big.NewInt(1 << 6)
-	createSelfServiceProfileSSOTicketRequestContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 7)
-	createSelfServiceProfileSSOTicketRequestContentFieldEnabledFeatures             = big.NewInt(1 << 8)
+	createSelfServiceProfileSSOTicketRequestContentFieldConnectionID                 = big.NewInt(1 << 0)
+	createSelfServiceProfileSSOTicketRequestContentFieldConnectionConfig             = big.NewInt(1 << 1)
+	createSelfServiceProfileSSOTicketRequestContentFieldEnabledClients               = big.NewInt(1 << 2)
+	createSelfServiceProfileSSOTicketRequestContentFieldEnabledOrganizations         = big.NewInt(1 << 3)
+	createSelfServiceProfileSSOTicketRequestContentFieldTTLSec                       = big.NewInt(1 << 4)
+	createSelfServiceProfileSSOTicketRequestContentFieldDomainAliasesConfig          = big.NewInt(1 << 5)
+	createSelfServiceProfileSSOTicketRequestContentFieldProvisioningConfig           = big.NewInt(1 << 6)
+	createSelfServiceProfileSSOTicketRequestContentFieldUseForOrganizationDiscovery  = big.NewInt(1 << 7)
+	createSelfServiceProfileSSOTicketRequestContentFieldThirdPartyClientAccessConfig = big.NewInt(1 << 8)
+	createSelfServiceProfileSSOTicketRequestContentFieldEnabledFeatures              = big.NewInt(1 << 9)
 )
 
 type CreateSelfServiceProfileSSOTicketRequestContent struct {
@@ -1691,8 +1701,9 @@ type CreateSelfServiceProfileSSOTicketRequestContent struct {
 	DomainAliasesConfig *SelfServiceProfileSSOTicketDomainAliasesConfig `json:"domain_aliases_config,omitempty" url:"-"`
 	ProvisioningConfig  *SelfServiceProfileSSOTicketProvisioningConfig  `json:"provisioning_config,omitempty" url:"-"`
 	// Indicates whether a verified domain should be used for organization discovery during authentication.
-	UseForOrganizationDiscovery *bool                                       `json:"use_for_organization_discovery,omitempty" url:"-"`
-	EnabledFeatures             *SelfServiceProfileSSOTicketEnabledFeatures `json:"enabled_features,omitempty" url:"-"`
+	UseForOrganizationDiscovery  *bool                                       `json:"use_for_organization_discovery,omitempty" url:"-"`
+	ThirdPartyClientAccessConfig *ThirdPartyClientAccessConfig               `json:"third_party_client_access_config,omitempty" url:"-"`
+	EnabledFeatures              *SelfServiceProfileSSOTicketEnabledFeatures `json:"enabled_features,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1759,6 +1770,13 @@ func (c *CreateSelfServiceProfileSSOTicketRequestContent) SetProvisioningConfig(
 func (c *CreateSelfServiceProfileSSOTicketRequestContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
 	c.UseForOrganizationDiscovery = useForOrganizationDiscovery
 	c.require(createSelfServiceProfileSSOTicketRequestContentFieldUseForOrganizationDiscovery)
+}
+
+// SetThirdPartyClientAccessConfig sets the ThirdPartyClientAccessConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSelfServiceProfileSSOTicketRequestContent) SetThirdPartyClientAccessConfig(thirdPartyClientAccessConfig *ThirdPartyClientAccessConfig) {
+	c.ThirdPartyClientAccessConfig = thirdPartyClientAccessConfig
+	c.require(createSelfServiceProfileSSOTicketRequestContentFieldThirdPartyClientAccessConfig)
 }
 
 // SetEnabledFeatures sets the EnabledFeatures field and marks it as non-optional;
@@ -2204,8 +2222,9 @@ var (
 	createBrandingThemeRequestContentFieldColors         = big.NewInt(1 << 1)
 	createBrandingThemeRequestContentFieldDisplayName    = big.NewInt(1 << 2)
 	createBrandingThemeRequestContentFieldFonts          = big.NewInt(1 << 3)
-	createBrandingThemeRequestContentFieldPageBackground = big.NewInt(1 << 4)
-	createBrandingThemeRequestContentFieldWidget         = big.NewInt(1 << 5)
+	createBrandingThemeRequestContentFieldIdentifiers    = big.NewInt(1 << 4)
+	createBrandingThemeRequestContentFieldPageBackground = big.NewInt(1 << 5)
+	createBrandingThemeRequestContentFieldWidget         = big.NewInt(1 << 6)
 )
 
 type CreateBrandingThemeRequestContent struct {
@@ -2214,6 +2233,7 @@ type CreateBrandingThemeRequestContent struct {
 	// Display Name
 	DisplayName    *string                      `json:"displayName,omitempty" url:"-"`
 	Fonts          *BrandingThemeFonts          `json:"fonts" url:"-"`
+	Identifiers    *BrandingThemeIdentifiers    `json:"identifiers,omitempty" url:"-"`
 	PageBackground *BrandingThemePageBackground `json:"page_background" url:"-"`
 	Widget         *BrandingThemeWidget         `json:"widget" url:"-"`
 
@@ -2254,6 +2274,13 @@ func (c *CreateBrandingThemeRequestContent) SetDisplayName(displayName *string) 
 func (c *CreateBrandingThemeRequestContent) SetFonts(fonts *BrandingThemeFonts) {
 	c.Fonts = fonts
 	c.require(createBrandingThemeRequestContentFieldFonts)
+}
+
+// SetIdentifiers sets the Identifiers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingThemeRequestContent) SetIdentifiers(identifiers *BrandingThemeIdentifiers) {
+	c.Identifiers = identifiers
+	c.require(createBrandingThemeRequestContentFieldIdentifiers)
 }
 
 // SetPageBackground sets the PageBackground field and marks it as non-optional;
@@ -2957,11 +2984,12 @@ var (
 	createClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
 	createClientRequestContentFieldTokenQuota                                     = big.NewInt(1 << 48)
 	createClientRequestContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
-	createClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 50)
-	createClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 51)
-	createClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 52)
-	createClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
-	createClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 54)
+	createClientRequestContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 50)
+	createClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 51)
+	createClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 52)
+	createClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
+	createClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
+	createClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 55)
 )
 
 type CreateClientRequestContent struct {
@@ -3045,12 +3073,13 @@ type CreateClientRequestContent struct {
 	ParRequestExpiry *int              `json:"par_request_expiry,omitempty" url:"-"`
 	TokenQuota       *CreateTokenQuota `json:"token_quota,omitempty" url:"-"`
 	// The identifier of the resource server that this client is linked to.
-	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"-"`
-	ThirdPartySecurityMode            *ClientThirdPartySecurityModeEnum                             `json:"third_party_security_mode,omitempty" url:"-"`
-	RedirectionPolicy                 *ClientRedirectionPolicyEnum                                  `json:"redirection_policy,omitempty" url:"-"`
-	ExpressConfiguration              *ExpressConfiguration                                         `json:"express_configuration,omitempty" url:"-"`
-	MyOrganizationConfiguration       *ClientMyOrganizationPostConfiguration                        `json:"my_organization_configuration,omitempty" url:"-"`
-	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"-"`
+	ResourceServerIdentifier            *string                                                       `json:"resource_server_identifier,omitempty" url:"-"`
+	IdentityAssertionAuthorizationGrant *CreateIdentityAssertionAuthorizationGrant                    `json:"identity_assertion_authorization_grant,omitempty" url:"-"`
+	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum                             `json:"third_party_security_mode,omitempty" url:"-"`
+	RedirectionPolicy                   *ClientRedirectionPolicyEnum                                  `json:"redirection_policy,omitempty" url:"-"`
+	ExpressConfiguration                *ExpressConfiguration                                         `json:"express_configuration,omitempty" url:"-"`
+	MyOrganizationConfiguration         *ClientMyOrganizationPostConfiguration                        `json:"my_organization_configuration,omitempty" url:"-"`
+	AsyncApprovalNotificationChannels   *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3411,6 +3440,13 @@ func (c *CreateClientRequestContent) SetTokenQuota(tokenQuota *CreateTokenQuota)
 func (c *CreateClientRequestContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
 	c.ResourceServerIdentifier = resourceServerIdentifier
 	c.require(createClientRequestContentFieldResourceServerIdentifier)
+}
+
+// SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientRequestContent) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *CreateIdentityAssertionAuthorizationGrant) {
+	c.IdentityAssertionAuthorizationGrant = identityAssertionAuthorizationGrant
+	c.require(createClientRequestContentFieldIdentityAssertionAuthorizationGrant)
 }
 
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
@@ -8941,7 +8977,7 @@ type ListClientsRequestParameters struct {
 	IsFirstParty *bool `json:"-" url:"is_first_party,omitempty"`
 	// Optional filter by a comma-separated list of application types.
 	AppType *string `json:"-" url:"app_type,omitempty"`
-	// Optional filter by the <a href="https://www.ietf.org/archive/id/draft-ietf-oauth-client-id-metadata-document-04.html">Client ID Metadata Document</a> URI for CIMD-registered clients.
+	// Optional filter by the <a href="https://drafts.oauth.net/draft-ietf-oauth-client-id-metadata-document/draft-ietf-oauth-client-id-metadata-document.html">Client ID Metadata Document</a> URI for CIMD-registered clients.
 	ExternalClientID *string `json:"-" url:"external_client_id,omitempty"`
 	// Advanced Query in <a href="https://lucene.apache.org/core/2_9_4/queryparsersyntax.html">Lucene</a> syntax.<br /><b>Permitted Queries</b>:<br /><ul><li><i>client_grant.organization_id:{organization_id}</i></li><li><i>client_grant.allow_any_organization:true</i></li></ul><b>Additional Restrictions</b>:<br /><ul><li>Cannot be used in combination with other filters</li><li>Requires use of the <i>from</i> and <i>take</i> paging parameters (checkpoint paginatinon)</li><li>Reduced rate limits apply. See <a href="https://auth0.com/docs/troubleshoot/customer-support/operational-policies/rate-limit-policy/rate-limit-configurations/enterprise-public">Rate Limit Configurations</a></li></ul><i><b>Note</b>: Recent updates may not be immediately reflected in query results</i>
 	Q *string `json:"-" url:"q,omitempty"`
@@ -13127,8 +13163,9 @@ var (
 	updateBrandingThemeRequestContentFieldColors         = big.NewInt(1 << 1)
 	updateBrandingThemeRequestContentFieldDisplayName    = big.NewInt(1 << 2)
 	updateBrandingThemeRequestContentFieldFonts          = big.NewInt(1 << 3)
-	updateBrandingThemeRequestContentFieldPageBackground = big.NewInt(1 << 4)
-	updateBrandingThemeRequestContentFieldWidget         = big.NewInt(1 << 5)
+	updateBrandingThemeRequestContentFieldIdentifiers    = big.NewInt(1 << 4)
+	updateBrandingThemeRequestContentFieldPageBackground = big.NewInt(1 << 5)
+	updateBrandingThemeRequestContentFieldWidget         = big.NewInt(1 << 6)
 )
 
 type UpdateBrandingThemeRequestContent struct {
@@ -13137,6 +13174,7 @@ type UpdateBrandingThemeRequestContent struct {
 	// Display Name
 	DisplayName    *string                      `json:"displayName,omitempty" url:"-"`
 	Fonts          *BrandingThemeFonts          `json:"fonts" url:"-"`
+	Identifiers    *BrandingThemeIdentifiers    `json:"identifiers,omitempty" url:"-"`
 	PageBackground *BrandingThemePageBackground `json:"page_background" url:"-"`
 	Widget         *BrandingThemeWidget         `json:"widget" url:"-"`
 
@@ -13177,6 +13215,13 @@ func (u *UpdateBrandingThemeRequestContent) SetDisplayName(displayName *string) 
 func (u *UpdateBrandingThemeRequestContent) SetFonts(fonts *BrandingThemeFonts) {
 	u.Fonts = fonts
 	u.require(updateBrandingThemeRequestContentFieldFonts)
+}
+
+// SetIdentifiers sets the Identifiers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingThemeRequestContent) SetIdentifiers(identifiers *BrandingThemeIdentifiers) {
+	u.Identifiers = identifiers
+	u.require(updateBrandingThemeRequestContentFieldIdentifiers)
 }
 
 // SetPageBackground sets the PageBackground field and marks it as non-optional;
@@ -15510,6 +15555,7 @@ var (
 	updateConnectionRequestContentFieldAuthentication              = big.NewInt(1 << 7)
 	updateConnectionRequestContentFieldConnectedAccounts           = big.NewInt(1 << 8)
 	updateConnectionRequestContentFieldCrossAppAccessRequestingApp = big.NewInt(1 << 9)
+	updateConnectionRequestContentFieldCrossAppAccessResourceApp   = big.NewInt(1 << 10)
 )
 
 type UpdateConnectionRequestContent struct {
@@ -15528,6 +15574,7 @@ type UpdateConnectionRequestContent struct {
 	Authentication              *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"-"`
 	ConnectedAccounts           *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"-"`
 	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp        `json:"cross_app_access_requesting_app,omitempty" url:"-"`
+	CrossAppAccessResourceApp   *UpdateCrossAppAccessResourceApp    `json:"cross_app_access_resource_app,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -15610,6 +15657,13 @@ func (u *UpdateConnectionRequestContent) SetCrossAppAccessRequestingApp(crossApp
 	u.require(updateConnectionRequestContentFieldCrossAppAccessRequestingApp)
 }
 
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionRequestContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *UpdateCrossAppAccessResourceApp) {
+	u.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	u.require(updateConnectionRequestContentFieldCrossAppAccessResourceApp)
+}
+
 func (u *UpdateConnectionRequestContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler UpdateConnectionRequestContent
 	var body unmarshaler
@@ -15661,32 +15715,33 @@ var (
 	updateClientRequestContentFieldCustomLoginPage                                = big.NewInt(1 << 26)
 	updateClientRequestContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 27)
 	updateClientRequestContentFieldTokenQuota                                     = big.NewInt(1 << 28)
-	updateClientRequestContentFieldFormTemplate                                   = big.NewInt(1 << 29)
-	updateClientRequestContentFieldAddons                                         = big.NewInt(1 << 30)
-	updateClientRequestContentFieldClientMetadata                                 = big.NewInt(1 << 31)
-	updateClientRequestContentFieldMobile                                         = big.NewInt(1 << 32)
-	updateClientRequestContentFieldInitiateLoginURI                               = big.NewInt(1 << 33)
-	updateClientRequestContentFieldNativeSocialLogin                              = big.NewInt(1 << 34)
-	updateClientRequestContentFieldFedcmLogin                                     = big.NewInt(1 << 35)
-	updateClientRequestContentFieldRefreshToken                                   = big.NewInt(1 << 36)
-	updateClientRequestContentFieldDefaultOrganization                            = big.NewInt(1 << 37)
-	updateClientRequestContentFieldOrganizationUsage                              = big.NewInt(1 << 38)
-	updateClientRequestContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
-	updateClientRequestContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
-	updateClientRequestContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
-	updateClientRequestContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
-	updateClientRequestContentFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
-	updateClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 44)
-	updateClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 45)
-	updateClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 46)
-	updateClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 47)
-	updateClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 48)
-	updateClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 49)
-	updateClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 50)
-	updateClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 51)
-	updateClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 52)
-	updateClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 53)
-	updateClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 54)
+	updateClientRequestContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 29)
+	updateClientRequestContentFieldFormTemplate                                   = big.NewInt(1 << 30)
+	updateClientRequestContentFieldAddons                                         = big.NewInt(1 << 31)
+	updateClientRequestContentFieldClientMetadata                                 = big.NewInt(1 << 32)
+	updateClientRequestContentFieldMobile                                         = big.NewInt(1 << 33)
+	updateClientRequestContentFieldInitiateLoginURI                               = big.NewInt(1 << 34)
+	updateClientRequestContentFieldNativeSocialLogin                              = big.NewInt(1 << 35)
+	updateClientRequestContentFieldFedcmLogin                                     = big.NewInt(1 << 36)
+	updateClientRequestContentFieldRefreshToken                                   = big.NewInt(1 << 37)
+	updateClientRequestContentFieldDefaultOrganization                            = big.NewInt(1 << 38)
+	updateClientRequestContentFieldOrganizationUsage                              = big.NewInt(1 << 39)
+	updateClientRequestContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 40)
+	updateClientRequestContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 41)
+	updateClientRequestContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 42)
+	updateClientRequestContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 43)
+	updateClientRequestContentFieldRequireProofOfPossession                       = big.NewInt(1 << 44)
+	updateClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 45)
+	updateClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 46)
+	updateClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 47)
+	updateClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
+	updateClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 49)
+	updateClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 50)
+	updateClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 51)
+	updateClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 52)
+	updateClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 53)
+	updateClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
+	updateClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
 )
 
 type UpdateClientRequestContent struct {
@@ -15739,9 +15794,10 @@ type UpdateClientRequestContent struct {
 	// Whether this client will conform to strict OIDC specifications
 	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"-"`
 	// The content (HTML, CSS, JS) of the custom login page
-	CustomLoginPage        *string           `json:"custom_login_page,omitempty" url:"-"`
-	CustomLoginPagePreview *string           `json:"custom_login_page_preview,omitempty" url:"-"`
-	TokenQuota             *UpdateTokenQuota `json:"token_quota,omitempty" url:"-"`
+	CustomLoginPage                     *string                                    `json:"custom_login_page,omitempty" url:"-"`
+	CustomLoginPagePreview              *string                                    `json:"custom_login_page_preview,omitempty" url:"-"`
+	TokenQuota                          *UpdateTokenQuota                          `json:"token_quota,omitempty" url:"-"`
+	IdentityAssertionAuthorizationGrant *UpdateIdentityAssertionAuthorizationGrant `json:"identity_assertion_authorization_grant,omitempty" url:"-"`
 	// Form template for WS-Federation protocol
 	FormTemplate   *string         `json:"form_template,omitempty" url:"-"`
 	Addons         *ClientAddons   `json:"addons,omitempty" url:"-"`
@@ -15991,6 +16047,13 @@ func (u *UpdateClientRequestContent) SetCustomLoginPagePreview(customLoginPagePr
 func (u *UpdateClientRequestContent) SetTokenQuota(tokenQuota *UpdateTokenQuota) {
 	u.TokenQuota = tokenQuota
 	u.require(updateClientRequestContentFieldTokenQuota)
+}
+
+// SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientRequestContent) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *UpdateIdentityAssertionAuthorizationGrant) {
+	u.IdentityAssertionAuthorizationGrant = identityAssertionAuthorizationGrant
+	u.require(updateClientRequestContentFieldIdentityAssertionAuthorizationGrant)
 }
 
 // SetFormTemplate sets the FormTemplate field and marks it as non-optional;

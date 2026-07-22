@@ -340,8 +340,9 @@ func (c *ClientGrantResponseContent) String() string {
 type ClientGrantSubjectTypeEnum string
 
 const (
-	ClientGrantSubjectTypeEnumClient ClientGrantSubjectTypeEnum = "client"
-	ClientGrantSubjectTypeEnumUser   ClientGrantSubjectTypeEnum = "user"
+	ClientGrantSubjectTypeEnumClient        ClientGrantSubjectTypeEnum = "client"
+	ClientGrantSubjectTypeEnumUser          ClientGrantSubjectTypeEnum = "user"
+	ClientGrantSubjectTypeEnumAnonymousUser ClientGrantSubjectTypeEnum = "anonymous_user"
 )
 
 func NewClientGrantSubjectTypeEnumFromString(s string) (ClientGrantSubjectTypeEnum, error) {
@@ -350,6 +351,8 @@ func NewClientGrantSubjectTypeEnumFromString(s string) (ClientGrantSubjectTypeEn
 		return ClientGrantSubjectTypeEnumClient, nil
 	case "user":
 		return ClientGrantSubjectTypeEnumUser, nil
+	case "anonymous_user":
+		return ClientGrantSubjectTypeEnumAnonymousUser, nil
 	}
 	var t ClientGrantSubjectTypeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
