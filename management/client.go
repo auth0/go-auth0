@@ -260,15 +260,6 @@ type Client struct {
 
 	// FedCMLogin holds the Federated Credential Management login configuration.
 	FedCMLogin *FedCMLogin `json:"fedcm_login,omitempty"`
-
-	// IdentityAssertionAuthorizationGrant enables the Identity Assertion Authorization Grant (ID-JAG) exchange for the client, used for Cross-App Access.
-	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant `json:"identity_assertion_authorization_grant,omitempty"`
-}
-
-// IdentityAssertionAuthorizationGrant enables the Identity Assertion Authorization Grant (ID-JAG) exchange for the client, used for Cross-App Access.
-type IdentityAssertionAuthorizationGrant struct {
-	// Active controls whether the client can exchange ID-JAGs for access tokens.
-	Active *bool `json:"active,omitempty"`
 }
 
 // ExpressConfiguration represents the OIN Express Configuration settings for a client.
