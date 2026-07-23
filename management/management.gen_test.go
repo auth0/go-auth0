@@ -2451,6 +2451,13 @@ func TestClient_GetGrantTypes(tt *testing.T) {
 	c.GetGrantTypes()
 }
 
+func TestClient_GetIdentityAssertionAuthorizationGrant(tt *testing.T) {
+	c := &Client{}
+	c.GetIdentityAssertionAuthorizationGrant()
+	c = nil
+	c.GetIdentityAssertionAuthorizationGrant()
+}
+
 func TestClient_GetInitiateLoginURI(tt *testing.T) {
 	var zeroValue string
 	c := &Client{InitiateLoginURI: &zeroValue}
@@ -3519,6 +3526,13 @@ func TestConnection_GetConnectedAccounts(tt *testing.T) {
 	c.GetConnectedAccounts()
 	c = nil
 	c.GetConnectedAccounts()
+}
+
+func TestConnection_GetCrossAppAccessResourceApp(tt *testing.T) {
+	c := &Connection{}
+	c.GetCrossAppAccessResourceApp()
+	c = nil
+	c.GetCrossAppAccessResourceApp()
 }
 
 func TestConnection_GetDisplayName(tt *testing.T) {
@@ -8171,6 +8185,16 @@ func TestConnectionOptionsSAML_GetDisableSignOut(tt *testing.T) {
 	c.GetDisableSignOut()
 }
 
+func TestConnectionOptionsSAML_GetDiscoveryURL(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{DiscoveryURL: &zeroValue}
+	c.GetDiscoveryURL()
+	c = &ConnectionOptionsSAML{}
+	c.GetDiscoveryURL()
+	c = nil
+	c.GetDiscoveryURL()
+}
+
 func TestConnectionOptionsSAML_GetDomainAliases(tt *testing.T) {
 	var zeroValue []string
 	c := &ConnectionOptionsSAML{DomainAliases: &zeroValue}
@@ -8296,6 +8320,16 @@ func TestConnectionOptionsSAML_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 	c = nil
 	c.GetNonPersistentAttrs()
+}
+
+func TestConnectionOptionsSAML_GetOIDCMetadata(tt *testing.T) {
+	zeroValue := map[string]interface{}{}
+	c := &ConnectionOptionsSAML{OIDCMetadata: zeroValue}
+	c.GetOIDCMetadata()
+	c = &ConnectionOptionsSAML{}
+	c.GetOIDCMetadata()
+	c = nil
+	c.GetOIDCMetadata()
 }
 
 func TestConnectionOptionsSAML_GetProtocolBinding(tt *testing.T) {
@@ -9187,6 +9221,24 @@ func TestCredential_GetUpdatedAt(tt *testing.T) {
 func TestCredential_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Credential{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestCrossAppAccessResourceApp_GetStatus(tt *testing.T) {
+	var zeroValue string
+	c := &CrossAppAccessResourceApp{Status: &zeroValue}
+	c.GetStatus()
+	c = &CrossAppAccessResourceApp{}
+	c.GetStatus()
+	c = nil
+	c.GetStatus()
+}
+
+func TestCrossAppAccessResourceApp_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &CrossAppAccessResourceApp{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -11474,6 +11526,24 @@ func TestHook_String(t *testing.T) {
 func TestHookList_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &HookList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestIdentityAssertionAuthorizationGrant_GetActive(tt *testing.T) {
+	var zeroValue bool
+	i := &IdentityAssertionAuthorizationGrant{Active: &zeroValue}
+	i.GetActive()
+	i = &IdentityAssertionAuthorizationGrant{}
+	i.GetActive()
+	i = nil
+	i.GetActive()
+}
+
+func TestIdentityAssertionAuthorizationGrant_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &IdentityAssertionAuthorizationGrant{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
