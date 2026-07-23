@@ -29,14 +29,16 @@ type QueryEncoder interface {
 	EncodeQueryValues(key string, v *url.Values) error
 }
 
-// prepareValue handles common validation and unwrapping logic for both functions
+// prepareValue handles common validation and unwrapping logic for both functions.
 func prepareValue(v interface{}) (reflect.Value, url.Values, error) {
 	values := make(url.Values)
+
 	val := reflect.ValueOf(v)
 	for val.Kind() == reflect.Ptr {
 		if val.IsNil() {
 			return reflect.Value{}, values, nil
 		}
+
 		val = val.Elem()
 	}
 
@@ -75,7 +77,16 @@ func QueryValuesWithDefaults(v interface{}, defaults map[string]interface{}) (ur
 	if err != nil {
 		return values, err
 	}
+
 	if !val.IsValid() {
+		// No struct was provided (e.g. a nil request pointer), so there are no
+		// fields to inspect. Apply every default directly so that callers still
+		// get the intended default query parameters (e.g. include_totals=true,
+		// which selects the object-shaped paginated response).
+		for wireName, defaultVal := range defaults {
+			values.Set(wireName, valueString(reflect.ValueOf(defaultVal), tagOptions{}, reflect.StructField{}))
+		}
+
 		return values, nil
 	}
 
@@ -97,10 +108,12 @@ func QueryValuesWithDefaults(v interface{}, defaults map[string]interface{}) (ur
 			if tag == "" || tag == "-" {
 				continue
 			}
+
 			wireName, _ := parseTag(tag)
 			if wireName == "" {
 				wireName = fieldName
 			}
+
 			if defaultVal, exists := defaults[wireName]; exists {
 				values.Set(wireName, valueString(reflect.ValueOf(defaultVal), tagOptions{}, reflect.StructField{}))
 			}
@@ -123,6 +136,7 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 		}
 
 		sv := val.Field(i)
+
 		tag := sf.Tag.Get("url")
 		if tag == "" || tag == "-" {
 			continue
@@ -152,6 +166,7 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 			if err := m.EncodeQueryValues(name, &values); err != nil {
 				return err
 			}
+
 			continue
 		}
 
@@ -160,6 +175,7 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 			if sv.IsNil() {
 				break
 			}
+
 			sv = sv.Elem()
 		}
 
@@ -173,6 +189,7 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 				// Skip if slice or array is empty.
 				continue
 			}
+
 			for i := 0; i < sv.Len(); i++ {
 				value := sv.Index(i)
 				if isStructPointer(value) && !value.IsNil() {
@@ -183,6 +200,7 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 					values.Add(name, valueString(value, opts, sf))
 				}
 			}
+
 			continue
 		}
 
@@ -190,6 +208,7 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 			if err := reflectMap(values, sv, name); err != nil {
 				return err
 			}
+
 			continue
 		}
 
@@ -197,6 +216,7 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 			if err := reflectValue(values, sv, name); err != nil {
 				return err
 			}
+
 			continue
 		}
 
@@ -206,7 +226,7 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 	return nil
 }
 
-// reflectMap handles map types specifically, generating query parameters in the format key[mapkey]=value
+// reflectMap handles map types specifically, generating query parameters in the format key[mapkey]=value.
 func reflectMap(values url.Values, val reflect.Value, scope string) error {
 	if val.IsNil() {
 		return nil
@@ -224,6 +244,7 @@ func reflectMap(values url.Values, val reflect.Value, scope string) error {
 			if v.IsNil() {
 				break
 			}
+
 			v = v.Elem()
 		}
 
@@ -235,6 +256,7 @@ func reflectMap(values url.Values, val reflect.Value, scope string) error {
 			if err := reflectMap(values, v, paramName); err != nil {
 				return err
 			}
+
 			continue
 		}
 
@@ -242,6 +264,7 @@ func reflectMap(values url.Values, val reflect.Value, scope string) error {
 			if err := reflectValue(values, v, paramName); err != nil {
 				return err
 			}
+
 			continue
 		}
 
@@ -249,6 +272,7 @@ func reflectMap(values url.Values, val reflect.Value, scope string) error {
 			if v.Len() == 0 {
 				continue
 			}
+
 			for i := 0; i < v.Len(); i++ {
 				value := v.Index(i)
 				if isStructPointer(value) && !value.IsNil() {
@@ -259,6 +283,7 @@ func reflectMap(values url.Values, val reflect.Value, scope string) error {
 					values.Add(paramName, valueString(value, tagOptions{}, reflect.StructField{}))
 				}
 			}
+
 			continue
 		}
 
@@ -274,6 +299,7 @@ func valueString(v reflect.Value, opts tagOptions, sf reflect.StructField) strin
 		if v.IsNil() {
 			return ""
 		}
+
 		v = v.Elem()
 	}
 
@@ -282,6 +308,7 @@ func valueString(v reflect.Value, opts tagOptions, sf reflect.StructField) strin
 		if format := sf.Tag.Get("format"); format == "date" {
 			return t.Format("2006-01-02")
 		}
+
 		return t.Format(RFC3339Milli)
 	}
 
@@ -354,5 +381,6 @@ func (o tagOptions) Contains(option string) bool {
 			return true
 		}
 	}
+
 	return false
 }
