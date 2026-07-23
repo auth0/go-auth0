@@ -1467,8 +1467,15 @@ func (c *ConnectionOptionsOAuth2) MarshalJSON() ([]byte, error) {
 	alias := &connectionOptionsOAuth2Wrapper{(*connectionOptionsOAuth2)(c), nil}
 
 	if c.Scope != nil {
-		scopes := strings.Fields(*c.Scope)
-		alias.RawScope = scopes
+		// Don't unify these branches. Auth0's backend comma-joins the array
+		// form and forwards it verbatim to spec-compliant IdPs (Keycloak,
+		// Ory, ...) that reject "a,b,c" as one invalid scope, so
+		// useOauthSpecScope=true must send the raw space-delimited string.
+		if c.GetUseOauthSpecScope() {
+			alias.RawScope = *c.Scope
+		} else {
+			alias.RawScope = strings.Fields(*c.Scope)
+		}
 	}
 
 	return json.Marshal(alias)
