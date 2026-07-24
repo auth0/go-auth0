@@ -2893,6 +2893,14 @@ func (c *Connection) GetConnectedAccounts() *ConnectedAccounts {
 	return c.ConnectedAccounts
 }
 
+// GetCrossAppAccessRequestingApp returns the CrossAppAccessRequestingApp field.
+func (c *Connection) GetCrossAppAccessRequestingApp() *CrossAppAccessRequestingApp {
+	if c == nil {
+		return nil
+	}
+	return c.CrossAppAccessRequestingApp
+}
+
 // GetCrossAppAccessResourceApp returns the CrossAppAccessResourceApp field.
 func (c *Connection) GetCrossAppAccessResourceApp() *CrossAppAccessResourceApp {
 	if c == nil {
@@ -7467,6 +7475,19 @@ func (c *Credential) GetUpdatedAt() time.Time {
 
 // String returns a string representation of Credential.
 func (c *Credential) String() string {
+	return Stringify(c)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (c *CrossAppAccessRequestingApp) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+// String returns a string representation of CrossAppAccessRequestingApp.
+func (c *CrossAppAccessRequestingApp) String() string {
 	return Stringify(c)
 }
 
