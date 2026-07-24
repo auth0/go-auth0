@@ -1628,6 +1628,8 @@ func TestOAuth2Connection_MarshalJSON(t *testing.T) {
 		{Scope: auth0.String("foo bar baz")}: `{"authorizationURL":null,"tokenURL":null,"scope":["foo","bar","baz"]}`,
 		{Scope: auth0.String("")}:            `{"authorizationURL":null,"tokenURL":null,"scope":[]}`,
 		{Scope: nil}:                         `{"authorizationURL":null,"tokenURL":null}`,
+		{Scope: auth0.String("foo bar baz"), UseOauthSpecScope: auth0.Bool(false)}: `{"authorizationURL":null,"tokenURL":null,"useOauthSpecScope":false,"scope":["foo","bar","baz"]}`,
+		{Scope: auth0.String("foo bar baz"), UseOauthSpecScope: auth0.Bool(true)}:  `{"authorizationURL":null,"tokenURL":null,"useOauthSpecScope":true,"scope":"foo bar baz"}`,
 	} {
 		payload, err := json.Marshal(connection)
 		assert.NoError(t, err)
@@ -1638,6 +1640,7 @@ func TestOAuth2Connection_MarshalJSON(t *testing.T) {
 func TestOAuth2Connection_UnmarshalJSON(t *testing.T) {
 	for expectedAsString, expected := range map[string]*ConnectionOptionsOAuth2{
 		`{"scope":["foo","bar","baz"]}`: {Scope: auth0.String("foo bar baz")},
+		`{"scope":"foo bar baz"}`:       {Scope: auth0.String("foo bar baz")},
 		`{"scope":null}`:                {Scope: nil},
 		`{}`:                            {},
 		`{"scope":[]}`:                  {Scope: auth0.String("")},
