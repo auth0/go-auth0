@@ -1937,6 +1937,14 @@ func (c *Client) GetGrantTypes() []string {
 	return *c.GrantTypes
 }
 
+// GetIdentityAssertionAuthorizationGrant returns the IdentityAssertionAuthorizationGrant field.
+func (c *Client) GetIdentityAssertionAuthorizationGrant() *IdentityAssertionAuthorizationGrant {
+	if c == nil {
+		return nil
+	}
+	return c.IdentityAssertionAuthorizationGrant
+}
+
 // GetInitiateLoginURI returns the InitiateLoginURI field if it's non-nil, zero value otherwise.
 func (c *Client) GetInitiateLoginURI() string {
 	if c == nil || c.InitiateLoginURI == nil {
@@ -2891,6 +2899,14 @@ func (c *Connection) GetCrossAppAccessRequestingApp() *CrossAppAccessRequestingA
 		return nil
 	}
 	return c.CrossAppAccessRequestingApp
+}
+
+// GetCrossAppAccessResourceApp returns the CrossAppAccessResourceApp field.
+func (c *Connection) GetCrossAppAccessResourceApp() *CrossAppAccessResourceApp {
+	if c == nil {
+		return nil
+	}
+	return c.CrossAppAccessResourceApp
 }
 
 // GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
@@ -6625,6 +6641,14 @@ func (c *ConnectionOptionsSAML) GetDisableSignOut() bool {
 	return *c.DisableSignOut
 }
 
+// GetDiscoveryURL returns the DiscoveryURL field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetDiscoveryURL() string {
+	if c == nil || c.DiscoveryURL == nil {
+		return ""
+	}
+	return *c.DiscoveryURL
+}
+
 // GetDomainAliases returns the DomainAliases field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsSAML) GetDomainAliases() []string {
 	if c == nil || c.DomainAliases == nil {
@@ -6727,6 +6751,14 @@ func (c *ConnectionOptionsSAML) GetNonPersistentAttrs() []string {
 		return nil
 	}
 	return *c.NonPersistentAttrs
+}
+
+// GetOIDCMetadata returns the OIDCMetadata map if it's non-nil, an empty map otherwise.
+func (c *ConnectionOptionsSAML) GetOIDCMetadata() map[string]interface{} {
+	if c == nil || c.OIDCMetadata == nil {
+		return map[string]interface{}{}
+	}
+	return c.OIDCMetadata
 }
 
 // GetProtocolBinding returns the ProtocolBinding field if it's non-nil, zero value otherwise.
@@ -7456,6 +7488,19 @@ func (c *CrossAppAccessRequestingApp) GetActive() bool {
 
 // String returns a string representation of CrossAppAccessRequestingApp.
 func (c *CrossAppAccessRequestingApp) String() string {
+	return Stringify(c)
+}
+
+// GetStatus returns the Status field if it's non-nil, zero value otherwise.
+func (c *CrossAppAccessResourceApp) GetStatus() string {
+	if c == nil || c.Status == nil {
+		return ""
+	}
+	return *c.Status
+}
+
+// String returns a string representation of CrossAppAccessResourceApp.
+func (c *CrossAppAccessResourceApp) String() string {
 	return Stringify(c)
 }
 
@@ -9229,6 +9274,19 @@ func (h *Hook) String() string {
 // String returns a string representation of HookList.
 func (h *HookList) String() string {
 	return Stringify(h)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (i *IdentityAssertionAuthorizationGrant) GetActive() bool {
+	if i == nil || i.Active == nil {
+		return false
+	}
+	return *i.Active
+}
+
+// String returns a string representation of IdentityAssertionAuthorizationGrant.
+func (i *IdentityAssertionAuthorizationGrant) String() string {
+	return Stringify(i)
 }
 
 // GetClientID returns the ClientID field if it's non-nil, zero value otherwise.

@@ -166,6 +166,9 @@ type Connection struct {
 	// ConnectedAccounts is used for configuring the purpose of a connection to be used for connected accounts and Token Vault.
 	ConnectedAccounts *ConnectedAccounts `json:"connected_accounts,omitempty"`
 
+	// CrossAppAccessResourceApp is used for configuring the purpose of a connection to be used as a Cross-App Access resource application authorization server.
+	CrossAppAccessResourceApp *CrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty"`
+
 	// CrossAppAccessRequestingApp is used for configuring the purpose of a connection to be used as a Cross-App Access requesting application authorization server.
 	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp `json:"cross_app_access_requesting_app,omitempty"`
 }
@@ -173,6 +176,12 @@ type Connection struct {
 // Authentication is used for configuring the purpose of a Connection for login with Universal Login and displaying the connection.
 type Authentication struct {
 	Active *bool `json:"active,omitempty"`
+}
+
+// CrossAppAccessResourceApp is used for configuring the purpose of a connection to be used as a Cross-App Access resource application authorization server.
+type CrossAppAccessResourceApp struct {
+	// Status controls whether the connection acts as a Cross-App Access resource application. One of "enabled" or "disabled".
+	Status *string `json:"status,omitempty"`
 }
 
 // ConnectedAccounts is used for configuring the purpose of a connection to be used for connected accounts and Token Vault.
@@ -1751,6 +1760,11 @@ type ConnectionOptionsSAML struct {
 	UpstreamParams              map[string]interface{} `json:"upstream_params,omitempty"`
 	GlobalTokenRevocationJWTIss *string                `json:"global_token_revocation_jwt_iss,omitempty"`
 	GlobalTokenRevocationJWTSub *string                `json:"global_token_revocation_jwt_sub,omitempty"`
+
+	// DiscoveryURL is the OIDC discovery URL used to auto-populate OIDCMetadata. Honoured for SAML connections acting as a Cross-App Access resource application.
+	DiscoveryURL *string `json:"discovery_url,omitempty"`
+	// OIDCMetadata is the OIDC discovery document. Auto-populated from DiscoveryURL when absent, or preserved as uploaded. Honoured for SAML connections acting as a Cross-App Access resource application.
+	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
 }
 
 // ConnectionOptionsSAMLIdpInitiated is used to configure the
