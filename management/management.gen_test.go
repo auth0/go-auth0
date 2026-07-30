@@ -2725,6 +2725,13 @@ func TestClient_GetTokenQuota(tt *testing.T) {
 	c.GetTokenQuota()
 }
 
+func TestClient_GetTokenVaultPrivilegedAccess(tt *testing.T) {
+	c := &Client{}
+	c.GetTokenVaultPrivilegedAccess()
+	c = nil
+	c.GetTokenVaultPrivilegedAccess()
+}
+
 func TestClient_GetWebOrigins(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{WebOrigins: &zeroValue}
@@ -2978,6 +2985,54 @@ func TestClientAuthenticationMethods_GetTLSClientAuth(tt *testing.T) {
 func TestClientAuthenticationMethods_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientAuthenticationMethods{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientCredentialID_GetCredentialType(tt *testing.T) {
+	var zeroValue string
+	c := &ClientCredentialID{CredentialType: &zeroValue}
+	c.GetCredentialType()
+	c = &ClientCredentialID{}
+	c.GetCredentialType()
+	c = nil
+	c.GetCredentialType()
+}
+
+func TestClientCredentialID_GetID(tt *testing.T) {
+	var zeroValue string
+	c := &ClientCredentialID{ID: &zeroValue}
+	c.GetID()
+	c = &ClientCredentialID{}
+	c.GetID()
+	c = nil
+	c.GetID()
+}
+
+func TestClientCredentialID_GetName(tt *testing.T) {
+	var zeroValue string
+	c := &ClientCredentialID{Name: &zeroValue}
+	c.GetName()
+	c = &ClientCredentialID{}
+	c.GetName()
+	c = nil
+	c.GetName()
+}
+
+func TestClientCredentialID_GetPEM(tt *testing.T) {
+	var zeroValue string
+	c := &ClientCredentialID{PEM: &zeroValue}
+	c.GetPEM()
+	c = &ClientCredentialID{}
+	c.GetPEM()
+	c = nil
+	c.GetPEM()
+}
+
+func TestClientCredentialID_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientCredentialID{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -3475,6 +3530,72 @@ func TestClientTokenExchange_GetAllowAnyProfileOfType(tt *testing.T) {
 func TestClientTokenExchange_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientTokenExchange{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientTokenVaultPrivilegedAccess_GetCredentials(tt *testing.T) {
+	var zeroValue []ClientCredentialID
+	c := &ClientTokenVaultPrivilegedAccess{Credentials: &zeroValue}
+	c.GetCredentials()
+	c = &ClientTokenVaultPrivilegedAccess{}
+	c.GetCredentials()
+	c = nil
+	c.GetCredentials()
+}
+
+func TestClientTokenVaultPrivilegedAccess_GetGrants(tt *testing.T) {
+	var zeroValue []ClientTokenVaultPrivilegedGrant
+	c := &ClientTokenVaultPrivilegedAccess{Grants: &zeroValue}
+	c.GetGrants()
+	c = &ClientTokenVaultPrivilegedAccess{}
+	c.GetGrants()
+	c = nil
+	c.GetGrants()
+}
+
+func TestClientTokenVaultPrivilegedAccess_GetIPAllowlist(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientTokenVaultPrivilegedAccess{IPAllowlist: &zeroValue}
+	c.GetIPAllowlist()
+	c = &ClientTokenVaultPrivilegedAccess{}
+	c.GetIPAllowlist()
+	c = nil
+	c.GetIPAllowlist()
+}
+
+func TestClientTokenVaultPrivilegedAccess_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientTokenVaultPrivilegedAccess{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientTokenVaultPrivilegedGrant_GetConnection(tt *testing.T) {
+	var zeroValue string
+	c := &ClientTokenVaultPrivilegedGrant{Connection: &zeroValue}
+	c.GetConnection()
+	c = &ClientTokenVaultPrivilegedGrant{}
+	c.GetConnection()
+	c = nil
+	c.GetConnection()
+}
+
+func TestClientTokenVaultPrivilegedGrant_GetScopes(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientTokenVaultPrivilegedGrant{Scopes: &zeroValue}
+	c.GetScopes()
+	c = &ClientTokenVaultPrivilegedGrant{}
+	c.GetScopes()
+	c = nil
+	c.GetScopes()
+}
+
+func TestClientTokenVaultPrivilegedGrant_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientTokenVaultPrivilegedGrant{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}

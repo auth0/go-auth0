@@ -2185,6 +2185,14 @@ func (c *Client) GetTokenQuota() *TokenQuota {
 	return c.TokenQuota
 }
 
+// GetTokenVaultPrivilegedAccess returns the TokenVaultPrivilegedAccess field.
+func (c *Client) GetTokenVaultPrivilegedAccess() *ClientTokenVaultPrivilegedAccess {
+	if c == nil {
+		return nil
+	}
+	return c.TokenVaultPrivilegedAccess
+}
+
 // GetWebOrigins returns the WebOrigins field if it's non-nil, zero value otherwise.
 func (c *Client) GetWebOrigins() []string {
 	if c == nil || c.WebOrigins == nil {
@@ -2461,6 +2469,43 @@ func (c *ClientAuthenticationMethods) GetTLSClientAuth() *TLSClientAuth {
 
 // String returns a string representation of ClientAuthenticationMethods.
 func (c *ClientAuthenticationMethods) String() string {
+	return Stringify(c)
+}
+
+// GetCredentialType returns the CredentialType field if it's non-nil, zero value otherwise.
+func (c *ClientCredentialID) GetCredentialType() string {
+	if c == nil || c.CredentialType == nil {
+		return ""
+	}
+	return *c.CredentialType
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (c *ClientCredentialID) GetID() string {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (c *ClientCredentialID) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+// GetPEM returns the PEM field if it's non-nil, zero value otherwise.
+func (c *ClientCredentialID) GetPEM() string {
+	if c == nil || c.PEM == nil {
+		return ""
+	}
+	return *c.PEM
+}
+
+// String returns a string representation of ClientCredentialID.
+func (c *ClientCredentialID) String() string {
 	return Stringify(c)
 }
 
@@ -2851,6 +2896,56 @@ func (c *ClientTokenExchange) GetAllowAnyProfileOfType() []string {
 
 // String returns a string representation of ClientTokenExchange.
 func (c *ClientTokenExchange) String() string {
+	return Stringify(c)
+}
+
+// GetCredentials returns the Credentials field if it's non-nil, zero value otherwise.
+func (c *ClientTokenVaultPrivilegedAccess) GetCredentials() []ClientCredentialID {
+	if c == nil || c.Credentials == nil {
+		return nil
+	}
+	return *c.Credentials
+}
+
+// GetGrants returns the Grants field if it's non-nil, zero value otherwise.
+func (c *ClientTokenVaultPrivilegedAccess) GetGrants() []ClientTokenVaultPrivilegedGrant {
+	if c == nil || c.Grants == nil {
+		return nil
+	}
+	return *c.Grants
+}
+
+// GetIPAllowlist returns the IPAllowlist field if it's non-nil, zero value otherwise.
+func (c *ClientTokenVaultPrivilegedAccess) GetIPAllowlist() []string {
+	if c == nil || c.IPAllowlist == nil {
+		return nil
+	}
+	return *c.IPAllowlist
+}
+
+// String returns a string representation of ClientTokenVaultPrivilegedAccess.
+func (c *ClientTokenVaultPrivilegedAccess) String() string {
+	return Stringify(c)
+}
+
+// GetConnection returns the Connection field if it's non-nil, zero value otherwise.
+func (c *ClientTokenVaultPrivilegedGrant) GetConnection() string {
+	if c == nil || c.Connection == nil {
+		return ""
+	}
+	return *c.Connection
+}
+
+// GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
+func (c *ClientTokenVaultPrivilegedGrant) GetScopes() []string {
+	if c == nil || c.Scopes == nil {
+		return nil
+	}
+	return *c.Scopes
+}
+
+// String returns a string representation of ClientTokenVaultPrivilegedGrant.
+func (c *ClientTokenVaultPrivilegedGrant) String() string {
 	return Stringify(c)
 }
 

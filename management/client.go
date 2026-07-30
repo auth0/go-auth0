@@ -263,6 +263,86 @@ type Client struct {
 
 	// IdentityAssertionAuthorizationGrant enables the Identity Assertion Authorization Grant (ID-JAG) exchange for the client, used for Cross-App Access.
 	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant `json:"identity_assertion_authorization_grant,omitempty"`
+
+	// TokenVaultPrivilegedAccess configures the client as a Token Vault privileged worker,
+	// allowing it to request Token Vault tokens on behalf of other users.
+	//
+	// This is an Early Access feature and requires it to be enabled for your tenant.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	// PATCH /api/v2/clients/{id}
+	// {
+	//	 "token_vault_privileged_access": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccess `json:"token_vault_privileged_access,omitempty"`
+}
+
+// ClientTokenVaultPrivilegedAccess configures Token Vault privileged worker access for a client.
+//
+// Each field is a pointer to a slice so that the three write semantics of the
+// Management API can be expressed:
+//
+//   - nil            → the key is omitted, leaving the stored value unchanged.
+//   - &[]T{}         → an empty array is sent, clearing the stored value.
+//   - &[]T{...}      → the stored value is replaced.
+//
+// Note that removing the whole object requires sending a literal `null` for
+// `token_vault_privileged_access`, which a nil pointer on Client cannot express
+// because of `omitempty`. Use a custom PATCH request for that, as documented on
+// Client.TokenVaultPrivilegedAccess.
+type ClientTokenVaultPrivilegedAccess struct {
+	// Credentials attached to the privileged worker. Maximum of 2.
+	//
+	// This property is required whenever token_vault_privileged_access is being
+	// set, on both POST /clients and PATCH /clients/{id}. Sending an empty array
+	// detaches every credential and disables the worker.
+	//
+	// The accepted shape differs per endpoint:
+	// POST /clients expects credential material (CredentialType and PEM), while
+	// PATCH /clients/{id} expects references to previously created credentials (ID).
+	Credentials *[]ClientCredentialID `json:"credentials,omitempty"`
+
+	// IPAllowlist is the list of permitted IPv4 or IPv6 addresses, or CIDR ranges,
+	// from which the privileged worker may request tokens. Maximum of 10 entries.
+	IPAllowlist *[]string `json:"ip_allowlist,omitempty"`
+
+	// Grants pins the connections, and the scopes within them, that the privileged
+	// worker may request tokens for. Maximum of 5 grants, with a maximum of 20
+	// scopes in total across all of them.
+	Grants *[]ClientTokenVaultPrivilegedGrant `json:"grants,omitempty"`
+}
+
+// ClientCredentialID references a client credential used by a Token Vault privileged worker.
+//
+// On PATCH /clients/{id} only ID may be set, referencing a credential created
+// beforehand through ClientManager.CreateCredential. On POST /clients the
+// credential material is supplied instead, through CredentialType and PEM.
+type ClientCredentialID struct {
+	// ID of a previously created client credential.
+	ID *string `json:"id,omitempty"`
+
+	// Name of the credential.
+	Name *string `json:"name,omitempty"`
+
+	// CredentialType of the credential, for example "public_key".
+	CredentialType *string `json:"credential_type,omitempty"`
+
+	// PEM-formatted public key.
+	PEM *string `json:"pem,omitempty"`
+}
+
+// ClientTokenVaultPrivilegedGrant pins the scopes of a single connection that a
+// Token Vault privileged worker is allowed to request tokens for.
+type ClientTokenVaultPrivilegedGrant struct {
+	// Connection is the name of the connection the grant applies to.
+	Connection *string `json:"connection,omitempty"`
+
+	// Scopes the privileged worker may request on the connection.
+	// Must be non-empty and must not contain duplicates.
+	Scopes *[]string `json:"scopes,omitempty"`
 }
 
 // IdentityAssertionAuthorizationGrant enables the Identity Assertion Authorization Grant (ID-JAG) exchange for the client, used for Cross-App Access.
@@ -396,6 +476,28 @@ func (c *Client) CleanForPatch() {
 		}
 
 		c.ClientAuthenticationMethods.PrivateKeyJWT.Credentials = &credentials
+	}
+
+	// PATCH /clients/{id} only accepts credential references, so reduce a
+	// read-back credential list to its IDs. Entries without an ID are left
+	// untouched rather than dropped: dropping them would silently detach the
+	// worker's credentials, whereas passing them through surfaces the API error.
+	if c.TokenVaultPrivilegedAccess != nil && c.TokenVaultPrivilegedAccess.Credentials != nil {
+		credentials := []ClientCredentialID{}
+		reducible := true
+
+		for _, cred := range *c.TokenVaultPrivilegedAccess.Credentials {
+			if cred.ID == nil || *cred.ID == "" {
+				reducible = false
+				break
+			}
+
+			credentials = append(credentials, ClientCredentialID{ID: cred.ID})
+		}
+
+		if reducible {
+			c.TokenVaultPrivilegedAccess.Credentials = &credentials
+		}
 	}
 }
 

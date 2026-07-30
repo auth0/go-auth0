@@ -1385,6 +1385,275 @@ func cleanupCredential(t *testing.T, clientID string, credentialID string) {
 	require.NoError(t, err)
 }
 
+func TestClientTokenVaultPrivilegedAccess_MarshalJSON(t *testing.T) {
+	t.Run("Omits sub-fields that are nil, to preserve the stored value", func(t *testing.T) {
+		payload, err := json.Marshal(&Client{
+			TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+				Credentials: &[]ClientCredentialID{{ID: auth0.String("cred_123")}},
+			},
+		})
+		require.NoError(t, err)
+		assert.JSONEq(
+			t,
+			`{"token_vault_privileged_access":{"credentials":[{"id":"cred_123"}]}}`,
+			string(payload),
+		)
+	})
+
+	t.Run("Sends empty arrays that clear the stored value", func(t *testing.T) {
+		payload, err := json.Marshal(&Client{
+			TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+				Credentials: &[]ClientCredentialID{{ID: auth0.String("cred_123")}},
+				IPAllowlist: &[]string{},
+				Grants:      &[]ClientTokenVaultPrivilegedGrant{},
+			},
+		})
+		require.NoError(t, err)
+		assert.JSONEq(
+			t,
+			`{"token_vault_privileged_access":{"credentials":[{"id":"cred_123"}],"ip_allowlist":[],"grants":[]}}`,
+			string(payload),
+		)
+	})
+
+	t.Run("Sends populated arrays that replace the stored value", func(t *testing.T) {
+		payload, err := json.Marshal(&Client{
+			TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+				Credentials: &[]ClientCredentialID{{ID: auth0.String("cred_123")}},
+				IPAllowlist: &[]string{"10.0.0.1", "192.168.1.0/24"},
+				Grants: &[]ClientTokenVaultPrivilegedGrant{
+					{
+						Connection: auth0.String("google-oauth2"),
+						Scopes:     &[]string{"https://www.googleapis.com/auth/calendar.readonly"},
+					},
+				},
+			},
+		})
+		require.NoError(t, err)
+		assert.JSONEq(
+			t,
+			`{"token_vault_privileged_access":{
+				"credentials":[{"id":"cred_123"}],
+				"ip_allowlist":["10.0.0.1","192.168.1.0/24"],
+				"grants":[{"connection":"google-oauth2","scopes":["https://www.googleapis.com/auth/calendar.readonly"]}]
+			}}`,
+			string(payload),
+		)
+	})
+
+	t.Run("Sends the credential material accepted on create", func(t *testing.T) {
+		payload, err := json.Marshal(&Client{
+			TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+				Credentials: &[]ClientCredentialID{
+					{
+						CredentialType: auth0.String("public_key"),
+						PEM:            auth0.String("-----BEGIN PUBLIC KEY-----"),
+					},
+				},
+			},
+		})
+		require.NoError(t, err)
+		assert.JSONEq(
+			t,
+			`{"token_vault_privileged_access":{"credentials":[{"credential_type":"public_key","pem":"-----BEGIN PUBLIC KEY-----"}]}}`,
+			string(payload),
+		)
+	})
+
+	t.Run("Unmarshals a stored object", func(t *testing.T) {
+		var client Client
+
+		err := json.Unmarshal([]byte(`{"token_vault_privileged_access":{
+			"credentials":[{"id":"cred_123","name":"Worker Key","credential_type":"public_key"}],
+			"ip_allowlist":["10.0.0.1"],
+			"grants":[{"connection":"slack","scopes":["chat:write","channels:read"]}]
+		}}`), &client)
+		require.NoError(t, err)
+
+		access := client.GetTokenVaultPrivilegedAccess()
+		require.NotNil(t, access)
+		assert.Equal(t, []string{"10.0.0.1"}, access.GetIPAllowlist())
+
+		credentials := access.GetCredentials()
+		require.Len(t, credentials, 1)
+		assert.Equal(t, "cred_123", credentials[0].GetID())
+		assert.Equal(t, "Worker Key", credentials[0].GetName())
+		assert.Equal(t, "public_key", credentials[0].GetCredentialType())
+
+		grants := access.GetGrants()
+		require.Len(t, grants, 1)
+		assert.Equal(t, "slack", grants[0].GetConnection())
+		assert.Equal(t, []string{"chat:write", "channels:read"}, grants[0].GetScopes())
+	})
+
+	t.Run("Nil access omits the key entirely", func(t *testing.T) {
+		payload, err := json.Marshal(&Client{Name: auth0.String("Test Client")})
+		require.NoError(t, err)
+		assert.NotContains(t, string(payload), "token_vault_privileged_access")
+	})
+}
+
+func TestClientTokenVaultPrivilegedAccess_CleanForPatch(t *testing.T) {
+	t.Run("Reduces read-back credentials to their IDs", func(t *testing.T) {
+		client := &Client{
+			TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+				Credentials: &[]ClientCredentialID{
+					{
+						ID:             auth0.String("cred_123"),
+						Name:           auth0.String("Worker Key"),
+						CredentialType: auth0.String("public_key"),
+					},
+				},
+				IPAllowlist: &[]string{"10.0.0.1"},
+			},
+		}
+
+		client.CleanForPatch()
+
+		payload, err := json.Marshal(client)
+		require.NoError(t, err)
+		assert.JSONEq(
+			t,
+			`{"token_vault_privileged_access":{"credentials":[{"id":"cred_123"}],"ip_allowlist":["10.0.0.1"]}}`,
+			string(payload),
+		)
+	})
+
+	t.Run("Leaves credential material untouched", func(t *testing.T) {
+		client := &Client{
+			TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+				Credentials: &[]ClientCredentialID{
+					{
+						CredentialType: auth0.String("public_key"),
+						PEM:            auth0.String("-----BEGIN PUBLIC KEY-----"),
+					},
+				},
+			},
+		}
+
+		client.CleanForPatch()
+
+		assert.Equal(t, "public_key", client.GetTokenVaultPrivilegedAccess().GetCredentials()[0].GetCredentialType())
+		assert.Equal(t, "-----BEGIN PUBLIC KEY-----", client.GetTokenVaultPrivilegedAccess().GetCredentials()[0].GetPEM())
+	})
+
+	t.Run("Preserves an empty credentials list", func(t *testing.T) {
+		client := &Client{
+			TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+				Credentials: &[]ClientCredentialID{},
+			},
+		}
+
+		client.CleanForPatch()
+
+		payload, err := json.Marshal(client)
+		require.NoError(t, err)
+		assert.JSONEq(t, `{"token_vault_privileged_access":{"credentials":[]}}`, string(payload))
+	})
+}
+
+func TestClient_TokenVaultPrivilegedAccess(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	// A privileged worker's credentials must exist before they can be referenced,
+	// and creating them needs a client ID, so the object is attached with a PATCH
+	// rather than being part of the initial POST.
+	client := &Client{
+		Name:         auth0.Stringf("Test Client TVPA (%s)", time.Now().Format(time.StampMilli)),
+		Description:  auth0.String("This is a test client with Token Vault privileged access."),
+		AppType:      auth0.String("non_interactive"),
+		IsFirstParty: auth0.Bool(true),
+	}
+
+	require.NoError(t, api.Client.Create(ctx, client))
+	require.NotEmpty(t, client.GetClientID())
+
+	t.Cleanup(func() {
+		cleanupClient(t, client.GetClientID())
+	})
+
+	credential := givenACredential(t, client)
+
+	// Attach the object with all three sub-fields populated. `credentials` is
+	// required whenever the object is being set, so it is echoed on every write.
+	access := &ClientTokenVaultPrivilegedAccess{
+		Credentials: &[]ClientCredentialID{{ID: auth0.String(credential.GetID())}},
+		IPAllowlist: &[]string{"10.0.0.1", "192.168.1.0/24"},
+		Grants: &[]ClientTokenVaultPrivilegedGrant{
+			{
+				Connection: auth0.String("Username-Password-Authentication"),
+				Scopes:     &[]string{"openid", "profile"},
+			},
+		},
+	}
+
+	require.NoError(t, api.Client.Update(ctx, client.GetClientID(), &Client{TokenVaultPrivilegedAccess: access}))
+
+	created, err := api.Client.Read(ctx, client.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, created.GetTokenVaultPrivilegedAccess())
+	assert.ElementsMatch(t, []string{"10.0.0.1", "192.168.1.0/24"}, created.GetTokenVaultPrivilegedAccess().GetIPAllowlist())
+	require.Len(t, created.GetTokenVaultPrivilegedAccess().GetCredentials(), 1)
+	assert.Equal(t, credential.GetID(), created.GetTokenVaultPrivilegedAccess().GetCredentials()[0].GetID())
+	require.Len(t, created.GetTokenVaultPrivilegedAccess().GetGrants(), 1)
+	assert.Equal(t, "Username-Password-Authentication", created.GetTokenVaultPrivilegedAccess().GetGrants()[0].GetConnection())
+	assert.ElementsMatch(t, []string{"openid", "profile"}, created.GetTokenVaultPrivilegedAccess().GetGrants()[0].GetScopes())
+
+	// Updating an unrelated field must not clobber the stored object.
+	require.NoError(t, api.Client.Update(ctx, client.GetClientID(), &Client{
+		Description: auth0.String("Description updated without touching Token Vault."),
+	}))
+
+	preserved, err := api.Client.Read(ctx, client.GetClientID())
+	require.NoError(t, err)
+	assert.Equal(t, "Description updated without touching Token Vault.", preserved.GetDescription())
+	assert.Equal(t, created.GetTokenVaultPrivilegedAccess(), preserved.GetTokenVaultPrivilegedAccess())
+
+	// A populated array replaces the stored value; a nil sub-field is omitted and
+	// leaves its stored value alone.
+	require.NoError(t, api.Client.Update(ctx, client.GetClientID(), &Client{
+		TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+			Credentials: &[]ClientCredentialID{{ID: auth0.String(credential.GetID())}},
+			IPAllowlist: &[]string{"10.0.0.2"},
+		},
+	}))
+
+	replaced, err := api.Client.Read(ctx, client.GetClientID())
+	require.NoError(t, err)
+	assert.Equal(t, []string{"10.0.0.2"}, replaced.GetTokenVaultPrivilegedAccess().GetIPAllowlist())
+	assert.Len(t, replaced.GetTokenVaultPrivilegedAccess().GetGrants(), 1)
+
+	// An empty array clears the stored value, which is distinct from removing the
+	// whole object.
+	require.NoError(t, api.Client.Update(ctx, client.GetClientID(), &Client{
+		TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+			Credentials: &[]ClientCredentialID{{ID: auth0.String(credential.GetID())}},
+			Grants:      &[]ClientTokenVaultPrivilegedGrant{},
+		},
+	}))
+
+	cleared, err := api.Client.Read(ctx, client.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, cleared.GetTokenVaultPrivilegedAccess())
+	assert.Empty(t, cleared.GetTokenVaultPrivilegedAccess().GetGrants())
+	assert.Equal(t, []string{"10.0.0.2"}, cleared.GetTokenVaultPrivilegedAccess().GetIPAllowlist())
+
+	// Removing the object requires a literal null, which `omitempty` prevents the
+	// struct from emitting, so use a custom request.
+	type clientPatchNullTokenVault struct {
+		TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccess `json:"token_vault_privileged_access"` // no omitempty to allow null.
+	}
+
+	patch := &clientPatchNullTokenVault{TokenVaultPrivilegedAccess: nil}
+	require.NoError(t, api.Request(ctx, http.MethodPatch, api.URI("clients", client.GetClientID()), patch))
+
+	removed, err := api.Client.Read(ctx, client.GetClientID())
+	require.NoError(t, err)
+	assert.Nil(t, removed.GetTokenVaultPrivilegedAccess())
+}
+
 func TestClient_CIMDFields(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
