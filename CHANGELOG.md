@@ -1,9 +1,12 @@
 # Change Log
 
-## [Unreleased]
+## [v1.46.0](https://github.com/auth0/go-auth0/tree/v1.46.0) (2026-07-31)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.45.0...v1.46.0)
 
 **Added**
-- feat: add `Auth0Managed` curated blocklist support to `NetworkACLRuleMatch`
+- feat: add Cross-App Access resource application support with `CrossAppAccessResourceApp` on `Connection`, `IdentityAssertionAuthorizationGrant` on `Client`, and `DiscoveryURL`/`OIDCMetadata` on `ConnectionOptionsSAML` [\#839](https://github.com/auth0/go-auth0/pull/839) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add Cross-App Access requesting application support with `CrossAppAccessRequestingApp` on `Connection` [\#824](https://github.com/auth0/go-auth0/pull/824) ([KartikJha](https://github.com/KartikJha))
+- feat: add `Auth0Managed` curated blocklist support to `NetworkACLRuleMatch` [\#830](https://github.com/auth0/go-auth0/pull/830) ([KartikJha](https://github.com/KartikJha))
 
 ## [v1.45.0](https://github.com/auth0/go-auth0/tree/v1.45.0) (2026-07-16)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.44.0...v1.45.0)
