@@ -282,18 +282,21 @@ type Client struct {
 
 // ClientTokenVaultPrivilegedAccess configures Token Vault privileged worker access for a client.
 //
-// All three fields are required whenever this object is being written, on both
-// POST /clients and PATCH /clients/{id}. Leaving any one of them nil omits its
-// key and is rejected with a 400, so a caller must always send the full intended
-// state rather than only the sub-fields that changed:
+// All three fields are required on every write, on both POST /clients and
+// PATCH /clients/{id}. Omitting any one of them is rejected with a 400, so a
+// caller must always send the full intended state rather than only the
+// sub-fields that changed.
 //
-//	400 Updating `token_vault_privileged_access` requires `grants` to be present.
+// Writing this object also requires the create:client_token_vault_privileged_access
+// or update:client_token_vault_privileged_access scope, alongside the matching
+// client_credentials scope.
 //
-// Each field is a pointer to a slice so that clearing can be distinguished from
-// omission:
+// Each field is a pointer to a slice so that an empty array can be
+// distinguished from an omitted key:
 //
 //   - &[]T{...} → replaces the stored value.
-//   - &[]T{}    → sends an empty array, clearing that sub-field.
+//   - &[]T{}    → sends an empty array. PATCH clears the value, while POST
+//     rejects an empty IPAllowlist or Grants.
 //   - nil       → omits the key, which is an error (see above).
 //
 // Removing the whole object requires sending a literal `null` for
@@ -301,55 +304,44 @@ type Client struct {
 // because of `omitempty`. Use a custom PATCH request for that, as documented on
 // Client.TokenVaultPrivilegedAccess.
 type ClientTokenVaultPrivilegedAccess struct {
-	// Credentials attached to the privileged worker. Maximum of 2.
+	// Credentials pins the client credentials the privileged worker may
+	// authenticate with. Maximum of 2.
 	//
-	// Required whenever token_vault_privileged_access is being written. Sending an
-	// empty array detaches every credential and disables the worker, so read the
-	// current IDs and echo them on any write that is not meant to change them.
+	// The array is the complete attachment set: writing it replaces which
+	// credentials are attached, and an empty array detaches all of them.
+	// Attaching never creates or deletes a credential record, and a credential
+	// cannot be deleted while it is still attached.
 	//
-	// The accepted shape differs per endpoint:
-	// POST /clients accepts credential material (CredentialType and PEM) and creates
-	// the credentials inline, while PATCH /clients/{id} accepts only references to
-	// previously created credentials (ID).
-	Credentials *[]ClientCredentialID `json:"credentials,omitempty"`
+	// The accepted shape differs per endpoint. POST /clients takes credential
+	// material and creates the credentials inline, where CredentialType and PEM
+	// are required, Name, KeyID, Algorithm and ExpiresAt are optional, and ID is
+	// rejected. PATCH /clients/{id} takes only references to existing
+	// credentials, so ID is the only field accepted there.
+	//
+	// GET /clients/{id} returns just the ID of each attached credential. Use
+	// ClientManager.ListCredentials to read the full metadata.
+	Credentials *[]Credential `json:"credentials,omitempty"`
 
 	// IPAllowlist is the list of permitted IPv4 or IPv6 addresses, or CIDR ranges,
 	// from which the privileged worker may request tokens. Maximum of 10 entries.
 	//
-	// Required whenever token_vault_privileged_access is being written.
+	// Required on every write; POST rejects an empty array.
 	IPAllowlist *[]string `json:"ip_allowlist,omitempty"`
 
 	// Grants pins the connections, and the scopes within them, that the privileged
 	// worker may request tokens for. Maximum of 5 grants, with a maximum of 20
-	// scopes in total across all of them.
+	// scopes in total across all of them, and no repeated connections.
 	//
-	// Required whenever token_vault_privileged_access is being written.
+	// Required on every write; POST rejects an empty array.
 	Grants *[]ClientTokenVaultPrivilegedGrant `json:"grants,omitempty"`
-}
-
-// ClientCredentialID references a client credential used by a Token Vault privileged worker.
-//
-// On PATCH /clients/{id} only ID may be set, referencing a credential created
-// beforehand through ClientManager.CreateCredential. On POST /clients the
-// credential material is supplied instead, through CredentialType and PEM.
-type ClientCredentialID struct {
-	// ID of a previously created client credential.
-	ID *string `json:"id,omitempty"`
-
-	// Name of the credential.
-	Name *string `json:"name,omitempty"`
-
-	// CredentialType of the credential, for example "public_key".
-	CredentialType *string `json:"credential_type,omitempty"`
-
-	// PEM-formatted public key.
-	PEM *string `json:"pem,omitempty"`
 }
 
 // ClientTokenVaultPrivilegedGrant pins the scopes of a single connection that a
 // Token Vault privileged worker is allowed to request tokens for.
 type ClientTokenVaultPrivilegedGrant struct {
-	// Connection is the name of the connection the grant applies to.
+	// Connection is the name of the connection the grant applies to. The
+	// connection does not need to exist when the grant is configured; it is
+	// validated at runtime.
 	Connection *string `json:"connection,omitempty"`
 
 	// Scopes the privileged worker may request on the connection.
@@ -490,12 +482,12 @@ func (c *Client) CleanForPatch() {
 		c.ClientAuthenticationMethods.PrivateKeyJWT.Credentials = &credentials
 	}
 
-	// PATCH /clients/{id} only accepts credential references, so reduce a
-	// read-back credential list to its IDs. Entries without an ID are left
+	// PATCH /clients/{id} rejects any credential field other than `id`, so reduce
+	// a read-back credential list to bare IDs. Entries without an ID are left
 	// untouched rather than dropped: dropping them would silently detach the
 	// worker's credentials, whereas passing them through surfaces the API error.
 	if c.TokenVaultPrivilegedAccess != nil && c.TokenVaultPrivilegedAccess.Credentials != nil {
-		credentials := []ClientCredentialID{}
+		credentials := []Credential{}
 		reducible := true
 
 		for _, cred := range *c.TokenVaultPrivilegedAccess.Credentials {
@@ -504,7 +496,7 @@ func (c *Client) CleanForPatch() {
 				break
 			}
 
-			credentials = append(credentials, ClientCredentialID{ID: cred.ID})
+			credentials = append(credentials, Credential{ID: cred.ID})
 		}
 
 		if reducible {

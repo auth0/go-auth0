@@ -2990,54 +2990,6 @@ func TestClientAuthenticationMethods_String(t *testing.T) {
 	}
 }
 
-func TestClientCredentialID_GetCredentialType(tt *testing.T) {
-	var zeroValue string
-	c := &ClientCredentialID{CredentialType: &zeroValue}
-	c.GetCredentialType()
-	c = &ClientCredentialID{}
-	c.GetCredentialType()
-	c = nil
-	c.GetCredentialType()
-}
-
-func TestClientCredentialID_GetID(tt *testing.T) {
-	var zeroValue string
-	c := &ClientCredentialID{ID: &zeroValue}
-	c.GetID()
-	c = &ClientCredentialID{}
-	c.GetID()
-	c = nil
-	c.GetID()
-}
-
-func TestClientCredentialID_GetName(tt *testing.T) {
-	var zeroValue string
-	c := &ClientCredentialID{Name: &zeroValue}
-	c.GetName()
-	c = &ClientCredentialID{}
-	c.GetName()
-	c = nil
-	c.GetName()
-}
-
-func TestClientCredentialID_GetPEM(tt *testing.T) {
-	var zeroValue string
-	c := &ClientCredentialID{PEM: &zeroValue}
-	c.GetPEM()
-	c = &ClientCredentialID{}
-	c.GetPEM()
-	c = nil
-	c.GetPEM()
-}
-
-func TestClientCredentialID_String(t *testing.T) {
-	var rawJSON json.RawMessage
-	v := &ClientCredentialID{}
-	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
-		t.Errorf("failed to produce a valid json")
-	}
-}
-
 func TestClientDefaultOrganization_GetFlows(tt *testing.T) {
 	var zeroValue []string
 	c := &ClientDefaultOrganization{Flows: &zeroValue}
@@ -3536,7 +3488,7 @@ func TestClientTokenExchange_String(t *testing.T) {
 }
 
 func TestClientTokenVaultPrivilegedAccess_GetCredentials(tt *testing.T) {
-	var zeroValue []ClientCredentialID
+	var zeroValue []Credential
 	c := &ClientTokenVaultPrivilegedAccess{Credentials: &zeroValue}
 	c.GetCredentials()
 	c = &ClientTokenVaultPrivilegedAccess{}

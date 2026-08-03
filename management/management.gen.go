@@ -2472,43 +2472,6 @@ func (c *ClientAuthenticationMethods) String() string {
 	return Stringify(c)
 }
 
-// GetCredentialType returns the CredentialType field if it's non-nil, zero value otherwise.
-func (c *ClientCredentialID) GetCredentialType() string {
-	if c == nil || c.CredentialType == nil {
-		return ""
-	}
-	return *c.CredentialType
-}
-
-// GetID returns the ID field if it's non-nil, zero value otherwise.
-func (c *ClientCredentialID) GetID() string {
-	if c == nil || c.ID == nil {
-		return ""
-	}
-	return *c.ID
-}
-
-// GetName returns the Name field if it's non-nil, zero value otherwise.
-func (c *ClientCredentialID) GetName() string {
-	if c == nil || c.Name == nil {
-		return ""
-	}
-	return *c.Name
-}
-
-// GetPEM returns the PEM field if it's non-nil, zero value otherwise.
-func (c *ClientCredentialID) GetPEM() string {
-	if c == nil || c.PEM == nil {
-		return ""
-	}
-	return *c.PEM
-}
-
-// String returns a string representation of ClientCredentialID.
-func (c *ClientCredentialID) String() string {
-	return Stringify(c)
-}
-
 // GetFlows returns the Flows field if it's non-nil, zero value otherwise.
 func (c *ClientDefaultOrganization) GetFlows() []string {
 	if c == nil || c.Flows == nil {
@@ -2900,7 +2863,7 @@ func (c *ClientTokenExchange) String() string {
 }
 
 // GetCredentials returns the Credentials field if it's non-nil, zero value otherwise.
-func (c *ClientTokenVaultPrivilegedAccess) GetCredentials() []ClientCredentialID {
+func (c *ClientTokenVaultPrivilegedAccess) GetCredentials() []Credential {
 	if c == nil || c.Credentials == nil {
 		return nil
 	}
