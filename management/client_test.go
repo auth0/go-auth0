@@ -1212,6 +1212,23 @@ func cleanupClient(t *testing.T, clientID string) {
 	require.NoError(t, err)
 }
 
+// testTokenVaultPublicKeyPEM is a throwaway public key used to create the
+// credentials a Token Vault privileged worker must have attached.
+const testTokenVaultPublicKeyPEM = `-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA3njxXJoHnuN4hByBhSUo
+0kIbXkJTA0wP0fig87MyVz5KgohPrPJgbRSZ7yz/MmXa4qRNHkWiClJybMS2a98M
+6ELOFG8pfDb6J7JaJqx0Kvqn6xsGInbpwsth3K582Cxrp+Y+GBNja++8wDY5IqAi
+TSKSZRNies0GO0grzQ7kj2p0+R7a0c86mdLO4JnGrHoBqEY1HcsfnJvkJkqETlGi
+yMzDQw8Wkux7P59N/3wuroAI83+HMYl1fV39ek3L/GrsLjECrNe5/CVFtblNltyb
+/va9+pAP7Ye5p6tTW2oj3fzUvdX3dYzENWEtRB7DBHXnfEHMjTaBiQeWb2yDHBCw
+++Uh1OCKw9ZLYzoE6gcDQspYf+fFU3F0kuU4c//gSoNuj/iEjaNmOEK6S3xGy8fE
+TjsC+0oF6YaokDZO9+NreL/sGxFfOAysybrKWrMoaYwa81RlpcmBGZM7H1M00zLH
+PPfCYVhGhFs5X3Qzzt6MQE+msgMt9zeGH7liJbOSW2NGSJwbmn7q35YYIfJEoXRF
+1iefT/9fJB9vhQhtYfCOe3AEpTQq6Yz5ViLhToBdsVDBbz2gmRLALs9/D91SE9T4
+XzvXjHGyxWVu0jdvS9hyhJzP4165k1cYDgx8mmg0VxR7j79LmCUDsFcvvSrAOf6y
+0zY7r4pmNyQQ0r4in/gs/wkCAwEAAQ==
+-----END PUBLIC KEY-----`
+
 func givenACredential(t *testing.T, client *Client) *Credential {
 	t.Helper()
 
@@ -1386,7 +1403,9 @@ func cleanupCredential(t *testing.T, clientID string, credentialID string) {
 }
 
 func TestClientTokenVaultPrivilegedAccess_MarshalJSON(t *testing.T) {
-	t.Run("Omits sub-fields that are nil, to preserve the stored value", func(t *testing.T) {
+	// The API rejects a write that omits any sub-field, so this asserts the
+	// marshalling behaviour only: a nil pointer emits no key at all.
+	t.Run("Omits sub-fields that are nil", func(t *testing.T) {
 		payload, err := json.Marshal(&Client{
 			TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
 				Credentials: &[]ClientCredentialID{{ID: auth0.String("cred_123")}},
@@ -1557,9 +1576,16 @@ func TestClient_TokenVaultPrivilegedAccess(t *testing.T) {
 
 	ctx := context.Background()
 
-	// A privileged worker's credentials must exist before they can be referenced,
-	// and creating them needs a client ID, so the object is attached with a PATCH
-	// rather than being part of the initial POST.
+	// Every write that sets `token_vault_privileged_access` must carry all three
+	// sub-fields. Verified against a tenant with the feature enabled: omitting any
+	// one of them is a 400, so there is no "omit preserves the stored value"
+	// behaviour at the sub-field level. Clearing is done with an empty array, and
+	// removing the whole object with a literal null.
+	//
+	// Credentials are referenced by ID on PATCH, so they must exist first, which
+	// needs a client ID. The object is therefore attached with a PATCH rather than
+	// being part of the initial POST. POST does accept the object with inline
+	// credential material instead; that path is covered separately below.
 	client := &Client{
 		Name:         auth0.Stringf("Test Client TVPA (%s)", time.Now().Format(time.StampMilli)),
 		Description:  auth0.String("This is a test client with Token Vault privileged access."),
@@ -1611,12 +1637,50 @@ func TestClient_TokenVaultPrivilegedAccess(t *testing.T) {
 	assert.Equal(t, "Description updated without touching Token Vault.", preserved.GetDescription())
 	assert.Equal(t, created.GetTokenVaultPrivilegedAccess(), preserved.GetTokenVaultPrivilegedAccess())
 
-	// A populated array replaces the stored value; a nil sub-field is omitted and
-	// leaves its stored value alone.
+	// Omitting any single sub-field is rejected, even though the other two are
+	// present and the object already exists. This is why a caller must always echo
+	// the full intended state rather than sending only what changed.
+	for _, missing := range []struct {
+		name   string
+		access *ClientTokenVaultPrivilegedAccess
+	}{
+		{
+			name: "grants",
+			access: &ClientTokenVaultPrivilegedAccess{
+				Credentials: &[]ClientCredentialID{{ID: auth0.String(credential.GetID())}},
+				IPAllowlist: &[]string{"10.0.0.2"},
+			},
+		},
+		{
+			name: "ip_allowlist",
+			access: &ClientTokenVaultPrivilegedAccess{
+				Credentials: &[]ClientCredentialID{{ID: auth0.String(credential.GetID())}},
+				Grants:      &[]ClientTokenVaultPrivilegedGrant{},
+			},
+		},
+		{
+			name: "credentials",
+			access: &ClientTokenVaultPrivilegedAccess{
+				IPAllowlist: &[]string{"10.0.0.2"},
+				Grants:      &[]ClientTokenVaultPrivilegedGrant{},
+			},
+		},
+	} {
+		err := api.Client.Update(ctx, client.GetClientID(), &Client{TokenVaultPrivilegedAccess: missing.access})
+		assert.Error(t, err, "omitting %s should be rejected", missing.name)
+	}
+
+	// A populated array replaces the stored value.
 	require.NoError(t, api.Client.Update(ctx, client.GetClientID(), &Client{
 		TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
 			Credentials: &[]ClientCredentialID{{ID: auth0.String(credential.GetID())}},
 			IPAllowlist: &[]string{"10.0.0.2"},
+			Grants: &[]ClientTokenVaultPrivilegedGrant{
+				{
+					Connection: auth0.String("Username-Password-Authentication"),
+					Scopes:     &[]string{"openid", "profile"},
+				},
+			},
 		},
 	}))
 
@@ -1625,11 +1689,12 @@ func TestClient_TokenVaultPrivilegedAccess(t *testing.T) {
 	assert.Equal(t, []string{"10.0.0.2"}, replaced.GetTokenVaultPrivilegedAccess().GetIPAllowlist())
 	assert.Len(t, replaced.GetTokenVaultPrivilegedAccess().GetGrants(), 1)
 
-	// An empty array clears the stored value, which is distinct from removing the
-	// whole object.
+	// An empty array clears just that sub-field, which is distinct from removing
+	// the whole object.
 	require.NoError(t, api.Client.Update(ctx, client.GetClientID(), &Client{
 		TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
 			Credentials: &[]ClientCredentialID{{ID: auth0.String(credential.GetID())}},
+			IPAllowlist: &[]string{"10.0.0.2"},
 			Grants:      &[]ClientTokenVaultPrivilegedGrant{},
 		},
 	}))
@@ -1652,6 +1717,63 @@ func TestClient_TokenVaultPrivilegedAccess(t *testing.T) {
 	removed, err := api.Client.Read(ctx, client.GetClientID())
 	require.NoError(t, err)
 	assert.Nil(t, removed.GetTokenVaultPrivilegedAccess())
+}
+
+func TestClient_TokenVaultPrivilegedAccessOnCreate(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	// POST /clients accepts the object with inline credential material, so a
+	// privileged worker can be created in a single request. This is the one place
+	// CredentialType and PEM are used instead of an ID; PATCH only takes IDs.
+	client := &Client{
+		Name:         auth0.Stringf("Test Client TVPA Create (%s)", time.Now().Format(time.StampMilli)),
+		AppType:      auth0.String("non_interactive"),
+		IsFirstParty: auth0.Bool(true),
+		TokenVaultPrivilegedAccess: &ClientTokenVaultPrivilegedAccess{
+			Credentials: &[]ClientCredentialID{
+				{
+					Name:           auth0.String("Test Credential On Create"),
+					CredentialType: auth0.String("public_key"),
+					PEM:            auth0.String(testTokenVaultPublicKeyPEM),
+				},
+			},
+			IPAllowlist: &[]string{"10.0.0.1"},
+			Grants: &[]ClientTokenVaultPrivilegedGrant{
+				{
+					Connection: auth0.String("Username-Password-Authentication"),
+					Scopes:     &[]string{"openid"},
+				},
+			},
+		},
+	}
+
+	require.NoError(t, api.Client.Create(ctx, client))
+
+	t.Cleanup(func() {
+		cleanupClient(t, client.GetClientID())
+	})
+
+	// The response echoes the created credential, now carrying a server-assigned ID.
+	access := client.GetTokenVaultPrivilegedAccess()
+	require.NotNil(t, access)
+	require.Len(t, access.GetCredentials(), 1)
+	assert.NotEmpty(t, access.GetCredentials()[0].GetID())
+	assert.Equal(t, "public_key", access.GetCredentials()[0].GetCredentialType())
+	assert.Equal(t, []string{"10.0.0.1"}, access.GetIPAllowlist())
+	require.Len(t, access.GetGrants(), 1)
+	assert.Equal(t, "Username-Password-Authentication", access.GetGrants()[0].GetConnection())
+
+	// Reading back reduces credentials to bare ID references.
+	actual, err := api.Client.Read(ctx, client.GetClientID())
+	require.NoError(t, err)
+	require.Len(t, actual.GetTokenVaultPrivilegedAccess().GetCredentials(), 1)
+	assert.Equal(
+		t,
+		access.GetCredentials()[0].GetID(),
+		actual.GetTokenVaultPrivilegedAccess().GetCredentials()[0].GetID(),
+	)
 }
 
 func TestClient_CIMDFields(t *testing.T) {

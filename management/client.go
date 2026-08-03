@@ -282,36 +282,48 @@ type Client struct {
 
 // ClientTokenVaultPrivilegedAccess configures Token Vault privileged worker access for a client.
 //
-// Each field is a pointer to a slice so that the three write semantics of the
-// Management API can be expressed:
+// All three fields are required whenever this object is being written, on both
+// POST /clients and PATCH /clients/{id}. Leaving any one of them nil omits its
+// key and is rejected with a 400, so a caller must always send the full intended
+// state rather than only the sub-fields that changed:
 //
-//   - nil            → the key is omitted, leaving the stored value unchanged.
-//   - &[]T{}         → an empty array is sent, clearing the stored value.
-//   - &[]T{...}      → the stored value is replaced.
+//	400 Updating `token_vault_privileged_access` requires `grants` to be present.
 //
-// Note that removing the whole object requires sending a literal `null` for
+// Each field is a pointer to a slice so that clearing can be distinguished from
+// omission:
+//
+//   - &[]T{...} → replaces the stored value.
+//   - &[]T{}    → sends an empty array, clearing that sub-field.
+//   - nil       → omits the key, which is an error (see above).
+//
+// Removing the whole object requires sending a literal `null` for
 // `token_vault_privileged_access`, which a nil pointer on Client cannot express
 // because of `omitempty`. Use a custom PATCH request for that, as documented on
 // Client.TokenVaultPrivilegedAccess.
 type ClientTokenVaultPrivilegedAccess struct {
 	// Credentials attached to the privileged worker. Maximum of 2.
 	//
-	// This property is required whenever token_vault_privileged_access is being
-	// set, on both POST /clients and PATCH /clients/{id}. Sending an empty array
-	// detaches every credential and disables the worker.
+	// Required whenever token_vault_privileged_access is being written. Sending an
+	// empty array detaches every credential and disables the worker, so read the
+	// current IDs and echo them on any write that is not meant to change them.
 	//
 	// The accepted shape differs per endpoint:
-	// POST /clients expects credential material (CredentialType and PEM), while
-	// PATCH /clients/{id} expects references to previously created credentials (ID).
+	// POST /clients accepts credential material (CredentialType and PEM) and creates
+	// the credentials inline, while PATCH /clients/{id} accepts only references to
+	// previously created credentials (ID).
 	Credentials *[]ClientCredentialID `json:"credentials,omitempty"`
 
 	// IPAllowlist is the list of permitted IPv4 or IPv6 addresses, or CIDR ranges,
 	// from which the privileged worker may request tokens. Maximum of 10 entries.
+	//
+	// Required whenever token_vault_privileged_access is being written.
 	IPAllowlist *[]string `json:"ip_allowlist,omitempty"`
 
 	// Grants pins the connections, and the scopes within them, that the privileged
 	// worker may request tokens for. Maximum of 5 grants, with a maximum of 20
 	// scopes in total across all of them.
+	//
+	// Required whenever token_vault_privileged_access is being written.
 	Grants *[]ClientTokenVaultPrivilegedGrant `json:"grants,omitempty"`
 }
 
