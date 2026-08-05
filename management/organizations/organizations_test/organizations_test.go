@@ -89,6 +89,9 @@ func TestOrganizationsListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListOrganizationsRequestParameters{
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -97,6 +100,9 @@ func TestOrganizationsListWithWireMock(
 		),
 		Sort: management.String(
 			"sort",
+		),
+		IncludeClientAssociationFor: management.String(
+			"include_client_association_for",
 		),
 	}
 	_, invocationErr := client.Organizations.List(
@@ -108,7 +114,7 @@ func TestOrganizationsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsListWithWireMock", "GET", "/organizations", map[string]interface{}{"from": "from", "take": "1", "sort": "sort"}, 1)
+	VerifyRequestCount(t, "TestOrganizationsListWithWireMock", "GET", "/organizations", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1", "sort": "sort", "include_client_association_for": "include_client_association_for"}, 1)
 }
 
 func TestOrganizationsCreateWithWireMock(

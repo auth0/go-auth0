@@ -89,6 +89,9 @@ func TestClientGrantsListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListClientGrantsRequestParameters{
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -116,7 +119,7 @@ func TestClientGrantsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestClientGrantsListWithWireMock", "GET", "/client-grants", map[string]interface{}{"from": "from", "take": "1", "audience": "audience", "client_id": "client_id", "allow_any_organization": "true", "subject_type": "client", "default_for": "third_party_clients"}, 1)
+	VerifyRequestCount(t, "TestClientGrantsListWithWireMock", "GET", "/client-grants", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1", "audience": "audience", "client_id": "client_id", "allow_any_organization": "true", "subject_type": "client", "default_for": "third_party_clients"}, 1)
 }
 
 func TestClientGrantsCreateWithWireMock(

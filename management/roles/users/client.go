@@ -37,6 +37,8 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Retrieve list of users associated with a specific role. For Dashboard instructions, review [View Users Assigned to Roles](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/roles/view-users-assigned-to-roles).
 //
+// **Note**: Returns only users with direct role assignments. For groups assigned to this role, use `GET /api/v2/roles/{id}/groups`.
+//
 // This endpoint supports two types of pagination:
 //
 // - Offset pagination
@@ -72,7 +74,8 @@ func (c *Client) List(
 	queryParams, err := internal.QueryValuesWithDefaults(
 		request,
 		map[string]any{
-			"take": 50,
+			"include_totals": true,
+			"take":           50,
 		},
 	)
 	if err != nil {

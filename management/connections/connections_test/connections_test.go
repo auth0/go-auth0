@@ -89,6 +89,9 @@ func TestConnectionsListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListConnectionsQueryParameters{
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -117,7 +120,7 @@ func TestConnectionsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsListWithWireMock", "GET", "/connections", map[string]interface{}{"from": "from", "take": "1", "strategy": "ad", "name": "name", "fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestConnectionsListWithWireMock", "GET", "/connections", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1", "strategy": "ad", "name": "name", "fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestConnectionsCreateWithWireMock(

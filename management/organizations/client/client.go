@@ -11,6 +11,7 @@ import (
 	internal "github.com/auth0/go-auth0/v3/management/internal"
 	option "github.com/auth0/go-auth0/v3/management/option"
 	clientgrants "github.com/auth0/go-auth0/v3/management/organizations/clientgrants"
+	clients "github.com/auth0/go-auth0/v3/management/organizations/clients"
 	connections "github.com/auth0/go-auth0/v3/management/organizations/connections"
 	discoverydomains "github.com/auth0/go-auth0/v3/management/organizations/discoverydomains"
 	enabledconnections "github.com/auth0/go-auth0/v3/management/organizations/enabledconnections"
@@ -23,6 +24,7 @@ import (
 type Client struct {
 	WithRawResponse    *RawClient
 	ClientGrants       *clientgrants.Client
+	Clients            *clients.Client
 	Connections        *connections.Client
 	DiscoveryDomains   *discoverydomains.Client
 	EnabledConnections *enabledconnections.Client
@@ -39,6 +41,7 @@ type Client struct {
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		ClientGrants:       clientgrants.NewClient(options),
+		Clients:            clients.NewClient(options),
 		Connections:        connections.NewClient(options),
 		DiscoveryDomains:   discoverydomains.NewClient(options),
 		EnabledConnections: enabledconnections.NewClient(options),
@@ -91,7 +94,8 @@ func (c *Client) List(
 	queryParams, err := internal.QueryValuesWithDefaults(
 		request,
 		map[string]any{
-			"take": 50,
+			"include_totals": true,
+			"take":           50,
 		},
 	)
 	if err != nil {

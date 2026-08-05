@@ -245,6 +245,9 @@ func TestConnectionsDirectoryProvisioningListSynchronizedGroupsWithWireMock(
 		Take: management.Int(
 			1,
 		),
+		Q: management.String(
+			"q",
+		),
 	}
 	_, invocationErr := client.Connections.DirectoryProvisioning.ListSynchronizedGroups(
 		context.TODO(),
@@ -256,7 +259,38 @@ func TestConnectionsDirectoryProvisioningListSynchronizedGroupsWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsDirectoryProvisioningListSynchronizedGroupsWithWireMock", "GET", "/connections/id/directory-provisioning/synchronized-groups", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestConnectionsDirectoryProvisioningListSynchronizedGroupsWithWireMock", "GET", "/connections/id/directory-provisioning/synchronized-groups", map[string]interface{}{"from": "from", "take": "1", "q": "q"}, 1)
+}
+
+func TestConnectionsDirectoryProvisioningAddSynchronizedGroupSelectionsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.AddSynchronizedGroupsRequestContent{
+		Groups: []*management.SynchronizedGroupPayload{
+			&management.SynchronizedGroupPayload{
+				ID: "id",
+			},
+		},
+	}
+	invocationErr := client.Connections.DirectoryProvisioning.AddSynchronizedGroupSelections(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsDirectoryProvisioningAddSynchronizedGroupSelectionsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsDirectoryProvisioningAddSynchronizedGroupSelectionsWithWireMock", "POST", "/connections/id/directory-provisioning/synchronized-groups", nil, 1)
 }
 
 func TestConnectionsDirectoryProvisioningSetWithWireMock(
@@ -288,4 +322,35 @@ func TestConnectionsDirectoryProvisioningSetWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestConnectionsDirectoryProvisioningSetWithWireMock", "PUT", "/connections/id/directory-provisioning/synchronized-groups", nil, 1)
+}
+
+func TestConnectionsDirectoryProvisioningDeleteSynchronizedGroupSelectionsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteSynchronizedGroupsRequestContent{
+		Groups: []*management.SynchronizedGroupSelectionID{
+			&management.SynchronizedGroupSelectionID{
+				ID: "id",
+			},
+		},
+	}
+	invocationErr := client.Connections.DirectoryProvisioning.DeleteSynchronizedGroupSelections(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsDirectoryProvisioningDeleteSynchronizedGroupSelectionsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsDirectoryProvisioningDeleteSynchronizedGroupSelectionsWithWireMock", "DELETE", "/connections/id/directory-provisioning/synchronized-groups", nil, 1)
 }

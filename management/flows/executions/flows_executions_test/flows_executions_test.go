@@ -89,6 +89,9 @@ func TestFlowsExecutionsListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListFlowExecutionsRequestParameters{
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -106,7 +109,7 @@ func TestFlowsExecutionsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsExecutionsListWithWireMock", "GET", "/flows/flow_id/executions", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestFlowsExecutionsListWithWireMock", "GET", "/flows/flow_id/executions", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1"}, 1)
 }
 
 func TestFlowsExecutionsGetWithWireMock(

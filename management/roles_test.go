@@ -34,6 +34,22 @@ func TestSettersCreateRoleResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateRoleResponseContent{}
+		var fernTestValueType *RoleTypeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOwnerID", func(t *testing.T) {
+		obj := &CreateRoleResponseContent{}
+		var fernTestValueOwnerID *string
+		obj.SetOwnerID(fernTestValueOwnerID)
+		assert.Equal(t, fernTestValueOwnerID, obj.OwnerID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersCreateRoleResponseContent(t *testing.T) {
@@ -139,6 +155,74 @@ func TestGettersCreateRoleResponseContent(t *testing.T) {
 		_ = obj.GetDescription() // Should return zero value
 	})
 
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateRoleResponseContent{}
+		var value RoleTypeEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateRoleResponseContent{}
+		obj.Type = nil
+		var expectedZero RoleTypeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateRoleResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetOwnerID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateRoleResponseContent{}
+		var value string
+		obj.OwnerID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOwnerID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOwnerID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateRoleResponseContent{}
+		obj.OwnerID = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOwnerID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOwnerID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateRoleResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOwnerID() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitCreateRoleResponseContent(t *testing.T) {
@@ -235,6 +319,68 @@ func TestSettersMarkExplicitCreateRoleResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateRoleResponseContent{}
+		var fernTestValueType *RoleTypeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOwnerID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateRoleResponseContent{}
+		var fernTestValueOwnerID *string
+
+		// Act
+		obj.SetOwnerID(fernTestValueOwnerID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersGetRoleResponseContent(t *testing.T) {
@@ -259,6 +405,22 @@ func TestSettersGetRoleResponseContent(t *testing.T) {
 		var fernTestValueDescription *string
 		obj.SetDescription(fernTestValueDescription)
 		assert.Equal(t, fernTestValueDescription, obj.Description)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetType", func(t *testing.T) {
+		obj := &GetRoleResponseContent{}
+		var fernTestValueType *RoleTypeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOwnerID", func(t *testing.T) {
+		obj := &GetRoleResponseContent{}
+		var fernTestValueOwnerID *string
+		obj.SetOwnerID(fernTestValueOwnerID)
+		assert.Equal(t, fernTestValueOwnerID, obj.OwnerID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -367,6 +529,74 @@ func TestGettersGetRoleResponseContent(t *testing.T) {
 		_ = obj.GetDescription() // Should return zero value
 	})
 
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetRoleResponseContent{}
+		var value RoleTypeEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetRoleResponseContent{}
+		obj.Type = nil
+		var expectedZero RoleTypeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetRoleResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetOwnerID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetRoleResponseContent{}
+		var value string
+		obj.OwnerID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOwnerID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOwnerID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetRoleResponseContent{}
+		obj.OwnerID = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOwnerID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOwnerID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetRoleResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOwnerID() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitGetRoleResponseContent(t *testing.T) {
@@ -440,6 +670,68 @@ func TestSettersMarkExplicitGetRoleResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetDescription(fernTestValueDescription)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetRoleResponseContent{}
+		var fernTestValueType *RoleTypeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOwnerID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetRoleResponseContent{}
+		var fernTestValueOwnerID *string
+
+		// Act
+		obj.SetOwnerID(fernTestValueOwnerID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -757,6 +1049,22 @@ func TestSettersUpdateRoleResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &UpdateRoleResponseContent{}
+		var fernTestValueType *RoleTypeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOwnerID", func(t *testing.T) {
+		obj := &UpdateRoleResponseContent{}
+		var fernTestValueOwnerID *string
+		obj.SetOwnerID(fernTestValueOwnerID)
+		assert.Equal(t, fernTestValueOwnerID, obj.OwnerID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersUpdateRoleResponseContent(t *testing.T) {
@@ -862,6 +1170,74 @@ func TestGettersUpdateRoleResponseContent(t *testing.T) {
 		_ = obj.GetDescription() // Should return zero value
 	})
 
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateRoleResponseContent{}
+		var value RoleTypeEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateRoleResponseContent{}
+		obj.Type = nil
+		var expectedZero RoleTypeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateRoleResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetOwnerID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateRoleResponseContent{}
+		var value string
+		obj.OwnerID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOwnerID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOwnerID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateRoleResponseContent{}
+		obj.OwnerID = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOwnerID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOwnerID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateRoleResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOwnerID() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitUpdateRoleResponseContent(t *testing.T) {
@@ -935,6 +1311,68 @@ func TestSettersMarkExplicitUpdateRoleResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetDescription(fernTestValueDescription)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateRoleResponseContent{}
+		var fernTestValueType *RoleTypeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOwnerID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateRoleResponseContent{}
+		var fernTestValueOwnerID *string
+
+		// Act
+		obj.SetOwnerID(fernTestValueOwnerID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
