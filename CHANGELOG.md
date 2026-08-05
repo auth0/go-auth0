@@ -1,5 +1,20 @@
 # Change Log
 
+## [v3.2.0](https://github.com/auth0/go-auth0/tree/v3.2.0) (2026-08-05)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.1.0...v3.2.0)
+
+**Added**
+- feat: add `Agents` client with `List` (cursor-paginated), `Create`, `Read`, `Delete`, and `Update` methods [\#842](https://github.com/auth0/go-auth0/pull/842) ([developerkunal](https://github.com/developerkunal))
+- feat: add `Organizations.Clients` client with `List` (checkpoint-paginated), `Create`, `Delete`, `Get`, and `Update` methods for managing organization-client associations, and expose `IsAppEntitlementActive` and `Client` on organization responses [\#842](https://github.com/auth0/go-auth0/pull/842) ([developerkunal](https://github.com/developerkunal))
+- feat: add `Organizations.Roles.Groups` client with `List` to retrieve the groups assigned to a role within an organization [\#842](https://github.com/auth0/go-auth0/pull/842) ([developerkunal](https://github.com/developerkunal))
+- feat: add `Keys.NetworkACLs` client with `Create` for keys used to verify HTTP Message Signatures on Network ACL rules [\#842](https://github.com/auth0/go-auth0/pull/842) ([developerkunal](https://github.com/developerkunal))
+- feat: add `Connections.DirectoryProvisioning.AddSynchronizedGroupSelections` and `Connections.DirectoryProvisioning.DeleteSynchronizedGroupSelections` methods [\#842](https://github.com/auth0/go-auth0/pull/842) ([developerkunal](https://github.com/developerkunal))
+- feat: add `Type` (`RoleTypeEnum`) and `OwnerID` fields to role responses and requests for organization-level roles [\#842](https://github.com/auth0/go-auth0/pull/842) ([developerkunal](https://github.com/developerkunal))
+
+**Fixed**
+- fix: `EventStreams.Deliveries.List` now decodes the `deliveries` list and `next` cursor from the response object and returns a `*core.Page[...]`, so pagination works and the `next` cursor is surfaced. Previously it decoded the response directly into a slice, which did not match the endpoint's payload [\#842](https://github.com/auth0/go-auth0/pull/842) ([developerkunal](https://github.com/developerkunal))
+- fix: apply default query parameters when a paginated `List` receives a nil request, so defaults such as `include_totals` are sent instead of being dropped [\#843](https://github.com/auth0/go-auth0/pull/843) ([developerkunal](https://github.com/developerkunal))
+
 ## [v3.1.0](https://github.com/auth0/go-auth0/tree/v3.1.0) (2026-07-22)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.0.0...v3.1.0)
 
