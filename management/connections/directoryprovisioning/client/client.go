@@ -269,6 +269,26 @@ func (c *Client) ListSynchronizedGroups(
 	return pager.GetPage(ctx, request.From)
 }
 
+// Add synchronized group selections to a directory provisioning configuration.
+func (c *Client) AddSynchronizedGroupSelections(
+	ctx context.Context,
+	// The id of the connection to add synchronized groups to
+	id string,
+	request *management.AddSynchronizedGroupsRequestContent,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.AddSynchronizedGroupSelections(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // Create or replace the selected groups for a connection directory provisioning configuration.
 func (c *Client) Set(
 	ctx context.Context,
@@ -278,6 +298,26 @@ func (c *Client) Set(
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Set(
+		ctx,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// Delete synchronized group selections for a directory provisioning configuration
+func (c *Client) DeleteSynchronizedGroupSelections(
+	ctx context.Context,
+	// The id of the connection to delete synchronized group selections for
+	id string,
+	request *management.DeleteSynchronizedGroupsRequestContent,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.DeleteSynchronizedGroupSelections(
 		ctx,
 		id,
 		request,

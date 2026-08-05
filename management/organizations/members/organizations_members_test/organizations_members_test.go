@@ -89,6 +89,9 @@ func TestOrganizationsMembersListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListOrganizationMembersRequestParameters{
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -112,7 +115,7 @@ func TestOrganizationsMembersListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsMembersListWithWireMock", "GET", "/organizations/id/members", map[string]interface{}{"from": "from", "take": "1", "fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestOrganizationsMembersListWithWireMock", "GET", "/organizations/id/members", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1", "fields": "fields", "include_fields": "true"}, 1)
 }
 
 func TestOrganizationsMembersCreateWithWireMock(

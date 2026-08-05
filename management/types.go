@@ -4625,6 +4625,7 @@ type AculContextEnum string
 const (
 	AculContextEnumBrandingSettings                           AculContextEnum = "branding.settings"
 	AculContextEnumBrandingThemesDefault                      AculContextEnum = "branding.themes.default"
+	AculContextEnumCountryCodes                               AculContextEnum = "country_codes"
 	AculContextEnumClientLogoURI                              AculContextEnum = "client.logo_uri"
 	AculContextEnumClientDescription                          AculContextEnum = "client.description"
 	AculContextEnumOrganizationDisplayName                    AculContextEnum = "organization.display_name"
@@ -4649,6 +4650,8 @@ func NewAculContextEnumFromString(s string) (AculContextEnum, error) {
 		return AculContextEnumBrandingSettings, nil
 	case "branding.themes.default":
 		return AculContextEnumBrandingThemesDefault, nil
+	case "country_codes":
+		return AculContextEnumCountryCodes, nil
 	case "client.logo_uri":
 		return AculContextEnumClientLogoURI, nil
 	case "client.description":
@@ -10522,6 +10525,142 @@ func (c ClientCredentialTypeEnum) Ptr() *ClientCredentialTypeEnum {
 	return &c
 }
 
+// Conflict
+var (
+	conflictSchemaFieldMessage    = big.NewInt(1 << 0)
+	conflictSchemaFieldStatusCode = big.NewInt(1 << 1)
+	conflictSchemaFieldError      = big.NewInt(1 << 2)
+)
+
+type ConflictSchema struct {
+	Message    string              `json:"message" url:"message"`
+	StatusCode string              `json:"statusCode" url:"statusCode"`
+	Error      ConflictSchemaError `json:"error" url:"error"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConflictSchema) GetMessage() string {
+	if c == nil {
+		return ""
+	}
+	return c.Message
+}
+
+func (c *ConflictSchema) GetStatusCode() string {
+	if c == nil {
+		return ""
+	}
+	return c.StatusCode
+}
+
+func (c *ConflictSchema) GetError() ConflictSchemaError {
+	if c == nil {
+		return ""
+	}
+	return c.Error
+}
+
+func (c *ConflictSchema) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConflictSchema) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConflictSchema) SetMessage(message string) {
+	c.Message = message
+	c.require(conflictSchemaFieldMessage)
+}
+
+// SetStatusCode sets the StatusCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConflictSchema) SetStatusCode(statusCode string) {
+	c.StatusCode = statusCode
+	c.require(conflictSchemaFieldStatusCode)
+}
+
+// SetError sets the Error field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConflictSchema) SetError(error_ ConflictSchemaError) {
+	c.Error = error_
+	c.require(conflictSchemaFieldError)
+}
+
+func (c *ConflictSchema) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConflictSchema
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConflictSchema(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConflictSchema) MarshalJSON() ([]byte, error) {
+	type embed ConflictSchema
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConflictSchema) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type ConflictSchemaError string
+
+const (
+	ConflictSchemaErrorConflict ConflictSchemaError = "Conflict"
+)
+
+func NewConflictSchemaErrorFromString(s string) (ConflictSchemaError, error) {
+	switch s {
+	case "Conflict":
+		return ConflictSchemaErrorConflict, nil
+	}
+	var t ConflictSchemaError
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConflictSchemaError) Ptr() *ConflictSchemaError {
+	return &c
+}
+
 var (
 	connectedAccountFieldID             = big.NewInt(1 << 0)
 	connectedAccountFieldConnection     = big.NewInt(1 << 1)
@@ -11415,13 +11554,16 @@ type ConnectionConfiguration = map[string]string
 
 // Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
-	connectionConnectedAccountsPurposeFieldActive         = big.NewInt(1 << 0)
-	connectionConnectedAccountsPurposeFieldCrossAppAccess = big.NewInt(1 << 1)
+	connectionConnectedAccountsPurposeFieldActive             = big.NewInt(1 << 0)
+	connectionConnectedAccountsPurposeFieldCrossAppAccess     = big.NewInt(1 << 1)
+	connectionConnectedAccountsPurposeFieldAllowMissingUserID = big.NewInt(1 << 2)
 )
 
 type ConnectionConnectedAccountsPurpose struct {
 	Active         bool  `json:"active" url:"active"`
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
+	// When true, allows storing a connected account without an upstream identity provider user id. At most one such connected account is allowed per user per connection. Default false preserves the strict behaviour (an upstream user id is required).
+	AllowMissingUserID *bool `json:"allow_missing_user_id,omitempty" url:"allow_missing_user_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11442,6 +11584,13 @@ func (c *ConnectionConnectedAccountsPurpose) GetCrossAppAccess() bool {
 		return false
 	}
 	return *c.CrossAppAccess
+}
+
+func (c *ConnectionConnectedAccountsPurpose) GetAllowMissingUserID() bool {
+	if c == nil || c.AllowMissingUserID == nil {
+		return false
+	}
+	return *c.AllowMissingUserID
 }
 
 func (c *ConnectionConnectedAccountsPurpose) GetExtraProperties() map[string]interface{} {
@@ -11470,6 +11619,13 @@ func (c *ConnectionConnectedAccountsPurpose) SetActive(active bool) {
 func (c *ConnectionConnectedAccountsPurpose) SetCrossAppAccess(crossAppAccess *bool) {
 	c.CrossAppAccess = crossAppAccess
 	c.require(connectionConnectedAccountsPurposeFieldCrossAppAccess)
+}
+
+// SetAllowMissingUserID sets the AllowMissingUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionConnectedAccountsPurpose) SetAllowMissingUserID(allowMissingUserID *bool) {
+	c.AllowMissingUserID = allowMissingUserID
+	c.require(connectionConnectedAccountsPurposeFieldAllowMissingUserID)
 }
 
 func (c *ConnectionConnectedAccountsPurpose) UnmarshalJSON(data []byte) error {
@@ -11516,13 +11672,16 @@ func (c *ConnectionConnectedAccountsPurpose) String() string {
 
 // Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
-	connectionConnectedAccountsPurposeXaaFieldCrossAppAccess = big.NewInt(1 << 0)
-	connectionConnectedAccountsPurposeXaaFieldActive         = big.NewInt(1 << 1)
+	connectionConnectedAccountsPurposeXaaFieldCrossAppAccess     = big.NewInt(1 << 0)
+	connectionConnectedAccountsPurposeXaaFieldActive             = big.NewInt(1 << 1)
+	connectionConnectedAccountsPurposeXaaFieldAllowMissingUserID = big.NewInt(1 << 2)
 )
 
 type ConnectionConnectedAccountsPurposeXaa struct {
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
 	Active         bool  `json:"active" url:"active"`
+	// When true, allows storing a connected account without an upstream identity provider user id. At most one such connected account is allowed per user per connection. Default false preserves the strict behaviour (an upstream user id is required).
+	AllowMissingUserID *bool `json:"allow_missing_user_id,omitempty" url:"allow_missing_user_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11543,6 +11702,13 @@ func (c *ConnectionConnectedAccountsPurposeXaa) GetActive() bool {
 		return false
 	}
 	return c.Active
+}
+
+func (c *ConnectionConnectedAccountsPurposeXaa) GetAllowMissingUserID() bool {
+	if c == nil || c.AllowMissingUserID == nil {
+		return false
+	}
+	return *c.AllowMissingUserID
 }
 
 func (c *ConnectionConnectedAccountsPurposeXaa) GetExtraProperties() map[string]interface{} {
@@ -11571,6 +11737,13 @@ func (c *ConnectionConnectedAccountsPurposeXaa) SetCrossAppAccess(crossAppAccess
 func (c *ConnectionConnectedAccountsPurposeXaa) SetActive(active bool) {
 	c.Active = active
 	c.require(connectionConnectedAccountsPurposeXaaFieldActive)
+}
+
+// SetAllowMissingUserID sets the AllowMissingUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionConnectedAccountsPurposeXaa) SetAllowMissingUserID(allowMissingUserID *bool) {
+	c.AllowMissingUserID = allowMissingUserID
+	c.require(connectionConnectedAccountsPurposeXaaFieldAllowMissingUserID)
 }
 
 func (c *ConnectionConnectedAccountsPurposeXaa) UnmarshalJSON(data []byte) error {
@@ -69766,6 +69939,175 @@ func (c *CreateImportUsersResponseContent) String() string {
 }
 
 var (
+	createKeysNetworkACLsResponseContentFieldID          = big.NewInt(1 << 0)
+	createKeysNetworkACLsResponseContentFieldName        = big.NewInt(1 << 1)
+	createKeysNetworkACLsResponseContentFieldAlg         = big.NewInt(1 << 2)
+	createKeysNetworkACLsResponseContentFieldFingerprint = big.NewInt(1 << 3)
+	createKeysNetworkACLsResponseContentFieldCreatedAt   = big.NewInt(1 << 4)
+	createKeysNetworkACLsResponseContentFieldUpdatedAt   = big.NewInt(1 << 5)
+)
+
+type CreateKeysNetworkACLsResponseContent struct {
+	// Auth0-generated identifier for the key. Used to reference the key from a Network ACL and to identify it in Tenant Logs.
+	ID string `json:"id" url:"id"`
+	// Customer-supplied label with no cryptographic meaning.
+	Name string                     `json:"name" url:"name"`
+	Alg  NetworkACLKeyAlgorithmEnum `json:"alg" url:"alg"`
+	// Fingerprint of the key material, determined by the algorithm specified. Currently only HMAC-SHA256 is supported.
+	Fingerprint string `json:"fingerprint" url:"fingerprint"`
+	// Time when the key was created.
+	CreatedAt string `json:"created_at" url:"created_at"`
+	// Time when the key was last updated.
+	UpdatedAt string `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) GetAlg() NetworkACLKeyAlgorithmEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Alg
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) GetFingerprint() string {
+	if c == nil {
+		return ""
+	}
+	return c.Fingerprint
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) GetCreatedAt() string {
+	if c == nil {
+		return ""
+	}
+	return c.CreatedAt
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) GetUpdatedAt() string {
+	if c == nil {
+		return ""
+	}
+	return c.UpdatedAt
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateKeysNetworkACLsResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createKeysNetworkACLsResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateKeysNetworkACLsResponseContent) SetName(name string) {
+	c.Name = name
+	c.require(createKeysNetworkACLsResponseContentFieldName)
+}
+
+// SetAlg sets the Alg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateKeysNetworkACLsResponseContent) SetAlg(alg NetworkACLKeyAlgorithmEnum) {
+	c.Alg = alg
+	c.require(createKeysNetworkACLsResponseContentFieldAlg)
+}
+
+// SetFingerprint sets the Fingerprint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateKeysNetworkACLsResponseContent) SetFingerprint(fingerprint string) {
+	c.Fingerprint = fingerprint
+	c.require(createKeysNetworkACLsResponseContentFieldFingerprint)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateKeysNetworkACLsResponseContent) SetCreatedAt(createdAt string) {
+	c.CreatedAt = createdAt
+	c.require(createKeysNetworkACLsResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateKeysNetworkACLsResponseContent) SetUpdatedAt(updatedAt string) {
+	c.UpdatedAt = updatedAt
+	c.require(createKeysNetworkACLsResponseContentFieldUpdatedAt)
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateKeysNetworkACLsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateKeysNetworkACLsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateKeysNetworkACLsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateKeysNetworkACLsResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
 	createOrganizationAllConnectionResponseContentFieldOrganizationConnectionName = big.NewInt(1 << 0)
 	createOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
 	createOrganizationAllConnectionResponseContentFieldShowAsButton               = big.NewInt(1 << 2)
@@ -69966,6 +70308,110 @@ func (c *CreateOrganizationAllConnectionResponseContent) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+var (
+	createOrganizationClientRequestItemFieldClientID           = big.NewInt(1 << 0)
+	createOrganizationClientRequestItemFieldUseForMemberAccess = big.NewInt(1 << 1)
+)
+
+type CreateOrganizationClientRequestItem struct {
+	// The identifier of the client to associate.
+	ClientID string `json:"client_id" url:"client_id"`
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess bool `json:"use_for_member_access" url:"use_for_member_access"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateOrganizationClientRequestItem) GetClientID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ClientID
+}
+
+func (c *CreateOrganizationClientRequestItem) GetUseForMemberAccess() bool {
+	if c == nil {
+		return false
+	}
+	return c.UseForMemberAccess
+}
+
+func (c *CreateOrganizationClientRequestItem) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateOrganizationClientRequestItem) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationClientRequestItem) SetClientID(clientID string) {
+	c.ClientID = clientID
+	c.require(createOrganizationClientRequestItemFieldClientID)
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationClientRequestItem) SetUseForMemberAccess(useForMemberAccess bool) {
+	c.UseForMemberAccess = useForMemberAccess
+	c.require(createOrganizationClientRequestItemFieldUseForMemberAccess)
+}
+
+func (c *CreateOrganizationClientRequestItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateOrganizationClientRequestItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateOrganizationClientRequestItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateOrganizationClientRequestItem) MarshalJSON() ([]byte, error) {
+	type embed CreateOrganizationClientRequestItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateOrganizationClientRequestItem) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateOrganizationClientsResponseContent = []*OrganizationClient
 
 var (
 	createOrganizationDiscoveryDomainResponseContentFieldID                          = big.NewInt(1 << 0)
@@ -76318,9 +76764,8 @@ type EventStreamCloudEvent struct {
 	// Type of the event (e.g., user.created)
 	Type *string `json:"type,omitempty" url:"type,omitempty"`
 	// Timestamp at which the event was generated
-	Time *time.Time `json:"time,omitempty" url:"time,omitempty"`
-	// Event contents encoded as a string.
-	Data *string `json:"data,omitempty" url:"data,omitempty"`
+	Time *time.Time                 `json:"time,omitempty" url:"time,omitempty"`
+	Data *EventStreamCloudEventData `json:"data,omitempty" url:"data,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -76364,9 +76809,9 @@ func (e *EventStreamCloudEvent) GetTime() time.Time {
 	return *e.Time
 }
 
-func (e *EventStreamCloudEvent) GetData() string {
+func (e *EventStreamCloudEvent) GetData() EventStreamCloudEventData {
 	if e == nil || e.Data == nil {
-		return ""
+		return nil
 	}
 	return *e.Data
 }
@@ -76422,7 +76867,7 @@ func (e *EventStreamCloudEvent) SetTime(time *time.Time) {
 
 // SetData sets the Data field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEvent) SetData(data *string) {
+func (e *EventStreamCloudEvent) SetData(data *EventStreamCloudEventData) {
 	e.Data = data
 	e.require(eventStreamCloudEventFieldData)
 }
@@ -76536,6 +76981,9 @@ func NewEventStreamCloudEventConnectionUpdatedTypeEnumFromString(s string) (Even
 func (e EventStreamCloudEventConnectionUpdatedTypeEnum) Ptr() *EventStreamCloudEventConnectionUpdatedTypeEnum {
 	return &e
 }
+
+// Event contents.
+type EventStreamCloudEventData = map[string]any
 
 // Identifies this as an error message (injected from the SSE event field).
 type EventStreamCloudEventErrorMessageTypeEnum string
@@ -77189,6 +77637,7 @@ var (
 	eventStreamDeliveryAttemptFieldStatus       = big.NewInt(1 << 0)
 	eventStreamDeliveryAttemptFieldTimestamp    = big.NewInt(1 << 1)
 	eventStreamDeliveryAttemptFieldErrorMessage = big.NewInt(1 << 2)
+	eventStreamDeliveryAttemptFieldDuration     = big.NewInt(1 << 3)
 )
 
 type EventStreamDeliveryAttempt struct {
@@ -77197,6 +77646,8 @@ type EventStreamDeliveryAttempt struct {
 	Timestamp time.Time `json:"timestamp" url:"timestamp"`
 	// Delivery error message, if applicable
 	ErrorMessage *string `json:"error_message,omitempty" url:"error_message,omitempty"`
+	// Duration of the delivery attempt in milliseconds
+	Duration *float64 `json:"duration,omitempty" url:"duration,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -77224,6 +77675,13 @@ func (e *EventStreamDeliveryAttempt) GetErrorMessage() string {
 		return ""
 	}
 	return *e.ErrorMessage
+}
+
+func (e *EventStreamDeliveryAttempt) GetDuration() float64 {
+	if e == nil || e.Duration == nil {
+		return 0
+	}
+	return *e.Duration
 }
 
 func (e *EventStreamDeliveryAttempt) GetExtraProperties() map[string]interface{} {
@@ -77259,6 +77717,13 @@ func (e *EventStreamDeliveryAttempt) SetTimestamp(timestamp time.Time) {
 func (e *EventStreamDeliveryAttempt) SetErrorMessage(errorMessage *string) {
 	e.ErrorMessage = errorMessage
 	e.require(eventStreamDeliveryAttemptFieldErrorMessage)
+}
+
+// SetDuration sets the Duration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDeliveryAttempt) SetDuration(duration *float64) {
+	e.Duration = duration
+	e.require(eventStreamDeliveryAttemptFieldDuration)
 }
 
 func (e *EventStreamDeliveryAttempt) UnmarshalJSON(data []byte) error {
@@ -87615,6 +88080,124 @@ func (g *GetOrganizationAllConnectionResponseContent) String() string {
 }
 
 var (
+	getOrganizationClientResponseContentFieldClientID           = big.NewInt(1 << 0)
+	getOrganizationClientResponseContentFieldUseForMemberAccess = big.NewInt(1 << 1)
+	getOrganizationClientResponseContentFieldClient             = big.NewInt(1 << 2)
+)
+
+type GetOrganizationClientResponseContent struct {
+	// The identifier of the client associated with the organization.
+	ClientID string `json:"client_id" url:"client_id"`
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess bool                        `json:"use_for_member_access" url:"use_for_member_access"`
+	Client             *OrganizationClientMetadata `json:"client" url:"client"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetOrganizationClientResponseContent) GetClientID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ClientID
+}
+
+func (g *GetOrganizationClientResponseContent) GetUseForMemberAccess() bool {
+	if g == nil {
+		return false
+	}
+	return g.UseForMemberAccess
+}
+
+func (g *GetOrganizationClientResponseContent) GetClient() *OrganizationClientMetadata {
+	if g == nil {
+		return nil
+	}
+	return g.Client
+}
+
+func (g *GetOrganizationClientResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetOrganizationClientResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationClientResponseContent) SetClientID(clientID string) {
+	g.ClientID = clientID
+	g.require(getOrganizationClientResponseContentFieldClientID)
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationClientResponseContent) SetUseForMemberAccess(useForMemberAccess bool) {
+	g.UseForMemberAccess = useForMemberAccess
+	g.require(getOrganizationClientResponseContentFieldUseForMemberAccess)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationClientResponseContent) SetClient(client *OrganizationClientMetadata) {
+	g.Client = client
+	g.require(getOrganizationClientResponseContentFieldClient)
+}
+
+func (g *GetOrganizationClientResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetOrganizationClientResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetOrganizationClientResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetOrganizationClientResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetOrganizationClientResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetOrganizationClientResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	getOrganizationConnectionResponseContentFieldConnectionID            = big.NewInt(1 << 0)
 	getOrganizationConnectionResponseContentFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 	getOrganizationConnectionResponseContentFieldShowAsButton            = big.NewInt(1 << 2)
@@ -91750,6 +92333,7 @@ var (
 	guardianFactorFieldEnabled      = big.NewInt(1 << 0)
 	guardianFactorFieldTrialExpired = big.NewInt(1 << 1)
 	guardianFactorFieldName         = big.NewInt(1 << 2)
+	guardianFactorFieldSettings     = big.NewInt(1 << 3)
 )
 
 type GuardianFactor struct {
@@ -91758,6 +92342,7 @@ type GuardianFactor struct {
 	// Whether trial limits have been exceeded.
 	TrialExpired *bool                   `json:"trial_expired,omitempty" url:"trial_expired,omitempty"`
 	Name         *GuardianFactorNameEnum `json:"name,omitempty" url:"name,omitempty"`
+	Settings     *GuardianFactorSettings `json:"settings,omitempty" url:"settings,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -91785,6 +92370,13 @@ func (g *GuardianFactor) GetName() GuardianFactorNameEnum {
 		return ""
 	}
 	return *g.Name
+}
+
+func (g *GuardianFactor) GetSettings() GuardianFactorSettings {
+	if g == nil || g.Settings == nil {
+		return GuardianFactorSettings{}
+	}
+	return *g.Settings
 }
 
 func (g *GuardianFactor) GetExtraProperties() map[string]interface{} {
@@ -91820,6 +92412,13 @@ func (g *GuardianFactor) SetTrialExpired(trialExpired *bool) {
 func (g *GuardianFactor) SetName(name *GuardianFactorNameEnum) {
 	g.Name = name
 	g.require(guardianFactorFieldName)
+}
+
+// SetSettings sets the Settings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GuardianFactor) SetSettings(settings *GuardianFactorSettings) {
+	g.Settings = settings
+	g.require(guardianFactorFieldSettings)
 }
 
 func (g *GuardianFactor) UnmarshalJSON(data []byte) error {
@@ -91925,6 +92524,114 @@ func NewGuardianFactorPhoneFactorMessageTypeEnumFromString(s string) (GuardianFa
 
 func (g GuardianFactorPhoneFactorMessageTypeEnum) Ptr() *GuardianFactorPhoneFactorMessageTypeEnum {
 	return &g
+}
+
+// Factor-specific settings. Only returned when include_settings=true.
+var (
+	guardianFactorSettingsFieldOtpLength         = big.NewInt(1 << 0)
+	guardianFactorSettingsFieldOtpExpirationTime = big.NewInt(1 << 1)
+)
+
+type GuardianFactorSettings struct {
+	// The length of the OTP code.
+	OtpLength *int `json:"otp_length,omitempty" url:"otp_length,omitempty"`
+	// The OTP expiration time in seconds.
+	OtpExpirationTime *int `json:"otp_expiration_time,omitempty" url:"otp_expiration_time,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GuardianFactorSettings) GetOtpLength() int {
+	if g == nil || g.OtpLength == nil {
+		return 0
+	}
+	return *g.OtpLength
+}
+
+func (g *GuardianFactorSettings) GetOtpExpirationTime() int {
+	if g == nil || g.OtpExpirationTime == nil {
+		return 0
+	}
+	return *g.OtpExpirationTime
+}
+
+func (g *GuardianFactorSettings) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.ExtraProperties
+}
+
+func (g *GuardianFactorSettings) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetOtpLength sets the OtpLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GuardianFactorSettings) SetOtpLength(otpLength *int) {
+	g.OtpLength = otpLength
+	g.require(guardianFactorSettingsFieldOtpLength)
+}
+
+// SetOtpExpirationTime sets the OtpExpirationTime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GuardianFactorSettings) SetOtpExpirationTime(otpExpirationTime *int) {
+	g.OtpExpirationTime = otpExpirationTime
+	g.require(guardianFactorSettingsFieldOtpExpirationTime)
+}
+
+func (g *GuardianFactorSettings) UnmarshalJSON(data []byte) error {
+	type embed GuardianFactorSettings
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GuardianFactorSettings(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GuardianFactorSettings) MarshalJSON() ([]byte, error) {
+	type embed GuardianFactorSettings
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GuardianFactorSettings) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 type GuardianFactorsProviderPushNotificationProviderDataEnum string
@@ -94724,6 +95431,108 @@ func (l *ListEncryptionKeyOffsetPaginatedResponseContent) String() string {
 }
 
 var (
+	listEventStreamDeliveriesResponseContentFieldDeliveries = big.NewInt(1 << 0)
+	listEventStreamDeliveriesResponseContentFieldNext       = big.NewInt(1 << 1)
+)
+
+type ListEventStreamDeliveriesResponseContent struct {
+	// List of event stream deliveries
+	Deliveries []*EventStreamDelivery `json:"deliveries" url:"deliveries"`
+	// The cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) GetDeliveries() []*EventStreamDelivery {
+	if l == nil {
+		return nil
+	}
+	return l.Deliveries
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetDeliveries sets the Deliveries field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesResponseContent) SetDeliveries(deliveries []*EventStreamDelivery) {
+	l.Deliveries = deliveries
+	l.require(listEventStreamDeliveriesResponseContentFieldDeliveries)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listEventStreamDeliveriesResponseContentFieldNext)
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListEventStreamDeliveriesResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListEventStreamDeliveriesResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListEventStreamDeliveriesResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
 	listFlowExecutionsPaginatedResponseContentFieldNext       = big.NewInt(1 << 0)
 	listFlowExecutionsPaginatedResponseContentFieldExecutions = big.NewInt(1 << 1)
 )
@@ -95309,6 +96118,108 @@ func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) MarshalJSON
 }
 
 func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationClientsResponseContentFieldClients = big.NewInt(1 << 0)
+	listOrganizationClientsResponseContentFieldNext    = big.NewInt(1 << 1)
+)
+
+type ListOrganizationClientsResponseContent struct {
+	// The list of clients associated with the organization.
+	Clients []*OrganizationClient `json:"clients" url:"clients"`
+	// An opaque token that, when present, can be passed as the `from` query parameter to retrieve the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationClientsResponseContent) GetClients() []*OrganizationClient {
+	if l == nil {
+		return nil
+	}
+	return l.Clients
+}
+
+func (l *ListOrganizationClientsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationClientsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationClientsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationClientsResponseContent) SetClients(clients []*OrganizationClient) {
+	l.Clients = clients
+	l.require(listOrganizationClientsResponseContentFieldClients)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationClientsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationClientsResponseContentFieldNext)
+}
+
+func (l *ListOrganizationClientsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationClientsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationClientsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationClientsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationClientsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationClientsResponseContent) String() string {
 	if l == nil {
 		return "<nil>"
 	}
@@ -96298,6 +97209,108 @@ func (l *ListOrganizationMembersPaginatedResponseContent) MarshalJSON() ([]byte,
 }
 
 func (l *ListOrganizationMembersPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+// Checkpoint paginated list of groups assigned to a role within an organization.
+var (
+	listOrganizationRoleGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
+	listOrganizationRoleGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
+)
+
+type ListOrganizationRoleGroupsResponseContent struct {
+	Groups []*RoleGroup `json:"groups" url:"groups"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) GetGroups() []*RoleGroup {
+	if l == nil {
+		return nil
+	}
+	return l.Groups
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetGroups sets the Groups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleGroupsResponseContent) SetGroups(groups []*RoleGroup) {
+	l.Groups = groups
+	l.require(listOrganizationRoleGroupsResponseContentFieldGroups)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleGroupsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationRoleGroupsResponseContentFieldNext)
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationRoleGroupsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationRoleGroupsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationRoleGroupsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) String() string {
 	if l == nil {
 		return "<nil>"
 	}
@@ -99825,6 +100838,26 @@ func (m MfaPolicyEnum) Ptr() *MfaPolicyEnum {
 	return &m
 }
 
+// Signing algorithm used to verify the signature. Currently only HMAC-SHA256 is supported.
+type NetworkACLKeyAlgorithmEnum string
+
+const (
+	NetworkACLKeyAlgorithmEnumHmacSha256 NetworkACLKeyAlgorithmEnum = "hmac-sha256"
+)
+
+func NewNetworkACLKeyAlgorithmEnumFromString(s string) (NetworkACLKeyAlgorithmEnum, error) {
+	switch s {
+	case "hmac-sha256":
+		return NetworkACLKeyAlgorithmEnumHmacSha256, nil
+	}
+	var t NetworkACLKeyAlgorithmEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (n NetworkACLKeyAlgorithmEnum) Ptr() *NetworkACLKeyAlgorithmEnum {
+	return &n
+}
+
 var (
 	notFoundErrorBodyFieldMessage    = big.NewInt(1 << 0)
 	notFoundErrorBodyFieldStatusCode = big.NewInt(1 << 1)
@@ -99960,6 +100993,142 @@ func (n NotFoundErrorBodyError) Ptr() *NotFoundErrorBodyError {
 	return &n
 }
 
+// Not Found
+var (
+	notFoundSchemaFieldMessage    = big.NewInt(1 << 0)
+	notFoundSchemaFieldStatusCode = big.NewInt(1 << 1)
+	notFoundSchemaFieldError      = big.NewInt(1 << 2)
+)
+
+type NotFoundSchema struct {
+	Message    string              `json:"message" url:"message"`
+	StatusCode string              `json:"statusCode" url:"statusCode"`
+	Error      NotFoundSchemaError `json:"error" url:"error"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NotFoundSchema) GetMessage() string {
+	if n == nil {
+		return ""
+	}
+	return n.Message
+}
+
+func (n *NotFoundSchema) GetStatusCode() string {
+	if n == nil {
+		return ""
+	}
+	return n.StatusCode
+}
+
+func (n *NotFoundSchema) GetError() NotFoundSchemaError {
+	if n == nil {
+		return ""
+	}
+	return n.Error
+}
+
+func (n *NotFoundSchema) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NotFoundSchema) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NotFoundSchema) SetMessage(message string) {
+	n.Message = message
+	n.require(notFoundSchemaFieldMessage)
+}
+
+// SetStatusCode sets the StatusCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NotFoundSchema) SetStatusCode(statusCode string) {
+	n.StatusCode = statusCode
+	n.require(notFoundSchemaFieldStatusCode)
+}
+
+// SetError sets the Error field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NotFoundSchema) SetError(error_ NotFoundSchemaError) {
+	n.Error = error_
+	n.require(notFoundSchemaFieldError)
+}
+
+func (n *NotFoundSchema) UnmarshalJSON(data []byte) error {
+	type unmarshaler NotFoundSchema
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NotFoundSchema(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NotFoundSchema) MarshalJSON() ([]byte, error) {
+	type embed NotFoundSchema
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NotFoundSchema) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+type NotFoundSchemaError string
+
+const (
+	NotFoundSchemaErrorNotFound NotFoundSchemaError = "Not Found"
+)
+
+func NewNotFoundSchemaErrorFromString(s string) (NotFoundSchemaError, error) {
+	switch s {
+	case "Not Found":
+		return NotFoundSchemaErrorNotFound, nil
+	}
+	var t NotFoundSchemaError
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (n NotFoundSchemaError) Ptr() *NotFoundSchemaError {
+	return &n
+}
+
 type OauthScope string
 
 const (
@@ -99971,6 +101140,14 @@ const (
 	OauthScopeUpdateActions OauthScope = "update:actions"
 	// Delete Actions
 	OauthScopeDeleteActions OauthScope = "delete:actions"
+	// Create Agents
+	OauthScopeCreateAgents OauthScope = "create:agents"
+	// Read Agents
+	OauthScopeReadAgents OauthScope = "read:agents"
+	// Update Agents
+	OauthScopeUpdateAgents OauthScope = "update:agents"
+	// Delete Agents
+	OauthScopeDeleteAgents OauthScope = "delete:agents"
 	// Read Anomaly Blocks
 	OauthScopeReadAnomalyBlocks OauthScope = "read:anomaly_blocks"
 	// Delete Anomaly Blocks
@@ -100435,6 +101612,16 @@ const (
 	OauthScopeUpdateVdcsTemplates OauthScope = "update:vdcs_templates"
 	// Delete Vdcs Templates
 	OauthScopeDeleteVdcsTemplates OauthScope = "delete:vdcs_templates"
+	// Create Organization Client Associations
+	OauthScopeCreateOrganizationClients OauthScope = "create:organization_clients"
+	// Read Organization Client Associations
+	OauthScopeReadOrganizationClients OauthScope = "read:organization_clients"
+	// Update Organization Client Associations
+	OauthScopeUpdateOrganizationClients OauthScope = "update:organization_clients"
+	// Delete Organization Client Associations
+	OauthScopeDeleteOrganizationClients OauthScope = "delete:organization_clients"
+	// Create Network ACL Keys
+	OauthScopeCreateNetworkACLKeys OauthScope = "create:network_acl_keys"
 )
 
 func NewOauthScopeFromString(s string) (OauthScope, error) {
@@ -100447,6 +101634,14 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeUpdateActions, nil
 	case "delete:actions":
 		return OauthScopeDeleteActions, nil
+	case "create:agents":
+		return OauthScopeCreateAgents, nil
+	case "read:agents":
+		return OauthScopeReadAgents, nil
+	case "update:agents":
+		return OauthScopeUpdateAgents, nil
+	case "delete:agents":
+		return OauthScopeDeleteAgents, nil
 	case "read:anomaly_blocks":
 		return OauthScopeReadAnomalyBlocks, nil
 	case "delete:anomaly_blocks":
@@ -100911,6 +102106,16 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeUpdateVdcsTemplates, nil
 	case "delete:vdcs_templates":
 		return OauthScopeDeleteVdcsTemplates, nil
+	case "create:organization_clients":
+		return OauthScopeCreateOrganizationClients, nil
+	case "read:organization_clients":
+		return OauthScopeReadOrganizationClients, nil
+	case "update:organization_clients":
+		return OauthScopeUpdateOrganizationClients, nil
+	case "delete:organization_clients":
+		return OauthScopeDeleteOrganizationClients, nil
+	case "create:network_acl_keys":
+		return OauthScopeCreateNetworkACLKeys, nil
 	}
 	var t OauthScope
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -100928,6 +102133,8 @@ var (
 	organizationFieldMetadata               = big.NewInt(1 << 4)
 	organizationFieldTokenQuota             = big.NewInt(1 << 5)
 	organizationFieldThirdPartyClientAccess = big.NewInt(1 << 6)
+	organizationFieldIsAppEntitlementActive = big.NewInt(1 << 7)
+	organizationFieldClient                 = big.NewInt(1 << 8)
 )
 
 type Organization struct {
@@ -100941,6 +102148,9 @@ type Organization struct {
 	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
 	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
+	// Whether app entitlement is active for this organization.
+	IsAppEntitlementActive *bool                          `json:"is_app_entitlement_active,omitempty" url:"is_app_entitlement_active,omitempty"`
+	Client                 *OrganizationClientAssociation `json:"client,omitempty" url:"client,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -100997,6 +102207,20 @@ func (o *Organization) GetThirdPartyClientAccess() OrganizationThirdPartyClientA
 		return ""
 	}
 	return *o.ThirdPartyClientAccess
+}
+
+func (o *Organization) GetIsAppEntitlementActive() bool {
+	if o == nil || o.IsAppEntitlementActive == nil {
+		return false
+	}
+	return *o.IsAppEntitlementActive
+}
+
+func (o *Organization) GetClient() OrganizationClientAssociation {
+	if o == nil || o.Client == nil {
+		return OrganizationClientAssociation{}
+	}
+	return *o.Client
 }
 
 func (o *Organization) GetExtraProperties() map[string]interface{} {
@@ -101060,6 +102284,20 @@ func (o *Organization) SetTokenQuota(tokenQuota *TokenQuota) {
 func (o *Organization) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
 	o.ThirdPartyClientAccess = thirdPartyClientAccess
 	o.require(organizationFieldThirdPartyClientAccess)
+}
+
+// SetIsAppEntitlementActive sets the IsAppEntitlementActive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetIsAppEntitlementActive(isAppEntitlementActive *bool) {
+	o.IsAppEntitlementActive = isAppEntitlementActive
+	o.require(organizationFieldIsAppEntitlementActive)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetClient(client *OrganizationClientAssociation) {
+	o.Client = client
+	o.require(organizationFieldClient)
 }
 
 func (o *Organization) UnmarshalJSON(data []byte) error {
@@ -101574,6 +102812,210 @@ func (o *OrganizationBrandingColors) String() string {
 }
 
 var (
+	organizationClientFieldClientID           = big.NewInt(1 << 0)
+	organizationClientFieldUseForMemberAccess = big.NewInt(1 << 1)
+	organizationClientFieldClient             = big.NewInt(1 << 2)
+)
+
+type OrganizationClient struct {
+	// The identifier of the client associated with the organization.
+	ClientID string `json:"client_id" url:"client_id"`
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess bool                        `json:"use_for_member_access" url:"use_for_member_access"`
+	Client             *OrganizationClientMetadata `json:"client" url:"client"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationClient) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *OrganizationClient) GetUseForMemberAccess() bool {
+	if o == nil {
+		return false
+	}
+	return o.UseForMemberAccess
+}
+
+func (o *OrganizationClient) GetClient() *OrganizationClientMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Client
+}
+
+func (o *OrganizationClient) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationClient) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClient) SetClientID(clientID string) {
+	o.ClientID = clientID
+	o.require(organizationClientFieldClientID)
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClient) SetUseForMemberAccess(useForMemberAccess bool) {
+	o.UseForMemberAccess = useForMemberAccess
+	o.require(organizationClientFieldUseForMemberAccess)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClient) SetClient(client *OrganizationClientMetadata) {
+	o.Client = client
+	o.require(organizationClientFieldClient)
+}
+
+func (o *OrganizationClient) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationClient
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationClient(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationClient) MarshalJSON() ([]byte, error) {
+	type embed OrganizationClient
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationClient) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// The organization's association with the client passed in the <code>include_client_association_for</code> query parameter.
+var (
+	organizationClientAssociationFieldUseForMemberAccess = big.NewInt(1 << 0)
+)
+
+type OrganizationClientAssociation struct {
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess *bool `json:"use_for_member_access,omitempty" url:"use_for_member_access,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationClientAssociation) GetUseForMemberAccess() bool {
+	if o == nil || o.UseForMemberAccess == nil {
+		return false
+	}
+	return *o.UseForMemberAccess
+}
+
+func (o *OrganizationClientAssociation) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationClientAssociation) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientAssociation) SetUseForMemberAccess(useForMemberAccess *bool) {
+	o.UseForMemberAccess = useForMemberAccess
+	o.require(organizationClientAssociationFieldUseForMemberAccess)
+}
+
+func (o *OrganizationClientAssociation) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationClientAssociation
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationClientAssociation(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationClientAssociation) MarshalJSON() ([]byte, error) {
+	type embed OrganizationClientAssociation
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationClientAssociation) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
 	organizationClientGrantFieldID                   = big.NewInt(1 << 0)
 	organizationClientGrantFieldClientID             = big.NewInt(1 << 1)
 	organizationClientGrantFieldAudience             = big.NewInt(1 << 2)
@@ -101740,6 +103182,202 @@ func (o *OrganizationClientGrant) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
+}
+
+// Metadata about the associated client.
+var (
+	organizationClientMetadataFieldName              = big.NewInt(1 << 0)
+	organizationClientMetadataFieldAppType           = big.NewInt(1 << 1)
+	organizationClientMetadataFieldLogoURI           = big.NewInt(1 << 2)
+	organizationClientMetadataFieldIsFirstParty      = big.NewInt(1 << 3)
+	organizationClientMetadataFieldGrantTypes        = big.NewInt(1 << 4)
+	organizationClientMetadataFieldOrganizationUsage = big.NewInt(1 << 5)
+)
+
+type OrganizationClientMetadata struct {
+	// The name of the client.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The type of the client application.
+	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
+	// The URI of the client logo.
+	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
+	// Whether this client is a first-party client (true) or not (false).
+	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// The grant types enabled for the client.
+	GrantTypes        []string                                         `json:"grant_types,omitempty" url:"grant_types,omitempty"`
+	OrganizationUsage *OrganizationClientMetadataOrganizationUsageEnum `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationClientMetadata) GetName() string {
+	if o == nil || o.Name == nil {
+		return ""
+	}
+	return *o.Name
+}
+
+func (o *OrganizationClientMetadata) GetAppType() string {
+	if o == nil || o.AppType == nil {
+		return ""
+	}
+	return *o.AppType
+}
+
+func (o *OrganizationClientMetadata) GetLogoURI() string {
+	if o == nil || o.LogoURI == nil {
+		return ""
+	}
+	return *o.LogoURI
+}
+
+func (o *OrganizationClientMetadata) GetIsFirstParty() bool {
+	if o == nil || o.IsFirstParty == nil {
+		return false
+	}
+	return *o.IsFirstParty
+}
+
+func (o *OrganizationClientMetadata) GetGrantTypes() []string {
+	if o == nil || o.GrantTypes == nil {
+		return nil
+	}
+	return o.GrantTypes
+}
+
+func (o *OrganizationClientMetadata) GetOrganizationUsage() OrganizationClientMetadataOrganizationUsageEnum {
+	if o == nil || o.OrganizationUsage == nil {
+		return ""
+	}
+	return *o.OrganizationUsage
+}
+
+func (o *OrganizationClientMetadata) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationClientMetadata) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetName(name *string) {
+	o.Name = name
+	o.require(organizationClientMetadataFieldName)
+}
+
+// SetAppType sets the AppType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetAppType(appType *string) {
+	o.AppType = appType
+	o.require(organizationClientMetadataFieldAppType)
+}
+
+// SetLogoURI sets the LogoURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetLogoURI(logoURI *string) {
+	o.LogoURI = logoURI
+	o.require(organizationClientMetadataFieldLogoURI)
+}
+
+// SetIsFirstParty sets the IsFirstParty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetIsFirstParty(isFirstParty *bool) {
+	o.IsFirstParty = isFirstParty
+	o.require(organizationClientMetadataFieldIsFirstParty)
+}
+
+// SetGrantTypes sets the GrantTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetGrantTypes(grantTypes []string) {
+	o.GrantTypes = grantTypes
+	o.require(organizationClientMetadataFieldGrantTypes)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetOrganizationUsage(organizationUsage *OrganizationClientMetadataOrganizationUsageEnum) {
+	o.OrganizationUsage = organizationUsage
+	o.require(organizationClientMetadataFieldOrganizationUsage)
+}
+
+func (o *OrganizationClientMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationClientMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationClientMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationClientMetadata) MarshalJSON() ([]byte, error) {
+	type embed OrganizationClientMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationClientMetadata) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Whether organizations may be used with the client.
+type OrganizationClientMetadataOrganizationUsageEnum string
+
+const (
+	OrganizationClientMetadataOrganizationUsageEnumDeny    OrganizationClientMetadataOrganizationUsageEnum = "deny"
+	OrganizationClientMetadataOrganizationUsageEnumAllow   OrganizationClientMetadataOrganizationUsageEnum = "allow"
+	OrganizationClientMetadataOrganizationUsageEnumRequire OrganizationClientMetadataOrganizationUsageEnum = "require"
+)
+
+func NewOrganizationClientMetadataOrganizationUsageEnumFromString(s string) (OrganizationClientMetadataOrganizationUsageEnum, error) {
+	switch s {
+	case "deny":
+		return OrganizationClientMetadataOrganizationUsageEnumDeny, nil
+	case "allow":
+		return OrganizationClientMetadataOrganizationUsageEnumAllow, nil
+	case "require":
+		return OrganizationClientMetadataOrganizationUsageEnumRequire, nil
+	}
+	var t OrganizationClientMetadataOrganizationUsageEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationClientMetadataOrganizationUsageEnum) Ptr() *OrganizationClientMetadataOrganizationUsageEnum {
+	return &o
 }
 
 var (
@@ -106707,6 +108345,8 @@ var (
 	roleFieldID          = big.NewInt(1 << 0)
 	roleFieldName        = big.NewInt(1 << 1)
 	roleFieldDescription = big.NewInt(1 << 2)
+	roleFieldType        = big.NewInt(1 << 3)
+	roleFieldOwnerID     = big.NewInt(1 << 4)
 )
 
 type Role struct {
@@ -106715,7 +108355,10 @@ type Role struct {
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
-	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	Description *string       `json:"description,omitempty" url:"description,omitempty"`
+	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	// The id of the entity that owns this role, such as an organization id.
+	OwnerID *string `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -106743,6 +108386,20 @@ func (r *Role) GetDescription() string {
 		return ""
 	}
 	return *r.Description
+}
+
+func (r *Role) GetType() RoleTypeEnum {
+	if r == nil || r.Type == nil {
+		return ""
+	}
+	return *r.Type
+}
+
+func (r *Role) GetOwnerID() string {
+	if r == nil || r.OwnerID == nil {
+		return ""
+	}
+	return *r.OwnerID
 }
 
 func (r *Role) GetExtraProperties() map[string]interface{} {
@@ -106780,6 +108437,20 @@ func (r *Role) SetDescription(description *string) {
 	r.require(roleFieldDescription)
 }
 
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Role) SetType(type_ *RoleTypeEnum) {
+	r.Type = type_
+	r.require(roleFieldType)
+}
+
+// SetOwnerID sets the OwnerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *Role) SetOwnerID(ownerID *string) {
+	r.OwnerID = ownerID
+	r.require(roleFieldOwnerID)
+}
+
 func (r *Role) UnmarshalJSON(data []byte) error {
 	type unmarshaler Role
 	var value unmarshaler
@@ -106808,6 +108479,240 @@ func (r *Role) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Role) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// A group assigned to a role in the context of an organization.
+var (
+	roleGroupFieldID             = big.NewInt(1 << 0)
+	roleGroupFieldName           = big.NewInt(1 << 1)
+	roleGroupFieldExternalID     = big.NewInt(1 << 2)
+	roleGroupFieldConnectionID   = big.NewInt(1 << 3)
+	roleGroupFieldOrganizationID = big.NewInt(1 << 4)
+	roleGroupFieldTenantName     = big.NewInt(1 << 5)
+	roleGroupFieldDescription    = big.NewInt(1 << 6)
+	roleGroupFieldCreatedAt      = big.NewInt(1 << 7)
+	roleGroupFieldUpdatedAt      = big.NewInt(1 << 8)
+)
+
+type RoleGroup struct {
+	// Unique identifier for the group (service-generated).
+	ID string `json:"id" url:"id"`
+	// Name of the group. Must be unique within its connection. Must contain between 1 and 128 printable ASCII characters.
+	Name string `json:"name" url:"name"`
+	// External identifier for the group, often used for SCIM synchronization. Max length of 256 characters.
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
+	// Identifier for the connection this group belongs to (if a connection group).
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// Identifier for the organization this group belongs to (if an organization group).
+	OrganizationID *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	// Identifier for the tenant this group belongs to.
+	TenantName *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
+	// Description of the group.
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// Timestamp of when the group was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp of when the group was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RoleGroup) GetID() string {
+	if r == nil {
+		return ""
+	}
+	return r.ID
+}
+
+func (r *RoleGroup) GetName() string {
+	if r == nil {
+		return ""
+	}
+	return r.Name
+}
+
+func (r *RoleGroup) GetExternalID() string {
+	if r == nil || r.ExternalID == nil {
+		return ""
+	}
+	return *r.ExternalID
+}
+
+func (r *RoleGroup) GetConnectionID() string {
+	if r == nil || r.ConnectionID == nil {
+		return ""
+	}
+	return *r.ConnectionID
+}
+
+func (r *RoleGroup) GetOrganizationID() string {
+	if r == nil || r.OrganizationID == nil {
+		return ""
+	}
+	return *r.OrganizationID
+}
+
+func (r *RoleGroup) GetTenantName() string {
+	if r == nil || r.TenantName == nil {
+		return ""
+	}
+	return *r.TenantName
+}
+
+func (r *RoleGroup) GetDescription() string {
+	if r == nil || r.Description == nil {
+		return ""
+	}
+	return *r.Description
+}
+
+func (r *RoleGroup) GetCreatedAt() time.Time {
+	if r == nil || r.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *r.CreatedAt
+}
+
+func (r *RoleGroup) GetUpdatedAt() time.Time {
+	if r == nil || r.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *r.UpdatedAt
+}
+
+func (r *RoleGroup) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RoleGroup) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetID(id string) {
+	r.ID = id
+	r.require(roleGroupFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetName(name string) {
+	r.Name = name
+	r.require(roleGroupFieldName)
+}
+
+// SetExternalID sets the ExternalID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetExternalID(externalID *string) {
+	r.ExternalID = externalID
+	r.require(roleGroupFieldExternalID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetConnectionID(connectionID *string) {
+	r.ConnectionID = connectionID
+	r.require(roleGroupFieldConnectionID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetOrganizationID(organizationID *string) {
+	r.OrganizationID = organizationID
+	r.require(roleGroupFieldOrganizationID)
+}
+
+// SetTenantName sets the TenantName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetTenantName(tenantName *string) {
+	r.TenantName = tenantName
+	r.require(roleGroupFieldTenantName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetDescription(description *string) {
+	r.Description = description
+	r.require(roleGroupFieldDescription)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetCreatedAt(createdAt *time.Time) {
+	r.CreatedAt = createdAt
+	r.require(roleGroupFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetUpdatedAt(updatedAt *time.Time) {
+	r.UpdatedAt = updatedAt
+	r.require(roleGroupFieldUpdatedAt)
+}
+
+func (r *RoleGroup) UnmarshalJSON(data []byte) error {
+	type embed RoleGroup
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*r),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*r = RoleGroup(unmarshaler.embed)
+	r.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	r.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RoleGroup) MarshalJSON() ([]byte, error) {
+	type embed RoleGroup
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*r),
+		CreatedAt: internal.NewOptionalDateTime(r.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(r.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RoleGroup) String() string {
 	if r == nil {
 		return "<nil>"
 	}
@@ -106956,6 +108861,29 @@ func (r *RoleMember) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+// The type of the role
+type RoleTypeEnum string
+
+const (
+	RoleTypeEnumTenant       RoleTypeEnum = "tenant"
+	RoleTypeEnumOrganization RoleTypeEnum = "organization"
+)
+
+func NewRoleTypeEnumFromString(s string) (RoleTypeEnum, error) {
+	switch s {
+	case "tenant":
+		return RoleTypeEnumTenant, nil
+	case "organization":
+		return RoleTypeEnumOrganization, nil
+	}
+	var t RoleTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r RoleTypeEnum) Ptr() *RoleTypeEnum {
+	return &r
 }
 
 var (
@@ -109278,12 +111206,15 @@ func (s *SelfServiceProfileSSOTicketEnabledOrganization) String() string {
 
 // Configuration for Google Workspace Directory Sync during the self-service flow.
 var (
-	selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncUsers = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncUsers  = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncGroups = big.NewInt(1 << 1)
 )
 
 type SelfServiceProfileSSOTicketGoogleWorkspaceConfig struct {
 	// Whether to enable Google Workspace Directory Sync for users during the self-service flow.
 	SyncUsers bool `json:"sync_users" url:"sync_users"`
+	// Whether to enable Google Workspace Directory Sync for groups during the self-service flow.
+	SyncGroups *bool `json:"sync_groups,omitempty" url:"sync_groups,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -109297,6 +111228,13 @@ func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) GetSyncUsers() bool {
 		return false
 	}
 	return s.SyncUsers
+}
+
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) GetSyncGroups() bool {
+	if s == nil || s.SyncGroups == nil {
+		return false
+	}
+	return *s.SyncGroups
 }
 
 func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) GetExtraProperties() map[string]interface{} {
@@ -109318,6 +111256,13 @@ func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) require(field *big.In
 func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) SetSyncUsers(syncUsers bool) {
 	s.SyncUsers = syncUsers
 	s.require(selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncUsers)
+}
+
+// SetSyncGroups sets the SyncGroups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) SetSyncGroups(syncGroups *bool) {
+	s.SyncGroups = syncGroups
+	s.require(selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncGroups)
 }
 
 func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) UnmarshalJSON(data []byte) error {
@@ -113868,12 +115813,21 @@ func (s SynchronizeGroupsEnum) Ptr() *SynchronizeGroupsEnum {
 }
 
 var (
-	synchronizedGroupPayloadFieldID = big.NewInt(1 << 0)
+	synchronizedGroupPayloadFieldID                 = big.NewInt(1 << 0)
+	synchronizedGroupPayloadFieldName               = big.NewInt(1 << 1)
+	synchronizedGroupPayloadFieldEmail              = big.NewInt(1 << 2)
+	synchronizedGroupPayloadFieldDirectMembersCount = big.NewInt(1 << 3)
 )
 
 type SynchronizedGroupPayload struct {
 	// Google Workspace Directory group ID.
 	ID string `json:"id" url:"id"`
+	// Google Workspace Directory group name.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Google Workspace Directory group email.
+	Email *string `json:"email,omitempty" url:"email,omitempty"`
+	// Number of direct members in the Google Workspace Directory group.
+	DirectMembersCount *int `json:"direct_members_count,omitempty" url:"direct_members_count,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -113887,6 +115841,27 @@ func (s *SynchronizedGroupPayload) GetID() string {
 		return ""
 	}
 	return s.ID
+}
+
+func (s *SynchronizedGroupPayload) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+func (s *SynchronizedGroupPayload) GetEmail() string {
+	if s == nil || s.Email == nil {
+		return ""
+	}
+	return *s.Email
+}
+
+func (s *SynchronizedGroupPayload) GetDirectMembersCount() int {
+	if s == nil || s.DirectMembersCount == nil {
+		return 0
+	}
+	return *s.DirectMembersCount
 }
 
 func (s *SynchronizedGroupPayload) GetExtraProperties() map[string]interface{} {
@@ -113908,6 +115883,27 @@ func (s *SynchronizedGroupPayload) require(field *big.Int) {
 func (s *SynchronizedGroupPayload) SetID(id string) {
 	s.ID = id
 	s.require(synchronizedGroupPayloadFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SynchronizedGroupPayload) SetName(name *string) {
+	s.Name = name
+	s.require(synchronizedGroupPayloadFieldName)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SynchronizedGroupPayload) SetEmail(email *string) {
+	s.Email = email
+	s.require(synchronizedGroupPayloadFieldEmail)
+}
+
+// SetDirectMembersCount sets the DirectMembersCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SynchronizedGroupPayload) SetDirectMembersCount(directMembersCount *int) {
+	s.DirectMembersCount = directMembersCount
+	s.require(synchronizedGroupPayloadFieldDirectMembersCount)
 }
 
 func (s *SynchronizedGroupPayload) UnmarshalJSON(data []byte) error {
@@ -113938,6 +115934,91 @@ func (s *SynchronizedGroupPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SynchronizedGroupPayload) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	synchronizedGroupSelectionIDFieldID = big.NewInt(1 << 0)
+)
+
+type SynchronizedGroupSelectionID struct {
+	// Google Workspace Directory group ID.
+	ID string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SynchronizedGroupSelectionID) GetID() string {
+	if s == nil {
+		return ""
+	}
+	return s.ID
+}
+
+func (s *SynchronizedGroupSelectionID) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SynchronizedGroupSelectionID) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SynchronizedGroupSelectionID) SetID(id string) {
+	s.ID = id
+	s.require(synchronizedGroupSelectionIDFieldID)
+}
+
+func (s *SynchronizedGroupSelectionID) UnmarshalJSON(data []byte) error {
+	type unmarshaler SynchronizedGroupSelectionID
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SynchronizedGroupSelectionID(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SynchronizedGroupSelectionID) MarshalJSON() ([]byte, error) {
+	type embed SynchronizedGroupSelectionID
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SynchronizedGroupSelectionID) String() string {
 	if s == nil {
 		return "<nil>"
 	}
@@ -128952,6 +131033,124 @@ func (u *UpdateOrganizationAllConnectionResponseContent) String() string {
 }
 
 var (
+	updateOrganizationClientResponseContentFieldClientID           = big.NewInt(1 << 0)
+	updateOrganizationClientResponseContentFieldUseForMemberAccess = big.NewInt(1 << 1)
+	updateOrganizationClientResponseContentFieldClient             = big.NewInt(1 << 2)
+)
+
+type UpdateOrganizationClientResponseContent struct {
+	// The identifier of the client associated with the organization.
+	ClientID string `json:"client_id" url:"client_id"`
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess bool                        `json:"use_for_member_access" url:"use_for_member_access"`
+	Client             *OrganizationClientMetadata `json:"client,omitempty" url:"client,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateOrganizationClientResponseContent) GetClientID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ClientID
+}
+
+func (u *UpdateOrganizationClientResponseContent) GetUseForMemberAccess() bool {
+	if u == nil {
+		return false
+	}
+	return u.UseForMemberAccess
+}
+
+func (u *UpdateOrganizationClientResponseContent) GetClient() OrganizationClientMetadata {
+	if u == nil || u.Client == nil {
+		return OrganizationClientMetadata{}
+	}
+	return *u.Client
+}
+
+func (u *UpdateOrganizationClientResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateOrganizationClientResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationClientResponseContent) SetClientID(clientID string) {
+	u.ClientID = clientID
+	u.require(updateOrganizationClientResponseContentFieldClientID)
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationClientResponseContent) SetUseForMemberAccess(useForMemberAccess bool) {
+	u.UseForMemberAccess = useForMemberAccess
+	u.require(updateOrganizationClientResponseContentFieldUseForMemberAccess)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationClientResponseContent) SetClient(client *OrganizationClientMetadata) {
+	u.Client = client
+	u.require(updateOrganizationClientResponseContentFieldClient)
+}
+
+func (u *UpdateOrganizationClientResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateOrganizationClientResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateOrganizationClientResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateOrganizationClientResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateOrganizationClientResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateOrganizationClientResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
 	updateOrganizationConnectionResponseContentFieldConnectionID            = big.NewInt(1 << 0)
 	updateOrganizationConnectionResponseContentFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 	updateOrganizationConnectionResponseContentFieldShowAsButton            = big.NewInt(1 << 2)
@@ -132254,7 +134453,9 @@ var (
 	userEffectivePermissionRoleSourceResponseContentFieldID          = big.NewInt(1 << 0)
 	userEffectivePermissionRoleSourceResponseContentFieldName        = big.NewInt(1 << 1)
 	userEffectivePermissionRoleSourceResponseContentFieldDescription = big.NewInt(1 << 2)
-	userEffectivePermissionRoleSourceResponseContentFieldSources     = big.NewInt(1 << 3)
+	userEffectivePermissionRoleSourceResponseContentFieldType        = big.NewInt(1 << 3)
+	userEffectivePermissionRoleSourceResponseContentFieldOwnerID     = big.NewInt(1 << 4)
+	userEffectivePermissionRoleSourceResponseContentFieldSources     = big.NewInt(1 << 5)
 )
 
 type UserEffectivePermissionRoleSourceResponseContent struct {
@@ -132263,7 +134464,10 @@ type UserEffectivePermissionRoleSourceResponseContent struct {
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
-	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	Description *string       `json:"description,omitempty" url:"description,omitempty"`
+	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	// The id of the entity that owns this role, such as an organization id.
+	OwnerID *string `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 	// List of sources where this role is coming from.
 	Sources []UserEffectivePermissionRoleSourceEnum `json:"sources,omitempty" url:"sources,omitempty"`
 
@@ -132293,6 +134497,20 @@ func (u *UserEffectivePermissionRoleSourceResponseContent) GetDescription() stri
 		return ""
 	}
 	return *u.Description
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetType() RoleTypeEnum {
+	if u == nil || u.Type == nil {
+		return ""
+	}
+	return *u.Type
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetOwnerID() string {
+	if u == nil || u.OwnerID == nil {
+		return ""
+	}
+	return *u.OwnerID
 }
 
 func (u *UserEffectivePermissionRoleSourceResponseContent) GetSources() []UserEffectivePermissionRoleSourceEnum {
@@ -132335,6 +134553,20 @@ func (u *UserEffectivePermissionRoleSourceResponseContent) SetName(name *string)
 func (u *UserEffectivePermissionRoleSourceResponseContent) SetDescription(description *string) {
 	u.Description = description
 	u.require(userEffectivePermissionRoleSourceResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionRoleSourceResponseContent) SetType(type_ *RoleTypeEnum) {
+	u.Type = type_
+	u.require(userEffectivePermissionRoleSourceResponseContentFieldType)
+}
+
+// SetOwnerID sets the OwnerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionRoleSourceResponseContent) SetOwnerID(ownerID *string) {
+	u.OwnerID = ownerID
+	u.require(userEffectivePermissionRoleSourceResponseContentFieldOwnerID)
 }
 
 // SetSources sets the Sources field and marks it as non-optional;

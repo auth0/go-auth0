@@ -614,6 +614,358 @@ client.Actions.Test(
 </dl>
 </details>
 
+## Agents
+<details><summary><code>client.Agents.List() -> *management.ListAgentsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get agents
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListAgentsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Agents.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Agents.Create(request) -> *management.AgentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateAgentRequestContent{
+        Name: "name",
+    }
+client.Agents.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — The agent name. Cannot contain <, >, or null bytes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `*string` — Optional client ID to associate with the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**externalAgentID:** `*string` — Optional external identifier for the agent. Immutable after creation. Must be unique within the tenant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `*management.AgentMetadata` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Agents.Read(ID) -> *management.AgentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Agents.Read(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The agent ID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Agents.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Agents.Delete(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The agent ID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Agents.Update(ID, request) -> *management.AgentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.PatchAgentRequestParameters{}
+client.Agents.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The agent ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — The agent name. Cannot contain <, >, or null bytes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `map[string]any` — Arbitrary key-value metadata for the agent. Pass null to clear all metadata.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Branding
 <details><summary><code>client.Branding.Get() -> *management.GetBrandingResponseContent</code></summary>
 <dl>
@@ -769,6 +1121,9 @@ Retrieve a list of [client grants](https://auth0.com/docs/get-started/applicatio
 
 ```go
 request := &management.ListClientGrantsRequestParameters{
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -802,6 +1157,14 @@ client.ClientGrants.List(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -3340,6 +3703,9 @@ To search by checkpoint, use the following parameters:
 
 ```go
 request := &management.ListConnectionsQueryParameters{
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -3374,6 +3740,14 @@ client.Connections.List(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — true if a query summary must be included in the result, false otherwise. Not returned when using checkpoint pagination. Default <code>false</code>.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -6803,6 +7177,9 @@ request := &management.ListGroupsRequestParameters{
         IncludeFields: management.Bool(
             true,
         ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -6870,6 +7247,14 @@ client.Groups.List(
 <dd>
 
 **includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -9074,6 +9459,9 @@ To search by checkpoint, use the following parameters:
 
 ```go
 request := &management.ListOrganizationsRequestParameters{
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -9082,6 +9470,9 @@ request := &management.ListOrganizationsRequestParameters{
         ),
         Sort: management.String(
             "sort",
+        ),
+        IncludeClientAssociationFor: management.String(
+            "include_client_association_for",
         ),
     }
 client.Organizations.List(
@@ -9103,6 +9494,14 @@ client.Organizations.List(
 <dl>
 <dd>
 
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **from:** `*string` — Optional Id from which to start selection.
     
 </dd>
@@ -9120,6 +9519,14 @@ client.Organizations.List(
 <dd>
 
 **sort:** `*string` — Field to sort by. Use <code>field:order</code> where order is <code>1</code> for ascending and <code>-1</code> for descending. e.g. <code>created_at:1</code>. We currently support sorting by the following fields: <code>name</code>, <code>display_name</code> and <code>created_at</code>.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeClientAssociationFor:** `*string` — Client ID. When set, each returned organization that has an association with this client gains a <code>client</code> object describing it; organizations without one omit the field.
     
 </dd>
 </dl>
@@ -9229,6 +9636,14 @@ client.Organizations.Create(
 <dd>
 
 **thirdPartyClientAccess:** `*management.OrganizationThirdPartyClientAccessEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isAppEntitlementActive:** `*bool` — Whether app entitlement is active for this organization.
     
 </dd>
 </dl>
@@ -9513,6 +9928,14 @@ client.Organizations.Update(
 <dd>
 
 **thirdPartyClientAccess:** `*management.OrganizationThirdPartyClientAccessEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isAppEntitlementActive:** `*bool` — Whether app entitlement is active for this organization.
     
 </dd>
 </dl>
@@ -11018,6 +11441,10 @@ request := &management.ListRolesRequestParameters{
         NameFilter: management.String(
             "name_filter",
         ),
+        Type: management.RoleTypeEnumTenant.Ptr(),
+        OwnerID: management.String(
+            "owner_id",
+        ),
     }
 client.Roles.List(
         context.TODO(),
@@ -11063,6 +11490,22 @@ client.Roles.List(
 <dd>
 
 **nameFilter:** `*string` — Optional filter on name (case-insensitive).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type_:** `*management.RoleTypeEnum` — Optional filter on the type of the role
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ownerID:** `*string` — Filter organization-level roles by owner ID. Required when type is "organization".
     
 </dd>
 </dl>
@@ -11134,6 +11577,22 @@ client.Roles.Create(
 <dd>
 
 **description:** `*string` — Description of the role.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type_:** `*management.RoleTypeEnum` — The type of the role. Defaults to tenant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ownerID:** `*string` — The ID of the organization that owns this role. Required when type is "organization".
     
 </dd>
 </dl>
@@ -18840,6 +19299,9 @@ client.Branding.Phone.Templates.Test(
 
 ```go
 request := &management.ListClientGrantOrganizationsRequestParameters{
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -18868,6 +19330,14 @@ client.ClientGrants.Organizations.List(
 <dd>
 
 **id:** `string` — ID of the client grant
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -19890,6 +20360,9 @@ request := &management.ListSynchronizedGroupsRequestParameters{
         Take: management.Int(
             1,
         ),
+        Q: management.String(
+            "q",
+        ),
     }
 client.Connections.DirectoryProvisioning.ListSynchronizedGroups(
         context.TODO(),
@@ -19928,6 +20401,88 @@ client.Connections.DirectoryProvisioning.ListSynchronizedGroups(
 <dd>
 
 **take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `*string` — Query in <a target='_new' href ='https://lucene.apache.org/core/2_9_4/queryparsersyntax.html'>Lucene query string syntax</a>. Only prefix search on "name" or "email" fields are allowed, with a single wildcard suffix. Operators, modifiers, and groupings are not allowed. Terms are treated as case-insensitive. Example query: "name:engineering*".
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DirectoryProvisioning.AddSynchronizedGroupSelections(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add synchronized group selections to a directory provisioning configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AddSynchronizedGroupsRequestContent{
+        Groups: []*management.SynchronizedGroupPayload{
+            &management.SynchronizedGroupPayload{
+                ID: "id",
+            },
+        },
+    }
+client.Connections.DirectoryProvisioning.AddSynchronizedGroupSelections(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to add synchronized groups to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]*management.SynchronizedGroupPayload` — Array of Google Workspace Directory group objects to synchronize.
     
 </dd>
 </dl>
@@ -20002,6 +20557,80 @@ client.Connections.DirectoryProvisioning.Set(
 <dd>
 
 **groups:** `[]*management.SynchronizedGroupPayload` — Array of Google Workspace Directory group objects to synchronize.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DirectoryProvisioning.DeleteSynchronizedGroupSelections(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete synchronized group selections for a directory provisioning configuration
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteSynchronizedGroupsRequestContent{
+        Groups: []*management.SynchronizedGroupSelectionID{
+            &management.SynchronizedGroupSelectionID{
+                ID: "id",
+            },
+        },
+    }
+client.Connections.DirectoryProvisioning.DeleteSynchronizedGroupSelections(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to delete synchronized group selections for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]*management.SynchronizedGroupSelectionID` — Array of groups to remove from the selection set.
     
 </dd>
 </dl>
@@ -21439,7 +22068,7 @@ client.Emails.Provider.Update(
 </details>
 
 ## EventStreams Deliveries
-<details><summary><code>client.EventStreams.Deliveries.List(ID) -> []*management.EventStreamDelivery</code></summary>
+<details><summary><code>client.EventStreams.Deliveries.List(ID) -> *management.ListEventStreamDeliveriesResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -21752,6 +22381,9 @@ client.EventStreams.Redeliveries.CreateByID(
 
 ```go
 request := &management.ListFlowExecutionsRequestParameters{
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -21780,6 +22412,14 @@ client.Flows.Executions.List(
 <dd>
 
 **flowID:** `string` — Flow id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -25842,6 +26482,86 @@ client.Keys.Encryption.CreatePublicWrappingKey(
 </dl>
 </details>
 
+## Keys NetworkACLs
+<details><summary><code>client.Keys.NetworkACLs.Create(request) -> *management.CreateKeysNetworkACLsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new key used to verify HTTP Message Signatures on Network ACL rules.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateKeysNetworkACLsRequestContent{
+        Name: "name",
+        Alg: management.NetworkACLKeyAlgorithmEnumHmacSha256,
+        Value: "value",
+    }
+client.Keys.NetworkACLs.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — Customer-supplied label with no cryptographic meaning. Must be unique across all Network ACL keys for the tenant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alg:** `*management.NetworkACLKeyAlgorithmEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**value:** `string` — Base64-encoded raw key material. Constraints on the decoded value depend on the algorithm specified. Currently only HMAC-SHA256 is supported.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Keys Signing
 <details><summary><code>client.Keys.Signing.List() -> []*management.SigningKeys</code></summary>
 <dl>
@@ -26257,6 +26977,386 @@ client.Organizations.ClientGrants.Delete(
 <dd>
 
 **grantID:** `string` — The Client Grant ID to remove from the organization
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organizations Clients
+<details><summary><code>client.Organizations.Clients.List(ID) -> *management.ListOrganizationClientsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all clients associated with an organization, using checkpoint pagination.
+<ul>
+  <li>
+    <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+  </li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationClientsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.Clients.List(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50. Values greater than the maximum of 100 are capped at 100.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Clients.Create(ID, request) -> management.CreateOrganizationClientsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Associate one or more clients with an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationClientsRequestContent{
+        Clients: []*management.CreateOrganizationClientRequestItem{
+            &management.CreateOrganizationClientRequestItem{
+                ClientID: "client_id",
+                UseForMemberAccess: true,
+            },
+        },
+    }
+client.Organizations.Clients.Create(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clients:** `[]*management.CreateOrganizationClientRequestItem` — List of clients to associate with the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Clients.Delete(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove one or more client associations from an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteOrganizationClientsRequestContent{
+        Clients: []string{
+            "clients",
+        },
+    }
+client.Organizations.Clients.Delete(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clients:** `[]string` — List of client IDs to disassociate from the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Clients.Get(ID, ClientID) -> *management.GetOrganizationClientResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific client association for an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.Clients.Get(
+        context.TODO(),
+        "id",
+        "client_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `string` — ID of the client association to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.Clients.Update(ID, ClientID, request) -> *management.UpdateOrganizationClientResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an organization client association.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateOrganizationClientRequestContent{}
+client.Organizations.Clients.Update(
+        context.TODO(),
+        "id",
+        "client_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `string` — ID of the client association to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForMemberAccess:** `*bool` — Whether this client is used for member access to the organization.
     
 </dd>
 </dl>
@@ -27968,7 +29068,7 @@ List organization members.
 This endpoint is subject to eventual consistency. New users may not be immediately included in the response and deleted users may not be immediately removed from it.
 
 - Use the `fields` parameter to optionally define the specific member details retrieved. If `fields` is left blank, all fields (except roles) are returned.
-- Member roles are not sent by default. Use `fields=roles` to retrieve the roles assigned to each listed member. To use this parameter, you must include the `read:organization_member_roles` scope in the token.
+- Member roles are not sent by default. Use `fields=roles` to retrieve the roles assigned to each listed member. To use this parameter, you must include the `read:organization_member_roles` scope in the token. Only directly assigned roles are returned. To also include group-based role assignments, use `GET /api/v2/organizations/{id}/members/{user_id}/effective-roles`.
 
 This endpoint supports two types of pagination:
 
@@ -27995,6 +29095,9 @@ To search by checkpoint, use the following parameters: - from: Optional id from 
 
 ```go
 request := &management.ListOrganizationMembersRequestParameters{
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -28029,6 +29132,14 @@ client.Organizations.Members.List(
 <dd>
 
 **id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -28652,6 +29763,8 @@ client.Organizations.Members.EffectiveRoles.List(
 Retrieve detailed list of roles assigned to a given user within the context of a specific Organization. 
 
 Users can be members of multiple Organizations with unique roles assigned for each membership. This action only returns the roles associated with the specified Organization; any roles assigned to the user within other Organizations are not included.
+
+**Note**: Returns only direct role assignments for this member. To also include group-based role assignments, use `GET /api/v2/organizations/{id}/members/{user_id}/effective-roles`.
 </dd>
 </dl>
 </dd>
@@ -29024,6 +30137,11 @@ client.Organizations.Members.EffectiveRoles.Sources.Groups.List(
 <dd>
 
 List the organization members assigned a specific role within the context of an organization.
+<ul>
+  <li>
+    <b>Note</b>: Returns only members with direct role assignments. For groups assigned to this role within the organization, use <code>GET /api/v2/organizations/{organization_id}/roles/{role_id}/groups</code>.
+  </li>
+</ul>
 </dd>
 </dl>
 </dd>
@@ -29114,6 +30232,99 @@ client.Organizations.Roles.Members.List(
 <dd>
 
 **includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organizations Roles Groups
+<details><summary><code>client.Organizations.Roles.Groups.List(OrganizationID, RoleID) -> *management.ListOrganizationRoleGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the list of groups assigned to a role in the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationRoleGroupsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.Roles.Groups.List(
+        context.TODO(),
+        "organization_id",
+        "role_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleID:** `string` — ID of the role.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
     
 </dd>
 </dl>
@@ -30486,6 +31697,8 @@ client.Roles.Permissions.Delete(
 
 Retrieve list of users associated with a specific role. For Dashboard instructions, review [View Users Assigned to Roles](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/roles/view-users-assigned-to-roles).
 
+**Note**: Returns only users with direct role assignments. For groups assigned to this role, use `GET /api/v2/roles/{id}/groups`.
+
 This endpoint supports two types of pagination:
 
 - Offset pagination
@@ -30516,6 +31729,9 @@ To search by checkpoint, use the following parameters:
 
 ```go
 request := &management.ListRoleUsersRequestParameters{
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -30544,6 +31760,14 @@ client.Roles.Users.List(
 <dd>
 
 **id:** `string` — ID of the role to retrieve a list of users associated with.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -32529,6 +33753,9 @@ request := &management.GetUserGroupsRequestParameters{
         IncludeFields: management.Bool(
             true,
         ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -32573,6 +33800,14 @@ client.Users.Groups.Get(
 <dd>
 
 **includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -33146,6 +34381,8 @@ client.Users.Organizations.List(
 <dd>
 
 Retrieve all permissions associated with the user.
+
+**Note**: Returns only permissions from direct assignments and directly assigned roles. For permissions a user has via group-based role assignments, use `GET /api/v2/users/{id}/effective-permissions`.
 </dd>
 </dl>
 </dd>
@@ -33475,6 +34712,8 @@ client.Users.RiskAssessments.Clear(
 Retrieve detailed list of all user roles currently assigned to a user.
 
 **Note**: This action retrieves all roles assigned to a user in the context of your whole tenant. To retrieve Organization-specific roles, use the following endpoint: [Get user roles assigned to an Organization member](https://auth0.com/docs/api/management/v2/organizations/get-organization-member-roles).
+
+**Note**: Returns only direct role assignments. To also include group-based role assignments, use `GET /api/v2/users/{id}/effective-roles`.
 </dd>
 </dl>
 </dd>
@@ -33733,6 +34972,9 @@ Retrieve details for a user's refresh tokens.
 
 ```go
 request := &management.ListRefreshTokensRequestParameters{
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -33761,6 +35003,14 @@ client.Users.RefreshToken.List(
 <dd>
 
 **userID:** `string` — ID of the user to get refresh tokens for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -33875,6 +35125,9 @@ Retrieve details for a user's sessions.
 
 ```go
 request := &management.ListUserSessionsRequestParameters{
+        IncludeTotals: management.Bool(
+            true,
+        ),
         From: management.String(
             "from",
         ),
@@ -33903,6 +35156,14 @@ client.Users.Sessions.List(
 <dd>
 
 **userID:** `string` — ID of the user to get sessions for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>

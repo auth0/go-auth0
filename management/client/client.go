@@ -4,6 +4,7 @@ package client
 
 import (
 	client "github.com/auth0/go-auth0/v3/management/actions/client"
+	agents "github.com/auth0/go-auth0/v3/management/agents"
 	anomalyclient "github.com/auth0/go-auth0/v3/management/anomaly/client"
 	attackprotectionclient "github.com/auth0/go-auth0/v3/management/attackprotection/client"
 	brandingclient "github.com/auth0/go-auth0/v3/management/branding/client"
@@ -55,6 +56,7 @@ import (
 
 type Management struct {
 	Actions               *client.Client
+	Agents                *agents.Client
 	Branding              *brandingclient.Client
 	ClientGrants          *clientgrantsclient.Client
 	Clients               *clientsclient.Client
@@ -109,6 +111,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 	options := core.NewRequestOptions(opts...)
 	return &Management{
 		Actions:               client.NewClient(options),
+		Agents:                agents.NewClient(options),
 		Branding:              brandingclient.NewClient(options),
 		ClientGrants:          clientgrantsclient.NewClient(options),
 		Clients:               clientsclient.NewClient(options),

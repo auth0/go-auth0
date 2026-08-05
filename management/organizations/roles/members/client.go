@@ -36,6 +36,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // List the organization members assigned a specific role within the context of an organization.
+// <ul>
+//
+//	<li>
+//	  <b>Note</b>: Returns only members with direct role assignments. For groups assigned to this role within the organization, use <code>GET /api/v2/organizations/{organization_id}/roles/{role_id}/groups</code>.
+//	</li>
+//
+// </ul>
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the organization.

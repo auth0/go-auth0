@@ -7,12 +7,14 @@ import (
 	internal "github.com/auth0/go-auth0/v3/management/internal"
 	customsigning "github.com/auth0/go-auth0/v3/management/keys/customsigning"
 	encryption "github.com/auth0/go-auth0/v3/management/keys/encryption"
+	networkacls "github.com/auth0/go-auth0/v3/management/keys/networkacls"
 	signing "github.com/auth0/go-auth0/v3/management/keys/signing"
 )
 
 type Client struct {
 	CustomSigning *customsigning.Client
 	Encryption    *encryption.Client
+	NetworkACLs   *networkacls.Client
 	Signing       *signing.Client
 
 	options *core.RequestOptions
@@ -24,6 +26,7 @@ func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		CustomSigning: customsigning.NewClient(options),
 		Encryption:    encryption.NewClient(options),
+		NetworkACLs:   networkacls.NewClient(options),
 		Signing:       signing.NewClient(options),
 		options:       options,
 		baseURL:       options.BaseURL,
