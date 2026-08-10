@@ -15462,6 +15462,26 @@ func TestRole_GetName(tt *testing.T) {
 	r.GetName()
 }
 
+func TestRole_GetOwnerID(tt *testing.T) {
+	var zeroValue string
+	r := &Role{OwnerID: &zeroValue}
+	r.GetOwnerID()
+	r = &Role{}
+	r.GetOwnerID()
+	r = nil
+	r.GetOwnerID()
+}
+
+func TestRole_GetType(tt *testing.T) {
+	var zeroValue string
+	r := &Role{Type: &zeroValue}
+	r.GetType()
+	r = &Role{}
+	r.GetType()
+	r = nil
+	r.GetType()
+}
+
 func TestRole_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &Role{}

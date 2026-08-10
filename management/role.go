@@ -12,6 +12,15 @@ type Role struct {
 
 	// A description of the role created.
 	Description *string `json:"description,omitempty"`
+
+	// The type of the role. Can be either "tenant" for tenant-level roles,
+	// which is the default, or "organization" for organization-level roles.
+	Type *string `json:"type,omitempty"`
+
+	// References the owning entity of the role. This is only non-null when the
+	// role was created as an organization-level role, in which case it holds a
+	// valid organization ID.
+	OwnerID *string `json:"owner_id,omitempty"`
 }
 
 // RoleList holds a list of Roles.

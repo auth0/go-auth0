@@ -154,6 +154,63 @@ func TestRoleManager_Permissions(t *testing.T) {
 	assert.Len(t, permissionList.Permissions, 0)
 }
 
+func TestRoleManager_OrganizationLevelRole(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	org := givenAnOrganization(t)
+
+	// An organization-level role is created by pointing OwnerID at the owning
+	// organization. Type is what distinguishes it from a tenant-level role, which
+	// is what the API defaults to when both fields are omitted.
+	role := &Role{
+		Name:        auth0.String(fmt.Sprintf("test-org-role%d", rand.Intn(999))),
+		Description: auth0.String("Test Organization Role"),
+		Type:        auth0.String("organization"),
+		OwnerID:     org.ID,
+	}
+
+	require.NoError(t, api.Role.Create(ctx, role))
+
+	t.Cleanup(func() {
+		cleanupRole(t, role.GetID())
+	})
+
+	assert.Equal(t, "organization", role.GetType())
+	assert.Equal(t, org.GetID(), role.GetOwnerID())
+
+	// Both fields are echoed on read and on update, even though neither can be
+	// changed after creation.
+	readRole, err := api.Role.Read(ctx, role.GetID())
+	assert.NoError(t, err)
+	assert.Equal(t, "organization", readRole.GetType())
+	assert.Equal(t, org.GetID(), readRole.GetOwnerID())
+
+	updatedRole := &Role{
+		Description: auth0.String("The Organization Administrator"),
+	}
+	err = api.Role.Update(ctx, role.GetID(), updatedRole)
+	assert.NoError(t, err)
+	assert.Equal(t, "The Organization Administrator", updatedRole.GetDescription())
+	assert.Equal(t, "organization", updatedRole.GetType())
+	assert.Equal(t, org.GetID(), updatedRole.GetOwnerID())
+
+	// The list endpoint can be filtered down to the roles owned by a single
+	// organization.
+	roleList, err := api.Role.List(ctx, Parameter("type", "organization"), Parameter("owner_id", org.GetID()))
+	assert.NoError(t, err)
+	assert.Len(t, roleList.Roles, 1)
+	assert.Equal(t, role.GetID(), roleList.Roles[0].GetID())
+	assert.Equal(t, "organization", roleList.Roles[0].GetType())
+	assert.Equal(t, org.GetID(), roleList.Roles[0].GetOwnerID())
+
+	// A role created without either field is a tenant-level role with no owner.
+	tenantRole := givenARole(t)
+	assert.Equal(t, "tenant", tenantRole.GetType())
+	assert.Empty(t, tenantRole.GetOwnerID())
+}
+
 func givenARole(t *testing.T) *Role {
 	t.Helper()
 
