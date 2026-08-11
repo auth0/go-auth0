@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"errors"
+	"net/http"
 )
 
 // Organization is used to allow B2B customers to better manage
@@ -48,6 +49,14 @@ type Organization struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	TokenQuota *TokenQuota `json:"token_quota,omitempty"`
+
+	// IsAppEntitlementActive controls whether this organization's app entitlement is active,
+	// determining whether members of this organization can access applications associated with it.
+	IsAppEntitlementActive *bool `json:"is_app_entitlement_active,omitempty"`
+
+	// Client holds the association between this organization and a client, only populated
+	// when the `include_client_association_for` request parameter is passed on List.
+	Client *OrganizationClientAssociation `json:"client,omitempty"`
 }
 
 // OrganizationBranding holds branding information for an Organization.
@@ -251,6 +260,55 @@ func (o *OrganizationDiscoveryDomain) cleanForPatch() *OrganizationDiscoveryDoma
 type DiscoveryDomainList struct {
 	List
 	Domains []*OrganizationDiscoveryDomain `json:"domains"`
+}
+
+// OrganizationClientAssociation holds the lightweight association between an
+// Organization and a client, as returned under Organization.Client when the
+// `include_client_association_for` request parameter is passed on List.
+type OrganizationClientAssociation struct {
+	// UseForMemberAccess indicates whether the client is used for member access to the organization.
+	UseForMemberAccess *bool `json:"use_for_member_access,omitempty"`
+}
+
+// OrganizationClientMetadata holds read-only client metadata returned alongside
+// an OrganizationClient association.
+type OrganizationClientMetadata struct {
+	// Name of the client.
+	Name *string `json:"name,omitempty"`
+
+	// AppType of the client.
+	AppType *string `json:"app_type,omitempty"`
+
+	// LogoURI of the client.
+	LogoURI *string `json:"logo_uri,omitempty"`
+
+	// IsFirstParty indicates whether the client is a first-party client.
+	IsFirstParty *bool `json:"is_first_party,omitempty"`
+
+	// GrantTypes enabled for the client.
+	GrantTypes *[]string `json:"grant_types,omitempty"`
+
+	// OrganizationUsage indicates how the client uses organizations. Possible values are
+	// "deny", "allow" and "require".
+	OrganizationUsage *string `json:"organization_usage,omitempty"`
+}
+
+// OrganizationClient represents the association between an Organization and a client.
+type OrganizationClient struct {
+	// ClientID of the associated client.
+	ClientID *string `json:"client_id,omitempty"`
+
+	// UseForMemberAccess indicates whether the client is used for member access to the organization.
+	UseForMemberAccess *bool `json:"use_for_member_access,omitempty"`
+
+	// Client holds read-only metadata about the associated client.
+	Client *OrganizationClientMetadata `json:"client,omitempty"`
+}
+
+// OrganizationClientList is a list of OrganizationClients.
+type OrganizationClientList struct {
+	List
+	Clients []*OrganizationClient `json:"clients"`
 }
 
 // OrganizationManager is used for managing an Organization.
@@ -525,6 +583,75 @@ func (m *OrganizationManager) UpdateDiscoveryDomain(ctx context.Context, id stri
 	}
 
 	err = m.management.Request(ctx, "PATCH", m.management.URI("organizations", id, "discovery-domains", domainID), d.cleanForPatch(), opts...)
+
+	return
+}
+
+// Clients retrieves the clients associated with an organization.
+//
+// For information on how to paginate using this function see https://pkg.go.dev/github.com/auth0/go-auth0/management#hdr-Checkpoint_Pagination
+func (m *OrganizationManager) Clients(ctx context.Context, id string, opts ...RequestOption) (c *OrganizationClientList, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "clients"), &c, applyListCheckpointDefaults(opts))
+	return
+}
+
+// AssociateClient associates a client with an organization.
+func (m *OrganizationManager) AssociateClient(ctx context.Context, id string, clientID string, useForMemberAccess bool, opts ...RequestOption) (err error) {
+	body := struct {
+		Clients []*OrganizationClient `json:"clients"`
+	}{
+		Clients: []*OrganizationClient{
+			{
+				ClientID:           &clientID,
+				UseForMemberAccess: &useForMemberAccess,
+			},
+		},
+	}
+
+	request, err := m.management.NewRequest(ctx, "POST", m.management.URI("organizations", id, "clients"), &body, opts...)
+	if err != nil {
+		return err
+	}
+
+	response, err := m.management.Do(request)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= http.StatusBadRequest {
+		return newError(response)
+	}
+
+	return nil
+}
+
+// Client retrieves a specific client associated with an organization.
+func (m *OrganizationManager) Client(ctx context.Context, id string, clientID string, opts ...RequestOption) (c *OrganizationClient, err error) {
+	err = m.management.Request(ctx, "GET", m.management.URI("organizations", id, "clients", clientID), &c, opts...)
+	return
+}
+
+// UpdateClient updates the association between an organization and a client.
+func (m *OrganizationManager) UpdateClient(ctx context.Context, id string, clientID string, useForMemberAccess bool, opts ...RequestOption) (err error) {
+	body := struct {
+		UseForMemberAccess *bool `json:"use_for_member_access,omitempty"`
+	}{
+		UseForMemberAccess: &useForMemberAccess,
+	}
+	err = m.management.Request(ctx, "PATCH", m.management.URI("organizations", id, "clients", clientID), &body, opts...)
+
+	return
+}
+
+// RemoveClient removes the association between an organization and a client.
+func (m *OrganizationManager) RemoveClient(ctx context.Context, id string, clientID string, opts ...RequestOption) (err error) {
+	body := struct {
+		Clients []string `json:"clients"`
+	}{
+		Clients: []string{clientID},
+	}
+	err = m.management.Request(ctx, "DELETE", m.management.URI("organizations", id, "clients"), &body, opts...)
 
 	return
 }

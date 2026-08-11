@@ -1,5 +1,10 @@
 # Change Log
 
+## [Unreleased]
+
+**Added**
+- feat: add Organization-to-Application Entitlement support (EA only) with `IsAppEntitlementActive`/`Client` on `Organization`, `OrganizationClient`/`OrganizationClientAssociation`/`OrganizationClientMetadata`/`OrganizationClientList` types, and `Clients`/`AssociateClient`/`Client`/`UpdateClient`/`RemoveClient` on `OrganizationManager`
+
 ## [v1.46.0](https://github.com/auth0/go-auth0/tree/v1.46.0) (2026-07-31)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.45.0...v1.46.0)
 

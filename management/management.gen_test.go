@@ -13446,6 +13446,13 @@ func TestOrganization_GetBranding(tt *testing.T) {
 	o.GetBranding()
 }
 
+func TestOrganization_GetClient(tt *testing.T) {
+	o := &Organization{}
+	o.GetClient()
+	o = nil
+	o.GetClient()
+}
+
 func TestOrganization_GetDisplayName(tt *testing.T) {
 	var zeroValue string
 	o := &Organization{DisplayName: &zeroValue}
@@ -13464,6 +13471,16 @@ func TestOrganization_GetID(tt *testing.T) {
 	o.GetID()
 	o = nil
 	o.GetID()
+}
+
+func TestOrganization_GetIsAppEntitlementActive(tt *testing.T) {
+	var zeroValue bool
+	o := &Organization{IsAppEntitlementActive: &zeroValue}
+	o.GetIsAppEntitlementActive()
+	o = &Organization{}
+	o.GetIsAppEntitlementActive()
+	o = nil
+	o.GetIsAppEntitlementActive()
 }
 
 func TestOrganization_GetMetadata(tt *testing.T) {
@@ -13534,6 +13551,135 @@ func TestOrganizationBranding_GetLogoURL(tt *testing.T) {
 func TestOrganizationBranding_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &OrganizationBranding{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestOrganizationClient_GetClient(tt *testing.T) {
+	o := &OrganizationClient{}
+	o.GetClient()
+	o = nil
+	o.GetClient()
+}
+
+func TestOrganizationClient_GetClientID(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationClient{ClientID: &zeroValue}
+	o.GetClientID()
+	o = &OrganizationClient{}
+	o.GetClientID()
+	o = nil
+	o.GetClientID()
+}
+
+func TestOrganizationClient_GetUseForMemberAccess(tt *testing.T) {
+	var zeroValue bool
+	o := &OrganizationClient{UseForMemberAccess: &zeroValue}
+	o.GetUseForMemberAccess()
+	o = &OrganizationClient{}
+	o.GetUseForMemberAccess()
+	o = nil
+	o.GetUseForMemberAccess()
+}
+
+func TestOrganizationClient_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &OrganizationClient{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestOrganizationClientAssociation_GetUseForMemberAccess(tt *testing.T) {
+	var zeroValue bool
+	o := &OrganizationClientAssociation{UseForMemberAccess: &zeroValue}
+	o.GetUseForMemberAccess()
+	o = &OrganizationClientAssociation{}
+	o.GetUseForMemberAccess()
+	o = nil
+	o.GetUseForMemberAccess()
+}
+
+func TestOrganizationClientAssociation_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &OrganizationClientAssociation{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestOrganizationClientList_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &OrganizationClientList{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestOrganizationClientMetadata_GetAppType(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationClientMetadata{AppType: &zeroValue}
+	o.GetAppType()
+	o = &OrganizationClientMetadata{}
+	o.GetAppType()
+	o = nil
+	o.GetAppType()
+}
+
+func TestOrganizationClientMetadata_GetGrantTypes(tt *testing.T) {
+	var zeroValue []string
+	o := &OrganizationClientMetadata{GrantTypes: &zeroValue}
+	o.GetGrantTypes()
+	o = &OrganizationClientMetadata{}
+	o.GetGrantTypes()
+	o = nil
+	o.GetGrantTypes()
+}
+
+func TestOrganizationClientMetadata_GetIsFirstParty(tt *testing.T) {
+	var zeroValue bool
+	o := &OrganizationClientMetadata{IsFirstParty: &zeroValue}
+	o.GetIsFirstParty()
+	o = &OrganizationClientMetadata{}
+	o.GetIsFirstParty()
+	o = nil
+	o.GetIsFirstParty()
+}
+
+func TestOrganizationClientMetadata_GetLogoURI(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationClientMetadata{LogoURI: &zeroValue}
+	o.GetLogoURI()
+	o = &OrganizationClientMetadata{}
+	o.GetLogoURI()
+	o = nil
+	o.GetLogoURI()
+}
+
+func TestOrganizationClientMetadata_GetName(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationClientMetadata{Name: &zeroValue}
+	o.GetName()
+	o = &OrganizationClientMetadata{}
+	o.GetName()
+	o = nil
+	o.GetName()
+}
+
+func TestOrganizationClientMetadata_GetOrganizationUsage(tt *testing.T) {
+	var zeroValue string
+	o := &OrganizationClientMetadata{OrganizationUsage: &zeroValue}
+	o.GetOrganizationUsage()
+	o = &OrganizationClientMetadata{}
+	o.GetOrganizationUsage()
+	o = nil
+	o.GetOrganizationUsage()
+}
+
+func TestOrganizationClientMetadata_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &OrganizationClientMetadata{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
