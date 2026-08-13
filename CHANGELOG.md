@@ -1,10 +1,12 @@
 # Change Log
 
-## [Unreleased]
+## [v1.47.0](https://github.com/auth0/go-auth0/tree/v1.47.0) (2026-08-13)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.46.0...v1.47.0)
 
 **Added**
-- feat: add Organization-to-Application Entitlement support (EA only) with `IsAppEntitlementActive`/`Client` on `Organization`.
-- feat: add `TokenVaultPrivilegedAccess` support to `Client`, letting a client be configured as a Token Vault privileged worker with credentials, an IP allowlist, and per-connection scope grants (Early Access). Note that `Credentials`, `IPAllowlist`, and `Grants` are all required whenever the object is written
+- feat: add Organization-to-Application Entitlement support (EA only) with `IsAppEntitlementActive`/`Client` on `Organization` [\#848](https://github.com/auth0/go-auth0/pull/848) ([KartikJha](https://github.com/KartikJha))
+- feat: add support for managing organization-level roles with `Type` and `OwnerID` fields on `Role` [\#847](https://github.com/auth0/go-auth0/pull/847) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: add `TokenVaultPrivilegedAccess` support to `Client`, letting a client be configured as a Token Vault privileged worker with credentials, an IP allowlist, and per-connection scope grants (Early Access). Note that `Credentials`, `IPAllowlist`, and `Grants` are all required whenever the object is written [\#840](https://github.com/auth0/go-auth0/pull/840) ([KartikJha](https://github.com/KartikJha))
 
 ## [v1.46.0](https://github.com/auth0/go-auth0/tree/v1.46.0) (2026-07-31)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.45.0...v1.46.0)
