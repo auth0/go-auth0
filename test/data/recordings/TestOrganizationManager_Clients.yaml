@@ -13,7 +13,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"test-organization131","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
+            {"name":"test-organization213","display_name":"Test Organization","branding":{"logo_url":"https://example.com/logo.gif"}}
         form: {}
         headers:
             Content-Type:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 219
         uncompressed: false
-        body: '{"id":"org_TVoxsLRcMhkh6CKZ","display_name":"Test Organization","name":"test-organization131","branding":{"logo_url":"https://example.com/logo.gif"},"third_party_client_access":"block","is_app_entitlement_active":false}'
+        body: '{"id":"org_yeTGpixqdv44fqz5","display_name":"Test Organization","name":"test-organization213","branding":{"logo_url":"https://example.com/logo.gif"},"third_party_client_access":"block","is_app_entitlement_active":false}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 340.78525ms
+        duration: 321.602792ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -49,7 +49,7 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test Client (Aug 11 11:19:08.124)","description":"This is just a test client.","jwt_configuration":{"alg":"RS256"},"organization_usage":"allow","client_authentication_methods":{"private_key_jwt":{"credentials":[{"name":"Test Credential (Aug 11 11:19:08.124)","credential_type":"public_key","pem":"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAua6LXMfgDE/tDdkOL1Oe\n3oWUwg1r4dSTg9L7RCcI5hItUzmkVofHtWN0H4CH2lm2ANmaJUsnhzctYowYW2+R\ntHvU9afTmtbdhpy993972hUqZSYLsE3iGziphYkOKVsqq38+VRH3TNg93zSLoRao\nJnTTkMXseVqiyqYRmFN8+gQQoEclHSGPUWQG5XMZ+hhuXeFyo+Yw/qbZWca/6/2I\n3rsca9jXR1alhxhHrXrg8N4Dm3gBgGbmiht6YYYT2Tyl1OqB9+iOI/9D7dfoCF6X\nAWJXRE454cmC8k8oucpjZVpflA+ocKshwPDR6YTLQYbXYiaWxEoaz0QGUErNQBnG\nI+sr9jDY3ua/s6HF6h0qyi/HVZH4wx+m4CtOfJoYTjrGBbaRszzUxhtSN2/MhXDu\n+a35q9/2zcu/3fjkkfVvGUt+NyyiYOKQ9vsJC1g/xxdUWtowjNwjfZE2zcG4usi8\nr38Bp0lmiipAsMLduZM/D5dFXkRdWCBNDfULmmg/4nv2wwjbjQuLemAMh7mmrztW\ni/85WMnjKQZT8NqS43pmgyIzg1gK1neMqdS90YmQ/PvJ36qALxCs245w1JpN9BAL\nJbwxCg/dbmKT7PalfWrksx9hGcJxtGqebldaOpw+5GVIPxxtC1C0gVr9BKeiDS3f\naibASY5pIRiKENmbZELDtucCAwEAAQ==\n-----END PUBLIC KEY-----"}]}}}
+            {"name":"Test Client (Aug 13 10:22:36.322)","description":"This is just a test client.","jwt_configuration":{"alg":"RS256"},"organization_usage":"allow","client_authentication_methods":{"private_key_jwt":{"credentials":[{"name":"Test Credential (Aug 13 10:22:36.323)","credential_type":"public_key","pem":"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAua6LXMfgDE/tDdkOL1Oe\n3oWUwg1r4dSTg9L7RCcI5hItUzmkVofHtWN0H4CH2lm2ANmaJUsnhzctYowYW2+R\ntHvU9afTmtbdhpy993972hUqZSYLsE3iGziphYkOKVsqq38+VRH3TNg93zSLoRao\nJnTTkMXseVqiyqYRmFN8+gQQoEclHSGPUWQG5XMZ+hhuXeFyo+Yw/qbZWca/6/2I\n3rsca9jXR1alhxhHrXrg8N4Dm3gBgGbmiht6YYYT2Tyl1OqB9+iOI/9D7dfoCF6X\nAWJXRE454cmC8k8oucpjZVpflA+ocKshwPDR6YTLQYbXYiaWxEoaz0QGUErNQBnG\nI+sr9jDY3ua/s6HF6h0qyi/HVZH4wx+m4CtOfJoYTjrGBbaRszzUxhtSN2/MhXDu\n+a35q9/2zcu/3fjkkfVvGUt+NyyiYOKQ9vsJC1g/xxdUWtowjNwjfZE2zcG4usi8\nr38Bp0lmiipAsMLduZM/D5dFXkRdWCBNDfULmmg/4nv2wwjbjQuLemAMh7mmrztW\ni/85WMnjKQZT8NqS43pmgyIzg1gK1neMqdS90YmQ/PvJ36qALxCs245w1JpN9BAL\nJbwxCg/dbmKT7PalfWrksx9hGcJxtGqebldaOpw+5GVIPxxtC1C0gVr9BKeiDS3f\naibASY5pIRiKENmbZELDtucCAwEAAQ==\n-----END PUBLIC KEY-----"}]}}}
         form: {}
         headers:
             Content-Type:
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: false
-        body: '{"name":"Test Client (Aug 11 11:19:08.124)","description":"This is just a test client.","client_id":"fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw","client_secret":"[REDACTED]","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"alg":"RS256"},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"organization_usage":"allow","client_authentication_methods":{"private_key_jwt":{"credentials":[{"id":"cred_3x4WVkH8QpbJhWHUphcdBT","name":"Test Credential (Aug 11 11:19:08.124)","kid":"4e7yYf0TKdyTLbVnpq2wLN6mZ8t7eb9UJkMksyHj9iU","credential_type":"public_key","alg":"RS256","created_at":"2026-08-11T05:49:08.596Z","updated_at":"2026-08-11T05:49:08.596Z"}]}}}'
+        body: '{"name":"Test Client (Aug 13 10:22:36.322)","description":"This is just a test client.","client_id":"qzp5TB78cTWLcYlz6hol5uFMYOFXm51e","client_secret":"[REDACTED]","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"alg":"RS256"},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"organization_usage":"allow","client_authentication_methods":{"private_key_jwt":{"credentials":[{"id":"cred_hmwVXztSXiE4KvHcjgLK3Z","name":"Test Credential (Aug 13 10:22:36.323)","kid":"4e7yYf0TKdyTLbVnpq2wLN6mZ8t7eb9UJkMksyHj9iU","credential_type":"public_key","alg":"RS256","created_at":"2026-08-13T04:52:36.826Z","updated_at":"2026-08-13T04:52:36.826Z"}]}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 645.304041ms
+        duration: 605.439666ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -85,14 +85,14 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"clients":[{"client_id":"fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw","use_for_member_access":true}]}
+            {"clients":[{"client_id":"qzp5TB78cTWLcYlz6hol5uFMYOFXm51e","use_for_member_access":true}]}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.46.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_TVoxsLRcMhkh6CKZ/clients
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_yeTGpixqdv44fqz5/clients
         method: POST
       response:
         proto: HTTP/2.0
@@ -102,13 +102,13 @@ interactions:
         trailer: {}
         content_length: 269
         uncompressed: false
-        body: '[{"client_id":"fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw","use_for_member_access":true,"client":{"name":"Test Client (Aug 11 11:19:08.124)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}]'
+        body: '[{"client_id":"qzp5TB78cTWLcYlz6hol5uFMYOFXm51e","use_for_member_access":true,"client":{"name":"Test Client (Aug 13 10:22:36.322)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}]'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 345.109625ms
+        duration: 354.144709ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -125,7 +125,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.46.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_TVoxsLRcMhkh6CKZ/clients/fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_yeTGpixqdv44fqz5/clients/qzp5TB78cTWLcYlz6hol5uFMYOFXm51e
         method: GET
       response:
         proto: HTTP/2.0
@@ -135,13 +135,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"client_id":"fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw","use_for_member_access":true,"client":{"name":"Test Client (Aug 11 11:19:08.124)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}'
+        body: '{"client_id":"qzp5TB78cTWLcYlz6hol5uFMYOFXm51e","use_for_member_access":true,"client":{"name":"Test Client (Aug 13 10:22:36.322)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 326.263333ms
+        duration: 342.987917ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -158,7 +158,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.46.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_TVoxsLRcMhkh6CKZ/clients?take=50
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_yeTGpixqdv44fqz5/clients?take=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -168,13 +168,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"clients":[{"client_id":"fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw","use_for_member_access":true,"client":{"name":"Test Client (Aug 11 11:19:08.124)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}]}'
+        body: '{"clients":[{"client_id":"qzp5TB78cTWLcYlz6hol5uFMYOFXm51e","use_for_member_access":true,"client":{"name":"Test Client (Aug 13 10:22:36.322)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}]}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 321.6705ms
+        duration: 350.283792ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -194,7 +194,7 @@ interactions:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.46.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_TVoxsLRcMhkh6CKZ/clients/fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_yeTGpixqdv44fqz5/clients/qzp5TB78cTWLcYlz6hol5uFMYOFXm51e
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -204,13 +204,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"client_id":"fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw","use_for_member_access":false,"client":{"name":"Test Client (Aug 11 11:19:08.124)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}'
+        body: '{"client_id":"qzp5TB78cTWLcYlz6hol5uFMYOFXm51e","use_for_member_access":false,"client":{"name":"Test Client (Aug 13 10:22:36.322)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 303.955208ms
+        duration: 303.669083ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -227,7 +227,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.46.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_TVoxsLRcMhkh6CKZ/clients/fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_yeTGpixqdv44fqz5/clients/qzp5TB78cTWLcYlz6hol5uFMYOFXm51e
         method: GET
       response:
         proto: HTTP/2.0
@@ -237,13 +237,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"client_id":"fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw","use_for_member_access":false,"client":{"name":"Test Client (Aug 11 11:19:08.124)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}'
+        body: '{"client_id":"qzp5TB78cTWLcYlz6hol5uFMYOFXm51e","use_for_member_access":false,"client":{"name":"Test Client (Aug 13 10:22:36.322)","is_first_party":true,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"organization_usage":"allow"}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 294.176625ms
+        duration: 306.58025ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -256,14 +256,14 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"clients":["fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw"]}
+            {"clients":["qzp5TB78cTWLcYlz6hol5uFMYOFXm51e"]}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
                 - Go-Auth0/1.46.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_TVoxsLRcMhkh6CKZ/clients
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_yeTGpixqdv44fqz5/clients
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -279,7 +279,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 299.639542ms
+        duration: 316.993583ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -296,7 +296,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.46.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_TVoxsLRcMhkh6CKZ/clients?take=50
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_yeTGpixqdv44fqz5/clients?take=50
         method: GET
       response:
         proto: HTTP/2.0
@@ -312,7 +312,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 289.098541ms
+        duration: 329.465542ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -329,7 +329,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.46.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/fLbqKZjZInLKmU6m1pT2RzKThLLAA9Qw
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/qzp5TB78cTWLcYlz6hol5uFMYOFXm51e
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -345,7 +345,7 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 364.047709ms
+        duration: 434.540583ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -362,7 +362,7 @@ interactions:
         headers:
             User-Agent:
                 - Go-Auth0/1.46.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_TVoxsLRcMhkh6CKZ
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/organizations/org_yeTGpixqdv44fqz5
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -378,4 +378,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 305.933959ms
+        duration: 312.816583ms
