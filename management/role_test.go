@@ -57,6 +57,42 @@ func TestRoleManager_Update(t *testing.T) {
 	assert.Equal(t, expectedRole.GetName(), updatedRole.GetName())
 }
 
+func TestRoleManager_UpdateStripsReadOnlyFields(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	org := givenAnOrganization(t)
+
+	role := &Role{
+		Name:        auth0.String(fmt.Sprintf("test-org-role%d", rand.Intn(999))),
+		Description: auth0.String("Test Organization Role"),
+		Type:        auth0.String("organization"),
+		OwnerID:     org.ID,
+	}
+	require.NoError(t, api.Role.Create(ctx, role))
+
+	t.Cleanup(func() {
+		cleanupRole(t, role.GetID())
+	})
+
+	// PATCH /roles/{id} accepts only name and description, so handing it a role
+	// read straight back from the API has to work: ID, Type and OwnerID are
+	// stripped before the request is sent.
+	readRole, err := api.Role.Read(ctx, role.GetID())
+	require.NoError(t, err)
+
+	readRole.Description = auth0.String("The Organization Administrator")
+	require.NoError(t, api.Role.Update(ctx, role.GetID(), readRole))
+
+	assert.Equal(t, "The Organization Administrator", readRole.GetDescription())
+
+	// The response repopulates the read-only fields that were stripped.
+	assert.Equal(t, role.GetID(), readRole.GetID())
+	assert.Equal(t, "organization", readRole.GetType())
+	assert.Equal(t, org.GetID(), readRole.GetOwnerID())
+}
+
 func TestRoleManager_Delete(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
@@ -181,7 +217,7 @@ func TestRoleManager_OrganizationLevelRole(t *testing.T) {
 	assert.Equal(t, org.GetID(), role.GetOwnerID())
 
 	// Both fields are echoed on read and on update, even though neither can be
-	// changed after creation.
+	// sent to the update endpoint. See TestRoleManager_UpdateStripsReadOnlyFields.
 	readRole, err := api.Role.Read(ctx, role.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, "organization", readRole.GetType())

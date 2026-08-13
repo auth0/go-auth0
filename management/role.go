@@ -23,6 +23,20 @@ type Role struct {
 	OwnerID *string `json:"owner_id,omitempty"`
 }
 
+// cleanForPatch keeps only the fields PATCH /roles/{id} accepts. The endpoint
+// rejects everything else with a 400 "Additional properties not allowed",
+// including ID and including Type and OwnerID when their values are unchanged,
+// so a Read followed by an Update would otherwise always fail.
+//
+// The struct is reset in place so the response can still be decoded back into
+// it, which is what repopulates the read-only fields for the caller.
+func (r *Role) cleanForPatch() {
+	*r = Role{
+		Name:        r.Name,
+		Description: r.Description,
+	}
+}
+
 // RoleList holds a list of Roles.
 type RoleList struct {
 	List
@@ -70,8 +84,16 @@ func (m *RoleManager) Read(ctx context.Context, id string, opts ...RequestOption
 
 // Update a role.
 //
+// Only Name and Description can be updated. Type and OwnerID are set when the
+// role is created and are stripped from the request, as the endpoint rejects
+// them outright.
+//
 // See: https://auth0.com/docs/api/management/v2#!/Roles/patch_roles_by_id
 func (m *RoleManager) Update(ctx context.Context, id string, r *Role, opts ...RequestOption) (err error) {
+	if r != nil {
+		r.cleanForPatch()
+	}
+
 	return m.management.Request(ctx, "PATCH", m.management.URI("roles", id), r, opts...)
 }
 
