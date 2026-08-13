@@ -482,41 +482,6 @@ func TestOrganizationManager_IsAppEntitlementActive(t *testing.T) {
 	assert.False(t, actualOrg.GetIsAppEntitlementActive())
 }
 
-func TestOrganizationManager_Clients(t *testing.T) {
-	configureHTTPTestRecordings(t)
-
-	org := givenAnOrganization(t)
-	client := givenAClient(t)
-
-	err := api.Organization.AssociateClient(context.Background(), org.GetID(), client.GetClientID(), true)
-	require.NoError(t, err)
-
-	associatedClient, err := api.Organization.Client(context.Background(), org.GetID(), client.GetClientID())
-	require.NoError(t, err)
-	assert.Equal(t, client.GetClientID(), associatedClient.GetClientID())
-	assert.True(t, associatedClient.GetUseForMemberAccess())
-	assert.Equal(t, client.GetName(), associatedClient.GetClient().GetName())
-
-	clients, err := api.Organization.Clients(context.Background(), org.GetID())
-	require.NoError(t, err)
-	assert.Len(t, clients.Clients, 1)
-	assert.Equal(t, client.GetClientID(), clients.Clients[0].GetClientID())
-
-	err = api.Organization.UpdateClient(context.Background(), org.GetID(), client.GetClientID(), false)
-	require.NoError(t, err)
-
-	associatedClient, err = api.Organization.Client(context.Background(), org.GetID(), client.GetClientID())
-	require.NoError(t, err)
-	assert.False(t, associatedClient.GetUseForMemberAccess())
-
-	err = api.Organization.RemoveClient(context.Background(), org.GetID(), client.GetClientID())
-	require.NoError(t, err)
-
-	clients, err = api.Organization.Clients(context.Background(), org.GetID())
-	require.NoError(t, err)
-	assert.Len(t, clients.Clients, 0)
-}
-
 func TestOrganizationManager_ClientGrants(t *testing.T) {
 	configureHTTPTestRecordings(t)
 

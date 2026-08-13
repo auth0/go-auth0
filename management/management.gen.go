@@ -10756,14 +10756,6 @@ func (o *Organization) GetBranding() *OrganizationBranding {
 	return o.Branding
 }
 
-// GetClient returns the Client field.
-func (o *Organization) GetClient() *OrganizationClientAssociation {
-	if o == nil {
-		return nil
-	}
-	return o.Client
-}
-
 // GetDisplayName returns the DisplayName field if it's non-nil, zero value otherwise.
 func (o *Organization) GetDisplayName() string {
 	if o == nil || o.DisplayName == nil {
@@ -10843,106 +10835,6 @@ func (o *OrganizationBranding) GetLogoURL() string {
 
 // String returns a string representation of OrganizationBranding.
 func (o *OrganizationBranding) String() string {
-	return Stringify(o)
-}
-
-// GetClient returns the Client field.
-func (o *OrganizationClient) GetClient() *OrganizationClientMetadata {
-	if o == nil {
-		return nil
-	}
-	return o.Client
-}
-
-// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
-func (o *OrganizationClient) GetClientID() string {
-	if o == nil || o.ClientID == nil {
-		return ""
-	}
-	return *o.ClientID
-}
-
-// GetUseForMemberAccess returns the UseForMemberAccess field if it's non-nil, zero value otherwise.
-func (o *OrganizationClient) GetUseForMemberAccess() bool {
-	if o == nil || o.UseForMemberAccess == nil {
-		return false
-	}
-	return *o.UseForMemberAccess
-}
-
-// String returns a string representation of OrganizationClient.
-func (o *OrganizationClient) String() string {
-	return Stringify(o)
-}
-
-// GetUseForMemberAccess returns the UseForMemberAccess field if it's non-nil, zero value otherwise.
-func (o *OrganizationClientAssociation) GetUseForMemberAccess() bool {
-	if o == nil || o.UseForMemberAccess == nil {
-		return false
-	}
-	return *o.UseForMemberAccess
-}
-
-// String returns a string representation of OrganizationClientAssociation.
-func (o *OrganizationClientAssociation) String() string {
-	return Stringify(o)
-}
-
-// String returns a string representation of OrganizationClientList.
-func (o *OrganizationClientList) String() string {
-	return Stringify(o)
-}
-
-// GetAppType returns the AppType field if it's non-nil, zero value otherwise.
-func (o *OrganizationClientMetadata) GetAppType() string {
-	if o == nil || o.AppType == nil {
-		return ""
-	}
-	return *o.AppType
-}
-
-// GetGrantTypes returns the GrantTypes field if it's non-nil, zero value otherwise.
-func (o *OrganizationClientMetadata) GetGrantTypes() []string {
-	if o == nil || o.GrantTypes == nil {
-		return nil
-	}
-	return *o.GrantTypes
-}
-
-// GetIsFirstParty returns the IsFirstParty field if it's non-nil, zero value otherwise.
-func (o *OrganizationClientMetadata) GetIsFirstParty() bool {
-	if o == nil || o.IsFirstParty == nil {
-		return false
-	}
-	return *o.IsFirstParty
-}
-
-// GetLogoURI returns the LogoURI field if it's non-nil, zero value otherwise.
-func (o *OrganizationClientMetadata) GetLogoURI() string {
-	if o == nil || o.LogoURI == nil {
-		return ""
-	}
-	return *o.LogoURI
-}
-
-// GetName returns the Name field if it's non-nil, zero value otherwise.
-func (o *OrganizationClientMetadata) GetName() string {
-	if o == nil || o.Name == nil {
-		return ""
-	}
-	return *o.Name
-}
-
-// GetOrganizationUsage returns the OrganizationUsage field if it's non-nil, zero value otherwise.
-func (o *OrganizationClientMetadata) GetOrganizationUsage() string {
-	if o == nil || o.OrganizationUsage == nil {
-		return ""
-	}
-	return *o.OrganizationUsage
-}
-
-// String returns a string representation of OrganizationClientMetadata.
-func (o *OrganizationClientMetadata) String() string {
 	return Stringify(o)
 }
 
