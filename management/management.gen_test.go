@@ -13539,6 +13539,16 @@ func TestOrganization_GetID(tt *testing.T) {
 	o.GetID()
 }
 
+func TestOrganization_GetIsAppEntitlementActive(tt *testing.T) {
+	var zeroValue bool
+	o := &Organization{IsAppEntitlementActive: &zeroValue}
+	o.GetIsAppEntitlementActive()
+	o = &Organization{}
+	o.GetIsAppEntitlementActive()
+	o = nil
+	o.GetIsAppEntitlementActive()
+}
+
 func TestOrganization_GetMetadata(tt *testing.T) {
 	var zeroValue map[string]string
 	o := &Organization{Metadata: &zeroValue}

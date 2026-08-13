@@ -48,6 +48,10 @@ type Organization struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	TokenQuota *TokenQuota `json:"token_quota,omitempty"`
+
+	// IsAppEntitlementActive controls whether this organization's app entitlement is active,
+	// determining whether members of this organization can access applications associated with it.
+	IsAppEntitlementActive *bool `json:"is_app_entitlement_active,omitempty"`
 }
 
 // OrganizationBranding holds branding information for an Organization.

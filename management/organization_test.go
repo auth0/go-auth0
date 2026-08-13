@@ -454,6 +454,34 @@ func TestOrganizationManager_MemberRoles(t *testing.T) {
 	assert.Len(t, roles.Roles, 0)
 }
 
+func TestOrganizationManager_IsAppEntitlementActive(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	org := &Organization{
+		Name:                   auth0.String(fmt.Sprintf("test-organization%v", rand.Intn(999))),
+		DisplayName:            auth0.String("Test Organization"),
+		IsAppEntitlementActive: auth0.Bool(true),
+	}
+
+	err := api.Organization.Create(context.Background(), org)
+	require.NoError(t, err)
+	t.Cleanup(func() {
+		cleanupOrganization(t, org.GetID())
+	})
+	assert.True(t, org.GetIsAppEntitlementActive())
+
+	actualOrg, err := api.Organization.Read(context.Background(), org.GetID())
+	require.NoError(t, err)
+	assert.True(t, actualOrg.GetIsAppEntitlementActive())
+
+	err = api.Organization.Update(context.Background(), org.GetID(), &Organization{IsAppEntitlementActive: auth0.Bool(false)})
+	require.NoError(t, err)
+
+	actualOrg, err = api.Organization.Read(context.Background(), org.GetID())
+	require.NoError(t, err)
+	assert.False(t, actualOrg.GetIsAppEntitlementActive())
+}
+
 func TestOrganizationManager_ClientGrants(t *testing.T) {
 	configureHTTPTestRecordings(t)
 

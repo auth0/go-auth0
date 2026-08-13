@@ -10830,6 +10830,14 @@ func (o *Organization) GetID() string {
 	return *o.ID
 }
 
+// GetIsAppEntitlementActive returns the IsAppEntitlementActive field if it's non-nil, zero value otherwise.
+func (o *Organization) GetIsAppEntitlementActive() bool {
+	if o == nil || o.IsAppEntitlementActive == nil {
+		return false
+	}
+	return *o.IsAppEntitlementActive
+}
+
 // GetMetadata returns the Metadata field if it's non-nil, zero value otherwise.
 func (o *Organization) GetMetadata() map[string]string {
 	if o == nil || o.Metadata == nil {

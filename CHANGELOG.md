@@ -1,6 +1,9 @@
 # Change Log
 
+## [Unreleased]
+
 **Added**
+- feat: add Organization-to-Application Entitlement support (EA only) with `IsAppEntitlementActive`/`Client` on `Organization`.
 - feat: add `TokenVaultPrivilegedAccess` support to `Client`, letting a client be configured as a Token Vault privileged worker with credentials, an IP allowlist, and per-connection scope grants (Early Access). Note that `Credentials`, `IPAllowlist`, and `Grants` are all required whenever the object is written
 
 ## [v1.46.0](https://github.com/auth0/go-auth0/tree/v1.46.0) (2026-07-31)
