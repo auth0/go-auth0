@@ -12337,6 +12337,22 @@ func (r *Role) GetName() string {
 	return *r.Name
 }
 
+// GetOwnerID returns the OwnerID field if it's non-nil, zero value otherwise.
+func (r *Role) GetOwnerID() string {
+	if r == nil || r.OwnerID == nil {
+		return ""
+	}
+	return *r.OwnerID
+}
+
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (r *Role) GetType() string {
+	if r == nil || r.Type == nil {
+		return ""
+	}
+	return *r.Type
+}
+
 // String returns a string representation of Role.
 func (r *Role) String() string {
 	return Stringify(r)
