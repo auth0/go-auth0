@@ -263,6 +263,90 @@ type Client struct {
 
 	// IdentityAssertionAuthorizationGrant enables the Identity Assertion Authorization Grant (ID-JAG) exchange for the client, used for Cross-App Access.
 	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant `json:"identity_assertion_authorization_grant,omitempty"`
+
+	// TokenVaultPrivilegedAccess configures the client as a Token Vault privileged worker,
+	// allowing it to request Token Vault tokens on behalf of other users.
+	//
+	// This is an Early Access feature and requires it to be enabled for your tenant.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	// PATCH /api/v2/clients/{id}
+	// {
+	//	 "token_vault_privileged_access": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccess `json:"token_vault_privileged_access,omitempty"`
+}
+
+// ClientTokenVaultPrivilegedAccess configures Token Vault privileged worker access for a client.
+//
+// All three fields are required on every write, on both POST /clients and
+// PATCH /clients/{id}. Omitting any one of them is rejected with a 400, so a
+// caller must always send the full intended state rather than only the
+// sub-fields that changed.
+//
+// Writing this object also requires the create:client_token_vault_privileged_access
+// or update:client_token_vault_privileged_access scope, alongside the matching
+// client_credentials scope.
+//
+// Each field is a pointer to a slice so that an empty array can be
+// distinguished from an omitted key:
+//
+//   - &[]T{...} → replaces the stored value.
+//   - &[]T{}    → sends an empty array. PATCH clears the value, while POST
+//     rejects an empty IPAllowlist or Grants.
+//   - nil       → omits the key, which is an error (see above).
+//
+// Removing the whole object requires sending a literal `null` for
+// `token_vault_privileged_access`, which a nil pointer on Client cannot express
+// because of `omitempty`. Use a custom PATCH request for that, as documented on
+// Client.TokenVaultPrivilegedAccess.
+type ClientTokenVaultPrivilegedAccess struct {
+	// Credentials pins the client credentials the privileged worker may
+	// authenticate with. Maximum of 2.
+	//
+	// The array is the complete attachment set: writing it replaces which
+	// credentials are attached, and an empty array detaches all of them.
+	// Attaching never creates or deletes a credential record, and a credential
+	// cannot be deleted while it is still attached.
+	//
+	// The accepted shape differs per endpoint. POST /clients takes credential
+	// material and creates the credentials inline, where CredentialType and PEM
+	// are required, Name, KeyID, Algorithm and ExpiresAt are optional, and ID is
+	// rejected. PATCH /clients/{id} takes only references to existing
+	// credentials, so ID is the only field accepted there.
+	//
+	// GET /clients/{id} returns just the ID of each attached credential. Use
+	// ClientManager.ListCredentials to read the full metadata.
+	Credentials *[]Credential `json:"credentials,omitempty"`
+
+	// IPAllowlist is the list of permitted IPv4 or IPv6 addresses, or CIDR ranges,
+	// from which the privileged worker may request tokens. Maximum of 10 entries.
+	//
+	// Required on every write; POST rejects an empty array.
+	IPAllowlist *[]string `json:"ip_allowlist,omitempty"`
+
+	// Grants pins the connections, and the scopes within them, that the privileged
+	// worker may request tokens for. Maximum of 5 grants, with a maximum of 20
+	// scopes in total across all of them, and no repeated connections.
+	//
+	// Required on every write; POST rejects an empty array.
+	Grants *[]ClientTokenVaultPrivilegedGrant `json:"grants,omitempty"`
+}
+
+// ClientTokenVaultPrivilegedGrant pins the scopes of a single connection that a
+// Token Vault privileged worker is allowed to request tokens for.
+type ClientTokenVaultPrivilegedGrant struct {
+	// Connection is the name of the connection the grant applies to. The
+	// connection does not need to exist when the grant is configured; it is
+	// validated at runtime.
+	Connection *string `json:"connection,omitempty"`
+
+	// Scopes the privileged worker may request on the connection.
+	// Must be non-empty and must not contain duplicates.
+	Scopes *[]string `json:"scopes,omitempty"`
 }
 
 // IdentityAssertionAuthorizationGrant enables the Identity Assertion Authorization Grant (ID-JAG) exchange for the client, used for Cross-App Access.
@@ -396,6 +480,28 @@ func (c *Client) CleanForPatch() {
 		}
 
 		c.ClientAuthenticationMethods.PrivateKeyJWT.Credentials = &credentials
+	}
+
+	// PATCH /clients/{id} rejects any credential field other than `id`, so reduce
+	// a read-back credential list to bare IDs. Entries without an ID are left
+	// untouched rather than dropped: dropping them would silently detach the
+	// worker's credentials, whereas passing them through surfaces the API error.
+	if c.TokenVaultPrivilegedAccess != nil && c.TokenVaultPrivilegedAccess.Credentials != nil {
+		credentials := []Credential{}
+		reducible := true
+
+		for _, cred := range *c.TokenVaultPrivilegedAccess.Credentials {
+			if cred.ID == nil || *cred.ID == "" {
+				reducible = false
+				break
+			}
+
+			credentials = append(credentials, Credential{ID: cred.ID})
+		}
+
+		if reducible {
+			c.TokenVaultPrivilegedAccess.Credentials = &credentials
+		}
 	}
 }
 

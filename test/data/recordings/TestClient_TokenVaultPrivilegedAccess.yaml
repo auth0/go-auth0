@@ -1,0 +1,594 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 175
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"This is a test client with Token Vault privileged access.","app_type":"non_interactive","is_first_party":true}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: false
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"This is a test client with Token Vault privileged access.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 1.055280375s
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 901
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test Credential (Aug  3 18:32:21.086)","credential_type":"public_key","pem":"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA3njxXJoHnuN4hByBhSUo\n0kIbXkJTA0wP0fig87MyVz5KgohPrPJgbRSZ7yz/MmXa4qRNHkWiClJybMS2a98M\n6ELOFG8pfDb6J7JaJqx0Kvqn6xsGInbpwsth3K582Cxrp+Y+GBNja++8wDY5IqAi\nTSKSZRNies0GO0grzQ7kj2p0+R7a0c86mdLO4JnGrHoBqEY1HcsfnJvkJkqETlGi\nyMzDQw8Wkux7P59N/3wuroAI83+HMYl1fV39ek3L/GrsLjECrNe5/CVFtblNltyb\n/va9+pAP7Ye5p6tTW2oj3fzUvdX3dYzENWEtRB7DBHXnfEHMjTaBiQeWb2yDHBCw\n++Uh1OCKw9ZLYzoE6gcDQspYf+fFU3F0kuU4c//gSoNuj/iEjaNmOEK6S3xGy8fE\nTjsC+0oF6YaokDZO9+NreL/sGxFfOAysybrKWrMoaYwa81RlpcmBGZM7H1M00zLH\nPPfCYVhGhFs5X3Qzzt6MQE+msgMt9zeGH7liJbOSW2NGSJwbmn7q35YYIfJEoXRF\n1iefT/9fJB9vhQhtYfCOe3AEpTQq6Yz5ViLhToBdsVDBbz2gmRLALs9/D91SE9T4\nXzvXjHGyxWVu0jdvS9hyhJzP4165k1cYDgx8mmg0VxR7j79LmCUDsFcvvSrAOf6y\n0zY7r4pmNyQQ0r4in/gs/wkCAwEAAQ==\n-----END PUBLIC KEY-----"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3/credentials
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 260
+        uncompressed: false
+        body: '{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB","credential_type":"public_key","kid":"QTtPEeOT2gWWuID0QDg6nHgh7foYRcWkOyJ9DhNIn_A","alg":"RS256","name":"Test Credential (Aug  3 18:32:21.086)","created_at":"2026-08-03T13:02:21.341Z","updated_at":"2026-08-03T13:02:21.341Z"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 328.075791ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 225
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.1","192.168.1.0/24"],"grants":[{"connection":"Username-Password-Authentication","scopes":["openid","profile"]}]}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"This is a test client with Token Vault privileged access.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.1","192.168.1.0/24"],"grants":[{"connection":"Username-Password-Authentication","scopes":["openid","profile"]}]}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 399.907167ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"This is a test client with Token Vault privileged access.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.1","192.168.1.0/24"],"grants":[{"connection":"Username-Password-Authentication","scopes":["openid","profile"]}]}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 286.913583ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 68
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"description":"Description updated without touching Token Vault."}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"Description updated without touching Token Vault.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.1","192.168.1.0/24"],"grants":[{"connection":"Username-Password-Authentication","scopes":["openid","profile"]}]}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 338.674166ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"Description updated without touching Token Vault.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.1","192.168.1.0/24"],"grants":[{"connection":"Username-Password-Authentication","scopes":["openid","profile"]}]}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 291.824625ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 117
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.2"]}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 153
+        uncompressed: false
+        body: '{"client_secret":"[REDACTED]","signing_keys":[{"cert":"[REDACTED]"}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 400 Bad Request
+        code: 400
+        duration: 291.45975ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 101
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"grants":[]}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 159
+        uncompressed: false
+        body: '{"client_secret":"[REDACTED]","signing_keys":[{"cert":"[REDACTED]"}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 400 Bad Request
+        code: 400
+        duration: 313.19775ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 76
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"token_vault_privileged_access":{"ip_allowlist":["10.0.0.2"],"grants":[]}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 234
+        uncompressed: false
+        body: '{"client_secret":"[REDACTED]","signing_keys":[{"cert":"[REDACTED]"}]}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 400 Bad Request
+        code: 400
+        duration: 282.280166ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 208
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.2"],"grants":[{"connection":"Username-Password-Authentication","scopes":["openid","profile"]}]}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"Description updated without touching Token Vault.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.2"],"grants":[{"connection":"Username-Password-Authentication","scopes":["openid","profile"]}]}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 311.153084ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"Description updated without touching Token Vault.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.2"],"grants":[{"connection":"Username-Password-Authentication","scopes":["openid","profile"]}]}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 294.063791ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 129
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.2"],"grants":[]}}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"Description updated without touching Token Vault.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.2"],"grants":[]}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 327.701125ms
+    - id: 12
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"Description updated without touching Token Vault.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000},"token_vault_privileged_access":{"credentials":[{"id":"cred_vm7vsoYsx69ZPRHMH3KCPB"}],"ip_allowlist":["10.0.0.2"],"grants":[]}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 283.037291ms
+    - id: 13
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 39
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"token_vault_privileged_access":null}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"Description updated without touching Token Vault.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 298.062291ms
+    - id: 14
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"name":"Test Client TVPA (Aug  3 18:32:20.029)","description":"Description updated without touching Token Vault.","client_id":"RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3","client_secret":"[REDACTED]","app_type":"non_interactive","is_first_party":true,"is_token_endpoint_ip_header_trusted":false,"oidc_conformant":false,"jwt_configuration":{"secret_encoded":false,"lifetime_in_seconds":36000},"signing_keys":[{"cert":"[REDACTED]"}],"sso_disabled":false,"cross_origin_authentication":false,"grant_types":["authorization_code","implicit","refresh_token","client_credentials"],"custom_login_page_on":true,"refresh_token":{"rotation_type":"non-rotating","expiration_type":"non-expiring","leeway":0,"token_lifetime":2592000,"infinite_token_lifetime":true,"infinite_idle_token_lifetime":true,"idle_token_lifetime":1296000}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 305.927958ms
+    - id: 15
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3/credentials/cred_vm7vsoYsx69ZPRHMH3KCPB
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 305.588125ms
+    - id: 16
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.45.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/clients/RX69k1dthuv3BkMWmdVeQgKgCzhLAPh3
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 332.799ms
