@@ -17368,6 +17368,7 @@ var (
 	connectionOptionsCommonOidcFieldTokenEndpointJwtcaAudFormat   = big.NewInt(1 << 19)
 	connectionOptionsCommonOidcFieldUpstreamParams                = big.NewInt(1 << 20)
 	connectionOptionsCommonOidcFieldUserinfoEndpoint              = big.NewInt(1 << 21)
+	connectionOptionsCommonOidcFieldUseOauthSpecScope             = big.NewInt(1 << 22)
 )
 
 type ConnectionOptionsCommonOidc struct {
@@ -17393,6 +17394,7 @@ type ConnectionOptionsCommonOidc struct {
 	TokenEndpointJwtcaAudFormat   *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	UpstreamParams                *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 	UserinfoEndpoint              *ConnectionUserinfoEndpoint                    `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
+	UseOauthSpecScope             *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -17554,6 +17556,13 @@ func (c *ConnectionOptionsCommonOidc) GetUserinfoEndpoint() ConnectionUserinfoEn
 		return ""
 	}
 	return *c.UserinfoEndpoint
+}
+
+func (c *ConnectionOptionsCommonOidc) GetUseOauthSpecScope() ConnectionUseOauthSpecScope {
+	if c == nil || c.UseOauthSpecScope == nil {
+		return false
+	}
+	return *c.UseOauthSpecScope
 }
 
 func (c *ConnectionOptionsCommonOidc) GetExtraProperties() map[string]interface{} {
@@ -17722,6 +17731,13 @@ func (c *ConnectionOptionsCommonOidc) SetUpstreamParams(upstreamParams *Connecti
 func (c *ConnectionOptionsCommonOidc) SetUserinfoEndpoint(userinfoEndpoint *ConnectionUserinfoEndpoint) {
 	c.UserinfoEndpoint = userinfoEndpoint
 	c.require(connectionOptionsCommonOidcFieldUserinfoEndpoint)
+}
+
+// SetUseOauthSpecScope sets the UseOauthSpecScope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsCommonOidc) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
+	c.UseOauthSpecScope = useOauthSpecScope
+	c.require(connectionOptionsCommonOidcFieldUseOauthSpecScope)
 }
 
 func (c *ConnectionOptionsCommonOidc) UnmarshalJSON(data []byte) error {
@@ -24399,10 +24415,11 @@ var (
 	connectionOptionsOidcFieldTokenEndpointJwtcaAudFormat   = big.NewInt(1 << 19)
 	connectionOptionsOidcFieldUpstreamParams                = big.NewInt(1 << 20)
 	connectionOptionsOidcFieldUserinfoEndpoint              = big.NewInt(1 << 21)
-	connectionOptionsOidcFieldNonPersistentAttrs            = big.NewInt(1 << 22)
-	connectionOptionsOidcFieldAttributeMap                  = big.NewInt(1 << 23)
-	connectionOptionsOidcFieldDiscoveryURL                  = big.NewInt(1 << 24)
-	connectionOptionsOidcFieldType                          = big.NewInt(1 << 25)
+	connectionOptionsOidcFieldUseOauthSpecScope             = big.NewInt(1 << 22)
+	connectionOptionsOidcFieldNonPersistentAttrs            = big.NewInt(1 << 23)
+	connectionOptionsOidcFieldAttributeMap                  = big.NewInt(1 << 24)
+	connectionOptionsOidcFieldDiscoveryURL                  = big.NewInt(1 << 25)
+	connectionOptionsOidcFieldType                          = big.NewInt(1 << 26)
 )
 
 type ConnectionOptionsOidc struct {
@@ -24428,6 +24445,7 @@ type ConnectionOptionsOidc struct {
 	TokenEndpointJwtcaAudFormat   *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	UpstreamParams                *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 	UserinfoEndpoint              *ConnectionUserinfoEndpoint                    `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
+	UseOauthSpecScope             *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
 	NonPersistentAttrs            *ConnectionNonPersistentAttrs                  `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	AttributeMap                  *ConnectionAttributeMapOidc                    `json:"attribute_map,omitempty" url:"attribute_map,omitempty"`
 	DiscoveryURL                  *ConnectionDiscoveryURL                        `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
@@ -24593,6 +24611,13 @@ func (c *ConnectionOptionsOidc) GetUserinfoEndpoint() ConnectionUserinfoEndpoint
 		return ""
 	}
 	return *c.UserinfoEndpoint
+}
+
+func (c *ConnectionOptionsOidc) GetUseOauthSpecScope() ConnectionUseOauthSpecScope {
+	if c == nil || c.UseOauthSpecScope == nil {
+		return false
+	}
+	return *c.UseOauthSpecScope
 }
 
 func (c *ConnectionOptionsOidc) GetNonPersistentAttrs() ConnectionNonPersistentAttrs {
@@ -24789,6 +24814,13 @@ func (c *ConnectionOptionsOidc) SetUpstreamParams(upstreamParams *ConnectionUpst
 func (c *ConnectionOptionsOidc) SetUserinfoEndpoint(userinfoEndpoint *ConnectionUserinfoEndpoint) {
 	c.UserinfoEndpoint = userinfoEndpoint
 	c.require(connectionOptionsOidcFieldUserinfoEndpoint)
+}
+
+// SetUseOauthSpecScope sets the UseOauthSpecScope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOidc) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
+	c.UseOauthSpecScope = useOauthSpecScope
+	c.require(connectionOptionsOidcFieldUseOauthSpecScope)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -25556,9 +25588,10 @@ var (
 	connectionOptionsOktaFieldTokenEndpointJwtcaAudFormat   = big.NewInt(1 << 20)
 	connectionOptionsOktaFieldUpstreamParams                = big.NewInt(1 << 21)
 	connectionOptionsOktaFieldUserinfoEndpoint              = big.NewInt(1 << 22)
-	connectionOptionsOktaFieldAttributeMap                  = big.NewInt(1 << 23)
-	connectionOptionsOktaFieldDomain                        = big.NewInt(1 << 24)
-	connectionOptionsOktaFieldType                          = big.NewInt(1 << 25)
+	connectionOptionsOktaFieldUseOauthSpecScope             = big.NewInt(1 << 23)
+	connectionOptionsOktaFieldAttributeMap                  = big.NewInt(1 << 24)
+	connectionOptionsOktaFieldDomain                        = big.NewInt(1 << 25)
+	connectionOptionsOktaFieldType                          = big.NewInt(1 << 26)
 )
 
 type ConnectionOptionsOkta struct {
@@ -25585,6 +25618,7 @@ type ConnectionOptionsOkta struct {
 	TokenEndpointJwtcaAudFormat   *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	UpstreamParams                *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 	UserinfoEndpoint              *ConnectionUserinfoEndpoint                    `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
+	UseOauthSpecScope             *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
 	AttributeMap                  *ConnectionAttributeMapOkta                    `json:"attribute_map,omitempty" url:"attribute_map,omitempty"`
 	Domain                        *ConnectionDomainOkta                          `json:"domain,omitempty" url:"domain,omitempty"`
 	Type                          *ConnectionTypeEnumOkta                        `json:"type,omitempty" url:"type,omitempty"`
@@ -25756,6 +25790,13 @@ func (c *ConnectionOptionsOkta) GetUserinfoEndpoint() ConnectionUserinfoEndpoint
 		return ""
 	}
 	return *c.UserinfoEndpoint
+}
+
+func (c *ConnectionOptionsOkta) GetUseOauthSpecScope() ConnectionUseOauthSpecScope {
+	if c == nil || c.UseOauthSpecScope == nil {
+		return false
+	}
+	return *c.UseOauthSpecScope
 }
 
 func (c *ConnectionOptionsOkta) GetAttributeMap() ConnectionAttributeMapOkta {
@@ -25952,6 +25993,13 @@ func (c *ConnectionOptionsOkta) SetUpstreamParams(upstreamParams *ConnectionUpst
 func (c *ConnectionOptionsOkta) SetUserinfoEndpoint(userinfoEndpoint *ConnectionUserinfoEndpoint) {
 	c.UserinfoEndpoint = userinfoEndpoint
 	c.require(connectionOptionsOktaFieldUserinfoEndpoint)
+}
+
+// SetUseOauthSpecScope sets the UseOauthSpecScope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOkta) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
+	c.UseOauthSpecScope = useOauthSpecScope
+	c.require(connectionOptionsOktaFieldUseOauthSpecScope)
 }
 
 // SetAttributeMap sets the AttributeMap field and marks it as non-optional;
@@ -82878,6 +82926,91 @@ func (g *GetAculResponseContent) String() string {
 }
 
 var (
+	getAllKeysNetworkACLsResponseContentFieldKeys = big.NewInt(1 << 0)
+)
+
+type GetAllKeysNetworkACLsResponseContent struct {
+	// The tenant's Network ACL Keys.
+	Keys []*NetworkACLKey `json:"keys" url:"keys"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetAllKeysNetworkACLsResponseContent) GetKeys() []*NetworkACLKey {
+	if g == nil {
+		return nil
+	}
+	return g.Keys
+}
+
+func (g *GetAllKeysNetworkACLsResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetAllKeysNetworkACLsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetKeys sets the Keys field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAllKeysNetworkACLsResponseContent) SetKeys(keys []*NetworkACLKey) {
+	g.Keys = keys
+	g.require(getAllKeysNetworkACLsResponseContentFieldKeys)
+}
+
+func (g *GetAllKeysNetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetAllKeysNetworkACLsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetAllKeysNetworkACLsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetAllKeysNetworkACLsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetAllKeysNetworkACLsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetAllKeysNetworkACLsResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	getAttackProtectionCaptchaResponseContentFieldActiveProviderID    = big.NewInt(1 << 0)
 	getAttackProtectionCaptchaResponseContentFieldArkose              = big.NewInt(1 << 1)
 	getAttackProtectionCaptchaResponseContentFieldAuthChallenge       = big.NewInt(1 << 2)
@@ -100838,6 +100971,175 @@ func (m MfaPolicyEnum) Ptr() *MfaPolicyEnum {
 	return &m
 }
 
+var (
+	networkACLKeyFieldID          = big.NewInt(1 << 0)
+	networkACLKeyFieldName        = big.NewInt(1 << 1)
+	networkACLKeyFieldAlg         = big.NewInt(1 << 2)
+	networkACLKeyFieldFingerprint = big.NewInt(1 << 3)
+	networkACLKeyFieldCreatedAt   = big.NewInt(1 << 4)
+	networkACLKeyFieldUpdatedAt   = big.NewInt(1 << 5)
+)
+
+type NetworkACLKey struct {
+	// Generated identifier for the key. Used to reference the key from a Network ACL and to identify it in Tenant Logs.
+	ID string `json:"id" url:"id"`
+	// User supplied label for the key.
+	Name string                     `json:"name" url:"name"`
+	Alg  NetworkACLKeyAlgorithmEnum `json:"alg" url:"alg"`
+	// Fingerprint of the key material, determined by the algorithm specified. Currently only HMAC-SHA256 is supported.
+	Fingerprint string `json:"fingerprint" url:"fingerprint"`
+	// Time when the key was created.
+	CreatedAt string `json:"created_at" url:"created_at"`
+	// Time when the key was last updated.
+	UpdatedAt string `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NetworkACLKey) GetID() string {
+	if n == nil {
+		return ""
+	}
+	return n.ID
+}
+
+func (n *NetworkACLKey) GetName() string {
+	if n == nil {
+		return ""
+	}
+	return n.Name
+}
+
+func (n *NetworkACLKey) GetAlg() NetworkACLKeyAlgorithmEnum {
+	if n == nil {
+		return ""
+	}
+	return n.Alg
+}
+
+func (n *NetworkACLKey) GetFingerprint() string {
+	if n == nil {
+		return ""
+	}
+	return n.Fingerprint
+}
+
+func (n *NetworkACLKey) GetCreatedAt() string {
+	if n == nil {
+		return ""
+	}
+	return n.CreatedAt
+}
+
+func (n *NetworkACLKey) GetUpdatedAt() string {
+	if n == nil {
+		return ""
+	}
+	return n.UpdatedAt
+}
+
+func (n *NetworkACLKey) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NetworkACLKey) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLKey) SetID(id string) {
+	n.ID = id
+	n.require(networkACLKeyFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLKey) SetName(name string) {
+	n.Name = name
+	n.require(networkACLKeyFieldName)
+}
+
+// SetAlg sets the Alg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLKey) SetAlg(alg NetworkACLKeyAlgorithmEnum) {
+	n.Alg = alg
+	n.require(networkACLKeyFieldAlg)
+}
+
+// SetFingerprint sets the Fingerprint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLKey) SetFingerprint(fingerprint string) {
+	n.Fingerprint = fingerprint
+	n.require(networkACLKeyFieldFingerprint)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLKey) SetCreatedAt(createdAt string) {
+	n.CreatedAt = createdAt
+	n.require(networkACLKeyFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLKey) SetUpdatedAt(updatedAt string) {
+	n.UpdatedAt = updatedAt
+	n.require(networkACLKeyFieldUpdatedAt)
+}
+
+func (n *NetworkACLKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler NetworkACLKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NetworkACLKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NetworkACLKey) MarshalJSON() ([]byte, error) {
+	type embed NetworkACLKey
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NetworkACLKey) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
 // Signing algorithm used to verify the signature. Currently only HMAC-SHA256 is supported.
 type NetworkACLKeyAlgorithmEnum string
 
@@ -101622,6 +101924,8 @@ const (
 	OauthScopeDeleteOrganizationClients OauthScope = "delete:organization_clients"
 	// Create Network ACL Keys
 	OauthScopeCreateNetworkACLKeys OauthScope = "create:network_acl_keys"
+	// Read Network ACL Keys
+	OauthScopeReadNetworkACLKeys OauthScope = "read:network_acl_keys"
 )
 
 func NewOauthScopeFromString(s string) (OauthScope, error) {
@@ -102116,6 +102420,8 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeDeleteOrganizationClients, nil
 	case "create:network_acl_keys":
 		return OauthScopeCreateNetworkACLKeys, nil
+	case "read:network_acl_keys":
+		return OauthScopeReadNetworkACLKeys, nil
 	}
 	var t OauthScope
 	return "", fmt.Errorf("%s is not a valid %T", s, t)

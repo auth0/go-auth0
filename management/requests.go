@@ -4643,15 +4643,17 @@ var (
 	createConnectionProfileRequestContentFieldEnabledFeatures              = big.NewInt(1 << 3)
 	createConnectionProfileRequestContentFieldConnectionConfig             = big.NewInt(1 << 4)
 	createConnectionProfileRequestContentFieldStrategyOverrides            = big.NewInt(1 << 5)
+	createConnectionProfileRequestContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 6)
 )
 
 type CreateConnectionProfileRequestContent struct {
-	Name                         ConnectionProfileName               `json:"name" url:"-"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"-"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"-"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"-"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"-"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"-"`
+	Name                         ConnectionProfileName                       `json:"name" url:"-"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"-"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"-"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"-"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"-"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"-"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4704,6 +4706,13 @@ func (c *CreateConnectionProfileRequestContent) SetConnectionConfig(connectionCo
 func (c *CreateConnectionProfileRequestContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	c.StrategyOverrides = strategyOverrides
 	c.require(createConnectionProfileRequestContentFieldStrategyOverrides)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileRequestContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(createConnectionProfileRequestContentFieldCrossAppAccessResourceApp)
 }
 
 func (c *CreateConnectionProfileRequestContent) UnmarshalJSON(data []byte) error {
@@ -16218,15 +16227,17 @@ var (
 	updateConnectionProfileRequestContentFieldEnabledFeatures              = big.NewInt(1 << 3)
 	updateConnectionProfileRequestContentFieldConnectionConfig             = big.NewInt(1 << 4)
 	updateConnectionProfileRequestContentFieldStrategyOverrides            = big.NewInt(1 << 5)
+	updateConnectionProfileRequestContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 6)
 )
 
 type UpdateConnectionProfileRequestContent struct {
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"-"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"-"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"-"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"-"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"-"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"-"`
+	Name                         *ConnectionProfileName                      `json:"name,omitempty" url:"-"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"-"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"-"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"-"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"-"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"-"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -16279,6 +16290,13 @@ func (u *UpdateConnectionProfileRequestContent) SetConnectionConfig(connectionCo
 func (u *UpdateConnectionProfileRequestContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	u.StrategyOverrides = strategyOverrides
 	u.require(updateConnectionProfileRequestContentFieldStrategyOverrides)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionProfileRequestContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	u.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	u.require(updateConnectionProfileRequestContentFieldCrossAppAccessResourceApp)
 }
 
 func (u *UpdateConnectionProfileRequestContent) UnmarshalJSON(data []byte) error {

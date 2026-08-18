@@ -20,16 +20,18 @@ var (
 	connectionProfileFieldEnabledFeatures              = big.NewInt(1 << 4)
 	connectionProfileFieldConnectionConfig             = big.NewInt(1 << 5)
 	connectionProfileFieldStrategyOverrides            = big.NewInt(1 << 6)
+	connectionProfileFieldCrossAppAccessResourceApp    = big.NewInt(1 << 7)
 )
 
 type ConnectionProfile struct {
-	ID                           *ConnectionProfileID                `json:"id,omitempty" url:"id,omitempty"`
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"connection_config,omitempty"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	ID                           *ConnectionProfileID                        `json:"id,omitempty" url:"id,omitempty"`
+	Name                         *ConnectionProfileName                      `json:"name,omitempty" url:"name,omitempty"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"organization,omitempty"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"connection_config,omitempty"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -85,6 +87,13 @@ func (c *ConnectionProfile) GetStrategyOverrides() ConnectionProfileStrategyOver
 		return ConnectionProfileStrategyOverrides{}
 	}
 	return *c.StrategyOverrides
+}
+
+func (c *ConnectionProfile) GetCrossAppAccessResourceApp() ConnectionProfileCrossAppAccessResourceApp {
+	if c == nil || c.CrossAppAccessResourceApp == nil {
+		return ConnectionProfileCrossAppAccessResourceApp{}
+	}
+	return *c.CrossAppAccessResourceApp
 }
 
 func (c *ConnectionProfile) GetExtraProperties() map[string]interface{} {
@@ -148,6 +157,13 @@ func (c *ConnectionProfile) SetConnectionConfig(connectionConfig *ConnectionProf
 func (c *ConnectionProfile) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	c.StrategyOverrides = strategyOverrides
 	c.require(connectionProfileFieldStrategyOverrides)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfile) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(connectionProfileFieldCrossAppAccessResourceApp)
 }
 
 func (c *ConnectionProfile) UnmarshalJSON(data []byte) error {
@@ -256,6 +272,241 @@ func (c *ConnectionProfileConfig) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
+}
+
+// Controls whether organization admins may enable Cross App Access (XAA) on their Identity Providers.
+var (
+	connectionProfileCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
+)
+
+type ConnectionProfileCrossAppAccessResourceApp struct {
+	Status *ConnectionProfileCrossAppAccessResourceAppStatus `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) GetStatus() *ConnectionProfileCrossAppAccessResourceAppStatus {
+	if c == nil {
+		return nil
+	}
+	return c.Status
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileCrossAppAccessResourceApp) SetStatus(status *ConnectionProfileCrossAppAccessResourceAppStatus) {
+	c.Status = status
+	c.require(connectionProfileCrossAppAccessResourceAppFieldStatus)
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileCrossAppAccessResourceApp
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileCrossAppAccessResourceApp(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileCrossAppAccessResourceApp
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// The Cross App Access resource app status configuration.
+var (
+	connectionProfileCrossAppAccessResourceAppStatusFieldDefaultValue  = big.NewInt(1 << 0)
+	connectionProfileCrossAppAccessResourceAppStatusFieldAllowedValues = big.NewInt(1 << 1)
+)
+
+type ConnectionProfileCrossAppAccessResourceAppStatus struct {
+	DefaultValue  ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum   `json:"default_value" url:"default_value"`
+	AllowedValues *ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum `json:"allowed_values,omitempty" url:"allowed_values,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) GetDefaultValue() ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum {
+	if c == nil {
+		return ""
+	}
+	return c.DefaultValue
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) GetAllowedValues() ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum {
+	if c == nil || c.AllowedValues == nil {
+		return nil
+	}
+	return *c.AllowedValues
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) SetDefaultValue(defaultValue ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum) {
+	c.DefaultValue = defaultValue
+	c.require(connectionProfileCrossAppAccessResourceAppStatusFieldDefaultValue)
+}
+
+// SetAllowedValues sets the AllowedValues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) SetAllowedValues(allowedValues *ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum) {
+	c.AllowedValues = allowedValues
+	c.require(connectionProfileCrossAppAccessResourceAppStatusFieldAllowedValues)
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileCrossAppAccessResourceAppStatus
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileCrossAppAccessResourceAppStatus(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileCrossAppAccessResourceAppStatus
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// The allowed Cross App Access resource app status values.
+type ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum = []ConnectionProfileCrossAppAccessResourceAppStatusValueEnum
+
+// The default Cross App Access resource app status.
+type ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum string
+
+const (
+	ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumEnabled  ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum = "enabled"
+	ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumDisabled ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum = "disabled"
+)
+
+func NewConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumFromString(s string) (ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum, error) {
+	switch s {
+	case "enabled":
+		return ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumEnabled, nil
+	case "disabled":
+		return ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumDisabled, nil
+	}
+	var t ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum) Ptr() *ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum {
+	return &c
+}
+
+// A Cross App Access resource app status value.
+type ConnectionProfileCrossAppAccessResourceAppStatusValueEnum string
+
+const (
+	ConnectionProfileCrossAppAccessResourceAppStatusValueEnumEnabled  ConnectionProfileCrossAppAccessResourceAppStatusValueEnum = "enabled"
+	ConnectionProfileCrossAppAccessResourceAppStatusValueEnumDisabled ConnectionProfileCrossAppAccessResourceAppStatusValueEnum = "disabled"
+)
+
+func NewConnectionProfileCrossAppAccessResourceAppStatusValueEnumFromString(s string) (ConnectionProfileCrossAppAccessResourceAppStatusValueEnum, error) {
+	switch s {
+	case "enabled":
+		return ConnectionProfileCrossAppAccessResourceAppStatusValueEnumEnabled, nil
+	case "disabled":
+		return ConnectionProfileCrossAppAccessResourceAppStatusValueEnumDisabled, nil
+	}
+	var t ConnectionProfileCrossAppAccessResourceAppStatusValueEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionProfileCrossAppAccessResourceAppStatusValueEnum) Ptr() *ConnectionProfileCrossAppAccessResourceAppStatusValueEnum {
+	return &c
 }
 
 // Enabled features for the connection profile.
@@ -1078,16 +1329,18 @@ var (
 	createConnectionProfileResponseContentFieldEnabledFeatures              = big.NewInt(1 << 4)
 	createConnectionProfileResponseContentFieldConnectionConfig             = big.NewInt(1 << 5)
 	createConnectionProfileResponseContentFieldStrategyOverrides            = big.NewInt(1 << 6)
+	createConnectionProfileResponseContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 7)
 )
 
 type CreateConnectionProfileResponseContent struct {
-	ID                           *ConnectionProfileID                `json:"id,omitempty" url:"id,omitempty"`
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"connection_config,omitempty"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	ID                           *ConnectionProfileID                        `json:"id,omitempty" url:"id,omitempty"`
+	Name                         *ConnectionProfileName                      `json:"name,omitempty" url:"name,omitempty"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"organization,omitempty"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"connection_config,omitempty"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1143,6 +1396,13 @@ func (c *CreateConnectionProfileResponseContent) GetStrategyOverrides() Connecti
 		return ConnectionProfileStrategyOverrides{}
 	}
 	return *c.StrategyOverrides
+}
+
+func (c *CreateConnectionProfileResponseContent) GetCrossAppAccessResourceApp() ConnectionProfileCrossAppAccessResourceApp {
+	if c == nil || c.CrossAppAccessResourceApp == nil {
+		return ConnectionProfileCrossAppAccessResourceApp{}
+	}
+	return *c.CrossAppAccessResourceApp
 }
 
 func (c *CreateConnectionProfileResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1206,6 +1466,13 @@ func (c *CreateConnectionProfileResponseContent) SetConnectionConfig(connectionC
 func (c *CreateConnectionProfileResponseContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	c.StrategyOverrides = strategyOverrides
 	c.require(createConnectionProfileResponseContentFieldStrategyOverrides)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileResponseContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(createConnectionProfileResponseContentFieldCrossAppAccessResourceApp)
 }
 
 func (c *CreateConnectionProfileResponseContent) UnmarshalJSON(data []byte) error {
@@ -1281,16 +1548,18 @@ var (
 	getConnectionProfileResponseContentFieldEnabledFeatures              = big.NewInt(1 << 4)
 	getConnectionProfileResponseContentFieldConnectionConfig             = big.NewInt(1 << 5)
 	getConnectionProfileResponseContentFieldStrategyOverrides            = big.NewInt(1 << 6)
+	getConnectionProfileResponseContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 7)
 )
 
 type GetConnectionProfileResponseContent struct {
-	ID                           *ConnectionProfileID                `json:"id,omitempty" url:"id,omitempty"`
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"connection_config,omitempty"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	ID                           *ConnectionProfileID                        `json:"id,omitempty" url:"id,omitempty"`
+	Name                         *ConnectionProfileName                      `json:"name,omitempty" url:"name,omitempty"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"organization,omitempty"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"connection_config,omitempty"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1346,6 +1615,13 @@ func (g *GetConnectionProfileResponseContent) GetStrategyOverrides() ConnectionP
 		return ConnectionProfileStrategyOverrides{}
 	}
 	return *g.StrategyOverrides
+}
+
+func (g *GetConnectionProfileResponseContent) GetCrossAppAccessResourceApp() ConnectionProfileCrossAppAccessResourceApp {
+	if g == nil || g.CrossAppAccessResourceApp == nil {
+		return ConnectionProfileCrossAppAccessResourceApp{}
+	}
+	return *g.CrossAppAccessResourceApp
 }
 
 func (g *GetConnectionProfileResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1409,6 +1685,13 @@ func (g *GetConnectionProfileResponseContent) SetConnectionConfig(connectionConf
 func (g *GetConnectionProfileResponseContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	g.StrategyOverrides = strategyOverrides
 	g.require(getConnectionProfileResponseContentFieldStrategyOverrides)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionProfileResponseContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	g.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	g.require(getConnectionProfileResponseContentFieldCrossAppAccessResourceApp)
 }
 
 func (g *GetConnectionProfileResponseContent) UnmarshalJSON(data []byte) error {
@@ -1764,16 +2047,18 @@ var (
 	updateConnectionProfileResponseContentFieldEnabledFeatures              = big.NewInt(1 << 4)
 	updateConnectionProfileResponseContentFieldConnectionConfig             = big.NewInt(1 << 5)
 	updateConnectionProfileResponseContentFieldStrategyOverrides            = big.NewInt(1 << 6)
+	updateConnectionProfileResponseContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 7)
 )
 
 type UpdateConnectionProfileResponseContent struct {
-	ID                           *ConnectionProfileID                `json:"id,omitempty" url:"id,omitempty"`
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"connection_config,omitempty"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	ID                           *ConnectionProfileID                        `json:"id,omitempty" url:"id,omitempty"`
+	Name                         *ConnectionProfileName                      `json:"name,omitempty" url:"name,omitempty"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"organization,omitempty"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"connection_config,omitempty"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1829,6 +2114,13 @@ func (u *UpdateConnectionProfileResponseContent) GetStrategyOverrides() Connecti
 		return ConnectionProfileStrategyOverrides{}
 	}
 	return *u.StrategyOverrides
+}
+
+func (u *UpdateConnectionProfileResponseContent) GetCrossAppAccessResourceApp() ConnectionProfileCrossAppAccessResourceApp {
+	if u == nil || u.CrossAppAccessResourceApp == nil {
+		return ConnectionProfileCrossAppAccessResourceApp{}
+	}
+	return *u.CrossAppAccessResourceApp
 }
 
 func (u *UpdateConnectionProfileResponseContent) GetExtraProperties() map[string]interface{} {
@@ -1892,6 +2184,13 @@ func (u *UpdateConnectionProfileResponseContent) SetConnectionConfig(connectionC
 func (u *UpdateConnectionProfileResponseContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	u.StrategyOverrides = strategyOverrides
 	u.require(updateConnectionProfileResponseContentFieldStrategyOverrides)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionProfileResponseContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	u.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	u.require(updateConnectionProfileResponseContentFieldCrossAppAccessResourceApp)
 }
 
 func (u *UpdateConnectionProfileResponseContent) UnmarshalJSON(data []byte) error {

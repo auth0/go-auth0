@@ -34,6 +34,21 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Retrieve all keys used to verify HTTP Message Signatures on Network ACL rules, ordered by creation time descending.
+func (c *Client) List(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (*management.GetAllKeysNetworkACLsResponseContent, error) {
+	response, err := c.WithRawResponse.List(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Create a new key used to verify HTTP Message Signatures on Network ACL rules.
 func (c *Client) Create(
 	ctx context.Context,
@@ -43,6 +58,24 @@ func (c *Client) Create(
 	response, err := c.WithRawResponse.Create(
 		ctx,
 		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Retrieve a specific key used to verify HTTP Message Signatures on Network ACL rules.
+func (c *Client) Get(
+	ctx context.Context,
+	// ID of the Network ACL Key to retrieve.
+	id string,
+	opts ...option.RequestOption,
+) (*management.NetworkACLKey, error) {
+	response, err := c.WithRawResponse.Get(
+		ctx,
+		id,
 		opts...,
 	)
 	if err != nil {

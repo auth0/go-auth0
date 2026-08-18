@@ -77,6 +77,28 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
+func TestKeysNetworkACLsListWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Keys.NetworkACLs.List(
+		context.TODO(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestKeysNetworkACLsListWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestKeysNetworkACLsListWithWireMock", "GET", "/keys/network-acls", nil, 1)
+}
+
 func TestKeysNetworkACLsCreateWithWireMock(
 	t *testing.T,
 ) {
@@ -103,4 +125,27 @@ func TestKeysNetworkACLsCreateWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestKeysNetworkACLsCreateWithWireMock", "POST", "/keys/network-acls", nil, 1)
+}
+
+func TestKeysNetworkACLsGetWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Keys.NetworkACLs.Get(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestKeysNetworkACLsGetWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestKeysNetworkACLsGetWithWireMock", "GET", "/keys/network-acls/id", nil, 1)
 }

@@ -7411,6 +7411,49 @@ func (c ClientMyOrganizationConfigurationAllowedStrategiesEnum) Ptr() *ClientMyO
 	return &c
 }
 
+// A valid third-party client access value for the My Organization Configuration.
+type ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum string
+
+const (
+	ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumAllow ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum = "allow"
+	ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumBlock ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum = "block"
+)
+
+func NewClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumFromString(s string) (ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum, error) {
+	switch s {
+	case "allow":
+		return ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumAllow, nil
+	case "block":
+		return ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumBlock, nil
+	}
+	var t ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum) Ptr() *ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum {
+	return &c
+}
+
+// The default third-party client access value for the My Organization Configuration.
+type ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum string
+
+const (
+	ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnumBlock ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum = "block"
+)
+
+func NewClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnumFromString(s string) (ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum, error) {
+	switch s {
+	case "block":
+		return ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnumBlock, nil
+	}
+	var t ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum) Ptr() *ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum {
+	return &c
+}
+
 // The deletion behavior for this client.
 type ClientMyOrganizationDeletionBehaviorEnum string
 
@@ -7439,8 +7482,9 @@ var (
 	clientMyOrganizationPatchConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
 	clientMyOrganizationPatchConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
 	clientMyOrganizationPatchConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
-	clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
-	clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 4)
+	clientMyOrganizationPatchConfigurationFieldThirdPartyClientAccess     = big.NewInt(1 << 3)
+	clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 4)
+	clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 5)
 )
 
 type ClientMyOrganizationPatchConfiguration struct {
@@ -7450,6 +7494,7 @@ type ClientMyOrganizationPatchConfiguration struct {
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 	// The allowed connection strategies for the My Organization Configuration.
 	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
+	ThirdPartyClientAccess     *ClientMyOrganizationThirdPartyClientAccessConfiguration `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
 	// The client ID this client uses while creating invitations through My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
@@ -7480,6 +7525,13 @@ func (c *ClientMyOrganizationPatchConfiguration) GetAllowedStrategies() []Client
 		return nil
 	}
 	return c.AllowedStrategies
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetThirdPartyClientAccess() ClientMyOrganizationThirdPartyClientAccessConfiguration {
+	if c == nil || c.ThirdPartyClientAccess == nil {
+		return ClientMyOrganizationThirdPartyClientAccessConfiguration{}
+	}
+	return *c.ThirdPartyClientAccess
 }
 
 func (c *ClientMyOrganizationPatchConfiguration) GetConnectionDeletionBehavior() ClientMyOrganizationDeletionBehaviorEnum {
@@ -7529,6 +7581,13 @@ func (c *ClientMyOrganizationPatchConfiguration) SetUserAttributeProfileID(userA
 func (c *ClientMyOrganizationPatchConfiguration) SetAllowedStrategies(allowedStrategies []ClientMyOrganizationConfigurationAllowedStrategiesEnum) {
 	c.AllowedStrategies = allowedStrategies
 	c.require(clientMyOrganizationPatchConfigurationFieldAllowedStrategies)
+}
+
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetThirdPartyClientAccess(thirdPartyClientAccess *ClientMyOrganizationThirdPartyClientAccessConfiguration) {
+	c.ThirdPartyClientAccess = thirdPartyClientAccess
+	c.require(clientMyOrganizationPatchConfigurationFieldThirdPartyClientAccess)
 }
 
 // SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
@@ -7592,8 +7651,9 @@ var (
 	clientMyOrganizationPostConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
 	clientMyOrganizationPostConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
 	clientMyOrganizationPostConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
-	clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
-	clientMyOrganizationPostConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 4)
+	clientMyOrganizationPostConfigurationFieldThirdPartyClientAccess     = big.NewInt(1 << 3)
+	clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 4)
+	clientMyOrganizationPostConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 5)
 )
 
 type ClientMyOrganizationPostConfiguration struct {
@@ -7603,6 +7663,7 @@ type ClientMyOrganizationPostConfiguration struct {
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 	// The allowed connection strategies for the My Organization Configuration.
 	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
+	ThirdPartyClientAccess     *ClientMyOrganizationThirdPartyClientAccessConfiguration `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
 	// The client ID this client uses while creating invitations through My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
@@ -7633,6 +7694,13 @@ func (c *ClientMyOrganizationPostConfiguration) GetAllowedStrategies() []ClientM
 		return nil
 	}
 	return c.AllowedStrategies
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetThirdPartyClientAccess() ClientMyOrganizationThirdPartyClientAccessConfiguration {
+	if c == nil || c.ThirdPartyClientAccess == nil {
+		return ClientMyOrganizationThirdPartyClientAccessConfiguration{}
+	}
+	return *c.ThirdPartyClientAccess
 }
 
 func (c *ClientMyOrganizationPostConfiguration) GetConnectionDeletionBehavior() ClientMyOrganizationDeletionBehaviorEnum {
@@ -7682,6 +7750,13 @@ func (c *ClientMyOrganizationPostConfiguration) SetUserAttributeProfileID(userAt
 func (c *ClientMyOrganizationPostConfiguration) SetAllowedStrategies(allowedStrategies []ClientMyOrganizationConfigurationAllowedStrategiesEnum) {
 	c.AllowedStrategies = allowedStrategies
 	c.require(clientMyOrganizationPostConfigurationFieldAllowedStrategies)
+}
+
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetThirdPartyClientAccess(thirdPartyClientAccess *ClientMyOrganizationThirdPartyClientAccessConfiguration) {
+	c.ThirdPartyClientAccess = thirdPartyClientAccess
+	c.require(clientMyOrganizationPostConfigurationFieldThirdPartyClientAccess)
 }
 
 // SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
@@ -7745,8 +7820,9 @@ var (
 	clientMyOrganizationResponseConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
 	clientMyOrganizationResponseConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
 	clientMyOrganizationResponseConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
-	clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
-	clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 4)
+	clientMyOrganizationResponseConfigurationFieldThirdPartyClientAccess     = big.NewInt(1 << 3)
+	clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 4)
+	clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 5)
 )
 
 type ClientMyOrganizationResponseConfiguration struct {
@@ -7756,6 +7832,7 @@ type ClientMyOrganizationResponseConfiguration struct {
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 	// The allowed connection strategies for the My Organization Configuration.
 	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
+	ThirdPartyClientAccess     *ClientMyOrganizationThirdPartyClientAccessConfiguration `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
 	// The client ID this client uses while creating invitations through My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
@@ -7786,6 +7863,13 @@ func (c *ClientMyOrganizationResponseConfiguration) GetAllowedStrategies() []Cli
 		return nil
 	}
 	return c.AllowedStrategies
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetThirdPartyClientAccess() ClientMyOrganizationThirdPartyClientAccessConfiguration {
+	if c == nil || c.ThirdPartyClientAccess == nil {
+		return ClientMyOrganizationThirdPartyClientAccessConfiguration{}
+	}
+	return *c.ThirdPartyClientAccess
 }
 
 func (c *ClientMyOrganizationResponseConfiguration) GetConnectionDeletionBehavior() ClientMyOrganizationDeletionBehaviorEnum {
@@ -7837,6 +7921,13 @@ func (c *ClientMyOrganizationResponseConfiguration) SetAllowedStrategies(allowed
 	c.require(clientMyOrganizationResponseConfigurationFieldAllowedStrategies)
 }
 
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetThirdPartyClientAccess(thirdPartyClientAccess *ClientMyOrganizationThirdPartyClientAccessConfiguration) {
+	c.ThirdPartyClientAccess = thirdPartyClientAccess
+	c.require(clientMyOrganizationResponseConfigurationFieldThirdPartyClientAccess)
+}
+
 // SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ClientMyOrganizationResponseConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
@@ -7879,6 +7970,108 @@ func (c *ClientMyOrganizationResponseConfiguration) MarshalJSON() ([]byte, error
 }
 
 func (c *ClientMyOrganizationResponseConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// The third-party client access configuration for the My Organization Configuration.
+var (
+	clientMyOrganizationThirdPartyClientAccessConfigurationFieldDefaultValue  = big.NewInt(1 << 0)
+	clientMyOrganizationThirdPartyClientAccessConfigurationFieldAllowedValues = big.NewInt(1 << 1)
+)
+
+type ClientMyOrganizationThirdPartyClientAccessConfiguration struct {
+	DefaultValue ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum `json:"default_value" url:"default_value"`
+	// The allowed third-party client access values for the My Organization Configuration.
+	AllowedValues []ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum `json:"allowed_values" url:"allowed_values"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) GetDefaultValue() ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum {
+	if c == nil {
+		return ""
+	}
+	return c.DefaultValue
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) GetAllowedValues() []ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum {
+	if c == nil {
+		return nil
+	}
+	return c.AllowedValues
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) SetDefaultValue(defaultValue ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum) {
+	c.DefaultValue = defaultValue
+	c.require(clientMyOrganizationThirdPartyClientAccessConfigurationFieldDefaultValue)
+}
+
+// SetAllowedValues sets the AllowedValues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) SetAllowedValues(allowedValues []ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum) {
+	c.AllowedValues = allowedValues
+	c.require(clientMyOrganizationThirdPartyClientAccessConfigurationFieldAllowedValues)
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientMyOrganizationThirdPartyClientAccessConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientMyOrganizationThirdPartyClientAccessConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) MarshalJSON() ([]byte, error) {
+	type embed ClientMyOrganizationThirdPartyClientAccessConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) String() string {
 	if c == nil {
 		return "<nil>"
 	}

@@ -761,14 +761,16 @@ var (
 	networkACLRuleFieldAction   = big.NewInt(1 << 0)
 	networkACLRuleFieldMatch    = big.NewInt(1 << 1)
 	networkACLRuleFieldNotMatch = big.NewInt(1 << 2)
-	networkACLRuleFieldScope    = big.NewInt(1 << 3)
+	networkACLRuleFieldMatchAll = big.NewInt(1 << 3)
+	networkACLRuleFieldScope    = big.NewInt(1 << 4)
 )
 
 type NetworkACLRule struct {
-	Action   *NetworkACLAction       `json:"action" url:"action"`
-	Match    *NetworkACLMatch        `json:"match,omitempty" url:"match,omitempty"`
-	NotMatch *NetworkACLMatch        `json:"not_match,omitempty" url:"not_match,omitempty"`
-	Scope    NetworkACLRuleScopeEnum `json:"scope" url:"scope"`
+	Action   *NetworkACLAction           `json:"action" url:"action"`
+	Match    *NetworkACLMatch            `json:"match,omitempty" url:"match,omitempty"`
+	NotMatch *NetworkACLMatch            `json:"not_match,omitempty" url:"not_match,omitempty"`
+	MatchAll *NetworkACLRuleMatchAllEnum `json:"match_all,omitempty" url:"match_all,omitempty"`
+	Scope    NetworkACLRuleScopeEnum     `json:"scope" url:"scope"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -796,6 +798,13 @@ func (n *NetworkACLRule) GetNotMatch() NetworkACLMatch {
 		return NetworkACLMatch{}
 	}
 	return *n.NotMatch
+}
+
+func (n *NetworkACLRule) GetMatchAll() NetworkACLRuleMatchAllEnum {
+	if n == nil || n.MatchAll == nil {
+		return false
+	}
+	return *n.MatchAll
 }
 
 func (n *NetworkACLRule) GetScope() NetworkACLRuleScopeEnum {
@@ -838,6 +847,13 @@ func (n *NetworkACLRule) SetMatch(match *NetworkACLMatch) {
 func (n *NetworkACLRule) SetNotMatch(notMatch *NetworkACLMatch) {
 	n.NotMatch = notMatch
 	n.require(networkACLRuleFieldNotMatch)
+}
+
+// SetMatchAll sets the MatchAll field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLRule) SetMatchAll(matchAll *NetworkACLRuleMatchAllEnum) {
+	n.MatchAll = matchAll
+	n.require(networkACLRuleFieldMatchAll)
 }
 
 // SetScope sets the Scope field and marks it as non-optional;
@@ -888,6 +904,9 @@ func (n *NetworkACLRule) String() string {
 	}
 	return fmt.Sprintf("%#v", n)
 }
+
+// When true, the rule unconditionally matches all traffic regardless of any other signals. Mutually exclusive with `match` and `not_match`.
+type NetworkACLRuleMatchAllEnum = bool
 
 // Identifies the origin of the request as the Management API (management), Authentication API (authentication), Dynamic Client Registration API (dynamic_client_registration), or any (tenant)
 type NetworkACLRuleScopeEnum string
