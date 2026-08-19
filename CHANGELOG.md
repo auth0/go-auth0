@@ -14,6 +14,9 @@
 - Flows endpoints now return `*management.NotFoundError` for 404 responses instead of a generic API error [\#846](https://github.com/auth0/go-auth0/pull/846) ([fern-api[bot]](https://github.com/apps/fern-api))
 - docs: correct the client field list on `Clients.Create`, `Clients.Update`, and in `reference.md` to reference `custom_login_page_on` instead of `custom_login_page_off`, and clarify on `Connections.Update` that any unspecified option falls back to its default even when that differs from the existing value [\#846](https://github.com/auth0/go-auth0/pull/846) ([fern-api[bot]](https://github.com/apps/fern-api))
 
+**Fixed**
+- fix: send the `Auth0-Client` and `User-Agent` headers when a custom HTTP client is passed to `client.New`. The client given through `option.WithHTTPClient` is now wrapped instead of replacing the one the SDK configures, so its transport, timeout, and proxy settings are kept alongside the SDK headers, and the client itself is left unmodified [\#852](https://github.com/auth0/go-auth0/pull/852) ([developerkunal](https://github.com/developerkunal))
+
 ## [v3.2.0](https://github.com/auth0/go-auth0/tree/v3.2.0) (2026-08-05)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.1.0...v3.2.0)
 
