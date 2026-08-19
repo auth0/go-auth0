@@ -2653,8 +2653,9 @@ var (
 	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
 	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
 	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 36)
-	connectionPropertiesOptionsFieldDiscoveryURL                     = big.NewInt(1 << 37)
-	connectionPropertiesOptionsFieldOidcMetadata                     = big.NewInt(1 << 38)
+	connectionPropertiesOptionsFieldUseOauthSpecScope                = big.NewInt(1 << 37)
+	connectionPropertiesOptionsFieldDiscoveryURL                     = big.NewInt(1 << 38)
+	connectionPropertiesOptionsFieldOidcMetadata                     = big.NewInt(1 << 39)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2701,6 +2702,7 @@ type ConnectionPropertiesOptions struct {
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
 	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	UseOauthSpecScope                *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
 	DiscoveryURL                     *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
 	OidcMetadata                     *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
 
@@ -2969,6 +2971,13 @@ func (c *ConnectionPropertiesOptions) GetIDTokenSessionExpirySupported() Connect
 		return false
 	}
 	return *c.IDTokenSessionExpirySupported
+}
+
+func (c *ConnectionPropertiesOptions) GetUseOauthSpecScope() ConnectionUseOauthSpecScope {
+	if c == nil || c.UseOauthSpecScope == nil {
+		return false
+	}
+	return *c.UseOauthSpecScope
 }
 
 func (c *ConnectionPropertiesOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
@@ -3256,6 +3265,13 @@ func (c *ConnectionPropertiesOptions) SetTokenEndpointJwtcaAudFormat(tokenEndpoi
 func (c *ConnectionPropertiesOptions) SetIDTokenSessionExpirySupported(idTokenSessionExpirySupported *ConnectionIDTokenSessionExpirySupported) {
 	c.IDTokenSessionExpirySupported = idTokenSessionExpirySupported
 	c.require(connectionPropertiesOptionsFieldIDTokenSessionExpirySupported)
+}
+
+// SetUseOauthSpecScope sets the UseOauthSpecScope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
+	c.UseOauthSpecScope = useOauthSpecScope
+	c.require(connectionPropertiesOptionsFieldUseOauthSpecScope)
 }
 
 // SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;
@@ -3735,6 +3751,9 @@ func (c *ConnectionUpstreamValue) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+// When true, uses space-delimited scopes (per OAuth 2.0 spec) instead of comma-delimited when calling the identity provider's authorization endpoint. Only relevant when using the connection_scope parameter. See https://auth0.com/docs/authenticate/identity-providers/adding-scopes-for-an-external-idp#pass-scopes-to-authorize-endpoint
+type ConnectionUseOauthSpecScope = bool
 
 var (
 	connectionUsernameValidationOptionsFieldMin = big.NewInt(1 << 0)
@@ -6405,8 +6424,9 @@ var (
 	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
 	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
 	updateConnectionOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 36)
-	updateConnectionOptionsFieldDiscoveryURL                     = big.NewInt(1 << 37)
-	updateConnectionOptionsFieldOidcMetadata                     = big.NewInt(1 << 38)
+	updateConnectionOptionsFieldUseOauthSpecScope                = big.NewInt(1 << 37)
+	updateConnectionOptionsFieldDiscoveryURL                     = big.NewInt(1 << 38)
+	updateConnectionOptionsFieldOidcMetadata                     = big.NewInt(1 << 39)
 )
 
 type UpdateConnectionOptions struct {
@@ -6453,6 +6473,7 @@ type UpdateConnectionOptions struct {
 	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
 	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	UseOauthSpecScope                *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
 	DiscoveryURL                     *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
 	OidcMetadata                     *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
 
@@ -6721,6 +6742,13 @@ func (u *UpdateConnectionOptions) GetIDTokenSessionExpirySupported() ConnectionI
 		return false
 	}
 	return *u.IDTokenSessionExpirySupported
+}
+
+func (u *UpdateConnectionOptions) GetUseOauthSpecScope() ConnectionUseOauthSpecScope {
+	if u == nil || u.UseOauthSpecScope == nil {
+		return false
+	}
+	return *u.UseOauthSpecScope
 }
 
 func (u *UpdateConnectionOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
@@ -7008,6 +7036,13 @@ func (u *UpdateConnectionOptions) SetTokenEndpointJwtcaAudFormat(tokenEndpointJw
 func (u *UpdateConnectionOptions) SetIDTokenSessionExpirySupported(idTokenSessionExpirySupported *ConnectionIDTokenSessionExpirySupported) {
 	u.IDTokenSessionExpirySupported = idTokenSessionExpirySupported
 	u.require(updateConnectionOptionsFieldIDTokenSessionExpirySupported)
+}
+
+// SetUseOauthSpecScope sets the UseOauthSpecScope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
+	u.UseOauthSpecScope = useOauthSpecScope
+	u.require(updateConnectionOptionsFieldUseOauthSpecScope)
 }
 
 // SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;

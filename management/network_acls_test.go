@@ -2101,6 +2101,14 @@ func TestSettersNetworkACLRule(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetMatchAll", func(t *testing.T) {
+		obj := &NetworkACLRule{}
+		var fernTestValueMatchAll *NetworkACLRuleMatchAllEnum
+		obj.SetMatchAll(fernTestValueMatchAll)
+		assert.Equal(t, fernTestValueMatchAll, obj.MatchAll)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetScope", func(t *testing.T) {
 		obj := &NetworkACLRule{}
 		var fernTestValueScope NetworkACLRuleScopeEnum
@@ -2213,6 +2221,40 @@ func TestGettersNetworkACLRule(t *testing.T) {
 		_ = obj.GetNotMatch() // Should return zero value
 	})
 
+	t.Run("GetMatchAll", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLRule{}
+		var value NetworkACLRuleMatchAllEnum
+		obj.MatchAll = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMatchAll(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMatchAll_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLRule{}
+		obj.MatchAll = nil
+		var expectedZero NetworkACLRuleMatchAllEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMatchAll(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMatchAll_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLRule
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMatchAll() // Should return zero value
+	})
+
 	t.Run("GetScope", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -2309,6 +2351,37 @@ func TestSettersMarkExplicitNetworkACLRule(t *testing.T) {
 
 		// Act
 		obj.SetNotMatch(fernTestValueNotMatch)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMatchAll_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLRule{}
+		var fernTestValueMatchAll *NetworkACLRuleMatchAllEnum
+
+		// Act
+		obj.SetMatchAll(fernTestValueMatchAll)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

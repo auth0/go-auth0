@@ -37220,6 +37220,14 @@ func TestSettersConnectionOptionsCommonOidc(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUseOauthSpecScope", func(t *testing.T) {
+		obj := &ConnectionOptionsCommonOidc{}
+		var fernTestValueUseOauthSpecScope *ConnectionUseOauthSpecScope
+		obj.SetUseOauthSpecScope(fernTestValueUseOauthSpecScope)
+		assert.Equal(t, fernTestValueUseOauthSpecScope, obj.UseOauthSpecScope)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersConnectionOptionsCommonOidc(t *testing.T) {
@@ -37960,6 +37968,40 @@ func TestGettersConnectionOptionsCommonOidc(t *testing.T) {
 		_ = obj.GetUserinfoEndpoint() // Should return zero value
 	})
 
+	t.Run("GetUseOauthSpecScope", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsCommonOidc{}
+		var value ConnectionUseOauthSpecScope
+		obj.UseOauthSpecScope = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUseOauthSpecScope(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUseOauthSpecScope_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsCommonOidc{}
+		obj.UseOauthSpecScope = nil
+		var expectedZero ConnectionUseOauthSpecScope
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUseOauthSpecScope(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUseOauthSpecScope_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOptionsCommonOidc
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUseOauthSpecScope() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitConnectionOptionsCommonOidc(t *testing.T) {
@@ -38622,6 +38664,37 @@ func TestSettersMarkExplicitConnectionOptionsCommonOidc(t *testing.T) {
 
 		// Act
 		obj.SetUserinfoEndpoint(fernTestValueUserinfoEndpoint)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUseOauthSpecScope_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsCommonOidc{}
+		var fernTestValueUseOauthSpecScope *ConnectionUseOauthSpecScope
+
+		// Act
+		obj.SetUseOauthSpecScope(fernTestValueUseOauthSpecScope)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -61244,6 +61317,14 @@ func TestSettersConnectionOptionsOidc(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUseOauthSpecScope", func(t *testing.T) {
+		obj := &ConnectionOptionsOidc{}
+		var fernTestValueUseOauthSpecScope *ConnectionUseOauthSpecScope
+		obj.SetUseOauthSpecScope(fernTestValueUseOauthSpecScope)
+		assert.Equal(t, fernTestValueUseOauthSpecScope, obj.UseOauthSpecScope)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetNonPersistentAttrs", func(t *testing.T) {
 		obj := &ConnectionOptionsOidc{}
 		var fernTestValueNonPersistentAttrs *ConnectionNonPersistentAttrs
@@ -62014,6 +62095,40 @@ func TestGettersConnectionOptionsOidc(t *testing.T) {
 			}
 		}()
 		_ = obj.GetUserinfoEndpoint() // Should return zero value
+	})
+
+	t.Run("GetUseOauthSpecScope", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsOidc{}
+		var value ConnectionUseOauthSpecScope
+		obj.UseOauthSpecScope = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUseOauthSpecScope(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUseOauthSpecScope_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsOidc{}
+		obj.UseOauthSpecScope = nil
+		var expectedZero ConnectionUseOauthSpecScope
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUseOauthSpecScope(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUseOauthSpecScope_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOptionsOidc
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUseOauthSpecScope() // Should return zero value
 	})
 
 	t.Run("GetNonPersistentAttrs", func(t *testing.T) {
@@ -62814,6 +62929,37 @@ func TestSettersMarkExplicitConnectionOptionsOidc(t *testing.T) {
 
 		// Act
 		obj.SetUserinfoEndpoint(fernTestValueUserinfoEndpoint)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUseOauthSpecScope_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsOidc{}
+		var fernTestValueUseOauthSpecScope *ConnectionUseOauthSpecScope
+
+		// Act
+		obj.SetUseOauthSpecScope(fernTestValueUseOauthSpecScope)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -65814,6 +65960,14 @@ func TestSettersConnectionOptionsOkta(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUseOauthSpecScope", func(t *testing.T) {
+		obj := &ConnectionOptionsOkta{}
+		var fernTestValueUseOauthSpecScope *ConnectionUseOauthSpecScope
+		obj.SetUseOauthSpecScope(fernTestValueUseOauthSpecScope)
+		assert.Equal(t, fernTestValueUseOauthSpecScope, obj.UseOauthSpecScope)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAttributeMap", func(t *testing.T) {
 		obj := &ConnectionOptionsOkta{}
 		var fernTestValueAttributeMap *ConnectionAttributeMapOkta
@@ -66612,6 +66766,40 @@ func TestGettersConnectionOptionsOkta(t *testing.T) {
 		_ = obj.GetUserinfoEndpoint() // Should return zero value
 	})
 
+	t.Run("GetUseOauthSpecScope", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsOkta{}
+		var value ConnectionUseOauthSpecScope
+		obj.UseOauthSpecScope = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUseOauthSpecScope(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUseOauthSpecScope_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsOkta{}
+		obj.UseOauthSpecScope = nil
+		var expectedZero ConnectionUseOauthSpecScope
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUseOauthSpecScope(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUseOauthSpecScope_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOptionsOkta
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUseOauthSpecScope() // Should return zero value
+	})
+
 	t.Run("GetAttributeMap", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -67407,6 +67595,37 @@ func TestSettersMarkExplicitConnectionOptionsOkta(t *testing.T) {
 
 		// Act
 		obj.SetUserinfoEndpoint(fernTestValueUserinfoEndpoint)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUseOauthSpecScope_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsOkta{}
+		var fernTestValueUseOauthSpecScope *ConnectionUseOauthSpecScope
+
+		// Act
+		obj.SetUseOauthSpecScope(fernTestValueUseOauthSpecScope)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -203337,6 +203556,87 @@ func TestSettersMarkExplicitGetAculResponseContent(t *testing.T) {
 
 }
 
+func TestSettersGetAllKeysNetworkACLsResponseContent(t *testing.T) {
+	t.Run("SetKeys", func(t *testing.T) {
+		obj := &GetAllKeysNetworkACLsResponseContent{}
+		var fernTestValueKeys []*NetworkACLKey
+		obj.SetKeys(fernTestValueKeys)
+		assert.Equal(t, fernTestValueKeys, obj.Keys)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersGetAllKeysNetworkACLsResponseContent(t *testing.T) {
+	t.Run("GetKeys", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAllKeysNetworkACLsResponseContent{}
+		var expected []*NetworkACLKey
+		obj.Keys = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetKeys(), "getter should return the property value")
+	})
+
+	t.Run("GetKeys_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAllKeysNetworkACLsResponseContent{}
+		obj.Keys = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetKeys(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetKeys_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAllKeysNetworkACLsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetKeys() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitGetAllKeysNetworkACLsResponseContent(t *testing.T) {
+	t.Run("SetKeys_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAllKeysNetworkACLsResponseContent{}
+		var fernTestValueKeys []*NetworkACLKey
+
+		// Act
+		obj.SetKeys(fernTestValueKeys)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersGetAttackProtectionCaptchaResponseContent(t *testing.T) {
 	t.Run("SetActiveProviderID", func(t *testing.T) {
 		obj := &GetAttackProtectionCaptchaResponseContent{}
@@ -243573,6 +243873,387 @@ func TestSettersMarkExplicitMdlPresentationRequestProperties(t *testing.T) {
 
 		// Act
 		obj.SetOrgIso1801351(fernTestValueOrgIso1801351)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersNetworkACLKey(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
+		obj := &NetworkACLKey{}
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetName", func(t *testing.T) {
+		obj := &NetworkACLKey{}
+		var fernTestValueName string
+		obj.SetName(fernTestValueName)
+		assert.Equal(t, fernTestValueName, obj.Name)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAlg", func(t *testing.T) {
+		obj := &NetworkACLKey{}
+		var fernTestValueAlg NetworkACLKeyAlgorithmEnum
+		obj.SetAlg(fernTestValueAlg)
+		assert.Equal(t, fernTestValueAlg, obj.Alg)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetFingerprint", func(t *testing.T) {
+		obj := &NetworkACLKey{}
+		var fernTestValueFingerprint string
+		obj.SetFingerprint(fernTestValueFingerprint)
+		assert.Equal(t, fernTestValueFingerprint, obj.Fingerprint)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCreatedAt", func(t *testing.T) {
+		obj := &NetworkACLKey{}
+		var fernTestValueCreatedAt string
+		obj.SetCreatedAt(fernTestValueCreatedAt)
+		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetUpdatedAt", func(t *testing.T) {
+		obj := &NetworkACLKey{}
+		var fernTestValueUpdatedAt string
+		obj.SetUpdatedAt(fernTestValueUpdatedAt)
+		assert.Equal(t, fernTestValueUpdatedAt, obj.UpdatedAt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersNetworkACLKey(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var expected string
+		obj.ID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
+	})
+
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetID() // Should return zero value
+	})
+
+	t.Run("GetName", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var expected string
+		obj.Name = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetName(), "getter should return the property value")
+	})
+
+	t.Run("GetName_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetAlg", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var expected NetworkACLKeyAlgorithmEnum
+		obj.Alg = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAlg(), "getter should return the property value")
+	})
+
+	t.Run("GetAlg_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAlg() // Should return zero value
+	})
+
+	t.Run("GetFingerprint", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var expected string
+		obj.Fingerprint = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetFingerprint(), "getter should return the property value")
+	})
+
+	t.Run("GetFingerprint_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFingerprint() // Should return zero value
+	})
+
+	t.Run("GetCreatedAt", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var expected string
+		obj.CreatedAt = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetCreatedAt(), "getter should return the property value")
+	})
+
+	t.Run("GetCreatedAt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCreatedAt() // Should return zero value
+	})
+
+	t.Run("GetUpdatedAt", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var expected string
+		obj.UpdatedAt = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetUpdatedAt(), "getter should return the property value")
+	})
+
+	t.Run("GetUpdatedAt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUpdatedAt() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitNetworkACLKey(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var fernTestValueID string
+
+		// Act
+		obj.SetID(fernTestValueID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetName_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var fernTestValueName string
+
+		// Act
+		obj.SetName(fernTestValueName)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAlg_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var fernTestValueAlg NetworkACLKeyAlgorithmEnum
+
+		// Act
+		obj.SetAlg(fernTestValueAlg)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetFingerprint_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var fernTestValueFingerprint string
+
+		// Act
+		obj.SetFingerprint(fernTestValueFingerprint)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCreatedAt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var fernTestValueCreatedAt string
+
+		// Act
+		obj.SetCreatedAt(fernTestValueCreatedAt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUpdatedAt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+		var fernTestValueUpdatedAt string
+
+		// Act
+		obj.SetUpdatedAt(fernTestValueUpdatedAt)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -333024,6 +333705,39 @@ func TestJSONMarshalingGetAculResponseContent(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingGetAllKeysNetworkACLsResponseContent(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAllKeysNetworkACLsResponseContent{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled GetAllKeysNetworkACLsResponseContent
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj GetAllKeysNetworkACLsResponseContent
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj GetAllKeysNetworkACLsResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingGetAttackProtectionCaptchaResponseContent(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -336814,6 +337528,39 @@ func TestJSONMarshalingMdlPresentationRequestProperties(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj MdlPresentationRequestProperties
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingNetworkACLKey(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLKey{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled NetworkACLKey
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj NetworkACLKey
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj NetworkACLKey
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -349887,6 +350634,22 @@ func TestStringGetAculResponseContent(t *testing.T) {
 	})
 }
 
+func TestStringGetAllKeysNetworkACLsResponseContent(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &GetAllKeysNetworkACLsResponseContent{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAllKeysNetworkACLsResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringGetAttackProtectionCaptchaResponseContent(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -351722,6 +352485,22 @@ func TestStringMdlPresentationRequestProperties(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *MdlPresentationRequestProperties
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringNetworkACLKey(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &NetworkACLKey{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLKey
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -365280,6 +366059,13 @@ func TestEnumOauthScope(t *testing.T) {
 		val, err := NewOauthScopeFromString("create:network_acl_keys")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, OauthScope("create:network_acl_keys"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_read_network_acl_keys", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewOauthScopeFromString("read:network_acl_keys")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, OauthScope("read:network_acl_keys"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
@@ -379068,6 +379854,29 @@ func TestExtraPropertiesGetAculResponseContent(t *testing.T) {
 	})
 }
 
+func TestExtraPropertiesGetAllKeysNetworkACLsResponseContent(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &GetAllKeysNetworkACLsResponseContent{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAllKeysNetworkACLsResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesGetAttackProtectionCaptchaResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -381708,6 +382517,29 @@ func TestExtraPropertiesMdlPresentationRequestProperties(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *MdlPresentationRequestProperties
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesNetworkACLKey(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &NetworkACLKey{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLKey
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
