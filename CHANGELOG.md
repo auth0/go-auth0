@@ -1,5 +1,19 @@
 # Change Log
 
+## [v3.3.0](https://github.com/auth0/go-auth0/tree/v3.3.0) (2026-08-19)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.2.0...v3.3.0)
+
+**Added**
+- feat: add `Keys.NetworkACLs.List` and `Keys.NetworkACLs.Get` to read the keys used to verify HTTP Message Signatures on Network ACL rules, along with the `NetworkACLKey` and `GetAllKeysNetworkACLsResponseContent` types and the `OauthScopeReadNetworkACLKeys` (`read:network_acl_keys`) scope [\#846](https://github.com/auth0/go-auth0/pull/846) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `MatchAll` field (`NetworkACLRuleMatchAllEnum`) to `NetworkACLRule` so a rule can match all traffic unconditionally; it is mutually exclusive with `Match` and `NotMatch` [\#846](https://github.com/auth0/go-auth0/pull/846) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add connection profile cross-app access support via the `CrossAppAccessResourceApp` field on `CreateConnectionProfileRequestContent`, `UpdateConnectionProfileRequestContent`, `ConnectionProfile`, and the connection profile create, get, and update response types, plus the `ConnectionProfileCrossAppAccessResourceApp` and `ConnectionProfileCrossAppAccessResourceAppStatus` types with their `enabled` and `disabled` enum values [\#846](https://github.com/auth0/go-auth0/pull/846) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add client My Organization third-party client access via the `ThirdPartyClientAccess` field on `ClientMyOrganizationPostConfiguration`, `ClientMyOrganizationPatchConfiguration`, and `ClientMyOrganizationResponseConfiguration`, plus the `ClientMyOrganizationThirdPartyClientAccessConfiguration` type with its `allow` and `block` default value and allowed values enums [\#846](https://github.com/auth0/go-auth0/pull/846) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `UseOauthSpecScope` field (`ConnectionUseOauthSpecScope`) to `ConnectionPropertiesOptions`, `UpdateConnectionOptions`, `ConnectionOptionsOidc`, `ConnectionOptionsCommonOidc`, and `ConnectionOptionsOkta` to send space-delimited scopes per the OAuth 2.0 spec instead of comma-delimited when calling the identity provider's authorization endpoint [\#846](https://github.com/auth0/go-auth0/pull/846) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Changed**
+- Flows endpoints now return `*management.NotFoundError` for 404 responses instead of a generic API error [\#846](https://github.com/auth0/go-auth0/pull/846) ([fern-api[bot]](https://github.com/apps/fern-api))
+- docs: correct the client field list on `Clients.Create`, `Clients.Update`, and in `reference.md` to reference `custom_login_page_on` instead of `custom_login_page_off`, and clarify on `Connections.Update` that any unspecified option falls back to its default even when that differs from the existing value [\#846](https://github.com/auth0/go-auth0/pull/846) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v3.2.0](https://github.com/auth0/go-auth0/tree/v3.2.0) (2026-08-05)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.1.0...v3.2.0)
 
