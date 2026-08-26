@@ -1,9 +1,10 @@
 # Change Log
 
-## [Unreleased]
+## [v1.48.0](https://github.com/auth0/go-auth0/tree/v1.48.0) (2026-08-26)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.47.0...v1.48.0)
 
 **Added**
-- feat: add `ThirdPartyClientAccess` support to `MyOrganizationConfiguration` on `Client`, controlling whether third-party clients can access organizations created for the client through the My Organization API (Early Access). Note that `AllowedValues` is required whenever `ThirdPartyClientAccess` is set.
+- feat: add `ThirdPartyClientAccess` support to `MyOrganizationConfiguration` on `Client`, controlling whether third-party clients can access organizations created for the client through the My Organization API (Early Access). Note that `AllowedValues` is required whenever `ThirdPartyClientAccess` is set [\#854](https://github.com/auth0/go-auth0/pull/854) ([KartikJha](https://github.com/KartikJha))
 
 ## [v1.47.0](https://github.com/auth0/go-auth0/tree/v1.47.0) (2026-08-13)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.46.0...v1.47.0)
