@@ -2140,6 +2140,54 @@ func TestClient_MyOrganizationConfiguration(t *testing.T) {
 	assert.Equal(t, "allow", readClient.GetMyOrganizationConfiguration().GetConnectionDeletionBehavior())
 }
 
+func TestClient_MyOrganizationConfigurationThirdPartyClientAccess(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	// Case: Create a client with third_party_client_access set to its only allowed default value.
+	clientWith := &Client{
+		Name:        auth0.Stringf("Test Client ThirdPartyClientAccess (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("Client with my_organization_configuration.third_party_client_access."),
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			AllowedStrategies:          &[]string{"okta"},
+			ConnectionDeletionBehavior: auth0.String("allow"),
+			ThirdPartyClientAccess: &MyOrganizationThirdPartyClientAccess{
+				DefaultValue:  auth0.String("block"),
+				AllowedValues: &[]string{"allow", "block"},
+			},
+		},
+	}
+	err := api.Client.Create(ctx, clientWith)
+	require.NoError(t, err)
+	require.NotEmpty(t, clientWith.GetClientID())
+	t.Cleanup(func() {
+		cleanupClient(t, clientWith.GetClientID())
+	})
+
+	thirdPartyClientAccess := clientWith.GetMyOrganizationConfiguration().GetThirdPartyClientAccess()
+	require.NotNil(t, thirdPartyClientAccess)
+	assert.Equal(t, "block", thirdPartyClientAccess.GetDefaultValue())
+	assert.ElementsMatch(t, []string{"allow", "block"}, thirdPartyClientAccess.GetAllowedValues())
+
+	// Case: DefaultValue "allow" is rejected by the API, which only accepts "block" (400).
+	clientWithInvalidDefault := &Client{
+		Name: auth0.Stringf("Test Client ThirdPartyClientAccess Invalid Default (%s)", time.Now().Format(time.StampMilli)),
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			AllowedStrategies:          &[]string{"okta"},
+			ConnectionDeletionBehavior: auth0.String("allow"),
+			ThirdPartyClientAccess: &MyOrganizationThirdPartyClientAccess{
+				DefaultValue:  auth0.String("allow"),
+				AllowedValues: &[]string{"allow", "block"},
+			},
+		},
+	}
+	err = api.Client.Create(ctx, clientWithInvalidDefault)
+	require.Error(t, err)
+	assert.Implements(t, (*Error)(nil), err)
+	assert.Equal(t, http.StatusBadRequest, err.(Error).Status())
+}
+
 func givenAnExpressConfigurationClient(t *testing.T) *Client {
 	t.Helper()
 
