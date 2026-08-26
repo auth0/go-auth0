@@ -10473,6 +10473,14 @@ func (m *MyOrganizationConfiguration) GetInvitationLandingClientID() string {
 	return *m.InvitationLandingClientID
 }
 
+// GetThirdPartyClientAccess returns the ThirdPartyClientAccess field.
+func (m *MyOrganizationConfiguration) GetThirdPartyClientAccess() *MyOrganizationThirdPartyClientAccess {
+	if m == nil {
+		return nil
+	}
+	return m.ThirdPartyClientAccess
+}
+
 // GetUserAttributeProfileID returns the UserAttributeProfileID field if it's non-nil, zero value otherwise.
 func (m *MyOrganizationConfiguration) GetUserAttributeProfileID() string {
 	if m == nil || m.UserAttributeProfileID == nil {
@@ -10483,6 +10491,27 @@ func (m *MyOrganizationConfiguration) GetUserAttributeProfileID() string {
 
 // String returns a string representation of MyOrganizationConfiguration.
 func (m *MyOrganizationConfiguration) String() string {
+	return Stringify(m)
+}
+
+// GetAllowedValues returns the AllowedValues field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationThirdPartyClientAccess) GetAllowedValues() []string {
+	if m == nil || m.AllowedValues == nil {
+		return nil
+	}
+	return *m.AllowedValues
+}
+
+// GetDefaultValue returns the DefaultValue field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationThirdPartyClientAccess) GetDefaultValue() string {
+	if m == nil || m.DefaultValue == nil {
+		return ""
+	}
+	return *m.DefaultValue
+}
+
+// String returns a string representation of MyOrganizationThirdPartyClientAccess.
+func (m *MyOrganizationThirdPartyClientAccess) String() string {
 	return Stringify(m)
 }
 

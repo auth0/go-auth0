@@ -13098,6 +13098,13 @@ func TestMyOrganizationConfiguration_GetInvitationLandingClientID(tt *testing.T)
 	m.GetInvitationLandingClientID()
 }
 
+func TestMyOrganizationConfiguration_GetThirdPartyClientAccess(tt *testing.T) {
+	m := &MyOrganizationConfiguration{}
+	m.GetThirdPartyClientAccess()
+	m = nil
+	m.GetThirdPartyClientAccess()
+}
+
 func TestMyOrganizationConfiguration_GetUserAttributeProfileID(tt *testing.T) {
 	var zeroValue string
 	m := &MyOrganizationConfiguration{UserAttributeProfileID: &zeroValue}
@@ -13111,6 +13118,34 @@ func TestMyOrganizationConfiguration_GetUserAttributeProfileID(tt *testing.T) {
 func TestMyOrganizationConfiguration_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &MyOrganizationConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestMyOrganizationThirdPartyClientAccess_GetAllowedValues(tt *testing.T) {
+	var zeroValue []string
+	m := &MyOrganizationThirdPartyClientAccess{AllowedValues: &zeroValue}
+	m.GetAllowedValues()
+	m = &MyOrganizationThirdPartyClientAccess{}
+	m.GetAllowedValues()
+	m = nil
+	m.GetAllowedValues()
+}
+
+func TestMyOrganizationThirdPartyClientAccess_GetDefaultValue(tt *testing.T) {
+	var zeroValue string
+	m := &MyOrganizationThirdPartyClientAccess{DefaultValue: &zeroValue}
+	m.GetDefaultValue()
+	m = &MyOrganizationThirdPartyClientAccess{}
+	m.GetDefaultValue()
+	m = nil
+	m.GetDefaultValue()
+}
+
+func TestMyOrganizationThirdPartyClientAccess_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &MyOrganizationThirdPartyClientAccess{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
