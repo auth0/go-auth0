@@ -77,6 +77,20 @@ type NetworkACLRuleMatch struct {
 	ConnectingIPv4Cidrs *[]string `json:"connecting_ipv4_cidrs,omitempty"`
 	// Connecting IPv6 CIDRs
 	ConnectingIPv6Cidrs *[]string `json:"connecting_ipv6_cidrs,omitempty"`
+	// HTTP Message Signature
+	HTTPMessageSignature *NetworkACLHTTPMessageSignature `json:"http_message_signature,omitempty"`
+}
+
+// NetworkACLHTTPMessageSignature : the http_message_signature signal of a Network ACL Rule Match.
+type NetworkACLHTTPMessageSignature struct {
+	// The keys whose signatures satisfy the rule.
+	Keys []*NetworkACLHTTPMessageSignatureKey `json:"keys,omitempty"`
+}
+
+// NetworkACLHTTPMessageSignatureKey : a reference to a Network ACL key by id.
+type NetworkACLHTTPMessageSignatureKey struct {
+	// The id of the referenced Network ACL key.
+	ID *string `json:"id,omitempty"`
 }
 
 // MarshalJSON implements the json.Marshaler interface.

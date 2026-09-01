@@ -10576,6 +10576,24 @@ func (n *NetworkACL) String() string {
 	return Stringify(n)
 }
 
+// String returns a string representation of NetworkACLHTTPMessageSignature.
+func (n *NetworkACLHTTPMessageSignature) String() string {
+	return Stringify(n)
+}
+
+// GetID returns the ID field if it's non-nil, zero value otherwise.
+func (n *NetworkACLHTTPMessageSignatureKey) GetID() string {
+	if n == nil || n.ID == nil {
+		return ""
+	}
+	return *n.ID
+}
+
+// String returns a string representation of NetworkACLHTTPMessageSignatureKey.
+func (n *NetworkACLHTTPMessageSignatureKey) String() string {
+	return Stringify(n)
+}
+
 // GetAction returns the Action field.
 func (n *NetworkACLRule) GetAction() *NetworkACLRuleAction {
 	if n == nil {
@@ -10712,6 +10730,14 @@ func (n *NetworkACLRuleMatch) GetHostnames() []string {
 		return nil
 	}
 	return *n.Hostnames
+}
+
+// GetHTTPMessageSignature returns the HTTPMessageSignature field.
+func (n *NetworkACLRuleMatch) GetHTTPMessageSignature() *NetworkACLHTTPMessageSignature {
+	if n == nil {
+		return nil
+	}
+	return n.HTTPMessageSignature
 }
 
 // GetIPv4Cidrs returns the IPv4Cidrs field if it's non-nil, zero value otherwise.
