@@ -410,6 +410,24 @@ type MyOrganizationConfiguration struct {
 	// InvitationLandingClientID is the client ID used as the invitation landing page
 	// when creating invitations through the My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty"`
+
+	// ThirdPartyClientAccess controls whether third-party clients can access organizations
+	// created for this client through the My Organization API.
+	ThirdPartyClientAccess *MyOrganizationThirdPartyClientAccess `json:"third_party_client_access,omitempty"`
+}
+
+// MyOrganizationThirdPartyClientAccess represents the third-party client access policy for
+// organizations created through the My Organization API.
+type MyOrganizationThirdPartyClientAccess struct {
+	// DefaultValue is the default third-party client access value applied to organizations
+	// created for this client. Currently the API only accepts "block"; "allow" is rejected
+	// with a 400 error.
+	DefaultValue *string `json:"default_value,omitempty"`
+
+	// AllowedValues is the list of third-party client access values that can be set on
+	// organizations created for this client through the My Organization API.
+	// Possible values: "allow", "block". Required whenever ThirdPartyClientAccess is set.
+	AllowedValues *[]string `json:"allowed_values,omitempty"`
 }
 
 // ClientTokenExchange allows configuration for token exchange.
