@@ -489,34 +489,209 @@ type NetworkACLActionLogEnum = bool
 // Indicates the rule will redirect requests that either match or not_match specific criteria
 type NetworkACLActionRedirectEnum = bool
 
+// HTTP Message Signature configuration.
 var (
-	networkACLMatchFieldAsns                = big.NewInt(1 << 0)
-	networkACLMatchFieldAuth0Managed        = big.NewInt(1 << 1)
-	networkACLMatchFieldGeoCountryCodes     = big.NewInt(1 << 2)
-	networkACLMatchFieldGeoSubdivisionCodes = big.NewInt(1 << 3)
-	networkACLMatchFieldIpv4Cidrs           = big.NewInt(1 << 4)
-	networkACLMatchFieldIpv6Cidrs           = big.NewInt(1 << 5)
-	networkACLMatchFieldJa3Fingerprints     = big.NewInt(1 << 6)
-	networkACLMatchFieldJa4Fingerprints     = big.NewInt(1 << 7)
-	networkACLMatchFieldUserAgents          = big.NewInt(1 << 8)
-	networkACLMatchFieldHostnames           = big.NewInt(1 << 9)
-	networkACLMatchFieldConnectingIpv4Cidrs = big.NewInt(1 << 10)
-	networkACLMatchFieldConnectingIpv6Cidrs = big.NewInt(1 << 11)
+	networkAclHttpMessageSignatureFieldKeys = big.NewInt(1 << 0)
+)
+
+type NetworkAclHttpMessageSignature struct {
+	Keys NetworkAclHttpMessageSignatureKeys `json:"keys" url:"keys"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NetworkAclHttpMessageSignature) GetKeys() NetworkAclHttpMessageSignatureKeys {
+	if n == nil {
+		return nil
+	}
+	return n.Keys
+}
+
+func (n *NetworkAclHttpMessageSignature) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NetworkAclHttpMessageSignature) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetKeys sets the Keys field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclHttpMessageSignature) SetKeys(keys NetworkAclHttpMessageSignatureKeys) {
+	n.Keys = keys
+	n.require(networkAclHttpMessageSignatureFieldKeys)
+}
+
+func (n *NetworkAclHttpMessageSignature) UnmarshalJSON(data []byte) error {
+	type unmarshaler NetworkAclHttpMessageSignature
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NetworkAclHttpMessageSignature(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NetworkAclHttpMessageSignature) MarshalJSON() ([]byte, error) {
+	type embed NetworkAclHttpMessageSignature
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NetworkAclHttpMessageSignature) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+var (
+	networkAclHttpMessageSignatureKeyFieldID = big.NewInt(1 << 0)
+)
+
+type NetworkAclHttpMessageSignatureKey struct {
+	// Auth0-generated identifier for the key, as returned by `POST /api/v2/keys/network-acls`.
+	ID string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NetworkAclHttpMessageSignatureKey) GetID() string {
+	if n == nil {
+		return ""
+	}
+	return n.ID
+}
+
+func (n *NetworkAclHttpMessageSignatureKey) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NetworkAclHttpMessageSignatureKey) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkAclHttpMessageSignatureKey) SetID(id string) {
+	n.ID = id
+	n.require(networkAclHttpMessageSignatureKeyFieldID)
+}
+
+func (n *NetworkAclHttpMessageSignatureKey) UnmarshalJSON(data []byte) error {
+	type unmarshaler NetworkAclHttpMessageSignatureKey
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NetworkAclHttpMessageSignatureKey(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NetworkAclHttpMessageSignatureKey) MarshalJSON() ([]byte, error) {
+	type embed NetworkAclHttpMessageSignatureKey
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NetworkAclHttpMessageSignatureKey) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+// The keys whose signatures satisfy this rule. Each id references a key that was already created via `POST /api/v2/keys/network-acls`.
+type NetworkAclHttpMessageSignatureKeys = []*NetworkAclHttpMessageSignatureKey
+
+var (
+	networkACLMatchFieldAsns                 = big.NewInt(1 << 0)
+	networkACLMatchFieldAuth0Managed         = big.NewInt(1 << 1)
+	networkACLMatchFieldGeoCountryCodes      = big.NewInt(1 << 2)
+	networkACLMatchFieldGeoSubdivisionCodes  = big.NewInt(1 << 3)
+	networkACLMatchFieldIpv4Cidrs            = big.NewInt(1 << 4)
+	networkACLMatchFieldIpv6Cidrs            = big.NewInt(1 << 5)
+	networkACLMatchFieldJa3Fingerprints      = big.NewInt(1 << 6)
+	networkACLMatchFieldJa4Fingerprints      = big.NewInt(1 << 7)
+	networkACLMatchFieldUserAgents           = big.NewInt(1 << 8)
+	networkACLMatchFieldHostnames            = big.NewInt(1 << 9)
+	networkACLMatchFieldConnectingIpv4Cidrs  = big.NewInt(1 << 10)
+	networkACLMatchFieldConnectingIpv6Cidrs  = big.NewInt(1 << 11)
+	networkACLMatchFieldHTTPMessageSignature = big.NewInt(1 << 12)
 )
 
 type NetworkACLMatch struct {
-	Asns                []int                               `json:"asns,omitempty" url:"asns,omitempty"`
-	Auth0Managed        []string                            `json:"auth0_managed,omitempty" url:"auth0_managed,omitempty"`
-	GeoCountryCodes     []string                            `json:"geo_country_codes,omitempty" url:"geo_country_codes,omitempty"`
-	GeoSubdivisionCodes []string                            `json:"geo_subdivision_codes,omitempty" url:"geo_subdivision_codes,omitempty"`
-	Ipv4Cidrs           []NetworkACLMatchIpv4Cidr           `json:"ipv4_cidrs,omitempty" url:"ipv4_cidrs,omitempty"`
-	Ipv6Cidrs           []NetworkACLMatchIpv6Cidr           `json:"ipv6_cidrs,omitempty" url:"ipv6_cidrs,omitempty"`
-	Ja3Fingerprints     []string                            `json:"ja3_fingerprints,omitempty" url:"ja3_fingerprints,omitempty"`
-	Ja4Fingerprints     []string                            `json:"ja4_fingerprints,omitempty" url:"ja4_fingerprints,omitempty"`
-	UserAgents          []string                            `json:"user_agents,omitempty" url:"user_agents,omitempty"`
-	Hostnames           []string                            `json:"hostnames,omitempty" url:"hostnames,omitempty"`
-	ConnectingIpv4Cidrs []NetworkACLMatchConnectingIpv4Cidr `json:"connecting_ipv4_cidrs,omitempty" url:"connecting_ipv4_cidrs,omitempty"`
-	ConnectingIpv6Cidrs []NetworkACLMatchConnectingIpv6Cidr `json:"connecting_ipv6_cidrs,omitempty" url:"connecting_ipv6_cidrs,omitempty"`
+	Asns                 []int                               `json:"asns,omitempty" url:"asns,omitempty"`
+	Auth0Managed         []string                            `json:"auth0_managed,omitempty" url:"auth0_managed,omitempty"`
+	GeoCountryCodes      []string                            `json:"geo_country_codes,omitempty" url:"geo_country_codes,omitempty"`
+	GeoSubdivisionCodes  []string                            `json:"geo_subdivision_codes,omitempty" url:"geo_subdivision_codes,omitempty"`
+	Ipv4Cidrs            []NetworkACLMatchIpv4Cidr           `json:"ipv4_cidrs,omitempty" url:"ipv4_cidrs,omitempty"`
+	Ipv6Cidrs            []NetworkACLMatchIpv6Cidr           `json:"ipv6_cidrs,omitempty" url:"ipv6_cidrs,omitempty"`
+	Ja3Fingerprints      []string                            `json:"ja3_fingerprints,omitempty" url:"ja3_fingerprints,omitempty"`
+	Ja4Fingerprints      []string                            `json:"ja4_fingerprints,omitempty" url:"ja4_fingerprints,omitempty"`
+	UserAgents           []string                            `json:"user_agents,omitempty" url:"user_agents,omitempty"`
+	Hostnames            []string                            `json:"hostnames,omitempty" url:"hostnames,omitempty"`
+	ConnectingIpv4Cidrs  []NetworkACLMatchConnectingIpv4Cidr `json:"connecting_ipv4_cidrs,omitempty" url:"connecting_ipv4_cidrs,omitempty"`
+	ConnectingIpv6Cidrs  []NetworkACLMatchConnectingIpv6Cidr `json:"connecting_ipv6_cidrs,omitempty" url:"connecting_ipv6_cidrs,omitempty"`
+	HTTPMessageSignature *NetworkAclHttpMessageSignature     `json:"http_message_signature,omitempty" url:"http_message_signature,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -607,6 +782,13 @@ func (n *NetworkACLMatch) GetConnectingIpv6Cidrs() []NetworkACLMatchConnectingIp
 		return nil
 	}
 	return n.ConnectingIpv6Cidrs
+}
+
+func (n *NetworkACLMatch) GetHTTPMessageSignature() NetworkAclHttpMessageSignature {
+	if n == nil || n.HTTPMessageSignature == nil {
+		return NetworkAclHttpMessageSignature{}
+	}
+	return *n.HTTPMessageSignature
 }
 
 func (n *NetworkACLMatch) GetExtraProperties() map[string]interface{} {
@@ -705,6 +887,13 @@ func (n *NetworkACLMatch) SetConnectingIpv4Cidrs(connectingIpv4Cidrs []NetworkAC
 func (n *NetworkACLMatch) SetConnectingIpv6Cidrs(connectingIpv6Cidrs []NetworkACLMatchConnectingIpv6Cidr) {
 	n.ConnectingIpv6Cidrs = connectingIpv6Cidrs
 	n.require(networkACLMatchFieldConnectingIpv6Cidrs)
+}
+
+// SetHTTPMessageSignature sets the HTTPMessageSignature field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NetworkACLMatch) SetHTTPMessageSignature(httpMessageSignature *NetworkAclHttpMessageSignature) {
+	n.HTTPMessageSignature = httpMessageSignature
+	n.require(networkACLMatchFieldHTTPMessageSignature)
 }
 
 func (n *NetworkACLMatch) UnmarshalJSON(data []byte) error {

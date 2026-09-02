@@ -1203,6 +1203,148 @@ func TestSettersMarkExplicitNetworkACLAction(t *testing.T) {
 
 }
 
+func TestSettersNetworkAclHttpMessageSignature(t *testing.T) {
+	t.Run("SetKeys", func(t *testing.T) {
+		obj := &NetworkAclHttpMessageSignature{}
+		var fernTestValueKeys NetworkAclHttpMessageSignatureKeys
+		obj.SetKeys(fernTestValueKeys)
+		assert.Equal(t, fernTestValueKeys, obj.Keys)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersNetworkAclHttpMessageSignature(t *testing.T) {
+	t.Run("GetKeys", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkAclHttpMessageSignature{}
+		var expected NetworkAclHttpMessageSignatureKeys
+		obj.Keys = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetKeys(), "getter should return the property value")
+	})
+
+	t.Run("GetKeys_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkAclHttpMessageSignature
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetKeys() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitNetworkAclHttpMessageSignature(t *testing.T) {
+	t.Run("SetKeys_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkAclHttpMessageSignature{}
+		var fernTestValueKeys NetworkAclHttpMessageSignatureKeys
+
+		// Act
+		obj.SetKeys(fernTestValueKeys)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersNetworkAclHttpMessageSignatureKey(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
+		obj := &NetworkAclHttpMessageSignatureKey{}
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersNetworkAclHttpMessageSignatureKey(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkAclHttpMessageSignatureKey{}
+		var expected string
+		obj.ID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
+	})
+
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkAclHttpMessageSignatureKey
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetID() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitNetworkAclHttpMessageSignatureKey(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkAclHttpMessageSignatureKey{}
+		var fernTestValueID string
+
+		// Act
+		obj.SetID(fernTestValueID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersNetworkACLMatch(t *testing.T) {
 	t.Run("SetAsns", func(t *testing.T) {
 		obj := &NetworkACLMatch{}
@@ -1297,6 +1439,14 @@ func TestSettersNetworkACLMatch(t *testing.T) {
 		var fernTestValueConnectingIpv6Cidrs []NetworkACLMatchConnectingIpv6Cidr
 		obj.SetConnectingIpv6Cidrs(fernTestValueConnectingIpv6Cidrs)
 		assert.Equal(t, fernTestValueConnectingIpv6Cidrs, obj.ConnectingIpv6Cidrs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHTTPMessageSignature", func(t *testing.T) {
+		obj := &NetworkACLMatch{}
+		var fernTestValueHTTPMessageSignature *NetworkAclHttpMessageSignature
+		obj.SetHTTPMessageSignature(fernTestValueHTTPMessageSignature)
+		assert.Equal(t, fernTestValueHTTPMessageSignature, obj.HTTPMessageSignature)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1699,6 +1849,40 @@ func TestGettersNetworkACLMatch(t *testing.T) {
 		_ = obj.GetConnectingIpv6Cidrs() // Should return zero value
 	})
 
+	t.Run("GetHTTPMessageSignature", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var value NetworkAclHttpMessageSignature
+		obj.HTTPMessageSignature = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetHTTPMessageSignature(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetHTTPMessageSignature_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		obj.HTTPMessageSignature = nil
+		var expectedZero NetworkAclHttpMessageSignature
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetHTTPMessageSignature(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetHTTPMessageSignature_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkACLMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHTTPMessageSignature() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitNetworkACLMatch(t *testing.T) {
@@ -2051,6 +2235,37 @@ func TestSettersMarkExplicitNetworkACLMatch(t *testing.T) {
 
 		// Act
 		obj.SetConnectingIpv6Cidrs(fernTestValueConnectingIpv6Cidrs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHTTPMessageSignature_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkACLMatch{}
+		var fernTestValueHTTPMessageSignature *NetworkAclHttpMessageSignature
+
+		// Act
+		obj.SetHTTPMessageSignature(fernTestValueHTTPMessageSignature)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -4196,6 +4411,72 @@ func TestJSONMarshalingNetworkACLsResponseContent(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingNetworkAclHttpMessageSignature(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkAclHttpMessageSignature{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled NetworkAclHttpMessageSignature
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj NetworkAclHttpMessageSignature
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj NetworkAclHttpMessageSignature
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingNetworkAclHttpMessageSignatureKey(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &NetworkAclHttpMessageSignatureKey{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled NetworkAclHttpMessageSignatureKey
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj NetworkAclHttpMessageSignatureKey
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj NetworkAclHttpMessageSignatureKey
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingSetNetworkACLsResponseContent(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -4353,6 +4634,38 @@ func TestStringNetworkACLsResponseContent(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *NetworkACLsResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringNetworkAclHttpMessageSignature(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &NetworkAclHttpMessageSignature{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkAclHttpMessageSignature
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringNetworkAclHttpMessageSignatureKey(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &NetworkAclHttpMessageSignatureKey{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkAclHttpMessageSignatureKey
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -4566,6 +4879,52 @@ func TestExtraPropertiesNetworkACLsResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *NetworkACLsResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesNetworkAclHttpMessageSignature(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &NetworkAclHttpMessageSignature{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkAclHttpMessageSignature
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesNetworkAclHttpMessageSignatureKey(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &NetworkAclHttpMessageSignatureKey{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *NetworkAclHttpMessageSignatureKey
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

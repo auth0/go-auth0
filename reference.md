@@ -2256,6 +2256,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dl>
 <dd>
 
+**b2BIntegrationConfiguration:** `*management.B2BIntegrationConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **myOrganizationConfiguration:** `*management.ClientMyOrganizationPostConfiguration` 
     
 </dd>
@@ -3060,6 +3068,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dl>
 <dd>
 
+**b2BIntegrationConfiguration:** `*management.B2BIntegrationConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **myOrganizationConfiguration:** `*management.ClientMyOrganizationPatchConfiguration` 
     
 </dd>
@@ -3323,6 +3339,14 @@ client.ConnectionProfiles.Create(
 <dd>
 
 **strategyOverrides:** `*management.ConnectionProfileStrategyOverrides` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provisioning:** `*management.ConnectionProfileProvisioning` 
     
 </dd>
 </dl>
@@ -3655,6 +3679,14 @@ client.ConnectionProfiles.Update(
 <dd>
 
 **strategyOverrides:** `*management.ConnectionProfileStrategyOverrides` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provisioning:** `*management.ConnectionProfileProvisioning` 
     
 </dd>
 </dl>
@@ -9419,6 +9451,546 @@ client.NetworkACLs.Update(
 <dd>
 
 **rule:** `*management.NetworkACLRule` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OrganizationTemplates
+<details><summary><code>client.OrganizationTemplates.List() -> *management.ListOrganizationTemplatesPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of Organization Templates. This endpoint supports Checkpoint pagination. Results are returned in a stable order, sorted by their identifier (`id`) in ascending order.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListOrganizationTemplatesRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.OrganizationTemplates.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 5. Values greater than 10 are capped at 10.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.OrganizationTemplates.Create(request) -> *management.OrganizationTemplate</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an Organization Template.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationTemplateRequestContent{
+        Name: "name",
+        OrganizationDeletionBehavior: management.OrganizationDeletionBehaviorEnumAllow,
+        EnforcePermissionCeiling: true,
+        EnforceSelfAssignmentRestriction: true,
+    }
+client.OrganizationTemplates.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — The name of the organization template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isDefault:** `*bool` — Whether this is the default template applied to new organizations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationDeletionBehavior:** `*management.OrganizationDeletionBehaviorEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionDeletionBehavior:** `*management.ConnectionDeletionBehaviorEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enforcePermissionCeiling:** `bool` — Whether to enforce permission ceiling for organizations using this template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enforceSelfAssignmentRestriction:** `bool` — Whether to enforce self-assignment restrictions for organizations using this template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionProfileID:** `*string` — The connection profile to apply to new connections.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userAttributeProfileID:** `*string` — The user attribute profile to apply to organizations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowedStrategies:** `[]*management.OrganizationTemplateAllowedStrategyEnum` — List of allowed connection strategies for this template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**invitationLandingClientID:** `*string` — The client ID for the invitation landing page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**adminRolesAssignment:** `[]string` — Default admin roles to assign to organization creators.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*management.OrganizationTemplateUseForOrganizationDiscovery` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleVisibilityPolicy:** `*management.OrganizationTemplateRoleVisibilityPolicy` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.OrganizationTemplates.Get(ID) -> *management.OrganizationTemplate</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a single Organization Template specified by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.OrganizationTemplates.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization Template identifier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.OrganizationTemplates.Update(ID, request) -> *management.OrganizationTemplate</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the details of a specific Organization Template.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateOrganizationTemplateRequestContent{}
+client.OrganizationTemplates.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization Template identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — The name of the organization template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isDefault:** `*bool` — Whether this is the default template applied to new organizations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationDeletionBehavior:** `*management.OrganizationDeletionBehaviorEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionDeletionBehavior:** `*management.ConnectionDeletionBehaviorEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enforcePermissionCeiling:** `*bool` — Whether to enforce permission ceiling for organizations using this template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enforceSelfAssignmentRestriction:** `*bool` — Whether to enforce self-assignment restrictions for organizations using this template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionProfileID:** `*string` — The connection profile to apply to new connections.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userAttributeProfileID:** `*string` — The user attribute profile to apply to organizations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowedStrategies:** `[]*management.OrganizationTemplateAllowedStrategyEnum` — List of allowed connection strategies for this template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**invitationLandingClientID:** `*string` — The client ID for the invitation landing page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**adminRolesAssignment:** `[]string` — Default admin roles to assign to organization creators.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*management.OrganizationTemplateUseForOrganizationDiscovery` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleVisibilityPolicy:** `*management.OrganizationTemplateRoleVisibilityPolicy` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.OrganizationTemplates.ListOrganizations(ID) -> *management.ListTemplateOrganizationsPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of organizations assigned to an Organization Template. This endpoint supports Checkpoint pagination. Results are returned in a stable order, sorted by their identifier (`id`) in ascending order.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListTemplateOrganizationsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.OrganizationTemplates.ListOrganizations(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the organization template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 5. Values greater than 10 are capped at 10.
     
 </dd>
 </dl>
@@ -26678,6 +27250,64 @@ client.Keys.NetworkACLs.Get(
 </dl>
 </details>
 
+<details><summary><code>client.Keys.NetworkACLs.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a key used to verify HTTP Message Signatures on Network ACL rules
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.NetworkACLs.Delete(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the Network ACL Key to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Keys Signing
 <details><summary><code>client.Keys.Signing.List() -> []*management.SigningKeys</code></summary>
 <dl>
@@ -29420,6 +30050,199 @@ client.Organizations.Members.Delete(
 <dd>
 
 **members:** `[]string` — List of user IDs to remove from the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organizations OrganizationTemplate
+<details><summary><code>client.Organizations.OrganizationTemplate.Get(ID) -> *management.OrganizationTemplate</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the organization template assigned to a specific organization. Returns the template object if one is explicitly assigned, or a 404 if no template is assigned.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.OrganizationTemplate.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.OrganizationTemplate.AssignOrganizationTemplate(ID, TemplateID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign an Organization Template to an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.OrganizationTemplate.AssignOrganizationTemplate(
+        context.TODO(),
+        "id",
+        "template_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**templateID:** `string` — The ID of the organization template to assign.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.OrganizationTemplate.UnassignOrganizationTemplate(ID, TemplateID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove an Organization Template assignment from an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.OrganizationTemplate.UnassignOrganizationTemplate(
+        context.TODO(),
+        "id",
+        "template_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**templateID:** `string` — The ID of the organization template to unassign.
     
 </dd>
 </dl>
@@ -34402,6 +35225,22 @@ client.Users.Multifactor.DeleteProvider(
 <dd>
 
 Retrieve list of the specified user's current Organization memberships. User must be specified by user ID. For more information, review [Auth0 Organizations](https://auth0.com/docs/manage-users/organizations).
+
+This endpoint supports two types of pagination:
+
+- Offset pagination
+- Checkpoint pagination
+
+Checkpoint pagination must be used if you need to retrieve more than 1000 organizations.
+
+**Checkpoint Pagination**
+
+To search by checkpoint, use the following parameters:
+
+- `from`: Optional id from which to start selection.
+- `take`: The total number of entries to retrieve when using the `from` parameter. Defaults to 50.
+
+**Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
 </dd>
 </dl>
 </dd>

@@ -32,6 +32,7 @@ import (
 	networkacls "github.com/auth0/go-auth0/v3/management/networkacls"
 	option "github.com/auth0/go-auth0/v3/management/option"
 	organizationsclient "github.com/auth0/go-auth0/v3/management/organizations/client"
+	organizationtemplates "github.com/auth0/go-auth0/v3/management/organizationtemplates"
 	promptsclient "github.com/auth0/go-auth0/v3/management/prompts/client"
 	ratelimitpolicies "github.com/auth0/go-auth0/v3/management/ratelimitpolicies"
 	refreshtokens "github.com/auth0/go-auth0/v3/management/refreshtokens"
@@ -76,6 +77,7 @@ type Management struct {
 	LogStreams            *logstreams.Client
 	Logs                  *logs.Client
 	NetworkACLs           *networkacls.Client
+	OrganizationTemplates *organizationtemplates.Client
 	Organizations         *organizationsclient.Client
 	Prompts               *promptsclient.Client
 	RateLimitPolicies     *ratelimitpolicies.Client
@@ -131,6 +133,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		LogStreams:            logstreams.NewClient(options),
 		Logs:                  logs.NewClient(options),
 		NetworkACLs:           networkacls.NewClient(options),
+		OrganizationTemplates: organizationtemplates.NewClient(options),
 		Organizations:         organizationsclient.NewClient(options),
 		Prompts:               promptsclient.NewClient(options),
 		RateLimitPolicies:     ratelimitpolicies.NewClient(options),

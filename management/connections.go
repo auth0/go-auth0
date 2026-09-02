@@ -737,6 +737,9 @@ func (c *ConnectionEmailOtpAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// When true, the server uses Pushed Authorization Requests (PAR) to start the authorization transaction with the identity provider, pushing authorization parameters over back-channel HTTP and redirecting with only a request_uri.
+type ConnectionEnablePushedAuthorizationRequests = bool
+
 // Token-based authentication settings to be applied when connection is using an sms strategy.
 var (
 	connectionGatewayAuthenticationFieldMethod              = big.NewInt(1 << 0)
@@ -1025,6 +1028,24 @@ const (
 	ConnectionIdentityProviderEnumWordpress           ConnectionIdentityProviderEnum = "wordpress"
 	ConnectionIdentityProviderEnumYahoo               ConnectionIdentityProviderEnum = "yahoo"
 	ConnectionIdentityProviderEnumYandex              ConnectionIdentityProviderEnum = "yandex"
+	ConnectionIdentityProviderEnumNotionMcp           ConnectionIdentityProviderEnum = "notion-mcp"
+	ConnectionIdentityProviderEnumAsanaMcp            ConnectionIdentityProviderEnum = "asana-mcp"
+	ConnectionIdentityProviderEnumAtlassianMcp        ConnectionIdentityProviderEnum = "atlassian-mcp"
+	ConnectionIdentityProviderEnumCloudflareMcp       ConnectionIdentityProviderEnum = "cloudflare-mcp"
+	ConnectionIdentityProviderEnumDocusignMcp         ConnectionIdentityProviderEnum = "docusign-mcp"
+	ConnectionIdentityProviderEnumFigmaMcp            ConnectionIdentityProviderEnum = "figma-mcp"
+	ConnectionIdentityProviderEnumGitlabMcp           ConnectionIdentityProviderEnum = "gitlab-mcp"
+	ConnectionIdentityProviderEnumGustoMcp            ConnectionIdentityProviderEnum = "gusto-mcp"
+	ConnectionIdentityProviderEnumHerokuMcp           ConnectionIdentityProviderEnum = "heroku-mcp"
+	ConnectionIdentityProviderEnumHubspotMcp          ConnectionIdentityProviderEnum = "hubspot-mcp"
+	ConnectionIdentityProviderEnumIntercomMcp         ConnectionIdentityProviderEnum = "intercom-mcp"
+	ConnectionIdentityProviderEnumLinearMcp           ConnectionIdentityProviderEnum = "linear-mcp"
+	ConnectionIdentityProviderEnumPagerdutyMcp        ConnectionIdentityProviderEnum = "pagerduty-mcp"
+	ConnectionIdentityProviderEnumSentryMcp           ConnectionIdentityProviderEnum = "sentry-mcp"
+	ConnectionIdentityProviderEnumSlackMcp            ConnectionIdentityProviderEnum = "slack-mcp"
+	ConnectionIdentityProviderEnumSupabaseMcp         ConnectionIdentityProviderEnum = "supabase-mcp"
+	ConnectionIdentityProviderEnumVercelMcp           ConnectionIdentityProviderEnum = "vercel-mcp"
+	ConnectionIdentityProviderEnumXeroMcp             ConnectionIdentityProviderEnum = "xero-mcp"
 )
 
 func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityProviderEnum, error) {
@@ -1139,6 +1160,42 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 		return ConnectionIdentityProviderEnumYahoo, nil
 	case "yandex":
 		return ConnectionIdentityProviderEnumYandex, nil
+	case "notion-mcp":
+		return ConnectionIdentityProviderEnumNotionMcp, nil
+	case "asana-mcp":
+		return ConnectionIdentityProviderEnumAsanaMcp, nil
+	case "atlassian-mcp":
+		return ConnectionIdentityProviderEnumAtlassianMcp, nil
+	case "cloudflare-mcp":
+		return ConnectionIdentityProviderEnumCloudflareMcp, nil
+	case "docusign-mcp":
+		return ConnectionIdentityProviderEnumDocusignMcp, nil
+	case "figma-mcp":
+		return ConnectionIdentityProviderEnumFigmaMcp, nil
+	case "gitlab-mcp":
+		return ConnectionIdentityProviderEnumGitlabMcp, nil
+	case "gusto-mcp":
+		return ConnectionIdentityProviderEnumGustoMcp, nil
+	case "heroku-mcp":
+		return ConnectionIdentityProviderEnumHerokuMcp, nil
+	case "hubspot-mcp":
+		return ConnectionIdentityProviderEnumHubspotMcp, nil
+	case "intercom-mcp":
+		return ConnectionIdentityProviderEnumIntercomMcp, nil
+	case "linear-mcp":
+		return ConnectionIdentityProviderEnumLinearMcp, nil
+	case "pagerduty-mcp":
+		return ConnectionIdentityProviderEnumPagerdutyMcp, nil
+	case "sentry-mcp":
+		return ConnectionIdentityProviderEnumSentryMcp, nil
+	case "slack-mcp":
+		return ConnectionIdentityProviderEnumSlackMcp, nil
+	case "supabase-mcp":
+		return ConnectionIdentityProviderEnumSupabaseMcp, nil
+	case "vercel-mcp":
+		return ConnectionIdentityProviderEnumVercelMcp, nil
+	case "xero-mcp":
+		return ConnectionIdentityProviderEnumXeroMcp, nil
 	}
 	var t ConnectionIdentityProviderEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -2616,46 +2673,48 @@ func (c *ConnectionPhoneOtpAuthenticationMethod) String() string {
 
 // The connection's options (depend on the connection strategy)
 var (
-	connectionPropertiesOptionsFieldValidation                       = big.NewInt(1 << 0)
-	connectionPropertiesOptionsFieldNonPersistentAttrs               = big.NewInt(1 << 1)
-	connectionPropertiesOptionsFieldPrecedence                       = big.NewInt(1 << 2)
-	connectionPropertiesOptionsFieldAttributes                       = big.NewInt(1 << 3)
-	connectionPropertiesOptionsFieldEnableScriptContext              = big.NewInt(1 << 4)
-	connectionPropertiesOptionsFieldEnabledDatabaseCustomization     = big.NewInt(1 << 5)
-	connectionPropertiesOptionsFieldImportMode                       = big.NewInt(1 << 6)
-	connectionPropertiesOptionsFieldConfiguration                    = big.NewInt(1 << 7)
-	connectionPropertiesOptionsFieldCustomScripts                    = big.NewInt(1 << 8)
-	connectionPropertiesOptionsFieldAuthenticationMethods            = big.NewInt(1 << 9)
-	connectionPropertiesOptionsFieldPasskeyOptions                   = big.NewInt(1 << 10)
-	connectionPropertiesOptionsFieldPasswordPolicy                   = big.NewInt(1 << 11)
-	connectionPropertiesOptionsFieldPasswordComplexityOptions        = big.NewInt(1 << 12)
-	connectionPropertiesOptionsFieldPasswordHistory                  = big.NewInt(1 << 13)
-	connectionPropertiesOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 14)
-	connectionPropertiesOptionsFieldPasswordDictionary               = big.NewInt(1 << 15)
-	connectionPropertiesOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 16)
-	connectionPropertiesOptionsFieldAPIEnableGroups                  = big.NewInt(1 << 17)
-	connectionPropertiesOptionsFieldBasicProfile                     = big.NewInt(1 << 18)
-	connectionPropertiesOptionsFieldExtAdmin                         = big.NewInt(1 << 19)
-	connectionPropertiesOptionsFieldExtIsSuspended                   = big.NewInt(1 << 20)
-	connectionPropertiesOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 21)
-	connectionPropertiesOptionsFieldExtGroups                        = big.NewInt(1 << 22)
-	connectionPropertiesOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 23)
-	connectionPropertiesOptionsFieldExtProfile                       = big.NewInt(1 << 24)
-	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 25)
-	connectionPropertiesOptionsFieldUpstreamParams                   = big.NewInt(1 << 26)
-	connectionPropertiesOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 27)
-	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
-	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
-	connectionPropertiesOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 30)
-	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
-	connectionPropertiesOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 32)
-	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
-	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
-	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
-	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 36)
-	connectionPropertiesOptionsFieldUseOauthSpecScope                = big.NewInt(1 << 37)
-	connectionPropertiesOptionsFieldDiscoveryURL                     = big.NewInt(1 << 38)
-	connectionPropertiesOptionsFieldOidcMetadata                     = big.NewInt(1 << 39)
+	connectionPropertiesOptionsFieldValidation                         = big.NewInt(1 << 0)
+	connectionPropertiesOptionsFieldNonPersistentAttrs                 = big.NewInt(1 << 1)
+	connectionPropertiesOptionsFieldPrecedence                         = big.NewInt(1 << 2)
+	connectionPropertiesOptionsFieldAttributes                         = big.NewInt(1 << 3)
+	connectionPropertiesOptionsFieldEnableScriptContext                = big.NewInt(1 << 4)
+	connectionPropertiesOptionsFieldEnabledDatabaseCustomization       = big.NewInt(1 << 5)
+	connectionPropertiesOptionsFieldImportMode                         = big.NewInt(1 << 6)
+	connectionPropertiesOptionsFieldConfiguration                      = big.NewInt(1 << 7)
+	connectionPropertiesOptionsFieldCustomScripts                      = big.NewInt(1 << 8)
+	connectionPropertiesOptionsFieldAuthenticationMethods              = big.NewInt(1 << 9)
+	connectionPropertiesOptionsFieldPasskeyOptions                     = big.NewInt(1 << 10)
+	connectionPropertiesOptionsFieldPasswordPolicy                     = big.NewInt(1 << 11)
+	connectionPropertiesOptionsFieldPasswordComplexityOptions          = big.NewInt(1 << 12)
+	connectionPropertiesOptionsFieldPasswordHistory                    = big.NewInt(1 << 13)
+	connectionPropertiesOptionsFieldPasswordNoPersonalInfo             = big.NewInt(1 << 14)
+	connectionPropertiesOptionsFieldPasswordDictionary                 = big.NewInt(1 << 15)
+	connectionPropertiesOptionsFieldAPIEnableUsers                     = big.NewInt(1 << 16)
+	connectionPropertiesOptionsFieldAPIEnableGroups                    = big.NewInt(1 << 17)
+	connectionPropertiesOptionsFieldBasicProfile                       = big.NewInt(1 << 18)
+	connectionPropertiesOptionsFieldExtAdmin                           = big.NewInt(1 << 19)
+	connectionPropertiesOptionsFieldExtIsSuspended                     = big.NewInt(1 << 20)
+	connectionPropertiesOptionsFieldExtAgreedTerms                     = big.NewInt(1 << 21)
+	connectionPropertiesOptionsFieldExtGroups                          = big.NewInt(1 << 22)
+	connectionPropertiesOptionsFieldExtAssignedPlans                   = big.NewInt(1 << 23)
+	connectionPropertiesOptionsFieldExtProfile                         = big.NewInt(1 << 24)
+	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword   = big.NewInt(1 << 25)
+	connectionPropertiesOptionsFieldUpstreamParams                     = big.NewInt(1 << 26)
+	connectionPropertiesOptionsFieldSetUserRootAttributes              = big.NewInt(1 << 27)
+	connectionPropertiesOptionsFieldGatewayAuthentication              = big.NewInt(1 << 28)
+	connectionPropertiesOptionsFieldPasswordOptions                    = big.NewInt(1 << 29)
+	connectionPropertiesOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 30)
+	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 31)
+	connectionPropertiesOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 32)
+	connectionPropertiesOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 33)
+	connectionPropertiesOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 34)
+	connectionPropertiesOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 35)
+	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 36)
+	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 37)
+	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 38)
+	connectionPropertiesOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 39)
+	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 40)
+	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 41)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2672,39 +2731,41 @@ type ConnectionPropertiesOptions struct {
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
 	ImportMode *bool `json:"import_mode,omitempty" url:"import_mode,omitempty"`
 	// Stores encrypted string only configurations for connections
-	Configuration                    map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
-	CustomScripts                    *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
-	AuthenticationMethods            *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
-	PasskeyOptions                   *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
-	PasswordPolicy                   *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
-	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
-	PasswordHistory                  *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
-	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
-	PasswordDictionary               *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
-	APIEnableUsers                   *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
-	APIEnableGroups                  *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
-	BasicProfile                     *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
-	ExtAdmin                         *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
-	ExtIsSuspended                   *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
-	ExtAgreedTerms                   *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
-	ExtGroups                        *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
-	ExtAssignedPlans                 *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
-	ExtProfile                       *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
-	DisableSelfServiceChangePassword *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
-	UpstreamParams                   *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
-	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
-	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
-	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
-	DpopSigningAlg                   *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
-	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
-	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
-	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
-	UseOauthSpecScope                *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
-	DiscoveryURL                     *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	OidcMetadata                     *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Configuration                      map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
+	CustomScripts                      *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
+	AuthenticationMethods              *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	PasskeyOptions                     *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
+	PasswordPolicy                     *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
+	PasswordComplexityOptions          *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
+	PasswordHistory                    *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
+	PasswordNoPersonalInfo             *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
+	PasswordDictionary                 *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
+	APIEnableUsers                     *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableGroups                    *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
+	BasicProfile                       *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
+	ExtAdmin                           *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
+	ExtIsSuspended                     *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
+	ExtAgreedTerms                     *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
+	ExtGroups                          *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
+	ExtAssignedPlans                   *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
+	ExtProfile                         *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
+	DisableSelfServiceChangePassword   *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
+	UpstreamParams                     *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	SetUserRootAttributes              *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	GatewayAuthentication              *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
+	PasswordOptions                    *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
+	AssertionDecryptionSettings        *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
+	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
+	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
+	PushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint  `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
+	TokenEndpointAuthMethod            *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg        *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
+	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2943,6 +3004,20 @@ func (c *ConnectionPropertiesOptions) GetDpopSigningAlg() ConnectionDpopSigningA
 		return ""
 	}
 	return *c.DpopSigningAlg
+}
+
+func (c *ConnectionPropertiesOptions) GetEnablePushedAuthorizationRequests() ConnectionEnablePushedAuthorizationRequests {
+	if c == nil || c.EnablePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.EnablePushedAuthorizationRequests
+}
+
+func (c *ConnectionPropertiesOptions) GetPushedAuthorizationRequestEndpoint() ConnectionPushedAuthorizationRequestEndpoint {
+	if c == nil || c.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *c.PushedAuthorizationRequestEndpoint
 }
 
 func (c *ConnectionPropertiesOptions) GetTokenEndpointAuthMethod() ConnectionTokenEndpointAuthMethodEnum {
@@ -3239,6 +3314,20 @@ func (c *ConnectionPropertiesOptions) SetDpopSigningAlg(dpopSigningAlg *Connecti
 	c.require(connectionPropertiesOptionsFieldDpopSigningAlg)
 }
 
+// SetEnablePushedAuthorizationRequests sets the EnablePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetEnablePushedAuthorizationRequests(enablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests) {
+	c.EnablePushedAuthorizationRequests = enablePushedAuthorizationRequests
+	c.require(connectionPropertiesOptionsFieldEnablePushedAuthorizationRequests)
+}
+
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint) {
+	c.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	c.require(connectionPropertiesOptionsFieldPushedAuthorizationRequestEndpoint)
+}
+
 // SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionPropertiesOptions) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum) {
@@ -3333,6 +3422,9 @@ func (c *ConnectionPropertiesOptions) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+// URL of the identity provider's Pushed Authorization Request (PAR) endpoint, as per https://datatracker.ietf.org/doc/html/rfc9126. Must use HTTPS scheme.
+type ConnectionPushedAuthorizationRequestEndpoint = string
 
 // When using an external IdP, this flag determines  whether 'name', 'given_name', 'family_name', 'nickname', and 'picture' attributes are updated. In addition, it also determines whether the user is created when user doesnt exist previously. Possible values are 'on_each_login' (default value, it configures the connection to automatically create the user if necessary and update the root attributes from the external IdP with each user login. When this setting is used, root attributes cannot be independently updated), 'on_first_login' (configures the connection to create the user and set the root attributes on first login only, allowing them to be independently updated thereafter), and 'never_on_login' (configures the connection not to create the user and not to set the root attributes from the external IdP, allowing them to be independently updated).
 type ConnectionSetUserRootAttributesEnum string
@@ -3981,7 +4073,9 @@ var (
 	connectionsOidcMetadataFieldOpPolicyURI                                = big.NewInt(1 << 33)
 	connectionsOidcMetadataFieldOpTosURI                                   = big.NewInt(1 << 34)
 	connectionsOidcMetadataFieldEndSessionEndpoint                         = big.NewInt(1 << 35)
-	connectionsOidcMetadataFieldDpopSigningAlgValuesSupported              = big.NewInt(1 << 36)
+	connectionsOidcMetadataFieldPushedAuthorizationRequestEndpoint         = big.NewInt(1 << 36)
+	connectionsOidcMetadataFieldRequirePushedAuthorizationRequests         = big.NewInt(1 << 37)
+	connectionsOidcMetadataFieldDpopSigningAlgValuesSupported              = big.NewInt(1 << 38)
 )
 
 type ConnectionsOidcMetadata struct {
@@ -4057,6 +4151,10 @@ type ConnectionsOidcMetadata struct {
 	OpTosURI *string `json:"op_tos_uri,omitempty" url:"op_tos_uri,omitempty"`
 	// URL of the identity provider's logout/end session endpoint. When configured as a static URL, users are redirected here after logging out from Auth0. Must use HTTPS scheme.
 	EndSessionEndpoint *string `json:"end_session_endpoint,omitempty" url:"end_session_endpoint,omitempty"`
+	// URL of the identity provider's Pushed Authorization Request (PAR) endpoint, as per https://datatracker.ietf.org/doc/html/rfc9126. Must use HTTPS scheme.
+	PushedAuthorizationRequestEndpoint *string `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
+	// Boolean parameter indicating whether the identity provider requires Pushed Authorization Requests (PAR), as per https://datatracker.ietf.org/doc/html/rfc9126. Discovered from the identity provider's metadata; not used to decide whether the server performs PAR.
+	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// JSON array containing a list of the JWS signing algorithms (alg values) supported for DPoP proof JWT signing.
 	DpopSigningAlgValuesSupported []string `json:"dpop_signing_alg_values_supported,omitempty" url:"dpop_signing_alg_values_supported,omitempty"`
 
@@ -4318,6 +4416,20 @@ func (c *ConnectionsOidcMetadata) GetEndSessionEndpoint() string {
 		return ""
 	}
 	return *c.EndSessionEndpoint
+}
+
+func (c *ConnectionsOidcMetadata) GetPushedAuthorizationRequestEndpoint() string {
+	if c == nil || c.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *c.PushedAuthorizationRequestEndpoint
+}
+
+func (c *ConnectionsOidcMetadata) GetRequirePushedAuthorizationRequests() bool {
+	if c == nil || c.RequirePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.RequirePushedAuthorizationRequests
 }
 
 func (c *ConnectionsOidcMetadata) GetDpopSigningAlgValuesSupported() []string {
@@ -4591,6 +4703,20 @@ func (c *ConnectionsOidcMetadata) SetOpTosURI(opTosURI *string) {
 func (c *ConnectionsOidcMetadata) SetEndSessionEndpoint(endSessionEndpoint *string) {
 	c.EndSessionEndpoint = endSessionEndpoint
 	c.require(connectionsOidcMetadataFieldEndSessionEndpoint)
+}
+
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *string) {
+	c.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	c.require(connectionsOidcMetadataFieldPushedAuthorizationRequestEndpoint)
+}
+
+// SetRequirePushedAuthorizationRequests sets the RequirePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetRequirePushedAuthorizationRequests(requirePushedAuthorizationRequests *bool) {
+	c.RequirePushedAuthorizationRequests = requirePushedAuthorizationRequests
+	c.require(connectionsOidcMetadataFieldRequirePushedAuthorizationRequests)
 }
 
 // SetDpopSigningAlgValuesSupported sets the DpopSigningAlgValuesSupported field and marks it as non-optional;
@@ -6387,46 +6513,48 @@ func (s *SignupVerified) String() string {
 
 // The connection's options (depend on the connection strategy). To update these options, the `update:connections_options` scope must be present. To verify your changes, also include the `read:connections_options` scope. If this scope is not specified, you will not be able to review the updated object.
 var (
-	updateConnectionOptionsFieldValidation                       = big.NewInt(1 << 0)
-	updateConnectionOptionsFieldNonPersistentAttrs               = big.NewInt(1 << 1)
-	updateConnectionOptionsFieldPrecedence                       = big.NewInt(1 << 2)
-	updateConnectionOptionsFieldAttributes                       = big.NewInt(1 << 3)
-	updateConnectionOptionsFieldEnableScriptContext              = big.NewInt(1 << 4)
-	updateConnectionOptionsFieldEnabledDatabaseCustomization     = big.NewInt(1 << 5)
-	updateConnectionOptionsFieldImportMode                       = big.NewInt(1 << 6)
-	updateConnectionOptionsFieldConfiguration                    = big.NewInt(1 << 7)
-	updateConnectionOptionsFieldCustomScripts                    = big.NewInt(1 << 8)
-	updateConnectionOptionsFieldAuthenticationMethods            = big.NewInt(1 << 9)
-	updateConnectionOptionsFieldPasskeyOptions                   = big.NewInt(1 << 10)
-	updateConnectionOptionsFieldPasswordPolicy                   = big.NewInt(1 << 11)
-	updateConnectionOptionsFieldPasswordComplexityOptions        = big.NewInt(1 << 12)
-	updateConnectionOptionsFieldPasswordHistory                  = big.NewInt(1 << 13)
-	updateConnectionOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 14)
-	updateConnectionOptionsFieldPasswordDictionary               = big.NewInt(1 << 15)
-	updateConnectionOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 16)
-	updateConnectionOptionsFieldAPIEnableGroups                  = big.NewInt(1 << 17)
-	updateConnectionOptionsFieldBasicProfile                     = big.NewInt(1 << 18)
-	updateConnectionOptionsFieldExtAdmin                         = big.NewInt(1 << 19)
-	updateConnectionOptionsFieldExtIsSuspended                   = big.NewInt(1 << 20)
-	updateConnectionOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 21)
-	updateConnectionOptionsFieldExtGroups                        = big.NewInt(1 << 22)
-	updateConnectionOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 23)
-	updateConnectionOptionsFieldExtProfile                       = big.NewInt(1 << 24)
-	updateConnectionOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 25)
-	updateConnectionOptionsFieldUpstreamParams                   = big.NewInt(1 << 26)
-	updateConnectionOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 27)
-	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
-	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
-	updateConnectionOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 30)
-	updateConnectionOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
-	updateConnectionOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 32)
-	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
-	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
-	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
-	updateConnectionOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 36)
-	updateConnectionOptionsFieldUseOauthSpecScope                = big.NewInt(1 << 37)
-	updateConnectionOptionsFieldDiscoveryURL                     = big.NewInt(1 << 38)
-	updateConnectionOptionsFieldOidcMetadata                     = big.NewInt(1 << 39)
+	updateConnectionOptionsFieldValidation                         = big.NewInt(1 << 0)
+	updateConnectionOptionsFieldNonPersistentAttrs                 = big.NewInt(1 << 1)
+	updateConnectionOptionsFieldPrecedence                         = big.NewInt(1 << 2)
+	updateConnectionOptionsFieldAttributes                         = big.NewInt(1 << 3)
+	updateConnectionOptionsFieldEnableScriptContext                = big.NewInt(1 << 4)
+	updateConnectionOptionsFieldEnabledDatabaseCustomization       = big.NewInt(1 << 5)
+	updateConnectionOptionsFieldImportMode                         = big.NewInt(1 << 6)
+	updateConnectionOptionsFieldConfiguration                      = big.NewInt(1 << 7)
+	updateConnectionOptionsFieldCustomScripts                      = big.NewInt(1 << 8)
+	updateConnectionOptionsFieldAuthenticationMethods              = big.NewInt(1 << 9)
+	updateConnectionOptionsFieldPasskeyOptions                     = big.NewInt(1 << 10)
+	updateConnectionOptionsFieldPasswordPolicy                     = big.NewInt(1 << 11)
+	updateConnectionOptionsFieldPasswordComplexityOptions          = big.NewInt(1 << 12)
+	updateConnectionOptionsFieldPasswordHistory                    = big.NewInt(1 << 13)
+	updateConnectionOptionsFieldPasswordNoPersonalInfo             = big.NewInt(1 << 14)
+	updateConnectionOptionsFieldPasswordDictionary                 = big.NewInt(1 << 15)
+	updateConnectionOptionsFieldAPIEnableUsers                     = big.NewInt(1 << 16)
+	updateConnectionOptionsFieldAPIEnableGroups                    = big.NewInt(1 << 17)
+	updateConnectionOptionsFieldBasicProfile                       = big.NewInt(1 << 18)
+	updateConnectionOptionsFieldExtAdmin                           = big.NewInt(1 << 19)
+	updateConnectionOptionsFieldExtIsSuspended                     = big.NewInt(1 << 20)
+	updateConnectionOptionsFieldExtAgreedTerms                     = big.NewInt(1 << 21)
+	updateConnectionOptionsFieldExtGroups                          = big.NewInt(1 << 22)
+	updateConnectionOptionsFieldExtAssignedPlans                   = big.NewInt(1 << 23)
+	updateConnectionOptionsFieldExtProfile                         = big.NewInt(1 << 24)
+	updateConnectionOptionsFieldDisableSelfServiceChangePassword   = big.NewInt(1 << 25)
+	updateConnectionOptionsFieldUpstreamParams                     = big.NewInt(1 << 26)
+	updateConnectionOptionsFieldSetUserRootAttributes              = big.NewInt(1 << 27)
+	updateConnectionOptionsFieldGatewayAuthentication              = big.NewInt(1 << 28)
+	updateConnectionOptionsFieldPasswordOptions                    = big.NewInt(1 << 29)
+	updateConnectionOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 30)
+	updateConnectionOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 31)
+	updateConnectionOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 32)
+	updateConnectionOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 33)
+	updateConnectionOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 34)
+	updateConnectionOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 35)
+	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 36)
+	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 37)
+	updateConnectionOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 38)
+	updateConnectionOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 39)
+	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 40)
+	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 41)
 )
 
 type UpdateConnectionOptions struct {
@@ -6443,39 +6571,41 @@ type UpdateConnectionOptions struct {
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
 	ImportMode *bool `json:"import_mode,omitempty" url:"import_mode,omitempty"`
 	// Stores encrypted string only configurations for connections
-	Configuration                    map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
-	CustomScripts                    *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
-	AuthenticationMethods            *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
-	PasskeyOptions                   *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
-	PasswordPolicy                   *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
-	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
-	PasswordHistory                  *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
-	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
-	PasswordDictionary               *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
-	APIEnableUsers                   *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
-	APIEnableGroups                  *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
-	BasicProfile                     *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
-	ExtAdmin                         *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
-	ExtIsSuspended                   *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
-	ExtAgreedTerms                   *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
-	ExtGroups                        *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
-	ExtAssignedPlans                 *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
-	ExtProfile                       *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
-	DisableSelfServiceChangePassword *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
-	UpstreamParams                   *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
-	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
-	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
-	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
-	DpopSigningAlg                   *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
-	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
-	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
-	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
-	UseOauthSpecScope                *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
-	DiscoveryURL                     *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	OidcMetadata                     *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Configuration                      map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
+	CustomScripts                      *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
+	AuthenticationMethods              *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	PasskeyOptions                     *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
+	PasswordPolicy                     *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
+	PasswordComplexityOptions          *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
+	PasswordHistory                    *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
+	PasswordNoPersonalInfo             *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
+	PasswordDictionary                 *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
+	APIEnableUsers                     *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableGroups                    *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
+	BasicProfile                       *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
+	ExtAdmin                           *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
+	ExtIsSuspended                     *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
+	ExtAgreedTerms                     *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
+	ExtGroups                          *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
+	ExtAssignedPlans                   *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
+	ExtProfile                         *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
+	DisableSelfServiceChangePassword   *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
+	UpstreamParams                     *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	SetUserRootAttributes              *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	GatewayAuthentication              *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
+	PasswordOptions                    *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
+	AssertionDecryptionSettings        *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
+	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
+	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
+	PushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint  `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
+	TokenEndpointAuthMethod            *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg        *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
+	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -6714,6 +6844,20 @@ func (u *UpdateConnectionOptions) GetDpopSigningAlg() ConnectionDpopSigningAlgEn
 		return ""
 	}
 	return *u.DpopSigningAlg
+}
+
+func (u *UpdateConnectionOptions) GetEnablePushedAuthorizationRequests() ConnectionEnablePushedAuthorizationRequests {
+	if u == nil || u.EnablePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *u.EnablePushedAuthorizationRequests
+}
+
+func (u *UpdateConnectionOptions) GetPushedAuthorizationRequestEndpoint() ConnectionPushedAuthorizationRequestEndpoint {
+	if u == nil || u.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *u.PushedAuthorizationRequestEndpoint
 }
 
 func (u *UpdateConnectionOptions) GetTokenEndpointAuthMethod() ConnectionTokenEndpointAuthMethodEnum {
@@ -7008,6 +7152,20 @@ func (u *UpdateConnectionOptions) SetIDTokenSignedResponseAlgs(idTokenSignedResp
 func (u *UpdateConnectionOptions) SetDpopSigningAlg(dpopSigningAlg *ConnectionDpopSigningAlgEnum) {
 	u.DpopSigningAlg = dpopSigningAlg
 	u.require(updateConnectionOptionsFieldDpopSigningAlg)
+}
+
+// SetEnablePushedAuthorizationRequests sets the EnablePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetEnablePushedAuthorizationRequests(enablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests) {
+	u.EnablePushedAuthorizationRequests = enablePushedAuthorizationRequests
+	u.require(updateConnectionOptionsFieldEnablePushedAuthorizationRequests)
+}
+
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint) {
+	u.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	u.require(updateConnectionOptionsFieldPushedAuthorizationRequestEndpoint)
 }
 
 // SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;

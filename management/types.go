@@ -3565,6 +3565,7 @@ const (
 	ActionTriggerTypeEnumPasswordHashMigration      ActionTriggerTypeEnum = "password-hash-migration"
 	ActionTriggerTypeEnumLoginPostIdentifier        ActionTriggerTypeEnum = "login-post-identifier"
 	ActionTriggerTypeEnumSignupPostIdentifier       ActionTriggerTypeEnum = "signup-post-identifier"
+	ActionTriggerTypeEnumPostCredentialValidation   ActionTriggerTypeEnum = "post-credential-validation"
 )
 
 func NewActionTriggerTypeEnumFromString(s string) (ActionTriggerTypeEnum, error) {
@@ -3597,6 +3598,8 @@ func NewActionTriggerTypeEnumFromString(s string) (ActionTriggerTypeEnum, error)
 		return ActionTriggerTypeEnumLoginPostIdentifier, nil
 	case "signup-post-identifier":
 		return ActionTriggerTypeEnumSignupPostIdentifier, nil
+	case "post-credential-validation":
+		return ActionTriggerTypeEnumPostCredentialValidation, nil
 	}
 	var t ActionTriggerTypeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -12184,6 +12187,29 @@ func (c *ConnectionDecryptionKeySAMLCert) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Controls whether connections created from this template can be deleted.
+type ConnectionDeletionBehaviorEnum string
+
+const (
+	ConnectionDeletionBehaviorEnumAllow        ConnectionDeletionBehaviorEnum = "allow"
+	ConnectionDeletionBehaviorEnumAllowIfEmpty ConnectionDeletionBehaviorEnum = "allow_if_empty"
+)
+
+func NewConnectionDeletionBehaviorEnumFromString(s string) (ConnectionDeletionBehaviorEnum, error) {
+	switch s {
+	case "allow":
+		return ConnectionDeletionBehaviorEnumAllow, nil
+	case "allow_if_empty":
+		return ConnectionDeletionBehaviorEnumAllowIfEmpty, nil
+	}
+	var t ConnectionDeletionBehaviorEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionDeletionBehaviorEnum) Ptr() *ConnectionDeletionBehaviorEnum {
+	return &c
+}
+
 // The URL where Auth0 will send SAML authentication requests (the Identity Provider's SSO URL). Must be a valid HTTPS URL.
 type ConnectionDestinationUrlSaml = ConnectionHttpsUrlWithHttpFallback255
 
@@ -17346,55 +17372,59 @@ func (c *ConnectionOptionsCommon) String() string {
 
 // common options for OIDC connections
 var (
-	connectionOptionsCommonOidcFieldAuthorizationEndpoint         = big.NewInt(1 << 0)
-	connectionOptionsCommonOidcFieldClientID                      = big.NewInt(1 << 1)
-	connectionOptionsCommonOidcFieldClientSecret                  = big.NewInt(1 << 2)
-	connectionOptionsCommonOidcFieldConnectionSettings            = big.NewInt(1 << 3)
-	connectionOptionsCommonOidcFieldDomainAliases                 = big.NewInt(1 << 4)
-	connectionOptionsCommonOidcFieldDpopSigningAlg                = big.NewInt(1 << 5)
-	connectionOptionsCommonOidcFieldIconURL                       = big.NewInt(1 << 6)
-	connectionOptionsCommonOidcFieldIDTokenSessionExpirySupported = big.NewInt(1 << 7)
-	connectionOptionsCommonOidcFieldIDTokenSignedResponseAlgs     = big.NewInt(1 << 8)
-	connectionOptionsCommonOidcFieldIssuer                        = big.NewInt(1 << 9)
-	connectionOptionsCommonOidcFieldJwksURI                       = big.NewInt(1 << 10)
-	connectionOptionsCommonOidcFieldOidcMetadata                  = big.NewInt(1 << 11)
-	connectionOptionsCommonOidcFieldScope                         = big.NewInt(1 << 12)
-	connectionOptionsCommonOidcFieldSendBackChannelNonce          = big.NewInt(1 << 13)
-	connectionOptionsCommonOidcFieldSetUserRootAttributes         = big.NewInt(1 << 14)
-	connectionOptionsCommonOidcFieldTenantDomain                  = big.NewInt(1 << 15)
-	connectionOptionsCommonOidcFieldTokenEndpoint                 = big.NewInt(1 << 16)
-	connectionOptionsCommonOidcFieldTokenEndpointAuthMethod       = big.NewInt(1 << 17)
-	connectionOptionsCommonOidcFieldTokenEndpointAuthSigningAlg   = big.NewInt(1 << 18)
-	connectionOptionsCommonOidcFieldTokenEndpointJwtcaAudFormat   = big.NewInt(1 << 19)
-	connectionOptionsCommonOidcFieldUpstreamParams                = big.NewInt(1 << 20)
-	connectionOptionsCommonOidcFieldUserinfoEndpoint              = big.NewInt(1 << 21)
-	connectionOptionsCommonOidcFieldUseOauthSpecScope             = big.NewInt(1 << 22)
+	connectionOptionsCommonOidcFieldAuthorizationEndpoint              = big.NewInt(1 << 0)
+	connectionOptionsCommonOidcFieldClientID                           = big.NewInt(1 << 1)
+	connectionOptionsCommonOidcFieldClientSecret                       = big.NewInt(1 << 2)
+	connectionOptionsCommonOidcFieldConnectionSettings                 = big.NewInt(1 << 3)
+	connectionOptionsCommonOidcFieldDomainAliases                      = big.NewInt(1 << 4)
+	connectionOptionsCommonOidcFieldDpopSigningAlg                     = big.NewInt(1 << 5)
+	connectionOptionsCommonOidcFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 6)
+	connectionOptionsCommonOidcFieldIconURL                            = big.NewInt(1 << 7)
+	connectionOptionsCommonOidcFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 8)
+	connectionOptionsCommonOidcFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 9)
+	connectionOptionsCommonOidcFieldIssuer                             = big.NewInt(1 << 10)
+	connectionOptionsCommonOidcFieldJwksURI                            = big.NewInt(1 << 11)
+	connectionOptionsCommonOidcFieldOidcMetadata                       = big.NewInt(1 << 12)
+	connectionOptionsCommonOidcFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 13)
+	connectionOptionsCommonOidcFieldScope                              = big.NewInt(1 << 14)
+	connectionOptionsCommonOidcFieldSendBackChannelNonce               = big.NewInt(1 << 15)
+	connectionOptionsCommonOidcFieldSetUserRootAttributes              = big.NewInt(1 << 16)
+	connectionOptionsCommonOidcFieldTenantDomain                       = big.NewInt(1 << 17)
+	connectionOptionsCommonOidcFieldTokenEndpoint                      = big.NewInt(1 << 18)
+	connectionOptionsCommonOidcFieldTokenEndpointAuthMethod            = big.NewInt(1 << 19)
+	connectionOptionsCommonOidcFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 20)
+	connectionOptionsCommonOidcFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 21)
+	connectionOptionsCommonOidcFieldUpstreamParams                     = big.NewInt(1 << 22)
+	connectionOptionsCommonOidcFieldUserinfoEndpoint                   = big.NewInt(1 << 23)
+	connectionOptionsCommonOidcFieldUseOauthSpecScope                  = big.NewInt(1 << 24)
 )
 
 type ConnectionOptionsCommonOidc struct {
-	AuthorizationEndpoint         *ConnectionAuthorizationEndpoint               `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
-	ClientID                      ConnectionClientIDOidc                         `json:"client_id" url:"client_id"`
-	ClientSecret                  *ConnectionClientSecretOidc                    `json:"client_secret,omitempty" url:"client_secret,omitempty"`
-	ConnectionSettings            *ConnectionConnectionSettings                  `json:"connection_settings,omitempty" url:"connection_settings,omitempty"`
-	DomainAliases                 *ConnectionDomainAliases                       `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
-	DpopSigningAlg                *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
-	IconURL                       *ConnectionIconURL                             `json:"icon_url,omitempty" url:"icon_url,omitempty"`
-	IDTokenSessionExpirySupported *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
-	IDTokenSignedResponseAlgs     *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
-	Issuer                        *ConnectionIssuer                              `json:"issuer,omitempty" url:"issuer,omitempty"`
-	JwksURI                       *ConnectionJwksURI                             `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
-	OidcMetadata                  *ConnectionOptionsOidcMetadata                 `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
-	Scope                         *ConnectionScopeOidc                           `json:"scope,omitempty" url:"scope,omitempty"`
-	SendBackChannelNonce          *ConnectionSendBackChannelNonce                `json:"send_back_channel_nonce,omitempty" url:"send_back_channel_nonce,omitempty"`
-	SetUserRootAttributes         *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	TenantDomain                  *ConnectionTenantDomain                        `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
-	TokenEndpoint                 *ConnectionTokenEndpoint                       `json:"token_endpoint,omitempty" url:"token_endpoint,omitempty"`
-	TokenEndpointAuthMethod       *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	TokenEndpointAuthSigningAlg   *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
-	TokenEndpointJwtcaAudFormat   *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
-	UpstreamParams                *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	UserinfoEndpoint              *ConnectionUserinfoEndpoint                    `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
-	UseOauthSpecScope             *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
+	AuthorizationEndpoint              *ConnectionAuthorizationEndpoint               `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
+	ClientID                           ConnectionClientIDOidc                         `json:"client_id" url:"client_id"`
+	ClientSecret                       *ConnectionClientSecretOidc                    `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	ConnectionSettings                 *ConnectionConnectionSettings                  `json:"connection_settings,omitempty" url:"connection_settings,omitempty"`
+	DomainAliases                      *ConnectionDomainAliases                       `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
+	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
+	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
+	IconURL                            *ConnectionIconURL                             `json:"icon_url,omitempty" url:"icon_url,omitempty"`
+	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	Issuer                             *ConnectionIssuer                              `json:"issuer,omitempty" url:"issuer,omitempty"`
+	JwksURI                            *ConnectionJwksURI                             `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
+	OidcMetadata                       *ConnectionOptionsOidcMetadata                 `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	PushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint  `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
+	Scope                              *ConnectionScopeOidc                           `json:"scope,omitempty" url:"scope,omitempty"`
+	SendBackChannelNonce               *ConnectionSendBackChannelNonce                `json:"send_back_channel_nonce,omitempty" url:"send_back_channel_nonce,omitempty"`
+	SetUserRootAttributes              *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	TenantDomain                       *ConnectionTenantDomain                        `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
+	TokenEndpoint                      *ConnectionTokenEndpoint                       `json:"token_endpoint,omitempty" url:"token_endpoint,omitempty"`
+	TokenEndpointAuthMethod            *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg        *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	UpstreamParams                     *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	UserinfoEndpoint                   *ConnectionUserinfoEndpoint                    `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
+	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -17446,6 +17476,13 @@ func (c *ConnectionOptionsCommonOidc) GetDpopSigningAlg() ConnectionDpopSigningA
 	return *c.DpopSigningAlg
 }
 
+func (c *ConnectionOptionsCommonOidc) GetEnablePushedAuthorizationRequests() ConnectionEnablePushedAuthorizationRequests {
+	if c == nil || c.EnablePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.EnablePushedAuthorizationRequests
+}
+
 func (c *ConnectionOptionsCommonOidc) GetIconURL() ConnectionIconURL {
 	if c == nil || c.IconURL == nil {
 		return ""
@@ -17486,6 +17523,13 @@ func (c *ConnectionOptionsCommonOidc) GetOidcMetadata() ConnectionOptionsOidcMet
 		return ConnectionOptionsOidcMetadata{}
 	}
 	return *c.OidcMetadata
+}
+
+func (c *ConnectionOptionsCommonOidc) GetPushedAuthorizationRequestEndpoint() ConnectionPushedAuthorizationRequestEndpoint {
+	if c == nil || c.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *c.PushedAuthorizationRequestEndpoint
 }
 
 func (c *ConnectionOptionsCommonOidc) GetScope() ConnectionScopeOidc {
@@ -17621,6 +17665,13 @@ func (c *ConnectionOptionsCommonOidc) SetDpopSigningAlg(dpopSigningAlg *Connecti
 	c.require(connectionOptionsCommonOidcFieldDpopSigningAlg)
 }
 
+// SetEnablePushedAuthorizationRequests sets the EnablePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsCommonOidc) SetEnablePushedAuthorizationRequests(enablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests) {
+	c.EnablePushedAuthorizationRequests = enablePushedAuthorizationRequests
+	c.require(connectionOptionsCommonOidcFieldEnablePushedAuthorizationRequests)
+}
+
 // SetIconURL sets the IconURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionOptionsCommonOidc) SetIconURL(iconURL *ConnectionIconURL) {
@@ -17661,6 +17712,13 @@ func (c *ConnectionOptionsCommonOidc) SetJwksURI(jwksURI *ConnectionJwksURI) {
 func (c *ConnectionOptionsCommonOidc) SetOidcMetadata(oidcMetadata *ConnectionOptionsOidcMetadata) {
 	c.OidcMetadata = oidcMetadata
 	c.require(connectionOptionsCommonOidcFieldOidcMetadata)
+}
+
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsCommonOidc) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint) {
+	c.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	c.require(connectionOptionsCommonOidcFieldPushedAuthorizationRequestEndpoint)
 }
 
 // SetScope sets the Scope field and marks it as non-optional;
@@ -24393,63 +24451,67 @@ func (c *ConnectionOptionsOffice365) String() string {
 
 // Options for the 'oidc' connection
 var (
-	connectionOptionsOidcFieldAuthorizationEndpoint         = big.NewInt(1 << 0)
-	connectionOptionsOidcFieldClientID                      = big.NewInt(1 << 1)
-	connectionOptionsOidcFieldClientSecret                  = big.NewInt(1 << 2)
-	connectionOptionsOidcFieldConnectionSettings            = big.NewInt(1 << 3)
-	connectionOptionsOidcFieldDomainAliases                 = big.NewInt(1 << 4)
-	connectionOptionsOidcFieldDpopSigningAlg                = big.NewInt(1 << 5)
-	connectionOptionsOidcFieldIconURL                       = big.NewInt(1 << 6)
-	connectionOptionsOidcFieldIDTokenSessionExpirySupported = big.NewInt(1 << 7)
-	connectionOptionsOidcFieldIDTokenSignedResponseAlgs     = big.NewInt(1 << 8)
-	connectionOptionsOidcFieldIssuer                        = big.NewInt(1 << 9)
-	connectionOptionsOidcFieldJwksURI                       = big.NewInt(1 << 10)
-	connectionOptionsOidcFieldOidcMetadata                  = big.NewInt(1 << 11)
-	connectionOptionsOidcFieldScope                         = big.NewInt(1 << 12)
-	connectionOptionsOidcFieldSendBackChannelNonce          = big.NewInt(1 << 13)
-	connectionOptionsOidcFieldSetUserRootAttributes         = big.NewInt(1 << 14)
-	connectionOptionsOidcFieldTenantDomain                  = big.NewInt(1 << 15)
-	connectionOptionsOidcFieldTokenEndpoint                 = big.NewInt(1 << 16)
-	connectionOptionsOidcFieldTokenEndpointAuthMethod       = big.NewInt(1 << 17)
-	connectionOptionsOidcFieldTokenEndpointAuthSigningAlg   = big.NewInt(1 << 18)
-	connectionOptionsOidcFieldTokenEndpointJwtcaAudFormat   = big.NewInt(1 << 19)
-	connectionOptionsOidcFieldUpstreamParams                = big.NewInt(1 << 20)
-	connectionOptionsOidcFieldUserinfoEndpoint              = big.NewInt(1 << 21)
-	connectionOptionsOidcFieldUseOauthSpecScope             = big.NewInt(1 << 22)
-	connectionOptionsOidcFieldNonPersistentAttrs            = big.NewInt(1 << 23)
-	connectionOptionsOidcFieldAttributeMap                  = big.NewInt(1 << 24)
-	connectionOptionsOidcFieldDiscoveryURL                  = big.NewInt(1 << 25)
-	connectionOptionsOidcFieldType                          = big.NewInt(1 << 26)
+	connectionOptionsOidcFieldAuthorizationEndpoint              = big.NewInt(1 << 0)
+	connectionOptionsOidcFieldClientID                           = big.NewInt(1 << 1)
+	connectionOptionsOidcFieldClientSecret                       = big.NewInt(1 << 2)
+	connectionOptionsOidcFieldConnectionSettings                 = big.NewInt(1 << 3)
+	connectionOptionsOidcFieldDomainAliases                      = big.NewInt(1 << 4)
+	connectionOptionsOidcFieldDpopSigningAlg                     = big.NewInt(1 << 5)
+	connectionOptionsOidcFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 6)
+	connectionOptionsOidcFieldIconURL                            = big.NewInt(1 << 7)
+	connectionOptionsOidcFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 8)
+	connectionOptionsOidcFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 9)
+	connectionOptionsOidcFieldIssuer                             = big.NewInt(1 << 10)
+	connectionOptionsOidcFieldJwksURI                            = big.NewInt(1 << 11)
+	connectionOptionsOidcFieldOidcMetadata                       = big.NewInt(1 << 12)
+	connectionOptionsOidcFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 13)
+	connectionOptionsOidcFieldScope                              = big.NewInt(1 << 14)
+	connectionOptionsOidcFieldSendBackChannelNonce               = big.NewInt(1 << 15)
+	connectionOptionsOidcFieldSetUserRootAttributes              = big.NewInt(1 << 16)
+	connectionOptionsOidcFieldTenantDomain                       = big.NewInt(1 << 17)
+	connectionOptionsOidcFieldTokenEndpoint                      = big.NewInt(1 << 18)
+	connectionOptionsOidcFieldTokenEndpointAuthMethod            = big.NewInt(1 << 19)
+	connectionOptionsOidcFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 20)
+	connectionOptionsOidcFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 21)
+	connectionOptionsOidcFieldUpstreamParams                     = big.NewInt(1 << 22)
+	connectionOptionsOidcFieldUserinfoEndpoint                   = big.NewInt(1 << 23)
+	connectionOptionsOidcFieldUseOauthSpecScope                  = big.NewInt(1 << 24)
+	connectionOptionsOidcFieldNonPersistentAttrs                 = big.NewInt(1 << 25)
+	connectionOptionsOidcFieldAttributeMap                       = big.NewInt(1 << 26)
+	connectionOptionsOidcFieldDiscoveryURL                       = big.NewInt(1 << 27)
+	connectionOptionsOidcFieldType                               = big.NewInt(1 << 28)
 )
 
 type ConnectionOptionsOidc struct {
-	AuthorizationEndpoint         *ConnectionAuthorizationEndpoint               `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
-	ClientID                      ConnectionClientIDOidc                         `json:"client_id" url:"client_id"`
-	ClientSecret                  *ConnectionClientSecretOidc                    `json:"client_secret,omitempty" url:"client_secret,omitempty"`
-	ConnectionSettings            *ConnectionConnectionSettings                  `json:"connection_settings,omitempty" url:"connection_settings,omitempty"`
-	DomainAliases                 *ConnectionDomainAliases                       `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
-	DpopSigningAlg                *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
-	IconURL                       *ConnectionIconURL                             `json:"icon_url,omitempty" url:"icon_url,omitempty"`
-	IDTokenSessionExpirySupported *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
-	IDTokenSignedResponseAlgs     *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
-	Issuer                        *ConnectionIssuer                              `json:"issuer,omitempty" url:"issuer,omitempty"`
-	JwksURI                       *ConnectionJwksURI                             `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
-	OidcMetadata                  *ConnectionOptionsOidcMetadata                 `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
-	Scope                         *ConnectionScopeOidc                           `json:"scope,omitempty" url:"scope,omitempty"`
-	SendBackChannelNonce          *ConnectionSendBackChannelNonce                `json:"send_back_channel_nonce,omitempty" url:"send_back_channel_nonce,omitempty"`
-	SetUserRootAttributes         *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	TenantDomain                  *ConnectionTenantDomain                        `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
-	TokenEndpoint                 *ConnectionTokenEndpoint                       `json:"token_endpoint,omitempty" url:"token_endpoint,omitempty"`
-	TokenEndpointAuthMethod       *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	TokenEndpointAuthSigningAlg   *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
-	TokenEndpointJwtcaAudFormat   *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
-	UpstreamParams                *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	UserinfoEndpoint              *ConnectionUserinfoEndpoint                    `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
-	UseOauthSpecScope             *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
-	NonPersistentAttrs            *ConnectionNonPersistentAttrs                  `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
-	AttributeMap                  *ConnectionAttributeMapOidc                    `json:"attribute_map,omitempty" url:"attribute_map,omitempty"`
-	DiscoveryURL                  *ConnectionDiscoveryURL                        `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	Type                          *ConnectionTypeEnumOidc                        `json:"type,omitempty" url:"type,omitempty"`
+	AuthorizationEndpoint              *ConnectionAuthorizationEndpoint               `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
+	ClientID                           ConnectionClientIDOidc                         `json:"client_id" url:"client_id"`
+	ClientSecret                       *ConnectionClientSecretOidc                    `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	ConnectionSettings                 *ConnectionConnectionSettings                  `json:"connection_settings,omitempty" url:"connection_settings,omitempty"`
+	DomainAliases                      *ConnectionDomainAliases                       `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
+	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
+	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
+	IconURL                            *ConnectionIconURL                             `json:"icon_url,omitempty" url:"icon_url,omitempty"`
+	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	Issuer                             *ConnectionIssuer                              `json:"issuer,omitempty" url:"issuer,omitempty"`
+	JwksURI                            *ConnectionJwksURI                             `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
+	OidcMetadata                       *ConnectionOptionsOidcMetadata                 `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	PushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint  `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
+	Scope                              *ConnectionScopeOidc                           `json:"scope,omitempty" url:"scope,omitempty"`
+	SendBackChannelNonce               *ConnectionSendBackChannelNonce                `json:"send_back_channel_nonce,omitempty" url:"send_back_channel_nonce,omitempty"`
+	SetUserRootAttributes              *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	TenantDomain                       *ConnectionTenantDomain                        `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
+	TokenEndpoint                      *ConnectionTokenEndpoint                       `json:"token_endpoint,omitempty" url:"token_endpoint,omitempty"`
+	TokenEndpointAuthMethod            *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg        *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	UpstreamParams                     *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	UserinfoEndpoint                   *ConnectionUserinfoEndpoint                    `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
+	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
+	NonPersistentAttrs                 *ConnectionNonPersistentAttrs                  `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
+	AttributeMap                       *ConnectionAttributeMapOidc                    `json:"attribute_map,omitempty" url:"attribute_map,omitempty"`
+	DiscoveryURL                       *ConnectionDiscoveryURL                        `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	Type                               *ConnectionTypeEnumOidc                        `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -24501,6 +24563,13 @@ func (c *ConnectionOptionsOidc) GetDpopSigningAlg() ConnectionDpopSigningAlgEnum
 	return *c.DpopSigningAlg
 }
 
+func (c *ConnectionOptionsOidc) GetEnablePushedAuthorizationRequests() ConnectionEnablePushedAuthorizationRequests {
+	if c == nil || c.EnablePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.EnablePushedAuthorizationRequests
+}
+
 func (c *ConnectionOptionsOidc) GetIconURL() ConnectionIconURL {
 	if c == nil || c.IconURL == nil {
 		return ""
@@ -24541,6 +24610,13 @@ func (c *ConnectionOptionsOidc) GetOidcMetadata() ConnectionOptionsOidcMetadata 
 		return ConnectionOptionsOidcMetadata{}
 	}
 	return *c.OidcMetadata
+}
+
+func (c *ConnectionOptionsOidc) GetPushedAuthorizationRequestEndpoint() ConnectionPushedAuthorizationRequestEndpoint {
+	if c == nil || c.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *c.PushedAuthorizationRequestEndpoint
 }
 
 func (c *ConnectionOptionsOidc) GetScope() ConnectionScopeOidc {
@@ -24704,6 +24780,13 @@ func (c *ConnectionOptionsOidc) SetDpopSigningAlg(dpopSigningAlg *ConnectionDpop
 	c.require(connectionOptionsOidcFieldDpopSigningAlg)
 }
 
+// SetEnablePushedAuthorizationRequests sets the EnablePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOidc) SetEnablePushedAuthorizationRequests(enablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests) {
+	c.EnablePushedAuthorizationRequests = enablePushedAuthorizationRequests
+	c.require(connectionOptionsOidcFieldEnablePushedAuthorizationRequests)
+}
+
 // SetIconURL sets the IconURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionOptionsOidc) SetIconURL(iconURL *ConnectionIconURL) {
@@ -24744,6 +24827,13 @@ func (c *ConnectionOptionsOidc) SetJwksURI(jwksURI *ConnectionJwksURI) {
 func (c *ConnectionOptionsOidc) SetOidcMetadata(oidcMetadata *ConnectionOptionsOidcMetadata) {
 	c.OidcMetadata = oidcMetadata
 	c.require(connectionOptionsOidcFieldOidcMetadata)
+}
+
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOidc) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint) {
+	c.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	c.require(connectionOptionsOidcFieldPushedAuthorizationRequestEndpoint)
 }
 
 // SetScope sets the Scope field and marks it as non-optional;
@@ -24916,26 +25006,28 @@ var (
 	connectionOptionsOidcMetadataFieldJwksURI                                    = big.NewInt(1 << 14)
 	connectionOptionsOidcMetadataFieldOpPolicyURI                                = big.NewInt(1 << 15)
 	connectionOptionsOidcMetadataFieldOpTosURI                                   = big.NewInt(1 << 16)
-	connectionOptionsOidcMetadataFieldRegistrationEndpoint                       = big.NewInt(1 << 17)
-	connectionOptionsOidcMetadataFieldRequestObjectEncryptionAlgValuesSupported  = big.NewInt(1 << 18)
-	connectionOptionsOidcMetadataFieldRequestObjectEncryptionEncValuesSupported  = big.NewInt(1 << 19)
-	connectionOptionsOidcMetadataFieldRequestObjectSigningAlgValuesSupported     = big.NewInt(1 << 20)
-	connectionOptionsOidcMetadataFieldRequestParameterSupported                  = big.NewInt(1 << 21)
-	connectionOptionsOidcMetadataFieldRequestURIParameterSupported               = big.NewInt(1 << 22)
-	connectionOptionsOidcMetadataFieldRequireRequestURIRegistration              = big.NewInt(1 << 23)
-	connectionOptionsOidcMetadataFieldResponseModesSupported                     = big.NewInt(1 << 24)
-	connectionOptionsOidcMetadataFieldResponseTypesSupported                     = big.NewInt(1 << 25)
-	connectionOptionsOidcMetadataFieldScopesSupported                            = big.NewInt(1 << 26)
-	connectionOptionsOidcMetadataFieldServiceDocumentation                       = big.NewInt(1 << 27)
-	connectionOptionsOidcMetadataFieldSubjectTypesSupported                      = big.NewInt(1 << 28)
-	connectionOptionsOidcMetadataFieldTokenEndpoint                              = big.NewInt(1 << 29)
-	connectionOptionsOidcMetadataFieldTokenEndpointAuthMethodsSupported          = big.NewInt(1 << 30)
-	connectionOptionsOidcMetadataFieldTokenEndpointAuthSigningAlgValuesSupported = big.NewInt(1 << 31)
-	connectionOptionsOidcMetadataFieldUILocalesSupported                         = big.NewInt(1 << 32)
-	connectionOptionsOidcMetadataFieldUserinfoEncryptionAlgValuesSupported       = big.NewInt(1 << 33)
-	connectionOptionsOidcMetadataFieldUserinfoEncryptionEncValuesSupported       = big.NewInt(1 << 34)
-	connectionOptionsOidcMetadataFieldUserinfoEndpoint                           = big.NewInt(1 << 35)
-	connectionOptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 36)
+	connectionOptionsOidcMetadataFieldPushedAuthorizationRequestEndpoint         = big.NewInt(1 << 17)
+	connectionOptionsOidcMetadataFieldRegistrationEndpoint                       = big.NewInt(1 << 18)
+	connectionOptionsOidcMetadataFieldRequestObjectEncryptionAlgValuesSupported  = big.NewInt(1 << 19)
+	connectionOptionsOidcMetadataFieldRequestObjectEncryptionEncValuesSupported  = big.NewInt(1 << 20)
+	connectionOptionsOidcMetadataFieldRequestObjectSigningAlgValuesSupported     = big.NewInt(1 << 21)
+	connectionOptionsOidcMetadataFieldRequestParameterSupported                  = big.NewInt(1 << 22)
+	connectionOptionsOidcMetadataFieldRequestURIParameterSupported               = big.NewInt(1 << 23)
+	connectionOptionsOidcMetadataFieldRequirePushedAuthorizationRequests         = big.NewInt(1 << 24)
+	connectionOptionsOidcMetadataFieldRequireRequestURIRegistration              = big.NewInt(1 << 25)
+	connectionOptionsOidcMetadataFieldResponseModesSupported                     = big.NewInt(1 << 26)
+	connectionOptionsOidcMetadataFieldResponseTypesSupported                     = big.NewInt(1 << 27)
+	connectionOptionsOidcMetadataFieldScopesSupported                            = big.NewInt(1 << 28)
+	connectionOptionsOidcMetadataFieldServiceDocumentation                       = big.NewInt(1 << 29)
+	connectionOptionsOidcMetadataFieldSubjectTypesSupported                      = big.NewInt(1 << 30)
+	connectionOptionsOidcMetadataFieldTokenEndpoint                              = big.NewInt(1 << 31)
+	connectionOptionsOidcMetadataFieldTokenEndpointAuthMethodsSupported          = big.NewInt(1 << 32)
+	connectionOptionsOidcMetadataFieldTokenEndpointAuthSigningAlgValuesSupported = big.NewInt(1 << 33)
+	connectionOptionsOidcMetadataFieldUILocalesSupported                         = big.NewInt(1 << 34)
+	connectionOptionsOidcMetadataFieldUserinfoEncryptionAlgValuesSupported       = big.NewInt(1 << 35)
+	connectionOptionsOidcMetadataFieldUserinfoEncryptionEncValuesSupported       = big.NewInt(1 << 36)
+	connectionOptionsOidcMetadataFieldUserinfoEndpoint                           = big.NewInt(1 << 37)
+	connectionOptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 38)
 )
 
 type ConnectionOptionsOidcMetadata struct {
@@ -24956,12 +25048,14 @@ type ConnectionOptionsOidcMetadata struct {
 	JwksURI                                    ConnectionJwksURI                                     `json:"jwks_uri" url:"jwks_uri"`
 	OpPolicyURI                                *ConnectionOpPolicyURI                                `json:"op_policy_uri,omitempty" url:"op_policy_uri,omitempty"`
 	OpTosURI                                   *ConnectionOpTosURI                                   `json:"op_tos_uri,omitempty" url:"op_tos_uri,omitempty"`
+	PushedAuthorizationRequestEndpoint         *ConnectionPushedAuthorizationRequestEndpoint         `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
 	RegistrationEndpoint                       *ConnectionRegistrationEndpoint                       `json:"registration_endpoint,omitempty" url:"registration_endpoint,omitempty"`
 	RequestObjectEncryptionAlgValuesSupported  *ConnectionRequestObjectEncryptionAlgValuesSupported  `json:"request_object_encryption_alg_values_supported,omitempty" url:"request_object_encryption_alg_values_supported,omitempty"`
 	RequestObjectEncryptionEncValuesSupported  *ConnectionRequestObjectEncryptionEncValuesSupported  `json:"request_object_encryption_enc_values_supported,omitempty" url:"request_object_encryption_enc_values_supported,omitempty"`
 	RequestObjectSigningAlgValuesSupported     *ConnectionRequestObjectSigningAlgValuesSupported     `json:"request_object_signing_alg_values_supported,omitempty" url:"request_object_signing_alg_values_supported,omitempty"`
 	RequestParameterSupported                  *ConnectionRequestParameterSupported                  `json:"request_parameter_supported,omitempty" url:"request_parameter_supported,omitempty"`
 	RequestURIParameterSupported               *ConnectionRequestURIParameterSupported               `json:"request_uri_parameter_supported,omitempty" url:"request_uri_parameter_supported,omitempty"`
+	RequirePushedAuthorizationRequests         *ConnectionRequirePushedAuthorizationRequests         `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	RequireRequestURIRegistration              *ConnectionRequireRequestURIRegistration              `json:"require_request_uri_registration,omitempty" url:"require_request_uri_registration,omitempty"`
 	ResponseModesSupported                     *ConnectionResponseModesSupported                     `json:"response_modes_supported,omitempty" url:"response_modes_supported,omitempty"`
 	ResponseTypesSupported                     *ConnectionResponseTypesSupported                     `json:"response_types_supported,omitempty" url:"response_types_supported,omitempty"`
@@ -25104,6 +25198,13 @@ func (c *ConnectionOptionsOidcMetadata) GetOpTosURI() ConnectionOpTosURI {
 	return *c.OpTosURI
 }
 
+func (c *ConnectionOptionsOidcMetadata) GetPushedAuthorizationRequestEndpoint() ConnectionPushedAuthorizationRequestEndpoint {
+	if c == nil || c.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *c.PushedAuthorizationRequestEndpoint
+}
+
 func (c *ConnectionOptionsOidcMetadata) GetRegistrationEndpoint() ConnectionRegistrationEndpoint {
 	if c == nil || c.RegistrationEndpoint == nil {
 		return ""
@@ -25144,6 +25245,13 @@ func (c *ConnectionOptionsOidcMetadata) GetRequestURIParameterSupported() Connec
 		return false
 	}
 	return *c.RequestURIParameterSupported
+}
+
+func (c *ConnectionOptionsOidcMetadata) GetRequirePushedAuthorizationRequests() ConnectionRequirePushedAuthorizationRequests {
+	if c == nil || c.RequirePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.RequirePushedAuthorizationRequests
 }
 
 func (c *ConnectionOptionsOidcMetadata) GetRequireRequestURIRegistration() ConnectionRequireRequestURIRegistration {
@@ -25377,6 +25485,13 @@ func (c *ConnectionOptionsOidcMetadata) SetOpTosURI(opTosURI *ConnectionOpTosURI
 	c.require(connectionOptionsOidcMetadataFieldOpTosURI)
 }
 
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOidcMetadata) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint) {
+	c.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	c.require(connectionOptionsOidcMetadataFieldPushedAuthorizationRequestEndpoint)
+}
+
 // SetRegistrationEndpoint sets the RegistrationEndpoint field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionOptionsOidcMetadata) SetRegistrationEndpoint(registrationEndpoint *ConnectionRegistrationEndpoint) {
@@ -25417,6 +25532,13 @@ func (c *ConnectionOptionsOidcMetadata) SetRequestParameterSupported(requestPara
 func (c *ConnectionOptionsOidcMetadata) SetRequestURIParameterSupported(requestURIParameterSupported *ConnectionRequestURIParameterSupported) {
 	c.RequestURIParameterSupported = requestURIParameterSupported
 	c.require(connectionOptionsOidcMetadataFieldRequestURIParameterSupported)
+}
+
+// SetRequirePushedAuthorizationRequests sets the RequirePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOidcMetadata) SetRequirePushedAuthorizationRequests(requirePushedAuthorizationRequests *ConnectionRequirePushedAuthorizationRequests) {
+	c.RequirePushedAuthorizationRequests = requirePushedAuthorizationRequests
+	c.require(connectionOptionsOidcMetadataFieldRequirePushedAuthorizationRequests)
 }
 
 // SetRequireRequestURIRegistration sets the RequireRequestURIRegistration field and marks it as non-optional;
@@ -25565,63 +25687,67 @@ func (c *ConnectionOptionsOidcMetadata) String() string {
 
 // Options for the 'okta' connection
 var (
-	connectionOptionsOktaFieldNonPersistentAttrs            = big.NewInt(1 << 0)
-	connectionOptionsOktaFieldAuthorizationEndpoint         = big.NewInt(1 << 1)
-	connectionOptionsOktaFieldClientID                      = big.NewInt(1 << 2)
-	connectionOptionsOktaFieldClientSecret                  = big.NewInt(1 << 3)
-	connectionOptionsOktaFieldConnectionSettings            = big.NewInt(1 << 4)
-	connectionOptionsOktaFieldDomainAliases                 = big.NewInt(1 << 5)
-	connectionOptionsOktaFieldDpopSigningAlg                = big.NewInt(1 << 6)
-	connectionOptionsOktaFieldIconURL                       = big.NewInt(1 << 7)
-	connectionOptionsOktaFieldIDTokenSessionExpirySupported = big.NewInt(1 << 8)
-	connectionOptionsOktaFieldIDTokenSignedResponseAlgs     = big.NewInt(1 << 9)
-	connectionOptionsOktaFieldIssuer                        = big.NewInt(1 << 10)
-	connectionOptionsOktaFieldJwksURI                       = big.NewInt(1 << 11)
-	connectionOptionsOktaFieldOidcMetadata                  = big.NewInt(1 << 12)
-	connectionOptionsOktaFieldScope                         = big.NewInt(1 << 13)
-	connectionOptionsOktaFieldSendBackChannelNonce          = big.NewInt(1 << 14)
-	connectionOptionsOktaFieldSetUserRootAttributes         = big.NewInt(1 << 15)
-	connectionOptionsOktaFieldTenantDomain                  = big.NewInt(1 << 16)
-	connectionOptionsOktaFieldTokenEndpoint                 = big.NewInt(1 << 17)
-	connectionOptionsOktaFieldTokenEndpointAuthMethod       = big.NewInt(1 << 18)
-	connectionOptionsOktaFieldTokenEndpointAuthSigningAlg   = big.NewInt(1 << 19)
-	connectionOptionsOktaFieldTokenEndpointJwtcaAudFormat   = big.NewInt(1 << 20)
-	connectionOptionsOktaFieldUpstreamParams                = big.NewInt(1 << 21)
-	connectionOptionsOktaFieldUserinfoEndpoint              = big.NewInt(1 << 22)
-	connectionOptionsOktaFieldUseOauthSpecScope             = big.NewInt(1 << 23)
-	connectionOptionsOktaFieldAttributeMap                  = big.NewInt(1 << 24)
-	connectionOptionsOktaFieldDomain                        = big.NewInt(1 << 25)
-	connectionOptionsOktaFieldType                          = big.NewInt(1 << 26)
+	connectionOptionsOktaFieldNonPersistentAttrs                 = big.NewInt(1 << 0)
+	connectionOptionsOktaFieldAuthorizationEndpoint              = big.NewInt(1 << 1)
+	connectionOptionsOktaFieldClientID                           = big.NewInt(1 << 2)
+	connectionOptionsOktaFieldClientSecret                       = big.NewInt(1 << 3)
+	connectionOptionsOktaFieldConnectionSettings                 = big.NewInt(1 << 4)
+	connectionOptionsOktaFieldDomainAliases                      = big.NewInt(1 << 5)
+	connectionOptionsOktaFieldDpopSigningAlg                     = big.NewInt(1 << 6)
+	connectionOptionsOktaFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 7)
+	connectionOptionsOktaFieldIconURL                            = big.NewInt(1 << 8)
+	connectionOptionsOktaFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 9)
+	connectionOptionsOktaFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 10)
+	connectionOptionsOktaFieldIssuer                             = big.NewInt(1 << 11)
+	connectionOptionsOktaFieldJwksURI                            = big.NewInt(1 << 12)
+	connectionOptionsOktaFieldOidcMetadata                       = big.NewInt(1 << 13)
+	connectionOptionsOktaFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 14)
+	connectionOptionsOktaFieldScope                              = big.NewInt(1 << 15)
+	connectionOptionsOktaFieldSendBackChannelNonce               = big.NewInt(1 << 16)
+	connectionOptionsOktaFieldSetUserRootAttributes              = big.NewInt(1 << 17)
+	connectionOptionsOktaFieldTenantDomain                       = big.NewInt(1 << 18)
+	connectionOptionsOktaFieldTokenEndpoint                      = big.NewInt(1 << 19)
+	connectionOptionsOktaFieldTokenEndpointAuthMethod            = big.NewInt(1 << 20)
+	connectionOptionsOktaFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 21)
+	connectionOptionsOktaFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 22)
+	connectionOptionsOktaFieldUpstreamParams                     = big.NewInt(1 << 23)
+	connectionOptionsOktaFieldUserinfoEndpoint                   = big.NewInt(1 << 24)
+	connectionOptionsOktaFieldUseOauthSpecScope                  = big.NewInt(1 << 25)
+	connectionOptionsOktaFieldAttributeMap                       = big.NewInt(1 << 26)
+	connectionOptionsOktaFieldDomain                             = big.NewInt(1 << 27)
+	connectionOptionsOktaFieldType                               = big.NewInt(1 << 28)
 )
 
 type ConnectionOptionsOkta struct {
-	NonPersistentAttrs            *ConnectionNonPersistentAttrs                  `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
-	AuthorizationEndpoint         *ConnectionAuthorizationEndpoint               `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
-	ClientID                      ConnectionClientIDOidc                         `json:"client_id" url:"client_id"`
-	ClientSecret                  *ConnectionClientSecretOidc                    `json:"client_secret,omitempty" url:"client_secret,omitempty"`
-	ConnectionSettings            *ConnectionConnectionSettings                  `json:"connection_settings,omitempty" url:"connection_settings,omitempty"`
-	DomainAliases                 *ConnectionDomainAliases                       `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
-	DpopSigningAlg                *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
-	IconURL                       *ConnectionIconURL                             `json:"icon_url,omitempty" url:"icon_url,omitempty"`
-	IDTokenSessionExpirySupported *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
-	IDTokenSignedResponseAlgs     *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
-	Issuer                        *ConnectionIssuer                              `json:"issuer,omitempty" url:"issuer,omitempty"`
-	JwksURI                       *ConnectionJwksURI                             `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
-	OidcMetadata                  *ConnectionOptionsOidcMetadata                 `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
-	Scope                         *ConnectionScopeOidc                           `json:"scope,omitempty" url:"scope,omitempty"`
-	SendBackChannelNonce          *ConnectionSendBackChannelNonce                `json:"send_back_channel_nonce,omitempty" url:"send_back_channel_nonce,omitempty"`
-	SetUserRootAttributes         *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	TenantDomain                  *ConnectionTenantDomain                        `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
-	TokenEndpoint                 *ConnectionTokenEndpoint                       `json:"token_endpoint,omitempty" url:"token_endpoint,omitempty"`
-	TokenEndpointAuthMethod       *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	TokenEndpointAuthSigningAlg   *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
-	TokenEndpointJwtcaAudFormat   *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
-	UpstreamParams                *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	UserinfoEndpoint              *ConnectionUserinfoEndpoint                    `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
-	UseOauthSpecScope             *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
-	AttributeMap                  *ConnectionAttributeMapOkta                    `json:"attribute_map,omitempty" url:"attribute_map,omitempty"`
-	Domain                        *ConnectionDomainOkta                          `json:"domain,omitempty" url:"domain,omitempty"`
-	Type                          *ConnectionTypeEnumOkta                        `json:"type,omitempty" url:"type,omitempty"`
+	NonPersistentAttrs                 *ConnectionNonPersistentAttrs                  `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
+	AuthorizationEndpoint              *ConnectionAuthorizationEndpoint               `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
+	ClientID                           ConnectionClientIDOidc                         `json:"client_id" url:"client_id"`
+	ClientSecret                       *ConnectionClientSecretOidc                    `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	ConnectionSettings                 *ConnectionConnectionSettings                  `json:"connection_settings,omitempty" url:"connection_settings,omitempty"`
+	DomainAliases                      *ConnectionDomainAliases                       `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
+	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
+	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
+	IconURL                            *ConnectionIconURL                             `json:"icon_url,omitempty" url:"icon_url,omitempty"`
+	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	Issuer                             *ConnectionIssuer                              `json:"issuer,omitempty" url:"issuer,omitempty"`
+	JwksURI                            *ConnectionJwksURI                             `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
+	OidcMetadata                       *ConnectionOptionsOidcMetadata                 `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	PushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint  `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
+	Scope                              *ConnectionScopeOidc                           `json:"scope,omitempty" url:"scope,omitempty"`
+	SendBackChannelNonce               *ConnectionSendBackChannelNonce                `json:"send_back_channel_nonce,omitempty" url:"send_back_channel_nonce,omitempty"`
+	SetUserRootAttributes              *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	TenantDomain                       *ConnectionTenantDomain                        `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
+	TokenEndpoint                      *ConnectionTokenEndpoint                       `json:"token_endpoint,omitempty" url:"token_endpoint,omitempty"`
+	TokenEndpointAuthMethod            *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg        *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	UpstreamParams                     *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	UserinfoEndpoint                   *ConnectionUserinfoEndpoint                    `json:"userinfo_endpoint,omitempty" url:"userinfo_endpoint,omitempty"`
+	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
+	AttributeMap                       *ConnectionAttributeMapOkta                    `json:"attribute_map,omitempty" url:"attribute_map,omitempty"`
+	Domain                             *ConnectionDomainOkta                          `json:"domain,omitempty" url:"domain,omitempty"`
+	Type                               *ConnectionTypeEnumOkta                        `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -25680,6 +25806,13 @@ func (c *ConnectionOptionsOkta) GetDpopSigningAlg() ConnectionDpopSigningAlgEnum
 	return *c.DpopSigningAlg
 }
 
+func (c *ConnectionOptionsOkta) GetEnablePushedAuthorizationRequests() ConnectionEnablePushedAuthorizationRequests {
+	if c == nil || c.EnablePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.EnablePushedAuthorizationRequests
+}
+
 func (c *ConnectionOptionsOkta) GetIconURL() ConnectionIconURL {
 	if c == nil || c.IconURL == nil {
 		return ""
@@ -25720,6 +25853,13 @@ func (c *ConnectionOptionsOkta) GetOidcMetadata() ConnectionOptionsOidcMetadata 
 		return ConnectionOptionsOidcMetadata{}
 	}
 	return *c.OidcMetadata
+}
+
+func (c *ConnectionOptionsOkta) GetPushedAuthorizationRequestEndpoint() ConnectionPushedAuthorizationRequestEndpoint {
+	if c == nil || c.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *c.PushedAuthorizationRequestEndpoint
 }
 
 func (c *ConnectionOptionsOkta) GetScope() ConnectionScopeOidc {
@@ -25883,6 +26023,13 @@ func (c *ConnectionOptionsOkta) SetDpopSigningAlg(dpopSigningAlg *ConnectionDpop
 	c.require(connectionOptionsOktaFieldDpopSigningAlg)
 }
 
+// SetEnablePushedAuthorizationRequests sets the EnablePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOkta) SetEnablePushedAuthorizationRequests(enablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests) {
+	c.EnablePushedAuthorizationRequests = enablePushedAuthorizationRequests
+	c.require(connectionOptionsOktaFieldEnablePushedAuthorizationRequests)
+}
+
 // SetIconURL sets the IconURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionOptionsOkta) SetIconURL(iconURL *ConnectionIconURL) {
@@ -25923,6 +26070,13 @@ func (c *ConnectionOptionsOkta) SetJwksURI(jwksURI *ConnectionJwksURI) {
 func (c *ConnectionOptionsOkta) SetOidcMetadata(oidcMetadata *ConnectionOptionsOidcMetadata) {
 	c.OidcMetadata = oidcMetadata
 	c.require(connectionOptionsOktaFieldOidcMetadata)
+}
+
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOkta) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint) {
+	c.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	c.require(connectionOptionsOktaFieldPushedAuthorizationRequestEndpoint)
 }
 
 // SetScope sets the Scope field and marks it as non-optional;
@@ -27323,17 +27477,19 @@ var (
 	connectionOptionsSAMLFieldDeflate                     = big.NewInt(1 << 18)
 	connectionOptionsSAMLFieldDestinationURL              = big.NewInt(1 << 19)
 	connectionOptionsSAMLFieldDisableSignout              = big.NewInt(1 << 20)
-	connectionOptionsSAMLFieldFieldsMap                   = big.NewInt(1 << 21)
-	connectionOptionsSAMLFieldGlobalTokenRevocationJwtIss = big.NewInt(1 << 22)
-	connectionOptionsSAMLFieldGlobalTokenRevocationJwtSub = big.NewInt(1 << 23)
-	connectionOptionsSAMLFieldMetadataURL                 = big.NewInt(1 << 24)
-	connectionOptionsSAMLFieldMetadataXML                 = big.NewInt(1 << 25)
-	connectionOptionsSAMLFieldRecipientURL                = big.NewInt(1 << 26)
-	connectionOptionsSAMLFieldRequestTemplate             = big.NewInt(1 << 27)
-	connectionOptionsSAMLFieldSigningCert                 = big.NewInt(1 << 28)
-	connectionOptionsSAMLFieldSigningKey                  = big.NewInt(1 << 29)
-	connectionOptionsSAMLFieldSignOutEndpoint             = big.NewInt(1 << 30)
-	connectionOptionsSAMLFieldUserIDAttribute             = big.NewInt(1 << 31)
+	connectionOptionsSAMLFieldDiscoveryURL                = big.NewInt(1 << 21)
+	connectionOptionsSAMLFieldFieldsMap                   = big.NewInt(1 << 22)
+	connectionOptionsSAMLFieldGlobalTokenRevocationJwtIss = big.NewInt(1 << 23)
+	connectionOptionsSAMLFieldGlobalTokenRevocationJwtSub = big.NewInt(1 << 24)
+	connectionOptionsSAMLFieldMetadataURL                 = big.NewInt(1 << 25)
+	connectionOptionsSAMLFieldMetadataXML                 = big.NewInt(1 << 26)
+	connectionOptionsSAMLFieldOidcMetadata                = big.NewInt(1 << 27)
+	connectionOptionsSAMLFieldRecipientURL                = big.NewInt(1 << 28)
+	connectionOptionsSAMLFieldRequestTemplate             = big.NewInt(1 << 29)
+	connectionOptionsSAMLFieldSigningCert                 = big.NewInt(1 << 30)
+	connectionOptionsSAMLFieldSigningKey                  = big.NewInt(1 << 31)
+	connectionOptionsSAMLFieldSignOutEndpoint             = big.NewInt(1 << 32)
+	connectionOptionsSAMLFieldUserIDAttribute             = big.NewInt(1 << 33)
 )
 
 type ConnectionOptionsSAML struct {
@@ -27359,11 +27515,13 @@ type ConnectionOptionsSAML struct {
 	DestinationURL              *ConnectionDestinationUrlSaml          `json:"destinationUrl,omitempty" url:"destinationUrl,omitempty"`
 	// When true, disables sending SAML logout requests (SingleLogoutService) to the identity provider during user sign-out. The user will be logged out of Auth0 but will remain logged into the identity provider. Defaults to false (federated logout enabled).
 	DisableSignout              *bool                                      `json:"disableSignout,omitempty" url:"disableSignout,omitempty"`
+	DiscoveryURL                *ConnectionDiscoveryURL                    `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
 	FieldsMap                   *ConnectionFieldsMapSAML                   `json:"fieldsMap,omitempty" url:"fieldsMap,omitempty"`
 	GlobalTokenRevocationJwtIss *ConnectionGlobalTokenRevocationJwtIssSAML `json:"global_token_revocation_jwt_iss,omitempty" url:"global_token_revocation_jwt_iss,omitempty"`
 	GlobalTokenRevocationJwtSub *ConnectionGlobalTokenRevocationJwtSubSAML `json:"global_token_revocation_jwt_sub,omitempty" url:"global_token_revocation_jwt_sub,omitempty"`
 	MetadataURL                 *ConnectionMetadataUrlSaml                 `json:"metadataUrl,omitempty" url:"metadataUrl,omitempty"`
 	MetadataXML                 *ConnectionMetadataXmlSaml                 `json:"metadataXml,omitempty" url:"metadataXml,omitempty"`
+	OidcMetadata                *ConnectionOptionsOidcMetadata             `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
 	RecipientURL                *ConnectionRecipientUrlSaml                `json:"recipientUrl,omitempty" url:"recipientUrl,omitempty"`
 	RequestTemplate             *ConnectionRequestTemplateSAML             `json:"requestTemplate,omitempty" url:"requestTemplate,omitempty"`
 	SigningCert                 *ConnectionSigningCertSAML                 `json:"signingCert,omitempty" url:"signingCert,omitempty"`
@@ -27526,6 +27684,13 @@ func (c *ConnectionOptionsSAML) GetDisableSignout() bool {
 	return *c.DisableSignout
 }
 
+func (c *ConnectionOptionsSAML) GetDiscoveryURL() ConnectionDiscoveryURL {
+	if c == nil || c.DiscoveryURL == nil {
+		return ""
+	}
+	return *c.DiscoveryURL
+}
+
 func (c *ConnectionOptionsSAML) GetFieldsMap() ConnectionFieldsMapSAML {
 	if c == nil || c.FieldsMap == nil {
 		return nil
@@ -27559,6 +27724,13 @@ func (c *ConnectionOptionsSAML) GetMetadataXML() ConnectionMetadataXmlSaml {
 		return ""
 	}
 	return *c.MetadataXML
+}
+
+func (c *ConnectionOptionsSAML) GetOidcMetadata() ConnectionOptionsOidcMetadata {
+	if c == nil || c.OidcMetadata == nil {
+		return ConnectionOptionsOidcMetadata{}
+	}
+	return *c.OidcMetadata
 }
 
 func (c *ConnectionOptionsSAML) GetRecipientURL() ConnectionRecipientUrlSaml {
@@ -27764,6 +27936,13 @@ func (c *ConnectionOptionsSAML) SetDisableSignout(disableSignout *bool) {
 	c.require(connectionOptionsSAMLFieldDisableSignout)
 }
 
+// SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsSAML) SetDiscoveryURL(discoveryURL *ConnectionDiscoveryURL) {
+	c.DiscoveryURL = discoveryURL
+	c.require(connectionOptionsSAMLFieldDiscoveryURL)
+}
+
 // SetFieldsMap sets the FieldsMap field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionOptionsSAML) SetFieldsMap(fieldsMap *ConnectionFieldsMapSAML) {
@@ -27797,6 +27976,13 @@ func (c *ConnectionOptionsSAML) SetMetadataURL(metadataURL *ConnectionMetadataUr
 func (c *ConnectionOptionsSAML) SetMetadataXML(metadataXML *ConnectionMetadataXmlSaml) {
 	c.MetadataXML = metadataXML
 	c.require(connectionOptionsSAMLFieldMetadataXML)
+}
+
+// SetOidcMetadata sets the OidcMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsSAML) SetOidcMetadata(oidcMetadata *ConnectionOptionsOidcMetadata) {
+	c.OidcMetadata = oidcMetadata
+	c.require(connectionOptionsSAMLFieldOidcMetadata)
 }
 
 // SetRecipientURL sets the RecipientURL field and marks it as non-optional;
@@ -31734,6 +31920,9 @@ type ConnectionRequestTokenUrloAuth1 = ConnectionHttpsUrlWithHttpFallback255
 
 // Boolean value specifying whether the OP supports use of the request_uri parameter, with true indicating support. If omitted, the default value is false.
 type ConnectionRequestURIParameterSupported = bool
+
+// Boolean parameter indicating whether the identity provider requires Pushed Authorization Requests (PAR), as per https://datatracker.ietf.org/doc/html/rfc9126. Discovered from the identity provider's metadata; not used to decide whether the server performs PAR.
+type ConnectionRequirePushedAuthorizationRequests = bool
 
 // Boolean value specifying whether the OP requires use of the request_uri parameter. If omitted, the default value is false.
 type ConnectionRequireRequestURIRegistration = bool
@@ -42812,19 +43001,20 @@ func (c ConnectionResponseContentSalesforceStrategy) Ptr() *ConnectionResponseCo
 
 // Response for connections with strategy=samlp
 var (
-	connectionResponseContentSAMLFieldAuthentication        = big.NewInt(1 << 0)
-	connectionResponseContentSAMLFieldConnectedAccounts     = big.NewInt(1 << 1)
-	connectionResponseContentSAMLFieldName                  = big.NewInt(1 << 2)
-	connectionResponseContentSAMLFieldEnabledClients        = big.NewInt(1 << 3)
-	connectionResponseContentSAMLFieldDisplayName           = big.NewInt(1 << 4)
-	connectionResponseContentSAMLFieldIsDomainConnection    = big.NewInt(1 << 5)
-	connectionResponseContentSAMLFieldMetadata              = big.NewInt(1 << 6)
-	connectionResponseContentSAMLFieldID                    = big.NewInt(1 << 7)
-	connectionResponseContentSAMLFieldRealms                = big.NewInt(1 << 8)
-	connectionResponseContentSAMLFieldStrategy              = big.NewInt(1 << 9)
-	connectionResponseContentSAMLFieldOptions               = big.NewInt(1 << 10)
-	connectionResponseContentSAMLFieldProvisioningTicketURL = big.NewInt(1 << 11)
-	connectionResponseContentSAMLFieldShowAsButton          = big.NewInt(1 << 12)
+	connectionResponseContentSAMLFieldAuthentication            = big.NewInt(1 << 0)
+	connectionResponseContentSAMLFieldConnectedAccounts         = big.NewInt(1 << 1)
+	connectionResponseContentSAMLFieldName                      = big.NewInt(1 << 2)
+	connectionResponseContentSAMLFieldEnabledClients            = big.NewInt(1 << 3)
+	connectionResponseContentSAMLFieldDisplayName               = big.NewInt(1 << 4)
+	connectionResponseContentSAMLFieldIsDomainConnection        = big.NewInt(1 << 5)
+	connectionResponseContentSAMLFieldMetadata                  = big.NewInt(1 << 6)
+	connectionResponseContentSAMLFieldID                        = big.NewInt(1 << 7)
+	connectionResponseContentSAMLFieldRealms                    = big.NewInt(1 << 8)
+	connectionResponseContentSAMLFieldStrategy                  = big.NewInt(1 << 9)
+	connectionResponseContentSAMLFieldCrossAppAccessResourceApp = big.NewInt(1 << 10)
+	connectionResponseContentSAMLFieldOptions                   = big.NewInt(1 << 11)
+	connectionResponseContentSAMLFieldProvisioningTicketURL     = big.NewInt(1 << 12)
+	connectionResponseContentSAMLFieldShowAsButton              = big.NewInt(1 << 13)
 )
 
 type ConnectionResponseContentSAML struct {
@@ -42832,16 +43022,17 @@ type ConnectionResponseContentSAML struct {
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
-	EnabledClients        []string                              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName           *ConnectionDisplayName                `json:"display_name,omitempty" url:"display_name,omitempty"`
-	IsDomainConnection    *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
-	Metadata              *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                    ConnectionID                          `json:"id" url:"id"`
-	Realms                *ConnectionRealms                     `json:"realms,omitempty" url:"realms,omitempty"`
-	Strategy              ConnectionResponseContentSAMLStrategy `json:"strategy" url:"strategy"`
-	Options               *ConnectionOptionsSAML                `json:"options,omitempty" url:"options,omitempty"`
-	ProvisioningTicketURL *ConnectionProvisioningTicketURL      `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
-	ShowAsButton          *ConnectionShowAsButton               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	EnabledClients            []string                              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	DisplayName               *ConnectionDisplayName                `json:"display_name,omitempty" url:"display_name,omitempty"`
+	IsDomainConnection        *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	Metadata                  *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
+	ID                        ConnectionID                          `json:"id" url:"id"`
+	Realms                    *ConnectionRealms                     `json:"realms,omitempty" url:"realms,omitempty"`
+	Strategy                  ConnectionResponseContentSAMLStrategy `json:"strategy" url:"strategy"`
+	CrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp  `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
+	Options                   *ConnectionOptionsSAML                `json:"options,omitempty" url:"options,omitempty"`
+	ProvisioningTicketURL     *ConnectionProvisioningTicketURL      `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
+	ShowAsButton              *ConnectionShowAsButton               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -42918,6 +43109,13 @@ func (c *ConnectionResponseContentSAML) GetStrategy() ConnectionResponseContentS
 		return ""
 	}
 	return c.Strategy
+}
+
+func (c *ConnectionResponseContentSAML) GetCrossAppAccessResourceApp() ConnectionCrossAppAccessResourceApp {
+	if c == nil || c.CrossAppAccessResourceApp == nil {
+		return ConnectionCrossAppAccessResourceApp{}
+	}
+	return *c.CrossAppAccessResourceApp
 }
 
 func (c *ConnectionResponseContentSAML) GetOptions() ConnectionOptionsSAML {
@@ -43023,6 +43221,13 @@ func (c *ConnectionResponseContentSAML) SetRealms(realms *ConnectionRealms) {
 func (c *ConnectionResponseContentSAML) SetStrategy(strategy ConnectionResponseContentSAMLStrategy) {
 	c.Strategy = strategy
 	c.require(connectionResponseContentSAMLFieldStrategy)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSAML) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(connectionResponseContentSAMLFieldCrossAppAccessResourceApp)
 }
 
 // SetOptions sets the Options field and marks it as non-optional;
@@ -47405,6 +47610,24 @@ const (
 	ConnectionStrategyEnumWordpress           ConnectionStrategyEnum = "wordpress"
 	ConnectionStrategyEnumYahoo               ConnectionStrategyEnum = "yahoo"
 	ConnectionStrategyEnumYandex              ConnectionStrategyEnum = "yandex"
+	ConnectionStrategyEnumNotionMcp           ConnectionStrategyEnum = "notion-mcp"
+	ConnectionStrategyEnumAsanaMcp            ConnectionStrategyEnum = "asana-mcp"
+	ConnectionStrategyEnumAtlassianMcp        ConnectionStrategyEnum = "atlassian-mcp"
+	ConnectionStrategyEnumCloudflareMcp       ConnectionStrategyEnum = "cloudflare-mcp"
+	ConnectionStrategyEnumDocusignMcp         ConnectionStrategyEnum = "docusign-mcp"
+	ConnectionStrategyEnumFigmaMcp            ConnectionStrategyEnum = "figma-mcp"
+	ConnectionStrategyEnumGitlabMcp           ConnectionStrategyEnum = "gitlab-mcp"
+	ConnectionStrategyEnumGustoMcp            ConnectionStrategyEnum = "gusto-mcp"
+	ConnectionStrategyEnumHerokuMcp           ConnectionStrategyEnum = "heroku-mcp"
+	ConnectionStrategyEnumHubspotMcp          ConnectionStrategyEnum = "hubspot-mcp"
+	ConnectionStrategyEnumIntercomMcp         ConnectionStrategyEnum = "intercom-mcp"
+	ConnectionStrategyEnumLinearMcp           ConnectionStrategyEnum = "linear-mcp"
+	ConnectionStrategyEnumPagerdutyMcp        ConnectionStrategyEnum = "pagerduty-mcp"
+	ConnectionStrategyEnumSentryMcp           ConnectionStrategyEnum = "sentry-mcp"
+	ConnectionStrategyEnumSlackMcp            ConnectionStrategyEnum = "slack-mcp"
+	ConnectionStrategyEnumSupabaseMcp         ConnectionStrategyEnum = "supabase-mcp"
+	ConnectionStrategyEnumVercelMcp           ConnectionStrategyEnum = "vercel-mcp"
+	ConnectionStrategyEnumXeroMcp             ConnectionStrategyEnum = "xero-mcp"
 	ConnectionStrategyEnumAuth0Adldap         ConnectionStrategyEnum = "auth0-adldap"
 )
 
@@ -47520,6 +47743,42 @@ func NewConnectionStrategyEnumFromString(s string) (ConnectionStrategyEnum, erro
 		return ConnectionStrategyEnumYahoo, nil
 	case "yandex":
 		return ConnectionStrategyEnumYandex, nil
+	case "notion-mcp":
+		return ConnectionStrategyEnumNotionMcp, nil
+	case "asana-mcp":
+		return ConnectionStrategyEnumAsanaMcp, nil
+	case "atlassian-mcp":
+		return ConnectionStrategyEnumAtlassianMcp, nil
+	case "cloudflare-mcp":
+		return ConnectionStrategyEnumCloudflareMcp, nil
+	case "docusign-mcp":
+		return ConnectionStrategyEnumDocusignMcp, nil
+	case "figma-mcp":
+		return ConnectionStrategyEnumFigmaMcp, nil
+	case "gitlab-mcp":
+		return ConnectionStrategyEnumGitlabMcp, nil
+	case "gusto-mcp":
+		return ConnectionStrategyEnumGustoMcp, nil
+	case "heroku-mcp":
+		return ConnectionStrategyEnumHerokuMcp, nil
+	case "hubspot-mcp":
+		return ConnectionStrategyEnumHubspotMcp, nil
+	case "intercom-mcp":
+		return ConnectionStrategyEnumIntercomMcp, nil
+	case "linear-mcp":
+		return ConnectionStrategyEnumLinearMcp, nil
+	case "pagerduty-mcp":
+		return ConnectionStrategyEnumPagerdutyMcp, nil
+	case "sentry-mcp":
+		return ConnectionStrategyEnumSentryMcp, nil
+	case "slack-mcp":
+		return ConnectionStrategyEnumSlackMcp, nil
+	case "supabase-mcp":
+		return ConnectionStrategyEnumSupabaseMcp, nil
+	case "vercel-mcp":
+		return ConnectionStrategyEnumVercelMcp, nil
+	case "xero-mcp":
+		return ConnectionStrategyEnumXeroMcp, nil
 	case "auth0-adldap":
 		return ConnectionStrategyEnumAuth0Adldap, nil
 	}
@@ -57483,26 +57742,28 @@ func (c CreateConnectionRequestContentSalesforceStrategy) Ptr() *CreateConnectio
 
 // Create a connection with strategy=samlp
 var (
-	createConnectionRequestContentSAMLFieldName               = big.NewInt(1 << 0)
-	createConnectionRequestContentSAMLFieldEnabledClients     = big.NewInt(1 << 1)
-	createConnectionRequestContentSAMLFieldDisplayName        = big.NewInt(1 << 2)
-	createConnectionRequestContentSAMLFieldIsDomainConnection = big.NewInt(1 << 3)
-	createConnectionRequestContentSAMLFieldMetadata           = big.NewInt(1 << 4)
-	createConnectionRequestContentSAMLFieldStrategy           = big.NewInt(1 << 5)
-	createConnectionRequestContentSAMLFieldOptions            = big.NewInt(1 << 6)
-	createConnectionRequestContentSAMLFieldShowAsButton       = big.NewInt(1 << 7)
+	createConnectionRequestContentSAMLFieldName                      = big.NewInt(1 << 0)
+	createConnectionRequestContentSAMLFieldEnabledClients            = big.NewInt(1 << 1)
+	createConnectionRequestContentSAMLFieldDisplayName               = big.NewInt(1 << 2)
+	createConnectionRequestContentSAMLFieldIsDomainConnection        = big.NewInt(1 << 3)
+	createConnectionRequestContentSAMLFieldMetadata                  = big.NewInt(1 << 4)
+	createConnectionRequestContentSAMLFieldStrategy                  = big.NewInt(1 << 5)
+	createConnectionRequestContentSAMLFieldCrossAppAccessResourceApp = big.NewInt(1 << 6)
+	createConnectionRequestContentSAMLFieldOptions                   = big.NewInt(1 << 7)
+	createConnectionRequestContentSAMLFieldShowAsButton              = big.NewInt(1 << 8)
 )
 
 type CreateConnectionRequestContentSAML struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
-	EnabledClients     []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
-	IsDomainConnection *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
-	Metadata           *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Strategy           CreateConnectionRequestContentSAMLStrategy `json:"strategy" url:"strategy"`
-	Options            *ConnectionOptionsSAML                     `json:"options,omitempty" url:"options,omitempty"`
-	ShowAsButton       *ConnectionShowAsButton                    `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	EnabledClients            []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	DisplayName               *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
+	IsDomainConnection        *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	Metadata                  *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Strategy                  CreateConnectionRequestContentSAMLStrategy `json:"strategy" url:"strategy"`
+	CrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp       `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
+	Options                   *ConnectionOptionsSAML                     `json:"options,omitempty" url:"options,omitempty"`
+	ShowAsButton              *ConnectionShowAsButton                    `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -57551,6 +57812,13 @@ func (c *CreateConnectionRequestContentSAML) GetStrategy() CreateConnectionReque
 		return ""
 	}
 	return c.Strategy
+}
+
+func (c *CreateConnectionRequestContentSAML) GetCrossAppAccessResourceApp() ConnectionCrossAppAccessResourceApp {
+	if c == nil || c.CrossAppAccessResourceApp == nil {
+		return ConnectionCrossAppAccessResourceApp{}
+	}
+	return *c.CrossAppAccessResourceApp
 }
 
 func (c *CreateConnectionRequestContentSAML) GetOptions() ConnectionOptionsSAML {
@@ -57621,6 +57889,13 @@ func (c *CreateConnectionRequestContentSAML) SetMetadata(metadata *ConnectionsMe
 func (c *CreateConnectionRequestContentSAML) SetStrategy(strategy CreateConnectionRequestContentSAMLStrategy) {
 	c.Strategy = strategy
 	c.require(createConnectionRequestContentSAMLFieldStrategy)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(createConnectionRequestContentSAMLFieldCrossAppAccessResourceApp)
 }
 
 // SetOptions sets the Options field and marks it as non-optional;
@@ -72798,7 +73073,7 @@ var (
 )
 
 type CrossAppAccessRequestingApp struct {
-	// Set to `true` to enable the connection as a Requesting Application for Cross App Access.
+	// Set to `true` to enable the connection as a Requesting Application for Cross App Access. On `oidc` connections this requires `options.type` to be `back_channel`. Setting `false` is always accepted, so the role can be turned off even if the tenant or connection no longer supports it.
 	Active bool `json:"active" url:"active"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -101922,10 +102197,18 @@ const (
 	OauthScopeUpdateOrganizationClients OauthScope = "update:organization_clients"
 	// Delete Organization Client Associations
 	OauthScopeDeleteOrganizationClients OauthScope = "delete:organization_clients"
+	// Create Organization Templates
+	OauthScopeCreateOrganizationTemplates OauthScope = "create:organization_templates"
+	// Read Organization Templates
+	OauthScopeReadOrganizationTemplates OauthScope = "read:organization_templates"
+	// Update Organization Templates
+	OauthScopeUpdateOrganizationTemplates OauthScope = "update:organization_templates"
 	// Create Network ACL Keys
 	OauthScopeCreateNetworkACLKeys OauthScope = "create:network_acl_keys"
 	// Read Network ACL Keys
 	OauthScopeReadNetworkACLKeys OauthScope = "read:network_acl_keys"
+	// Delete Network ACL Keys
+	OauthScopeDeleteNetworkACLKeys OauthScope = "delete:network_acl_keys"
 )
 
 func NewOauthScopeFromString(s string) (OauthScope, error) {
@@ -102418,10 +102701,18 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeUpdateOrganizationClients, nil
 	case "delete:organization_clients":
 		return OauthScopeDeleteOrganizationClients, nil
+	case "create:organization_templates":
+		return OauthScopeCreateOrganizationTemplates, nil
+	case "read:organization_templates":
+		return OauthScopeReadOrganizationTemplates, nil
+	case "update:organization_templates":
+		return OauthScopeUpdateOrganizationTemplates, nil
 	case "create:network_acl_keys":
 		return OauthScopeCreateNetworkACLKeys, nil
 	case "read:network_acl_keys":
 		return OauthScopeReadNetworkACLKeys, nil
+	case "delete:network_acl_keys":
+		return OauthScopeDeleteNetworkACLKeys, nil
 	}
 	var t OauthScope
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -103945,6 +104236,29 @@ func (o *OrganizationConnectionInformation) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// Controls whether organizations using this template can be deleted.
+type OrganizationDeletionBehaviorEnum string
+
+const (
+	OrganizationDeletionBehaviorEnumAllow        OrganizationDeletionBehaviorEnum = "allow"
+	OrganizationDeletionBehaviorEnumAllowIfEmpty OrganizationDeletionBehaviorEnum = "allow_if_empty"
+)
+
+func NewOrganizationDeletionBehaviorEnumFromString(s string) (OrganizationDeletionBehaviorEnum, error) {
+	switch s {
+	case "allow":
+		return OrganizationDeletionBehaviorEnumAllow, nil
+	case "allow_if_empty":
+		return OrganizationDeletionBehaviorEnumAllowIfEmpty, nil
+	}
+	var t OrganizationDeletionBehaviorEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationDeletionBehaviorEnum) Ptr() *OrganizationDeletionBehaviorEnum {
+	return &o
+}
+
 var (
 	organizationDiscoveryDomainFieldID                          = big.NewInt(1 << 0)
 	organizationDiscoveryDomainFieldDomain                      = big.NewInt(1 << 1)
@@ -105018,6 +105332,725 @@ func (o *OrganizationMemberRole) String() string {
 
 // Metadata associated with the organization, in the form of an object with string values (max 255 chars). Maximum of 25 metadata properties allowed.
 type OrganizationMetadata = map[string]*string
+
+var (
+	organizationTemplateFieldID                               = big.NewInt(1 << 0)
+	organizationTemplateFieldName                             = big.NewInt(1 << 1)
+	organizationTemplateFieldIsDefault                        = big.NewInt(1 << 2)
+	organizationTemplateFieldOrganizationDeletionBehavior     = big.NewInt(1 << 3)
+	organizationTemplateFieldConnectionDeletionBehavior       = big.NewInt(1 << 4)
+	organizationTemplateFieldEnforcePermissionCeiling         = big.NewInt(1 << 5)
+	organizationTemplateFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 6)
+	organizationTemplateFieldConnectionProfileID              = big.NewInt(1 << 7)
+	organizationTemplateFieldUserAttributeProfileID           = big.NewInt(1 << 8)
+	organizationTemplateFieldAllowedStrategies                = big.NewInt(1 << 9)
+	organizationTemplateFieldInvitationLandingClientID        = big.NewInt(1 << 10)
+	organizationTemplateFieldAdminRolesAssignment             = big.NewInt(1 << 11)
+	organizationTemplateFieldUseForOrganizationDiscovery      = big.NewInt(1 << 12)
+	organizationTemplateFieldRoleVisibilityPolicy             = big.NewInt(1 << 13)
+	organizationTemplateFieldCreatedAt                        = big.NewInt(1 << 14)
+	organizationTemplateFieldUpdatedAt                        = big.NewInt(1 << 15)
+)
+
+type OrganizationTemplate struct {
+	// Organization Template identifier.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the organization template.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Whether this is the default template applied to new organizations.
+	IsDefault                    *bool                             `json:"is_default,omitempty" url:"is_default,omitempty"`
+	OrganizationDeletionBehavior *OrganizationDeletionBehaviorEnum `json:"organization_deletion_behavior,omitempty" url:"organization_deletion_behavior,omitempty"`
+	ConnectionDeletionBehavior   *ConnectionDeletionBehaviorEnum   `json:"connection_deletion_behavior,omitempty" url:"connection_deletion_behavior,omitempty"`
+	// Whether to enforce permission ceiling for organizations using this template.
+	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty" url:"enforce_permission_ceiling,omitempty"`
+	// Whether to enforce self-assignment restrictions for organizations using this template.
+	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty" url:"enforce_self_assignment_restriction,omitempty"`
+	// The connection profile to apply to new connections.
+	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
+	// The user attribute profile to apply to organizations.
+	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
+	// List of allowed connection strategies for this template.
+	AllowedStrategies []OrganizationTemplateAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
+	// The client ID for the invitation landing page.
+	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
+	// Default admin roles to assign to organization creators.
+	AdminRolesAssignment        []string                                         `json:"admin_roles_assignment,omitempty" url:"admin_roles_assignment,omitempty"`
+	UseForOrganizationDiscovery *OrganizationTemplateUseForOrganizationDiscovery `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
+	RoleVisibilityPolicy        *OrganizationTemplateRoleVisibilityPolicy        `json:"role_visibility_policy,omitempty" url:"role_visibility_policy,omitempty"`
+	// The ISO 8601 formatted timestamp representing when the template was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 formatted timestamp representing when the template was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationTemplate) GetID() string {
+	if o == nil || o.ID == nil {
+		return ""
+	}
+	return *o.ID
+}
+
+func (o *OrganizationTemplate) GetName() string {
+	if o == nil || o.Name == nil {
+		return ""
+	}
+	return *o.Name
+}
+
+func (o *OrganizationTemplate) GetIsDefault() bool {
+	if o == nil || o.IsDefault == nil {
+		return false
+	}
+	return *o.IsDefault
+}
+
+func (o *OrganizationTemplate) GetOrganizationDeletionBehavior() OrganizationDeletionBehaviorEnum {
+	if o == nil || o.OrganizationDeletionBehavior == nil {
+		return ""
+	}
+	return *o.OrganizationDeletionBehavior
+}
+
+func (o *OrganizationTemplate) GetConnectionDeletionBehavior() ConnectionDeletionBehaviorEnum {
+	if o == nil || o.ConnectionDeletionBehavior == nil {
+		return ""
+	}
+	return *o.ConnectionDeletionBehavior
+}
+
+func (o *OrganizationTemplate) GetEnforcePermissionCeiling() bool {
+	if o == nil || o.EnforcePermissionCeiling == nil {
+		return false
+	}
+	return *o.EnforcePermissionCeiling
+}
+
+func (o *OrganizationTemplate) GetEnforceSelfAssignmentRestriction() bool {
+	if o == nil || o.EnforceSelfAssignmentRestriction == nil {
+		return false
+	}
+	return *o.EnforceSelfAssignmentRestriction
+}
+
+func (o *OrganizationTemplate) GetConnectionProfileID() string {
+	if o == nil || o.ConnectionProfileID == nil {
+		return ""
+	}
+	return *o.ConnectionProfileID
+}
+
+func (o *OrganizationTemplate) GetUserAttributeProfileID() string {
+	if o == nil || o.UserAttributeProfileID == nil {
+		return ""
+	}
+	return *o.UserAttributeProfileID
+}
+
+func (o *OrganizationTemplate) GetAllowedStrategies() []OrganizationTemplateAllowedStrategyEnum {
+	if o == nil || o.AllowedStrategies == nil {
+		return nil
+	}
+	return o.AllowedStrategies
+}
+
+func (o *OrganizationTemplate) GetInvitationLandingClientID() string {
+	if o == nil || o.InvitationLandingClientID == nil {
+		return ""
+	}
+	return *o.InvitationLandingClientID
+}
+
+func (o *OrganizationTemplate) GetAdminRolesAssignment() []string {
+	if o == nil || o.AdminRolesAssignment == nil {
+		return nil
+	}
+	return o.AdminRolesAssignment
+}
+
+func (o *OrganizationTemplate) GetUseForOrganizationDiscovery() OrganizationTemplateUseForOrganizationDiscovery {
+	if o == nil || o.UseForOrganizationDiscovery == nil {
+		return OrganizationTemplateUseForOrganizationDiscovery{}
+	}
+	return *o.UseForOrganizationDiscovery
+}
+
+func (o *OrganizationTemplate) GetRoleVisibilityPolicy() OrganizationTemplateRoleVisibilityPolicy {
+	if o == nil || o.RoleVisibilityPolicy == nil {
+		return OrganizationTemplateRoleVisibilityPolicy{}
+	}
+	return *o.RoleVisibilityPolicy
+}
+
+func (o *OrganizationTemplate) GetCreatedAt() time.Time {
+	if o == nil || o.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *o.CreatedAt
+}
+
+func (o *OrganizationTemplate) GetUpdatedAt() time.Time {
+	if o == nil || o.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *o.UpdatedAt
+}
+
+func (o *OrganizationTemplate) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationTemplate) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetID(id *string) {
+	o.ID = id
+	o.require(organizationTemplateFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetName(name *string) {
+	o.Name = name
+	o.require(organizationTemplateFieldName)
+}
+
+// SetIsDefault sets the IsDefault field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetIsDefault(isDefault *bool) {
+	o.IsDefault = isDefault
+	o.require(organizationTemplateFieldIsDefault)
+}
+
+// SetOrganizationDeletionBehavior sets the OrganizationDeletionBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetOrganizationDeletionBehavior(organizationDeletionBehavior *OrganizationDeletionBehaviorEnum) {
+	o.OrganizationDeletionBehavior = organizationDeletionBehavior
+	o.require(organizationTemplateFieldOrganizationDeletionBehavior)
+}
+
+// SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetConnectionDeletionBehavior(connectionDeletionBehavior *ConnectionDeletionBehaviorEnum) {
+	o.ConnectionDeletionBehavior = connectionDeletionBehavior
+	o.require(organizationTemplateFieldConnectionDeletionBehavior)
+}
+
+// SetEnforcePermissionCeiling sets the EnforcePermissionCeiling field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetEnforcePermissionCeiling(enforcePermissionCeiling *bool) {
+	o.EnforcePermissionCeiling = enforcePermissionCeiling
+	o.require(organizationTemplateFieldEnforcePermissionCeiling)
+}
+
+// SetEnforceSelfAssignmentRestriction sets the EnforceSelfAssignmentRestriction field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetEnforceSelfAssignmentRestriction(enforceSelfAssignmentRestriction *bool) {
+	o.EnforceSelfAssignmentRestriction = enforceSelfAssignmentRestriction
+	o.require(organizationTemplateFieldEnforceSelfAssignmentRestriction)
+}
+
+// SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetConnectionProfileID(connectionProfileID *string) {
+	o.ConnectionProfileID = connectionProfileID
+	o.require(organizationTemplateFieldConnectionProfileID)
+}
+
+// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetUserAttributeProfileID(userAttributeProfileID *string) {
+	o.UserAttributeProfileID = userAttributeProfileID
+	o.require(organizationTemplateFieldUserAttributeProfileID)
+}
+
+// SetAllowedStrategies sets the AllowedStrategies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetAllowedStrategies(allowedStrategies []OrganizationTemplateAllowedStrategyEnum) {
+	o.AllowedStrategies = allowedStrategies
+	o.require(organizationTemplateFieldAllowedStrategies)
+}
+
+// SetInvitationLandingClientID sets the InvitationLandingClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetInvitationLandingClientID(invitationLandingClientID *string) {
+	o.InvitationLandingClientID = invitationLandingClientID
+	o.require(organizationTemplateFieldInvitationLandingClientID)
+}
+
+// SetAdminRolesAssignment sets the AdminRolesAssignment field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetAdminRolesAssignment(adminRolesAssignment []string) {
+	o.AdminRolesAssignment = adminRolesAssignment
+	o.require(organizationTemplateFieldAdminRolesAssignment)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *OrganizationTemplateUseForOrganizationDiscovery) {
+	o.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	o.require(organizationTemplateFieldUseForOrganizationDiscovery)
+}
+
+// SetRoleVisibilityPolicy sets the RoleVisibilityPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetRoleVisibilityPolicy(roleVisibilityPolicy *OrganizationTemplateRoleVisibilityPolicy) {
+	o.RoleVisibilityPolicy = roleVisibilityPolicy
+	o.require(organizationTemplateFieldRoleVisibilityPolicy)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetCreatedAt(createdAt *time.Time) {
+	o.CreatedAt = createdAt
+	o.require(organizationTemplateFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplate) SetUpdatedAt(updatedAt *time.Time) {
+	o.UpdatedAt = updatedAt
+	o.require(organizationTemplateFieldUpdatedAt)
+}
+
+func (o *OrganizationTemplate) UnmarshalJSON(data []byte) error {
+	type embed OrganizationTemplate
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*o = OrganizationTemplate(unmarshaler.embed)
+	o.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	o.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationTemplate) MarshalJSON() ([]byte, error) {
+	type embed OrganizationTemplate
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*o),
+		CreatedAt: internal.NewOptionalDateTime(o.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(o.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationTemplate) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// An allowed enterprise connection strategy.
+type OrganizationTemplateAllowedStrategyEnum string
+
+const (
+	OrganizationTemplateAllowedStrategyEnumAdfs         OrganizationTemplateAllowedStrategyEnum = "adfs"
+	OrganizationTemplateAllowedStrategyEnumGoogleApps   OrganizationTemplateAllowedStrategyEnum = "google-apps"
+	OrganizationTemplateAllowedStrategyEnumOidc         OrganizationTemplateAllowedStrategyEnum = "oidc"
+	OrganizationTemplateAllowedStrategyEnumOkta         OrganizationTemplateAllowedStrategyEnum = "okta"
+	OrganizationTemplateAllowedStrategyEnumPingfederate OrganizationTemplateAllowedStrategyEnum = "pingfederate"
+	OrganizationTemplateAllowedStrategyEnumSamlp        OrganizationTemplateAllowedStrategyEnum = "samlp"
+	OrganizationTemplateAllowedStrategyEnumWaad         OrganizationTemplateAllowedStrategyEnum = "waad"
+)
+
+func NewOrganizationTemplateAllowedStrategyEnumFromString(s string) (OrganizationTemplateAllowedStrategyEnum, error) {
+	switch s {
+	case "adfs":
+		return OrganizationTemplateAllowedStrategyEnumAdfs, nil
+	case "google-apps":
+		return OrganizationTemplateAllowedStrategyEnumGoogleApps, nil
+	case "oidc":
+		return OrganizationTemplateAllowedStrategyEnumOidc, nil
+	case "okta":
+		return OrganizationTemplateAllowedStrategyEnumOkta, nil
+	case "pingfederate":
+		return OrganizationTemplateAllowedStrategyEnumPingfederate, nil
+	case "samlp":
+		return OrganizationTemplateAllowedStrategyEnumSamlp, nil
+	case "waad":
+		return OrganizationTemplateAllowedStrategyEnumWaad, nil
+	}
+	var t OrganizationTemplateAllowedStrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationTemplateAllowedStrategyEnum) Ptr() *OrganizationTemplateAllowedStrategyEnum {
+	return &o
+}
+
+// The role visibility level.
+type OrganizationTemplateRoleVisibilityEnum string
+
+const (
+	OrganizationTemplateRoleVisibilityEnumWrite    OrganizationTemplateRoleVisibilityEnum = "write"
+	OrganizationTemplateRoleVisibilityEnumReadOnly OrganizationTemplateRoleVisibilityEnum = "read_only"
+	OrganizationTemplateRoleVisibilityEnumHidden   OrganizationTemplateRoleVisibilityEnum = "hidden"
+)
+
+func NewOrganizationTemplateRoleVisibilityEnumFromString(s string) (OrganizationTemplateRoleVisibilityEnum, error) {
+	switch s {
+	case "write":
+		return OrganizationTemplateRoleVisibilityEnumWrite, nil
+	case "read_only":
+		return OrganizationTemplateRoleVisibilityEnumReadOnly, nil
+	case "hidden":
+		return OrganizationTemplateRoleVisibilityEnumHidden, nil
+	}
+	var t OrganizationTemplateRoleVisibilityEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationTemplateRoleVisibilityEnum) Ptr() *OrganizationTemplateRoleVisibilityEnum {
+	return &o
+}
+
+// A role visibility override.
+var (
+	organizationTemplateRoleVisibilityOverrideFieldRoleID = big.NewInt(1 << 0)
+	organizationTemplateRoleVisibilityOverrideFieldAccess = big.NewInt(1 << 1)
+)
+
+type OrganizationTemplateRoleVisibilityOverride struct {
+	// The role identifier.
+	RoleID string                                 `json:"role_id" url:"role_id"`
+	Access OrganizationTemplateRoleVisibilityEnum `json:"access" url:"access"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationTemplateRoleVisibilityOverride) GetRoleID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RoleID
+}
+
+func (o *OrganizationTemplateRoleVisibilityOverride) GetAccess() OrganizationTemplateRoleVisibilityEnum {
+	if o == nil {
+		return ""
+	}
+	return o.Access
+}
+
+func (o *OrganizationTemplateRoleVisibilityOverride) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationTemplateRoleVisibilityOverride) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetRoleID sets the RoleID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplateRoleVisibilityOverride) SetRoleID(roleID string) {
+	o.RoleID = roleID
+	o.require(organizationTemplateRoleVisibilityOverrideFieldRoleID)
+}
+
+// SetAccess sets the Access field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplateRoleVisibilityOverride) SetAccess(access OrganizationTemplateRoleVisibilityEnum) {
+	o.Access = access
+	o.require(organizationTemplateRoleVisibilityOverrideFieldAccess)
+}
+
+func (o *OrganizationTemplateRoleVisibilityOverride) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationTemplateRoleVisibilityOverride
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationTemplateRoleVisibilityOverride(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationTemplateRoleVisibilityOverride) MarshalJSON() ([]byte, error) {
+	type embed OrganizationTemplateRoleVisibilityOverride
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationTemplateRoleVisibilityOverride) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Controls role visibility for organization administrators.
+var (
+	organizationTemplateRoleVisibilityPolicyFieldDefaultValue = big.NewInt(1 << 0)
+	organizationTemplateRoleVisibilityPolicyFieldOverrides    = big.NewInt(1 << 1)
+)
+
+type OrganizationTemplateRoleVisibilityPolicy struct {
+	DefaultValue OrganizationTemplateRoleVisibilityEnum `json:"default_value" url:"default_value"`
+	// Role-specific visibility overrides.
+	Overrides []*OrganizationTemplateRoleVisibilityOverride `json:"overrides,omitempty" url:"overrides,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationTemplateRoleVisibilityPolicy) GetDefaultValue() OrganizationTemplateRoleVisibilityEnum {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultValue
+}
+
+func (o *OrganizationTemplateRoleVisibilityPolicy) GetOverrides() []*OrganizationTemplateRoleVisibilityOverride {
+	if o == nil || o.Overrides == nil {
+		return nil
+	}
+	return o.Overrides
+}
+
+func (o *OrganizationTemplateRoleVisibilityPolicy) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationTemplateRoleVisibilityPolicy) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplateRoleVisibilityPolicy) SetDefaultValue(defaultValue OrganizationTemplateRoleVisibilityEnum) {
+	o.DefaultValue = defaultValue
+	o.require(organizationTemplateRoleVisibilityPolicyFieldDefaultValue)
+}
+
+// SetOverrides sets the Overrides field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplateRoleVisibilityPolicy) SetOverrides(overrides []*OrganizationTemplateRoleVisibilityOverride) {
+	o.Overrides = overrides
+	o.require(organizationTemplateRoleVisibilityPolicyFieldOverrides)
+}
+
+func (o *OrganizationTemplateRoleVisibilityPolicy) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationTemplateRoleVisibilityPolicy
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationTemplateRoleVisibilityPolicy(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationTemplateRoleVisibilityPolicy) MarshalJSON() ([]byte, error) {
+	type embed OrganizationTemplateRoleVisibilityPolicy
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationTemplateRoleVisibilityPolicy) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Controls whether connections from this template are used for organization discovery.
+var (
+	organizationTemplateUseForOrganizationDiscoveryFieldDefaultValue  = big.NewInt(1 << 0)
+	organizationTemplateUseForOrganizationDiscoveryFieldAllowedValues = big.NewInt(1 << 1)
+)
+
+type OrganizationTemplateUseForOrganizationDiscovery struct {
+	// The default value for organization discovery.
+	DefaultValue bool `json:"default_value" url:"default_value"`
+	// The allowed values for organization discovery.
+	AllowedValues []bool `json:"allowed_values,omitempty" url:"allowed_values,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationTemplateUseForOrganizationDiscovery) GetDefaultValue() bool {
+	if o == nil {
+		return false
+	}
+	return o.DefaultValue
+}
+
+func (o *OrganizationTemplateUseForOrganizationDiscovery) GetAllowedValues() []bool {
+	if o == nil || o.AllowedValues == nil {
+		return nil
+	}
+	return o.AllowedValues
+}
+
+func (o *OrganizationTemplateUseForOrganizationDiscovery) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationTemplateUseForOrganizationDiscovery) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplateUseForOrganizationDiscovery) SetDefaultValue(defaultValue bool) {
+	o.DefaultValue = defaultValue
+	o.require(organizationTemplateUseForOrganizationDiscoveryFieldDefaultValue)
+}
+
+// SetAllowedValues sets the AllowedValues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationTemplateUseForOrganizationDiscovery) SetAllowedValues(allowedValues []bool) {
+	o.AllowedValues = allowedValues
+	o.require(organizationTemplateUseForOrganizationDiscoveryFieldAllowedValues)
+}
+
+func (o *OrganizationTemplateUseForOrganizationDiscovery) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationTemplateUseForOrganizationDiscovery
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationTemplateUseForOrganizationDiscovery(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationTemplateUseForOrganizationDiscovery) MarshalJSON() ([]byte, error) {
+	type embed OrganizationTemplateUseForOrganizationDiscovery
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationTemplateUseForOrganizationDiscovery) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
 
 // Controls whether this organization can be used in user flows with third-party clients. Defaults to `block`.
 type OrganizationThirdPartyClientAccessEnum string
@@ -110561,6 +111594,7 @@ const (
 	ScreenGroupNameEnumResetPasswordMfaWebauthnRoamingChallenge  ScreenGroupNameEnum = "reset-password-mfa-webauthn-roaming-challenge"
 	ScreenGroupNameEnumCustomForm                                ScreenGroupNameEnum = "custom-form"
 	ScreenGroupNameEnumConsent                                   ScreenGroupNameEnum = "consent"
+	ScreenGroupNameEnumConsentTenantScopes                       ScreenGroupNameEnum = "consent-tenant-scopes"
 	ScreenGroupNameEnumCustomizedConsent                         ScreenGroupNameEnum = "customized-consent"
 	ScreenGroupNameEnumLogout                                    ScreenGroupNameEnum = "logout"
 	ScreenGroupNameEnumLogoutComplete                            ScreenGroupNameEnum = "logout-complete"
@@ -110684,6 +111718,8 @@ func NewScreenGroupNameEnumFromString(s string) (ScreenGroupNameEnum, error) {
 		return ScreenGroupNameEnumCustomForm, nil
 	case "consent":
 		return ScreenGroupNameEnumConsent, nil
+	case "consent-tenant-scopes":
+		return ScreenGroupNameEnumConsentTenantScopes, nil
 	case "customized-consent":
 		return ScreenGroupNameEnumCustomizedConsent, nil
 	case "logout":
@@ -116970,10 +118006,11 @@ var (
 	tenantSettingsFlagsFieldRemoveAlgFromJwks                              = big.NewInt(1 << 22)
 	tenantSettingsFlagsFieldImprovedSignupBotDetectionInClassic            = big.NewInt(1 << 23)
 	tenantSettingsFlagsFieldGenaiTrial                                     = big.NewInt(1 << 24)
-	tenantSettingsFlagsFieldEnableDynamicClientRegistration                = big.NewInt(1 << 25)
-	tenantSettingsFlagsFieldDisableManagementAPISmsObfuscation             = big.NewInt(1 << 26)
-	tenantSettingsFlagsFieldTrustAzureAdfsEmailVerifiedConnectionProperty  = big.NewInt(1 << 27)
-	tenantSettingsFlagsFieldCustomDomainsProvisioning                      = big.NewInt(1 << 28)
+	tenantSettingsFlagsFieldLocalResourceDiscovery                         = big.NewInt(1 << 25)
+	tenantSettingsFlagsFieldEnableDynamicClientRegistration                = big.NewInt(1 << 26)
+	tenantSettingsFlagsFieldDisableManagementAPISmsObfuscation             = big.NewInt(1 << 27)
+	tenantSettingsFlagsFieldTrustAzureAdfsEmailVerifiedConnectionProperty  = big.NewInt(1 << 28)
+	tenantSettingsFlagsFieldCustomDomainsProvisioning                      = big.NewInt(1 << 29)
 )
 
 type TenantSettingsFlags struct {
@@ -117027,6 +118064,8 @@ type TenantSettingsFlags struct {
 	ImprovedSignupBotDetectionInClassic *bool `json:"improved_signup_bot_detection_in_classic,omitempty" url:"improved_signup_bot_detection_in_classic,omitempty"`
 	// This tenant signed up for the Auth4GenAI trail
 	GenaiTrial *bool `json:"genai_trial,omitempty" url:"genai_trial,omitempty"`
+	// Whether the Local Resource Discovery endpoint is enabled (true) or disabled (false).
+	LocalResourceDiscovery *bool `json:"local_resource_discovery,omitempty" url:"local_resource_discovery,omitempty"`
 	// Whether third-party developers can <a href="https://auth0.com/docs/api-auth/dynamic-client-registration">dynamically register</a> applications for your APIs (true) or not (false). This flag enables dynamic client registration.
 	EnableDynamicClientRegistration *bool `json:"enable_dynamic_client_registration,omitempty" url:"enable_dynamic_client_registration,omitempty"`
 	// If true, SMS phone numbers will not be obfuscated in Management API GET calls.
@@ -117216,6 +118255,13 @@ func (t *TenantSettingsFlags) GetGenaiTrial() bool {
 		return false
 	}
 	return *t.GenaiTrial
+}
+
+func (t *TenantSettingsFlags) GetLocalResourceDiscovery() bool {
+	if t == nil || t.LocalResourceDiscovery == nil {
+		return false
+	}
+	return *t.LocalResourceDiscovery
 }
 
 func (t *TenantSettingsFlags) GetEnableDynamicClientRegistration() bool {
@@ -117433,6 +118479,13 @@ func (t *TenantSettingsFlags) SetImprovedSignupBotDetectionInClassic(improvedSig
 func (t *TenantSettingsFlags) SetGenaiTrial(genaiTrial *bool) {
 	t.GenaiTrial = genaiTrial
 	t.require(tenantSettingsFlagsFieldGenaiTrial)
+}
+
+// SetLocalResourceDiscovery sets the LocalResourceDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TenantSettingsFlags) SetLocalResourceDiscovery(localResourceDiscovery *bool) {
+	t.LocalResourceDiscovery = localResourceDiscovery
+	t.require(tenantSettingsFlagsFieldLocalResourceDiscovery)
 }
 
 // SetEnableDynamicClientRegistration sets the EnableDynamicClientRegistration field and marks it as non-optional;
@@ -127215,21 +128268,23 @@ func (u *UpdateConnectionRequestContentSalesforceSandbox) String() string {
 
 // Update a connection with strategy=samlp
 var (
-	updateConnectionRequestContentSAMLFieldDisplayName        = big.NewInt(1 << 0)
-	updateConnectionRequestContentSAMLFieldEnabledClients     = big.NewInt(1 << 1)
-	updateConnectionRequestContentSAMLFieldIsDomainConnection = big.NewInt(1 << 2)
-	updateConnectionRequestContentSAMLFieldMetadata           = big.NewInt(1 << 3)
-	updateConnectionRequestContentSAMLFieldOptions            = big.NewInt(1 << 4)
-	updateConnectionRequestContentSAMLFieldShowAsButton       = big.NewInt(1 << 5)
+	updateConnectionRequestContentSAMLFieldDisplayName               = big.NewInt(1 << 0)
+	updateConnectionRequestContentSAMLFieldEnabledClients            = big.NewInt(1 << 1)
+	updateConnectionRequestContentSAMLFieldIsDomainConnection        = big.NewInt(1 << 2)
+	updateConnectionRequestContentSAMLFieldMetadata                  = big.NewInt(1 << 3)
+	updateConnectionRequestContentSAMLFieldOptions                   = big.NewInt(1 << 4)
+	updateConnectionRequestContentSAMLFieldCrossAppAccessResourceApp = big.NewInt(1 << 5)
+	updateConnectionRequestContentSAMLFieldShowAsButton              = big.NewInt(1 << 6)
 )
 
 type UpdateConnectionRequestContentSAML struct {
-	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
-	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	IsDomainConnection *ConnectionIsDomainConnection `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
-	Metadata           *ConnectionsMetadata          `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Options            *ConnectionOptionsSAML        `json:"options,omitempty" url:"options,omitempty"`
-	ShowAsButton       *ConnectionShowAsButton       `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	DisplayName               *ConnectionDisplayName               `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients            *ConnectionEnabledClients            `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection        *ConnectionIsDomainConnection        `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	Metadata                  *ConnectionsMetadata                 `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Options                   *ConnectionOptionsSAML               `json:"options,omitempty" url:"options,omitempty"`
+	CrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
+	ShowAsButton              *ConnectionShowAsButton              `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -127271,6 +128326,13 @@ func (u *UpdateConnectionRequestContentSAML) GetOptions() ConnectionOptionsSAML 
 		return ConnectionOptionsSAML{}
 	}
 	return *u.Options
+}
+
+func (u *UpdateConnectionRequestContentSAML) GetCrossAppAccessResourceApp() ConnectionCrossAppAccessResourceApp {
+	if u == nil || u.CrossAppAccessResourceApp == nil {
+		return ConnectionCrossAppAccessResourceApp{}
+	}
+	return *u.CrossAppAccessResourceApp
 }
 
 func (u *UpdateConnectionRequestContentSAML) GetShowAsButton() ConnectionShowAsButton {
@@ -127327,6 +128389,13 @@ func (u *UpdateConnectionRequestContentSAML) SetMetadata(metadata *ConnectionsMe
 func (u *UpdateConnectionRequestContentSAML) SetOptions(options *ConnectionOptionsSAML) {
 	u.Options = options
 	u.require(updateConnectionRequestContentSAMLFieldOptions)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionRequestContentSAML) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp) {
+	u.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	u.require(updateConnectionRequestContentSAMLFieldCrossAppAccessResourceApp)
 }
 
 // SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
