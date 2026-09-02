@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestNetworkACLsListWithWireMock(
+func TestNetworkACLsGetNetworkACLsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestNetworkACLsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListNetworkACLsRequestParameters{
+	request := &management.GetNetworkACLsRequest{
 		Page: management.Int(
 			1,
 		),
@@ -99,19 +99,19 @@ func TestNetworkACLsListWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.NetworkACLs.List(
+	_, invocationErr := client.NetworkACLs.GetNetworkACLs(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestNetworkACLsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestNetworkACLsGetNetworkACLsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestNetworkACLsListWithWireMock", "GET", "/network-acls", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true"}, 1)
+	VerifyRequestCount(t, "TestNetworkACLsGetNetworkACLsWithWireMock", "GET", "/network-acls", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true"}, 1)
 }
 
-func TestNetworkACLsCreateWithWireMock(
+func TestNetworkACLsPostNetworkACLsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -130,19 +130,19 @@ func TestNetworkACLsCreateWithWireMock(
 			Scope:  management.NetworkACLRuleScopeEnumManagement,
 		},
 	}
-	invocationErr := client.NetworkACLs.Create(
+	invocationErr := client.NetworkACLs.PostNetworkACLs(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestNetworkACLsCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestNetworkACLsPostNetworkACLsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestNetworkACLsCreateWithWireMock", "POST", "/network-acls", nil, 1)
+	VerifyRequestCount(t, "TestNetworkACLsPostNetworkACLsWithWireMock", "POST", "/network-acls", nil, 1)
 }
 
-func TestNetworkACLsGetWithWireMock(
+func TestNetworkACLsGetNetworkACLsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -153,19 +153,19 @@ func TestNetworkACLsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.NetworkACLs.Get(
+	_, invocationErr := client.NetworkACLs.GetNetworkACLsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestNetworkACLsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestNetworkACLsGetNetworkACLsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestNetworkACLsGetWithWireMock", "GET", "/network-acls/id", nil, 1)
+	VerifyRequestCount(t, "TestNetworkACLsGetNetworkACLsByIDWithWireMock", "GET", "/network-acls/id", nil, 1)
 }
 
-func TestNetworkACLsSetWithWireMock(
+func TestNetworkACLsPutNetworkACLsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -184,20 +184,20 @@ func TestNetworkACLsSetWithWireMock(
 			Scope:  management.NetworkACLRuleScopeEnumManagement,
 		},
 	}
-	_, invocationErr := client.NetworkACLs.Set(
+	_, invocationErr := client.NetworkACLs.PutNetworkACLsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestNetworkACLsSetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestNetworkACLsPutNetworkACLsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestNetworkACLsSetWithWireMock", "PUT", "/network-acls/id", nil, 1)
+	VerifyRequestCount(t, "TestNetworkACLsPutNetworkACLsByIDWithWireMock", "PUT", "/network-acls/id", nil, 1)
 }
 
-func TestNetworkACLsDeleteWithWireMock(
+func TestNetworkACLsDeleteNetworkACLsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -208,19 +208,19 @@ func TestNetworkACLsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.NetworkACLs.Delete(
+	invocationErr := client.NetworkACLs.DeleteNetworkACLsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestNetworkACLsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestNetworkACLsDeleteNetworkACLsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestNetworkACLsDeleteWithWireMock", "DELETE", "/network-acls/id", nil, 1)
+	VerifyRequestCount(t, "TestNetworkACLsDeleteNetworkACLsByIDWithWireMock", "DELETE", "/network-acls/id", nil, 1)
 }
 
-func TestNetworkACLsUpdateWithWireMock(
+func TestNetworkACLsPatchNetworkACLsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -232,15 +232,15 @@ func TestNetworkACLsUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateNetworkACLRequestContent{}
-	_, invocationErr := client.NetworkACLs.Update(
+	_, invocationErr := client.NetworkACLs.PatchNetworkACLsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestNetworkACLsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestNetworkACLsPatchNetworkACLsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestNetworkACLsUpdateWithWireMock", "PATCH", "/network-acls/id", nil, 1)
+	VerifyRequestCount(t, "TestNetworkACLsPatchNetworkACLsByIDWithWireMock", "PATCH", "/network-acls/id", nil, 1)
 }

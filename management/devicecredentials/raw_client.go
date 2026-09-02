@@ -32,7 +32,56 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) CreatePublicKey(
+func (r *RawClient) GetDeviceCredentials(
+	ctx context.Context,
+	request *management.GetDeviceCredentialsRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ListDeviceCredentialsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/device-credentials"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ListDeviceCredentialsResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ListDeviceCredentialsResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) PostDeviceCredentials(
 	ctx context.Context,
 	request *management.CreatePublicKeyDeviceCredentialRequestContent,
 	opts ...option.RequestOption,
@@ -76,7 +125,7 @@ func (r *RawClient) CreatePublicKey(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteDeviceCredentialsByID(
 	ctx context.Context,
 	// ID of the credential to delete.
 	id string,

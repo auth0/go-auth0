@@ -11,6 +11,4575 @@ import (
 )
 
 var (
+	actionFieldID                     = big.NewInt(1 << 0)
+	actionFieldName                   = big.NewInt(1 << 1)
+	actionFieldSupportedTriggers      = big.NewInt(1 << 2)
+	actionFieldAllChangesDeployed     = big.NewInt(1 << 3)
+	actionFieldCreatedAt              = big.NewInt(1 << 4)
+	actionFieldUpdatedAt              = big.NewInt(1 << 5)
+	actionFieldCode                   = big.NewInt(1 << 6)
+	actionFieldDependencies           = big.NewInt(1 << 7)
+	actionFieldRuntime                = big.NewInt(1 << 8)
+	actionFieldSecrets                = big.NewInt(1 << 9)
+	actionFieldDeployedVersion        = big.NewInt(1 << 10)
+	actionFieldInstalledIntegrationID = big.NewInt(1 << 11)
+	actionFieldIntegration            = big.NewInt(1 << 12)
+	actionFieldStatus                 = big.NewInt(1 << 13)
+	actionFieldBuiltAt                = big.NewInt(1 << 14)
+	actionFieldDeploy                 = big.NewInt(1 << 15)
+	actionFieldModules                = big.NewInt(1 << 16)
+)
+
+type Action struct {
+	// The unique ID of the action.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of an action.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
+	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"supported_triggers,omitempty"`
+	// True if all of an Action's contents have been deployed.
+	AllChangesDeployed *bool `json:"all_changes_deployed,omitempty" url:"all_changes_deployed,omitempty"`
+	// The time when this action was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The time when this action was updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// The source code of the action.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The list of third party npm modules, and their versions, that this action depends on.
+	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The Node runtime. For example: `node22`, defaults to `node22`
+	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
+	// The list of secrets that are included in an action or a version of an action.
+	Secrets         []*ActionSecretResponse `json:"secrets,omitempty" url:"secrets,omitempty"`
+	DeployedVersion *ActionDeployedVersion  `json:"deployed_version,omitempty" url:"deployed_version,omitempty"`
+	// installed_integration_id is the fk reference to the InstalledIntegration entity.
+	InstalledIntegrationID *string                `json:"installed_integration_id,omitempty" url:"installed_integration_id,omitempty"`
+	Integration            *Integration           `json:"integration,omitempty" url:"integration,omitempty"`
+	Status                 *ActionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	// The time when this action was built successfully.
+	BuiltAt *time.Time `json:"built_at,omitempty" url:"built_at,omitempty"`
+	// True if the action should be deployed after creation.
+	Deploy *bool `json:"deploy,omitempty" url:"deploy,omitempty"`
+	// The list of action modules and their versions used by this action.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"modules,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *Action) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *Action) GetName() string {
+	if a == nil || a.Name == nil {
+		return ""
+	}
+	return *a.Name
+}
+
+func (a *Action) GetSupportedTriggers() []*ActionTrigger {
+	if a == nil || a.SupportedTriggers == nil {
+		return nil
+	}
+	return a.SupportedTriggers
+}
+
+func (a *Action) GetAllChangesDeployed() bool {
+	if a == nil || a.AllChangesDeployed == nil {
+		return false
+	}
+	return *a.AllChangesDeployed
+}
+
+func (a *Action) GetCreatedAt() time.Time {
+	if a == nil || a.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *a.CreatedAt
+}
+
+func (a *Action) GetUpdatedAt() time.Time {
+	if a == nil || a.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *a.UpdatedAt
+}
+
+func (a *Action) GetCode() string {
+	if a == nil || a.Code == nil {
+		return ""
+	}
+	return *a.Code
+}
+
+func (a *Action) GetDependencies() []*ActionVersionDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return a.Dependencies
+}
+
+func (a *Action) GetRuntime() string {
+	if a == nil || a.Runtime == nil {
+		return ""
+	}
+	return *a.Runtime
+}
+
+func (a *Action) GetSecrets() []*ActionSecretResponse {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return a.Secrets
+}
+
+func (a *Action) GetDeployedVersion() ActionDeployedVersion {
+	if a == nil || a.DeployedVersion == nil {
+		return ActionDeployedVersion{}
+	}
+	return *a.DeployedVersion
+}
+
+func (a *Action) GetInstalledIntegrationID() string {
+	if a == nil || a.InstalledIntegrationID == nil {
+		return ""
+	}
+	return *a.InstalledIntegrationID
+}
+
+func (a *Action) GetIntegration() Integration {
+	if a == nil || a.Integration == nil {
+		return Integration{}
+	}
+	return *a.Integration
+}
+
+func (a *Action) GetStatus() ActionBuildStatusEnum {
+	if a == nil || a.Status == nil {
+		return ""
+	}
+	return *a.Status
+}
+
+func (a *Action) GetBuiltAt() time.Time {
+	if a == nil || a.BuiltAt == nil {
+		return time.Time{}
+	}
+	return *a.BuiltAt
+}
+
+func (a *Action) GetDeploy() bool {
+	if a == nil || a.Deploy == nil {
+		return false
+	}
+	return *a.Deploy
+}
+
+func (a *Action) GetModules() []*ActionModuleReference {
+	if a == nil || a.Modules == nil {
+		return nil
+	}
+	return a.Modules
+}
+
+func (a *Action) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *Action) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetID(id *string) {
+	a.ID = id
+	a.require(actionFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetName(name *string) {
+	a.Name = name
+	a.require(actionFieldName)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	a.SupportedTriggers = supportedTriggers
+	a.require(actionFieldSupportedTriggers)
+}
+
+// SetAllChangesDeployed sets the AllChangesDeployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetAllChangesDeployed(allChangesDeployed *bool) {
+	a.AllChangesDeployed = allChangesDeployed
+	a.require(actionFieldAllChangesDeployed)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetCreatedAt(createdAt *time.Time) {
+	a.CreatedAt = createdAt
+	a.require(actionFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetUpdatedAt(updatedAt *time.Time) {
+	a.UpdatedAt = updatedAt
+	a.require(actionFieldUpdatedAt)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetCode(code *string) {
+	a.Code = code
+	a.require(actionFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetDependencies(dependencies []*ActionVersionDependency) {
+	a.Dependencies = dependencies
+	a.require(actionFieldDependencies)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetRuntime(runtime *string) {
+	a.Runtime = runtime
+	a.require(actionFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetSecrets(secrets []*ActionSecretResponse) {
+	a.Secrets = secrets
+	a.require(actionFieldSecrets)
+}
+
+// SetDeployedVersion sets the DeployedVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetDeployedVersion(deployedVersion *ActionDeployedVersion) {
+	a.DeployedVersion = deployedVersion
+	a.require(actionFieldDeployedVersion)
+}
+
+// SetInstalledIntegrationID sets the InstalledIntegrationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetInstalledIntegrationID(installedIntegrationID *string) {
+	a.InstalledIntegrationID = installedIntegrationID
+	a.require(actionFieldInstalledIntegrationID)
+}
+
+// SetIntegration sets the Integration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetIntegration(integration *Integration) {
+	a.Integration = integration
+	a.require(actionFieldIntegration)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetStatus(status *ActionBuildStatusEnum) {
+	a.Status = status
+	a.require(actionFieldStatus)
+}
+
+// SetBuiltAt sets the BuiltAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetBuiltAt(builtAt *time.Time) {
+	a.BuiltAt = builtAt
+	a.require(actionFieldBuiltAt)
+}
+
+// SetDeploy sets the Deploy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetDeploy(deploy *bool) {
+	a.Deploy = deploy
+	a.require(actionFieldDeploy)
+}
+
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Action) SetModules(modules []*ActionModuleReference) {
+	a.Modules = modules
+	a.require(actionFieldModules)
+}
+
+func (a *Action) UnmarshalJSON(data []byte) error {
+	type embed Action
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = Action(unmarshaler.embed)
+	a.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	a.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	a.BuiltAt = unmarshaler.BuiltAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *Action) MarshalJSON() ([]byte, error) {
+	type embed Action
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		CreatedAt: internal.NewOptionalDateTime(a.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(a.UpdatedAt),
+		BuiltAt:   internal.NewOptionalDateTime(a.BuiltAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *Action) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// The action to which this version belongs.
+var (
+	actionBaseFieldID                 = big.NewInt(1 << 0)
+	actionBaseFieldName               = big.NewInt(1 << 1)
+	actionBaseFieldSupportedTriggers  = big.NewInt(1 << 2)
+	actionBaseFieldAllChangesDeployed = big.NewInt(1 << 3)
+	actionBaseFieldCreatedAt          = big.NewInt(1 << 4)
+	actionBaseFieldUpdatedAt          = big.NewInt(1 << 5)
+)
+
+type ActionBase struct {
+	// The unique ID of the action.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of an action.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
+	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"supported_triggers,omitempty"`
+	// True if all of an Action's contents have been deployed.
+	AllChangesDeployed *bool `json:"all_changes_deployed,omitempty" url:"all_changes_deployed,omitempty"`
+	// The time when this action was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The time when this action was updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionBase) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *ActionBase) GetName() string {
+	if a == nil || a.Name == nil {
+		return ""
+	}
+	return *a.Name
+}
+
+func (a *ActionBase) GetSupportedTriggers() []*ActionTrigger {
+	if a == nil || a.SupportedTriggers == nil {
+		return nil
+	}
+	return a.SupportedTriggers
+}
+
+func (a *ActionBase) GetAllChangesDeployed() bool {
+	if a == nil || a.AllChangesDeployed == nil {
+		return false
+	}
+	return *a.AllChangesDeployed
+}
+
+func (a *ActionBase) GetCreatedAt() time.Time {
+	if a == nil || a.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *a.CreatedAt
+}
+
+func (a *ActionBase) GetUpdatedAt() time.Time {
+	if a == nil || a.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *a.UpdatedAt
+}
+
+func (a *ActionBase) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionBase) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBase) SetID(id *string) {
+	a.ID = id
+	a.require(actionBaseFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBase) SetName(name *string) {
+	a.Name = name
+	a.require(actionBaseFieldName)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBase) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	a.SupportedTriggers = supportedTriggers
+	a.require(actionBaseFieldSupportedTriggers)
+}
+
+// SetAllChangesDeployed sets the AllChangesDeployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBase) SetAllChangesDeployed(allChangesDeployed *bool) {
+	a.AllChangesDeployed = allChangesDeployed
+	a.require(actionBaseFieldAllChangesDeployed)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBase) SetCreatedAt(createdAt *time.Time) {
+	a.CreatedAt = createdAt
+	a.require(actionBaseFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBase) SetUpdatedAt(updatedAt *time.Time) {
+	a.UpdatedAt = updatedAt
+	a.require(actionBaseFieldUpdatedAt)
+}
+
+func (a *ActionBase) UnmarshalJSON(data []byte) error {
+	type embed ActionBase
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionBase(unmarshaler.embed)
+	a.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	a.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionBase) MarshalJSON() ([]byte, error) {
+	type embed ActionBase
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		CreatedAt: internal.NewOptionalDateTime(a.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(a.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionBase) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Binding is the associative entity joining a trigger, and an action together.
+var (
+	actionBindingFieldID          = big.NewInt(1 << 0)
+	actionBindingFieldTriggerID   = big.NewInt(1 << 1)
+	actionBindingFieldDisplayName = big.NewInt(1 << 2)
+	actionBindingFieldAction      = big.NewInt(1 << 3)
+	actionBindingFieldCreatedAt   = big.NewInt(1 << 4)
+	actionBindingFieldUpdatedAt   = big.NewInt(1 << 5)
+)
+
+type ActionBinding struct {
+	// The unique ID of this binding.
+	ID        *string                `json:"id,omitempty" url:"id,omitempty"`
+	TriggerID *ActionTriggerTypeEnum `json:"trigger_id,omitempty" url:"trigger_id,omitempty"`
+	// The name of the binding.
+	DisplayName *string `json:"display_name,omitempty" url:"display_name,omitempty"`
+	Action      *Action `json:"action,omitempty" url:"action,omitempty"`
+	// The time when the binding was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The time when the binding was updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionBinding) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *ActionBinding) GetTriggerID() ActionTriggerTypeEnum {
+	if a == nil || a.TriggerID == nil {
+		return ""
+	}
+	return *a.TriggerID
+}
+
+func (a *ActionBinding) GetDisplayName() string {
+	if a == nil || a.DisplayName == nil {
+		return ""
+	}
+	return *a.DisplayName
+}
+
+func (a *ActionBinding) GetAction() Action {
+	if a == nil || a.Action == nil {
+		return Action{}
+	}
+	return *a.Action
+}
+
+func (a *ActionBinding) GetCreatedAt() time.Time {
+	if a == nil || a.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *a.CreatedAt
+}
+
+func (a *ActionBinding) GetUpdatedAt() time.Time {
+	if a == nil || a.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *a.UpdatedAt
+}
+
+func (a *ActionBinding) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionBinding) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBinding) SetID(id *string) {
+	a.ID = id
+	a.require(actionBindingFieldID)
+}
+
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBinding) SetTriggerID(triggerID *ActionTriggerTypeEnum) {
+	a.TriggerID = triggerID
+	a.require(actionBindingFieldTriggerID)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBinding) SetDisplayName(displayName *string) {
+	a.DisplayName = displayName
+	a.require(actionBindingFieldDisplayName)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBinding) SetAction(action *Action) {
+	a.Action = action
+	a.require(actionBindingFieldAction)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBinding) SetCreatedAt(createdAt *time.Time) {
+	a.CreatedAt = createdAt
+	a.require(actionBindingFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBinding) SetUpdatedAt(updatedAt *time.Time) {
+	a.UpdatedAt = updatedAt
+	a.require(actionBindingFieldUpdatedAt)
+}
+
+func (a *ActionBinding) UnmarshalJSON(data []byte) error {
+	type embed ActionBinding
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionBinding(unmarshaler.embed)
+	a.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	a.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionBinding) MarshalJSON() ([]byte, error) {
+	type embed ActionBinding
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		CreatedAt: internal.NewOptionalDateTime(a.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(a.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionBinding) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// A reference to an action. An action can be referred to by ID or by Name.
+var (
+	actionBindingRefFieldType  = big.NewInt(1 << 0)
+	actionBindingRefFieldValue = big.NewInt(1 << 1)
+)
+
+type ActionBindingRef struct {
+	Type *ActionBindingRefTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	// The id or name of an action that is being bound to a trigger.
+	Value *string `json:"value,omitempty" url:"value,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *ActionBindingRef) GetType() ActionBindingRefTypeEnum {
+	if a == nil || a.Type == nil {
+		return ""
+	}
+	return *a.Type
+}
+
+func (a *ActionBindingRef) GetValue() string {
+	if a == nil || a.Value == nil {
+		return ""
+	}
+	return *a.Value
+}
+
+func (a *ActionBindingRef) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.ExtraProperties
+}
+
+func (a *ActionBindingRef) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBindingRef) SetType(type_ *ActionBindingRefTypeEnum) {
+	a.Type = type_
+	a.require(actionBindingRefFieldType)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBindingRef) SetValue(value *string) {
+	a.Value = value
+	a.require(actionBindingRefFieldValue)
+}
+
+func (a *ActionBindingRef) UnmarshalJSON(data []byte) error {
+	type embed ActionBindingRef
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionBindingRef(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionBindingRef) MarshalJSON() ([]byte, error) {
+	type embed ActionBindingRef
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *ActionBindingRef) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// How the action is being referred to: `action_id` or `action_name`.
+type ActionBindingRefTypeEnum string
+
+const (
+	ActionBindingRefTypeEnumBindingID  ActionBindingRefTypeEnum = "binding_id"
+	ActionBindingRefTypeEnumActionID   ActionBindingRefTypeEnum = "action_id"
+	ActionBindingRefTypeEnumActionName ActionBindingRefTypeEnum = "action_name"
+)
+
+func NewActionBindingRefTypeEnumFromString(s string) (ActionBindingRefTypeEnum, error) {
+	switch s {
+	case "binding_id":
+		return ActionBindingRefTypeEnumBindingID, nil
+	case "action_id":
+		return ActionBindingRefTypeEnumActionID, nil
+	case "action_name":
+		return ActionBindingRefTypeEnumActionName, nil
+	}
+	var t ActionBindingRefTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a ActionBindingRefTypeEnum) Ptr() *ActionBindingRefTypeEnum {
+	return &a
+}
+
+// In order to execute an Action, it must be bound to a trigger using a binding. `trigger-bound` means that bindings are managed by the tenant. `entity-bound` means that the bindings are automatically managed by Auth0 and other internal resouces will control those bindings. Tenants cannot manage `entity-bound` bindings.
+type ActionBindingTypeEnum string
+
+const (
+	ActionBindingTypeEnumTriggerBound ActionBindingTypeEnum = "trigger-bound"
+	ActionBindingTypeEnumEntityBound  ActionBindingTypeEnum = "entity-bound"
+)
+
+func NewActionBindingTypeEnumFromString(s string) (ActionBindingTypeEnum, error) {
+	switch s {
+	case "trigger-bound":
+		return ActionBindingTypeEnumTriggerBound, nil
+	case "entity-bound":
+		return ActionBindingTypeEnumEntityBound, nil
+	}
+	var t ActionBindingTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a ActionBindingTypeEnum) Ptr() *ActionBindingTypeEnum {
+	return &a
+}
+
+var (
+	actionBindingWithRefFieldRef         = big.NewInt(1 << 0)
+	actionBindingWithRefFieldDisplayName = big.NewInt(1 << 1)
+	actionBindingWithRefFieldSecrets     = big.NewInt(1 << 2)
+)
+
+type ActionBindingWithRef struct {
+	Ref *ActionBindingRef `json:"ref" url:"ref"`
+	// The name of the binding.
+	DisplayName *string `json:"display_name,omitempty" url:"display_name,omitempty"`
+	// The list of secrets that are included in an action or a version of an action.
+	Secrets []*ActionSecretRequest `json:"secrets,omitempty" url:"secrets,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionBindingWithRef) GetRef() *ActionBindingRef {
+	if a == nil {
+		return nil
+	}
+	return a.Ref
+}
+
+func (a *ActionBindingWithRef) GetDisplayName() string {
+	if a == nil || a.DisplayName == nil {
+		return ""
+	}
+	return *a.DisplayName
+}
+
+func (a *ActionBindingWithRef) GetSecrets() []*ActionSecretRequest {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return a.Secrets
+}
+
+func (a *ActionBindingWithRef) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionBindingWithRef) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetRef sets the Ref field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBindingWithRef) SetRef(ref *ActionBindingRef) {
+	a.Ref = ref
+	a.require(actionBindingWithRefFieldRef)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBindingWithRef) SetDisplayName(displayName *string) {
+	a.DisplayName = displayName
+	a.require(actionBindingWithRefFieldDisplayName)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionBindingWithRef) SetSecrets(secrets []*ActionSecretRequest) {
+	a.Secrets = secrets
+	a.require(actionBindingWithRefFieldSecrets)
+}
+
+func (a *ActionBindingWithRef) UnmarshalJSON(data []byte) error {
+	type unmarshaler ActionBindingWithRef
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActionBindingWithRef(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionBindingWithRef) MarshalJSON() ([]byte, error) {
+	type embed ActionBindingWithRef
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionBindingWithRef) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// The build status of this action.
+type ActionBuildStatusEnum string
+
+const (
+	ActionBuildStatusEnumPending  ActionBuildStatusEnum = "pending"
+	ActionBuildStatusEnumBuilding ActionBuildStatusEnum = "building"
+	ActionBuildStatusEnumPackaged ActionBuildStatusEnum = "packaged"
+	ActionBuildStatusEnumBuilt    ActionBuildStatusEnum = "built"
+	ActionBuildStatusEnumRetrying ActionBuildStatusEnum = "retrying"
+	ActionBuildStatusEnumFailed   ActionBuildStatusEnum = "failed"
+)
+
+func NewActionBuildStatusEnumFromString(s string) (ActionBuildStatusEnum, error) {
+	switch s {
+	case "pending":
+		return ActionBuildStatusEnumPending, nil
+	case "building":
+		return ActionBuildStatusEnumBuilding, nil
+	case "packaged":
+		return ActionBuildStatusEnumPackaged, nil
+	case "built":
+		return ActionBuildStatusEnumBuilt, nil
+	case "retrying":
+		return ActionBuildStatusEnumRetrying, nil
+	case "failed":
+		return ActionBuildStatusEnumFailed, nil
+	}
+	var t ActionBuildStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a ActionBuildStatusEnum) Ptr() *ActionBuildStatusEnum {
+	return &a
+}
+
+// The version of the action that is currently deployed.
+var (
+	actionDeployedVersionFieldID                = big.NewInt(1 << 0)
+	actionDeployedVersionFieldActionID          = big.NewInt(1 << 1)
+	actionDeployedVersionFieldCode              = big.NewInt(1 << 2)
+	actionDeployedVersionFieldDependencies      = big.NewInt(1 << 3)
+	actionDeployedVersionFieldDeployed          = big.NewInt(1 << 4)
+	actionDeployedVersionFieldRuntime           = big.NewInt(1 << 5)
+	actionDeployedVersionFieldSecrets           = big.NewInt(1 << 6)
+	actionDeployedVersionFieldStatus            = big.NewInt(1 << 7)
+	actionDeployedVersionFieldNumber            = big.NewInt(1 << 8)
+	actionDeployedVersionFieldErrors            = big.NewInt(1 << 9)
+	actionDeployedVersionFieldAction            = big.NewInt(1 << 10)
+	actionDeployedVersionFieldBuiltAt           = big.NewInt(1 << 11)
+	actionDeployedVersionFieldCreatedAt         = big.NewInt(1 << 12)
+	actionDeployedVersionFieldUpdatedAt         = big.NewInt(1 << 13)
+	actionDeployedVersionFieldSupportedTriggers = big.NewInt(1 << 14)
+	actionDeployedVersionFieldModules           = big.NewInt(1 << 15)
+)
+
+type ActionDeployedVersion struct {
+	// The unique id of an action version.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The id of the action to which this version belongs.
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	// The source code of this specific version of the action.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The list of third party npm modules, and their versions, that this specific version depends on.
+	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// Indicates if this specific version is the currently one deployed.
+	Deployed *bool `json:"deployed,omitempty" url:"deployed,omitempty"`
+	// The Node runtime. For example: `node22`
+	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
+	// The list of secrets that are included in an action or a version of an action.
+	Secrets []*ActionSecretResponse       `json:"secrets,omitempty" url:"secrets,omitempty"`
+	Status  *ActionVersionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	// The index of this version in list of versions for the action.
+	Number *float64 `json:"number,omitempty" url:"number,omitempty"`
+	// Any errors that occurred while the version was being built.
+	Errors []*ActionError `json:"errors,omitempty" url:"errors,omitempty"`
+	Action *ActionBase    `json:"action,omitempty" url:"action,omitempty"`
+	// The time when this version was built successfully.
+	BuiltAt *time.Time `json:"built_at,omitempty" url:"built_at,omitempty"`
+	// The time when this version was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The time when a version was updated. Versions are never updated externally. Only Auth0 will update an action version as it is being built.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// The list of triggers that this version supports. At this time, a version can only target a single trigger at a time.
+	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"supported_triggers,omitempty"`
+	// The list of action modules and their versions used by this action version.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"modules,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionDeployedVersion) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *ActionDeployedVersion) GetActionID() string {
+	if a == nil || a.ActionID == nil {
+		return ""
+	}
+	return *a.ActionID
+}
+
+func (a *ActionDeployedVersion) GetCode() string {
+	if a == nil || a.Code == nil {
+		return ""
+	}
+	return *a.Code
+}
+
+func (a *ActionDeployedVersion) GetDependencies() []*ActionVersionDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return a.Dependencies
+}
+
+func (a *ActionDeployedVersion) GetDeployed() bool {
+	if a == nil || a.Deployed == nil {
+		return false
+	}
+	return *a.Deployed
+}
+
+func (a *ActionDeployedVersion) GetRuntime() string {
+	if a == nil || a.Runtime == nil {
+		return ""
+	}
+	return *a.Runtime
+}
+
+func (a *ActionDeployedVersion) GetSecrets() []*ActionSecretResponse {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return a.Secrets
+}
+
+func (a *ActionDeployedVersion) GetStatus() ActionVersionBuildStatusEnum {
+	if a == nil || a.Status == nil {
+		return ""
+	}
+	return *a.Status
+}
+
+func (a *ActionDeployedVersion) GetNumber() float64 {
+	if a == nil || a.Number == nil {
+		return 0
+	}
+	return *a.Number
+}
+
+func (a *ActionDeployedVersion) GetErrors() []*ActionError {
+	if a == nil || a.Errors == nil {
+		return nil
+	}
+	return a.Errors
+}
+
+func (a *ActionDeployedVersion) GetAction() ActionBase {
+	if a == nil || a.Action == nil {
+		return ActionBase{}
+	}
+	return *a.Action
+}
+
+func (a *ActionDeployedVersion) GetBuiltAt() time.Time {
+	if a == nil || a.BuiltAt == nil {
+		return time.Time{}
+	}
+	return *a.BuiltAt
+}
+
+func (a *ActionDeployedVersion) GetCreatedAt() time.Time {
+	if a == nil || a.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *a.CreatedAt
+}
+
+func (a *ActionDeployedVersion) GetUpdatedAt() time.Time {
+	if a == nil || a.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *a.UpdatedAt
+}
+
+func (a *ActionDeployedVersion) GetSupportedTriggers() []*ActionTrigger {
+	if a == nil || a.SupportedTriggers == nil {
+		return nil
+	}
+	return a.SupportedTriggers
+}
+
+func (a *ActionDeployedVersion) GetModules() []*ActionModuleReference {
+	if a == nil || a.Modules == nil {
+		return nil
+	}
+	return a.Modules
+}
+
+func (a *ActionDeployedVersion) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionDeployedVersion) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetID(id *string) {
+	a.ID = id
+	a.require(actionDeployedVersionFieldID)
+}
+
+// SetActionID sets the ActionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetActionID(actionID *string) {
+	a.ActionID = actionID
+	a.require(actionDeployedVersionFieldActionID)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetCode(code *string) {
+	a.Code = code
+	a.require(actionDeployedVersionFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetDependencies(dependencies []*ActionVersionDependency) {
+	a.Dependencies = dependencies
+	a.require(actionDeployedVersionFieldDependencies)
+}
+
+// SetDeployed sets the Deployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetDeployed(deployed *bool) {
+	a.Deployed = deployed
+	a.require(actionDeployedVersionFieldDeployed)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetRuntime(runtime *string) {
+	a.Runtime = runtime
+	a.require(actionDeployedVersionFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetSecrets(secrets []*ActionSecretResponse) {
+	a.Secrets = secrets
+	a.require(actionDeployedVersionFieldSecrets)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetStatus(status *ActionVersionBuildStatusEnum) {
+	a.Status = status
+	a.require(actionDeployedVersionFieldStatus)
+}
+
+// SetNumber sets the Number field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetNumber(number *float64) {
+	a.Number = number
+	a.require(actionDeployedVersionFieldNumber)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetErrors(errors []*ActionError) {
+	a.Errors = errors
+	a.require(actionDeployedVersionFieldErrors)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetAction(action *ActionBase) {
+	a.Action = action
+	a.require(actionDeployedVersionFieldAction)
+}
+
+// SetBuiltAt sets the BuiltAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetBuiltAt(builtAt *time.Time) {
+	a.BuiltAt = builtAt
+	a.require(actionDeployedVersionFieldBuiltAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetCreatedAt(createdAt *time.Time) {
+	a.CreatedAt = createdAt
+	a.require(actionDeployedVersionFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetUpdatedAt(updatedAt *time.Time) {
+	a.UpdatedAt = updatedAt
+	a.require(actionDeployedVersionFieldUpdatedAt)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	a.SupportedTriggers = supportedTriggers
+	a.require(actionDeployedVersionFieldSupportedTriggers)
+}
+
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionDeployedVersion) SetModules(modules []*ActionModuleReference) {
+	a.Modules = modules
+	a.require(actionDeployedVersionFieldModules)
+}
+
+func (a *ActionDeployedVersion) UnmarshalJSON(data []byte) error {
+	type embed ActionDeployedVersion
+	var unmarshaler = struct {
+		embed
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionDeployedVersion(unmarshaler.embed)
+	a.BuiltAt = unmarshaler.BuiltAt.TimePtr()
+	a.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	a.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionDeployedVersion) MarshalJSON() ([]byte, error) {
+	type embed ActionDeployedVersion
+	var marshaler = struct {
+		embed
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		BuiltAt:   internal.NewOptionalDateTime(a.BuiltAt),
+		CreatedAt: internal.NewOptionalDateTime(a.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(a.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionDeployedVersion) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Error is a generic error with a human readable id which should be easily referenced in support tickets.
+var (
+	actionErrorFieldID  = big.NewInt(1 << 0)
+	actionErrorFieldMsg = big.NewInt(1 << 1)
+	actionErrorFieldURL = big.NewInt(1 << 2)
+)
+
+type ActionError struct {
+	ID  *string `json:"id,omitempty" url:"id,omitempty"`
+	Msg *string `json:"msg,omitempty" url:"msg,omitempty"`
+	URL *string `json:"url,omitempty" url:"url,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionError) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *ActionError) GetMsg() string {
+	if a == nil || a.Msg == nil {
+		return ""
+	}
+	return *a.Msg
+}
+
+func (a *ActionError) GetURL() string {
+	if a == nil || a.URL == nil {
+		return ""
+	}
+	return *a.URL
+}
+
+func (a *ActionError) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionError) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionError) SetID(id *string) {
+	a.ID = id
+	a.require(actionErrorFieldID)
+}
+
+// SetMsg sets the Msg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionError) SetMsg(msg *string) {
+	a.Msg = msg
+	a.require(actionErrorFieldMsg)
+}
+
+// SetURL sets the URL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionError) SetURL(url *string) {
+	a.URL = url
+	a.require(actionErrorFieldURL)
+}
+
+func (a *ActionError) UnmarshalJSON(data []byte) error {
+	type unmarshaler ActionError
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActionError(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionError) MarshalJSON() ([]byte, error) {
+	type embed ActionError
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionError) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Captures the results of a single action being executed.
+var (
+	actionExecutionResultFieldActionName = big.NewInt(1 << 0)
+	actionExecutionResultFieldError      = big.NewInt(1 << 1)
+	actionExecutionResultFieldStartedAt  = big.NewInt(1 << 2)
+	actionExecutionResultFieldEndedAt    = big.NewInt(1 << 3)
+)
+
+type ActionExecutionResult struct {
+	// The name of the action that was executed.
+	ActionName *string      `json:"action_name,omitempty" url:"action_name,omitempty"`
+	Error      *ActionError `json:"error,omitempty" url:"error,omitempty"`
+	// The time when the action was started.
+	StartedAt *time.Time `json:"started_at,omitempty" url:"started_at,omitempty"`
+	// The time when the action finished executing.
+	EndedAt *time.Time `json:"ended_at,omitempty" url:"ended_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionExecutionResult) GetActionName() string {
+	if a == nil || a.ActionName == nil {
+		return ""
+	}
+	return *a.ActionName
+}
+
+func (a *ActionExecutionResult) GetError() ActionError {
+	if a == nil || a.Error == nil {
+		return ActionError{}
+	}
+	return *a.Error
+}
+
+func (a *ActionExecutionResult) GetStartedAt() time.Time {
+	if a == nil || a.StartedAt == nil {
+		return time.Time{}
+	}
+	return *a.StartedAt
+}
+
+func (a *ActionExecutionResult) GetEndedAt() time.Time {
+	if a == nil || a.EndedAt == nil {
+		return time.Time{}
+	}
+	return *a.EndedAt
+}
+
+func (a *ActionExecutionResult) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionExecutionResult) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetActionName sets the ActionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionExecutionResult) SetActionName(actionName *string) {
+	a.ActionName = actionName
+	a.require(actionExecutionResultFieldActionName)
+}
+
+// SetError sets the Error field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionExecutionResult) SetError(error_ *ActionError) {
+	a.Error = error_
+	a.require(actionExecutionResultFieldError)
+}
+
+// SetStartedAt sets the StartedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionExecutionResult) SetStartedAt(startedAt *time.Time) {
+	a.StartedAt = startedAt
+	a.require(actionExecutionResultFieldStartedAt)
+}
+
+// SetEndedAt sets the EndedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionExecutionResult) SetEndedAt(endedAt *time.Time) {
+	a.EndedAt = endedAt
+	a.require(actionExecutionResultFieldEndedAt)
+}
+
+func (a *ActionExecutionResult) UnmarshalJSON(data []byte) error {
+	type embed ActionExecutionResult
+	var unmarshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionExecutionResult(unmarshaler.embed)
+	a.StartedAt = unmarshaler.StartedAt.TimePtr()
+	a.EndedAt = unmarshaler.EndedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionExecutionResult) MarshalJSON() ([]byte, error) {
+	type embed ActionExecutionResult
+	var marshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		StartedAt: internal.NewOptionalDateTime(a.StartedAt),
+		EndedAt:   internal.NewOptionalDateTime(a.EndedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionExecutionResult) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// The overall status of an execution.
+type ActionExecutionStatusEnum string
+
+const (
+	ActionExecutionStatusEnumUnspecified ActionExecutionStatusEnum = "unspecified"
+	ActionExecutionStatusEnumPending     ActionExecutionStatusEnum = "pending"
+	ActionExecutionStatusEnumFinal       ActionExecutionStatusEnum = "final"
+	ActionExecutionStatusEnumPartial     ActionExecutionStatusEnum = "partial"
+	ActionExecutionStatusEnumCanceled    ActionExecutionStatusEnum = "canceled"
+	ActionExecutionStatusEnumSuspended   ActionExecutionStatusEnum = "suspended"
+)
+
+func NewActionExecutionStatusEnumFromString(s string) (ActionExecutionStatusEnum, error) {
+	switch s {
+	case "unspecified":
+		return ActionExecutionStatusEnumUnspecified, nil
+	case "pending":
+		return ActionExecutionStatusEnumPending, nil
+	case "final":
+		return ActionExecutionStatusEnumFinal, nil
+	case "partial":
+		return ActionExecutionStatusEnumPartial, nil
+	case "canceled":
+		return ActionExecutionStatusEnumCanceled, nil
+	case "suspended":
+		return ActionExecutionStatusEnumSuspended, nil
+	}
+	var t ActionExecutionStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a ActionExecutionStatusEnum) Ptr() *ActionExecutionStatusEnum {
+	return &a
+}
+
+var (
+	actionModuleActionFieldActionID            = big.NewInt(1 << 0)
+	actionModuleActionFieldActionName          = big.NewInt(1 << 1)
+	actionModuleActionFieldModuleVersionID     = big.NewInt(1 << 2)
+	actionModuleActionFieldModuleVersionNumber = big.NewInt(1 << 3)
+	actionModuleActionFieldSupportedTriggers   = big.NewInt(1 << 4)
+)
+
+type ActionModuleAction struct {
+	// The unique ID of the action.
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	// The name of the action.
+	ActionName *string `json:"action_name,omitempty" url:"action_name,omitempty"`
+	// The ID of the module version this action is using.
+	ModuleVersionID *string `json:"module_version_id,omitempty" url:"module_version_id,omitempty"`
+	// The version number of the module this action is using.
+	ModuleVersionNumber *int `json:"module_version_number,omitempty" url:"module_version_number,omitempty"`
+	// The triggers that this action supports.
+	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"supported_triggers,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionModuleAction) GetActionID() string {
+	if a == nil || a.ActionID == nil {
+		return ""
+	}
+	return *a.ActionID
+}
+
+func (a *ActionModuleAction) GetActionName() string {
+	if a == nil || a.ActionName == nil {
+		return ""
+	}
+	return *a.ActionName
+}
+
+func (a *ActionModuleAction) GetModuleVersionID() string {
+	if a == nil || a.ModuleVersionID == nil {
+		return ""
+	}
+	return *a.ModuleVersionID
+}
+
+func (a *ActionModuleAction) GetModuleVersionNumber() int {
+	if a == nil || a.ModuleVersionNumber == nil {
+		return 0
+	}
+	return *a.ModuleVersionNumber
+}
+
+func (a *ActionModuleAction) GetSupportedTriggers() []*ActionTrigger {
+	if a == nil || a.SupportedTriggers == nil {
+		return nil
+	}
+	return a.SupportedTriggers
+}
+
+func (a *ActionModuleAction) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionModuleAction) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetActionID sets the ActionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleAction) SetActionID(actionID *string) {
+	a.ActionID = actionID
+	a.require(actionModuleActionFieldActionID)
+}
+
+// SetActionName sets the ActionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleAction) SetActionName(actionName *string) {
+	a.ActionName = actionName
+	a.require(actionModuleActionFieldActionName)
+}
+
+// SetModuleVersionID sets the ModuleVersionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleAction) SetModuleVersionID(moduleVersionID *string) {
+	a.ModuleVersionID = moduleVersionID
+	a.require(actionModuleActionFieldModuleVersionID)
+}
+
+// SetModuleVersionNumber sets the ModuleVersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleAction) SetModuleVersionNumber(moduleVersionNumber *int) {
+	a.ModuleVersionNumber = moduleVersionNumber
+	a.require(actionModuleActionFieldModuleVersionNumber)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleAction) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	a.SupportedTriggers = supportedTriggers
+	a.require(actionModuleActionFieldSupportedTriggers)
+}
+
+func (a *ActionModuleAction) UnmarshalJSON(data []byte) error {
+	type unmarshaler ActionModuleAction
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActionModuleAction(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionModuleAction) MarshalJSON() ([]byte, error) {
+	type embed ActionModuleAction
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionModuleAction) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionModuleDependencyFieldName    = big.NewInt(1 << 0)
+	actionModuleDependencyFieldVersion = big.NewInt(1 << 1)
+)
+
+type ActionModuleDependency struct {
+	// The name of the npm dependency.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The version of the npm dependency.
+	Version *string `json:"version,omitempty" url:"version,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionModuleDependency) GetName() string {
+	if a == nil || a.Name == nil {
+		return ""
+	}
+	return *a.Name
+}
+
+func (a *ActionModuleDependency) GetVersion() string {
+	if a == nil || a.Version == nil {
+		return ""
+	}
+	return *a.Version
+}
+
+func (a *ActionModuleDependency) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionModuleDependency) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleDependency) SetName(name *string) {
+	a.Name = name
+	a.require(actionModuleDependencyFieldName)
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleDependency) SetVersion(version *string) {
+	a.Version = version
+	a.require(actionModuleDependencyFieldVersion)
+}
+
+func (a *ActionModuleDependency) UnmarshalJSON(data []byte) error {
+	type unmarshaler ActionModuleDependency
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActionModuleDependency(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionModuleDependency) MarshalJSON() ([]byte, error) {
+	type embed ActionModuleDependency
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionModuleDependency) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionModuleDependencyRequestFieldName    = big.NewInt(1 << 0)
+	actionModuleDependencyRequestFieldVersion = big.NewInt(1 << 1)
+)
+
+type ActionModuleDependencyRequest struct {
+	// The name of the npm dependency.
+	Name string `json:"name" url:"name"`
+	// The version of the npm dependency.
+	Version string `json:"version" url:"version"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionModuleDependencyRequest) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *ActionModuleDependencyRequest) GetVersion() string {
+	if a == nil {
+		return ""
+	}
+	return a.Version
+}
+
+func (a *ActionModuleDependencyRequest) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionModuleDependencyRequest) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleDependencyRequest) SetName(name string) {
+	a.Name = name
+	a.require(actionModuleDependencyRequestFieldName)
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleDependencyRequest) SetVersion(version string) {
+	a.Version = version
+	a.require(actionModuleDependencyRequestFieldVersion)
+}
+
+func (a *ActionModuleDependencyRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ActionModuleDependencyRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActionModuleDependencyRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionModuleDependencyRequest) MarshalJSON() ([]byte, error) {
+	type embed ActionModuleDependencyRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionModuleDependencyRequest) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionModuleListItemFieldID                      = big.NewInt(1 << 0)
+	actionModuleListItemFieldName                    = big.NewInt(1 << 1)
+	actionModuleListItemFieldCode                    = big.NewInt(1 << 2)
+	actionModuleListItemFieldDependencies            = big.NewInt(1 << 3)
+	actionModuleListItemFieldSecrets                 = big.NewInt(1 << 4)
+	actionModuleListItemFieldActionsUsingModuleTotal = big.NewInt(1 << 5)
+	actionModuleListItemFieldAllChangesPublished     = big.NewInt(1 << 6)
+	actionModuleListItemFieldLatestVersionNumber     = big.NewInt(1 << 7)
+	actionModuleListItemFieldCreatedAt               = big.NewInt(1 << 8)
+	actionModuleListItemFieldUpdatedAt               = big.NewInt(1 << 9)
+)
+
+type ActionModuleListItem struct {
+	// The unique ID of the module.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the module.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The source code from the module's draft version.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The npm dependencies from the module's draft version.
+	Dependencies []*ActionModuleDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The secrets from the module's draft version (names and timestamps only, values never returned).
+	Secrets []*ActionModuleSecret `json:"secrets,omitempty" url:"secrets,omitempty"`
+	// The number of deployed actions using this module.
+	ActionsUsingModuleTotal *int `json:"actions_using_module_total,omitempty" url:"actions_using_module_total,omitempty"`
+	// Whether all draft changes have been published as a version.
+	AllChangesPublished *bool `json:"all_changes_published,omitempty" url:"all_changes_published,omitempty"`
+	// The version number of the latest published version. Omitted if no versions have been published.
+	LatestVersionNumber *int `json:"latest_version_number,omitempty" url:"latest_version_number,omitempty"`
+	// Timestamp when the module was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp when the module was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionModuleListItem) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *ActionModuleListItem) GetName() string {
+	if a == nil || a.Name == nil {
+		return ""
+	}
+	return *a.Name
+}
+
+func (a *ActionModuleListItem) GetCode() string {
+	if a == nil || a.Code == nil {
+		return ""
+	}
+	return *a.Code
+}
+
+func (a *ActionModuleListItem) GetDependencies() []*ActionModuleDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return a.Dependencies
+}
+
+func (a *ActionModuleListItem) GetSecrets() []*ActionModuleSecret {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return a.Secrets
+}
+
+func (a *ActionModuleListItem) GetActionsUsingModuleTotal() int {
+	if a == nil || a.ActionsUsingModuleTotal == nil {
+		return 0
+	}
+	return *a.ActionsUsingModuleTotal
+}
+
+func (a *ActionModuleListItem) GetAllChangesPublished() bool {
+	if a == nil || a.AllChangesPublished == nil {
+		return false
+	}
+	return *a.AllChangesPublished
+}
+
+func (a *ActionModuleListItem) GetLatestVersionNumber() int {
+	if a == nil || a.LatestVersionNumber == nil {
+		return 0
+	}
+	return *a.LatestVersionNumber
+}
+
+func (a *ActionModuleListItem) GetCreatedAt() time.Time {
+	if a == nil || a.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *a.CreatedAt
+}
+
+func (a *ActionModuleListItem) GetUpdatedAt() time.Time {
+	if a == nil || a.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *a.UpdatedAt
+}
+
+func (a *ActionModuleListItem) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionModuleListItem) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetID(id *string) {
+	a.ID = id
+	a.require(actionModuleListItemFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetName(name *string) {
+	a.Name = name
+	a.require(actionModuleListItemFieldName)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetCode(code *string) {
+	a.Code = code
+	a.require(actionModuleListItemFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetDependencies(dependencies []*ActionModuleDependency) {
+	a.Dependencies = dependencies
+	a.require(actionModuleListItemFieldDependencies)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetSecrets(secrets []*ActionModuleSecret) {
+	a.Secrets = secrets
+	a.require(actionModuleListItemFieldSecrets)
+}
+
+// SetActionsUsingModuleTotal sets the ActionsUsingModuleTotal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetActionsUsingModuleTotal(actionsUsingModuleTotal *int) {
+	a.ActionsUsingModuleTotal = actionsUsingModuleTotal
+	a.require(actionModuleListItemFieldActionsUsingModuleTotal)
+}
+
+// SetAllChangesPublished sets the AllChangesPublished field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetAllChangesPublished(allChangesPublished *bool) {
+	a.AllChangesPublished = allChangesPublished
+	a.require(actionModuleListItemFieldAllChangesPublished)
+}
+
+// SetLatestVersionNumber sets the LatestVersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetLatestVersionNumber(latestVersionNumber *int) {
+	a.LatestVersionNumber = latestVersionNumber
+	a.require(actionModuleListItemFieldLatestVersionNumber)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetCreatedAt(createdAt *time.Time) {
+	a.CreatedAt = createdAt
+	a.require(actionModuleListItemFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleListItem) SetUpdatedAt(updatedAt *time.Time) {
+	a.UpdatedAt = updatedAt
+	a.require(actionModuleListItemFieldUpdatedAt)
+}
+
+func (a *ActionModuleListItem) UnmarshalJSON(data []byte) error {
+	type embed ActionModuleListItem
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionModuleListItem(unmarshaler.embed)
+	a.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	a.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionModuleListItem) MarshalJSON() ([]byte, error) {
+	type embed ActionModuleListItem
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		CreatedAt: internal.NewOptionalDateTime(a.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(a.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionModuleListItem) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Reference to a module and its version used by an action.
+var (
+	actionModuleReferenceFieldModuleID            = big.NewInt(1 << 0)
+	actionModuleReferenceFieldModuleName          = big.NewInt(1 << 1)
+	actionModuleReferenceFieldModuleVersionID     = big.NewInt(1 << 2)
+	actionModuleReferenceFieldModuleVersionNumber = big.NewInt(1 << 3)
+)
+
+type ActionModuleReference struct {
+	// The unique ID of the module.
+	ModuleID *string `json:"module_id,omitempty" url:"module_id,omitempty"`
+	// The name of the module.
+	ModuleName *string `json:"module_name,omitempty" url:"module_name,omitempty"`
+	// The ID of the specific module version.
+	ModuleVersionID *string `json:"module_version_id,omitempty" url:"module_version_id,omitempty"`
+	// The version number of the module.
+	ModuleVersionNumber *int `json:"module_version_number,omitempty" url:"module_version_number,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionModuleReference) GetModuleID() string {
+	if a == nil || a.ModuleID == nil {
+		return ""
+	}
+	return *a.ModuleID
+}
+
+func (a *ActionModuleReference) GetModuleName() string {
+	if a == nil || a.ModuleName == nil {
+		return ""
+	}
+	return *a.ModuleName
+}
+
+func (a *ActionModuleReference) GetModuleVersionID() string {
+	if a == nil || a.ModuleVersionID == nil {
+		return ""
+	}
+	return *a.ModuleVersionID
+}
+
+func (a *ActionModuleReference) GetModuleVersionNumber() int {
+	if a == nil || a.ModuleVersionNumber == nil {
+		return 0
+	}
+	return *a.ModuleVersionNumber
+}
+
+func (a *ActionModuleReference) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionModuleReference) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetModuleID sets the ModuleID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleReference) SetModuleID(moduleID *string) {
+	a.ModuleID = moduleID
+	a.require(actionModuleReferenceFieldModuleID)
+}
+
+// SetModuleName sets the ModuleName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleReference) SetModuleName(moduleName *string) {
+	a.ModuleName = moduleName
+	a.require(actionModuleReferenceFieldModuleName)
+}
+
+// SetModuleVersionID sets the ModuleVersionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleReference) SetModuleVersionID(moduleVersionID *string) {
+	a.ModuleVersionID = moduleVersionID
+	a.require(actionModuleReferenceFieldModuleVersionID)
+}
+
+// SetModuleVersionNumber sets the ModuleVersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleReference) SetModuleVersionNumber(moduleVersionNumber *int) {
+	a.ModuleVersionNumber = moduleVersionNumber
+	a.require(actionModuleReferenceFieldModuleVersionNumber)
+}
+
+func (a *ActionModuleReference) UnmarshalJSON(data []byte) error {
+	type unmarshaler ActionModuleReference
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActionModuleReference(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionModuleReference) MarshalJSON() ([]byte, error) {
+	type embed ActionModuleReference
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionModuleReference) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionModuleSecretFieldName      = big.NewInt(1 << 0)
+	actionModuleSecretFieldUpdatedAt = big.NewInt(1 << 1)
+)
+
+type ActionModuleSecret struct {
+	// The name of the secret.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The time when the secret was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionModuleSecret) GetName() string {
+	if a == nil || a.Name == nil {
+		return ""
+	}
+	return *a.Name
+}
+
+func (a *ActionModuleSecret) GetUpdatedAt() time.Time {
+	if a == nil || a.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *a.UpdatedAt
+}
+
+func (a *ActionModuleSecret) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionModuleSecret) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleSecret) SetName(name *string) {
+	a.Name = name
+	a.require(actionModuleSecretFieldName)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleSecret) SetUpdatedAt(updatedAt *time.Time) {
+	a.UpdatedAt = updatedAt
+	a.require(actionModuleSecretFieldUpdatedAt)
+}
+
+func (a *ActionModuleSecret) UnmarshalJSON(data []byte) error {
+	type embed ActionModuleSecret
+	var unmarshaler = struct {
+		embed
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionModuleSecret(unmarshaler.embed)
+	a.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionModuleSecret) MarshalJSON() ([]byte, error) {
+	type embed ActionModuleSecret
+	var marshaler = struct {
+		embed
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		UpdatedAt: internal.NewOptionalDateTime(a.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionModuleSecret) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionModuleSecretRequestFieldName  = big.NewInt(1 << 0)
+	actionModuleSecretRequestFieldValue = big.NewInt(1 << 1)
+)
+
+type ActionModuleSecretRequest struct {
+	// The name of the secret.
+	Name string `json:"name" url:"name"`
+	// The value of the secret.
+	Value string `json:"value" url:"value"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionModuleSecretRequest) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *ActionModuleSecretRequest) GetValue() string {
+	if a == nil {
+		return ""
+	}
+	return a.Value
+}
+
+func (a *ActionModuleSecretRequest) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionModuleSecretRequest) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleSecretRequest) SetName(name string) {
+	a.Name = name
+	a.require(actionModuleSecretRequestFieldName)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleSecretRequest) SetValue(value string) {
+	a.Value = value
+	a.require(actionModuleSecretRequestFieldValue)
+}
+
+func (a *ActionModuleSecretRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ActionModuleSecretRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActionModuleSecretRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionModuleSecretRequest) MarshalJSON() ([]byte, error) {
+	type embed ActionModuleSecretRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionModuleSecretRequest) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionModuleVersionFieldID            = big.NewInt(1 << 0)
+	actionModuleVersionFieldModuleID      = big.NewInt(1 << 1)
+	actionModuleVersionFieldVersionNumber = big.NewInt(1 << 2)
+	actionModuleVersionFieldCode          = big.NewInt(1 << 3)
+	actionModuleVersionFieldSecrets       = big.NewInt(1 << 4)
+	actionModuleVersionFieldDependencies  = big.NewInt(1 << 5)
+	actionModuleVersionFieldCreatedAt     = big.NewInt(1 << 6)
+)
+
+type ActionModuleVersion struct {
+	// The unique ID for this version.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The ID of the parent module.
+	ModuleID *string `json:"module_id,omitempty" url:"module_id,omitempty"`
+	// The sequential version number.
+	VersionNumber *int `json:"version_number,omitempty" url:"version_number,omitempty"`
+	// The exact source code that was published with this version.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// Secrets available to this version (name and updated_at only, values never returned).
+	Secrets []*ActionModuleSecret `json:"secrets,omitempty" url:"secrets,omitempty"`
+	// Dependencies locked to this version.
+	Dependencies []*ActionModuleDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The timestamp when this version was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionModuleVersion) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *ActionModuleVersion) GetModuleID() string {
+	if a == nil || a.ModuleID == nil {
+		return ""
+	}
+	return *a.ModuleID
+}
+
+func (a *ActionModuleVersion) GetVersionNumber() int {
+	if a == nil || a.VersionNumber == nil {
+		return 0
+	}
+	return *a.VersionNumber
+}
+
+func (a *ActionModuleVersion) GetCode() string {
+	if a == nil || a.Code == nil {
+		return ""
+	}
+	return *a.Code
+}
+
+func (a *ActionModuleVersion) GetSecrets() []*ActionModuleSecret {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return a.Secrets
+}
+
+func (a *ActionModuleVersion) GetDependencies() []*ActionModuleDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return a.Dependencies
+}
+
+func (a *ActionModuleVersion) GetCreatedAt() time.Time {
+	if a == nil || a.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *a.CreatedAt
+}
+
+func (a *ActionModuleVersion) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionModuleVersion) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersion) SetID(id *string) {
+	a.ID = id
+	a.require(actionModuleVersionFieldID)
+}
+
+// SetModuleID sets the ModuleID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersion) SetModuleID(moduleID *string) {
+	a.ModuleID = moduleID
+	a.require(actionModuleVersionFieldModuleID)
+}
+
+// SetVersionNumber sets the VersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersion) SetVersionNumber(versionNumber *int) {
+	a.VersionNumber = versionNumber
+	a.require(actionModuleVersionFieldVersionNumber)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersion) SetCode(code *string) {
+	a.Code = code
+	a.require(actionModuleVersionFieldCode)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersion) SetSecrets(secrets []*ActionModuleSecret) {
+	a.Secrets = secrets
+	a.require(actionModuleVersionFieldSecrets)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersion) SetDependencies(dependencies []*ActionModuleDependency) {
+	a.Dependencies = dependencies
+	a.require(actionModuleVersionFieldDependencies)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersion) SetCreatedAt(createdAt *time.Time) {
+	a.CreatedAt = createdAt
+	a.require(actionModuleVersionFieldCreatedAt)
+}
+
+func (a *ActionModuleVersion) UnmarshalJSON(data []byte) error {
+	type embed ActionModuleVersion
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionModuleVersion(unmarshaler.embed)
+	a.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionModuleVersion) MarshalJSON() ([]byte, error) {
+	type embed ActionModuleVersion
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		CreatedAt: internal.NewOptionalDateTime(a.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionModuleVersion) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// The latest published version as a reference object. Omitted if no versions have been published.
+var (
+	actionModuleVersionReferenceFieldID            = big.NewInt(1 << 0)
+	actionModuleVersionReferenceFieldVersionNumber = big.NewInt(1 << 1)
+	actionModuleVersionReferenceFieldCode          = big.NewInt(1 << 2)
+	actionModuleVersionReferenceFieldDependencies  = big.NewInt(1 << 3)
+	actionModuleVersionReferenceFieldSecrets       = big.NewInt(1 << 4)
+	actionModuleVersionReferenceFieldCreatedAt     = big.NewInt(1 << 5)
+)
+
+type ActionModuleVersionReference struct {
+	// The unique ID of the version.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The version number.
+	VersionNumber *int `json:"version_number,omitempty" url:"version_number,omitempty"`
+	// The source code from this version.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The npm dependencies from this version.
+	Dependencies []*ActionModuleDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The secrets from this version (names and timestamps only, values never returned).
+	Secrets []*ActionModuleSecret `json:"secrets,omitempty" url:"secrets,omitempty"`
+	// Timestamp when the version was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionModuleVersionReference) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *ActionModuleVersionReference) GetVersionNumber() int {
+	if a == nil || a.VersionNumber == nil {
+		return 0
+	}
+	return *a.VersionNumber
+}
+
+func (a *ActionModuleVersionReference) GetCode() string {
+	if a == nil || a.Code == nil {
+		return ""
+	}
+	return *a.Code
+}
+
+func (a *ActionModuleVersionReference) GetDependencies() []*ActionModuleDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return a.Dependencies
+}
+
+func (a *ActionModuleVersionReference) GetSecrets() []*ActionModuleSecret {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return a.Secrets
+}
+
+func (a *ActionModuleVersionReference) GetCreatedAt() time.Time {
+	if a == nil || a.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *a.CreatedAt
+}
+
+func (a *ActionModuleVersionReference) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionModuleVersionReference) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersionReference) SetID(id *string) {
+	a.ID = id
+	a.require(actionModuleVersionReferenceFieldID)
+}
+
+// SetVersionNumber sets the VersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersionReference) SetVersionNumber(versionNumber *int) {
+	a.VersionNumber = versionNumber
+	a.require(actionModuleVersionReferenceFieldVersionNumber)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersionReference) SetCode(code *string) {
+	a.Code = code
+	a.require(actionModuleVersionReferenceFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersionReference) SetDependencies(dependencies []*ActionModuleDependency) {
+	a.Dependencies = dependencies
+	a.require(actionModuleVersionReferenceFieldDependencies)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersionReference) SetSecrets(secrets []*ActionModuleSecret) {
+	a.Secrets = secrets
+	a.require(actionModuleVersionReferenceFieldSecrets)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionModuleVersionReference) SetCreatedAt(createdAt *time.Time) {
+	a.CreatedAt = createdAt
+	a.require(actionModuleVersionReferenceFieldCreatedAt)
+}
+
+func (a *ActionModuleVersionReference) UnmarshalJSON(data []byte) error {
+	type embed ActionModuleVersionReference
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionModuleVersionReference(unmarshaler.embed)
+	a.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionModuleVersionReference) MarshalJSON() ([]byte, error) {
+	type embed ActionModuleVersionReference
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		CreatedAt: internal.NewOptionalDateTime(a.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionModuleVersionReference) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionSecretRequestFieldName  = big.NewInt(1 << 0)
+	actionSecretRequestFieldValue = big.NewInt(1 << 1)
+)
+
+type ActionSecretRequest struct {
+	// The name of the particular secret, e.g. API_KEY.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The value of the particular secret, e.g. secret123. A secret's value can only be set upon creation. A secret's value will never be returned by the API.
+	Value *string `json:"value,omitempty" url:"value,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *ActionSecretRequest) GetName() string {
+	if a == nil || a.Name == nil {
+		return ""
+	}
+	return *a.Name
+}
+
+func (a *ActionSecretRequest) GetValue() string {
+	if a == nil || a.Value == nil {
+		return ""
+	}
+	return *a.Value
+}
+
+func (a *ActionSecretRequest) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.ExtraProperties
+}
+
+func (a *ActionSecretRequest) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionSecretRequest) SetName(name *string) {
+	a.Name = name
+	a.require(actionSecretRequestFieldName)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionSecretRequest) SetValue(value *string) {
+	a.Value = value
+	a.require(actionSecretRequestFieldValue)
+}
+
+func (a *ActionSecretRequest) UnmarshalJSON(data []byte) error {
+	type embed ActionSecretRequest
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionSecretRequest(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionSecretRequest) MarshalJSON() ([]byte, error) {
+	type embed ActionSecretRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *ActionSecretRequest) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionSecretResponseFieldName      = big.NewInt(1 << 0)
+	actionSecretResponseFieldUpdatedAt = big.NewInt(1 << 1)
+)
+
+type ActionSecretResponse struct {
+	// The name of the particular secret, e.g. API_KEY.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The time when the secret was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *ActionSecretResponse) GetName() string {
+	if a == nil || a.Name == nil {
+		return ""
+	}
+	return *a.Name
+}
+
+func (a *ActionSecretResponse) GetUpdatedAt() time.Time {
+	if a == nil || a.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *a.UpdatedAt
+}
+
+func (a *ActionSecretResponse) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.ExtraProperties
+}
+
+func (a *ActionSecretResponse) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionSecretResponse) SetName(name *string) {
+	a.Name = name
+	a.require(actionSecretResponseFieldName)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionSecretResponse) SetUpdatedAt(updatedAt *time.Time) {
+	a.UpdatedAt = updatedAt
+	a.require(actionSecretResponseFieldUpdatedAt)
+}
+
+func (a *ActionSecretResponse) UnmarshalJSON(data []byte) error {
+	type embed ActionSecretResponse
+	var unmarshaler = struct {
+		embed
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionSecretResponse(unmarshaler.embed)
+	a.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionSecretResponse) MarshalJSON() ([]byte, error) {
+	type embed ActionSecretResponse
+	var marshaler = struct {
+		embed
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		UpdatedAt: internal.NewOptionalDateTime(a.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *ActionSecretResponse) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionTriggerFieldID                 = big.NewInt(1 << 0)
+	actionTriggerFieldVersion            = big.NewInt(1 << 1)
+	actionTriggerFieldStatus             = big.NewInt(1 << 2)
+	actionTriggerFieldRuntimes           = big.NewInt(1 << 3)
+	actionTriggerFieldDefaultRuntime     = big.NewInt(1 << 4)
+	actionTriggerFieldCompatibleTriggers = big.NewInt(1 << 5)
+	actionTriggerFieldBindingPolicy      = big.NewInt(1 << 6)
+)
+
+type ActionTrigger struct {
+	ID ActionTriggerTypeEnum `json:"id" url:"id"`
+	// The version of a trigger. v1, v2, etc.
+	Version *string `json:"version,omitempty" url:"version,omitempty"`
+	// status points to the trigger status.
+	Status *string `json:"status,omitempty" url:"status,omitempty"`
+	// runtimes supported by this trigger.
+	Runtimes []string `json:"runtimes,omitempty" url:"runtimes,omitempty"`
+	// Runtime that will be used when none is specified when creating an action.
+	DefaultRuntime *string `json:"default_runtime,omitempty" url:"default_runtime,omitempty"`
+	// compatible_triggers informs which other trigger supports the same event and api.
+	CompatibleTriggers []*ActionTriggerCompatibleTrigger `json:"compatible_triggers,omitempty" url:"compatible_triggers,omitempty"`
+	BindingPolicy      *ActionBindingTypeEnum            `json:"binding_policy,omitempty" url:"binding_policy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionTrigger) GetID() ActionTriggerTypeEnum {
+	if a == nil {
+		return ""
+	}
+	return a.ID
+}
+
+func (a *ActionTrigger) GetVersion() string {
+	if a == nil || a.Version == nil {
+		return ""
+	}
+	return *a.Version
+}
+
+func (a *ActionTrigger) GetStatus() string {
+	if a == nil || a.Status == nil {
+		return ""
+	}
+	return *a.Status
+}
+
+func (a *ActionTrigger) GetRuntimes() []string {
+	if a == nil || a.Runtimes == nil {
+		return nil
+	}
+	return a.Runtimes
+}
+
+func (a *ActionTrigger) GetDefaultRuntime() string {
+	if a == nil || a.DefaultRuntime == nil {
+		return ""
+	}
+	return *a.DefaultRuntime
+}
+
+func (a *ActionTrigger) GetCompatibleTriggers() []*ActionTriggerCompatibleTrigger {
+	if a == nil || a.CompatibleTriggers == nil {
+		return nil
+	}
+	return a.CompatibleTriggers
+}
+
+func (a *ActionTrigger) GetBindingPolicy() ActionBindingTypeEnum {
+	if a == nil || a.BindingPolicy == nil {
+		return ""
+	}
+	return *a.BindingPolicy
+}
+
+func (a *ActionTrigger) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionTrigger) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionTrigger) SetID(id ActionTriggerTypeEnum) {
+	a.ID = id
+	a.require(actionTriggerFieldID)
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionTrigger) SetVersion(version *string) {
+	a.Version = version
+	a.require(actionTriggerFieldVersion)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionTrigger) SetStatus(status *string) {
+	a.Status = status
+	a.require(actionTriggerFieldStatus)
+}
+
+// SetRuntimes sets the Runtimes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionTrigger) SetRuntimes(runtimes []string) {
+	a.Runtimes = runtimes
+	a.require(actionTriggerFieldRuntimes)
+}
+
+// SetDefaultRuntime sets the DefaultRuntime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionTrigger) SetDefaultRuntime(defaultRuntime *string) {
+	a.DefaultRuntime = defaultRuntime
+	a.require(actionTriggerFieldDefaultRuntime)
+}
+
+// SetCompatibleTriggers sets the CompatibleTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionTrigger) SetCompatibleTriggers(compatibleTriggers []*ActionTriggerCompatibleTrigger) {
+	a.CompatibleTriggers = compatibleTriggers
+	a.require(actionTriggerFieldCompatibleTriggers)
+}
+
+// SetBindingPolicy sets the BindingPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionTrigger) SetBindingPolicy(bindingPolicy *ActionBindingTypeEnum) {
+	a.BindingPolicy = bindingPolicy
+	a.require(actionTriggerFieldBindingPolicy)
+}
+
+func (a *ActionTrigger) UnmarshalJSON(data []byte) error {
+	type unmarshaler ActionTrigger
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActionTrigger(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionTrigger) MarshalJSON() ([]byte, error) {
+	type embed ActionTrigger
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionTrigger) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	actionTriggerCompatibleTriggerFieldID      = big.NewInt(1 << 0)
+	actionTriggerCompatibleTriggerFieldVersion = big.NewInt(1 << 1)
+)
+
+type ActionTriggerCompatibleTrigger struct {
+	ID ActionTriggerTypeEnum `json:"id" url:"id"`
+	// The version of a trigger. v1, v2, etc.
+	Version string `json:"version" url:"version"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *ActionTriggerCompatibleTrigger) GetID() ActionTriggerTypeEnum {
+	if a == nil {
+		return ""
+	}
+	return a.ID
+}
+
+func (a *ActionTriggerCompatibleTrigger) GetVersion() string {
+	if a == nil {
+		return ""
+	}
+	return a.Version
+}
+
+func (a *ActionTriggerCompatibleTrigger) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.ExtraProperties
+}
+
+func (a *ActionTriggerCompatibleTrigger) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionTriggerCompatibleTrigger) SetID(id ActionTriggerTypeEnum) {
+	a.ID = id
+	a.require(actionTriggerCompatibleTriggerFieldID)
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionTriggerCompatibleTrigger) SetVersion(version string) {
+	a.Version = version
+	a.require(actionTriggerCompatibleTriggerFieldVersion)
+}
+
+func (a *ActionTriggerCompatibleTrigger) UnmarshalJSON(data []byte) error {
+	type embed ActionTriggerCompatibleTrigger
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionTriggerCompatibleTrigger(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionTriggerCompatibleTrigger) MarshalJSON() ([]byte, error) {
+	type embed ActionTriggerCompatibleTrigger
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *ActionTriggerCompatibleTrigger) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// An actions extensibility point.
+type ActionTriggerTypeEnum string
+
+const (
+	ActionTriggerTypeEnumPostLogin                  ActionTriggerTypeEnum = "post-login"
+	ActionTriggerTypeEnumCredentialsExchange        ActionTriggerTypeEnum = "credentials-exchange"
+	ActionTriggerTypeEnumPreUserRegistration        ActionTriggerTypeEnum = "pre-user-registration"
+	ActionTriggerTypeEnumPostUserRegistration       ActionTriggerTypeEnum = "post-user-registration"
+	ActionTriggerTypeEnumPostChangePassword         ActionTriggerTypeEnum = "post-change-password"
+	ActionTriggerTypeEnumSendPhoneMessage           ActionTriggerTypeEnum = "send-phone-message"
+	ActionTriggerTypeEnumCustomPhoneProvider        ActionTriggerTypeEnum = "custom-phone-provider"
+	ActionTriggerTypeEnumCustomEmailProvider        ActionTriggerTypeEnum = "custom-email-provider"
+	ActionTriggerTypeEnumPasswordResetPostChallenge ActionTriggerTypeEnum = "password-reset-post-challenge"
+	ActionTriggerTypeEnumCustomTokenExchange        ActionTriggerTypeEnum = "custom-token-exchange"
+	ActionTriggerTypeEnumEventStream                ActionTriggerTypeEnum = "event-stream"
+	ActionTriggerTypeEnumPasswordHashMigration      ActionTriggerTypeEnum = "password-hash-migration"
+	ActionTriggerTypeEnumLoginPostIdentifier        ActionTriggerTypeEnum = "login-post-identifier"
+	ActionTriggerTypeEnumSignupPostIdentifier       ActionTriggerTypeEnum = "signup-post-identifier"
+	ActionTriggerTypeEnumPostCredentialValidation   ActionTriggerTypeEnum = "post-credential-validation"
+)
+
+func NewActionTriggerTypeEnumFromString(s string) (ActionTriggerTypeEnum, error) {
+	switch s {
+	case "post-login":
+		return ActionTriggerTypeEnumPostLogin, nil
+	case "credentials-exchange":
+		return ActionTriggerTypeEnumCredentialsExchange, nil
+	case "pre-user-registration":
+		return ActionTriggerTypeEnumPreUserRegistration, nil
+	case "post-user-registration":
+		return ActionTriggerTypeEnumPostUserRegistration, nil
+	case "post-change-password":
+		return ActionTriggerTypeEnumPostChangePassword, nil
+	case "send-phone-message":
+		return ActionTriggerTypeEnumSendPhoneMessage, nil
+	case "custom-phone-provider":
+		return ActionTriggerTypeEnumCustomPhoneProvider, nil
+	case "custom-email-provider":
+		return ActionTriggerTypeEnumCustomEmailProvider, nil
+	case "password-reset-post-challenge":
+		return ActionTriggerTypeEnumPasswordResetPostChallenge, nil
+	case "custom-token-exchange":
+		return ActionTriggerTypeEnumCustomTokenExchange, nil
+	case "event-stream":
+		return ActionTriggerTypeEnumEventStream, nil
+	case "password-hash-migration":
+		return ActionTriggerTypeEnumPasswordHashMigration, nil
+	case "login-post-identifier":
+		return ActionTriggerTypeEnumLoginPostIdentifier, nil
+	case "signup-post-identifier":
+		return ActionTriggerTypeEnumSignupPostIdentifier, nil
+	case "post-credential-validation":
+		return ActionTriggerTypeEnumPostCredentialValidation, nil
+	}
+	var t ActionTriggerTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a ActionTriggerTypeEnum) Ptr() *ActionTriggerTypeEnum {
+	return &a
+}
+
+var (
+	actionVersionFieldID                = big.NewInt(1 << 0)
+	actionVersionFieldActionID          = big.NewInt(1 << 1)
+	actionVersionFieldCode              = big.NewInt(1 << 2)
+	actionVersionFieldDependencies      = big.NewInt(1 << 3)
+	actionVersionFieldDeployed          = big.NewInt(1 << 4)
+	actionVersionFieldRuntime           = big.NewInt(1 << 5)
+	actionVersionFieldSecrets           = big.NewInt(1 << 6)
+	actionVersionFieldStatus            = big.NewInt(1 << 7)
+	actionVersionFieldNumber            = big.NewInt(1 << 8)
+	actionVersionFieldErrors            = big.NewInt(1 << 9)
+	actionVersionFieldAction            = big.NewInt(1 << 10)
+	actionVersionFieldBuiltAt           = big.NewInt(1 << 11)
+	actionVersionFieldCreatedAt         = big.NewInt(1 << 12)
+	actionVersionFieldUpdatedAt         = big.NewInt(1 << 13)
+	actionVersionFieldSupportedTriggers = big.NewInt(1 << 14)
+	actionVersionFieldModules           = big.NewInt(1 << 15)
+)
+
+type ActionVersion struct {
+	// The unique id of an action version.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The id of the action to which this version belongs.
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	// The source code of this specific version of the action.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The list of third party npm modules, and their versions, that this specific version depends on.
+	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// Indicates if this specific version is the currently one deployed.
+	Deployed *bool `json:"deployed,omitempty" url:"deployed,omitempty"`
+	// The Node runtime. For example: `node22`
+	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
+	// The list of secrets that are included in an action or a version of an action.
+	Secrets []*ActionSecretResponse       `json:"secrets,omitempty" url:"secrets,omitempty"`
+	Status  *ActionVersionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	// The index of this version in list of versions for the action.
+	Number *float64 `json:"number,omitempty" url:"number,omitempty"`
+	// Any errors that occurred while the version was being built.
+	Errors []*ActionError `json:"errors,omitempty" url:"errors,omitempty"`
+	Action *ActionBase    `json:"action,omitempty" url:"action,omitempty"`
+	// The time when this version was built successfully.
+	BuiltAt *time.Time `json:"built_at,omitempty" url:"built_at,omitempty"`
+	// The time when this version was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The time when a version was updated. Versions are never updated externally. Only Auth0 will update an action version as it is being built.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// The list of triggers that this version supports. At this time, a version can only target a single trigger at a time.
+	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"supported_triggers,omitempty"`
+	// The list of action modules and their versions used by this action version.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"modules,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionVersion) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *ActionVersion) GetActionID() string {
+	if a == nil || a.ActionID == nil {
+		return ""
+	}
+	return *a.ActionID
+}
+
+func (a *ActionVersion) GetCode() string {
+	if a == nil || a.Code == nil {
+		return ""
+	}
+	return *a.Code
+}
+
+func (a *ActionVersion) GetDependencies() []*ActionVersionDependency {
+	if a == nil || a.Dependencies == nil {
+		return nil
+	}
+	return a.Dependencies
+}
+
+func (a *ActionVersion) GetDeployed() bool {
+	if a == nil || a.Deployed == nil {
+		return false
+	}
+	return *a.Deployed
+}
+
+func (a *ActionVersion) GetRuntime() string {
+	if a == nil || a.Runtime == nil {
+		return ""
+	}
+	return *a.Runtime
+}
+
+func (a *ActionVersion) GetSecrets() []*ActionSecretResponse {
+	if a == nil || a.Secrets == nil {
+		return nil
+	}
+	return a.Secrets
+}
+
+func (a *ActionVersion) GetStatus() ActionVersionBuildStatusEnum {
+	if a == nil || a.Status == nil {
+		return ""
+	}
+	return *a.Status
+}
+
+func (a *ActionVersion) GetNumber() float64 {
+	if a == nil || a.Number == nil {
+		return 0
+	}
+	return *a.Number
+}
+
+func (a *ActionVersion) GetErrors() []*ActionError {
+	if a == nil || a.Errors == nil {
+		return nil
+	}
+	return a.Errors
+}
+
+func (a *ActionVersion) GetAction() ActionBase {
+	if a == nil || a.Action == nil {
+		return ActionBase{}
+	}
+	return *a.Action
+}
+
+func (a *ActionVersion) GetBuiltAt() time.Time {
+	if a == nil || a.BuiltAt == nil {
+		return time.Time{}
+	}
+	return *a.BuiltAt
+}
+
+func (a *ActionVersion) GetCreatedAt() time.Time {
+	if a == nil || a.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *a.CreatedAt
+}
+
+func (a *ActionVersion) GetUpdatedAt() time.Time {
+	if a == nil || a.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *a.UpdatedAt
+}
+
+func (a *ActionVersion) GetSupportedTriggers() []*ActionTrigger {
+	if a == nil || a.SupportedTriggers == nil {
+		return nil
+	}
+	return a.SupportedTriggers
+}
+
+func (a *ActionVersion) GetModules() []*ActionModuleReference {
+	if a == nil || a.Modules == nil {
+		return nil
+	}
+	return a.Modules
+}
+
+func (a *ActionVersion) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionVersion) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetID(id *string) {
+	a.ID = id
+	a.require(actionVersionFieldID)
+}
+
+// SetActionID sets the ActionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetActionID(actionID *string) {
+	a.ActionID = actionID
+	a.require(actionVersionFieldActionID)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetCode(code *string) {
+	a.Code = code
+	a.require(actionVersionFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetDependencies(dependencies []*ActionVersionDependency) {
+	a.Dependencies = dependencies
+	a.require(actionVersionFieldDependencies)
+}
+
+// SetDeployed sets the Deployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetDeployed(deployed *bool) {
+	a.Deployed = deployed
+	a.require(actionVersionFieldDeployed)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetRuntime(runtime *string) {
+	a.Runtime = runtime
+	a.require(actionVersionFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetSecrets(secrets []*ActionSecretResponse) {
+	a.Secrets = secrets
+	a.require(actionVersionFieldSecrets)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetStatus(status *ActionVersionBuildStatusEnum) {
+	a.Status = status
+	a.require(actionVersionFieldStatus)
+}
+
+// SetNumber sets the Number field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetNumber(number *float64) {
+	a.Number = number
+	a.require(actionVersionFieldNumber)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetErrors(errors []*ActionError) {
+	a.Errors = errors
+	a.require(actionVersionFieldErrors)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetAction(action *ActionBase) {
+	a.Action = action
+	a.require(actionVersionFieldAction)
+}
+
+// SetBuiltAt sets the BuiltAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetBuiltAt(builtAt *time.Time) {
+	a.BuiltAt = builtAt
+	a.require(actionVersionFieldBuiltAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetCreatedAt(createdAt *time.Time) {
+	a.CreatedAt = createdAt
+	a.require(actionVersionFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetUpdatedAt(updatedAt *time.Time) {
+	a.UpdatedAt = updatedAt
+	a.require(actionVersionFieldUpdatedAt)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	a.SupportedTriggers = supportedTriggers
+	a.require(actionVersionFieldSupportedTriggers)
+}
+
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersion) SetModules(modules []*ActionModuleReference) {
+	a.Modules = modules
+	a.require(actionVersionFieldModules)
+}
+
+func (a *ActionVersion) UnmarshalJSON(data []byte) error {
+	type embed ActionVersion
+	var unmarshaler = struct {
+		embed
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = ActionVersion(unmarshaler.embed)
+	a.BuiltAt = unmarshaler.BuiltAt.TimePtr()
+	a.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	a.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionVersion) MarshalJSON() ([]byte, error) {
+	type embed ActionVersion
+	var marshaler = struct {
+		embed
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*a),
+		BuiltAt:   internal.NewOptionalDateTime(a.BuiltAt),
+		CreatedAt: internal.NewOptionalDateTime(a.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(a.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionVersion) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// The build status of this specific version.
+type ActionVersionBuildStatusEnum string
+
+const (
+	ActionVersionBuildStatusEnumPending  ActionVersionBuildStatusEnum = "pending"
+	ActionVersionBuildStatusEnumBuilding ActionVersionBuildStatusEnum = "building"
+	ActionVersionBuildStatusEnumPackaged ActionVersionBuildStatusEnum = "packaged"
+	ActionVersionBuildStatusEnumBuilt    ActionVersionBuildStatusEnum = "built"
+	ActionVersionBuildStatusEnumRetrying ActionVersionBuildStatusEnum = "retrying"
+	ActionVersionBuildStatusEnumFailed   ActionVersionBuildStatusEnum = "failed"
+)
+
+func NewActionVersionBuildStatusEnumFromString(s string) (ActionVersionBuildStatusEnum, error) {
+	switch s {
+	case "pending":
+		return ActionVersionBuildStatusEnumPending, nil
+	case "building":
+		return ActionVersionBuildStatusEnumBuilding, nil
+	case "packaged":
+		return ActionVersionBuildStatusEnumPackaged, nil
+	case "built":
+		return ActionVersionBuildStatusEnumBuilt, nil
+	case "retrying":
+		return ActionVersionBuildStatusEnumRetrying, nil
+	case "failed":
+		return ActionVersionBuildStatusEnumFailed, nil
+	}
+	var t ActionVersionBuildStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a ActionVersionBuildStatusEnum) Ptr() *ActionVersionBuildStatusEnum {
+	return &a
+}
+
+// Dependency is an npm module. These values are used to produce an immutable artifact, which manifests as a layer_id.
+var (
+	actionVersionDependencyFieldName        = big.NewInt(1 << 0)
+	actionVersionDependencyFieldVersion     = big.NewInt(1 << 1)
+	actionVersionDependencyFieldRegistryURL = big.NewInt(1 << 2)
+)
+
+type ActionVersionDependency struct {
+	// name is the name of the npm module, e.g. lodash
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// description is the version of the npm module, e.g. 4.17.1
+	Version *string `json:"version,omitempty" url:"version,omitempty"`
+	// registry_url is an optional value used primarily for private npm registries.
+	RegistryURL *string `json:"registry_url,omitempty" url:"registry_url,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *ActionVersionDependency) GetName() string {
+	if a == nil || a.Name == nil {
+		return ""
+	}
+	return *a.Name
+}
+
+func (a *ActionVersionDependency) GetVersion() string {
+	if a == nil || a.Version == nil {
+		return ""
+	}
+	return *a.Version
+}
+
+func (a *ActionVersionDependency) GetRegistryURL() string {
+	if a == nil || a.RegistryURL == nil {
+		return ""
+	}
+	return *a.RegistryURL
+}
+
+func (a *ActionVersionDependency) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *ActionVersionDependency) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersionDependency) SetName(name *string) {
+	a.Name = name
+	a.require(actionVersionDependencyFieldName)
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersionDependency) SetVersion(version *string) {
+	a.Version = version
+	a.require(actionVersionDependencyFieldVersion)
+}
+
+// SetRegistryURL sets the RegistryURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *ActionVersionDependency) SetRegistryURL(registryURL *string) {
+	a.RegistryURL = registryURL
+	a.require(actionVersionDependencyFieldRegistryURL)
+}
+
+func (a *ActionVersionDependency) UnmarshalJSON(data []byte) error {
+	type unmarshaler ActionVersionDependency
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = ActionVersionDependency(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *ActionVersionDependency) MarshalJSON() ([]byte, error) {
+	type embed ActionVersionDependency
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *ActionVersionDependency) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	createActionModuleResponseContentFieldID                      = big.NewInt(1 << 0)
+	createActionModuleResponseContentFieldName                    = big.NewInt(1 << 1)
+	createActionModuleResponseContentFieldCode                    = big.NewInt(1 << 2)
+	createActionModuleResponseContentFieldDependencies            = big.NewInt(1 << 3)
+	createActionModuleResponseContentFieldSecrets                 = big.NewInt(1 << 4)
+	createActionModuleResponseContentFieldActionsUsingModuleTotal = big.NewInt(1 << 5)
+	createActionModuleResponseContentFieldAllChangesPublished     = big.NewInt(1 << 6)
+	createActionModuleResponseContentFieldLatestVersionNumber     = big.NewInt(1 << 7)
+	createActionModuleResponseContentFieldCreatedAt               = big.NewInt(1 << 8)
+	createActionModuleResponseContentFieldUpdatedAt               = big.NewInt(1 << 9)
+	createActionModuleResponseContentFieldLatestVersion           = big.NewInt(1 << 10)
+)
+
+type CreateActionModuleResponseContent struct {
+	// The unique ID of the module.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the module.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The source code from the module's draft version.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The npm dependencies from the module's draft version.
+	Dependencies []*ActionModuleDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The secrets from the module's draft version (names and timestamps only, values never returned).
+	Secrets []*ActionModuleSecret `json:"secrets,omitempty" url:"secrets,omitempty"`
+	// The number of deployed actions using this module.
+	ActionsUsingModuleTotal *int `json:"actions_using_module_total,omitempty" url:"actions_using_module_total,omitempty"`
+	// Whether all draft changes have been published as a version.
+	AllChangesPublished *bool `json:"all_changes_published,omitempty" url:"all_changes_published,omitempty"`
+	// The version number of the latest published version. Omitted if no versions have been published.
+	LatestVersionNumber *int `json:"latest_version_number,omitempty" url:"latest_version_number,omitempty"`
+	// Timestamp when the module was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp when the module was last updated.
+	UpdatedAt     *time.Time                    `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	LatestVersion *ActionModuleVersionReference `json:"latest_version,omitempty" url:"latest_version,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateActionModuleResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+func (c *CreateActionModuleResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+func (c *CreateActionModuleResponseContent) GetCode() string {
+	if c == nil || c.Code == nil {
+		return ""
+	}
+	return *c.Code
+}
+
+func (c *CreateActionModuleResponseContent) GetDependencies() []*ActionModuleDependency {
+	if c == nil || c.Dependencies == nil {
+		return nil
+	}
+	return c.Dependencies
+}
+
+func (c *CreateActionModuleResponseContent) GetSecrets() []*ActionModuleSecret {
+	if c == nil || c.Secrets == nil {
+		return nil
+	}
+	return c.Secrets
+}
+
+func (c *CreateActionModuleResponseContent) GetActionsUsingModuleTotal() int {
+	if c == nil || c.ActionsUsingModuleTotal == nil {
+		return 0
+	}
+	return *c.ActionsUsingModuleTotal
+}
+
+func (c *CreateActionModuleResponseContent) GetAllChangesPublished() bool {
+	if c == nil || c.AllChangesPublished == nil {
+		return false
+	}
+	return *c.AllChangesPublished
+}
+
+func (c *CreateActionModuleResponseContent) GetLatestVersionNumber() int {
+	if c == nil || c.LatestVersionNumber == nil {
+		return 0
+	}
+	return *c.LatestVersionNumber
+}
+
+func (c *CreateActionModuleResponseContent) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *CreateActionModuleResponseContent) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *c.UpdatedAt
+}
+
+func (c *CreateActionModuleResponseContent) GetLatestVersion() ActionModuleVersionReference {
+	if c == nil || c.LatestVersion == nil {
+		return ActionModuleVersionReference{}
+	}
+	return *c.LatestVersion
+}
+
+func (c *CreateActionModuleResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateActionModuleResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createActionModuleResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createActionModuleResponseContentFieldName)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetCode(code *string) {
+	c.Code = code
+	c.require(createActionModuleResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetDependencies(dependencies []*ActionModuleDependency) {
+	c.Dependencies = dependencies
+	c.require(createActionModuleResponseContentFieldDependencies)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetSecrets(secrets []*ActionModuleSecret) {
+	c.Secrets = secrets
+	c.require(createActionModuleResponseContentFieldSecrets)
+}
+
+// SetActionsUsingModuleTotal sets the ActionsUsingModuleTotal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetActionsUsingModuleTotal(actionsUsingModuleTotal *int) {
+	c.ActionsUsingModuleTotal = actionsUsingModuleTotal
+	c.require(createActionModuleResponseContentFieldActionsUsingModuleTotal)
+}
+
+// SetAllChangesPublished sets the AllChangesPublished field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetAllChangesPublished(allChangesPublished *bool) {
+	c.AllChangesPublished = allChangesPublished
+	c.require(createActionModuleResponseContentFieldAllChangesPublished)
+}
+
+// SetLatestVersionNumber sets the LatestVersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetLatestVersionNumber(latestVersionNumber *int) {
+	c.LatestVersionNumber = latestVersionNumber
+	c.require(createActionModuleResponseContentFieldLatestVersionNumber)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createActionModuleResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createActionModuleResponseContentFieldUpdatedAt)
+}
+
+// SetLatestVersion sets the LatestVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleResponseContent) SetLatestVersion(latestVersion *ActionModuleVersionReference) {
+	c.LatestVersion = latestVersion
+	c.require(createActionModuleResponseContentFieldLatestVersion)
+}
+
+func (c *CreateActionModuleResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateActionModuleResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateActionModuleResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	c.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateActionModuleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateActionModuleResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(c.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateActionModuleResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createActionModuleVersionResponseContentFieldID            = big.NewInt(1 << 0)
+	createActionModuleVersionResponseContentFieldModuleID      = big.NewInt(1 << 1)
+	createActionModuleVersionResponseContentFieldVersionNumber = big.NewInt(1 << 2)
+	createActionModuleVersionResponseContentFieldCode          = big.NewInt(1 << 3)
+	createActionModuleVersionResponseContentFieldSecrets       = big.NewInt(1 << 4)
+	createActionModuleVersionResponseContentFieldDependencies  = big.NewInt(1 << 5)
+	createActionModuleVersionResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
+)
+
+type CreateActionModuleVersionResponseContent struct {
+	// The unique ID for this version.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The ID of the parent module.
+	ModuleID *string `json:"module_id,omitempty" url:"module_id,omitempty"`
+	// The sequential version number.
+	VersionNumber *int `json:"version_number,omitempty" url:"version_number,omitempty"`
+	// The exact source code that was published with this version.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// Secrets available to this version (name and updated_at only, values never returned).
+	Secrets []*ActionModuleSecret `json:"secrets,omitempty" url:"secrets,omitempty"`
+	// Dependencies locked to this version.
+	Dependencies []*ActionModuleDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The timestamp when this version was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateActionModuleVersionResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+func (c *CreateActionModuleVersionResponseContent) GetModuleID() string {
+	if c == nil || c.ModuleID == nil {
+		return ""
+	}
+	return *c.ModuleID
+}
+
+func (c *CreateActionModuleVersionResponseContent) GetVersionNumber() int {
+	if c == nil || c.VersionNumber == nil {
+		return 0
+	}
+	return *c.VersionNumber
+}
+
+func (c *CreateActionModuleVersionResponseContent) GetCode() string {
+	if c == nil || c.Code == nil {
+		return ""
+	}
+	return *c.Code
+}
+
+func (c *CreateActionModuleVersionResponseContent) GetSecrets() []*ActionModuleSecret {
+	if c == nil || c.Secrets == nil {
+		return nil
+	}
+	return c.Secrets
+}
+
+func (c *CreateActionModuleVersionResponseContent) GetDependencies() []*ActionModuleDependency {
+	if c == nil || c.Dependencies == nil {
+		return nil
+	}
+	return c.Dependencies
+}
+
+func (c *CreateActionModuleVersionResponseContent) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *CreateActionModuleVersionResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateActionModuleVersionResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleVersionResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createActionModuleVersionResponseContentFieldID)
+}
+
+// SetModuleID sets the ModuleID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleVersionResponseContent) SetModuleID(moduleID *string) {
+	c.ModuleID = moduleID
+	c.require(createActionModuleVersionResponseContentFieldModuleID)
+}
+
+// SetVersionNumber sets the VersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleVersionResponseContent) SetVersionNumber(versionNumber *int) {
+	c.VersionNumber = versionNumber
+	c.require(createActionModuleVersionResponseContentFieldVersionNumber)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleVersionResponseContent) SetCode(code *string) {
+	c.Code = code
+	c.require(createActionModuleVersionResponseContentFieldCode)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleVersionResponseContent) SetSecrets(secrets []*ActionModuleSecret) {
+	c.Secrets = secrets
+	c.require(createActionModuleVersionResponseContentFieldSecrets)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleVersionResponseContent) SetDependencies(dependencies []*ActionModuleDependency) {
+	c.Dependencies = dependencies
+	c.require(createActionModuleVersionResponseContentFieldDependencies)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleVersionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createActionModuleVersionResponseContentFieldCreatedAt)
+}
+
+func (c *CreateActionModuleVersionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateActionModuleVersionResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateActionModuleVersionResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateActionModuleVersionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateActionModuleVersionResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateActionModuleVersionResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
 	createActionResponseContentFieldID                     = big.NewInt(1 << 0)
 	createActionResponseContentFieldName                   = big.NewInt(1 << 1)
 	createActionResponseContentFieldSupportedTriggers      = big.NewInt(1 << 2)
@@ -735,6 +5304,1494 @@ func (d *DeployActionResponseContent) String() string {
 }
 
 var (
+	deployActionVersionRequestContentFieldUpdateDraft = big.NewInt(1 << 0)
+)
+
+type DeployActionVersionRequestContent struct {
+	// True if the draft of the action should be updated with the reverted version.
+	UpdateDraft *bool `json:"update_draft,omitempty" url:"update_draft,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (d *DeployActionVersionRequestContent) GetUpdateDraft() bool {
+	if d == nil || d.UpdateDraft == nil {
+		return false
+	}
+	return *d.UpdateDraft
+}
+
+func (d *DeployActionVersionRequestContent) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DeployActionVersionRequestContent) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetUpdateDraft sets the UpdateDraft field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionRequestContent) SetUpdateDraft(updateDraft *bool) {
+	d.UpdateDraft = updateDraft
+	d.require(deployActionVersionRequestContentFieldUpdateDraft)
+}
+
+func (d *DeployActionVersionRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeployActionVersionRequestContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DeployActionVersionRequestContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DeployActionVersionRequestContent) MarshalJSON() ([]byte, error) {
+	type embed DeployActionVersionRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (d *DeployActionVersionRequestContent) String() string {
+	if d == nil {
+		return "<nil>"
+	}
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
+var (
+	deployActionVersionResponseContentFieldID                = big.NewInt(1 << 0)
+	deployActionVersionResponseContentFieldActionID          = big.NewInt(1 << 1)
+	deployActionVersionResponseContentFieldCode              = big.NewInt(1 << 2)
+	deployActionVersionResponseContentFieldDependencies      = big.NewInt(1 << 3)
+	deployActionVersionResponseContentFieldDeployed          = big.NewInt(1 << 4)
+	deployActionVersionResponseContentFieldRuntime           = big.NewInt(1 << 5)
+	deployActionVersionResponseContentFieldSecrets           = big.NewInt(1 << 6)
+	deployActionVersionResponseContentFieldStatus            = big.NewInt(1 << 7)
+	deployActionVersionResponseContentFieldNumber            = big.NewInt(1 << 8)
+	deployActionVersionResponseContentFieldErrors            = big.NewInt(1 << 9)
+	deployActionVersionResponseContentFieldAction            = big.NewInt(1 << 10)
+	deployActionVersionResponseContentFieldBuiltAt           = big.NewInt(1 << 11)
+	deployActionVersionResponseContentFieldCreatedAt         = big.NewInt(1 << 12)
+	deployActionVersionResponseContentFieldUpdatedAt         = big.NewInt(1 << 13)
+	deployActionVersionResponseContentFieldSupportedTriggers = big.NewInt(1 << 14)
+	deployActionVersionResponseContentFieldModules           = big.NewInt(1 << 15)
+)
+
+type DeployActionVersionResponseContent struct {
+	// The unique id of an action version.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The id of the action to which this version belongs.
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	// The source code of this specific version of the action.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The list of third party npm modules, and their versions, that this specific version depends on.
+	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// Indicates if this specific version is the currently one deployed.
+	Deployed *bool `json:"deployed,omitempty" url:"deployed,omitempty"`
+	// The Node runtime. For example: `node22`
+	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
+	// The list of secrets that are included in an action or a version of an action.
+	Secrets []*ActionSecretResponse       `json:"secrets,omitempty" url:"secrets,omitempty"`
+	Status  *ActionVersionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	// The index of this version in list of versions for the action.
+	Number *float64 `json:"number,omitempty" url:"number,omitempty"`
+	// Any errors that occurred while the version was being built.
+	Errors []*ActionError `json:"errors,omitempty" url:"errors,omitempty"`
+	Action *ActionBase    `json:"action,omitempty" url:"action,omitempty"`
+	// The time when this version was built successfully.
+	BuiltAt *time.Time `json:"built_at,omitempty" url:"built_at,omitempty"`
+	// The time when this version was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The time when a version was updated. Versions are never updated externally. Only Auth0 will update an action version as it is being built.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// The list of triggers that this version supports. At this time, a version can only target a single trigger at a time.
+	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"supported_triggers,omitempty"`
+	// The list of action modules and their versions used by this action version.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"modules,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (d *DeployActionVersionResponseContent) GetID() string {
+	if d == nil || d.ID == nil {
+		return ""
+	}
+	return *d.ID
+}
+
+func (d *DeployActionVersionResponseContent) GetActionID() string {
+	if d == nil || d.ActionID == nil {
+		return ""
+	}
+	return *d.ActionID
+}
+
+func (d *DeployActionVersionResponseContent) GetCode() string {
+	if d == nil || d.Code == nil {
+		return ""
+	}
+	return *d.Code
+}
+
+func (d *DeployActionVersionResponseContent) GetDependencies() []*ActionVersionDependency {
+	if d == nil || d.Dependencies == nil {
+		return nil
+	}
+	return d.Dependencies
+}
+
+func (d *DeployActionVersionResponseContent) GetDeployed() bool {
+	if d == nil || d.Deployed == nil {
+		return false
+	}
+	return *d.Deployed
+}
+
+func (d *DeployActionVersionResponseContent) GetRuntime() string {
+	if d == nil || d.Runtime == nil {
+		return ""
+	}
+	return *d.Runtime
+}
+
+func (d *DeployActionVersionResponseContent) GetSecrets() []*ActionSecretResponse {
+	if d == nil || d.Secrets == nil {
+		return nil
+	}
+	return d.Secrets
+}
+
+func (d *DeployActionVersionResponseContent) GetStatus() ActionVersionBuildStatusEnum {
+	if d == nil || d.Status == nil {
+		return ""
+	}
+	return *d.Status
+}
+
+func (d *DeployActionVersionResponseContent) GetNumber() float64 {
+	if d == nil || d.Number == nil {
+		return 0
+	}
+	return *d.Number
+}
+
+func (d *DeployActionVersionResponseContent) GetErrors() []*ActionError {
+	if d == nil || d.Errors == nil {
+		return nil
+	}
+	return d.Errors
+}
+
+func (d *DeployActionVersionResponseContent) GetAction() ActionBase {
+	if d == nil || d.Action == nil {
+		return ActionBase{}
+	}
+	return *d.Action
+}
+
+func (d *DeployActionVersionResponseContent) GetBuiltAt() time.Time {
+	if d == nil || d.BuiltAt == nil {
+		return time.Time{}
+	}
+	return *d.BuiltAt
+}
+
+func (d *DeployActionVersionResponseContent) GetCreatedAt() time.Time {
+	if d == nil || d.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *d.CreatedAt
+}
+
+func (d *DeployActionVersionResponseContent) GetUpdatedAt() time.Time {
+	if d == nil || d.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *d.UpdatedAt
+}
+
+func (d *DeployActionVersionResponseContent) GetSupportedTriggers() []*ActionTrigger {
+	if d == nil || d.SupportedTriggers == nil {
+		return nil
+	}
+	return d.SupportedTriggers
+}
+
+func (d *DeployActionVersionResponseContent) GetModules() []*ActionModuleReference {
+	if d == nil || d.Modules == nil {
+		return nil
+	}
+	return d.Modules
+}
+
+func (d *DeployActionVersionResponseContent) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DeployActionVersionResponseContent) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetID(id *string) {
+	d.ID = id
+	d.require(deployActionVersionResponseContentFieldID)
+}
+
+// SetActionID sets the ActionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetActionID(actionID *string) {
+	d.ActionID = actionID
+	d.require(deployActionVersionResponseContentFieldActionID)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetCode(code *string) {
+	d.Code = code
+	d.require(deployActionVersionResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetDependencies(dependencies []*ActionVersionDependency) {
+	d.Dependencies = dependencies
+	d.require(deployActionVersionResponseContentFieldDependencies)
+}
+
+// SetDeployed sets the Deployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetDeployed(deployed *bool) {
+	d.Deployed = deployed
+	d.require(deployActionVersionResponseContentFieldDeployed)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetRuntime(runtime *string) {
+	d.Runtime = runtime
+	d.require(deployActionVersionResponseContentFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetSecrets(secrets []*ActionSecretResponse) {
+	d.Secrets = secrets
+	d.require(deployActionVersionResponseContentFieldSecrets)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetStatus(status *ActionVersionBuildStatusEnum) {
+	d.Status = status
+	d.require(deployActionVersionResponseContentFieldStatus)
+}
+
+// SetNumber sets the Number field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetNumber(number *float64) {
+	d.Number = number
+	d.require(deployActionVersionResponseContentFieldNumber)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetErrors(errors []*ActionError) {
+	d.Errors = errors
+	d.require(deployActionVersionResponseContentFieldErrors)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetAction(action *ActionBase) {
+	d.Action = action
+	d.require(deployActionVersionResponseContentFieldAction)
+}
+
+// SetBuiltAt sets the BuiltAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetBuiltAt(builtAt *time.Time) {
+	d.BuiltAt = builtAt
+	d.require(deployActionVersionResponseContentFieldBuiltAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	d.CreatedAt = createdAt
+	d.require(deployActionVersionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	d.UpdatedAt = updatedAt
+	d.require(deployActionVersionResponseContentFieldUpdatedAt)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	d.SupportedTriggers = supportedTriggers
+	d.require(deployActionVersionResponseContentFieldSupportedTriggers)
+}
+
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeployActionVersionResponseContent) SetModules(modules []*ActionModuleReference) {
+	d.Modules = modules
+	d.require(deployActionVersionResponseContentFieldModules)
+}
+
+func (d *DeployActionVersionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed DeployActionVersionResponseContent
+	var unmarshaler = struct {
+		embed
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*d),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*d = DeployActionVersionResponseContent(unmarshaler.embed)
+	d.BuiltAt = unmarshaler.BuiltAt.TimePtr()
+	d.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	d.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DeployActionVersionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed DeployActionVersionResponseContent
+	var marshaler = struct {
+		embed
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*d),
+		BuiltAt:   internal.NewOptionalDateTime(d.BuiltAt),
+		CreatedAt: internal.NewOptionalDateTime(d.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(d.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (d *DeployActionVersionResponseContent) String() string {
+	if d == nil {
+		return "<nil>"
+	}
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
+// The result of a specific execution of a trigger.
+var (
+	getActionExecutionResponseContentFieldID        = big.NewInt(1 << 0)
+	getActionExecutionResponseContentFieldTriggerID = big.NewInt(1 << 1)
+	getActionExecutionResponseContentFieldStatus    = big.NewInt(1 << 2)
+	getActionExecutionResponseContentFieldResults   = big.NewInt(1 << 3)
+	getActionExecutionResponseContentFieldCreatedAt = big.NewInt(1 << 4)
+	getActionExecutionResponseContentFieldUpdatedAt = big.NewInt(1 << 5)
+)
+
+type GetActionExecutionResponseContent struct {
+	// ID identifies this specific execution simulation. These IDs would resemble real executions in production.
+	ID        *string                    `json:"id,omitempty" url:"id,omitempty"`
+	TriggerID *ActionTriggerTypeEnum     `json:"trigger_id,omitempty" url:"trigger_id,omitempty"`
+	Status    *ActionExecutionStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	Results   []*ActionExecutionResult   `json:"results,omitempty" url:"results,omitempty"`
+	// The time that the execution was started.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The time that the exeution finished executing.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetActionExecutionResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GetActionExecutionResponseContent) GetTriggerID() ActionTriggerTypeEnum {
+	if g == nil || g.TriggerID == nil {
+		return ""
+	}
+	return *g.TriggerID
+}
+
+func (g *GetActionExecutionResponseContent) GetStatus() ActionExecutionStatusEnum {
+	if g == nil || g.Status == nil {
+		return ""
+	}
+	return *g.Status
+}
+
+func (g *GetActionExecutionResponseContent) GetResults() []*ActionExecutionResult {
+	if g == nil || g.Results == nil {
+		return nil
+	}
+	return g.Results
+}
+
+func (g *GetActionExecutionResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *g.CreatedAt
+}
+
+func (g *GetActionExecutionResponseContent) GetUpdatedAt() time.Time {
+	if g == nil || g.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *g.UpdatedAt
+}
+
+func (g *GetActionExecutionResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetActionExecutionResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionExecutionResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getActionExecutionResponseContentFieldID)
+}
+
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionExecutionResponseContent) SetTriggerID(triggerID *ActionTriggerTypeEnum) {
+	g.TriggerID = triggerID
+	g.require(getActionExecutionResponseContentFieldTriggerID)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionExecutionResponseContent) SetStatus(status *ActionExecutionStatusEnum) {
+	g.Status = status
+	g.require(getActionExecutionResponseContentFieldStatus)
+}
+
+// SetResults sets the Results field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionExecutionResponseContent) SetResults(results []*ActionExecutionResult) {
+	g.Results = results
+	g.require(getActionExecutionResponseContentFieldResults)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionExecutionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getActionExecutionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionExecutionResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getActionExecutionResponseContentFieldUpdatedAt)
+}
+
+func (g *GetActionExecutionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetActionExecutionResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetActionExecutionResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	g.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetActionExecutionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetActionExecutionResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetActionExecutionResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getActionModuleActionsResponseContentFieldActions = big.NewInt(1 << 0)
+	getActionModuleActionsResponseContentFieldTotal   = big.NewInt(1 << 1)
+	getActionModuleActionsResponseContentFieldPage    = big.NewInt(1 << 2)
+	getActionModuleActionsResponseContentFieldPerPage = big.NewInt(1 << 3)
+)
+
+type GetActionModuleActionsResponseContent struct {
+	// A list of action references.
+	Actions []*ActionModuleAction `json:"actions,omitempty" url:"actions,omitempty"`
+	// The total number of actions using this module.
+	Total *int `json:"total,omitempty" url:"total,omitempty"`
+	// The page index of the returned results.
+	Page *int `json:"page,omitempty" url:"page,omitempty"`
+	// The number of results requested per page.
+	PerPage *int `json:"per_page,omitempty" url:"per_page,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetActionModuleActionsResponseContent) GetActions() []*ActionModuleAction {
+	if g == nil || g.Actions == nil {
+		return nil
+	}
+	return g.Actions
+}
+
+func (g *GetActionModuleActionsResponseContent) GetTotal() int {
+	if g == nil || g.Total == nil {
+		return 0
+	}
+	return *g.Total
+}
+
+func (g *GetActionModuleActionsResponseContent) GetPage() int {
+	if g == nil || g.Page == nil {
+		return 0
+	}
+	return *g.Page
+}
+
+func (g *GetActionModuleActionsResponseContent) GetPerPage() int {
+	if g == nil || g.PerPage == nil {
+		return 0
+	}
+	return *g.PerPage
+}
+
+func (g *GetActionModuleActionsResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetActionModuleActionsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetActions sets the Actions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleActionsResponseContent) SetActions(actions []*ActionModuleAction) {
+	g.Actions = actions
+	g.require(getActionModuleActionsResponseContentFieldActions)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleActionsResponseContent) SetTotal(total *int) {
+	g.Total = total
+	g.require(getActionModuleActionsResponseContentFieldTotal)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleActionsResponseContent) SetPage(page *int) {
+	g.Page = page
+	g.require(getActionModuleActionsResponseContentFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleActionsResponseContent) SetPerPage(perPage *int) {
+	g.PerPage = perPage
+	g.require(getActionModuleActionsResponseContentFieldPerPage)
+}
+
+func (g *GetActionModuleActionsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetActionModuleActionsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetActionModuleActionsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetActionModuleActionsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetActionModuleActionsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetActionModuleActionsResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getActionModuleResponseContentFieldID                      = big.NewInt(1 << 0)
+	getActionModuleResponseContentFieldName                    = big.NewInt(1 << 1)
+	getActionModuleResponseContentFieldCode                    = big.NewInt(1 << 2)
+	getActionModuleResponseContentFieldDependencies            = big.NewInt(1 << 3)
+	getActionModuleResponseContentFieldSecrets                 = big.NewInt(1 << 4)
+	getActionModuleResponseContentFieldActionsUsingModuleTotal = big.NewInt(1 << 5)
+	getActionModuleResponseContentFieldAllChangesPublished     = big.NewInt(1 << 6)
+	getActionModuleResponseContentFieldLatestVersionNumber     = big.NewInt(1 << 7)
+	getActionModuleResponseContentFieldCreatedAt               = big.NewInt(1 << 8)
+	getActionModuleResponseContentFieldUpdatedAt               = big.NewInt(1 << 9)
+	getActionModuleResponseContentFieldLatestVersion           = big.NewInt(1 << 10)
+)
+
+type GetActionModuleResponseContent struct {
+	// The unique ID of the module.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the module.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The source code from the module's draft version.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The npm dependencies from the module's draft version.
+	Dependencies []*ActionModuleDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The secrets from the module's draft version (names and timestamps only, values never returned).
+	Secrets []*ActionModuleSecret `json:"secrets,omitempty" url:"secrets,omitempty"`
+	// The number of deployed actions using this module.
+	ActionsUsingModuleTotal *int `json:"actions_using_module_total,omitempty" url:"actions_using_module_total,omitempty"`
+	// Whether all draft changes have been published as a version.
+	AllChangesPublished *bool `json:"all_changes_published,omitempty" url:"all_changes_published,omitempty"`
+	// The version number of the latest published version. Omitted if no versions have been published.
+	LatestVersionNumber *int `json:"latest_version_number,omitempty" url:"latest_version_number,omitempty"`
+	// Timestamp when the module was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp when the module was last updated.
+	UpdatedAt     *time.Time                    `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	LatestVersion *ActionModuleVersionReference `json:"latest_version,omitempty" url:"latest_version,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetActionModuleResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GetActionModuleResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
+	}
+	return *g.Name
+}
+
+func (g *GetActionModuleResponseContent) GetCode() string {
+	if g == nil || g.Code == nil {
+		return ""
+	}
+	return *g.Code
+}
+
+func (g *GetActionModuleResponseContent) GetDependencies() []*ActionModuleDependency {
+	if g == nil || g.Dependencies == nil {
+		return nil
+	}
+	return g.Dependencies
+}
+
+func (g *GetActionModuleResponseContent) GetSecrets() []*ActionModuleSecret {
+	if g == nil || g.Secrets == nil {
+		return nil
+	}
+	return g.Secrets
+}
+
+func (g *GetActionModuleResponseContent) GetActionsUsingModuleTotal() int {
+	if g == nil || g.ActionsUsingModuleTotal == nil {
+		return 0
+	}
+	return *g.ActionsUsingModuleTotal
+}
+
+func (g *GetActionModuleResponseContent) GetAllChangesPublished() bool {
+	if g == nil || g.AllChangesPublished == nil {
+		return false
+	}
+	return *g.AllChangesPublished
+}
+
+func (g *GetActionModuleResponseContent) GetLatestVersionNumber() int {
+	if g == nil || g.LatestVersionNumber == nil {
+		return 0
+	}
+	return *g.LatestVersionNumber
+}
+
+func (g *GetActionModuleResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *g.CreatedAt
+}
+
+func (g *GetActionModuleResponseContent) GetUpdatedAt() time.Time {
+	if g == nil || g.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *g.UpdatedAt
+}
+
+func (g *GetActionModuleResponseContent) GetLatestVersion() ActionModuleVersionReference {
+	if g == nil || g.LatestVersion == nil {
+		return ActionModuleVersionReference{}
+	}
+	return *g.LatestVersion
+}
+
+func (g *GetActionModuleResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetActionModuleResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getActionModuleResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getActionModuleResponseContentFieldName)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetCode(code *string) {
+	g.Code = code
+	g.require(getActionModuleResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetDependencies(dependencies []*ActionModuleDependency) {
+	g.Dependencies = dependencies
+	g.require(getActionModuleResponseContentFieldDependencies)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetSecrets(secrets []*ActionModuleSecret) {
+	g.Secrets = secrets
+	g.require(getActionModuleResponseContentFieldSecrets)
+}
+
+// SetActionsUsingModuleTotal sets the ActionsUsingModuleTotal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetActionsUsingModuleTotal(actionsUsingModuleTotal *int) {
+	g.ActionsUsingModuleTotal = actionsUsingModuleTotal
+	g.require(getActionModuleResponseContentFieldActionsUsingModuleTotal)
+}
+
+// SetAllChangesPublished sets the AllChangesPublished field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetAllChangesPublished(allChangesPublished *bool) {
+	g.AllChangesPublished = allChangesPublished
+	g.require(getActionModuleResponseContentFieldAllChangesPublished)
+}
+
+// SetLatestVersionNumber sets the LatestVersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetLatestVersionNumber(latestVersionNumber *int) {
+	g.LatestVersionNumber = latestVersionNumber
+	g.require(getActionModuleResponseContentFieldLatestVersionNumber)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getActionModuleResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getActionModuleResponseContentFieldUpdatedAt)
+}
+
+// SetLatestVersion sets the LatestVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleResponseContent) SetLatestVersion(latestVersion *ActionModuleVersionReference) {
+	g.LatestVersion = latestVersion
+	g.require(getActionModuleResponseContentFieldLatestVersion)
+}
+
+func (g *GetActionModuleResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetActionModuleResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetActionModuleResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	g.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetActionModuleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetActionModuleResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetActionModuleResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getActionModuleVersionResponseContentFieldID            = big.NewInt(1 << 0)
+	getActionModuleVersionResponseContentFieldModuleID      = big.NewInt(1 << 1)
+	getActionModuleVersionResponseContentFieldVersionNumber = big.NewInt(1 << 2)
+	getActionModuleVersionResponseContentFieldCode          = big.NewInt(1 << 3)
+	getActionModuleVersionResponseContentFieldSecrets       = big.NewInt(1 << 4)
+	getActionModuleVersionResponseContentFieldDependencies  = big.NewInt(1 << 5)
+	getActionModuleVersionResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
+)
+
+type GetActionModuleVersionResponseContent struct {
+	// The unique ID for this version.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The ID of the parent module.
+	ModuleID *string `json:"module_id,omitempty" url:"module_id,omitempty"`
+	// The sequential version number.
+	VersionNumber *int `json:"version_number,omitempty" url:"version_number,omitempty"`
+	// The exact source code that was published with this version.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// Secrets available to this version (name and updated_at only, values never returned).
+	Secrets []*ActionModuleSecret `json:"secrets,omitempty" url:"secrets,omitempty"`
+	// Dependencies locked to this version.
+	Dependencies []*ActionModuleDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The timestamp when this version was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetActionModuleVersionResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GetActionModuleVersionResponseContent) GetModuleID() string {
+	if g == nil || g.ModuleID == nil {
+		return ""
+	}
+	return *g.ModuleID
+}
+
+func (g *GetActionModuleVersionResponseContent) GetVersionNumber() int {
+	if g == nil || g.VersionNumber == nil {
+		return 0
+	}
+	return *g.VersionNumber
+}
+
+func (g *GetActionModuleVersionResponseContent) GetCode() string {
+	if g == nil || g.Code == nil {
+		return ""
+	}
+	return *g.Code
+}
+
+func (g *GetActionModuleVersionResponseContent) GetSecrets() []*ActionModuleSecret {
+	if g == nil || g.Secrets == nil {
+		return nil
+	}
+	return g.Secrets
+}
+
+func (g *GetActionModuleVersionResponseContent) GetDependencies() []*ActionModuleDependency {
+	if g == nil || g.Dependencies == nil {
+		return nil
+	}
+	return g.Dependencies
+}
+
+func (g *GetActionModuleVersionResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *g.CreatedAt
+}
+
+func (g *GetActionModuleVersionResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetActionModuleVersionResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getActionModuleVersionResponseContentFieldID)
+}
+
+// SetModuleID sets the ModuleID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionResponseContent) SetModuleID(moduleID *string) {
+	g.ModuleID = moduleID
+	g.require(getActionModuleVersionResponseContentFieldModuleID)
+}
+
+// SetVersionNumber sets the VersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionResponseContent) SetVersionNumber(versionNumber *int) {
+	g.VersionNumber = versionNumber
+	g.require(getActionModuleVersionResponseContentFieldVersionNumber)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionResponseContent) SetCode(code *string) {
+	g.Code = code
+	g.require(getActionModuleVersionResponseContentFieldCode)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionResponseContent) SetSecrets(secrets []*ActionModuleSecret) {
+	g.Secrets = secrets
+	g.require(getActionModuleVersionResponseContentFieldSecrets)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionResponseContent) SetDependencies(dependencies []*ActionModuleDependency) {
+	g.Dependencies = dependencies
+	g.require(getActionModuleVersionResponseContentFieldDependencies)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getActionModuleVersionResponseContentFieldCreatedAt)
+}
+
+func (g *GetActionModuleVersionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetActionModuleVersionResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetActionModuleVersionResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetActionModuleVersionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetActionModuleVersionResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetActionModuleVersionResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getActionModuleVersionsResponseContentFieldVersions = big.NewInt(1 << 0)
+	getActionModuleVersionsResponseContentFieldTotal    = big.NewInt(1 << 1)
+	getActionModuleVersionsResponseContentFieldPage     = big.NewInt(1 << 2)
+	getActionModuleVersionsResponseContentFieldPerPage  = big.NewInt(1 << 3)
+)
+
+type GetActionModuleVersionsResponseContent struct {
+	// A list of ActionsModuleVersion objects.
+	Versions []*ActionModuleVersion `json:"versions,omitempty" url:"versions,omitempty"`
+	// The total number of versions for this module.
+	Total *int `json:"total,omitempty" url:"total,omitempty"`
+	// The page index of the returned results.
+	Page *int `json:"page,omitempty" url:"page,omitempty"`
+	// The number of results requested per page.
+	PerPage *int `json:"per_page,omitempty" url:"per_page,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetActionModuleVersionsResponseContent) GetVersions() []*ActionModuleVersion {
+	if g == nil || g.Versions == nil {
+		return nil
+	}
+	return g.Versions
+}
+
+func (g *GetActionModuleVersionsResponseContent) GetTotal() int {
+	if g == nil || g.Total == nil {
+		return 0
+	}
+	return *g.Total
+}
+
+func (g *GetActionModuleVersionsResponseContent) GetPage() int {
+	if g == nil || g.Page == nil {
+		return 0
+	}
+	return *g.Page
+}
+
+func (g *GetActionModuleVersionsResponseContent) GetPerPage() int {
+	if g == nil || g.PerPage == nil {
+		return 0
+	}
+	return *g.PerPage
+}
+
+func (g *GetActionModuleVersionsResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetActionModuleVersionsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetVersions sets the Versions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionsResponseContent) SetVersions(versions []*ActionModuleVersion) {
+	g.Versions = versions
+	g.require(getActionModuleVersionsResponseContentFieldVersions)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionsResponseContent) SetTotal(total *int) {
+	g.Total = total
+	g.require(getActionModuleVersionsResponseContentFieldTotal)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionsResponseContent) SetPage(page *int) {
+	g.Page = page
+	g.require(getActionModuleVersionsResponseContentFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModuleVersionsResponseContent) SetPerPage(perPage *int) {
+	g.PerPage = perPage
+	g.require(getActionModuleVersionsResponseContentFieldPerPage)
+}
+
+func (g *GetActionModuleVersionsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetActionModuleVersionsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetActionModuleVersionsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetActionModuleVersionsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetActionModuleVersionsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetActionModuleVersionsResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getActionModulesResponseContentFieldModules = big.NewInt(1 << 0)
+	getActionModulesResponseContentFieldTotal   = big.NewInt(1 << 1)
+	getActionModulesResponseContentFieldPage    = big.NewInt(1 << 2)
+	getActionModulesResponseContentFieldPerPage = big.NewInt(1 << 3)
+)
+
+type GetActionModulesResponseContent struct {
+	// A list of ActionsModule objects.
+	Modules []*ActionModuleListItem `json:"modules,omitempty" url:"modules,omitempty"`
+	// The total number of modules in the tenant.
+	Total *int `json:"total,omitempty" url:"total,omitempty"`
+	// The page index of the returned results.
+	Page *int `json:"page,omitempty" url:"page,omitempty"`
+	// The number of results requested per page.
+	PerPage *int `json:"per_page,omitempty" url:"per_page,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetActionModulesResponseContent) GetModules() []*ActionModuleListItem {
+	if g == nil || g.Modules == nil {
+		return nil
+	}
+	return g.Modules
+}
+
+func (g *GetActionModulesResponseContent) GetTotal() int {
+	if g == nil || g.Total == nil {
+		return 0
+	}
+	return *g.Total
+}
+
+func (g *GetActionModulesResponseContent) GetPage() int {
+	if g == nil || g.Page == nil {
+		return 0
+	}
+	return *g.Page
+}
+
+func (g *GetActionModulesResponseContent) GetPerPage() int {
+	if g == nil || g.PerPage == nil {
+		return 0
+	}
+	return *g.PerPage
+}
+
+func (g *GetActionModulesResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetActionModulesResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModulesResponseContent) SetModules(modules []*ActionModuleListItem) {
+	g.Modules = modules
+	g.require(getActionModulesResponseContentFieldModules)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModulesResponseContent) SetTotal(total *int) {
+	g.Total = total
+	g.require(getActionModulesResponseContentFieldTotal)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModulesResponseContent) SetPage(page *int) {
+	g.Page = page
+	g.require(getActionModulesResponseContentFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionModulesResponseContent) SetPerPage(perPage *int) {
+	g.PerPage = perPage
+	g.require(getActionModulesResponseContentFieldPerPage)
+}
+
+func (g *GetActionModulesResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetActionModulesResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetActionModulesResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetActionModulesResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetActionModulesResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetActionModulesResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	getActionResponseContentFieldID                     = big.NewInt(1 << 0)
 	getActionResponseContentFieldName                   = big.NewInt(1 << 1)
 	getActionResponseContentFieldSupportedTriggers      = big.NewInt(1 << 2)
@@ -1105,6 +7162,1696 @@ func (g *GetActionResponseContent) String() string {
 }
 
 var (
+	getActionVersionResponseContentFieldID                = big.NewInt(1 << 0)
+	getActionVersionResponseContentFieldActionID          = big.NewInt(1 << 1)
+	getActionVersionResponseContentFieldCode              = big.NewInt(1 << 2)
+	getActionVersionResponseContentFieldDependencies      = big.NewInt(1 << 3)
+	getActionVersionResponseContentFieldDeployed          = big.NewInt(1 << 4)
+	getActionVersionResponseContentFieldRuntime           = big.NewInt(1 << 5)
+	getActionVersionResponseContentFieldSecrets           = big.NewInt(1 << 6)
+	getActionVersionResponseContentFieldStatus            = big.NewInt(1 << 7)
+	getActionVersionResponseContentFieldNumber            = big.NewInt(1 << 8)
+	getActionVersionResponseContentFieldErrors            = big.NewInt(1 << 9)
+	getActionVersionResponseContentFieldAction            = big.NewInt(1 << 10)
+	getActionVersionResponseContentFieldBuiltAt           = big.NewInt(1 << 11)
+	getActionVersionResponseContentFieldCreatedAt         = big.NewInt(1 << 12)
+	getActionVersionResponseContentFieldUpdatedAt         = big.NewInt(1 << 13)
+	getActionVersionResponseContentFieldSupportedTriggers = big.NewInt(1 << 14)
+	getActionVersionResponseContentFieldModules           = big.NewInt(1 << 15)
+)
+
+type GetActionVersionResponseContent struct {
+	// The unique id of an action version.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The id of the action to which this version belongs.
+	ActionID *string `json:"action_id,omitempty" url:"action_id,omitempty"`
+	// The source code of this specific version of the action.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The list of third party npm modules, and their versions, that this specific version depends on.
+	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// Indicates if this specific version is the currently one deployed.
+	Deployed *bool `json:"deployed,omitempty" url:"deployed,omitempty"`
+	// The Node runtime. For example: `node22`
+	Runtime *string `json:"runtime,omitempty" url:"runtime,omitempty"`
+	// The list of secrets that are included in an action or a version of an action.
+	Secrets []*ActionSecretResponse       `json:"secrets,omitempty" url:"secrets,omitempty"`
+	Status  *ActionVersionBuildStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	// The index of this version in list of versions for the action.
+	Number *float64 `json:"number,omitempty" url:"number,omitempty"`
+	// Any errors that occurred while the version was being built.
+	Errors []*ActionError `json:"errors,omitempty" url:"errors,omitempty"`
+	Action *ActionBase    `json:"action,omitempty" url:"action,omitempty"`
+	// The time when this version was built successfully.
+	BuiltAt *time.Time `json:"built_at,omitempty" url:"built_at,omitempty"`
+	// The time when this version was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The time when a version was updated. Versions are never updated externally. Only Auth0 will update an action version as it is being built.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// The list of triggers that this version supports. At this time, a version can only target a single trigger at a time.
+	SupportedTriggers []*ActionTrigger `json:"supported_triggers,omitempty" url:"supported_triggers,omitempty"`
+	// The list of action modules and their versions used by this action version.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"modules,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetActionVersionResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GetActionVersionResponseContent) GetActionID() string {
+	if g == nil || g.ActionID == nil {
+		return ""
+	}
+	return *g.ActionID
+}
+
+func (g *GetActionVersionResponseContent) GetCode() string {
+	if g == nil || g.Code == nil {
+		return ""
+	}
+	return *g.Code
+}
+
+func (g *GetActionVersionResponseContent) GetDependencies() []*ActionVersionDependency {
+	if g == nil || g.Dependencies == nil {
+		return nil
+	}
+	return g.Dependencies
+}
+
+func (g *GetActionVersionResponseContent) GetDeployed() bool {
+	if g == nil || g.Deployed == nil {
+		return false
+	}
+	return *g.Deployed
+}
+
+func (g *GetActionVersionResponseContent) GetRuntime() string {
+	if g == nil || g.Runtime == nil {
+		return ""
+	}
+	return *g.Runtime
+}
+
+func (g *GetActionVersionResponseContent) GetSecrets() []*ActionSecretResponse {
+	if g == nil || g.Secrets == nil {
+		return nil
+	}
+	return g.Secrets
+}
+
+func (g *GetActionVersionResponseContent) GetStatus() ActionVersionBuildStatusEnum {
+	if g == nil || g.Status == nil {
+		return ""
+	}
+	return *g.Status
+}
+
+func (g *GetActionVersionResponseContent) GetNumber() float64 {
+	if g == nil || g.Number == nil {
+		return 0
+	}
+	return *g.Number
+}
+
+func (g *GetActionVersionResponseContent) GetErrors() []*ActionError {
+	if g == nil || g.Errors == nil {
+		return nil
+	}
+	return g.Errors
+}
+
+func (g *GetActionVersionResponseContent) GetAction() ActionBase {
+	if g == nil || g.Action == nil {
+		return ActionBase{}
+	}
+	return *g.Action
+}
+
+func (g *GetActionVersionResponseContent) GetBuiltAt() time.Time {
+	if g == nil || g.BuiltAt == nil {
+		return time.Time{}
+	}
+	return *g.BuiltAt
+}
+
+func (g *GetActionVersionResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *g.CreatedAt
+}
+
+func (g *GetActionVersionResponseContent) GetUpdatedAt() time.Time {
+	if g == nil || g.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *g.UpdatedAt
+}
+
+func (g *GetActionVersionResponseContent) GetSupportedTriggers() []*ActionTrigger {
+	if g == nil || g.SupportedTriggers == nil {
+		return nil
+	}
+	return g.SupportedTriggers
+}
+
+func (g *GetActionVersionResponseContent) GetModules() []*ActionModuleReference {
+	if g == nil || g.Modules == nil {
+		return nil
+	}
+	return g.Modules
+}
+
+func (g *GetActionVersionResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetActionVersionResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getActionVersionResponseContentFieldID)
+}
+
+// SetActionID sets the ActionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetActionID(actionID *string) {
+	g.ActionID = actionID
+	g.require(getActionVersionResponseContentFieldActionID)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetCode(code *string) {
+	g.Code = code
+	g.require(getActionVersionResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetDependencies(dependencies []*ActionVersionDependency) {
+	g.Dependencies = dependencies
+	g.require(getActionVersionResponseContentFieldDependencies)
+}
+
+// SetDeployed sets the Deployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetDeployed(deployed *bool) {
+	g.Deployed = deployed
+	g.require(getActionVersionResponseContentFieldDeployed)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetRuntime(runtime *string) {
+	g.Runtime = runtime
+	g.require(getActionVersionResponseContentFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetSecrets(secrets []*ActionSecretResponse) {
+	g.Secrets = secrets
+	g.require(getActionVersionResponseContentFieldSecrets)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetStatus(status *ActionVersionBuildStatusEnum) {
+	g.Status = status
+	g.require(getActionVersionResponseContentFieldStatus)
+}
+
+// SetNumber sets the Number field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetNumber(number *float64) {
+	g.Number = number
+	g.require(getActionVersionResponseContentFieldNumber)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetErrors(errors []*ActionError) {
+	g.Errors = errors
+	g.require(getActionVersionResponseContentFieldErrors)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetAction(action *ActionBase) {
+	g.Action = action
+	g.require(getActionVersionResponseContentFieldAction)
+}
+
+// SetBuiltAt sets the BuiltAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetBuiltAt(builtAt *time.Time) {
+	g.BuiltAt = builtAt
+	g.require(getActionVersionResponseContentFieldBuiltAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getActionVersionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getActionVersionResponseContentFieldUpdatedAt)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	g.SupportedTriggers = supportedTriggers
+	g.require(getActionVersionResponseContentFieldSupportedTriggers)
+}
+
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetActionVersionResponseContent) SetModules(modules []*ActionModuleReference) {
+	g.Modules = modules
+	g.require(getActionVersionResponseContentFieldModules)
+}
+
+func (g *GetActionVersionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetActionVersionResponseContent
+	var unmarshaler = struct {
+		embed
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetActionVersionResponseContent(unmarshaler.embed)
+	g.BuiltAt = unmarshaler.BuiltAt.TimePtr()
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	g.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetActionVersionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetActionVersionResponseContent
+	var marshaler = struct {
+		embed
+		BuiltAt   *internal.DateTime `json:"built_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*g),
+		BuiltAt:   internal.NewOptionalDateTime(g.BuiltAt),
+		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetActionVersionResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+// Integration defines a self contained functioning unit which partners
+// publish. A partner may create one or many of these integrations.
+var (
+	integrationFieldID                = big.NewInt(1 << 0)
+	integrationFieldCatalogID         = big.NewInt(1 << 1)
+	integrationFieldURLSlug           = big.NewInt(1 << 2)
+	integrationFieldPartnerID         = big.NewInt(1 << 3)
+	integrationFieldName              = big.NewInt(1 << 4)
+	integrationFieldDescription       = big.NewInt(1 << 5)
+	integrationFieldShortDescription  = big.NewInt(1 << 6)
+	integrationFieldLogo              = big.NewInt(1 << 7)
+	integrationFieldFeatureType       = big.NewInt(1 << 8)
+	integrationFieldTermsOfUseURL     = big.NewInt(1 << 9)
+	integrationFieldPrivacyPolicyURL  = big.NewInt(1 << 10)
+	integrationFieldPublicSupportLink = big.NewInt(1 << 11)
+	integrationFieldCurrentRelease    = big.NewInt(1 << 12)
+	integrationFieldCreatedAt         = big.NewInt(1 << 13)
+	integrationFieldUpdatedAt         = big.NewInt(1 << 14)
+)
+
+type Integration struct {
+	// id is a system generated GUID. This same ID is designed to be federated in
+	// all the applicable localities.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// catalog_id refers to the ID in the marketplace catalog
+	CatalogID *string `json:"catalog_id,omitempty" url:"catalog_id,omitempty"`
+	// url_slug refers to the url_slug in the marketplace catalog
+	URLSlug *string `json:"url_slug,omitempty" url:"url_slug,omitempty"`
+	// partner_id is the foreign key reference to the partner account this
+	// integration belongs to.
+	PartnerID *string `json:"partner_id,omitempty" url:"partner_id,omitempty"`
+	// name is the integration name, which will be used for display purposes in
+	// the marketplace.
+	//
+	// To start we're going to make sure the display name is at least 3
+	// characters. Can adjust this easily later.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// description adds more text for the integration name -- also relevant for
+	// the marketplace listing.
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// short_description is the brief description of the integration, which is used for display purposes in cards
+	ShortDescription  *string                     `json:"short_description,omitempty" url:"short_description,omitempty"`
+	Logo              *string                     `json:"logo,omitempty" url:"logo,omitempty"`
+	FeatureType       *IntegrationFeatureTypeEnum `json:"feature_type,omitempty" url:"feature_type,omitempty"`
+	TermsOfUseURL     *string                     `json:"terms_of_use_url,omitempty" url:"terms_of_use_url,omitempty"`
+	PrivacyPolicyURL  *string                     `json:"privacy_policy_url,omitempty" url:"privacy_policy_url,omitempty"`
+	PublicSupportLink *string                     `json:"public_support_link,omitempty" url:"public_support_link,omitempty"`
+	CurrentRelease    *IntegrationRelease         `json:"current_release,omitempty" url:"current_release,omitempty"`
+	CreatedAt         *time.Time                  `json:"created_at,omitempty" url:"created_at,omitempty"`
+	UpdatedAt         *time.Time                  `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (i *Integration) GetID() string {
+	if i == nil || i.ID == nil {
+		return ""
+	}
+	return *i.ID
+}
+
+func (i *Integration) GetCatalogID() string {
+	if i == nil || i.CatalogID == nil {
+		return ""
+	}
+	return *i.CatalogID
+}
+
+func (i *Integration) GetURLSlug() string {
+	if i == nil || i.URLSlug == nil {
+		return ""
+	}
+	return *i.URLSlug
+}
+
+func (i *Integration) GetPartnerID() string {
+	if i == nil || i.PartnerID == nil {
+		return ""
+	}
+	return *i.PartnerID
+}
+
+func (i *Integration) GetName() string {
+	if i == nil || i.Name == nil {
+		return ""
+	}
+	return *i.Name
+}
+
+func (i *Integration) GetDescription() string {
+	if i == nil || i.Description == nil {
+		return ""
+	}
+	return *i.Description
+}
+
+func (i *Integration) GetShortDescription() string {
+	if i == nil || i.ShortDescription == nil {
+		return ""
+	}
+	return *i.ShortDescription
+}
+
+func (i *Integration) GetLogo() string {
+	if i == nil || i.Logo == nil {
+		return ""
+	}
+	return *i.Logo
+}
+
+func (i *Integration) GetFeatureType() IntegrationFeatureTypeEnum {
+	if i == nil || i.FeatureType == nil {
+		return ""
+	}
+	return *i.FeatureType
+}
+
+func (i *Integration) GetTermsOfUseURL() string {
+	if i == nil || i.TermsOfUseURL == nil {
+		return ""
+	}
+	return *i.TermsOfUseURL
+}
+
+func (i *Integration) GetPrivacyPolicyURL() string {
+	if i == nil || i.PrivacyPolicyURL == nil {
+		return ""
+	}
+	return *i.PrivacyPolicyURL
+}
+
+func (i *Integration) GetPublicSupportLink() string {
+	if i == nil || i.PublicSupportLink == nil {
+		return ""
+	}
+	return *i.PublicSupportLink
+}
+
+func (i *Integration) GetCurrentRelease() IntegrationRelease {
+	if i == nil || i.CurrentRelease == nil {
+		return IntegrationRelease{}
+	}
+	return *i.CurrentRelease
+}
+
+func (i *Integration) GetCreatedAt() time.Time {
+	if i == nil || i.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *i.CreatedAt
+}
+
+func (i *Integration) GetUpdatedAt() time.Time {
+	if i == nil || i.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *i.UpdatedAt
+}
+
+func (i *Integration) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *Integration) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetID(id *string) {
+	i.ID = id
+	i.require(integrationFieldID)
+}
+
+// SetCatalogID sets the CatalogID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetCatalogID(catalogID *string) {
+	i.CatalogID = catalogID
+	i.require(integrationFieldCatalogID)
+}
+
+// SetURLSlug sets the URLSlug field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetURLSlug(urlSlug *string) {
+	i.URLSlug = urlSlug
+	i.require(integrationFieldURLSlug)
+}
+
+// SetPartnerID sets the PartnerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetPartnerID(partnerID *string) {
+	i.PartnerID = partnerID
+	i.require(integrationFieldPartnerID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetName(name *string) {
+	i.Name = name
+	i.require(integrationFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetDescription(description *string) {
+	i.Description = description
+	i.require(integrationFieldDescription)
+}
+
+// SetShortDescription sets the ShortDescription field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetShortDescription(shortDescription *string) {
+	i.ShortDescription = shortDescription
+	i.require(integrationFieldShortDescription)
+}
+
+// SetLogo sets the Logo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetLogo(logo *string) {
+	i.Logo = logo
+	i.require(integrationFieldLogo)
+}
+
+// SetFeatureType sets the FeatureType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetFeatureType(featureType *IntegrationFeatureTypeEnum) {
+	i.FeatureType = featureType
+	i.require(integrationFieldFeatureType)
+}
+
+// SetTermsOfUseURL sets the TermsOfUseURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetTermsOfUseURL(termsOfUseURL *string) {
+	i.TermsOfUseURL = termsOfUseURL
+	i.require(integrationFieldTermsOfUseURL)
+}
+
+// SetPrivacyPolicyURL sets the PrivacyPolicyURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetPrivacyPolicyURL(privacyPolicyURL *string) {
+	i.PrivacyPolicyURL = privacyPolicyURL
+	i.require(integrationFieldPrivacyPolicyURL)
+}
+
+// SetPublicSupportLink sets the PublicSupportLink field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetPublicSupportLink(publicSupportLink *string) {
+	i.PublicSupportLink = publicSupportLink
+	i.require(integrationFieldPublicSupportLink)
+}
+
+// SetCurrentRelease sets the CurrentRelease field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetCurrentRelease(currentRelease *IntegrationRelease) {
+	i.CurrentRelease = currentRelease
+	i.require(integrationFieldCurrentRelease)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetCreatedAt(createdAt *time.Time) {
+	i.CreatedAt = createdAt
+	i.require(integrationFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *Integration) SetUpdatedAt(updatedAt *time.Time) {
+	i.UpdatedAt = updatedAt
+	i.require(integrationFieldUpdatedAt)
+}
+
+func (i *Integration) UnmarshalJSON(data []byte) error {
+	type embed Integration
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*i),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*i = Integration(unmarshaler.embed)
+	i.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	i.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (i *Integration) MarshalJSON() ([]byte, error) {
+	type embed Integration
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*i),
+		CreatedAt: internal.NewOptionalDateTime(i.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(i.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (i *Integration) String() string {
+	if i == nil {
+		return "<nil>"
+	}
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+// feature_type is the type of the integration.
+type IntegrationFeatureTypeEnum string
+
+const (
+	IntegrationFeatureTypeEnumUnspecified      IntegrationFeatureTypeEnum = "unspecified"
+	IntegrationFeatureTypeEnumAction           IntegrationFeatureTypeEnum = "action"
+	IntegrationFeatureTypeEnumSocialConnection IntegrationFeatureTypeEnum = "social_connection"
+	IntegrationFeatureTypeEnumLogStream        IntegrationFeatureTypeEnum = "log_stream"
+	IntegrationFeatureTypeEnumSSOIntegration   IntegrationFeatureTypeEnum = "sso_integration"
+	IntegrationFeatureTypeEnumSmsProvider      IntegrationFeatureTypeEnum = "sms_provider"
+)
+
+func NewIntegrationFeatureTypeEnumFromString(s string) (IntegrationFeatureTypeEnum, error) {
+	switch s {
+	case "unspecified":
+		return IntegrationFeatureTypeEnumUnspecified, nil
+	case "action":
+		return IntegrationFeatureTypeEnumAction, nil
+	case "social_connection":
+		return IntegrationFeatureTypeEnumSocialConnection, nil
+	case "log_stream":
+		return IntegrationFeatureTypeEnumLogStream, nil
+	case "sso_integration":
+		return IntegrationFeatureTypeEnumSSOIntegration, nil
+	case "sms_provider":
+		return IntegrationFeatureTypeEnumSmsProvider, nil
+	}
+	var t IntegrationFeatureTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (i IntegrationFeatureTypeEnum) Ptr() *IntegrationFeatureTypeEnum {
+	return &i
+}
+
+var (
+	integrationReleaseFieldID                    = big.NewInt(1 << 0)
+	integrationReleaseFieldTrigger               = big.NewInt(1 << 1)
+	integrationReleaseFieldSemver                = big.NewInt(1 << 2)
+	integrationReleaseFieldRequiredSecrets       = big.NewInt(1 << 3)
+	integrationReleaseFieldRequiredConfiguration = big.NewInt(1 << 4)
+)
+
+type IntegrationRelease struct {
+	// The id of the associated IntegrationRelease
+	ID      *string            `json:"id,omitempty" url:"id,omitempty"`
+	Trigger *ActionTrigger     `json:"trigger,omitempty" url:"trigger,omitempty"`
+	Semver  *IntegrationSemVer `json:"semver,omitempty" url:"semver,omitempty"`
+	// required_secrets declares all the necessary secrets for an integration to
+	// work.
+	RequiredSecrets []*IntegrationRequiredParam `json:"required_secrets,omitempty" url:"required_secrets,omitempty"`
+	// required_configuration declares all the necessary configuration fields for an integration to work.
+	RequiredConfiguration []*IntegrationRequiredParam `json:"required_configuration,omitempty" url:"required_configuration,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (i *IntegrationRelease) GetID() string {
+	if i == nil || i.ID == nil {
+		return ""
+	}
+	return *i.ID
+}
+
+func (i *IntegrationRelease) GetTrigger() ActionTrigger {
+	if i == nil || i.Trigger == nil {
+		return ActionTrigger{}
+	}
+	return *i.Trigger
+}
+
+func (i *IntegrationRelease) GetSemver() IntegrationSemVer {
+	if i == nil || i.Semver == nil {
+		return IntegrationSemVer{}
+	}
+	return *i.Semver
+}
+
+func (i *IntegrationRelease) GetRequiredSecrets() []*IntegrationRequiredParam {
+	if i == nil || i.RequiredSecrets == nil {
+		return nil
+	}
+	return i.RequiredSecrets
+}
+
+func (i *IntegrationRelease) GetRequiredConfiguration() []*IntegrationRequiredParam {
+	if i == nil || i.RequiredConfiguration == nil {
+		return nil
+	}
+	return i.RequiredConfiguration
+}
+
+func (i *IntegrationRelease) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
+	return i.ExtraProperties
+}
+
+func (i *IntegrationRelease) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRelease) SetID(id *string) {
+	i.ID = id
+	i.require(integrationReleaseFieldID)
+}
+
+// SetTrigger sets the Trigger field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRelease) SetTrigger(trigger *ActionTrigger) {
+	i.Trigger = trigger
+	i.require(integrationReleaseFieldTrigger)
+}
+
+// SetSemver sets the Semver field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRelease) SetSemver(semver *IntegrationSemVer) {
+	i.Semver = semver
+	i.require(integrationReleaseFieldSemver)
+}
+
+// SetRequiredSecrets sets the RequiredSecrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRelease) SetRequiredSecrets(requiredSecrets []*IntegrationRequiredParam) {
+	i.RequiredSecrets = requiredSecrets
+	i.require(integrationReleaseFieldRequiredSecrets)
+}
+
+// SetRequiredConfiguration sets the RequiredConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRelease) SetRequiredConfiguration(requiredConfiguration []*IntegrationRequiredParam) {
+	i.RequiredConfiguration = requiredConfiguration
+	i.require(integrationReleaseFieldRequiredConfiguration)
+}
+
+func (i *IntegrationRelease) UnmarshalJSON(data []byte) error {
+	type embed IntegrationRelease
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*i = IntegrationRelease(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.ExtraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (i *IntegrationRelease) MarshalJSON() ([]byte, error) {
+	type embed IntegrationRelease
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, i.ExtraProperties)
+}
+
+func (i *IntegrationRelease) String() string {
+	if i == nil {
+		return "<nil>"
+	}
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+// Param are form input values, primarily utilized when specifying secrets and
+// configuration values for actions.
+//
+// These are especially important for partner integrations -- but can be
+// exposed to tenant admins as well if they want to parameterize their custom
+// actions.
+var (
+	integrationRequiredParamFieldType         = big.NewInt(1 << 0)
+	integrationRequiredParamFieldName         = big.NewInt(1 << 1)
+	integrationRequiredParamFieldRequired     = big.NewInt(1 << 2)
+	integrationRequiredParamFieldOptional     = big.NewInt(1 << 3)
+	integrationRequiredParamFieldLabel        = big.NewInt(1 << 4)
+	integrationRequiredParamFieldDescription  = big.NewInt(1 << 5)
+	integrationRequiredParamFieldDefaultValue = big.NewInt(1 << 6)
+	integrationRequiredParamFieldPlaceholder  = big.NewInt(1 << 7)
+	integrationRequiredParamFieldOptions      = big.NewInt(1 << 8)
+)
+
+type IntegrationRequiredParam struct {
+	Type *IntegrationRequiredParamTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	// The name of the parameter.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The flag for if this parameter is required.
+	Required *bool `json:"required,omitempty" url:"required,omitempty"`
+	// The temp flag for if this parameter is required (experimental; for Labs use only).
+	Optional *bool `json:"optional,omitempty" url:"optional,omitempty"`
+	// The short label for this parameter.
+	Label *string `json:"label,omitempty" url:"label,omitempty"`
+	// The lengthier description for this parameter.
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// The default value for this parameter.
+	DefaultValue *string `json:"default_value,omitempty" url:"default_value,omitempty"`
+	// Placeholder text for this parameter.
+	Placeholder *string `json:"placeholder,omitempty" url:"placeholder,omitempty"`
+	// The allowable options for this param.
+	Options []*IntegrationRequiredParamOption `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (i *IntegrationRequiredParam) GetType() IntegrationRequiredParamTypeEnum {
+	if i == nil || i.Type == nil {
+		return ""
+	}
+	return *i.Type
+}
+
+func (i *IntegrationRequiredParam) GetName() string {
+	if i == nil || i.Name == nil {
+		return ""
+	}
+	return *i.Name
+}
+
+func (i *IntegrationRequiredParam) GetRequired() bool {
+	if i == nil || i.Required == nil {
+		return false
+	}
+	return *i.Required
+}
+
+func (i *IntegrationRequiredParam) GetOptional() bool {
+	if i == nil || i.Optional == nil {
+		return false
+	}
+	return *i.Optional
+}
+
+func (i *IntegrationRequiredParam) GetLabel() string {
+	if i == nil || i.Label == nil {
+		return ""
+	}
+	return *i.Label
+}
+
+func (i *IntegrationRequiredParam) GetDescription() string {
+	if i == nil || i.Description == nil {
+		return ""
+	}
+	return *i.Description
+}
+
+func (i *IntegrationRequiredParam) GetDefaultValue() string {
+	if i == nil || i.DefaultValue == nil {
+		return ""
+	}
+	return *i.DefaultValue
+}
+
+func (i *IntegrationRequiredParam) GetPlaceholder() string {
+	if i == nil || i.Placeholder == nil {
+		return ""
+	}
+	return *i.Placeholder
+}
+
+func (i *IntegrationRequiredParam) GetOptions() []*IntegrationRequiredParamOption {
+	if i == nil || i.Options == nil {
+		return nil
+	}
+	return i.Options
+}
+
+func (i *IntegrationRequiredParam) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *IntegrationRequiredParam) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParam) SetType(type_ *IntegrationRequiredParamTypeEnum) {
+	i.Type = type_
+	i.require(integrationRequiredParamFieldType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParam) SetName(name *string) {
+	i.Name = name
+	i.require(integrationRequiredParamFieldName)
+}
+
+// SetRequired sets the Required field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParam) SetRequired(required *bool) {
+	i.Required = required
+	i.require(integrationRequiredParamFieldRequired)
+}
+
+// SetOptional sets the Optional field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParam) SetOptional(optional *bool) {
+	i.Optional = optional
+	i.require(integrationRequiredParamFieldOptional)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParam) SetLabel(label *string) {
+	i.Label = label
+	i.require(integrationRequiredParamFieldLabel)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParam) SetDescription(description *string) {
+	i.Description = description
+	i.require(integrationRequiredParamFieldDescription)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParam) SetDefaultValue(defaultValue *string) {
+	i.DefaultValue = defaultValue
+	i.require(integrationRequiredParamFieldDefaultValue)
+}
+
+// SetPlaceholder sets the Placeholder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParam) SetPlaceholder(placeholder *string) {
+	i.Placeholder = placeholder
+	i.require(integrationRequiredParamFieldPlaceholder)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParam) SetOptions(options []*IntegrationRequiredParamOption) {
+	i.Options = options
+	i.require(integrationRequiredParamFieldOptions)
+}
+
+func (i *IntegrationRequiredParam) UnmarshalJSON(data []byte) error {
+	type unmarshaler IntegrationRequiredParam
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = IntegrationRequiredParam(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (i *IntegrationRequiredParam) MarshalJSON() ([]byte, error) {
+	type embed IntegrationRequiredParam
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (i *IntegrationRequiredParam) String() string {
+	if i == nil {
+		return "<nil>"
+	}
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+var (
+	integrationRequiredParamOptionFieldValue = big.NewInt(1 << 0)
+	integrationRequiredParamOptionFieldLabel = big.NewInt(1 << 1)
+)
+
+type IntegrationRequiredParamOption struct {
+	// The value of an option that will be used within the application.
+	Value *string `json:"value,omitempty" url:"value,omitempty"`
+	// The display value of an option suitable for displaying in a UI.
+	Label *string `json:"label,omitempty" url:"label,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (i *IntegrationRequiredParamOption) GetValue() string {
+	if i == nil || i.Value == nil {
+		return ""
+	}
+	return *i.Value
+}
+
+func (i *IntegrationRequiredParamOption) GetLabel() string {
+	if i == nil || i.Label == nil {
+		return ""
+	}
+	return *i.Label
+}
+
+func (i *IntegrationRequiredParamOption) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *IntegrationRequiredParamOption) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParamOption) SetValue(value *string) {
+	i.Value = value
+	i.require(integrationRequiredParamOptionFieldValue)
+}
+
+// SetLabel sets the Label field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationRequiredParamOption) SetLabel(label *string) {
+	i.Label = label
+	i.require(integrationRequiredParamOptionFieldLabel)
+}
+
+func (i *IntegrationRequiredParamOption) UnmarshalJSON(data []byte) error {
+	type unmarshaler IntegrationRequiredParamOption
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = IntegrationRequiredParamOption(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (i *IntegrationRequiredParamOption) MarshalJSON() ([]byte, error) {
+	type embed IntegrationRequiredParamOption
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (i *IntegrationRequiredParamOption) String() string {
+	if i == nil {
+		return "<nil>"
+	}
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+type IntegrationRequiredParamTypeEnum string
+
+const (
+	IntegrationRequiredParamTypeEnumUnspecified IntegrationRequiredParamTypeEnum = "UNSPECIFIED"
+	IntegrationRequiredParamTypeEnumString      IntegrationRequiredParamTypeEnum = "STRING"
+)
+
+func NewIntegrationRequiredParamTypeEnumFromString(s string) (IntegrationRequiredParamTypeEnum, error) {
+	switch s {
+	case "UNSPECIFIED":
+		return IntegrationRequiredParamTypeEnumUnspecified, nil
+	case "STRING":
+		return IntegrationRequiredParamTypeEnumString, nil
+	}
+	var t IntegrationRequiredParamTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (i IntegrationRequiredParamTypeEnum) Ptr() *IntegrationRequiredParamTypeEnum {
+	return &i
+}
+
+// Semver denotes the major.minor version of an integration release
+var (
+	integrationSemVerFieldMajor = big.NewInt(1 << 0)
+	integrationSemVerFieldMinor = big.NewInt(1 << 1)
+)
+
+type IntegrationSemVer struct {
+	// Major is the major number of a semver
+	Major *int `json:"major,omitempty" url:"major,omitempty"`
+	// Minior is the minior number of a semver
+	Minor *int `json:"minor,omitempty" url:"minor,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (i *IntegrationSemVer) GetMajor() int {
+	if i == nil || i.Major == nil {
+		return 0
+	}
+	return *i.Major
+}
+
+func (i *IntegrationSemVer) GetMinor() int {
+	if i == nil || i.Minor == nil {
+		return 0
+	}
+	return *i.Minor
+}
+
+func (i *IntegrationSemVer) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *IntegrationSemVer) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+// SetMajor sets the Major field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationSemVer) SetMajor(major *int) {
+	i.Major = major
+	i.require(integrationSemVerFieldMajor)
+}
+
+// SetMinor sets the Minor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *IntegrationSemVer) SetMinor(minor *int) {
+	i.Minor = minor
+	i.require(integrationSemVerFieldMinor)
+}
+
+func (i *IntegrationSemVer) UnmarshalJSON(data []byte) error {
+	type unmarshaler IntegrationSemVer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = IntegrationSemVer(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (i *IntegrationSemVer) MarshalJSON() ([]byte, error) {
+	type embed IntegrationSemVer
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (i *IntegrationSemVer) String() string {
+	if i == nil {
+		return "<nil>"
+	}
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+var (
+	listActionBindingsPaginatedResponseContentFieldTotal    = big.NewInt(1 << 0)
+	listActionBindingsPaginatedResponseContentFieldPage     = big.NewInt(1 << 1)
+	listActionBindingsPaginatedResponseContentFieldPerPage  = big.NewInt(1 << 2)
+	listActionBindingsPaginatedResponseContentFieldBindings = big.NewInt(1 << 3)
+)
+
+type ListActionBindingsPaginatedResponseContent struct {
+	// The total result count.
+	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
+	// Page index of the results being returned. First page is 0.
+	Page *float64 `json:"page,omitempty" url:"page,omitempty"`
+	// Number of results per page.
+	PerPage *float64 `json:"per_page,omitempty" url:"per_page,omitempty"`
+	// The list of actions that are bound to this trigger in the order in which they will be executed.
+	Bindings []*ActionBinding `json:"bindings,omitempty" url:"bindings,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListActionBindingsPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListActionBindingsPaginatedResponseContent) GetPage() float64 {
+	if l == nil || l.Page == nil {
+		return 0
+	}
+	return *l.Page
+}
+
+func (l *ListActionBindingsPaginatedResponseContent) GetPerPage() float64 {
+	if l == nil || l.PerPage == nil {
+		return 0
+	}
+	return *l.PerPage
+}
+
+func (l *ListActionBindingsPaginatedResponseContent) GetBindings() []*ActionBinding {
+	if l == nil || l.Bindings == nil {
+		return nil
+	}
+	return l.Bindings
+}
+
+func (l *ListActionBindingsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListActionBindingsPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionBindingsPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listActionBindingsPaginatedResponseContentFieldTotal)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionBindingsPaginatedResponseContent) SetPage(page *float64) {
+	l.Page = page
+	l.require(listActionBindingsPaginatedResponseContentFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionBindingsPaginatedResponseContent) SetPerPage(perPage *float64) {
+	l.PerPage = perPage
+	l.require(listActionBindingsPaginatedResponseContentFieldPerPage)
+}
+
+// SetBindings sets the Bindings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionBindingsPaginatedResponseContent) SetBindings(bindings []*ActionBinding) {
+	l.Bindings = bindings
+	l.require(listActionBindingsPaginatedResponseContentFieldBindings)
+}
+
+func (l *ListActionBindingsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListActionBindingsPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListActionBindingsPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListActionBindingsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListActionBindingsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListActionBindingsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listActionTriggersResponseContentFieldTriggers = big.NewInt(1 << 0)
+)
+
+type ListActionTriggersResponseContent struct {
+	Triggers []*ActionTrigger `json:"triggers,omitempty" url:"triggers,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListActionTriggersResponseContent) GetTriggers() []*ActionTrigger {
+	if l == nil || l.Triggers == nil {
+		return nil
+	}
+	return l.Triggers
+}
+
+func (l *ListActionTriggersResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListActionTriggersResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetTriggers sets the Triggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionTriggersResponseContent) SetTriggers(triggers []*ActionTrigger) {
+	l.Triggers = triggers
+	l.require(listActionTriggersResponseContentFieldTriggers)
+}
+
+func (l *ListActionTriggersResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListActionTriggersResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListActionTriggersResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListActionTriggersResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListActionTriggersResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListActionTriggersResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listActionVersionsPaginatedResponseContentFieldTotal    = big.NewInt(1 << 0)
+	listActionVersionsPaginatedResponseContentFieldPage     = big.NewInt(1 << 1)
+	listActionVersionsPaginatedResponseContentFieldPerPage  = big.NewInt(1 << 2)
+	listActionVersionsPaginatedResponseContentFieldVersions = big.NewInt(1 << 3)
+)
+
+type ListActionVersionsPaginatedResponseContent struct {
+	// The total result count.
+	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
+	// Page index of the results being returned. First page is 0.
+	Page *float64 `json:"page,omitempty" url:"page,omitempty"`
+	// Number of results per page.
+	PerPage  *float64         `json:"per_page,omitempty" url:"per_page,omitempty"`
+	Versions []*ActionVersion `json:"versions,omitempty" url:"versions,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListActionVersionsPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListActionVersionsPaginatedResponseContent) GetPage() float64 {
+	if l == nil || l.Page == nil {
+		return 0
+	}
+	return *l.Page
+}
+
+func (l *ListActionVersionsPaginatedResponseContent) GetPerPage() float64 {
+	if l == nil || l.PerPage == nil {
+		return 0
+	}
+	return *l.PerPage
+}
+
+func (l *ListActionVersionsPaginatedResponseContent) GetVersions() []*ActionVersion {
+	if l == nil || l.Versions == nil {
+		return nil
+	}
+	return l.Versions
+}
+
+func (l *ListActionVersionsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListActionVersionsPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionVersionsPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listActionVersionsPaginatedResponseContentFieldTotal)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionVersionsPaginatedResponseContent) SetPage(page *float64) {
+	l.Page = page
+	l.require(listActionVersionsPaginatedResponseContentFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionVersionsPaginatedResponseContent) SetPerPage(perPage *float64) {
+	l.PerPage = perPage
+	l.require(listActionVersionsPaginatedResponseContentFieldPerPage)
+}
+
+// SetVersions sets the Versions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionVersionsPaginatedResponseContent) SetVersions(versions []*ActionVersion) {
+	l.Versions = versions
+	l.require(listActionVersionsPaginatedResponseContentFieldVersions)
+}
+
+func (l *ListActionVersionsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListActionVersionsPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListActionVersionsPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListActionVersionsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListActionVersionsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListActionVersionsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
 	listActionsPaginatedResponseContentFieldTotal   = big.NewInt(1 << 0)
 	listActionsPaginatedResponseContentFieldPage    = big.NewInt(1 << 1)
 	listActionsPaginatedResponseContentFieldPerPage = big.NewInt(1 << 2)
@@ -1240,6 +8987,272 @@ func (l *ListActionsPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	rollbackActionModuleResponseContentFieldID                      = big.NewInt(1 << 0)
+	rollbackActionModuleResponseContentFieldName                    = big.NewInt(1 << 1)
+	rollbackActionModuleResponseContentFieldCode                    = big.NewInt(1 << 2)
+	rollbackActionModuleResponseContentFieldDependencies            = big.NewInt(1 << 3)
+	rollbackActionModuleResponseContentFieldSecrets                 = big.NewInt(1 << 4)
+	rollbackActionModuleResponseContentFieldActionsUsingModuleTotal = big.NewInt(1 << 5)
+	rollbackActionModuleResponseContentFieldAllChangesPublished     = big.NewInt(1 << 6)
+	rollbackActionModuleResponseContentFieldLatestVersionNumber     = big.NewInt(1 << 7)
+	rollbackActionModuleResponseContentFieldCreatedAt               = big.NewInt(1 << 8)
+	rollbackActionModuleResponseContentFieldUpdatedAt               = big.NewInt(1 << 9)
+	rollbackActionModuleResponseContentFieldLatestVersion           = big.NewInt(1 << 10)
+)
+
+type RollbackActionModuleResponseContent struct {
+	// The unique ID of the module.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the module.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The source code from the module's draft version.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The npm dependencies from the module's draft version.
+	Dependencies []*ActionModuleDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The secrets from the module's draft version (names and timestamps only, values never returned).
+	Secrets []*ActionModuleSecret `json:"secrets,omitempty" url:"secrets,omitempty"`
+	// The number of deployed actions using this module.
+	ActionsUsingModuleTotal *int `json:"actions_using_module_total,omitempty" url:"actions_using_module_total,omitempty"`
+	// Whether all draft changes have been published as a version.
+	AllChangesPublished *bool `json:"all_changes_published,omitempty" url:"all_changes_published,omitempty"`
+	// The version number of the latest published version. Omitted if no versions have been published.
+	LatestVersionNumber *int `json:"latest_version_number,omitempty" url:"latest_version_number,omitempty"`
+	// Timestamp when the module was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp when the module was last updated.
+	UpdatedAt     *time.Time                    `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	LatestVersion *ActionModuleVersionReference `json:"latest_version,omitempty" url:"latest_version,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RollbackActionModuleResponseContent) GetID() string {
+	if r == nil || r.ID == nil {
+		return ""
+	}
+	return *r.ID
+}
+
+func (r *RollbackActionModuleResponseContent) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
+	}
+	return *r.Name
+}
+
+func (r *RollbackActionModuleResponseContent) GetCode() string {
+	if r == nil || r.Code == nil {
+		return ""
+	}
+	return *r.Code
+}
+
+func (r *RollbackActionModuleResponseContent) GetDependencies() []*ActionModuleDependency {
+	if r == nil || r.Dependencies == nil {
+		return nil
+	}
+	return r.Dependencies
+}
+
+func (r *RollbackActionModuleResponseContent) GetSecrets() []*ActionModuleSecret {
+	if r == nil || r.Secrets == nil {
+		return nil
+	}
+	return r.Secrets
+}
+
+func (r *RollbackActionModuleResponseContent) GetActionsUsingModuleTotal() int {
+	if r == nil || r.ActionsUsingModuleTotal == nil {
+		return 0
+	}
+	return *r.ActionsUsingModuleTotal
+}
+
+func (r *RollbackActionModuleResponseContent) GetAllChangesPublished() bool {
+	if r == nil || r.AllChangesPublished == nil {
+		return false
+	}
+	return *r.AllChangesPublished
+}
+
+func (r *RollbackActionModuleResponseContent) GetLatestVersionNumber() int {
+	if r == nil || r.LatestVersionNumber == nil {
+		return 0
+	}
+	return *r.LatestVersionNumber
+}
+
+func (r *RollbackActionModuleResponseContent) GetCreatedAt() time.Time {
+	if r == nil || r.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *r.CreatedAt
+}
+
+func (r *RollbackActionModuleResponseContent) GetUpdatedAt() time.Time {
+	if r == nil || r.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *r.UpdatedAt
+}
+
+func (r *RollbackActionModuleResponseContent) GetLatestVersion() ActionModuleVersionReference {
+	if r == nil || r.LatestVersion == nil {
+		return ActionModuleVersionReference{}
+	}
+	return *r.LatestVersion
+}
+
+func (r *RollbackActionModuleResponseContent) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RollbackActionModuleResponseContent) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetID(id *string) {
+	r.ID = id
+	r.require(rollbackActionModuleResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetName(name *string) {
+	r.Name = name
+	r.require(rollbackActionModuleResponseContentFieldName)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetCode(code *string) {
+	r.Code = code
+	r.require(rollbackActionModuleResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetDependencies(dependencies []*ActionModuleDependency) {
+	r.Dependencies = dependencies
+	r.require(rollbackActionModuleResponseContentFieldDependencies)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetSecrets(secrets []*ActionModuleSecret) {
+	r.Secrets = secrets
+	r.require(rollbackActionModuleResponseContentFieldSecrets)
+}
+
+// SetActionsUsingModuleTotal sets the ActionsUsingModuleTotal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetActionsUsingModuleTotal(actionsUsingModuleTotal *int) {
+	r.ActionsUsingModuleTotal = actionsUsingModuleTotal
+	r.require(rollbackActionModuleResponseContentFieldActionsUsingModuleTotal)
+}
+
+// SetAllChangesPublished sets the AllChangesPublished field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetAllChangesPublished(allChangesPublished *bool) {
+	r.AllChangesPublished = allChangesPublished
+	r.require(rollbackActionModuleResponseContentFieldAllChangesPublished)
+}
+
+// SetLatestVersionNumber sets the LatestVersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetLatestVersionNumber(latestVersionNumber *int) {
+	r.LatestVersionNumber = latestVersionNumber
+	r.require(rollbackActionModuleResponseContentFieldLatestVersionNumber)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetCreatedAt(createdAt *time.Time) {
+	r.CreatedAt = createdAt
+	r.require(rollbackActionModuleResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	r.UpdatedAt = updatedAt
+	r.require(rollbackActionModuleResponseContentFieldUpdatedAt)
+}
+
+// SetLatestVersion sets the LatestVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RollbackActionModuleResponseContent) SetLatestVersion(latestVersion *ActionModuleVersionReference) {
+	r.LatestVersion = latestVersion
+	r.require(rollbackActionModuleResponseContentFieldLatestVersion)
+}
+
+func (r *RollbackActionModuleResponseContent) UnmarshalJSON(data []byte) error {
+	type embed RollbackActionModuleResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*r),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*r = RollbackActionModuleResponseContent(unmarshaler.embed)
+	r.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	r.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RollbackActionModuleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed RollbackActionModuleResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*r),
+		CreatedAt: internal.NewOptionalDateTime(r.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(r.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RollbackActionModuleResponseContent) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
 // The payload for the action.
 type TestActionPayload = map[string]any
 
@@ -1329,6 +9342,358 @@ func (t *TestActionResponseContent) String() string {
 
 // The resulting payload after an action was executed.
 type TestActionResultPayload = map[string]any
+
+type UpdateActionBindingItem = *ActionBindingWithRef
+
+var (
+	updateActionBindingsResponseContentFieldBindings = big.NewInt(1 << 0)
+)
+
+type UpdateActionBindingsResponseContent struct {
+	Bindings []*ActionBinding `json:"bindings,omitempty" url:"bindings,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateActionBindingsResponseContent) GetBindings() []*ActionBinding {
+	if u == nil || u.Bindings == nil {
+		return nil
+	}
+	return u.Bindings
+}
+
+func (u *UpdateActionBindingsResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateActionBindingsResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetBindings sets the Bindings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionBindingsResponseContent) SetBindings(bindings []*ActionBinding) {
+	u.Bindings = bindings
+	u.require(updateActionBindingsResponseContentFieldBindings)
+}
+
+func (u *UpdateActionBindingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateActionBindingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateActionBindingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateActionBindingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateActionBindingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateActionBindingsResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateActionModuleResponseContentFieldID                      = big.NewInt(1 << 0)
+	updateActionModuleResponseContentFieldName                    = big.NewInt(1 << 1)
+	updateActionModuleResponseContentFieldCode                    = big.NewInt(1 << 2)
+	updateActionModuleResponseContentFieldDependencies            = big.NewInt(1 << 3)
+	updateActionModuleResponseContentFieldSecrets                 = big.NewInt(1 << 4)
+	updateActionModuleResponseContentFieldActionsUsingModuleTotal = big.NewInt(1 << 5)
+	updateActionModuleResponseContentFieldAllChangesPublished     = big.NewInt(1 << 6)
+	updateActionModuleResponseContentFieldLatestVersionNumber     = big.NewInt(1 << 7)
+	updateActionModuleResponseContentFieldCreatedAt               = big.NewInt(1 << 8)
+	updateActionModuleResponseContentFieldUpdatedAt               = big.NewInt(1 << 9)
+	updateActionModuleResponseContentFieldLatestVersion           = big.NewInt(1 << 10)
+)
+
+type UpdateActionModuleResponseContent struct {
+	// The unique ID of the module.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the module.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The source code from the module's draft version.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// The npm dependencies from the module's draft version.
+	Dependencies []*ActionModuleDependency `json:"dependencies,omitempty" url:"dependencies,omitempty"`
+	// The secrets from the module's draft version (names and timestamps only, values never returned).
+	Secrets []*ActionModuleSecret `json:"secrets,omitempty" url:"secrets,omitempty"`
+	// The number of deployed actions using this module.
+	ActionsUsingModuleTotal *int `json:"actions_using_module_total,omitempty" url:"actions_using_module_total,omitempty"`
+	// Whether all draft changes have been published as a version.
+	AllChangesPublished *bool `json:"all_changes_published,omitempty" url:"all_changes_published,omitempty"`
+	// The version number of the latest published version. Omitted if no versions have been published.
+	LatestVersionNumber *int `json:"latest_version_number,omitempty" url:"latest_version_number,omitempty"`
+	// Timestamp when the module was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp when the module was last updated.
+	UpdatedAt     *time.Time                    `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	LatestVersion *ActionModuleVersionReference `json:"latest_version,omitempty" url:"latest_version,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateActionModuleResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UpdateActionModuleResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+func (u *UpdateActionModuleResponseContent) GetCode() string {
+	if u == nil || u.Code == nil {
+		return ""
+	}
+	return *u.Code
+}
+
+func (u *UpdateActionModuleResponseContent) GetDependencies() []*ActionModuleDependency {
+	if u == nil || u.Dependencies == nil {
+		return nil
+	}
+	return u.Dependencies
+}
+
+func (u *UpdateActionModuleResponseContent) GetSecrets() []*ActionModuleSecret {
+	if u == nil || u.Secrets == nil {
+		return nil
+	}
+	return u.Secrets
+}
+
+func (u *UpdateActionModuleResponseContent) GetActionsUsingModuleTotal() int {
+	if u == nil || u.ActionsUsingModuleTotal == nil {
+		return 0
+	}
+	return *u.ActionsUsingModuleTotal
+}
+
+func (u *UpdateActionModuleResponseContent) GetAllChangesPublished() bool {
+	if u == nil || u.AllChangesPublished == nil {
+		return false
+	}
+	return *u.AllChangesPublished
+}
+
+func (u *UpdateActionModuleResponseContent) GetLatestVersionNumber() int {
+	if u == nil || u.LatestVersionNumber == nil {
+		return 0
+	}
+	return *u.LatestVersionNumber
+}
+
+func (u *UpdateActionModuleResponseContent) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UpdateActionModuleResponseContent) GetUpdatedAt() time.Time {
+	if u == nil || u.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *u.UpdatedAt
+}
+
+func (u *UpdateActionModuleResponseContent) GetLatestVersion() ActionModuleVersionReference {
+	if u == nil || u.LatestVersion == nil {
+		return ActionModuleVersionReference{}
+	}
+	return *u.LatestVersion
+}
+
+func (u *UpdateActionModuleResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateActionModuleResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateActionModuleResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateActionModuleResponseContentFieldName)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetCode(code *string) {
+	u.Code = code
+	u.require(updateActionModuleResponseContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetDependencies(dependencies []*ActionModuleDependency) {
+	u.Dependencies = dependencies
+	u.require(updateActionModuleResponseContentFieldDependencies)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetSecrets(secrets []*ActionModuleSecret) {
+	u.Secrets = secrets
+	u.require(updateActionModuleResponseContentFieldSecrets)
+}
+
+// SetActionsUsingModuleTotal sets the ActionsUsingModuleTotal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetActionsUsingModuleTotal(actionsUsingModuleTotal *int) {
+	u.ActionsUsingModuleTotal = actionsUsingModuleTotal
+	u.require(updateActionModuleResponseContentFieldActionsUsingModuleTotal)
+}
+
+// SetAllChangesPublished sets the AllChangesPublished field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetAllChangesPublished(allChangesPublished *bool) {
+	u.AllChangesPublished = allChangesPublished
+	u.require(updateActionModuleResponseContentFieldAllChangesPublished)
+}
+
+// SetLatestVersionNumber sets the LatestVersionNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetLatestVersionNumber(latestVersionNumber *int) {
+	u.LatestVersionNumber = latestVersionNumber
+	u.require(updateActionModuleResponseContentFieldLatestVersionNumber)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetCreatedAt(createdAt *time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateActionModuleResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateActionModuleResponseContentFieldUpdatedAt)
+}
+
+// SetLatestVersion sets the LatestVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleResponseContent) SetLatestVersion(latestVersion *ActionModuleVersionReference) {
+	u.LatestVersion = latestVersion
+	u.require(updateActionModuleResponseContentFieldLatestVersion)
+}
+
+func (u *UpdateActionModuleResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateActionModuleResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateActionModuleResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateActionModuleResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateActionModuleResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*u),
+		CreatedAt: internal.NewOptionalDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(u.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateActionModuleResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
 
 var (
 	updateActionResponseContentFieldID                     = big.NewInt(1 << 0)

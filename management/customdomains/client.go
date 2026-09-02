@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details on [custom domains](https://auth0.com/docs/custom-domains).
-func (c *Client) List(
+func (c *Client) GetCustomDomains(
 	ctx context.Context,
-	request *management.ListCustomDomainsRequestParameters,
+	request *management.GetCustomDomainsRequest,
 	opts ...option.RequestOption,
-) (management.ListCustomDomainsResponseContent, error) {
-	response, err := c.WithRawResponse.List(
+) (*management.ListCustomDomainsResponseContent, error) {
+	response, err := c.WithRawResponse.GetCustomDomains(
 		ctx,
 		request,
 		opts...,
@@ -64,12 +64,12 @@ func (c *Client) List(
 // TLS Policies:
 //
 // - recommended - for modern usage this includes TLS 1.2 only
-func (c *Client) Create(
+func (c *Client) PostCustomDomains(
 	ctx context.Context,
 	request *management.CreateCustomDomainRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateCustomDomainResponseContent, error) {
-	response, err := c.WithRawResponse.Create(
+	response, err := c.WithRawResponse.PostCustomDomains(
 		ctx,
 		request,
 		opts...,
@@ -96,12 +96,12 @@ func (c *Client) GetDefault(
 }
 
 // Set the default custom domain for the tenant.
-func (c *Client) SetDefault(
+func (c *Client) PatchDefault(
 	ctx context.Context,
 	request *management.SetDefaultCustomDomainRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateDefaultDomainResponseContent, error) {
-	response, err := c.WithRawResponse.SetDefault(
+	response, err := c.WithRawResponse.PatchDefault(
 		ctx,
 		request,
 		opts...,
@@ -113,13 +113,13 @@ func (c *Client) SetDefault(
 }
 
 // Retrieve a custom domain configuration and status.
-func (c *Client) Get(
+func (c *Client) GetCustomDomainsByID(
 	ctx context.Context,
 	// ID of the custom domain to retrieve.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetCustomDomainResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetCustomDomainsByID(
 		ctx,
 		id,
 		opts...,
@@ -131,13 +131,13 @@ func (c *Client) Get(
 }
 
 // Delete a custom domain and stop serving requests for it.
-func (c *Client) Delete(
+func (c *Client) DeleteCustomDomainsByID(
 	ctx context.Context,
 	// ID of the custom domain to delete.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteCustomDomainsByID(
 		ctx,
 		id,
 		opts...,
@@ -180,14 +180,14 @@ func (c *Client) Delete(
 //
 // - The TLS ciphers and protocols available in each TLS policy follow industry recommendations, and may be updated occasionally.
 // - The `compatible` TLS policy is no longer supported.
-func (c *Client) Update(
+func (c *Client) PatchCustomDomainsByID(
 	ctx context.Context,
 	// The id of the custom domain to update
 	id string,
 	request *management.UpdateCustomDomainRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateCustomDomainResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchCustomDomainsByID(
 		ctx,
 		id,
 		request,
@@ -200,13 +200,13 @@ func (c *Client) Update(
 }
 
 // Run the test process on a custom domain.
-func (c *Client) Test(
+func (c *Client) PostTestDomain(
 	ctx context.Context,
 	// ID of the custom domain to test.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.TestCustomDomainResponseContent, error) {
-	response, err := c.WithRawResponse.Test(
+	response, err := c.WithRawResponse.PostTestDomain(
 		ctx,
 		id,
 		opts...,
@@ -225,13 +225,13 @@ func (c *Client) Test(
 //
 // [Learn more](https://auth0.com/docs/custom-domains#step-2-verify-ownership) about verifying custom domains that use Auth0 Managed certificates.
 // [Learn more](https://auth0.com/docs/custom-domains/self-managed-certificates#step-2-verify-ownership) about verifying custom domains that use Self Managed certificates.
-func (c *Client) Verify(
+func (c *Client) PostVerify(
 	ctx context.Context,
 	// ID of the custom domain to verify.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.VerifyCustomDomainResponseContent, error) {
-	response, err := c.WithRawResponse.Verify(
+	response, err := c.WithRawResponse.PostVerify(
 		ctx,
 		id,
 		opts...,

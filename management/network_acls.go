@@ -328,6 +328,68 @@ func (l *ListNetworkACLsOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type ListNetworkACLsResponseContent struct {
+	ListNetworkACLsOffsetPaginatedResponseContent *ListNetworkACLsOffsetPaginatedResponseContent
+	NetworkACLsResponseContentList                []*NetworkACLsResponseContent
+
+	typ string
+}
+
+func (l *ListNetworkACLsResponseContent) GetListNetworkACLsOffsetPaginatedResponseContent() *ListNetworkACLsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListNetworkACLsOffsetPaginatedResponseContent
+}
+
+func (l *ListNetworkACLsResponseContent) GetNetworkACLsResponseContentList() []*NetworkACLsResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.NetworkACLsResponseContentList
+}
+
+func (l *ListNetworkACLsResponseContent) UnmarshalJSON(data []byte) error {
+	valueListNetworkACLsOffsetPaginatedResponseContent := new(ListNetworkACLsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListNetworkACLsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListNetworkACLsOffsetPaginatedResponseContent"
+		l.ListNetworkACLsOffsetPaginatedResponseContent = valueListNetworkACLsOffsetPaginatedResponseContent
+		return nil
+	}
+	var valueNetworkACLsResponseContentList []*NetworkACLsResponseContent
+	if err := json.Unmarshal(data, &valueNetworkACLsResponseContentList); err == nil {
+		l.typ = "NetworkACLsResponseContentList"
+		l.NetworkACLsResponseContentList = valueNetworkACLsResponseContentList
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListNetworkACLsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "ListNetworkACLsOffsetPaginatedResponseContent" || l.ListNetworkACLsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListNetworkACLsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "NetworkACLsResponseContentList" || l.NetworkACLsResponseContentList != nil {
+		return json.Marshal(l.NetworkACLsResponseContentList)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListNetworkACLsResponseContentVisitor interface {
+	VisitListNetworkACLsOffsetPaginatedResponseContent(*ListNetworkACLsOffsetPaginatedResponseContent) error
+	VisitNetworkACLsResponseContentList([]*NetworkACLsResponseContent) error
+}
+
+func (l *ListNetworkACLsResponseContent) Accept(visitor ListNetworkACLsResponseContentVisitor) error {
+	if l.typ == "ListNetworkACLsOffsetPaginatedResponseContent" || l.ListNetworkACLsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListNetworkACLsOffsetPaginatedResponseContent(l.ListNetworkACLsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "NetworkACLsResponseContentList" || l.NetworkACLsResponseContentList != nil {
+		return visitor.VisitNetworkACLsResponseContentList(l.NetworkACLsResponseContentList)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
 var (
 	networkACLActionFieldBlock       = big.NewInt(1 << 0)
 	networkACLActionFieldAllow       = big.NewInt(1 << 1)

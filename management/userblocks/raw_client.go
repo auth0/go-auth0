@@ -32,9 +32,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) ListByIdentifier(
+func (r *RawClient) GetUserBlocks(
 	ctx context.Context,
-	request *management.ListUserBlocksByIdentifierRequestParameters,
+	request *management.GetUserBlocksRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.ListUserBlocksByIdentifierResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -81,9 +81,9 @@ func (r *RawClient) ListByIdentifier(
 	}, nil
 }
 
-func (r *RawClient) DeleteByIdentifier(
+func (r *RawClient) DeleteUserBlocks(
 	ctx context.Context,
-	request *management.DeleteUserBlocksByIdentifierRequestParameters,
+	request *management.DeleteUserBlocksRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -128,11 +128,11 @@ func (r *RawClient) DeleteByIdentifier(
 	}, nil
 }
 
-func (r *RawClient) List(
+func (r *RawClient) GetUserBlocksByID(
 	ctx context.Context,
 	// user_id of the user blocks to retrieve.
 	id string,
-	request *management.ListUserBlocksRequestParameters,
+	request *management.GetUserBlocksByIDRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.ListUserBlocksResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -182,7 +182,7 @@ func (r *RawClient) List(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteUserBlocksByID(
 	ctx context.Context,
 	// The user_id of the user to update.
 	id string,

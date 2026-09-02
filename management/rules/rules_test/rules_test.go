@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestRulesListWithWireMock(
+func TestRulesGetRulesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestRulesListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListRulesRequestParameters{
+	request := &management.GetRulesRequest{
 		Page: management.Int(
 			1,
 		),
@@ -108,19 +108,19 @@ func TestRulesListWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.Rules.List(
+	_, invocationErr := client.Rules.GetRules(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRulesListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRulesGetRulesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRulesListWithWireMock", "GET", "/rules", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "enabled": "true", "fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestRulesGetRulesWithWireMock", "GET", "/rules", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "enabled": "true", "fields": "fields", "include_fields": "true"}, 1)
 }
 
-func TestRulesCreateWithWireMock(
+func TestRulesPostRulesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -135,19 +135,19 @@ func TestRulesCreateWithWireMock(
 		Name:   "name",
 		Script: "script",
 	}
-	_, invocationErr := client.Rules.Create(
+	_, invocationErr := client.Rules.PostRules(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRulesCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRulesPostRulesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRulesCreateWithWireMock", "POST", "/rules", nil, 1)
+	VerifyRequestCount(t, "TestRulesPostRulesWithWireMock", "POST", "/rules", nil, 1)
 }
 
-func TestRulesGetWithWireMock(
+func TestRulesGetRulesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -158,7 +158,7 @@ func TestRulesGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetRuleRequestParameters{
+	request := &management.GetRulesByIDRequest{
 		Fields: management.String(
 			"fields",
 		),
@@ -166,20 +166,20 @@ func TestRulesGetWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.Rules.Get(
+	_, invocationErr := client.Rules.GetRulesByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRulesGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRulesGetRulesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRulesGetWithWireMock", "GET", "/rules/id", map[string]interface{}{"fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestRulesGetRulesByIDWithWireMock", "GET", "/rules/id", map[string]interface{}{"fields": "fields", "include_fields": "true"}, 1)
 }
 
-func TestRulesDeleteWithWireMock(
+func TestRulesDeleteRulesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -190,19 +190,19 @@ func TestRulesDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Rules.Delete(
+	invocationErr := client.Rules.DeleteRulesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRulesDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRulesDeleteRulesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRulesDeleteWithWireMock", "DELETE", "/rules/id", nil, 1)
+	VerifyRequestCount(t, "TestRulesDeleteRulesByIDWithWireMock", "DELETE", "/rules/id", nil, 1)
 }
 
-func TestRulesUpdateWithWireMock(
+func TestRulesPatchRulesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -214,15 +214,15 @@ func TestRulesUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateRuleRequestContent{}
-	_, invocationErr := client.Rules.Update(
+	_, invocationErr := client.Rules.PatchRulesByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRulesUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRulesPatchRulesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRulesUpdateWithWireMock", "PATCH", "/rules/id", nil, 1)
+	VerifyRequestCount(t, "TestRulesPatchRulesByIDWithWireMock", "PATCH", "/rules/id", nil, 1)
 }

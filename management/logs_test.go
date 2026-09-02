@@ -1924,6 +1924,75 @@ func TestSettersMarkExplicitListLogOffsetPaginatedResponseContent(t *testing.T) 
 
 }
 
+func TestGettersListLogResponseContent(t *testing.T) {
+	t.Run("GetLogList", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListLogResponseContent{}
+		var expected []*Log
+		obj.LogList = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetLogList(), "getter should return the property value")
+	})
+
+	t.Run("GetLogList_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListLogResponseContent{}
+		obj.LogList = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetLogList(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetLogList_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListLogResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetLogList() // Should return zero value
+	})
+
+	t.Run("GetListLogOffsetPaginatedResponseContent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListLogResponseContent{}
+		var expected *ListLogOffsetPaginatedResponseContent
+		obj.ListLogOffsetPaginatedResponseContent = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetListLogOffsetPaginatedResponseContent(), "getter should return the property value")
+	})
+
+	t.Run("GetListLogOffsetPaginatedResponseContent_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListLogResponseContent{}
+		obj.ListLogOffsetPaginatedResponseContent = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetListLogOffsetPaginatedResponseContent(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetListLogOffsetPaginatedResponseContent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListLogResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetListLogOffsetPaginatedResponseContent() // Should return zero value
+	})
+
+}
+
 func TestJSONMarshalingGetLogResponseContent(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()

@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestBrandingGetWithWireMock(
+func TestBrandingGetBrandingWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,18 +88,18 @@ func TestBrandingGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Branding.Get(
+	_, invocationErr := client.Branding.GetBranding(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestBrandingGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestBrandingGetBrandingWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestBrandingGetWithWireMock", "GET", "/branding", nil, 1)
+	VerifyRequestCount(t, "TestBrandingGetBrandingWithWireMock", "GET", "/branding", nil, 1)
 }
 
-func TestBrandingUpdateWithWireMock(
+func TestBrandingPatchBrandingWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -111,14 +111,677 @@ func TestBrandingUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateBrandingRequestContent{}
-	_, invocationErr := client.Branding.Update(
+	_, invocationErr := client.Branding.PatchBranding(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestBrandingUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestBrandingPatchBrandingWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestBrandingUpdateWithWireMock", "PATCH", "/branding", nil, 1)
+	VerifyRequestCount(t, "TestBrandingPatchBrandingWithWireMock", "PATCH", "/branding", nil, 1)
+}
+
+func TestBrandingGetBrandingPhoneProvidersWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetBrandingPhoneProvidersRequest{
+		Disabled: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Branding.GetBrandingPhoneProviders(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingGetBrandingPhoneProvidersWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingGetBrandingPhoneProvidersWithWireMock", "GET", "/branding/phone/providers", map[string]interface{}{"disabled": "true"}, 1)
+}
+
+func TestBrandingCreatePhoneProviderWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateBrandingPhoneProviderRequestContent{
+		Name: management.PhoneProviderNameEnumTwilio,
+		Credentials: &management.PhoneProviderCredentials{
+			TwilioProviderCredentials: &management.TwilioProviderCredentials{
+				AuthToken: "auth_token",
+			},
+		},
+	}
+	_, invocationErr := client.Branding.CreatePhoneProvider(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingCreatePhoneProviderWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingCreatePhoneProviderWithWireMock", "POST", "/branding/phone/providers", nil, 1)
+}
+
+func TestBrandingGetPhoneProviderWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Branding.GetPhoneProvider(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingGetPhoneProviderWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingGetPhoneProviderWithWireMock", "GET", "/branding/phone/providers/id", nil, 1)
+}
+
+func TestBrandingDeletePhoneProviderWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Branding.DeletePhoneProvider(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingDeletePhoneProviderWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingDeletePhoneProviderWithWireMock", "DELETE", "/branding/phone/providers/id", nil, 1)
+}
+
+func TestBrandingUpdatePhoneProviderWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateBrandingPhoneProviderRequestContent{}
+	_, invocationErr := client.Branding.UpdatePhoneProvider(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingUpdatePhoneProviderWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingUpdatePhoneProviderWithWireMock", "PATCH", "/branding/phone/providers/id", nil, 1)
+}
+
+func TestBrandingTryPhoneProviderWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreatePhoneProviderSendTestRequestContent{
+		To: "to",
+	}
+	_, invocationErr := client.Branding.TryPhoneProvider(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingTryPhoneProviderWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingTryPhoneProviderWithWireMock", "POST", "/branding/phone/providers/id/try", nil, 1)
+}
+
+func TestBrandingGetPhoneTemplatesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetPhoneTemplatesRequest{
+		Disabled: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Branding.GetPhoneTemplates(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingGetPhoneTemplatesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingGetPhoneTemplatesWithWireMock", "GET", "/branding/phone/templates", map[string]interface{}{"disabled": "true"}, 1)
+}
+
+func TestBrandingCreatePhoneTemplateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreatePhoneTemplateRequestContent{}
+	_, invocationErr := client.Branding.CreatePhoneTemplate(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingCreatePhoneTemplateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingCreatePhoneTemplateWithWireMock", "POST", "/branding/phone/templates", nil, 1)
+}
+
+func TestBrandingGetPhoneTemplateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Branding.GetPhoneTemplate(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingGetPhoneTemplateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingGetPhoneTemplateWithWireMock", "GET", "/branding/phone/templates/id", nil, 1)
+}
+
+func TestBrandingDeletePhoneTemplateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Branding.DeletePhoneTemplate(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingDeletePhoneTemplateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingDeletePhoneTemplateWithWireMock", "DELETE", "/branding/phone/templates/id", nil, 1)
+}
+
+func TestBrandingUpdatePhoneTemplateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdatePhoneTemplateRequestContent{}
+	_, invocationErr := client.Branding.UpdatePhoneTemplate(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingUpdatePhoneTemplateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingUpdatePhoneTemplateWithWireMock", "PATCH", "/branding/phone/templates/id", nil, 1)
+}
+
+func TestBrandingResetPhoneTemplateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := map[string]any{
+		"key": "value",
+	}
+	_, invocationErr := client.Branding.ResetPhoneTemplate(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingResetPhoneTemplateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingResetPhoneTemplateWithWireMock", "PATCH", "/branding/phone/templates/id/reset", nil, 1)
+}
+
+func TestBrandingTryPhoneTemplateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreatePhoneTemplateTestNotificationRequestContent{
+		To: "to",
+	}
+	_, invocationErr := client.Branding.TryPhoneTemplate(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingTryPhoneTemplateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingTryPhoneTemplateWithWireMock", "POST", "/branding/phone/templates/id/try", nil, 1)
+}
+
+func TestBrandingGetUniversalLoginWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Branding.GetUniversalLogin(
+		context.TODO(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingGetUniversalLoginWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingGetUniversalLoginWithWireMock", "GET", "/branding/templates/universal-login", nil, 1)
+}
+
+func TestBrandingPutUniversalLoginWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateUniversalLoginTemplateRequestContent{
+		String: "string",
+	}
+	invocationErr := client.Branding.PutUniversalLogin(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingPutUniversalLoginWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingPutUniversalLoginWithWireMock", "PUT", "/branding/templates/universal-login", nil, 1)
+}
+
+func TestBrandingDeleteUniversalLoginWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Branding.DeleteUniversalLogin(
+		context.TODO(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingDeleteUniversalLoginWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingDeleteUniversalLoginWithWireMock", "DELETE", "/branding/templates/universal-login", nil, 1)
+}
+
+func TestBrandingPostBrandingThemeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateBrandingThemeRequestContent{
+		Borders: &management.BrandingThemeBorders{
+			ButtonBorderRadius: 1.1,
+			ButtonBorderWeight: 1.1,
+			ButtonsStyle:       management.BrandingThemeBordersButtonsStyleEnumPill,
+			InputBorderRadius:  1.1,
+			InputBorderWeight:  1.1,
+			InputsStyle:        management.BrandingThemeBordersInputsStyleEnumPill,
+			ShowWidgetShadow:   true,
+			WidgetBorderWeight: 1.1,
+			WidgetCornerRadius: 1.1,
+		},
+		Colors: &management.BrandingThemeColors{
+			BodyText:                "body_text",
+			Error:                   "error",
+			Header:                  "header",
+			Icons:                   "icons",
+			InputBackground:         "input_background",
+			InputBorder:             "input_border",
+			InputFilledText:         "input_filled_text",
+			InputLabelsPlaceholders: "input_labels_placeholders",
+			LinksFocusedComponents:  "links_focused_components",
+			PrimaryButton:           "primary_button",
+			PrimaryButtonLabel:      "primary_button_label",
+			SecondaryButtonBorder:   "secondary_button_border",
+			SecondaryButtonLabel:    "secondary_button_label",
+			Success:                 "success",
+			WidgetBackground:        "widget_background",
+			WidgetBorder:            "widget_border",
+		},
+		Fonts: &management.BrandingThemeFonts{
+			BodyText: &management.BrandingThemeFontBodyText{
+				Bold: true,
+				Size: 1.1,
+			},
+			ButtonsText: &management.BrandingThemeFontButtonsText{
+				Bold: true,
+				Size: 1.1,
+			},
+			FontURL: "font_url",
+			InputLabels: &management.BrandingThemeFontInputLabels{
+				Bold: true,
+				Size: 1.1,
+			},
+			Links: &management.BrandingThemeFontLinks{
+				Bold: true,
+				Size: 1.1,
+			},
+			LinksStyle:        management.BrandingThemeFontLinksStyleEnumNormal,
+			ReferenceTextSize: 1.1,
+			Subtitle: &management.BrandingThemeFontSubtitle{
+				Bold: true,
+				Size: 1.1,
+			},
+			Title: &management.BrandingThemeFontTitle{
+				Bold: true,
+				Size: 1.1,
+			},
+		},
+		PageBackground: &management.BrandingThemePageBackground{
+			BackgroundColor:    "background_color",
+			BackgroundImageURL: "background_image_url",
+			PageLayout:         management.BrandingThemePageBackgroundPageLayoutEnumCenter,
+		},
+		Widget: &management.BrandingThemeWidget{
+			HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
+			LogoHeight:          1.1,
+			LogoPosition:        management.BrandingThemeWidgetLogoPositionEnumCenter,
+			LogoURL:             "logo_url",
+			SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
+		},
+	}
+	_, invocationErr := client.Branding.PostBrandingTheme(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingPostBrandingThemeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingPostBrandingThemeWithWireMock", "POST", "/branding/themes", nil, 1)
+}
+
+func TestBrandingGetDefaultBrandingThemeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Branding.GetDefaultBrandingTheme(
+		context.TODO(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingGetDefaultBrandingThemeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingGetDefaultBrandingThemeWithWireMock", "GET", "/branding/themes/default", nil, 1)
+}
+
+func TestBrandingGetBrandingThemeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Branding.GetBrandingTheme(
+		context.TODO(),
+		"themeId",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingGetBrandingThemeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingGetBrandingThemeWithWireMock", "GET", "/branding/themes/themeId", nil, 1)
+}
+
+func TestBrandingDeleteBrandingThemeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Branding.DeleteBrandingTheme(
+		context.TODO(),
+		"themeId",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingDeleteBrandingThemeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingDeleteBrandingThemeWithWireMock", "DELETE", "/branding/themes/themeId", nil, 1)
+}
+
+func TestBrandingPatchBrandingThemeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateBrandingThemeRequestContent{
+		Borders: &management.BrandingThemeBorders{
+			ButtonBorderRadius: 1.1,
+			ButtonBorderWeight: 1.1,
+			ButtonsStyle:       management.BrandingThemeBordersButtonsStyleEnumPill,
+			InputBorderRadius:  1.1,
+			InputBorderWeight:  1.1,
+			InputsStyle:        management.BrandingThemeBordersInputsStyleEnumPill,
+			ShowWidgetShadow:   true,
+			WidgetBorderWeight: 1.1,
+			WidgetCornerRadius: 1.1,
+		},
+		Colors: &management.BrandingThemeColors{
+			BodyText:                "body_text",
+			Error:                   "error",
+			Header:                  "header",
+			Icons:                   "icons",
+			InputBackground:         "input_background",
+			InputBorder:             "input_border",
+			InputFilledText:         "input_filled_text",
+			InputLabelsPlaceholders: "input_labels_placeholders",
+			LinksFocusedComponents:  "links_focused_components",
+			PrimaryButton:           "primary_button",
+			PrimaryButtonLabel:      "primary_button_label",
+			SecondaryButtonBorder:   "secondary_button_border",
+			SecondaryButtonLabel:    "secondary_button_label",
+			Success:                 "success",
+			WidgetBackground:        "widget_background",
+			WidgetBorder:            "widget_border",
+		},
+		Fonts: &management.BrandingThemeFonts{
+			BodyText: &management.BrandingThemeFontBodyText{
+				Bold: true,
+				Size: 1.1,
+			},
+			ButtonsText: &management.BrandingThemeFontButtonsText{
+				Bold: true,
+				Size: 1.1,
+			},
+			FontURL: "font_url",
+			InputLabels: &management.BrandingThemeFontInputLabels{
+				Bold: true,
+				Size: 1.1,
+			},
+			Links: &management.BrandingThemeFontLinks{
+				Bold: true,
+				Size: 1.1,
+			},
+			LinksStyle:        management.BrandingThemeFontLinksStyleEnumNormal,
+			ReferenceTextSize: 1.1,
+			Subtitle: &management.BrandingThemeFontSubtitle{
+				Bold: true,
+				Size: 1.1,
+			},
+			Title: &management.BrandingThemeFontTitle{
+				Bold: true,
+				Size: 1.1,
+			},
+		},
+		PageBackground: &management.BrandingThemePageBackground{
+			BackgroundColor:    "background_color",
+			BackgroundImageURL: "background_image_url",
+			PageLayout:         management.BrandingThemePageBackgroundPageLayoutEnumCenter,
+		},
+		Widget: &management.BrandingThemeWidget{
+			HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
+			LogoHeight:          1.1,
+			LogoPosition:        management.BrandingThemeWidgetLogoPositionEnumCenter,
+			LogoURL:             "logo_url",
+			SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
+		},
+	}
+	_, invocationErr := client.Branding.PatchBrandingTheme(
+		context.TODO(),
+		"themeId",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestBrandingPatchBrandingThemeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestBrandingPatchBrandingThemeWithWireMock", "PATCH", "/branding/themes/themeId", nil, 1)
 }

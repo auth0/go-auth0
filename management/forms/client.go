@@ -4,9 +4,6 @@ package forms
 
 import (
 	context "context"
-	fmt "fmt"
-	http "net/http"
-	strconv "strconv"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -37,85 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) List(
+func (c *Client) GetForms(
 	ctx context.Context,
-	request *management.ListFormsRequestParameters,
+	request *management.GetFormsRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *management.FormSummary, *management.ListFormsOffsetPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/forms"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	next := 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *management.ListFormsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.FormSummary, *management.ListFormsOffsetPaginatedResponseContent] {
-		next += 1
-		results := response.Forms
-		return &core.PageResponse[*int, *management.FormSummary, *management.ListFormsOffsetPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
-}
-
-func (c *Client) Create(
-	ctx context.Context,
-	request *management.CreateFormRequestContent,
-	opts ...option.RequestOption,
-) (*management.CreateFormResponseContent, error) {
-	response, err := c.WithRawResponse.Create(
+) (*management.ListFormsResponseContent, error) {
+	response, err := c.WithRawResponse.GetForms(
 		ctx,
 		request,
 		opts...,
@@ -126,14 +50,30 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-func (c *Client) Get(
+func (c *Client) CreateForm(
+	ctx context.Context,
+	request *management.CreateFormRequestContent,
+	opts ...option.RequestOption,
+) (*management.CreateFormResponseContent, error) {
+	response, err := c.WithRawResponse.CreateForm(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) GetForm(
 	ctx context.Context,
 	// The ID of the form to retrieve.
 	id string,
-	request *management.GetFormRequestParameters,
+	request *management.GetFormRequest,
 	opts ...option.RequestOption,
 ) (*management.GetFormResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetForm(
 		ctx,
 		id,
 		request,
@@ -145,13 +85,13 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-func (c *Client) Delete(
+func (c *Client) DeleteForm(
 	ctx context.Context,
 	// The ID of the form to delete.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteForm(
 		ctx,
 		id,
 		opts...,
@@ -162,14 +102,14 @@ func (c *Client) Delete(
 	return nil
 }
 
-func (c *Client) Update(
+func (c *Client) PatchForm(
 	ctx context.Context,
 	// The ID of the form to update.
 	id string,
 	request *management.UpdateFormRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateFormResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchForm(
 		ctx,
 		id,
 		request,

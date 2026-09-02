@@ -4,7 +4,6 @@ package connectionprofiles
 
 import (
 	context "context"
-	http "net/http"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -36,78 +35,29 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a list of Connection Profiles. This endpoint supports Checkpoint pagination.
-func (c *Client) List(
+func (c *Client) GetConnectionProfiles(
 	ctx context.Context,
-	request *management.ListConnectionProfileRequestParameters,
+	request *management.GetConnectionProfilesRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *management.ConnectionProfile, *management.ListConnectionProfilesPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/connection-profiles"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.ListConnectionProfilesPaginatedResponseContent, error) {
+	response, err := c.WithRawResponse.GetConnectionProfiles(
+		ctx,
 		request,
-		map[string]any{
-			"take": 50,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("from", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	readPageResponse := func(response *management.ListConnectionProfilesPaginatedResponseContent) *core.PageResponse[*string, *management.ConnectionProfile, *management.ListConnectionProfilesPaginatedResponseContent] {
-		var zeroValue *string
-		next := response.Next
-		results := response.ConnectionProfiles
-		return &core.PageResponse[*string, *management.ConnectionProfile, *management.ListConnectionProfilesPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.From)
+	return response.Body, nil
 }
 
 // Create a Connection Profile.
-func (c *Client) Create(
+func (c *Client) PostConnectionProfiles(
 	ctx context.Context,
 	request *management.CreateConnectionProfileRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateConnectionProfileResponseContent, error) {
-	response, err := c.WithRawResponse.Create(
+	response, err := c.WithRawResponse.PostConnectionProfiles(
 		ctx,
 		request,
 		opts...,
@@ -119,11 +69,11 @@ func (c *Client) Create(
 }
 
 // Retrieve a list of Connection Profile Templates.
-func (c *Client) ListTemplates(
+func (c *Client) GetConnectionProfileTemplates(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*management.ListConnectionProfileTemplateResponseContent, error) {
-	response, err := c.WithRawResponse.ListTemplates(
+	response, err := c.WithRawResponse.GetConnectionProfileTemplates(
 		ctx,
 		opts...,
 	)
@@ -134,13 +84,13 @@ func (c *Client) ListTemplates(
 }
 
 // Retrieve a Connection Profile Template.
-func (c *Client) GetTemplate(
+func (c *Client) GetConnectionProfileTemplate(
 	ctx context.Context,
 	// ID of the connection-profile-template to retrieve.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetConnectionProfileTemplateResponseContent, error) {
-	response, err := c.WithRawResponse.GetTemplate(
+	response, err := c.WithRawResponse.GetConnectionProfileTemplate(
 		ctx,
 		id,
 		opts...,
@@ -152,13 +102,13 @@ func (c *Client) GetTemplate(
 }
 
 // Retrieve details about a single Connection Profile specified by ID.
-func (c *Client) Get(
+func (c *Client) GetConnectionProfilesByID(
 	ctx context.Context,
 	// ID of the connection-profile to retrieve.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetConnectionProfileResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetConnectionProfilesByID(
 		ctx,
 		id,
 		opts...,
@@ -170,13 +120,13 @@ func (c *Client) Get(
 }
 
 // Delete a single Connection Profile specified by ID.
-func (c *Client) Delete(
+func (c *Client) DeleteConnectionProfilesByID(
 	ctx context.Context,
 	// ID of the connection-profile to delete.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteConnectionProfilesByID(
 		ctx,
 		id,
 		opts...,
@@ -188,14 +138,14 @@ func (c *Client) Delete(
 }
 
 // Update the details of a specific Connection Profile.
-func (c *Client) Update(
+func (c *Client) PatchConnectionProfilesByID(
 	ctx context.Context,
 	// ID of the connection profile to update.
 	id string,
 	request *management.UpdateConnectionProfileRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateConnectionProfileResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchConnectionProfilesByID(
 		ctx,
 		id,
 		request,

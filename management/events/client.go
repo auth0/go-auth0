@@ -36,9 +36,9 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Subscribe to events via Server-Sent Events (SSE)
-func (c *Client) Subscribe(
+func (c *Client) SubscribeEvents(
 	ctx context.Context,
-	request *management.SubscribeEventsRequestParameters,
+	request *management.SubscribeEventsRequest,
 	opts ...option.RequestOption,
 ) (*core.Stream[management.EventStreamSubscribeEventsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -78,7 +78,6 @@ func (c *Client) Subscribe(
 			Prefix:                     internal.DefaultSSEDataPrefix,
 			Terminator:                 internal.DefaultSSETerminator,
 			Format:                     core.StreamFormatSSE,
-			EventDiscriminator:         "type",
 			ErrorDecoder:               internal.NewErrorDecoder(management.ErrorCodes),
 		},
 	)

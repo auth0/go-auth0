@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestSessionsGetWithWireMock(
+func TestSessionsGetSessionWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,19 +88,19 @@ func TestSessionsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Sessions.Get(
+	_, invocationErr := client.Sessions.GetSession(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSessionsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSessionsGetSessionWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSessionsGetWithWireMock", "GET", "/sessions/id", nil, 1)
+	VerifyRequestCount(t, "TestSessionsGetSessionWithWireMock", "GET", "/sessions/id", nil, 1)
 }
 
-func TestSessionsDeleteWithWireMock(
+func TestSessionsDeleteSessionWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -111,19 +111,19 @@ func TestSessionsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Sessions.Delete(
+	invocationErr := client.Sessions.DeleteSession(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSessionsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSessionsDeleteSessionWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSessionsDeleteWithWireMock", "DELETE", "/sessions/id", nil, 1)
+	VerifyRequestCount(t, "TestSessionsDeleteSessionWithWireMock", "DELETE", "/sessions/id", nil, 1)
 }
 
-func TestSessionsUpdateWithWireMock(
+func TestSessionsPatchSessionsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -135,20 +135,20 @@ func TestSessionsUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateSessionRequestContent{}
-	_, invocationErr := client.Sessions.Update(
+	_, invocationErr := client.Sessions.PatchSessionsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSessionsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSessionsPatchSessionsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSessionsUpdateWithWireMock", "PATCH", "/sessions/id", nil, 1)
+	VerifyRequestCount(t, "TestSessionsPatchSessionsByIDWithWireMock", "PATCH", "/sessions/id", nil, 1)
 }
 
-func TestSessionsRevokeWithWireMock(
+func TestSessionsRevokeSessionWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -159,14 +159,14 @@ func TestSessionsRevokeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Sessions.Revoke(
+	invocationErr := client.Sessions.RevokeSession(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSessionsRevokeWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSessionsRevokeSessionWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSessionsRevokeWithWireMock", "POST", "/sessions/id/revoke", nil, 1)
+	VerifyRequestCount(t, "TestSessionsRevokeSessionWithWireMock", "POST", "/sessions/id/revoke", nil, 1)
 }

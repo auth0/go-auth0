@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestTicketsVerifyEmailWithWireMock(
+func TestTicketsPostEmailVerificationWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -91,19 +91,19 @@ func TestTicketsVerifyEmailWithWireMock(
 	request := &management.VerifyEmailTicketRequestContent{
 		UserID: "user_id",
 	}
-	_, invocationErr := client.Tickets.VerifyEmail(
+	_, invocationErr := client.Tickets.PostEmailVerification(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestTicketsVerifyEmailWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestTicketsPostEmailVerificationWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestTicketsVerifyEmailWithWireMock", "POST", "/tickets/email-verification", nil, 1)
+	VerifyRequestCount(t, "TestTicketsPostEmailVerificationWithWireMock", "POST", "/tickets/email-verification", nil, 1)
 }
 
-func TestTicketsChangePasswordWithWireMock(
+func TestTicketsPostPasswordChangeWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -115,14 +115,14 @@ func TestTicketsChangePasswordWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ChangePasswordTicketRequestContent{}
-	_, invocationErr := client.Tickets.ChangePassword(
+	_, invocationErr := client.Tickets.PostPasswordChange(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestTicketsChangePasswordWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestTicketsPostPasswordChangeWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestTicketsChangePasswordWithWireMock", "POST", "/tickets/password-change", nil, 1)
+	VerifyRequestCount(t, "TestTicketsPostPasswordChangeWithWireMock", "POST", "/tickets/password-change", nil, 1)
 }

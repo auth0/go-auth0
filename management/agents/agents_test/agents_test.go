@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestAgentsListWithWireMock(
+func TestAgentsGetAgentsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestAgentsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListAgentsRequestParameters{
+	request := &management.GetAgentsRequest{
 		From: management.String(
 			"from",
 		),
@@ -96,19 +96,19 @@ func TestAgentsListWithWireMock(
 			1,
 		),
 	}
-	_, invocationErr := client.Agents.List(
+	_, invocationErr := client.Agents.GetAgents(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestAgentsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestAgentsGetAgentsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestAgentsListWithWireMock", "GET", "/agents", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestAgentsGetAgentsWithWireMock", "GET", "/agents", map[string]interface{}{"from": "from", "take": "1"}, 1)
 }
 
-func TestAgentsCreateWithWireMock(
+func TestAgentsPostAgentWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -122,19 +122,19 @@ func TestAgentsCreateWithWireMock(
 	request := &management.CreateAgentRequestContent{
 		Name: "name",
 	}
-	_, invocationErr := client.Agents.Create(
+	_, invocationErr := client.Agents.PostAgent(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestAgentsCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestAgentsPostAgentWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestAgentsCreateWithWireMock", "POST", "/agents", nil, 1)
+	VerifyRequestCount(t, "TestAgentsPostAgentWithWireMock", "POST", "/agents", nil, 1)
 }
 
-func TestAgentsReadWithWireMock(
+func TestAgentsGetAgentWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -145,19 +145,19 @@ func TestAgentsReadWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Agents.Read(
+	_, invocationErr := client.Agents.GetAgent(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestAgentsReadWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestAgentsGetAgentWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestAgentsReadWithWireMock", "GET", "/agents/id", nil, 1)
+	VerifyRequestCount(t, "TestAgentsGetAgentWithWireMock", "GET", "/agents/id", nil, 1)
 }
 
-func TestAgentsDeleteWithWireMock(
+func TestAgentsDeleteAgentWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -168,19 +168,19 @@ func TestAgentsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Agents.Delete(
+	invocationErr := client.Agents.DeleteAgent(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestAgentsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestAgentsDeleteAgentWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestAgentsDeleteWithWireMock", "DELETE", "/agents/id", nil, 1)
+	VerifyRequestCount(t, "TestAgentsDeleteAgentWithWireMock", "DELETE", "/agents/id", nil, 1)
 }
 
-func TestAgentsUpdateWithWireMock(
+func TestAgentsPatchAgentWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -191,16 +191,16 @@ func TestAgentsUpdateWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.PatchAgentRequestParameters{}
-	_, invocationErr := client.Agents.Update(
+	request := &management.UpdateAgentRequestContent{}
+	_, invocationErr := client.Agents.PatchAgent(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestAgentsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestAgentsPatchAgentWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestAgentsUpdateWithWireMock", "PATCH", "/agents/id", nil, 1)
+	VerifyRequestCount(t, "TestAgentsPatchAgentWithWireMock", "PATCH", "/agents/id", nil, 1)
 }

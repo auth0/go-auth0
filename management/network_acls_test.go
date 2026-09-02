@@ -829,6 +829,75 @@ func TestSettersMarkExplicitListNetworkACLsOffsetPaginatedResponseContent(t *tes
 
 }
 
+func TestGettersListNetworkACLsResponseContent(t *testing.T) {
+	t.Run("GetListNetworkACLsOffsetPaginatedResponseContent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListNetworkACLsResponseContent{}
+		var expected *ListNetworkACLsOffsetPaginatedResponseContent
+		obj.ListNetworkACLsOffsetPaginatedResponseContent = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetListNetworkACLsOffsetPaginatedResponseContent(), "getter should return the property value")
+	})
+
+	t.Run("GetListNetworkACLsOffsetPaginatedResponseContent_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListNetworkACLsResponseContent{}
+		obj.ListNetworkACLsOffsetPaginatedResponseContent = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetListNetworkACLsOffsetPaginatedResponseContent(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetListNetworkACLsOffsetPaginatedResponseContent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListNetworkACLsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetListNetworkACLsOffsetPaginatedResponseContent() // Should return zero value
+	})
+
+	t.Run("GetNetworkACLsResponseContentList", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListNetworkACLsResponseContent{}
+		var expected []*NetworkACLsResponseContent
+		obj.NetworkACLsResponseContentList = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetNetworkACLsResponseContentList(), "getter should return the property value")
+	})
+
+	t.Run("GetNetworkACLsResponseContentList_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListNetworkACLsResponseContent{}
+		obj.NetworkACLsResponseContentList = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetNetworkACLsResponseContentList(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetNetworkACLsResponseContentList_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListNetworkACLsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetNetworkACLsResponseContentList() // Should return zero value
+	})
+
+}
+
 func TestSettersNetworkACLAction(t *testing.T) {
 	t.Run("SetBlock", func(t *testing.T) {
 		obj := &NetworkACLAction{}

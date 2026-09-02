@@ -3,106 +3,112 @@
 package client
 
 import (
-	client "github.com/auth0/go-auth0/v3/management/actions/client"
+	actions "github.com/auth0/go-auth0/v3/management/actions"
 	agents "github.com/auth0/go-auth0/v3/management/agents"
-	anomalyclient "github.com/auth0/go-auth0/v3/management/anomaly/client"
-	attackprotectionclient "github.com/auth0/go-auth0/v3/management/attackprotection/client"
-	brandingclient "github.com/auth0/go-auth0/v3/management/branding/client"
-	clientgrantsclient "github.com/auth0/go-auth0/v3/management/clientgrants/client"
-	clientsclient "github.com/auth0/go-auth0/v3/management/clients/client"
+	anomaly "github.com/auth0/go-auth0/v3/management/anomaly"
+	attackprotection "github.com/auth0/go-auth0/v3/management/attackprotection"
+	branding "github.com/auth0/go-auth0/v3/management/branding"
+	clientgrants "github.com/auth0/go-auth0/v3/management/clientgrants"
+	clients "github.com/auth0/go-auth0/v3/management/clients"
 	connectionprofiles "github.com/auth0/go-auth0/v3/management/connectionprofiles"
-	connectionsclient "github.com/auth0/go-auth0/v3/management/connections/client"
+	connections "github.com/auth0/go-auth0/v3/management/connections"
+	connectionsdirectoryprovisionings "github.com/auth0/go-auth0/v3/management/connectionsdirectoryprovisionings"
+	connectionsscimconfigurations "github.com/auth0/go-auth0/v3/management/connectionsscimconfigurations"
 	core "github.com/auth0/go-auth0/v3/management/core"
 	customdomains "github.com/auth0/go-auth0/v3/management/customdomains"
 	devicecredentials "github.com/auth0/go-auth0/v3/management/devicecredentials"
-	emailsclient "github.com/auth0/go-auth0/v3/management/emails/client"
+	emails "github.com/auth0/go-auth0/v3/management/emails"
 	emailtemplates "github.com/auth0/go-auth0/v3/management/emailtemplates"
 	events "github.com/auth0/go-auth0/v3/management/events"
-	eventstreamsclient "github.com/auth0/go-auth0/v3/management/eventstreams/client"
-	flowsclient "github.com/auth0/go-auth0/v3/management/flows/client"
+	eventstreams "github.com/auth0/go-auth0/v3/management/eventstreams"
+	flows "github.com/auth0/go-auth0/v3/management/flows"
 	forms "github.com/auth0/go-auth0/v3/management/forms"
-	groupsclient "github.com/auth0/go-auth0/v3/management/groups/client"
-	guardianclient "github.com/auth0/go-auth0/v3/management/guardian/client"
-	hooksclient "github.com/auth0/go-auth0/v3/management/hooks/client"
+	grants "github.com/auth0/go-auth0/v3/management/grants"
+	groups "github.com/auth0/go-auth0/v3/management/groups"
+	guardian "github.com/auth0/go-auth0/v3/management/guardian"
+	hooks "github.com/auth0/go-auth0/v3/management/hooks"
 	internal "github.com/auth0/go-auth0/v3/management/internal"
-	jobsclient "github.com/auth0/go-auth0/v3/management/jobs/client"
-	keysclient "github.com/auth0/go-auth0/v3/management/keys/client"
+	jobs "github.com/auth0/go-auth0/v3/management/jobs"
+	keys "github.com/auth0/go-auth0/v3/management/keys"
 	logs "github.com/auth0/go-auth0/v3/management/logs"
 	logstreams "github.com/auth0/go-auth0/v3/management/logstreams"
 	networkacls "github.com/auth0/go-auth0/v3/management/networkacls"
 	option "github.com/auth0/go-auth0/v3/management/option"
-	organizationsclient "github.com/auth0/go-auth0/v3/management/organizations/client"
+	organizations "github.com/auth0/go-auth0/v3/management/organizations"
 	organizationtemplates "github.com/auth0/go-auth0/v3/management/organizationtemplates"
-	promptsclient "github.com/auth0/go-auth0/v3/management/prompts/client"
+	prompts "github.com/auth0/go-auth0/v3/management/prompts"
 	ratelimitpolicies "github.com/auth0/go-auth0/v3/management/ratelimitpolicies"
 	refreshtokens "github.com/auth0/go-auth0/v3/management/refreshtokens"
 	resourceservers "github.com/auth0/go-auth0/v3/management/resourceservers"
-	riskassessmentsclient "github.com/auth0/go-auth0/v3/management/riskassessments/client"
-	rolesclient "github.com/auth0/go-auth0/v3/management/roles/client"
+	riskassessments "github.com/auth0/go-auth0/v3/management/riskassessments"
+	roles "github.com/auth0/go-auth0/v3/management/roles"
 	rules "github.com/auth0/go-auth0/v3/management/rules"
 	rulesconfigs "github.com/auth0/go-auth0/v3/management/rulesconfigs"
-	selfserviceprofilesclient "github.com/auth0/go-auth0/v3/management/selfserviceprofiles/client"
+	selfserviceprofiles "github.com/auth0/go-auth0/v3/management/selfserviceprofiles"
 	sessions "github.com/auth0/go-auth0/v3/management/sessions"
 	stats "github.com/auth0/go-auth0/v3/management/stats"
 	supplementalsignals "github.com/auth0/go-auth0/v3/management/supplementalsignals"
-	tenantsclient "github.com/auth0/go-auth0/v3/management/tenants/client"
+	tenants "github.com/auth0/go-auth0/v3/management/tenants"
 	tickets "github.com/auth0/go-auth0/v3/management/tickets"
 	tokenexchangeprofiles "github.com/auth0/go-auth0/v3/management/tokenexchangeprofiles"
 	userattributeprofiles "github.com/auth0/go-auth0/v3/management/userattributeprofiles"
 	userblocks "github.com/auth0/go-auth0/v3/management/userblocks"
-	usergrants "github.com/auth0/go-auth0/v3/management/usergrants"
-	usersclient "github.com/auth0/go-auth0/v3/management/users/client"
-	verifiablecredentialsclient "github.com/auth0/go-auth0/v3/management/verifiablecredentials/client"
+	users "github.com/auth0/go-auth0/v3/management/users"
+	usersbyemail "github.com/auth0/go-auth0/v3/management/usersbyemail"
+	verifiablecredentials "github.com/auth0/go-auth0/v3/management/verifiablecredentials"
 )
 
 type Management struct {
-	Actions               *client.Client
-	Agents                *agents.Client
-	Branding              *brandingclient.Client
-	ClientGrants          *clientgrantsclient.Client
-	Clients               *clientsclient.Client
-	ConnectionProfiles    *connectionprofiles.Client
-	Connections           *connectionsclient.Client
-	CustomDomains         *customdomains.Client
-	DeviceCredentials     *devicecredentials.Client
-	EmailTemplates        *emailtemplates.Client
-	EventStreams          *eventstreamsclient.Client
-	Events                *events.Client
-	Flows                 *flowsclient.Client
-	Forms                 *forms.Client
-	UserGrants            *usergrants.Client
-	Groups                *groupsclient.Client
-	Hooks                 *hooksclient.Client
-	Jobs                  *jobsclient.Client
-	LogStreams            *logstreams.Client
-	Logs                  *logs.Client
-	NetworkACLs           *networkacls.Client
-	OrganizationTemplates *organizationtemplates.Client
-	Organizations         *organizationsclient.Client
-	Prompts               *promptsclient.Client
-	RateLimitPolicies     *ratelimitpolicies.Client
-	RefreshTokens         *refreshtokens.Client
-	ResourceServers       *resourceservers.Client
-	Roles                 *rolesclient.Client
-	Rules                 *rules.Client
-	RulesConfigs          *rulesconfigs.Client
-	SelfServiceProfiles   *selfserviceprofilesclient.Client
-	Sessions              *sessions.Client
-	Stats                 *stats.Client
-	SupplementalSignals   *supplementalsignals.Client
-	Tickets               *tickets.Client
-	TokenExchangeProfiles *tokenexchangeprofiles.Client
-	UserAttributeProfiles *userattributeprofiles.Client
-	UserBlocks            *userblocks.Client
-	Users                 *usersclient.Client
-	Anomaly               *anomalyclient.Client
-	AttackProtection      *attackprotectionclient.Client
-	Emails                *emailsclient.Client
-	Guardian              *guardianclient.Client
-	Keys                  *keysclient.Client
-	RiskAssessments       *riskassessmentsclient.Client
-	Tenants               *tenantsclient.Client
-	VerifiableCredentials *verifiablecredentialsclient.Client
+	Actions                           *actions.Client
+	Agents                            *agents.Client
+	Anomaly                           *anomaly.Client
+	AttackProtection                  *attackprotection.Client
+	Branding                          *branding.Client
+	ClientGrants                      *clientgrants.Client
+	Clients                           *clients.Client
+	ConnectionProfiles                *connectionprofiles.Client
+	Connections                       *connections.Client
+	ConnectionsDirectoryProvisionings *connectionsdirectoryprovisionings.Client
+	ConnectionsSCIMConfigurations     *connectionsscimconfigurations.Client
+	CustomDomains                     *customdomains.Client
+	DeviceCredentials                 *devicecredentials.Client
+	EmailTemplates                    *emailtemplates.Client
+	Emails                            *emails.Client
+	EventStreams                      *eventstreams.Client
+	Events                            *events.Client
+	Flows                             *flows.Client
+	Forms                             *forms.Client
+	Grants                            *grants.Client
+	Groups                            *groups.Client
+	Guardian                          *guardian.Client
+	Hooks                             *hooks.Client
+	Jobs                              *jobs.Client
+	Keys                              *keys.Client
+	LogStreams                        *logstreams.Client
+	Logs                              *logs.Client
+	NetworkACLs                       *networkacls.Client
+	OrganizationTemplates             *organizationtemplates.Client
+	Organizations                     *organizations.Client
+	Prompts                           *prompts.Client
+	RateLimitPolicies                 *ratelimitpolicies.Client
+	RefreshTokens                     *refreshtokens.Client
+	ResourceServers                   *resourceservers.Client
+	RiskAssessments                   *riskassessments.Client
+	Roles                             *roles.Client
+	Rules                             *rules.Client
+	RulesConfigs                      *rulesconfigs.Client
+	SelfServiceProfiles               *selfserviceprofiles.Client
+	Sessions                          *sessions.Client
+	Stats                             *stats.Client
+	SupplementalSignals               *supplementalsignals.Client
+	Tenants                           *tenants.Client
+	Tickets                           *tickets.Client
+	TokenExchangeProfiles             *tokenexchangeprofiles.Client
+	UserAttributeProfiles             *userattributeprofiles.Client
+	UserBlocks                        *userblocks.Client
+	Users                             *users.Client
+	UsersByEmail                      *usersbyemail.Client
+	VerifiableCredentials             *verifiablecredentials.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -112,55 +118,58 @@ type Management struct {
 func NewWithOptions(opts ...option.RequestOption) *Management {
 	options := core.NewRequestOptions(opts...)
 	return &Management{
-		Actions:               client.NewClient(options),
-		Agents:                agents.NewClient(options),
-		Branding:              brandingclient.NewClient(options),
-		ClientGrants:          clientgrantsclient.NewClient(options),
-		Clients:               clientsclient.NewClient(options),
-		ConnectionProfiles:    connectionprofiles.NewClient(options),
-		Connections:           connectionsclient.NewClient(options),
-		CustomDomains:         customdomains.NewClient(options),
-		DeviceCredentials:     devicecredentials.NewClient(options),
-		EmailTemplates:        emailtemplates.NewClient(options),
-		EventStreams:          eventstreamsclient.NewClient(options),
-		Events:                events.NewClient(options),
-		Flows:                 flowsclient.NewClient(options),
-		Forms:                 forms.NewClient(options),
-		UserGrants:            usergrants.NewClient(options),
-		Groups:                groupsclient.NewClient(options),
-		Hooks:                 hooksclient.NewClient(options),
-		Jobs:                  jobsclient.NewClient(options),
-		LogStreams:            logstreams.NewClient(options),
-		Logs:                  logs.NewClient(options),
-		NetworkACLs:           networkacls.NewClient(options),
-		OrganizationTemplates: organizationtemplates.NewClient(options),
-		Organizations:         organizationsclient.NewClient(options),
-		Prompts:               promptsclient.NewClient(options),
-		RateLimitPolicies:     ratelimitpolicies.NewClient(options),
-		RefreshTokens:         refreshtokens.NewClient(options),
-		ResourceServers:       resourceservers.NewClient(options),
-		Roles:                 rolesclient.NewClient(options),
-		Rules:                 rules.NewClient(options),
-		RulesConfigs:          rulesconfigs.NewClient(options),
-		SelfServiceProfiles:   selfserviceprofilesclient.NewClient(options),
-		Sessions:              sessions.NewClient(options),
-		Stats:                 stats.NewClient(options),
-		SupplementalSignals:   supplementalsignals.NewClient(options),
-		Tickets:               tickets.NewClient(options),
-		TokenExchangeProfiles: tokenexchangeprofiles.NewClient(options),
-		UserAttributeProfiles: userattributeprofiles.NewClient(options),
-		UserBlocks:            userblocks.NewClient(options),
-		Users:                 usersclient.NewClient(options),
-		Anomaly:               anomalyclient.NewClient(options),
-		AttackProtection:      attackprotectionclient.NewClient(options),
-		Emails:                emailsclient.NewClient(options),
-		Guardian:              guardianclient.NewClient(options),
-		Keys:                  keysclient.NewClient(options),
-		RiskAssessments:       riskassessmentsclient.NewClient(options),
-		Tenants:               tenantsclient.NewClient(options),
-		VerifiableCredentials: verifiablecredentialsclient.NewClient(options),
-		options:               options,
-		baseURL:               options.BaseURL,
+		Actions:                           actions.NewClient(options),
+		Agents:                            agents.NewClient(options),
+		Anomaly:                           anomaly.NewClient(options),
+		AttackProtection:                  attackprotection.NewClient(options),
+		Branding:                          branding.NewClient(options),
+		ClientGrants:                      clientgrants.NewClient(options),
+		Clients:                           clients.NewClient(options),
+		ConnectionProfiles:                connectionprofiles.NewClient(options),
+		Connections:                       connections.NewClient(options),
+		ConnectionsDirectoryProvisionings: connectionsdirectoryprovisionings.NewClient(options),
+		ConnectionsSCIMConfigurations:     connectionsscimconfigurations.NewClient(options),
+		CustomDomains:                     customdomains.NewClient(options),
+		DeviceCredentials:                 devicecredentials.NewClient(options),
+		EmailTemplates:                    emailtemplates.NewClient(options),
+		Emails:                            emails.NewClient(options),
+		EventStreams:                      eventstreams.NewClient(options),
+		Events:                            events.NewClient(options),
+		Flows:                             flows.NewClient(options),
+		Forms:                             forms.NewClient(options),
+		Grants:                            grants.NewClient(options),
+		Groups:                            groups.NewClient(options),
+		Guardian:                          guardian.NewClient(options),
+		Hooks:                             hooks.NewClient(options),
+		Jobs:                              jobs.NewClient(options),
+		Keys:                              keys.NewClient(options),
+		LogStreams:                        logstreams.NewClient(options),
+		Logs:                              logs.NewClient(options),
+		NetworkACLs:                       networkacls.NewClient(options),
+		OrganizationTemplates:             organizationtemplates.NewClient(options),
+		Organizations:                     organizations.NewClient(options),
+		Prompts:                           prompts.NewClient(options),
+		RateLimitPolicies:                 ratelimitpolicies.NewClient(options),
+		RefreshTokens:                     refreshtokens.NewClient(options),
+		ResourceServers:                   resourceservers.NewClient(options),
+		RiskAssessments:                   riskassessments.NewClient(options),
+		Roles:                             roles.NewClient(options),
+		Rules:                             rules.NewClient(options),
+		RulesConfigs:                      rulesconfigs.NewClient(options),
+		SelfServiceProfiles:               selfserviceprofiles.NewClient(options),
+		Sessions:                          sessions.NewClient(options),
+		Stats:                             stats.NewClient(options),
+		SupplementalSignals:               supplementalsignals.NewClient(options),
+		Tenants:                           tenants.NewClient(options),
+		Tickets:                           tickets.NewClient(options),
+		TokenExchangeProfiles:             tokenexchangeprofiles.NewClient(options),
+		UserAttributeProfiles:             userattributeprofiles.NewClient(options),
+		UserBlocks:                        userblocks.NewClient(options),
+		Users:                             users.NewClient(options),
+		UsersByEmail:                      usersbyemail.NewClient(options),
+		VerifiableCredentials:             verifiablecredentials.NewClient(options),
+		options:                           options,
+		baseURL:                           options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:         options.HTTPClient,

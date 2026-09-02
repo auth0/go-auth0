@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestTokenExchangeProfilesListWithWireMock(
+func TestTokenExchangeProfilesGetTokenExchangeProfilesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestTokenExchangeProfilesListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.TokenExchangeProfilesListRequest{
+	request := &management.GetTokenExchangeProfilesRequest{
 		From: management.String(
 			"from",
 		),
@@ -96,19 +96,19 @@ func TestTokenExchangeProfilesListWithWireMock(
 			1,
 		),
 	}
-	_, invocationErr := client.TokenExchangeProfiles.List(
+	_, invocationErr := client.TokenExchangeProfiles.GetTokenExchangeProfiles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesGetTokenExchangeProfilesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestTokenExchangeProfilesListWithWireMock", "GET", "/token-exchange-profiles", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestTokenExchangeProfilesGetTokenExchangeProfilesWithWireMock", "GET", "/token-exchange-profiles", map[string]interface{}{"from": "from", "take": "1"}, 1)
 }
 
-func TestTokenExchangeProfilesCreateWithWireMock(
+func TestTokenExchangeProfilesPostTokenExchangeProfilesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -125,19 +125,19 @@ func TestTokenExchangeProfilesCreateWithWireMock(
 		ActionID:         "action_id",
 		Type:             management.TokenExchangeProfileTypeEnumCustomAuthentication,
 	}
-	_, invocationErr := client.TokenExchangeProfiles.Create(
+	_, invocationErr := client.TokenExchangeProfiles.PostTokenExchangeProfiles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesPostTokenExchangeProfilesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestTokenExchangeProfilesCreateWithWireMock", "POST", "/token-exchange-profiles", nil, 1)
+	VerifyRequestCount(t, "TestTokenExchangeProfilesPostTokenExchangeProfilesWithWireMock", "POST", "/token-exchange-profiles", nil, 1)
 }
 
-func TestTokenExchangeProfilesGetWithWireMock(
+func TestTokenExchangeProfilesGetTokenExchangeProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -148,19 +148,19 @@ func TestTokenExchangeProfilesGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.TokenExchangeProfiles.Get(
+	_, invocationErr := client.TokenExchangeProfiles.GetTokenExchangeProfilesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesGetTokenExchangeProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestTokenExchangeProfilesGetWithWireMock", "GET", "/token-exchange-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestTokenExchangeProfilesGetTokenExchangeProfilesByIDWithWireMock", "GET", "/token-exchange-profiles/id", nil, 1)
 }
 
-func TestTokenExchangeProfilesDeleteWithWireMock(
+func TestTokenExchangeProfilesDeleteTokenExchangeProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -171,19 +171,19 @@ func TestTokenExchangeProfilesDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.TokenExchangeProfiles.Delete(
+	invocationErr := client.TokenExchangeProfiles.DeleteTokenExchangeProfilesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesDeleteTokenExchangeProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestTokenExchangeProfilesDeleteWithWireMock", "DELETE", "/token-exchange-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestTokenExchangeProfilesDeleteTokenExchangeProfilesByIDWithWireMock", "DELETE", "/token-exchange-profiles/id", nil, 1)
 }
 
-func TestTokenExchangeProfilesUpdateWithWireMock(
+func TestTokenExchangeProfilesPatchTokenExchangeProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -195,15 +195,15 @@ func TestTokenExchangeProfilesUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateTokenExchangeProfileRequestContent{}
-	invocationErr := client.TokenExchangeProfiles.Update(
+	invocationErr := client.TokenExchangeProfiles.PatchTokenExchangeProfilesByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestTokenExchangeProfilesPatchTokenExchangeProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestTokenExchangeProfilesUpdateWithWireMock", "PATCH", "/token-exchange-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestTokenExchangeProfilesPatchTokenExchangeProfilesByIDWithWireMock", "PATCH", "/token-exchange-profiles/id", nil, 1)
 }

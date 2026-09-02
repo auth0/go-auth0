@@ -4,7 +4,6 @@ package refreshtokens
 
 import (
 	context "context"
-	http "net/http"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -36,78 +35,29 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a paginated list of refresh tokens for a specific user, with optional filtering by client ID. Results are sorted by credential_id ascending.
-func (c *Client) List(
+func (c *Client) GetRefreshTokens(
 	ctx context.Context,
-	request *management.GetRefreshTokensRequestParameters,
+	request *management.GetRefreshTokensRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *management.RefreshTokenResponseContent, *management.GetRefreshTokensPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/refresh-tokens"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.GetRefreshTokensPaginatedResponseContent, error) {
+	response, err := c.WithRawResponse.GetRefreshTokens(
+		ctx,
 		request,
-		map[string]any{
-			"take": 50,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("from", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	readPageResponse := func(response *management.GetRefreshTokensPaginatedResponseContent) *core.PageResponse[*string, *management.RefreshTokenResponseContent, *management.GetRefreshTokensPaginatedResponseContent] {
-		var zeroValue *string
-		next := response.Next
-		results := response.RefreshTokens
-		return &core.PageResponse[*string, *management.RefreshTokenResponseContent, *management.GetRefreshTokensPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.From)
+	return response.Body, nil
 }
 
 // Revoke refresh tokens in bulk by ID list, user, user+client, or user+client+audience.
-func (c *Client) Revoke(
+func (c *Client) RevokeRefreshTokens(
 	ctx context.Context,
 	request *management.RevokeRefreshTokensRequestContent,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Revoke(
+	_, err := c.WithRawResponse.RevokeRefreshTokens(
 		ctx,
 		request,
 		opts...,
@@ -119,13 +69,13 @@ func (c *Client) Revoke(
 }
 
 // Retrieve refresh token information.
-func (c *Client) Get(
+func (c *Client) GetRefreshToken(
 	ctx context.Context,
 	// ID refresh token to retrieve
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetRefreshTokenResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetRefreshToken(
 		ctx,
 		id,
 		opts...,
@@ -137,13 +87,13 @@ func (c *Client) Get(
 }
 
 // Delete a refresh token by its ID.
-func (c *Client) Delete(
+func (c *Client) DeleteRefreshToken(
 	ctx context.Context,
 	// ID of the refresh token to delete.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteRefreshToken(
 		ctx,
 		id,
 		opts...,
@@ -155,14 +105,14 @@ func (c *Client) Delete(
 }
 
 // Update a refresh token by its ID.
-func (c *Client) Update(
+func (c *Client) PatchRefreshTokensByID(
 	ctx context.Context,
 	// ID of the refresh token to update.
 	id string,
 	request *management.UpdateRefreshTokenRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateRefreshTokenResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchRefreshTokensByID(
 		ctx,
 		id,
 		request,

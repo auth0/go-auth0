@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestFormsListWithWireMock(
+func TestFormsGetFormsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestFormsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListFormsRequestParameters{
+	request := &management.GetFormsRequest{
 		Page: management.Int(
 			1,
 		),
@@ -102,19 +102,19 @@ func TestFormsListWithWireMock(
 			management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
 		},
 	}
-	_, invocationErr := client.Forms.List(
+	_, invocationErr := client.Forms.GetForms(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFormsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFormsGetFormsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFormsListWithWireMock", "GET", "/forms", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "hydrate": "flow_count"}, 1)
+	VerifyRequestCount(t, "TestFormsGetFormsWithWireMock", "GET", "/forms", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "hydrate": "flow_count"}, 1)
 }
 
-func TestFormsCreateWithWireMock(
+func TestFormsCreateFormWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -128,19 +128,19 @@ func TestFormsCreateWithWireMock(
 	request := &management.CreateFormRequestContent{
 		Name: "name",
 	}
-	_, invocationErr := client.Forms.Create(
+	_, invocationErr := client.Forms.CreateForm(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFormsCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFormsCreateFormWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFormsCreateWithWireMock", "POST", "/forms", nil, 1)
+	VerifyRequestCount(t, "TestFormsCreateFormWithWireMock", "POST", "/forms", nil, 1)
 }
 
-func TestFormsGetWithWireMock(
+func TestFormsGetFormWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -151,25 +151,25 @@ func TestFormsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetFormRequestParameters{
+	request := &management.GetFormRequest{
 		Hydrate: []*management.FormsRequestParametersHydrateEnum{
 			management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
 		},
 	}
-	_, invocationErr := client.Forms.Get(
+	_, invocationErr := client.Forms.GetForm(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFormsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFormsGetFormWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFormsGetWithWireMock", "GET", "/forms/id", map[string]interface{}{"hydrate": "flow_count"}, 1)
+	VerifyRequestCount(t, "TestFormsGetFormWithWireMock", "GET", "/forms/id", map[string]interface{}{"hydrate": "flow_count"}, 1)
 }
 
-func TestFormsDeleteWithWireMock(
+func TestFormsDeleteFormWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -180,19 +180,19 @@ func TestFormsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Forms.Delete(
+	invocationErr := client.Forms.DeleteForm(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFormsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFormsDeleteFormWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFormsDeleteWithWireMock", "DELETE", "/forms/id", nil, 1)
+	VerifyRequestCount(t, "TestFormsDeleteFormWithWireMock", "DELETE", "/forms/id", nil, 1)
 }
 
-func TestFormsUpdateWithWireMock(
+func TestFormsPatchFormWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -204,15 +204,15 @@ func TestFormsUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateFormRequestContent{}
-	_, invocationErr := client.Forms.Update(
+	_, invocationErr := client.Forms.PatchForm(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFormsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFormsPatchFormWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFormsUpdateWithWireMock", "PATCH", "/forms/id", nil, 1)
+	VerifyRequestCount(t, "TestFormsPatchFormWithWireMock", "PATCH", "/forms/id", nil, 1)
 }

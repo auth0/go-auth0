@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestGroupsListWithWireMock(
+func TestGroupsGetGroupsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestGroupsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListGroupsRequestParameters{
+	request := &management.GetGroupsRequest{
 		ConnectionID: management.String(
 			"connection_id",
 		),
@@ -107,6 +107,12 @@ func TestGroupsListWithWireMock(
 		IncludeFields: management.Bool(
 			true,
 		),
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
 		IncludeTotals: management.Bool(
 			true,
 		),
@@ -117,19 +123,19 @@ func TestGroupsListWithWireMock(
 			1,
 		),
 	}
-	_, invocationErr := client.Groups.List(
+	_, invocationErr := client.Groups.GetGroups(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestGroupsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestGroupsGetGroupsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestGroupsListWithWireMock", "GET", "/groups", map[string]interface{}{"connection_id": "connection_id", "name": "name", "external_id": "external_id", "search": "search", "fields": "fields", "include_fields": "true", "include_totals": "true", "from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestGroupsGetGroupsWithWireMock", "GET", "/groups", map[string]interface{}{"connection_id": "connection_id", "name": "name", "external_id": "external_id", "search": "search", "fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "from": "from", "take": "1"}, 1)
 }
 
-func TestGroupsGetWithWireMock(
+func TestGroupsGetGroupWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -140,19 +146,19 @@ func TestGroupsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Groups.Get(
+	_, invocationErr := client.Groups.GetGroup(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestGroupsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestGroupsGetGroupWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestGroupsGetWithWireMock", "GET", "/groups/id", nil, 1)
+	VerifyRequestCount(t, "TestGroupsGetGroupWithWireMock", "GET", "/groups/id", nil, 1)
 }
 
-func TestGroupsDeleteWithWireMock(
+func TestGroupsDeleteGroupWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -163,14 +169,142 @@ func TestGroupsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Groups.Delete(
+	invocationErr := client.Groups.DeleteGroup(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestGroupsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestGroupsDeleteGroupWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestGroupsDeleteWithWireMock", "DELETE", "/groups/id", nil, 1)
+	VerifyRequestCount(t, "TestGroupsDeleteGroupWithWireMock", "DELETE", "/groups/id", nil, 1)
+}
+
+func TestGroupsGetGroupMembersWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetGroupMembersRequest{
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Groups.GetGroupMembers(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGroupsGetGroupMembersWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestGroupsGetGroupMembersWithWireMock", "GET", "/groups/id/members", map[string]interface{}{"fields": "fields", "include_fields": "true", "from": "from", "take": "1"}, 1)
+}
+
+func TestGroupsGetGroupRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetGroupRolesRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Groups.GetGroupRoles(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGroupsGetGroupRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestGroupsGetGroupRolesWithWireMock", "GET", "/groups/id/roles", map[string]interface{}{"from": "from", "take": "1"}, 1)
+}
+
+func TestGroupsPostGroupRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.AssignGroupRolesRequestContent{
+		Roles: []string{
+			"roles",
+		},
+	}
+	invocationErr := client.Groups.PostGroupRoles(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGroupsPostGroupRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestGroupsPostGroupRolesWithWireMock", "POST", "/groups/id/roles", nil, 1)
+}
+
+func TestGroupsDeleteGroupRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteGroupRolesRequestContent{
+		Roles: []string{
+			"roles",
+		},
+	}
+	invocationErr := client.Groups.DeleteGroupRoles(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestGroupsDeleteGroupRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestGroupsDeleteGroupRolesWithWireMock", "DELETE", "/groups/id/roles", nil, 1)
 }

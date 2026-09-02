@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
+	time "time"
 )
 
 // Specifies the API behavior for password authentication
@@ -740,6 +741,96 @@ func (c *ConnectionEmailOtpAuthenticationMethod) String() string {
 // When true, the server uses Pushed Authorization Requests (PAR) to start the authorization transaction with the identity provider, pushing authorization parameters over back-channel HTTP and redirecting with only a request_uri.
 type ConnectionEnablePushedAuthorizationRequests = bool
 
+var (
+	connectionEnabledClientFieldClientID = big.NewInt(1 << 0)
+)
+
+type ConnectionEnabledClient struct {
+	// The client id
+	ClientID string `json:"client_id" url:"client_id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ConnectionEnabledClient) GetClientID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ClientID
+}
+
+func (c *ConnectionEnabledClient) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *ConnectionEnabledClient) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionEnabledClient) SetClientID(clientID string) {
+	c.ClientID = clientID
+	c.require(connectionEnabledClientFieldClientID)
+}
+
+func (c *ConnectionEnabledClient) UnmarshalJSON(data []byte) error {
+	type embed ConnectionEnabledClient
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ConnectionEnabledClient(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionEnabledClient) MarshalJSON() ([]byte, error) {
+	type embed ConnectionEnabledClient
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *ConnectionEnabledClient) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 // Token-based authentication settings to be applied when connection is using an sms strategy.
 var (
 	connectionGatewayAuthenticationFieldMethod              = big.NewInt(1 << 0)
@@ -1202,6 +1293,304 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 }
 
 func (c ConnectionIdentityProviderEnum) Ptr() *ConnectionIdentityProviderEnum {
+	return &c
+}
+
+var (
+	connectionKeyFieldKid          = big.NewInt(1 << 0)
+	connectionKeyFieldCert         = big.NewInt(1 << 1)
+	connectionKeyFieldPkcs         = big.NewInt(1 << 2)
+	connectionKeyFieldCurrent      = big.NewInt(1 << 3)
+	connectionKeyFieldNext         = big.NewInt(1 << 4)
+	connectionKeyFieldPrevious     = big.NewInt(1 << 5)
+	connectionKeyFieldCurrentSince = big.NewInt(1 << 6)
+	connectionKeyFieldFingerprint  = big.NewInt(1 << 7)
+	connectionKeyFieldThumbprint   = big.NewInt(1 << 8)
+	connectionKeyFieldAlgorithm    = big.NewInt(1 << 9)
+	connectionKeyFieldKeyUse       = big.NewInt(1 << 10)
+	connectionKeyFieldSubjectDn    = big.NewInt(1 << 11)
+)
+
+type ConnectionKey struct {
+	// The key id of the signing key
+	Kid string `json:"kid" url:"kid"`
+	// The public certificate of the signing key
+	Cert string `json:"cert" url:"cert"`
+	// The public certificate of the signing key in pkcs7 format
+	Pkcs *string `json:"pkcs,omitempty" url:"pkcs,omitempty"`
+	// True if the key is the the current key
+	Current *bool `json:"current,omitempty" url:"current,omitempty"`
+	// True if the key is the the next key
+	Next *bool `json:"next,omitempty" url:"next,omitempty"`
+	// True if the key is the the previous key
+	Previous *bool `json:"previous,omitempty" url:"previous,omitempty"`
+	// The date and time when the key became the current key
+	CurrentSince *string `json:"current_since,omitempty" url:"current_since,omitempty"`
+	// The cert fingerprint
+	Fingerprint string `json:"fingerprint" url:"fingerprint"`
+	// The cert thumbprint
+	Thumbprint string `json:"thumbprint" url:"thumbprint"`
+	// Signing key algorithm
+	Algorithm *string               `json:"algorithm,omitempty" url:"algorithm,omitempty"`
+	KeyUse    *ConnectionKeyUseEnum `json:"key_use,omitempty" url:"key_use,omitempty"`
+	SubjectDn *string               `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ConnectionKey) GetKid() string {
+	if c == nil {
+		return ""
+	}
+	return c.Kid
+}
+
+func (c *ConnectionKey) GetCert() string {
+	if c == nil {
+		return ""
+	}
+	return c.Cert
+}
+
+func (c *ConnectionKey) GetPkcs() string {
+	if c == nil || c.Pkcs == nil {
+		return ""
+	}
+	return *c.Pkcs
+}
+
+func (c *ConnectionKey) GetCurrent() bool {
+	if c == nil || c.Current == nil {
+		return false
+	}
+	return *c.Current
+}
+
+func (c *ConnectionKey) GetNext() bool {
+	if c == nil || c.Next == nil {
+		return false
+	}
+	return *c.Next
+}
+
+func (c *ConnectionKey) GetPrevious() bool {
+	if c == nil || c.Previous == nil {
+		return false
+	}
+	return *c.Previous
+}
+
+func (c *ConnectionKey) GetCurrentSince() string {
+	if c == nil || c.CurrentSince == nil {
+		return ""
+	}
+	return *c.CurrentSince
+}
+
+func (c *ConnectionKey) GetFingerprint() string {
+	if c == nil {
+		return ""
+	}
+	return c.Fingerprint
+}
+
+func (c *ConnectionKey) GetThumbprint() string {
+	if c == nil {
+		return ""
+	}
+	return c.Thumbprint
+}
+
+func (c *ConnectionKey) GetAlgorithm() string {
+	if c == nil || c.Algorithm == nil {
+		return ""
+	}
+	return *c.Algorithm
+}
+
+func (c *ConnectionKey) GetKeyUse() ConnectionKeyUseEnum {
+	if c == nil || c.KeyUse == nil {
+		return ""
+	}
+	return *c.KeyUse
+}
+
+func (c *ConnectionKey) GetSubjectDn() string {
+	if c == nil || c.SubjectDn == nil {
+		return ""
+	}
+	return *c.SubjectDn
+}
+
+func (c *ConnectionKey) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *ConnectionKey) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetKid(kid string) {
+	c.Kid = kid
+	c.require(connectionKeyFieldKid)
+}
+
+// SetCert sets the Cert field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetCert(cert string) {
+	c.Cert = cert
+	c.require(connectionKeyFieldCert)
+}
+
+// SetPkcs sets the Pkcs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetPkcs(pkcs *string) {
+	c.Pkcs = pkcs
+	c.require(connectionKeyFieldPkcs)
+}
+
+// SetCurrent sets the Current field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetCurrent(current *bool) {
+	c.Current = current
+	c.require(connectionKeyFieldCurrent)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetNext(next *bool) {
+	c.Next = next
+	c.require(connectionKeyFieldNext)
+}
+
+// SetPrevious sets the Previous field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetPrevious(previous *bool) {
+	c.Previous = previous
+	c.require(connectionKeyFieldPrevious)
+}
+
+// SetCurrentSince sets the CurrentSince field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetCurrentSince(currentSince *string) {
+	c.CurrentSince = currentSince
+	c.require(connectionKeyFieldCurrentSince)
+}
+
+// SetFingerprint sets the Fingerprint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetFingerprint(fingerprint string) {
+	c.Fingerprint = fingerprint
+	c.require(connectionKeyFieldFingerprint)
+}
+
+// SetThumbprint sets the Thumbprint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetThumbprint(thumbprint string) {
+	c.Thumbprint = thumbprint
+	c.require(connectionKeyFieldThumbprint)
+}
+
+// SetAlgorithm sets the Algorithm field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetAlgorithm(algorithm *string) {
+	c.Algorithm = algorithm
+	c.require(connectionKeyFieldAlgorithm)
+}
+
+// SetKeyUse sets the KeyUse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetKeyUse(keyUse *ConnectionKeyUseEnum) {
+	c.KeyUse = keyUse
+	c.require(connectionKeyFieldKeyUse)
+}
+
+// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionKey) SetSubjectDn(subjectDn *string) {
+	c.SubjectDn = subjectDn
+	c.require(connectionKeyFieldSubjectDn)
+}
+
+func (c *ConnectionKey) UnmarshalJSON(data []byte) error {
+	type embed ConnectionKey
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ConnectionKey(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionKey) MarshalJSON() ([]byte, error) {
+	type embed ConnectionKey
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *ConnectionKey) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Signing key use, whether for encryption or signing
+type ConnectionKeyUseEnum string
+
+const (
+	ConnectionKeyUseEnumEncryption ConnectionKeyUseEnum = "encryption"
+	ConnectionKeyUseEnumSigning    ConnectionKeyUseEnum = "signing"
+)
+
+func NewConnectionKeyUseEnumFromString(s string) (ConnectionKeyUseEnum, error) {
+	switch s {
+	case "encryption":
+		return ConnectionKeyUseEnumEncryption, nil
+	case "signing":
+		return ConnectionKeyUseEnumSigning, nil
+	}
+	var t ConnectionKeyUseEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionKeyUseEnum) Ptr() *ConnectionKeyUseEnum {
 	return &c
 }
 
@@ -5157,6 +5546,984 @@ func (c *CreateCrossAppAccessResourceApp) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	createDirectoryProvisioningRequestContentFieldMapping                  = big.NewInt(1 << 0)
+	createDirectoryProvisioningRequestContentFieldSynchronizeAutomatically = big.NewInt(1 << 1)
+	createDirectoryProvisioningRequestContentFieldSynchronizeGroups        = big.NewInt(1 << 2)
+)
+
+type CreateDirectoryProvisioningRequestContent struct {
+	// The mapping between Auth0 and IDP user attributes
+	Mapping []*DirectoryProvisioningMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+	// Whether periodic automatic synchronization is enabled
+	SynchronizeAutomatically *bool                  `json:"synchronize_automatically,omitempty" url:"synchronize_automatically,omitempty"`
+	SynchronizeGroups        *SynchronizeGroupsEnum `json:"synchronize_groups,omitempty" url:"synchronize_groups,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateDirectoryProvisioningRequestContent) GetMapping() []*DirectoryProvisioningMappingItem {
+	if c == nil || c.Mapping == nil {
+		return nil
+	}
+	return c.Mapping
+}
+
+func (c *CreateDirectoryProvisioningRequestContent) GetSynchronizeAutomatically() bool {
+	if c == nil || c.SynchronizeAutomatically == nil {
+		return false
+	}
+	return *c.SynchronizeAutomatically
+}
+
+func (c *CreateDirectoryProvisioningRequestContent) GetSynchronizeGroups() SynchronizeGroupsEnum {
+	if c == nil || c.SynchronizeGroups == nil {
+		return ""
+	}
+	return *c.SynchronizeGroups
+}
+
+func (c *CreateDirectoryProvisioningRequestContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateDirectoryProvisioningRequestContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningRequestContent) SetMapping(mapping []*DirectoryProvisioningMappingItem) {
+	c.Mapping = mapping
+	c.require(createDirectoryProvisioningRequestContentFieldMapping)
+}
+
+// SetSynchronizeAutomatically sets the SynchronizeAutomatically field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningRequestContent) SetSynchronizeAutomatically(synchronizeAutomatically *bool) {
+	c.SynchronizeAutomatically = synchronizeAutomatically
+	c.require(createDirectoryProvisioningRequestContentFieldSynchronizeAutomatically)
+}
+
+// SetSynchronizeGroups sets the SynchronizeGroups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningRequestContent) SetSynchronizeGroups(synchronizeGroups *SynchronizeGroupsEnum) {
+	c.SynchronizeGroups = synchronizeGroups
+	c.require(createDirectoryProvisioningRequestContentFieldSynchronizeGroups)
+}
+
+func (c *CreateDirectoryProvisioningRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateDirectoryProvisioningRequestContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateDirectoryProvisioningRequestContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateDirectoryProvisioningRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateDirectoryProvisioningRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateDirectoryProvisioningRequestContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createDirectoryProvisioningResponseContentFieldConnectionID              = big.NewInt(1 << 0)
+	createDirectoryProvisioningResponseContentFieldConnectionName            = big.NewInt(1 << 1)
+	createDirectoryProvisioningResponseContentFieldStrategy                  = big.NewInt(1 << 2)
+	createDirectoryProvisioningResponseContentFieldMapping                   = big.NewInt(1 << 3)
+	createDirectoryProvisioningResponseContentFieldSynchronizeAutomatically  = big.NewInt(1 << 4)
+	createDirectoryProvisioningResponseContentFieldSynchronizeGroups         = big.NewInt(1 << 5)
+	createDirectoryProvisioningResponseContentFieldCreatedAt                 = big.NewInt(1 << 6)
+	createDirectoryProvisioningResponseContentFieldUpdatedAt                 = big.NewInt(1 << 7)
+	createDirectoryProvisioningResponseContentFieldLastSynchronizationAt     = big.NewInt(1 << 8)
+	createDirectoryProvisioningResponseContentFieldLastSynchronizationStatus = big.NewInt(1 << 9)
+	createDirectoryProvisioningResponseContentFieldLastSynchronizationError  = big.NewInt(1 << 10)
+)
+
+type CreateDirectoryProvisioningResponseContent struct {
+	// The connection's identifier
+	ConnectionID string `json:"connection_id" url:"connection_id"`
+	// The connection's name
+	ConnectionName string `json:"connection_name" url:"connection_name"`
+	// The connection's strategy
+	Strategy string `json:"strategy" url:"strategy"`
+	// The mapping between Auth0 and IDP user attributes
+	Mapping []*DirectoryProvisioningMappingItem `json:"mapping" url:"mapping"`
+	// Whether periodic automatic synchronization is enabled
+	SynchronizeAutomatically bool                   `json:"synchronize_automatically" url:"synchronize_automatically"`
+	SynchronizeGroups        *SynchronizeGroupsEnum `json:"synchronize_groups,omitempty" url:"synchronize_groups,omitempty"`
+	// The timestamp at which the directory provisioning configuration was created
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The timestamp at which the directory provisioning configuration was last updated
+	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
+	// The timestamp at which the connection was last synchronized
+	LastSynchronizationAt *time.Time `json:"last_synchronization_at,omitempty" url:"last_synchronization_at,omitempty"`
+	// The status of the last synchronization
+	LastSynchronizationStatus *string `json:"last_synchronization_status,omitempty" url:"last_synchronization_status,omitempty"`
+	// The error message of the last synchronization, if any
+	LastSynchronizationError *string `json:"last_synchronization_error,omitempty" url:"last_synchronization_error,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetConnectionID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionID
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetConnectionName() string {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionName
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetStrategy() string {
+	if c == nil {
+		return ""
+	}
+	return c.Strategy
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetMapping() []*DirectoryProvisioningMappingItem {
+	if c == nil {
+		return nil
+	}
+	return c.Mapping
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetSynchronizeAutomatically() bool {
+	if c == nil {
+		return false
+	}
+	return c.SynchronizeAutomatically
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetSynchronizeGroups() SynchronizeGroupsEnum {
+	if c == nil || c.SynchronizeGroups == nil {
+		return ""
+	}
+	return *c.SynchronizeGroups
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetUpdatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.UpdatedAt
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetLastSynchronizationAt() time.Time {
+	if c == nil || c.LastSynchronizationAt == nil {
+		return time.Time{}
+	}
+	return *c.LastSynchronizationAt
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetLastSynchronizationStatus() string {
+	if c == nil || c.LastSynchronizationStatus == nil {
+		return ""
+	}
+	return *c.LastSynchronizationStatus
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetLastSynchronizationError() string {
+	if c == nil || c.LastSynchronizationError == nil {
+		return ""
+	}
+	return *c.LastSynchronizationError
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetConnectionID(connectionID string) {
+	c.ConnectionID = connectionID
+	c.require(createDirectoryProvisioningResponseContentFieldConnectionID)
+}
+
+// SetConnectionName sets the ConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetConnectionName(connectionName string) {
+	c.ConnectionName = connectionName
+	c.require(createDirectoryProvisioningResponseContentFieldConnectionName)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetStrategy(strategy string) {
+	c.Strategy = strategy
+	c.require(createDirectoryProvisioningResponseContentFieldStrategy)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetMapping(mapping []*DirectoryProvisioningMappingItem) {
+	c.Mapping = mapping
+	c.require(createDirectoryProvisioningResponseContentFieldMapping)
+}
+
+// SetSynchronizeAutomatically sets the SynchronizeAutomatically field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetSynchronizeAutomatically(synchronizeAutomatically bool) {
+	c.SynchronizeAutomatically = synchronizeAutomatically
+	c.require(createDirectoryProvisioningResponseContentFieldSynchronizeAutomatically)
+}
+
+// SetSynchronizeGroups sets the SynchronizeGroups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetSynchronizeGroups(synchronizeGroups *SynchronizeGroupsEnum) {
+	c.SynchronizeGroups = synchronizeGroups
+	c.require(createDirectoryProvisioningResponseContentFieldSynchronizeGroups)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetCreatedAt(createdAt time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createDirectoryProvisioningResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createDirectoryProvisioningResponseContentFieldUpdatedAt)
+}
+
+// SetLastSynchronizationAt sets the LastSynchronizationAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetLastSynchronizationAt(lastSynchronizationAt *time.Time) {
+	c.LastSynchronizationAt = lastSynchronizationAt
+	c.require(createDirectoryProvisioningResponseContentFieldLastSynchronizationAt)
+}
+
+// SetLastSynchronizationStatus sets the LastSynchronizationStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetLastSynchronizationStatus(lastSynchronizationStatus *string) {
+	c.LastSynchronizationStatus = lastSynchronizationStatus
+	c.require(createDirectoryProvisioningResponseContentFieldLastSynchronizationStatus)
+}
+
+// SetLastSynchronizationError sets the LastSynchronizationError field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectoryProvisioningResponseContent) SetLastSynchronizationError(lastSynchronizationError *string) {
+	c.LastSynchronizationError = lastSynchronizationError
+	c.require(createDirectoryProvisioningResponseContentFieldLastSynchronizationError)
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateDirectoryProvisioningResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt             *internal.DateTime `json:"created_at"`
+		UpdatedAt             *internal.DateTime `json:"updated_at"`
+		LastSynchronizationAt *internal.DateTime `json:"last_synchronization_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateDirectoryProvisioningResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.Time()
+	c.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	c.LastSynchronizationAt = unmarshaler.LastSynchronizationAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateDirectoryProvisioningResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt             *internal.DateTime `json:"created_at"`
+		UpdatedAt             *internal.DateTime `json:"updated_at"`
+		LastSynchronizationAt *internal.DateTime `json:"last_synchronization_at,omitempty"`
+	}{
+		embed:                 embed(*c),
+		CreatedAt:             internal.NewDateTime(c.CreatedAt),
+		UpdatedAt:             internal.NewDateTime(c.UpdatedAt),
+		LastSynchronizationAt: internal.NewOptionalDateTime(c.LastSynchronizationAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateDirectoryProvisioningResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createDirectorySynchronizationResponseContentFieldConnectionID      = big.NewInt(1 << 0)
+	createDirectorySynchronizationResponseContentFieldSynchronizationID = big.NewInt(1 << 1)
+	createDirectorySynchronizationResponseContentFieldStatus            = big.NewInt(1 << 2)
+)
+
+type CreateDirectorySynchronizationResponseContent struct {
+	// The connection's identifier
+	ConnectionID string `json:"connection_id" url:"connection_id"`
+	// The synchronization's identifier
+	SynchronizationID string `json:"synchronization_id" url:"synchronization_id"`
+	// The synchronization status
+	Status string `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateDirectorySynchronizationResponseContent) GetConnectionID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionID
+}
+
+func (c *CreateDirectorySynchronizationResponseContent) GetSynchronizationID() string {
+	if c == nil {
+		return ""
+	}
+	return c.SynchronizationID
+}
+
+func (c *CreateDirectorySynchronizationResponseContent) GetStatus() string {
+	if c == nil {
+		return ""
+	}
+	return c.Status
+}
+
+func (c *CreateDirectorySynchronizationResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateDirectorySynchronizationResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectorySynchronizationResponseContent) SetConnectionID(connectionID string) {
+	c.ConnectionID = connectionID
+	c.require(createDirectorySynchronizationResponseContentFieldConnectionID)
+}
+
+// SetSynchronizationID sets the SynchronizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectorySynchronizationResponseContent) SetSynchronizationID(synchronizationID string) {
+	c.SynchronizationID = synchronizationID
+	c.require(createDirectorySynchronizationResponseContentFieldSynchronizationID)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateDirectorySynchronizationResponseContent) SetStatus(status string) {
+	c.Status = status
+	c.require(createDirectorySynchronizationResponseContentFieldStatus)
+}
+
+func (c *CreateDirectorySynchronizationResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateDirectorySynchronizationResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateDirectorySynchronizationResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateDirectorySynchronizationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateDirectorySynchronizationResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateDirectorySynchronizationResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createSCIMConfigurationRequestContentFieldUserIDAttribute = big.NewInt(1 << 0)
+	createSCIMConfigurationRequestContentFieldMapping         = big.NewInt(1 << 1)
+)
+
+type CreateSCIMConfigurationRequestContent struct {
+	// User ID attribute for generating unique user ids
+	UserIDAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
+	// The mapping between auth0 and SCIM
+	Mapping []*SCIMMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateSCIMConfigurationRequestContent) GetUserIDAttribute() string {
+	if c == nil || c.UserIDAttribute == nil {
+		return ""
+	}
+	return *c.UserIDAttribute
+}
+
+func (c *CreateSCIMConfigurationRequestContent) GetMapping() []*SCIMMappingItem {
+	if c == nil || c.Mapping == nil {
+		return nil
+	}
+	return c.Mapping
+}
+
+func (c *CreateSCIMConfigurationRequestContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateSCIMConfigurationRequestContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationRequestContent) SetUserIDAttribute(userIDAttribute *string) {
+	c.UserIDAttribute = userIDAttribute
+	c.require(createSCIMConfigurationRequestContentFieldUserIDAttribute)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationRequestContent) SetMapping(mapping []*SCIMMappingItem) {
+	c.Mapping = mapping
+	c.require(createSCIMConfigurationRequestContentFieldMapping)
+}
+
+func (c *CreateSCIMConfigurationRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSCIMConfigurationRequestContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateSCIMConfigurationRequestContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateSCIMConfigurationRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSCIMConfigurationRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateSCIMConfigurationRequestContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createSCIMConfigurationResponseContentFieldConnectionID    = big.NewInt(1 << 0)
+	createSCIMConfigurationResponseContentFieldConnectionName  = big.NewInt(1 << 1)
+	createSCIMConfigurationResponseContentFieldStrategy        = big.NewInt(1 << 2)
+	createSCIMConfigurationResponseContentFieldTenantName      = big.NewInt(1 << 3)
+	createSCIMConfigurationResponseContentFieldUserIDAttribute = big.NewInt(1 << 4)
+	createSCIMConfigurationResponseContentFieldMapping         = big.NewInt(1 << 5)
+	createSCIMConfigurationResponseContentFieldCreatedAt       = big.NewInt(1 << 6)
+	createSCIMConfigurationResponseContentFieldUpdatedOn       = big.NewInt(1 << 7)
+)
+
+type CreateSCIMConfigurationResponseContent struct {
+	// The connection's identifier
+	ConnectionID string `json:"connection_id" url:"connection_id"`
+	// The connection's name
+	ConnectionName string `json:"connection_name" url:"connection_name"`
+	// The connection's strategy
+	Strategy string `json:"strategy" url:"strategy"`
+	// The tenant's name
+	TenantName string `json:"tenant_name" url:"tenant_name"`
+	// User ID attribute for generating unique user ids
+	UserIDAttribute string `json:"user_id_attribute" url:"user_id_attribute"`
+	// The mapping between auth0 and SCIM
+	Mapping []*SCIMMappingItem `json:"mapping" url:"mapping"`
+	// The ISO 8601 date and time the SCIM configuration was created at
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The ISO 8601 date and time the SCIM configuration was last updated on
+	UpdatedOn time.Time `json:"updated_on" url:"updated_on"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateSCIMConfigurationResponseContent) GetConnectionID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionID
+}
+
+func (c *CreateSCIMConfigurationResponseContent) GetConnectionName() string {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionName
+}
+
+func (c *CreateSCIMConfigurationResponseContent) GetStrategy() string {
+	if c == nil {
+		return ""
+	}
+	return c.Strategy
+}
+
+func (c *CreateSCIMConfigurationResponseContent) GetTenantName() string {
+	if c == nil {
+		return ""
+	}
+	return c.TenantName
+}
+
+func (c *CreateSCIMConfigurationResponseContent) GetUserIDAttribute() string {
+	if c == nil {
+		return ""
+	}
+	return c.UserIDAttribute
+}
+
+func (c *CreateSCIMConfigurationResponseContent) GetMapping() []*SCIMMappingItem {
+	if c == nil {
+		return nil
+	}
+	return c.Mapping
+}
+
+func (c *CreateSCIMConfigurationResponseContent) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *CreateSCIMConfigurationResponseContent) GetUpdatedOn() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.UpdatedOn
+}
+
+func (c *CreateSCIMConfigurationResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateSCIMConfigurationResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationResponseContent) SetConnectionID(connectionID string) {
+	c.ConnectionID = connectionID
+	c.require(createSCIMConfigurationResponseContentFieldConnectionID)
+}
+
+// SetConnectionName sets the ConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationResponseContent) SetConnectionName(connectionName string) {
+	c.ConnectionName = connectionName
+	c.require(createSCIMConfigurationResponseContentFieldConnectionName)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationResponseContent) SetStrategy(strategy string) {
+	c.Strategy = strategy
+	c.require(createSCIMConfigurationResponseContentFieldStrategy)
+}
+
+// SetTenantName sets the TenantName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationResponseContent) SetTenantName(tenantName string) {
+	c.TenantName = tenantName
+	c.require(createSCIMConfigurationResponseContentFieldTenantName)
+}
+
+// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationResponseContent) SetUserIDAttribute(userIDAttribute string) {
+	c.UserIDAttribute = userIDAttribute
+	c.require(createSCIMConfigurationResponseContentFieldUserIDAttribute)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationResponseContent) SetMapping(mapping []*SCIMMappingItem) {
+	c.Mapping = mapping
+	c.require(createSCIMConfigurationResponseContentFieldMapping)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationResponseContent) SetCreatedAt(createdAt time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createSCIMConfigurationResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedOn sets the UpdatedOn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMConfigurationResponseContent) SetUpdatedOn(updatedOn time.Time) {
+	c.UpdatedOn = updatedOn
+	c.require(createSCIMConfigurationResponseContentFieldUpdatedOn)
+}
+
+func (c *CreateSCIMConfigurationResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateSCIMConfigurationResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedOn *internal.DateTime `json:"updated_on"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateSCIMConfigurationResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.Time()
+	c.UpdatedOn = unmarshaler.UpdatedOn.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateSCIMConfigurationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSCIMConfigurationResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedOn *internal.DateTime `json:"updated_on"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewDateTime(c.CreatedAt),
+		UpdatedOn: internal.NewDateTime(c.UpdatedOn),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateSCIMConfigurationResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createSCIMTokenResponseContentFieldTokenID    = big.NewInt(1 << 0)
+	createSCIMTokenResponseContentFieldToken      = big.NewInt(1 << 1)
+	createSCIMTokenResponseContentFieldScopes     = big.NewInt(1 << 2)
+	createSCIMTokenResponseContentFieldCreatedAt  = big.NewInt(1 << 3)
+	createSCIMTokenResponseContentFieldValidUntil = big.NewInt(1 << 4)
+)
+
+type CreateSCIMTokenResponseContent struct {
+	// The token's identifier
+	TokenID *string `json:"token_id,omitempty" url:"token_id,omitempty"`
+	// The scim client's token
+	Token *string `json:"token,omitempty" url:"token,omitempty"`
+	// The scopes of the scim token
+	Scopes []string `json:"scopes,omitempty" url:"scopes,omitempty"`
+	// The token's created at timestamp
+	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The token's valid until at timestamp
+	ValidUntil *string `json:"valid_until,omitempty" url:"valid_until,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateSCIMTokenResponseContent) GetTokenID() string {
+	if c == nil || c.TokenID == nil {
+		return ""
+	}
+	return *c.TokenID
+}
+
+func (c *CreateSCIMTokenResponseContent) GetToken() string {
+	if c == nil || c.Token == nil {
+		return ""
+	}
+	return *c.Token
+}
+
+func (c *CreateSCIMTokenResponseContent) GetScopes() []string {
+	if c == nil || c.Scopes == nil {
+		return nil
+	}
+	return c.Scopes
+}
+
+func (c *CreateSCIMTokenResponseContent) GetCreatedAt() string {
+	if c == nil || c.CreatedAt == nil {
+		return ""
+	}
+	return *c.CreatedAt
+}
+
+func (c *CreateSCIMTokenResponseContent) GetValidUntil() string {
+	if c == nil || c.ValidUntil == nil {
+		return ""
+	}
+	return *c.ValidUntil
+}
+
+func (c *CreateSCIMTokenResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateSCIMTokenResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetTokenID sets the TokenID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMTokenResponseContent) SetTokenID(tokenID *string) {
+	c.TokenID = tokenID
+	c.require(createSCIMTokenResponseContentFieldTokenID)
+}
+
+// SetToken sets the Token field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMTokenResponseContent) SetToken(token *string) {
+	c.Token = token
+	c.require(createSCIMTokenResponseContentFieldToken)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMTokenResponseContent) SetScopes(scopes []string) {
+	c.Scopes = scopes
+	c.require(createSCIMTokenResponseContentFieldScopes)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMTokenResponseContent) SetCreatedAt(createdAt *string) {
+	c.CreatedAt = createdAt
+	c.require(createSCIMTokenResponseContentFieldCreatedAt)
+}
+
+// SetValidUntil sets the ValidUntil field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSCIMTokenResponseContent) SetValidUntil(validUntil *string) {
+	c.ValidUntil = validUntil
+	c.require(createSCIMTokenResponseContentFieldValidUntil)
+}
+
+func (c *CreateSCIMTokenResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSCIMTokenResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateSCIMTokenResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateSCIMTokenResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSCIMTokenResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateSCIMTokenResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 // Default authentication method for email identifier
 type DefaultMethodEmailIdentifierEnum string
 
@@ -5453,6 +6820,113 @@ func (e *EmailAttributeIdentifier) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+var (
+	getConnectionEnabledClientsResponseContentFieldClients = big.NewInt(1 << 0)
+	getConnectionEnabledClientsResponseContentFieldNext    = big.NewInt(1 << 1)
+)
+
+type GetConnectionEnabledClientsResponseContent struct {
+	// Clients for which the connection is enabled
+	Clients []*ConnectionEnabledClient `json:"clients" url:"clients"`
+	// Encoded next token
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetConnectionEnabledClientsResponseContent) GetClients() []*ConnectionEnabledClient {
+	if g == nil {
+		return nil
+	}
+	return g.Clients
+}
+
+func (g *GetConnectionEnabledClientsResponseContent) GetNext() string {
+	if g == nil || g.Next == nil {
+		return ""
+	}
+	return *g.Next
+}
+
+func (g *GetConnectionEnabledClientsResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.ExtraProperties
+}
+
+func (g *GetConnectionEnabledClientsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionEnabledClientsResponseContent) SetClients(clients []*ConnectionEnabledClient) {
+	g.Clients = clients
+	g.require(getConnectionEnabledClientsResponseContentFieldClients)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionEnabledClientsResponseContent) SetNext(next *string) {
+	g.Next = next
+	g.require(getConnectionEnabledClientsResponseContentFieldNext)
+}
+
+func (g *GetConnectionEnabledClientsResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetConnectionEnabledClientsResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetConnectionEnabledClientsResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetConnectionEnabledClientsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetConnectionEnabledClientsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetConnectionEnabledClientsResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
 }
 
 var (
@@ -5756,6 +7230,665 @@ func (g *GetConnectionResponseContent) String() string {
 }
 
 var (
+	getDirectoryProvisioningDefaultMappingResponseContentFieldMapping = big.NewInt(1 << 0)
+)
+
+type GetDirectoryProvisioningDefaultMappingResponseContent struct {
+	// The mapping between Auth0 and IDP user attributes
+	Mapping []*DirectoryProvisioningMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetDirectoryProvisioningDefaultMappingResponseContent) GetMapping() []*DirectoryProvisioningMappingItem {
+	if g == nil || g.Mapping == nil {
+		return nil
+	}
+	return g.Mapping
+}
+
+func (g *GetDirectoryProvisioningDefaultMappingResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetDirectoryProvisioningDefaultMappingResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningDefaultMappingResponseContent) SetMapping(mapping []*DirectoryProvisioningMappingItem) {
+	g.Mapping = mapping
+	g.require(getDirectoryProvisioningDefaultMappingResponseContentFieldMapping)
+}
+
+func (g *GetDirectoryProvisioningDefaultMappingResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetDirectoryProvisioningDefaultMappingResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetDirectoryProvisioningDefaultMappingResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetDirectoryProvisioningDefaultMappingResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetDirectoryProvisioningDefaultMappingResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetDirectoryProvisioningDefaultMappingResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getDirectoryProvisioningResponseContentFieldConnectionID              = big.NewInt(1 << 0)
+	getDirectoryProvisioningResponseContentFieldConnectionName            = big.NewInt(1 << 1)
+	getDirectoryProvisioningResponseContentFieldStrategy                  = big.NewInt(1 << 2)
+	getDirectoryProvisioningResponseContentFieldMapping                   = big.NewInt(1 << 3)
+	getDirectoryProvisioningResponseContentFieldSynchronizeAutomatically  = big.NewInt(1 << 4)
+	getDirectoryProvisioningResponseContentFieldSynchronizeGroups         = big.NewInt(1 << 5)
+	getDirectoryProvisioningResponseContentFieldCreatedAt                 = big.NewInt(1 << 6)
+	getDirectoryProvisioningResponseContentFieldUpdatedAt                 = big.NewInt(1 << 7)
+	getDirectoryProvisioningResponseContentFieldLastSynchronizationAt     = big.NewInt(1 << 8)
+	getDirectoryProvisioningResponseContentFieldLastSynchronizationStatus = big.NewInt(1 << 9)
+	getDirectoryProvisioningResponseContentFieldLastSynchronizationError  = big.NewInt(1 << 10)
+)
+
+type GetDirectoryProvisioningResponseContent struct {
+	// The connection's identifier
+	ConnectionID string `json:"connection_id" url:"connection_id"`
+	// The connection's name
+	ConnectionName string `json:"connection_name" url:"connection_name"`
+	// The connection's strategy
+	Strategy string `json:"strategy" url:"strategy"`
+	// The mapping between Auth0 and IDP user attributes
+	Mapping []*DirectoryProvisioningMappingItem `json:"mapping" url:"mapping"`
+	// Whether periodic automatic synchronization is enabled
+	SynchronizeAutomatically bool                   `json:"synchronize_automatically" url:"synchronize_automatically"`
+	SynchronizeGroups        *SynchronizeGroupsEnum `json:"synchronize_groups,omitempty" url:"synchronize_groups,omitempty"`
+	// The timestamp at which the directory provisioning configuration was created
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The timestamp at which the directory provisioning configuration was last updated
+	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
+	// The timestamp at which the connection was last synchronized
+	LastSynchronizationAt *time.Time `json:"last_synchronization_at,omitempty" url:"last_synchronization_at,omitempty"`
+	// The status of the last synchronization
+	LastSynchronizationStatus *string `json:"last_synchronization_status,omitempty" url:"last_synchronization_status,omitempty"`
+	// The error message of the last synchronization, if any
+	LastSynchronizationError *string `json:"last_synchronization_error,omitempty" url:"last_synchronization_error,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetConnectionID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ConnectionID
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetConnectionName() string {
+	if g == nil {
+		return ""
+	}
+	return g.ConnectionName
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetStrategy() string {
+	if g == nil {
+		return ""
+	}
+	return g.Strategy
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetMapping() []*DirectoryProvisioningMappingItem {
+	if g == nil {
+		return nil
+	}
+	return g.Mapping
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetSynchronizeAutomatically() bool {
+	if g == nil {
+		return false
+	}
+	return g.SynchronizeAutomatically
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetSynchronizeGroups() SynchronizeGroupsEnum {
+	if g == nil || g.SynchronizeGroups == nil {
+		return ""
+	}
+	return *g.SynchronizeGroups
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetCreatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.CreatedAt
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetUpdatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.UpdatedAt
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetLastSynchronizationAt() time.Time {
+	if g == nil || g.LastSynchronizationAt == nil {
+		return time.Time{}
+	}
+	return *g.LastSynchronizationAt
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetLastSynchronizationStatus() string {
+	if g == nil || g.LastSynchronizationStatus == nil {
+		return ""
+	}
+	return *g.LastSynchronizationStatus
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetLastSynchronizationError() string {
+	if g == nil || g.LastSynchronizationError == nil {
+		return ""
+	}
+	return *g.LastSynchronizationError
+}
+
+func (g *GetDirectoryProvisioningResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetDirectoryProvisioningResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetConnectionID(connectionID string) {
+	g.ConnectionID = connectionID
+	g.require(getDirectoryProvisioningResponseContentFieldConnectionID)
+}
+
+// SetConnectionName sets the ConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetConnectionName(connectionName string) {
+	g.ConnectionName = connectionName
+	g.require(getDirectoryProvisioningResponseContentFieldConnectionName)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetStrategy(strategy string) {
+	g.Strategy = strategy
+	g.require(getDirectoryProvisioningResponseContentFieldStrategy)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetMapping(mapping []*DirectoryProvisioningMappingItem) {
+	g.Mapping = mapping
+	g.require(getDirectoryProvisioningResponseContentFieldMapping)
+}
+
+// SetSynchronizeAutomatically sets the SynchronizeAutomatically field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetSynchronizeAutomatically(synchronizeAutomatically bool) {
+	g.SynchronizeAutomatically = synchronizeAutomatically
+	g.require(getDirectoryProvisioningResponseContentFieldSynchronizeAutomatically)
+}
+
+// SetSynchronizeGroups sets the SynchronizeGroups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetSynchronizeGroups(synchronizeGroups *SynchronizeGroupsEnum) {
+	g.SynchronizeGroups = synchronizeGroups
+	g.require(getDirectoryProvisioningResponseContentFieldSynchronizeGroups)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetCreatedAt(createdAt time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getDirectoryProvisioningResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getDirectoryProvisioningResponseContentFieldUpdatedAt)
+}
+
+// SetLastSynchronizationAt sets the LastSynchronizationAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetLastSynchronizationAt(lastSynchronizationAt *time.Time) {
+	g.LastSynchronizationAt = lastSynchronizationAt
+	g.require(getDirectoryProvisioningResponseContentFieldLastSynchronizationAt)
+}
+
+// SetLastSynchronizationStatus sets the LastSynchronizationStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetLastSynchronizationStatus(lastSynchronizationStatus *string) {
+	g.LastSynchronizationStatus = lastSynchronizationStatus
+	g.require(getDirectoryProvisioningResponseContentFieldLastSynchronizationStatus)
+}
+
+// SetLastSynchronizationError sets the LastSynchronizationError field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetDirectoryProvisioningResponseContent) SetLastSynchronizationError(lastSynchronizationError *string) {
+	g.LastSynchronizationError = lastSynchronizationError
+	g.require(getDirectoryProvisioningResponseContentFieldLastSynchronizationError)
+}
+
+func (g *GetDirectoryProvisioningResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetDirectoryProvisioningResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt             *internal.DateTime `json:"created_at"`
+		UpdatedAt             *internal.DateTime `json:"updated_at"`
+		LastSynchronizationAt *internal.DateTime `json:"last_synchronization_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetDirectoryProvisioningResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.Time()
+	g.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	g.LastSynchronizationAt = unmarshaler.LastSynchronizationAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetDirectoryProvisioningResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetDirectoryProvisioningResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt             *internal.DateTime `json:"created_at"`
+		UpdatedAt             *internal.DateTime `json:"updated_at"`
+		LastSynchronizationAt *internal.DateTime `json:"last_synchronization_at,omitempty"`
+	}{
+		embed:                 embed(*g),
+		CreatedAt:             internal.NewDateTime(g.CreatedAt),
+		UpdatedAt:             internal.NewDateTime(g.UpdatedAt),
+		LastSynchronizationAt: internal.NewOptionalDateTime(g.LastSynchronizationAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetDirectoryProvisioningResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getSCIMConfigurationDefaultMappingResponseContentFieldMapping = big.NewInt(1 << 0)
+)
+
+type GetSCIMConfigurationDefaultMappingResponseContent struct {
+	// The mapping between auth0 and SCIM
+	Mapping []*SCIMMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) GetMapping() []*SCIMMappingItem {
+	if g == nil || g.Mapping == nil {
+		return nil
+	}
+	return g.Mapping
+}
+
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) SetMapping(mapping []*SCIMMappingItem) {
+	g.Mapping = mapping
+	g.require(getSCIMConfigurationDefaultMappingResponseContentFieldMapping)
+}
+
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetSCIMConfigurationDefaultMappingResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetSCIMConfigurationDefaultMappingResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetSCIMConfigurationDefaultMappingResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetSCIMConfigurationDefaultMappingResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getSCIMConfigurationResponseContentFieldConnectionID    = big.NewInt(1 << 0)
+	getSCIMConfigurationResponseContentFieldConnectionName  = big.NewInt(1 << 1)
+	getSCIMConfigurationResponseContentFieldStrategy        = big.NewInt(1 << 2)
+	getSCIMConfigurationResponseContentFieldTenantName      = big.NewInt(1 << 3)
+	getSCIMConfigurationResponseContentFieldUserIDAttribute = big.NewInt(1 << 4)
+	getSCIMConfigurationResponseContentFieldMapping         = big.NewInt(1 << 5)
+	getSCIMConfigurationResponseContentFieldCreatedAt       = big.NewInt(1 << 6)
+	getSCIMConfigurationResponseContentFieldUpdatedOn       = big.NewInt(1 << 7)
+)
+
+type GetSCIMConfigurationResponseContent struct {
+	// The connection's identifier
+	ConnectionID string `json:"connection_id" url:"connection_id"`
+	// The connection's name
+	ConnectionName string `json:"connection_name" url:"connection_name"`
+	// The connection's strategy
+	Strategy string `json:"strategy" url:"strategy"`
+	// The tenant's name
+	TenantName string `json:"tenant_name" url:"tenant_name"`
+	// User ID attribute for generating unique user ids
+	UserIDAttribute string `json:"user_id_attribute" url:"user_id_attribute"`
+	// The mapping between auth0 and SCIM
+	Mapping []*SCIMMappingItem `json:"mapping" url:"mapping"`
+	// The ISO 8601 date and time the SCIM configuration was created at
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The ISO 8601 date and time the SCIM configuration was last updated on
+	UpdatedOn time.Time `json:"updated_on" url:"updated_on"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetSCIMConfigurationResponseContent) GetConnectionID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ConnectionID
+}
+
+func (g *GetSCIMConfigurationResponseContent) GetConnectionName() string {
+	if g == nil {
+		return ""
+	}
+	return g.ConnectionName
+}
+
+func (g *GetSCIMConfigurationResponseContent) GetStrategy() string {
+	if g == nil {
+		return ""
+	}
+	return g.Strategy
+}
+
+func (g *GetSCIMConfigurationResponseContent) GetTenantName() string {
+	if g == nil {
+		return ""
+	}
+	return g.TenantName
+}
+
+func (g *GetSCIMConfigurationResponseContent) GetUserIDAttribute() string {
+	if g == nil {
+		return ""
+	}
+	return g.UserIDAttribute
+}
+
+func (g *GetSCIMConfigurationResponseContent) GetMapping() []*SCIMMappingItem {
+	if g == nil {
+		return nil
+	}
+	return g.Mapping
+}
+
+func (g *GetSCIMConfigurationResponseContent) GetCreatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.CreatedAt
+}
+
+func (g *GetSCIMConfigurationResponseContent) GetUpdatedOn() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.UpdatedOn
+}
+
+func (g *GetSCIMConfigurationResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetSCIMConfigurationResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSCIMConfigurationResponseContent) SetConnectionID(connectionID string) {
+	g.ConnectionID = connectionID
+	g.require(getSCIMConfigurationResponseContentFieldConnectionID)
+}
+
+// SetConnectionName sets the ConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSCIMConfigurationResponseContent) SetConnectionName(connectionName string) {
+	g.ConnectionName = connectionName
+	g.require(getSCIMConfigurationResponseContentFieldConnectionName)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSCIMConfigurationResponseContent) SetStrategy(strategy string) {
+	g.Strategy = strategy
+	g.require(getSCIMConfigurationResponseContentFieldStrategy)
+}
+
+// SetTenantName sets the TenantName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSCIMConfigurationResponseContent) SetTenantName(tenantName string) {
+	g.TenantName = tenantName
+	g.require(getSCIMConfigurationResponseContentFieldTenantName)
+}
+
+// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSCIMConfigurationResponseContent) SetUserIDAttribute(userIDAttribute string) {
+	g.UserIDAttribute = userIDAttribute
+	g.require(getSCIMConfigurationResponseContentFieldUserIDAttribute)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSCIMConfigurationResponseContent) SetMapping(mapping []*SCIMMappingItem) {
+	g.Mapping = mapping
+	g.require(getSCIMConfigurationResponseContentFieldMapping)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSCIMConfigurationResponseContent) SetCreatedAt(createdAt time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getSCIMConfigurationResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedOn sets the UpdatedOn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSCIMConfigurationResponseContent) SetUpdatedOn(updatedOn time.Time) {
+	g.UpdatedOn = updatedOn
+	g.require(getSCIMConfigurationResponseContentFieldUpdatedOn)
+}
+
+func (g *GetSCIMConfigurationResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetSCIMConfigurationResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedOn *internal.DateTime `json:"updated_on"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetSCIMConfigurationResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.Time()
+	g.UpdatedOn = unmarshaler.UpdatedOn.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetSCIMConfigurationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetSCIMConfigurationResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedOn *internal.DateTime `json:"updated_on"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewDateTime(g.CreatedAt),
+		UpdatedOn: internal.NewDateTime(g.UpdatedOn),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetSCIMConfigurationResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+// The list of scim tokens for scim clients
+type GetSCIMTokensResponseContent = []*SCIMTokenItem
+
+var (
 	listConnectionsCheckpointPaginatedResponseContentFieldNext        = big.NewInt(1 << 0)
 	listConnectionsCheckpointPaginatedResponseContentFieldConnections = big.NewInt(1 << 1)
 )
@@ -5842,6 +7975,323 @@ func (l *ListConnectionsCheckpointPaginatedResponseContent) MarshalJSON() ([]byt
 }
 
 func (l *ListConnectionsCheckpointPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listConnectionsOffsetPaginatedResponseContentFieldStart       = big.NewInt(1 << 0)
+	listConnectionsOffsetPaginatedResponseContentFieldLimit       = big.NewInt(1 << 1)
+	listConnectionsOffsetPaginatedResponseContentFieldTotal       = big.NewInt(1 << 2)
+	listConnectionsOffsetPaginatedResponseContentFieldConnections = big.NewInt(1 << 3)
+)
+
+type ListConnectionsOffsetPaginatedResponseContent struct {
+	Start       *float64             `json:"start,omitempty" url:"start,omitempty"`
+	Limit       *float64             `json:"limit,omitempty" url:"limit,omitempty"`
+	Total       *float64             `json:"total,omitempty" url:"total,omitempty"`
+	Connections []*ConnectionForList `json:"connections,omitempty" url:"connections,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListConnectionsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListConnectionsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListConnectionsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListConnectionsOffsetPaginatedResponseContent) GetConnections() []*ConnectionForList {
+	if l == nil || l.Connections == nil {
+		return nil
+	}
+	return l.Connections
+}
+
+func (l *ListConnectionsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListConnectionsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listConnectionsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listConnectionsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listConnectionsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetConnections sets the Connections field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsOffsetPaginatedResponseContent) SetConnections(connections []*ConnectionForList) {
+	l.Connections = connections
+	l.require(listConnectionsOffsetPaginatedResponseContentFieldConnections)
+}
+
+func (l *ListConnectionsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListConnectionsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListConnectionsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListConnectionsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListConnectionsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListConnectionsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListConnectionsResponseContent struct {
+	ConnectionForListList                             []*ConnectionForList
+	ListConnectionsOffsetPaginatedResponseContent     *ListConnectionsOffsetPaginatedResponseContent
+	ListConnectionsCheckpointPaginatedResponseContent *ListConnectionsCheckpointPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListConnectionsResponseContent) GetConnectionForListList() []*ConnectionForList {
+	if l == nil {
+		return nil
+	}
+	return l.ConnectionForListList
+}
+
+func (l *ListConnectionsResponseContent) GetListConnectionsOffsetPaginatedResponseContent() *ListConnectionsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListConnectionsOffsetPaginatedResponseContent
+}
+
+func (l *ListConnectionsResponseContent) GetListConnectionsCheckpointPaginatedResponseContent() *ListConnectionsCheckpointPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListConnectionsCheckpointPaginatedResponseContent
+}
+
+func (l *ListConnectionsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueConnectionForListList []*ConnectionForList
+	if err := json.Unmarshal(data, &valueConnectionForListList); err == nil {
+		l.typ = "ConnectionForListList"
+		l.ConnectionForListList = valueConnectionForListList
+		return nil
+	}
+	valueListConnectionsOffsetPaginatedResponseContent := new(ListConnectionsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListConnectionsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListConnectionsOffsetPaginatedResponseContent"
+		l.ListConnectionsOffsetPaginatedResponseContent = valueListConnectionsOffsetPaginatedResponseContent
+		return nil
+	}
+	valueListConnectionsCheckpointPaginatedResponseContent := new(ListConnectionsCheckpointPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListConnectionsCheckpointPaginatedResponseContent); err == nil {
+		l.typ = "ListConnectionsCheckpointPaginatedResponseContent"
+		l.ListConnectionsCheckpointPaginatedResponseContent = valueListConnectionsCheckpointPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListConnectionsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "ConnectionForListList" || l.ConnectionForListList != nil {
+		return json.Marshal(l.ConnectionForListList)
+	}
+	if l.typ == "ListConnectionsOffsetPaginatedResponseContent" || l.ListConnectionsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListConnectionsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListConnectionsCheckpointPaginatedResponseContent" || l.ListConnectionsCheckpointPaginatedResponseContent != nil {
+		return json.Marshal(l.ListConnectionsCheckpointPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListConnectionsResponseContentVisitor interface {
+	VisitConnectionForListList([]*ConnectionForList) error
+	VisitListConnectionsOffsetPaginatedResponseContent(*ListConnectionsOffsetPaginatedResponseContent) error
+	VisitListConnectionsCheckpointPaginatedResponseContent(*ListConnectionsCheckpointPaginatedResponseContent) error
+}
+
+func (l *ListConnectionsResponseContent) Accept(visitor ListConnectionsResponseContentVisitor) error {
+	if l.typ == "ConnectionForListList" || l.ConnectionForListList != nil {
+		return visitor.VisitConnectionForListList(l.ConnectionForListList)
+	}
+	if l.typ == "ListConnectionsOffsetPaginatedResponseContent" || l.ListConnectionsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListConnectionsOffsetPaginatedResponseContent(l.ListConnectionsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListConnectionsCheckpointPaginatedResponseContent" || l.ListConnectionsCheckpointPaginatedResponseContent != nil {
+		return visitor.VisitListConnectionsCheckpointPaginatedResponseContent(l.ListConnectionsCheckpointPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listSynchronizedGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
+	listSynchronizedGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
+)
+
+type ListSynchronizedGroupsResponseContent struct {
+	// Array of Google Workspace group ids configured for synchronization.
+	Groups []*SynchronizedGroupPayload `json:"groups" url:"groups"`
+	// The cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListSynchronizedGroupsResponseContent) GetGroups() []*SynchronizedGroupPayload {
+	if l == nil {
+		return nil
+	}
+	return l.Groups
+}
+
+func (l *ListSynchronizedGroupsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListSynchronizedGroupsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListSynchronizedGroupsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetGroups sets the Groups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSynchronizedGroupsResponseContent) SetGroups(groups []*SynchronizedGroupPayload) {
+	l.Groups = groups
+	l.require(listSynchronizedGroupsResponseContentFieldGroups)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSynchronizedGroupsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listSynchronizedGroupsResponseContentFieldNext)
+}
+
+func (l *ListSynchronizedGroupsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListSynchronizedGroupsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListSynchronizedGroupsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListSynchronizedGroupsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListSynchronizedGroupsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListSynchronizedGroupsResponseContent) String() string {
 	if l == nil {
 		return "<nil>"
 	}
@@ -6218,6 +8668,892 @@ func (p *PhoneAttributeIdentifier) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
+// Selected Signing Algorithm
+type PostConnectionKeysAlgEnum string
+
+const (
+	PostConnectionKeysAlgEnumRs256 PostConnectionKeysAlgEnum = "RS256"
+	PostConnectionKeysAlgEnumRs384 PostConnectionKeysAlgEnum = "RS384"
+	PostConnectionKeysAlgEnumRs512 PostConnectionKeysAlgEnum = "RS512"
+	PostConnectionKeysAlgEnumPs256 PostConnectionKeysAlgEnum = "PS256"
+	PostConnectionKeysAlgEnumPs384 PostConnectionKeysAlgEnum = "PS384"
+	PostConnectionKeysAlgEnumEs256 PostConnectionKeysAlgEnum = "ES256"
+	PostConnectionKeysAlgEnumEs384 PostConnectionKeysAlgEnum = "ES384"
+)
+
+func NewPostConnectionKeysAlgEnumFromString(s string) (PostConnectionKeysAlgEnum, error) {
+	switch s {
+	case "RS256":
+		return PostConnectionKeysAlgEnumRs256, nil
+	case "RS384":
+		return PostConnectionKeysAlgEnumRs384, nil
+	case "RS512":
+		return PostConnectionKeysAlgEnumRs512, nil
+	case "PS256":
+		return PostConnectionKeysAlgEnumPs256, nil
+	case "PS384":
+		return PostConnectionKeysAlgEnumPs384, nil
+	case "ES256":
+		return PostConnectionKeysAlgEnumEs256, nil
+	case "ES384":
+		return PostConnectionKeysAlgEnumEs384, nil
+	}
+	var t PostConnectionKeysAlgEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PostConnectionKeysAlgEnum) Ptr() *PostConnectionKeysAlgEnum {
+	return &p
+}
+
+var (
+	postConnectionKeysRequestContentFieldSigningAlg = big.NewInt(1 << 0)
+)
+
+type PostConnectionKeysRequestContent struct {
+	SigningAlg *PostConnectionKeysAlgEnum `json:"signing_alg,omitempty" url:"signing_alg,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PostConnectionKeysRequestContent) GetSigningAlg() PostConnectionKeysAlgEnum {
+	if p == nil || p.SigningAlg == nil {
+		return ""
+	}
+	return *p.SigningAlg
+}
+
+func (p *PostConnectionKeysRequestContent) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PostConnectionKeysRequestContent) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionKeysRequestContent) SetSigningAlg(signingAlg *PostConnectionKeysAlgEnum) {
+	p.SigningAlg = signingAlg
+	p.require(postConnectionKeysRequestContentFieldSigningAlg)
+}
+
+func (p *PostConnectionKeysRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler PostConnectionKeysRequestContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PostConnectionKeysRequestContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PostConnectionKeysRequestContent) MarshalJSON() ([]byte, error) {
+	type embed PostConnectionKeysRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PostConnectionKeysRequestContent) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+type PostConnectionsKeysResponseContent = []*PostConnectionsKeysResponseContentItem
+
+var (
+	postConnectionsKeysResponseContentItemFieldKid          = big.NewInt(1 << 0)
+	postConnectionsKeysResponseContentItemFieldCert         = big.NewInt(1 << 1)
+	postConnectionsKeysResponseContentItemFieldPkcs         = big.NewInt(1 << 2)
+	postConnectionsKeysResponseContentItemFieldCurrent      = big.NewInt(1 << 3)
+	postConnectionsKeysResponseContentItemFieldNext         = big.NewInt(1 << 4)
+	postConnectionsKeysResponseContentItemFieldCurrentSince = big.NewInt(1 << 5)
+	postConnectionsKeysResponseContentItemFieldFingerprint  = big.NewInt(1 << 6)
+	postConnectionsKeysResponseContentItemFieldThumbprint   = big.NewInt(1 << 7)
+	postConnectionsKeysResponseContentItemFieldAlgorithm    = big.NewInt(1 << 8)
+	postConnectionsKeysResponseContentItemFieldKeyUse       = big.NewInt(1 << 9)
+	postConnectionsKeysResponseContentItemFieldSubjectDn    = big.NewInt(1 << 10)
+)
+
+type PostConnectionsKeysResponseContentItem struct {
+	// The key id of the signing key
+	Kid string `json:"kid" url:"kid"`
+	// The public certificate of the signing key
+	Cert string `json:"cert" url:"cert"`
+	// The public certificate of the signing key in pkcs7 format
+	Pkcs *string `json:"pkcs,omitempty" url:"pkcs,omitempty"`
+	// True if the key is the current key
+	Current *bool `json:"current,omitempty" url:"current,omitempty"`
+	// True if the key is the next key
+	Next *bool `json:"next,omitempty" url:"next,omitempty"`
+	// The date and time when the key became the current key
+	CurrentSince *string `json:"current_since,omitempty" url:"current_since,omitempty"`
+	// The cert fingerprint
+	Fingerprint string `json:"fingerprint" url:"fingerprint"`
+	// The cert thumbprint
+	Thumbprint string `json:"thumbprint" url:"thumbprint"`
+	// Signing key algorithm
+	Algorithm *string               `json:"algorithm,omitempty" url:"algorithm,omitempty"`
+	KeyUse    *ConnectionKeyUseEnum `json:"key_use,omitempty" url:"key_use,omitempty"`
+	SubjectDn *string               `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetKid() string {
+	if p == nil {
+		return ""
+	}
+	return p.Kid
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetCert() string {
+	if p == nil {
+		return ""
+	}
+	return p.Cert
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetPkcs() string {
+	if p == nil || p.Pkcs == nil {
+		return ""
+	}
+	return *p.Pkcs
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetCurrent() bool {
+	if p == nil || p.Current == nil {
+		return false
+	}
+	return *p.Current
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetNext() bool {
+	if p == nil || p.Next == nil {
+		return false
+	}
+	return *p.Next
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetCurrentSince() string {
+	if p == nil || p.CurrentSince == nil {
+		return ""
+	}
+	return *p.CurrentSince
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetFingerprint() string {
+	if p == nil {
+		return ""
+	}
+	return p.Fingerprint
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetThumbprint() string {
+	if p == nil {
+		return ""
+	}
+	return p.Thumbprint
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetAlgorithm() string {
+	if p == nil || p.Algorithm == nil {
+		return ""
+	}
+	return *p.Algorithm
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetKeyUse() ConnectionKeyUseEnum {
+	if p == nil || p.KeyUse == nil {
+		return ""
+	}
+	return *p.KeyUse
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetSubjectDn() string {
+	if p == nil || p.SubjectDn == nil {
+		return ""
+	}
+	return *p.SubjectDn
+}
+
+func (p *PostConnectionsKeysResponseContentItem) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.ExtraProperties
+}
+
+func (p *PostConnectionsKeysResponseContentItem) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetKid(kid string) {
+	p.Kid = kid
+	p.require(postConnectionsKeysResponseContentItemFieldKid)
+}
+
+// SetCert sets the Cert field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetCert(cert string) {
+	p.Cert = cert
+	p.require(postConnectionsKeysResponseContentItemFieldCert)
+}
+
+// SetPkcs sets the Pkcs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetPkcs(pkcs *string) {
+	p.Pkcs = pkcs
+	p.require(postConnectionsKeysResponseContentItemFieldPkcs)
+}
+
+// SetCurrent sets the Current field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetCurrent(current *bool) {
+	p.Current = current
+	p.require(postConnectionsKeysResponseContentItemFieldCurrent)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetNext(next *bool) {
+	p.Next = next
+	p.require(postConnectionsKeysResponseContentItemFieldNext)
+}
+
+// SetCurrentSince sets the CurrentSince field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetCurrentSince(currentSince *string) {
+	p.CurrentSince = currentSince
+	p.require(postConnectionsKeysResponseContentItemFieldCurrentSince)
+}
+
+// SetFingerprint sets the Fingerprint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetFingerprint(fingerprint string) {
+	p.Fingerprint = fingerprint
+	p.require(postConnectionsKeysResponseContentItemFieldFingerprint)
+}
+
+// SetThumbprint sets the Thumbprint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetThumbprint(thumbprint string) {
+	p.Thumbprint = thumbprint
+	p.require(postConnectionsKeysResponseContentItemFieldThumbprint)
+}
+
+// SetAlgorithm sets the Algorithm field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetAlgorithm(algorithm *string) {
+	p.Algorithm = algorithm
+	p.require(postConnectionsKeysResponseContentItemFieldAlgorithm)
+}
+
+// SetKeyUse sets the KeyUse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetKeyUse(keyUse *ConnectionKeyUseEnum) {
+	p.KeyUse = keyUse
+	p.require(postConnectionsKeysResponseContentItemFieldKeyUse)
+}
+
+// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionsKeysResponseContentItem) SetSubjectDn(subjectDn *string) {
+	p.SubjectDn = subjectDn
+	p.require(postConnectionsKeysResponseContentItemFieldSubjectDn)
+}
+
+func (p *PostConnectionsKeysResponseContentItem) UnmarshalJSON(data []byte) error {
+	type embed PostConnectionsKeysResponseContentItem
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = PostConnectionsKeysResponseContentItem(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.ExtraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PostConnectionsKeysResponseContentItem) MarshalJSON() ([]byte, error) {
+	type embed PostConnectionsKeysResponseContentItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, p.ExtraProperties)
+}
+
+func (p *PostConnectionsKeysResponseContentItem) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
+	rotateConnectionKeysRequestContentFieldSigningAlg = big.NewInt(1 << 0)
+)
+
+type RotateConnectionKeysRequestContent struct {
+	SigningAlg *RotateConnectionKeysSigningAlgEnum `json:"signing_alg,omitempty" url:"signing_alg,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RotateConnectionKeysRequestContent) GetSigningAlg() RotateConnectionKeysSigningAlgEnum {
+	if r == nil || r.SigningAlg == nil {
+		return ""
+	}
+	return *r.SigningAlg
+}
+
+func (r *RotateConnectionKeysRequestContent) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RotateConnectionKeysRequestContent) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionKeysRequestContent) SetSigningAlg(signingAlg *RotateConnectionKeysSigningAlgEnum) {
+	r.SigningAlg = signingAlg
+	r.require(rotateConnectionKeysRequestContentFieldSigningAlg)
+}
+
+func (r *RotateConnectionKeysRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler RotateConnectionKeysRequestContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RotateConnectionKeysRequestContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RotateConnectionKeysRequestContent) MarshalJSON() ([]byte, error) {
+	type embed RotateConnectionKeysRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RotateConnectionKeysRequestContent) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Selected Signing Algorithm
+type RotateConnectionKeysSigningAlgEnum string
+
+const (
+	RotateConnectionKeysSigningAlgEnumRs256 RotateConnectionKeysSigningAlgEnum = "RS256"
+	RotateConnectionKeysSigningAlgEnumRs384 RotateConnectionKeysSigningAlgEnum = "RS384"
+	RotateConnectionKeysSigningAlgEnumRs512 RotateConnectionKeysSigningAlgEnum = "RS512"
+	RotateConnectionKeysSigningAlgEnumPs256 RotateConnectionKeysSigningAlgEnum = "PS256"
+	RotateConnectionKeysSigningAlgEnumPs384 RotateConnectionKeysSigningAlgEnum = "PS384"
+	RotateConnectionKeysSigningAlgEnumEs256 RotateConnectionKeysSigningAlgEnum = "ES256"
+	RotateConnectionKeysSigningAlgEnumEs384 RotateConnectionKeysSigningAlgEnum = "ES384"
+)
+
+func NewRotateConnectionKeysSigningAlgEnumFromString(s string) (RotateConnectionKeysSigningAlgEnum, error) {
+	switch s {
+	case "RS256":
+		return RotateConnectionKeysSigningAlgEnumRs256, nil
+	case "RS384":
+		return RotateConnectionKeysSigningAlgEnumRs384, nil
+	case "RS512":
+		return RotateConnectionKeysSigningAlgEnumRs512, nil
+	case "PS256":
+		return RotateConnectionKeysSigningAlgEnumPs256, nil
+	case "PS384":
+		return RotateConnectionKeysSigningAlgEnumPs384, nil
+	case "ES256":
+		return RotateConnectionKeysSigningAlgEnumEs256, nil
+	case "ES384":
+		return RotateConnectionKeysSigningAlgEnumEs384, nil
+	}
+	var t RotateConnectionKeysSigningAlgEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r RotateConnectionKeysSigningAlgEnum) Ptr() *RotateConnectionKeysSigningAlgEnum {
+	return &r
+}
+
+var (
+	rotateConnectionsKeysResponseContentFieldKid         = big.NewInt(1 << 0)
+	rotateConnectionsKeysResponseContentFieldCert        = big.NewInt(1 << 1)
+	rotateConnectionsKeysResponseContentFieldPkcs        = big.NewInt(1 << 2)
+	rotateConnectionsKeysResponseContentFieldNext        = big.NewInt(1 << 3)
+	rotateConnectionsKeysResponseContentFieldFingerprint = big.NewInt(1 << 4)
+	rotateConnectionsKeysResponseContentFieldThumbprint  = big.NewInt(1 << 5)
+	rotateConnectionsKeysResponseContentFieldAlgorithm   = big.NewInt(1 << 6)
+	rotateConnectionsKeysResponseContentFieldKeyUse      = big.NewInt(1 << 7)
+	rotateConnectionsKeysResponseContentFieldSubjectDn   = big.NewInt(1 << 8)
+)
+
+type RotateConnectionsKeysResponseContent struct {
+	// The key id of the signing key
+	Kid string `json:"kid" url:"kid"`
+	// The public certificate of the signing key
+	Cert string `json:"cert" url:"cert"`
+	// The public certificate of the signing key in pkcs7 format
+	Pkcs *string `json:"pkcs,omitempty" url:"pkcs,omitempty"`
+	// True if the key is the the next key
+	Next *bool `json:"next,omitempty" url:"next,omitempty"`
+	// The cert fingerprint
+	Fingerprint string `json:"fingerprint" url:"fingerprint"`
+	// The cert thumbprint
+	Thumbprint string `json:"thumbprint" url:"thumbprint"`
+	// Signing key algorithm
+	Algorithm *string               `json:"algorithm,omitempty" url:"algorithm,omitempty"`
+	KeyUse    *ConnectionKeyUseEnum `json:"key_use,omitempty" url:"key_use,omitempty"`
+	SubjectDn *string               `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetKid() string {
+	if r == nil {
+		return ""
+	}
+	return r.Kid
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetCert() string {
+	if r == nil {
+		return ""
+	}
+	return r.Cert
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetPkcs() string {
+	if r == nil || r.Pkcs == nil {
+		return ""
+	}
+	return *r.Pkcs
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetNext() bool {
+	if r == nil || r.Next == nil {
+		return false
+	}
+	return *r.Next
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetFingerprint() string {
+	if r == nil {
+		return ""
+	}
+	return r.Fingerprint
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetThumbprint() string {
+	if r == nil {
+		return ""
+	}
+	return r.Thumbprint
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetAlgorithm() string {
+	if r == nil || r.Algorithm == nil {
+		return ""
+	}
+	return *r.Algorithm
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetKeyUse() ConnectionKeyUseEnum {
+	if r == nil || r.KeyUse == nil {
+		return ""
+	}
+	return *r.KeyUse
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetSubjectDn() string {
+	if r == nil || r.SubjectDn == nil {
+		return ""
+	}
+	return *r.SubjectDn
+}
+
+func (r *RotateConnectionsKeysResponseContent) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.ExtraProperties
+}
+
+func (r *RotateConnectionsKeysResponseContent) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionsKeysResponseContent) SetKid(kid string) {
+	r.Kid = kid
+	r.require(rotateConnectionsKeysResponseContentFieldKid)
+}
+
+// SetCert sets the Cert field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionsKeysResponseContent) SetCert(cert string) {
+	r.Cert = cert
+	r.require(rotateConnectionsKeysResponseContentFieldCert)
+}
+
+// SetPkcs sets the Pkcs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionsKeysResponseContent) SetPkcs(pkcs *string) {
+	r.Pkcs = pkcs
+	r.require(rotateConnectionsKeysResponseContentFieldPkcs)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionsKeysResponseContent) SetNext(next *bool) {
+	r.Next = next
+	r.require(rotateConnectionsKeysResponseContentFieldNext)
+}
+
+// SetFingerprint sets the Fingerprint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionsKeysResponseContent) SetFingerprint(fingerprint string) {
+	r.Fingerprint = fingerprint
+	r.require(rotateConnectionsKeysResponseContentFieldFingerprint)
+}
+
+// SetThumbprint sets the Thumbprint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionsKeysResponseContent) SetThumbprint(thumbprint string) {
+	r.Thumbprint = thumbprint
+	r.require(rotateConnectionsKeysResponseContentFieldThumbprint)
+}
+
+// SetAlgorithm sets the Algorithm field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionsKeysResponseContent) SetAlgorithm(algorithm *string) {
+	r.Algorithm = algorithm
+	r.require(rotateConnectionsKeysResponseContentFieldAlgorithm)
+}
+
+// SetKeyUse sets the KeyUse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionsKeysResponseContent) SetKeyUse(keyUse *ConnectionKeyUseEnum) {
+	r.KeyUse = keyUse
+	r.require(rotateConnectionsKeysResponseContentFieldKeyUse)
+}
+
+// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionsKeysResponseContent) SetSubjectDn(subjectDn *string) {
+	r.SubjectDn = subjectDn
+	r.require(rotateConnectionsKeysResponseContentFieldSubjectDn)
+}
+
+func (r *RotateConnectionsKeysResponseContent) UnmarshalJSON(data []byte) error {
+	type embed RotateConnectionsKeysResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*r = RotateConnectionsKeysResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.ExtraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RotateConnectionsKeysResponseContent) MarshalJSON() ([]byte, error) {
+	type embed RotateConnectionsKeysResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, r.ExtraProperties)
+}
+
+func (r *RotateConnectionsKeysResponseContent) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	sCIMTokenItemFieldTokenID    = big.NewInt(1 << 0)
+	sCIMTokenItemFieldScopes     = big.NewInt(1 << 1)
+	sCIMTokenItemFieldCreatedAt  = big.NewInt(1 << 2)
+	sCIMTokenItemFieldValidUntil = big.NewInt(1 << 3)
+	sCIMTokenItemFieldLastUsedAt = big.NewInt(1 << 4)
+)
+
+type SCIMTokenItem struct {
+	// The token's identifier
+	TokenID *string `json:"token_id,omitempty" url:"token_id,omitempty"`
+	// The scopes of the scim token
+	Scopes []string `json:"scopes,omitempty" url:"scopes,omitempty"`
+	// The token's created at timestamp
+	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The token's valid until timestamp
+	ValidUntil *string `json:"valid_until,omitempty" url:"valid_until,omitempty"`
+	// The token's last used at timestamp
+	LastUsedAt *string `json:"last_used_at,omitempty" url:"last_used_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (s *SCIMTokenItem) GetTokenID() string {
+	if s == nil || s.TokenID == nil {
+		return ""
+	}
+	return *s.TokenID
+}
+
+func (s *SCIMTokenItem) GetScopes() []string {
+	if s == nil || s.Scopes == nil {
+		return nil
+	}
+	return s.Scopes
+}
+
+func (s *SCIMTokenItem) GetCreatedAt() string {
+	if s == nil || s.CreatedAt == nil {
+		return ""
+	}
+	return *s.CreatedAt
+}
+
+func (s *SCIMTokenItem) GetValidUntil() string {
+	if s == nil || s.ValidUntil == nil {
+		return ""
+	}
+	return *s.ValidUntil
+}
+
+func (s *SCIMTokenItem) GetLastUsedAt() string {
+	if s == nil || s.LastUsedAt == nil {
+		return ""
+	}
+	return *s.LastUsedAt
+}
+
+func (s *SCIMTokenItem) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.ExtraProperties
+}
+
+func (s *SCIMTokenItem) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetTokenID sets the TokenID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SCIMTokenItem) SetTokenID(tokenID *string) {
+	s.TokenID = tokenID
+	s.require(sCIMTokenItemFieldTokenID)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SCIMTokenItem) SetScopes(scopes []string) {
+	s.Scopes = scopes
+	s.require(sCIMTokenItemFieldScopes)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SCIMTokenItem) SetCreatedAt(createdAt *string) {
+	s.CreatedAt = createdAt
+	s.require(sCIMTokenItemFieldCreatedAt)
+}
+
+// SetValidUntil sets the ValidUntil field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SCIMTokenItem) SetValidUntil(validUntil *string) {
+	s.ValidUntil = validUntil
+	s.require(sCIMTokenItemFieldValidUntil)
+}
+
+// SetLastUsedAt sets the LastUsedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SCIMTokenItem) SetLastUsedAt(lastUsedAt *string) {
+	s.LastUsedAt = lastUsedAt
+	s.require(sCIMTokenItemFieldLastUsedAt)
+}
+
+func (s *SCIMTokenItem) UnmarshalJSON(data []byte) error {
+	type embed SCIMTokenItem
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*s = SCIMTokenItem(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.ExtraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SCIMTokenItem) MarshalJSON() ([]byte, error) {
+	type embed SCIMTokenItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
+}
+
+func (s *SCIMTokenItem) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 var (
 	signupSchemaFieldStatus = big.NewInt(1 << 0)
 )
@@ -6497,6 +9833,227 @@ func (s *SignupVerified) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SignupVerified) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	synchronizedGroupPayloadFieldID                 = big.NewInt(1 << 0)
+	synchronizedGroupPayloadFieldName               = big.NewInt(1 << 1)
+	synchronizedGroupPayloadFieldEmail              = big.NewInt(1 << 2)
+	synchronizedGroupPayloadFieldDirectMembersCount = big.NewInt(1 << 3)
+)
+
+type SynchronizedGroupPayload struct {
+	// Google Workspace Directory group ID.
+	ID string `json:"id" url:"id"`
+	// Google Workspace Directory group name.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Google Workspace Directory group email.
+	Email *string `json:"email,omitempty" url:"email,omitempty"`
+	// Number of direct members in the Google Workspace Directory group.
+	DirectMembersCount *int `json:"direct_members_count,omitempty" url:"direct_members_count,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SynchronizedGroupPayload) GetID() string {
+	if s == nil {
+		return ""
+	}
+	return s.ID
+}
+
+func (s *SynchronizedGroupPayload) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+func (s *SynchronizedGroupPayload) GetEmail() string {
+	if s == nil || s.Email == nil {
+		return ""
+	}
+	return *s.Email
+}
+
+func (s *SynchronizedGroupPayload) GetDirectMembersCount() int {
+	if s == nil || s.DirectMembersCount == nil {
+		return 0
+	}
+	return *s.DirectMembersCount
+}
+
+func (s *SynchronizedGroupPayload) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SynchronizedGroupPayload) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SynchronizedGroupPayload) SetID(id string) {
+	s.ID = id
+	s.require(synchronizedGroupPayloadFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SynchronizedGroupPayload) SetName(name *string) {
+	s.Name = name
+	s.require(synchronizedGroupPayloadFieldName)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SynchronizedGroupPayload) SetEmail(email *string) {
+	s.Email = email
+	s.require(synchronizedGroupPayloadFieldEmail)
+}
+
+// SetDirectMembersCount sets the DirectMembersCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SynchronizedGroupPayload) SetDirectMembersCount(directMembersCount *int) {
+	s.DirectMembersCount = directMembersCount
+	s.require(synchronizedGroupPayloadFieldDirectMembersCount)
+}
+
+func (s *SynchronizedGroupPayload) UnmarshalJSON(data []byte) error {
+	type unmarshaler SynchronizedGroupPayload
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SynchronizedGroupPayload(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SynchronizedGroupPayload) MarshalJSON() ([]byte, error) {
+	type embed SynchronizedGroupPayload
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SynchronizedGroupPayload) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	synchronizedGroupSelectionIDFieldID = big.NewInt(1 << 0)
+)
+
+type SynchronizedGroupSelectionID struct {
+	// Google Workspace Directory group ID.
+	ID string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SynchronizedGroupSelectionID) GetID() string {
+	if s == nil {
+		return ""
+	}
+	return s.ID
+}
+
+func (s *SynchronizedGroupSelectionID) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SynchronizedGroupSelectionID) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SynchronizedGroupSelectionID) SetID(id string) {
+	s.ID = id
+	s.require(synchronizedGroupSelectionIDFieldID)
+}
+
+func (s *SynchronizedGroupSelectionID) UnmarshalJSON(data []byte) error {
+	type unmarshaler SynchronizedGroupSelectionID
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SynchronizedGroupSelectionID(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SynchronizedGroupSelectionID) MarshalJSON() ([]byte, error) {
+	type embed SynchronizedGroupSelectionID
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SynchronizedGroupSelectionID) String() string {
 	if s == nil {
 		return "<nil>"
 	}
@@ -7634,6 +11191,714 @@ func (u *UpdateCrossAppAccessResourceApp) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateCrossAppAccessResourceApp) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateDirectoryProvisioningRequestContentFieldMapping                  = big.NewInt(1 << 0)
+	updateDirectoryProvisioningRequestContentFieldSynchronizeAutomatically = big.NewInt(1 << 1)
+	updateDirectoryProvisioningRequestContentFieldSynchronizeGroups        = big.NewInt(1 << 2)
+)
+
+type UpdateDirectoryProvisioningRequestContent struct {
+	// The mapping between Auth0 and IDP user attributes
+	Mapping []*DirectoryProvisioningMappingItem `json:"mapping,omitempty" url:"mapping,omitempty"`
+	// Whether periodic automatic synchronization is enabled
+	SynchronizeAutomatically *bool                  `json:"synchronize_automatically,omitempty" url:"synchronize_automatically,omitempty"`
+	SynchronizeGroups        *SynchronizeGroupsEnum `json:"synchronize_groups,omitempty" url:"synchronize_groups,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateDirectoryProvisioningRequestContent) GetMapping() []*DirectoryProvisioningMappingItem {
+	if u == nil || u.Mapping == nil {
+		return nil
+	}
+	return u.Mapping
+}
+
+func (u *UpdateDirectoryProvisioningRequestContent) GetSynchronizeAutomatically() bool {
+	if u == nil || u.SynchronizeAutomatically == nil {
+		return false
+	}
+	return *u.SynchronizeAutomatically
+}
+
+func (u *UpdateDirectoryProvisioningRequestContent) GetSynchronizeGroups() SynchronizeGroupsEnum {
+	if u == nil || u.SynchronizeGroups == nil {
+		return ""
+	}
+	return *u.SynchronizeGroups
+}
+
+func (u *UpdateDirectoryProvisioningRequestContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateDirectoryProvisioningRequestContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningRequestContent) SetMapping(mapping []*DirectoryProvisioningMappingItem) {
+	u.Mapping = mapping
+	u.require(updateDirectoryProvisioningRequestContentFieldMapping)
+}
+
+// SetSynchronizeAutomatically sets the SynchronizeAutomatically field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningRequestContent) SetSynchronizeAutomatically(synchronizeAutomatically *bool) {
+	u.SynchronizeAutomatically = synchronizeAutomatically
+	u.require(updateDirectoryProvisioningRequestContentFieldSynchronizeAutomatically)
+}
+
+// SetSynchronizeGroups sets the SynchronizeGroups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningRequestContent) SetSynchronizeGroups(synchronizeGroups *SynchronizeGroupsEnum) {
+	u.SynchronizeGroups = synchronizeGroups
+	u.require(updateDirectoryProvisioningRequestContentFieldSynchronizeGroups)
+}
+
+func (u *UpdateDirectoryProvisioningRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateDirectoryProvisioningRequestContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateDirectoryProvisioningRequestContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateDirectoryProvisioningRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateDirectoryProvisioningRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateDirectoryProvisioningRequestContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateDirectoryProvisioningResponseContentFieldConnectionID              = big.NewInt(1 << 0)
+	updateDirectoryProvisioningResponseContentFieldConnectionName            = big.NewInt(1 << 1)
+	updateDirectoryProvisioningResponseContentFieldStrategy                  = big.NewInt(1 << 2)
+	updateDirectoryProvisioningResponseContentFieldMapping                   = big.NewInt(1 << 3)
+	updateDirectoryProvisioningResponseContentFieldSynchronizeAutomatically  = big.NewInt(1 << 4)
+	updateDirectoryProvisioningResponseContentFieldSynchronizeGroups         = big.NewInt(1 << 5)
+	updateDirectoryProvisioningResponseContentFieldCreatedAt                 = big.NewInt(1 << 6)
+	updateDirectoryProvisioningResponseContentFieldUpdatedAt                 = big.NewInt(1 << 7)
+	updateDirectoryProvisioningResponseContentFieldLastSynchronizationAt     = big.NewInt(1 << 8)
+	updateDirectoryProvisioningResponseContentFieldLastSynchronizationStatus = big.NewInt(1 << 9)
+	updateDirectoryProvisioningResponseContentFieldLastSynchronizationError  = big.NewInt(1 << 10)
+)
+
+type UpdateDirectoryProvisioningResponseContent struct {
+	// The connection's identifier
+	ConnectionID string `json:"connection_id" url:"connection_id"`
+	// The connection's name
+	ConnectionName string `json:"connection_name" url:"connection_name"`
+	// The connection's strategy
+	Strategy string `json:"strategy" url:"strategy"`
+	// The mapping between Auth0 and IDP user attributes
+	Mapping []*DirectoryProvisioningMappingItem `json:"mapping" url:"mapping"`
+	// Whether periodic automatic synchronization is enabled
+	SynchronizeAutomatically bool                   `json:"synchronize_automatically" url:"synchronize_automatically"`
+	SynchronizeGroups        *SynchronizeGroupsEnum `json:"synchronize_groups,omitempty" url:"synchronize_groups,omitempty"`
+	// The timestamp at which the directory provisioning configuration was created
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The timestamp at which the directory provisioning configuration was last updated
+	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
+	// The timestamp at which the connection was last synchronized
+	LastSynchronizationAt *time.Time `json:"last_synchronization_at,omitempty" url:"last_synchronization_at,omitempty"`
+	// The status of the last synchronization
+	LastSynchronizationStatus *string `json:"last_synchronization_status,omitempty" url:"last_synchronization_status,omitempty"`
+	// The error message of the last synchronization, if any
+	LastSynchronizationError *string `json:"last_synchronization_error,omitempty" url:"last_synchronization_error,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetConnectionID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ConnectionID
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetConnectionName() string {
+	if u == nil {
+		return ""
+	}
+	return u.ConnectionName
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetStrategy() string {
+	if u == nil {
+		return ""
+	}
+	return u.Strategy
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetMapping() []*DirectoryProvisioningMappingItem {
+	if u == nil {
+		return nil
+	}
+	return u.Mapping
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetSynchronizeAutomatically() bool {
+	if u == nil {
+		return false
+	}
+	return u.SynchronizeAutomatically
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetSynchronizeGroups() SynchronizeGroupsEnum {
+	if u == nil || u.SynchronizeGroups == nil {
+		return ""
+	}
+	return *u.SynchronizeGroups
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetUpdatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedAt
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetLastSynchronizationAt() time.Time {
+	if u == nil || u.LastSynchronizationAt == nil {
+		return time.Time{}
+	}
+	return *u.LastSynchronizationAt
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetLastSynchronizationStatus() string {
+	if u == nil || u.LastSynchronizationStatus == nil {
+		return ""
+	}
+	return *u.LastSynchronizationStatus
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetLastSynchronizationError() string {
+	if u == nil || u.LastSynchronizationError == nil {
+		return ""
+	}
+	return *u.LastSynchronizationError
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetConnectionID(connectionID string) {
+	u.ConnectionID = connectionID
+	u.require(updateDirectoryProvisioningResponseContentFieldConnectionID)
+}
+
+// SetConnectionName sets the ConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetConnectionName(connectionName string) {
+	u.ConnectionName = connectionName
+	u.require(updateDirectoryProvisioningResponseContentFieldConnectionName)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetStrategy(strategy string) {
+	u.Strategy = strategy
+	u.require(updateDirectoryProvisioningResponseContentFieldStrategy)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetMapping(mapping []*DirectoryProvisioningMappingItem) {
+	u.Mapping = mapping
+	u.require(updateDirectoryProvisioningResponseContentFieldMapping)
+}
+
+// SetSynchronizeAutomatically sets the SynchronizeAutomatically field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetSynchronizeAutomatically(synchronizeAutomatically bool) {
+	u.SynchronizeAutomatically = synchronizeAutomatically
+	u.require(updateDirectoryProvisioningResponseContentFieldSynchronizeAutomatically)
+}
+
+// SetSynchronizeGroups sets the SynchronizeGroups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetSynchronizeGroups(synchronizeGroups *SynchronizeGroupsEnum) {
+	u.SynchronizeGroups = synchronizeGroups
+	u.require(updateDirectoryProvisioningResponseContentFieldSynchronizeGroups)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateDirectoryProvisioningResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateDirectoryProvisioningResponseContentFieldUpdatedAt)
+}
+
+// SetLastSynchronizationAt sets the LastSynchronizationAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetLastSynchronizationAt(lastSynchronizationAt *time.Time) {
+	u.LastSynchronizationAt = lastSynchronizationAt
+	u.require(updateDirectoryProvisioningResponseContentFieldLastSynchronizationAt)
+}
+
+// SetLastSynchronizationStatus sets the LastSynchronizationStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetLastSynchronizationStatus(lastSynchronizationStatus *string) {
+	u.LastSynchronizationStatus = lastSynchronizationStatus
+	u.require(updateDirectoryProvisioningResponseContentFieldLastSynchronizationStatus)
+}
+
+// SetLastSynchronizationError sets the LastSynchronizationError field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateDirectoryProvisioningResponseContent) SetLastSynchronizationError(lastSynchronizationError *string) {
+	u.LastSynchronizationError = lastSynchronizationError
+	u.require(updateDirectoryProvisioningResponseContentFieldLastSynchronizationError)
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateDirectoryProvisioningResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt             *internal.DateTime `json:"created_at"`
+		UpdatedAt             *internal.DateTime `json:"updated_at"`
+		LastSynchronizationAt *internal.DateTime `json:"last_synchronization_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateDirectoryProvisioningResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	u.LastSynchronizationAt = unmarshaler.LastSynchronizationAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateDirectoryProvisioningResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt             *internal.DateTime `json:"created_at"`
+		UpdatedAt             *internal.DateTime `json:"updated_at"`
+		LastSynchronizationAt *internal.DateTime `json:"last_synchronization_at,omitempty"`
+	}{
+		embed:                 embed(*u),
+		CreatedAt:             internal.NewDateTime(u.CreatedAt),
+		UpdatedAt:             internal.NewDateTime(u.UpdatedAt),
+		LastSynchronizationAt: internal.NewOptionalDateTime(u.LastSynchronizationAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateDirectoryProvisioningResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UpdateEnabledClientConnectionsRequestContent = []*UpdateEnabledClientConnectionsRequestContentItem
+
+var (
+	updateEnabledClientConnectionsRequestContentItemFieldClientID = big.NewInt(1 << 0)
+	updateEnabledClientConnectionsRequestContentItemFieldStatus   = big.NewInt(1 << 1)
+)
+
+type UpdateEnabledClientConnectionsRequestContentItem struct {
+	// The client_id of the client whose status will be changed. Note that the limit per PATCH request is 50 clients.
+	ClientID string `json:"client_id" url:"client_id"`
+	// Whether the connection is enabled or not for this client_id
+	Status bool `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateEnabledClientConnectionsRequestContentItem) GetClientID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ClientID
+}
+
+func (u *UpdateEnabledClientConnectionsRequestContentItem) GetStatus() bool {
+	if u == nil {
+		return false
+	}
+	return u.Status
+}
+
+func (u *UpdateEnabledClientConnectionsRequestContentItem) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateEnabledClientConnectionsRequestContentItem) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEnabledClientConnectionsRequestContentItem) SetClientID(clientID string) {
+	u.ClientID = clientID
+	u.require(updateEnabledClientConnectionsRequestContentItemFieldClientID)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateEnabledClientConnectionsRequestContentItem) SetStatus(status bool) {
+	u.Status = status
+	u.require(updateEnabledClientConnectionsRequestContentItemFieldStatus)
+}
+
+func (u *UpdateEnabledClientConnectionsRequestContentItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateEnabledClientConnectionsRequestContentItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateEnabledClientConnectionsRequestContentItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateEnabledClientConnectionsRequestContentItem) MarshalJSON() ([]byte, error) {
+	type embed UpdateEnabledClientConnectionsRequestContentItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateEnabledClientConnectionsRequestContentItem) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateSCIMConfigurationResponseContentFieldConnectionID    = big.NewInt(1 << 0)
+	updateSCIMConfigurationResponseContentFieldConnectionName  = big.NewInt(1 << 1)
+	updateSCIMConfigurationResponseContentFieldStrategy        = big.NewInt(1 << 2)
+	updateSCIMConfigurationResponseContentFieldTenantName      = big.NewInt(1 << 3)
+	updateSCIMConfigurationResponseContentFieldUserIDAttribute = big.NewInt(1 << 4)
+	updateSCIMConfigurationResponseContentFieldMapping         = big.NewInt(1 << 5)
+	updateSCIMConfigurationResponseContentFieldCreatedAt       = big.NewInt(1 << 6)
+	updateSCIMConfigurationResponseContentFieldUpdatedOn       = big.NewInt(1 << 7)
+)
+
+type UpdateSCIMConfigurationResponseContent struct {
+	// The connection's identifier
+	ConnectionID string `json:"connection_id" url:"connection_id"`
+	// The connection's name
+	ConnectionName string `json:"connection_name" url:"connection_name"`
+	// The connection's strategy
+	Strategy string `json:"strategy" url:"strategy"`
+	// The tenant's name
+	TenantName string `json:"tenant_name" url:"tenant_name"`
+	// User ID attribute for generating unique user ids
+	UserIDAttribute string `json:"user_id_attribute" url:"user_id_attribute"`
+	// The mapping between auth0 and SCIM
+	Mapping []*SCIMMappingItem `json:"mapping" url:"mapping"`
+	// The ISO 8601 date and time the SCIM configuration was created at
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The ISO 8601 date and time the SCIM configuration was last updated on
+	UpdatedOn time.Time `json:"updated_on" url:"updated_on"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) GetConnectionID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ConnectionID
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) GetConnectionName() string {
+	if u == nil {
+		return ""
+	}
+	return u.ConnectionName
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) GetStrategy() string {
+	if u == nil {
+		return ""
+	}
+	return u.Strategy
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) GetTenantName() string {
+	if u == nil {
+		return ""
+	}
+	return u.TenantName
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) GetUserIDAttribute() string {
+	if u == nil {
+		return ""
+	}
+	return u.UserIDAttribute
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) GetMapping() []*SCIMMappingItem {
+	if u == nil {
+		return nil
+	}
+	return u.Mapping
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) GetUpdatedOn() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedOn
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationResponseContent) SetConnectionID(connectionID string) {
+	u.ConnectionID = connectionID
+	u.require(updateSCIMConfigurationResponseContentFieldConnectionID)
+}
+
+// SetConnectionName sets the ConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationResponseContent) SetConnectionName(connectionName string) {
+	u.ConnectionName = connectionName
+	u.require(updateSCIMConfigurationResponseContentFieldConnectionName)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationResponseContent) SetStrategy(strategy string) {
+	u.Strategy = strategy
+	u.require(updateSCIMConfigurationResponseContentFieldStrategy)
+}
+
+// SetTenantName sets the TenantName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationResponseContent) SetTenantName(tenantName string) {
+	u.TenantName = tenantName
+	u.require(updateSCIMConfigurationResponseContentFieldTenantName)
+}
+
+// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationResponseContent) SetUserIDAttribute(userIDAttribute string) {
+	u.UserIDAttribute = userIDAttribute
+	u.require(updateSCIMConfigurationResponseContentFieldUserIDAttribute)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationResponseContent) SetMapping(mapping []*SCIMMappingItem) {
+	u.Mapping = mapping
+	u.require(updateSCIMConfigurationResponseContentFieldMapping)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationResponseContent) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateSCIMConfigurationResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedOn sets the UpdatedOn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationResponseContent) SetUpdatedOn(updatedOn time.Time) {
+	u.UpdatedOn = updatedOn
+	u.require(updateSCIMConfigurationResponseContentFieldUpdatedOn)
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateSCIMConfigurationResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedOn *internal.DateTime `json:"updated_on"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateSCIMConfigurationResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedOn = unmarshaler.UpdatedOn.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateSCIMConfigurationResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedOn *internal.DateTime `json:"updated_on"`
+	}{
+		embed:     embed(*u),
+		CreatedAt: internal.NewDateTime(u.CreatedAt),
+		UpdatedOn: internal.NewDateTime(u.UpdatedOn),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateSCIMConfigurationResponseContent) String() string {
 	if u == nil {
 		return "<nil>"
 	}

@@ -32,7 +32,61 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) GetOrganizationTemplates(
+	ctx context.Context,
+	request *management.GetOrganizationTemplatesRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ListOrganizationTemplatesPaginatedResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/organization-templates"
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 5,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ListOrganizationTemplatesPaginatedResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ListOrganizationTemplatesPaginatedResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) PostOrganizationTemplates(
 	ctx context.Context,
 	request *management.CreateOrganizationTemplateRequestContent,
 	opts ...option.RequestOption,
@@ -76,7 +130,7 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetOrganizationTemplatesByID(
 	ctx context.Context,
 	// Organization Template identifier.
 	id string,
@@ -122,7 +176,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchOrganizationTemplatesByID(
 	ctx context.Context,
 	// Organization Template identifier.
 	id string,
@@ -165,6 +219,65 @@ func (r *RawClient) Update(
 		return nil, err
 	}
 	return &core.Response[*management.OrganizationTemplate]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) GetOrganizationTemplatesByIDOrganizations(
+	ctx context.Context,
+	// The ID of the organization template.
+	id string,
+	request *management.GetOrganizationTemplatesByIDOrganizationsRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ListTemplateOrganizationsPaginatedResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/organization-templates/%v/organizations",
+		id,
+	)
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 5,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ListTemplateOrganizationsPaginatedResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ListTemplateOrganizationsPaginatedResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

@@ -1650,6 +1650,75 @@ func TestSettersMarkExplicitListHooksOffsetPaginatedResponseContent(t *testing.T
 
 }
 
+func TestGettersListHooksResponseContent(t *testing.T) {
+	t.Run("GetHookList", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListHooksResponseContent{}
+		var expected []*Hook
+		obj.HookList = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetHookList(), "getter should return the property value")
+	})
+
+	t.Run("GetHookList_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListHooksResponseContent{}
+		obj.HookList = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHookList(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHookList_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListHooksResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHookList() // Should return zero value
+	})
+
+	t.Run("GetListHooksOffsetPaginatedResponseContent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListHooksResponseContent{}
+		var expected *ListHooksOffsetPaginatedResponseContent
+		obj.ListHooksOffsetPaginatedResponseContent = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetListHooksOffsetPaginatedResponseContent(), "getter should return the property value")
+	})
+
+	t.Run("GetListHooksOffsetPaginatedResponseContent_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListHooksResponseContent{}
+		obj.ListHooksOffsetPaginatedResponseContent = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetListHooksOffsetPaginatedResponseContent(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetListHooksOffsetPaginatedResponseContent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListHooksResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetListHooksOffsetPaginatedResponseContent() // Should return zero value
+	})
+
+}
+
 func TestSettersUpdateHookResponseContent(t *testing.T) {
 	t.Run("SetTriggerID", func(t *testing.T) {
 		obj := &UpdateHookResponseContent{}

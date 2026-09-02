@@ -4,7 +4,6 @@ package userattributeprofiles
 
 import (
 	context "context"
-	http "net/http"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -36,78 +35,29 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a list of User Attribute Profiles. This endpoint supports Checkpoint pagination.
-func (c *Client) List(
+func (c *Client) GetUserAttributeProfiles(
 	ctx context.Context,
-	request *management.ListUserAttributeProfileRequestParameters,
+	request *management.GetUserAttributeProfilesRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *management.UserAttributeProfile, *management.ListUserAttributeProfilesPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/user-attribute-profiles"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.ListUserAttributeProfilesPaginatedResponseContent, error) {
+	response, err := c.WithRawResponse.GetUserAttributeProfiles(
+		ctx,
 		request,
-		map[string]any{
-			"take": 50,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("from", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	readPageResponse := func(response *management.ListUserAttributeProfilesPaginatedResponseContent) *core.PageResponse[*string, *management.UserAttributeProfile, *management.ListUserAttributeProfilesPaginatedResponseContent] {
-		var zeroValue *string
-		next := response.Next
-		results := response.UserAttributeProfiles
-		return &core.PageResponse[*string, *management.UserAttributeProfile, *management.ListUserAttributeProfilesPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.From)
+	return response.Body, nil
 }
 
 // Create a User Attribute Profile.
-func (c *Client) Create(
+func (c *Client) PostUserAttributeProfiles(
 	ctx context.Context,
 	request *management.CreateUserAttributeProfileRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateUserAttributeProfileResponseContent, error) {
-	response, err := c.WithRawResponse.Create(
+	response, err := c.WithRawResponse.PostUserAttributeProfiles(
 		ctx,
 		request,
 		opts...,
@@ -119,11 +69,11 @@ func (c *Client) Create(
 }
 
 // Retrieve a list of User Attribute Profile Templates.
-func (c *Client) ListTemplates(
+func (c *Client) GetUserAttributeProfileTemplates(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*management.ListUserAttributeProfileTemplateResponseContent, error) {
-	response, err := c.WithRawResponse.ListTemplates(
+	response, err := c.WithRawResponse.GetUserAttributeProfileTemplates(
 		ctx,
 		opts...,
 	)
@@ -134,13 +84,13 @@ func (c *Client) ListTemplates(
 }
 
 // Retrieve a User Attribute Profile Template.
-func (c *Client) GetTemplate(
+func (c *Client) GetUserAttributeProfileTemplate(
 	ctx context.Context,
 	// ID of the user-attribute-profile-template to retrieve.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetUserAttributeProfileTemplateResponseContent, error) {
-	response, err := c.WithRawResponse.GetTemplate(
+	response, err := c.WithRawResponse.GetUserAttributeProfileTemplate(
 		ctx,
 		id,
 		opts...,
@@ -152,13 +102,13 @@ func (c *Client) GetTemplate(
 }
 
 // Retrieve details about a single User Attribute Profile specified by ID.
-func (c *Client) Get(
+func (c *Client) GetUserAttributeProfilesByID(
 	ctx context.Context,
 	// ID of the user-attribute-profile to retrieve.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetUserAttributeProfileResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetUserAttributeProfilesByID(
 		ctx,
 		id,
 		opts...,
@@ -170,13 +120,13 @@ func (c *Client) Get(
 }
 
 // Delete a single User Attribute Profile specified by ID.
-func (c *Client) Delete(
+func (c *Client) DeleteUserAttributeProfilesByID(
 	ctx context.Context,
 	// ID of the user-attribute-profile to delete.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteUserAttributeProfilesByID(
 		ctx,
 		id,
 		opts...,
@@ -188,14 +138,14 @@ func (c *Client) Delete(
 }
 
 // Update the details of a specific User attribute profile, such as name, user_id and user_attributes.
-func (c *Client) Update(
+func (c *Client) PatchUserAttributeProfilesByID(
 	ctx context.Context,
 	// ID of the user attribute profile to update.
 	id string,
 	request *management.UpdateUserAttributeProfileRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateUserAttributeProfileResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchUserAttributeProfilesByID(
 		ctx,
 		id,
 		request,

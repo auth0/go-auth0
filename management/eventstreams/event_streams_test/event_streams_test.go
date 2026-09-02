@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestEventStreamsListWithWireMock(
+func TestEventStreamsGetEventStreamsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestEventStreamsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListEventStreamsRequestParameters{
+	request := &management.GetEventStreamsRequest{
 		From: management.String(
 			"from",
 		),
@@ -96,19 +96,19 @@ func TestEventStreamsListWithWireMock(
 			1,
 		),
 	}
-	_, invocationErr := client.EventStreams.List(
+	_, invocationErr := client.EventStreams.GetEventStreams(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEventStreamsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEventStreamsGetEventStreamsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEventStreamsListWithWireMock", "GET", "/event-streams", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestEventStreamsGetEventStreamsWithWireMock", "GET", "/event-streams", map[string]interface{}{"from": "from", "take": "1"}, 1)
 }
 
-func TestEventStreamsCreateWithWireMock(
+func TestEventStreamsPostEventStreamsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -119,7 +119,7 @@ func TestEventStreamsCreateWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.EventStreamsCreateRequest{
+	request := &management.PostEventStreamsRequest{
 		CreateEventStreamWebHookRequestContent: &management.CreateEventStreamWebHookRequestContent{
 			Destination: &management.EventStreamWebhookDestination{
 				Type: management.EventStreamWebhookDestinationTypeEnumWebhook,
@@ -135,19 +135,19 @@ func TestEventStreamsCreateWithWireMock(
 			},
 		},
 	}
-	_, invocationErr := client.EventStreams.Create(
+	_, invocationErr := client.EventStreams.PostEventStreams(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEventStreamsCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEventStreamsPostEventStreamsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEventStreamsCreateWithWireMock", "POST", "/event-streams", nil, 1)
+	VerifyRequestCount(t, "TestEventStreamsPostEventStreamsWithWireMock", "POST", "/event-streams", nil, 1)
 }
 
-func TestEventStreamsGetWithWireMock(
+func TestEventStreamsGetEventStreamsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -158,19 +158,19 @@ func TestEventStreamsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.EventStreams.Get(
+	_, invocationErr := client.EventStreams.GetEventStreamsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEventStreamsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEventStreamsGetEventStreamsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEventStreamsGetWithWireMock", "GET", "/event-streams/id", nil, 1)
+	VerifyRequestCount(t, "TestEventStreamsGetEventStreamsByIDWithWireMock", "GET", "/event-streams/id", nil, 1)
 }
 
-func TestEventStreamsDeleteWithWireMock(
+func TestEventStreamsDeleteEventStreamsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -181,19 +181,19 @@ func TestEventStreamsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.EventStreams.Delete(
+	invocationErr := client.EventStreams.DeleteEventStreamsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEventStreamsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEventStreamsDeleteEventStreamsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEventStreamsDeleteWithWireMock", "DELETE", "/event-streams/id", nil, 1)
+	VerifyRequestCount(t, "TestEventStreamsDeleteEventStreamsByIDWithWireMock", "DELETE", "/event-streams/id", nil, 1)
 }
 
-func TestEventStreamsUpdateWithWireMock(
+func TestEventStreamsPatchEventStreamsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -205,20 +205,137 @@ func TestEventStreamsUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateEventStreamRequestContent{}
-	_, invocationErr := client.EventStreams.Update(
+	_, invocationErr := client.EventStreams.PatchEventStreamsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEventStreamsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEventStreamsPatchEventStreamsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEventStreamsUpdateWithWireMock", "PATCH", "/event-streams/id", nil, 1)
+	VerifyRequestCount(t, "TestEventStreamsPatchEventStreamsByIDWithWireMock", "PATCH", "/event-streams/id", nil, 1)
 }
 
-func TestEventStreamsTestWithWireMock(
+func TestEventStreamsGetEventDeliveriesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetEventDeliveriesRequest{
+		Statuses: management.String(
+			"statuses",
+		),
+		EventTypes: management.String(
+			"event_types",
+		),
+		DateFrom: management.String(
+			"date_from",
+		),
+		DateTo: management.String(
+			"date_to",
+		),
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.EventStreams.GetEventDeliveries(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEventStreamsGetEventDeliveriesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEventStreamsGetEventDeliveriesWithWireMock", "GET", "/event-streams/id/deliveries", map[string]interface{}{"statuses": "statuses", "event_types": "event_types", "date_from": "date_from", "date_to": "date_to", "from": "from", "take": "1"}, 1)
+}
+
+func TestEventStreamsGetDeliveriesByEventIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.EventStreams.GetDeliveriesByEventID(
+		context.TODO(),
+		"id",
+		"event_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEventStreamsGetDeliveriesByEventIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEventStreamsGetDeliveriesByEventIDWithWireMock", "GET", "/event-streams/id/deliveries/event_id", nil, 1)
+}
+
+func TestEventStreamsPostRedeliverWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateEventStreamRedeliveryRequestContent{}
+	_, invocationErr := client.EventStreams.PostRedeliver(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEventStreamsPostRedeliverWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEventStreamsPostRedeliverWithWireMock", "POST", "/event-streams/id/redeliver", nil, 1)
+}
+
+func TestEventStreamsPostRedeliverByEventIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.EventStreams.PostRedeliverByEventID(
+		context.TODO(),
+		"id",
+		"event_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEventStreamsPostRedeliverByEventIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEventStreamsPostRedeliverByEventIDWithWireMock", "POST", "/event-streams/id/redeliver/event_id", nil, 1)
+}
+
+func TestEventStreamsPostTestEventWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -232,15 +349,15 @@ func TestEventStreamsTestWithWireMock(
 	request := &management.CreateEventStreamTestEventRequestContent{
 		EventType: management.EventStreamTestEventTypeEnumConnectionCreated,
 	}
-	_, invocationErr := client.EventStreams.Test(
+	_, invocationErr := client.EventStreams.PostTestEvent(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEventStreamsTestWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEventStreamsPostTestEventWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEventStreamsTestWithWireMock", "POST", "/event-streams/id/test", nil, 1)
+	VerifyRequestCount(t, "TestEventStreamsPostTestEventWithWireMock", "POST", "/event-streams/id/test", nil, 1)
 }

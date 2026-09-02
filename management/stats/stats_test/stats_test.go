@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestStatsGetActiveUsersCountWithWireMock(
+func TestStatsGetActiveUsersWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,15 +88,15 @@ func TestStatsGetActiveUsersCountWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Stats.GetActiveUsersCount(
+	_, invocationErr := client.Stats.GetActiveUsers(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestStatsGetActiveUsersCountWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestStatsGetActiveUsersWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestStatsGetActiveUsersCountWithWireMock", "GET", "/stats/active-users", nil, 1)
+	VerifyRequestCount(t, "TestStatsGetActiveUsersWithWireMock", "GET", "/stats/active-users", nil, 1)
 }
 
 func TestStatsGetDailyWithWireMock(
@@ -110,7 +110,7 @@ func TestStatsGetDailyWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetDailyStatsRequestParameters{
+	request := &management.GetDailyRequest{
 		From: management.String(
 			"from",
 		),

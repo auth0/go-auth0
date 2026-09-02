@@ -4,7 +4,6 @@ package agents
 
 import (
 	context "context"
-	http "net/http"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -36,78 +35,29 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get agents
-func (c *Client) List(
+func (c *Client) GetAgents(
 	ctx context.Context,
-	request *management.ListAgentsRequestParameters,
+	request *management.GetAgentsRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *management.AgentResponseContent, *management.ListAgentsResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/agents"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.ListAgentsResponseContent, error) {
+	response, err := c.WithRawResponse.GetAgents(
+		ctx,
 		request,
-		map[string]any{
-			"take": 50,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("from", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	readPageResponse := func(response *management.ListAgentsResponseContent) *core.PageResponse[*string, *management.AgentResponseContent, *management.ListAgentsResponseContent] {
-		var zeroValue *string
-		next := response.Next
-		results := response.Agents
-		return &core.PageResponse[*string, *management.AgentResponseContent, *management.ListAgentsResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.From)
+	return response.Body, nil
 }
 
 // Create an agent
-func (c *Client) Create(
+func (c *Client) PostAgent(
 	ctx context.Context,
 	request *management.CreateAgentRequestContent,
 	opts ...option.RequestOption,
 ) (*management.AgentResponseContent, error) {
-	response, err := c.WithRawResponse.Create(
+	response, err := c.WithRawResponse.PostAgent(
 		ctx,
 		request,
 		opts...,
@@ -119,13 +69,13 @@ func (c *Client) Create(
 }
 
 // Get an agent
-func (c *Client) Read(
+func (c *Client) GetAgent(
 	ctx context.Context,
 	// The agent ID
 	id string,
 	opts ...option.RequestOption,
 ) (*management.AgentResponseContent, error) {
-	response, err := c.WithRawResponse.Read(
+	response, err := c.WithRawResponse.GetAgent(
 		ctx,
 		id,
 		opts...,
@@ -137,13 +87,13 @@ func (c *Client) Read(
 }
 
 // Delete an agent
-func (c *Client) Delete(
+func (c *Client) DeleteAgent(
 	ctx context.Context,
 	// The agent ID
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteAgent(
 		ctx,
 		id,
 		opts...,
@@ -155,14 +105,14 @@ func (c *Client) Delete(
 }
 
 // Update an agent
-func (c *Client) Update(
+func (c *Client) PatchAgent(
 	ctx context.Context,
 	// The agent ID
 	id string,
-	request *management.PatchAgentRequestParameters,
+	request *management.UpdateAgentRequestContent,
 	opts ...option.RequestOption,
 ) (*management.AgentResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchAgent(
 		ctx,
 		id,
 		request,

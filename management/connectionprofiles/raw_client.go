@@ -32,7 +32,56 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) GetConnectionProfiles(
+	ctx context.Context,
+	request *management.GetConnectionProfilesRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ListConnectionProfilesPaginatedResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/connection-profiles"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ListConnectionProfilesPaginatedResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ListConnectionProfilesPaginatedResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) PostConnectionProfiles(
 	ctx context.Context,
 	request *management.CreateConnectionProfileRequestContent,
 	opts ...option.RequestOption,
@@ -76,7 +125,7 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) ListTemplates(
+func (r *RawClient) GetConnectionProfileTemplates(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.ListConnectionProfileTemplateResponseContent], error) {
@@ -117,7 +166,7 @@ func (r *RawClient) ListTemplates(
 	}, nil
 }
 
-func (r *RawClient) GetTemplate(
+func (r *RawClient) GetConnectionProfileTemplate(
 	ctx context.Context,
 	// ID of the connection-profile-template to retrieve.
 	id string,
@@ -163,7 +212,7 @@ func (r *RawClient) GetTemplate(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetConnectionProfilesByID(
 	ctx context.Context,
 	// ID of the connection-profile to retrieve.
 	id string,
@@ -209,7 +258,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteConnectionProfilesByID(
 	ctx context.Context,
 	// ID of the connection-profile to delete.
 	id string,
@@ -253,7 +302,7 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchConnectionProfilesByID(
 	ctx context.Context,
 	// ID of the connection profile to update.
 	id string,

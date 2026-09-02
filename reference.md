@@ -1,6 +1,6 @@
 # Reference
 ## Actions
-<details><summary><code>client.Actions.List() -> *management.ListActionsPaginatedResponseContent</code></summary>
+<details><summary><code>client.Actions.GetActions() -> *management.ListActionsPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Retrieve all actions.
 <dd>
 
 ```go
-request := &management.ListActionsRequestParameters{
+request := &management.GetActionsRequest{
         TriggerID: management.ActionTriggerTypeEnumPostLogin.Ptr(),
         ActionName: management.String(
             "actionName",
@@ -45,7 +45,7 @@ request := &management.ListActionsRequestParameters{
             true,
         ),
     }
-client.Actions.List(
+client.Actions.GetActions(
         context.TODO(),
         request,
     )
@@ -116,7 +116,7 @@ client.Actions.List(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Create(request) -> *management.CreateActionResponseContent</code></summary>
+<details><summary><code>client.Actions.PostAction(request) -> *management.CreateActionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -151,7 +151,7 @@ request := &management.CreateActionRequestContent{
             },
         },
     }
-client.Actions.Create(
+client.Actions.PostAction(
         context.TODO(),
         request,
     )
@@ -238,7 +238,234 @@ client.Actions.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Get(ID) -> *management.GetActionResponseContent</code></summary>
+<details><summary><code>client.Actions.GetActionVersions(ActionID) -> *management.ListActionVersionsPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all of an action's versions. An action version is created whenever an action is deployed. An action version is immutable, once created.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetActionVersionsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
+client.Actions.GetActionVersions(
+        context.TODO(),
+        "actionId",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**actionID:** `string` — The ID of the action.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Use this field to request a specific page of the list results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — This field specify the maximum number of results to be returned by the server. 20 by default
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.GetActionVersion(ActionID, ID) -> *management.GetActionVersionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific version of an action. An action version is created whenever an action is deployed. An action version is immutable, once created.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.GetActionVersion(
+        context.TODO(),
+        "actionId",
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**actionID:** `string` — The ID of the action.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the action version.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.PostDeployDraftVersion(ActionID, ID, request) -> *management.DeployActionVersionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Performs the equivalent of a roll-back of an action to an earlier, specified version. Creates a new, deployed action version that is identical to the specified version. If this action is currently bound to a trigger, the system will begin executing the newly-created version immediately.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeployActionVersionRequestContent{}
+client.Actions.PostDeployDraftVersion(
+        context.TODO(),
+        "actionId",
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**actionID:** `string` — The ID of an action.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of an action version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.DeployActionVersionRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.GetAction(ID) -> *management.GetActionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -265,7 +492,7 @@ Retrieve an action by its ID.
 <dd>
 
 ```go
-client.Actions.Get(
+client.Actions.GetAction(
         context.TODO(),
         "id",
     )
@@ -296,7 +523,7 @@ client.Actions.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Actions.DeleteAction(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -323,12 +550,12 @@ Deletes an action and all of its associated versions. An action must be unbound 
 <dd>
 
 ```go
-request := &management.DeleteActionRequestParameters{
+request := &management.DeleteActionRequest{
         Force: management.Bool(
             true,
         ),
     }
-client.Actions.Delete(
+client.Actions.DeleteAction(
         context.TODO(),
         "id",
         request,
@@ -368,7 +595,7 @@ client.Actions.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Update(ID, request) -> *management.UpdateActionResponseContent</code></summary>
+<details><summary><code>client.Actions.PatchAction(ID, request) -> *management.UpdateActionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -396,7 +623,7 @@ Update an existing action. If this action is currently bound to a trigger, updat
 
 ```go
 request := &management.UpdateActionRequestContent{}
-client.Actions.Update(
+client.Actions.PatchAction(
         context.TODO(),
         "id",
         request,
@@ -484,7 +711,7 @@ client.Actions.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Deploy(ID) -> *management.DeployActionResponseContent</code></summary>
+<details><summary><code>client.Actions.PostDeployAction(ID) -> *management.DeployActionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -511,7 +738,7 @@ Deploy an action. Deploying an action will create a new immutable version of the
 <dd>
 
 ```go
-client.Actions.Deploy(
+client.Actions.PostDeployAction(
         context.TODO(),
         "id",
     )
@@ -542,7 +769,7 @@ client.Actions.Deploy(
 </dl>
 </details>
 
-<details><summary><code>client.Actions.Test(ID, request) -> *management.TestActionResponseContent</code></summary>
+<details><summary><code>client.Actions.PostTestAction(ID, request) -> *management.TestActionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -574,7 +801,7 @@ request := &management.TestActionRequestContent{
             "key": "value",
         },
     }
-client.Actions.Test(
+client.Actions.PostTestAction(
         context.TODO(),
         "id",
         request,
@@ -614,8 +841,996 @@ client.Actions.Test(
 </dl>
 </details>
 
+<details><summary><code>client.Actions.GetExecution(ID) -> *management.GetActionExecutionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve information about a specific execution of a trigger. Relevant execution IDs will be included in tenant logs generated as part of that authentication flow. Executions will only be stored for 10 days after their creation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.GetExecution(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the execution to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.GetActionModules() -> *management.GetActionModulesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a paginated list of all Actions Modules with optional filtering and totals.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetActionModulesRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
+client.Actions.GetActionModules(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Paging is disabled if parameter not sent.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.PostActionModule(request) -> *management.CreateActionModuleResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new Actions Module for reusable code across actions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateActionModuleRequestContent{
+        Name: "name",
+        Code: "code",
+    }
+client.Actions.PostActionModule(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — The name of the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**code:** `string` — The source code of the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**secrets:** `[]*management.ActionModuleSecretRequest` — The secrets to associate with the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dependencies:** `[]*management.ActionModuleDependencyRequest` — The npm dependencies of the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apiVersion:** `*string` — The API version of the module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**publish:** `*bool` — Whether to publish the module immediately after creation.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.GetActionModule(ID) -> *management.GetActionModuleResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of a specific Actions Module by its unique identifier.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.GetActionModule(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the action module to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.DeleteActionModule(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently delete an Actions Module. This will fail if the module is still in use by any actions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.DeleteActionModule(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the Actions Module to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.PatchActionModule(ID, request) -> *management.UpdateActionModuleResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update properties of an existing Actions Module, such as code, dependencies, or secrets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateActionModuleRequestContent{}
+client.Actions.PatchActionModule(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the action module to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**code:** `*string` — The source code of the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**secrets:** `[]*management.ActionModuleSecretRequest` — The secrets to associate with the action module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dependencies:** `[]*management.ActionModuleDependencyRequest` — The npm dependencies of the action module.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.GetActionModuleActions(ID) -> *management.GetActionModuleActionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists all actions that are using a specific Actions Module, showing which deployed action versions reference this Actions Module.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetActionModuleActionsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
+client.Actions.GetActionModuleActions(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The unique ID of the module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.PostActionModuleRollback(ID, request) -> *management.RollbackActionModuleResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rolls back an Actions Module's draft to a previously created version. This action copies the code, dependencies, and secrets from the specified version into the current draft.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.RollbackActionModuleRequestContent{
+        ModuleVersionID: "module_version_id",
+    }
+client.Actions.PostActionModuleRollback(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The unique ID of the module to roll back.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moduleVersionID:** `string` — The unique ID of the module version to roll back to.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.GetActionModuleVersions(ID) -> *management.GetActionModuleVersionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all published versions of a specific Actions Module.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetActionModuleVersionsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
+client.Actions.GetActionModuleVersions(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The unique ID of the module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Use this field to request a specific page of the list results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — The maximum number of results to be returned by the server in a single response. 20 by default.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.PostActionModuleVersion(ID) -> *management.CreateActionModuleVersionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new immutable version of an Actions Module from the current draft version. This publishes the draft as a new version that can be referenced by actions, while maintaining the existing draft for continued development.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.PostActionModuleVersion(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the action module to create a version for.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.GetActionModuleVersion(ID, VersionID) -> *management.GetActionModuleVersionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the details of a specific, immutable version of an Actions Module.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.GetActionModuleVersion(
+        context.TODO(),
+        "id",
+        "versionId",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The unique ID of the module.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**versionID:** `string` — The unique ID of the module version to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.GetTriggers() -> *management.ListActionTriggersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the set of triggers currently available within actions. A trigger is an extensibility point to which actions can be bound.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Actions.GetTriggers(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.GetBindings(TriggerID) -> *management.ListActionBindingsPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the actions that are bound to a trigger. Once an action is created and deployed, it must be attached (i.e. bound) to a trigger so that it will be executed as part of a flow. The list of actions returned reflects the order in which they will be executed during the appropriate flow.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetBindingsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
+client.Actions.GetBindings(
+        context.TODO(),
+        management.ActionTriggerTypeEnumPostLogin.Ptr(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**triggerID:** `*management.ActionTriggerTypeEnum` — An actions extensibility point.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Use this field to request a specific page of the list results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — The maximum number of results to be returned in a single request. 20 by default
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Actions.PatchBindings(TriggerID, request) -> *management.UpdateActionBindingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the actions that are bound (i.e. attached) to a trigger. Once an action is created and deployed, it must be attached (i.e. bound) to a trigger so that it will be executed as part of a flow. The order in which the actions are provided will determine the order in which they are executed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateActionBindingsRequestContent{}
+client.Actions.PatchBindings(
+        context.TODO(),
+        management.ActionTriggerTypeEnumPostLogin.Ptr(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**triggerID:** `*management.ActionTriggerTypeEnum` — An actions extensibility point.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bindings:** `[]management.UpdateActionBindingItem` — The actions that will be bound to this trigger. The order in which they are included will be the order in which they are executed.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Agents
-<details><summary><code>client.Agents.List() -> *management.ListAgentsResponseContent</code></summary>
+<details><summary><code>client.Agents.GetAgents() -> *management.ListAgentsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -642,7 +1857,7 @@ Get agents
 <dd>
 
 ```go
-request := &management.ListAgentsRequestParameters{
+request := &management.GetAgentsRequest{
         From: management.String(
             "from",
         ),
@@ -650,7 +1865,7 @@ request := &management.ListAgentsRequestParameters{
             1,
         ),
     }
-client.Agents.List(
+client.Agents.GetAgents(
         context.TODO(),
         request,
     )
@@ -689,7 +1904,7 @@ client.Agents.List(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.Create(request) -> *management.AgentResponseContent</code></summary>
+<details><summary><code>client.Agents.PostAgent(request) -> *management.AgentResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -719,7 +1934,7 @@ Create an agent
 request := &management.CreateAgentRequestContent{
         Name: "name",
     }
-client.Agents.Create(
+client.Agents.PostAgent(
         context.TODO(),
         request,
     )
@@ -774,7 +1989,7 @@ client.Agents.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.Read(ID) -> *management.AgentResponseContent</code></summary>
+<details><summary><code>client.Agents.GetAgent(ID) -> *management.AgentResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -801,7 +2016,7 @@ Get an agent
 <dd>
 
 ```go
-client.Agents.Read(
+client.Agents.GetAgent(
         context.TODO(),
         "id",
     )
@@ -832,7 +2047,7 @@ client.Agents.Read(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Agents.DeleteAgent(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -859,7 +2074,7 @@ Delete an agent
 <dd>
 
 ```go
-client.Agents.Delete(
+client.Agents.DeleteAgent(
         context.TODO(),
         "id",
     )
@@ -890,7 +2105,7 @@ client.Agents.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Agents.Update(ID, request) -> *management.AgentResponseContent</code></summary>
+<details><summary><code>client.Agents.PatchAgent(ID, request) -> *management.AgentResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -917,8 +2132,8 @@ Update an agent
 <dd>
 
 ```go
-request := &management.PatchAgentRequestParameters{}
-client.Agents.Update(
+request := &management.UpdateAgentRequestContent{}
+client.Agents.PatchAgent(
         context.TODO(),
         "id",
         request,
@@ -966,8 +2181,930 @@ client.Agents.Update(
 </dl>
 </details>
 
+## Anomaly
+<details><summary><code>client.Anomaly.GetIpsByID(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Check if the given IP address is blocked via the <a href="https://auth0.com/docs/configure/attack-protection/suspicious-ip-throttling">Suspicious IP Throttling</a> due to multiple suspicious attempts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Anomaly.GetIpsByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.AnomalyIPFormat` — IP address to check.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Anomaly.DeleteIpsByID(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a block imposed by <a href="https://auth0.com/docs/configure/attack-protection/suspicious-ip-throttling">Suspicious IP Throttling</a> for the given IP address.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Anomaly.DeleteIpsByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.AnomalyIPFormat` — IP address to unblock.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AttackProtection
+<details><summary><code>client.AttackProtection.GetBotDetection() -> *management.GetBotDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the Bot Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.GetBotDetection(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.PatchBotDetection(request) -> *management.UpdateBotDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the Bot Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateBotDetectionSettingsRequestContent{}
+client.AttackProtection.PatchBotDetection(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**botDetectionLevel:** `*management.BotDetectionLevelEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**challengePasswordPolicy:** `*management.BotDetectionChallengePolicyPasswordFlowEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**challengePasswordlessPolicy:** `*management.BotDetectionChallengePolicyPasswordlessFlowEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**challengePasswordResetPolicy:** `*management.BotDetectionChallengePolicyPasswordResetFlowEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowlist:** `*management.BotDetectionAllowlist` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**monitoringModeEnabled:** `*management.BotDetectionMonitoringModeEnabled` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.GetBreachedPasswordDetection() -> *management.GetBreachedPasswordDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of the Breached Password Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.GetBreachedPasswordDetection(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.PatchBreachedPasswordDetection(request) -> *management.UpdateBreachedPasswordDetectionSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update details of the Breached Password Detection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateBreachedPasswordDetectionSettingsRequestContent{}
+client.AttackProtection.PatchBreachedPasswordDetection(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**enabled:** `*bool` — Whether or not breached password detection is active.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**shields:** `[]*management.BreachedPasswordDetectionShieldsEnum` 
+
+Action to take when a breached password is detected during a login.
+      Possible values: <code>block</code>, <code>user_notification</code>, <code>admin_notification</code>.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**adminNotificationFrequency:** `[]*management.BreachedPasswordDetectionAdminNotificationFrequencyEnum` 
+
+When "admin_notification" is enabled, determines how often email notifications are sent.
+        Possible values: <code>immediately</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**method:** `*management.BreachedPasswordDetectionMethodEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stage:** `*management.BreachedPasswordDetectionStage` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.GetBruteForceProtection() -> *management.GetBruteForceSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of the Brute-force Protection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.GetBruteForceProtection(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.PatchBruteForceProtection(request) -> *management.UpdateBruteForceSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the Brute-force Protection configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateBruteForceSettingsRequestContent{}
+client.AttackProtection.PatchBruteForceProtection(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**enabled:** `*bool` — Whether or not brute force attack protections are active.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**shields:** `[]*management.BruteForceProtectionShieldsEnum` 
+
+Action to take when a brute force protection threshold is violated.
+        Possible values: <code>block</code>, <code>user_notification</code>.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowlist:** `[]string` — List of trusted IP addresses that will not have attack protection enforced against them.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `*management.BruteForceProtectionModeEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maxAttempts:** `*int` — Maximum number of unsuccessful attempts.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.GetCaptcha() -> *management.GetAttackProtectionCaptchaResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the CAPTCHA configuration for your client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.GetCaptcha(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.PatchCaptcha(request) -> *management.UpdateAttackProtectionCaptchaResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update existing CAPTCHA configuration for your client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateAttackProtectionCaptchaRequestContent{}
+client.AttackProtection.PatchCaptcha(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**activeProviderID:** `*management.AttackProtectionCaptchaProviderID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**arkose:** `*management.AttackProtectionUpdateCaptchaArkose` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authChallenge:** `*management.AttackProtectionCaptchaAuthChallengeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hcaptcha:** `*management.AttackProtectionUpdateCaptchaHcaptcha` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**friendlyCaptcha:** `*management.AttackProtectionUpdateCaptchaFriendlyCaptcha` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recaptchaEnterprise:** `*management.AttackProtectionUpdateCaptchaRecaptchaEnterprise` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recaptchaV2:** `*management.AttackProtectionUpdateCaptchaRecaptchaV2` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**simpleCaptcha:** `*management.AttackProtectionCaptchaSimpleCaptchaResponseContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.GetPhoneProviderProtection() -> *management.GetPhoneProviderProtectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the phone provider protection configuration for a tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.GetPhoneProviderProtection(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.PatchPhoneProviderProtection(request) -> *management.PatchPhoneProviderProtectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the phone provider protection configuration for a tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.PatchPhoneProviderProtectionRequestContent{
+        Type: management.PhoneProviderProtectionBackoffStrategyEnumExponential,
+    }
+client.AttackProtection.PatchPhoneProviderProtection(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type_:** `*management.PhoneProviderProtectionBackoffStrategyEnum` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.GetSuspiciousIPThrottling() -> *management.GetSuspiciousIPThrottlingSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of the Suspicious IP Throttling configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.AttackProtection.GetSuspiciousIPThrottling(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.AttackProtection.PatchSuspiciousIPThrottling(request) -> *management.UpdateSuspiciousIPThrottlingSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the details of the Suspicious IP Throttling configuration of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateSuspiciousIPThrottlingSettingsRequestContent{}
+client.AttackProtection.PatchSuspiciousIPThrottling(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**enabled:** `*bool` — Whether or not suspicious IP throttling attack protections are active.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**shields:** `[]*management.SuspiciousIPThrottlingShieldsEnum` 
+
+Action to take when a suspicious IP throttling threshold is violated.
+          Possible values: <code>block</code>, <code>admin_notification</code>.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowlist:** `*management.SuspiciousIPThrottlingAllowlist` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stage:** `*management.SuspiciousIPThrottlingStage` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Branding
-<details><summary><code>client.Branding.Get() -> *management.GetBrandingResponseContent</code></summary>
+<details><summary><code>client.Branding.GetBranding() -> *management.GetBrandingResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -994,7 +3131,7 @@ Retrieve branding settings.
 <dd>
 
 ```go
-client.Branding.Get(
+client.Branding.GetBranding(
         context.TODO(),
     )
 }
@@ -1009,7 +3146,7 @@ client.Branding.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Branding.Update(request) -> *management.UpdateBrandingResponseContent</code></summary>
+<details><summary><code>client.Branding.PatchBranding(request) -> *management.UpdateBrandingResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1037,7 +3174,7 @@ Update branding settings.
 
 ```go
 request := &management.UpdateBrandingRequestContent{}
-client.Branding.Update(
+client.Branding.PatchBranding(
         context.TODO(),
         request,
     )
@@ -1092,8 +3229,1486 @@ client.Branding.Update(
 </dl>
 </details>
 
+<details><summary><code>client.Branding.GetBrandingPhoneProviders() -> *management.ListBrandingPhoneProvidersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of [phone providers](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers) details set for a Tenant. A list of fields to include or exclude may also be specified.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetBrandingPhoneProvidersRequest{
+        Disabled: management.Bool(
+            true,
+        ),
+    }
+client.Branding.GetBrandingPhoneProviders(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**disabled:** `*bool` — Whether the provider is enabled (false) or disabled (true).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.CreatePhoneProvider(request) -> *management.CreateBrandingPhoneProviderResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a [phone provider](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers).
+The `credentials` object requires different properties depending on the phone provider (which is specified using the `name` property).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateBrandingPhoneProviderRequestContent{
+        Name: management.PhoneProviderNameEnumTwilio,
+        Credentials: &management.PhoneProviderCredentials{
+            TwilioProviderCredentials: &management.TwilioProviderCredentials{
+                AuthToken: "auth_token",
+            },
+        },
+    }
+client.Branding.CreatePhoneProvider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `*management.PhoneProviderNameEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**disabled:** `*bool` — Whether the provider is enabled (false) or disabled (true).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**configuration:** `*management.PhoneProviderConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentials:** `*management.PhoneProviderCredentials` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.GetPhoneProvider(ID) -> *management.GetBrandingPhoneProviderResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve [phone provider](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers) details. A list of fields to include or exclude may also be specified.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Branding.GetPhoneProvider(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.DeletePhoneProvider(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete the configured phone provider.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Branding.DeletePhoneProvider(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.UpdatePhoneProvider(ID, request) -> *management.UpdateBrandingPhoneProviderResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a [phone provider](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers).
+The `credentials` object requires different properties depending on the phone provider (which is specified using the `name` property).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateBrandingPhoneProviderRequestContent{}
+client.Branding.UpdatePhoneProvider(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*management.PhoneProviderNameEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**disabled:** `*bool` — Whether the provider is enabled (false) or disabled (true).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentials:** `*management.PhoneProviderCredentials` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**configuration:** `*management.PhoneProviderConfiguration` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.TryPhoneProvider(ID, request) -> *management.CreatePhoneProviderSendTestResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreatePhoneProviderSendTestRequestContent{
+        To: "to",
+    }
+client.Branding.TryPhoneProvider(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `string` — The recipient phone number to receive a given notification.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deliveryMethod:** `*management.PhoneProviderDeliveryMethodEnum` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.GetPhoneTemplates() -> *management.ListPhoneTemplatesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetPhoneTemplatesRequest{
+        Disabled: management.Bool(
+            true,
+        ),
+    }
+client.Branding.GetPhoneTemplates(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**disabled:** `*bool` — Whether the template is enabled (false) or disabled (true).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.CreatePhoneTemplate(request) -> *management.CreatePhoneTemplateResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreatePhoneTemplateRequestContent{}
+client.Branding.CreatePhoneTemplate(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type_:** `*management.PhoneTemplateNotificationTypeEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**disabled:** `*bool` — Whether the template is enabled (false) or disabled (true).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `*management.PhoneTemplateContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.GetPhoneTemplate(ID) -> *management.GetPhoneTemplateResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Branding.GetPhoneTemplate(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.DeletePhoneTemplate(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Branding.DeletePhoneTemplate(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.UpdatePhoneTemplate(ID, request) -> *management.UpdatePhoneTemplateResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdatePhoneTemplateRequestContent{}
+client.Branding.UpdatePhoneTemplate(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `*management.PartialPhoneTemplateContent` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**disabled:** `*bool` — Whether the template is enabled (false) or disabled (true).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.ResetPhoneTemplate(ID, request) -> *management.ResetPhoneTemplateResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[string]any{
+        "key": "value",
+    }
+client.Branding.ResetPhoneTemplate(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `management.ResetPhoneTemplateRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.TryPhoneTemplate(ID, request) -> *management.CreatePhoneTemplateTestNotificationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreatePhoneTemplateTestNotificationRequestContent{
+        To: "to",
+    }
+client.Branding.TryPhoneTemplate(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth0CustomDomain:** `*string` — Custom domain to be used for this request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `string` — Destination of the testing phone notification
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deliveryMethod:** `*management.PhoneProviderDeliveryMethodEnum` — Medium to use to send the notification
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.GetUniversalLogin() -> *management.GetUniversalLoginTemplateResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Branding.GetUniversalLogin(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.PutUniversalLogin(request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the Universal Login branding template.
+
+When `content-type` header is set to `application/json`:
+
+```json
+{
+  "template": "<!DOCTYPE html>{% assign resolved_dir = dir | default: \"auto\" %}<html lang=\"{{locale}}\" dir=\"{{resolved_dir}}\"><head>{%- auth0:head -%}</head><body class=\"_widget-auto-layout\">{%- auth0:widget -%}</body></html>"
+}
+```
+
+When `content-type` header is set to `text/html`:
+
+```html
+<!DOCTYPE html>
+{% assign resolved_dir = dir | default: "auto" %}
+<html lang="{{locale}}" dir="{{resolved_dir}}">
+  <head>
+    {%- auth0:head -%}
+  </head>
+  <body class="_widget-auto-layout">
+    {%- auth0:widget -%}
+  </body>
+</html>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateUniversalLoginTemplateRequestContent{
+        String: "string",
+    }
+client.Branding.PutUniversalLogin(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*management.UpdateUniversalLoginTemplateRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.DeleteUniversalLogin() -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Branding.DeleteUniversalLogin(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.PostBrandingTheme(request) -> *management.CreateBrandingThemeResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create branding theme.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateBrandingThemeRequestContent{
+        Borders: &management.BrandingThemeBorders{
+            ButtonBorderRadius: 1.1,
+            ButtonBorderWeight: 1.1,
+            ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
+            InputBorderRadius: 1.1,
+            InputBorderWeight: 1.1,
+            InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
+            ShowWidgetShadow: true,
+            WidgetBorderWeight: 1.1,
+            WidgetCornerRadius: 1.1,
+        },
+        Colors: &management.BrandingThemeColors{
+            BodyText: "body_text",
+            Error: "error",
+            Header: "header",
+            Icons: "icons",
+            InputBackground: "input_background",
+            InputBorder: "input_border",
+            InputFilledText: "input_filled_text",
+            InputLabelsPlaceholders: "input_labels_placeholders",
+            LinksFocusedComponents: "links_focused_components",
+            PrimaryButton: "primary_button",
+            PrimaryButtonLabel: "primary_button_label",
+            SecondaryButtonBorder: "secondary_button_border",
+            SecondaryButtonLabel: "secondary_button_label",
+            Success: "success",
+            WidgetBackground: "widget_background",
+            WidgetBorder: "widget_border",
+        },
+        Fonts: &management.BrandingThemeFonts{
+            BodyText: &management.BrandingThemeFontBodyText{
+                Bold: true,
+                Size: 1.1,
+            },
+            ButtonsText: &management.BrandingThemeFontButtonsText{
+                Bold: true,
+                Size: 1.1,
+            },
+            FontURL: "font_url",
+            InputLabels: &management.BrandingThemeFontInputLabels{
+                Bold: true,
+                Size: 1.1,
+            },
+            Links: &management.BrandingThemeFontLinks{
+                Bold: true,
+                Size: 1.1,
+            },
+            LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
+            ReferenceTextSize: 1.1,
+            Subtitle: &management.BrandingThemeFontSubtitle{
+                Bold: true,
+                Size: 1.1,
+            },
+            Title: &management.BrandingThemeFontTitle{
+                Bold: true,
+                Size: 1.1,
+            },
+        },
+        PageBackground: &management.BrandingThemePageBackground{
+            BackgroundColor: "background_color",
+            BackgroundImageURL: "background_image_url",
+            PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
+        },
+        Widget: &management.BrandingThemeWidget{
+            HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
+            LogoHeight: 1.1,
+            LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
+            LogoURL: "logo_url",
+            SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
+        },
+    }
+client.Branding.PostBrandingTheme(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**borders:** `*management.BrandingThemeBorders` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**colors:** `*management.BrandingThemeColors` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**displayName:** `*string` — Display Name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fonts:** `*management.BrandingThemeFonts` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identifiers:** `*management.BrandingThemeIdentifiers` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pageBackground:** `*management.BrandingThemePageBackground` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**widget:** `*management.BrandingThemeWidget` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.GetDefaultBrandingTheme() -> *management.GetBrandingDefaultThemeResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve default branding theme.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Branding.GetDefaultBrandingTheme(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.GetBrandingTheme(ThemeID) -> *management.GetBrandingThemeResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve branding theme.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Branding.GetBrandingTheme(
+        context.TODO(),
+        "themeId",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**themeID:** `string` — The ID of the theme
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.DeleteBrandingTheme(ThemeID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete branding theme.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Branding.DeleteBrandingTheme(
+        context.TODO(),
+        "themeId",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**themeID:** `string` — The ID of the theme
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Branding.PatchBrandingTheme(ThemeID, request) -> *management.UpdateBrandingThemeResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update branding theme.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateBrandingThemeRequestContent{
+        Borders: &management.BrandingThemeBorders{
+            ButtonBorderRadius: 1.1,
+            ButtonBorderWeight: 1.1,
+            ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
+            InputBorderRadius: 1.1,
+            InputBorderWeight: 1.1,
+            InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
+            ShowWidgetShadow: true,
+            WidgetBorderWeight: 1.1,
+            WidgetCornerRadius: 1.1,
+        },
+        Colors: &management.BrandingThemeColors{
+            BodyText: "body_text",
+            Error: "error",
+            Header: "header",
+            Icons: "icons",
+            InputBackground: "input_background",
+            InputBorder: "input_border",
+            InputFilledText: "input_filled_text",
+            InputLabelsPlaceholders: "input_labels_placeholders",
+            LinksFocusedComponents: "links_focused_components",
+            PrimaryButton: "primary_button",
+            PrimaryButtonLabel: "primary_button_label",
+            SecondaryButtonBorder: "secondary_button_border",
+            SecondaryButtonLabel: "secondary_button_label",
+            Success: "success",
+            WidgetBackground: "widget_background",
+            WidgetBorder: "widget_border",
+        },
+        Fonts: &management.BrandingThemeFonts{
+            BodyText: &management.BrandingThemeFontBodyText{
+                Bold: true,
+                Size: 1.1,
+            },
+            ButtonsText: &management.BrandingThemeFontButtonsText{
+                Bold: true,
+                Size: 1.1,
+            },
+            FontURL: "font_url",
+            InputLabels: &management.BrandingThemeFontInputLabels{
+                Bold: true,
+                Size: 1.1,
+            },
+            Links: &management.BrandingThemeFontLinks{
+                Bold: true,
+                Size: 1.1,
+            },
+            LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
+            ReferenceTextSize: 1.1,
+            Subtitle: &management.BrandingThemeFontSubtitle{
+                Bold: true,
+                Size: 1.1,
+            },
+            Title: &management.BrandingThemeFontTitle{
+                Bold: true,
+                Size: 1.1,
+            },
+        },
+        PageBackground: &management.BrandingThemePageBackground{
+            BackgroundColor: "background_color",
+            BackgroundImageURL: "background_image_url",
+            PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
+        },
+        Widget: &management.BrandingThemeWidget{
+            HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
+            LogoHeight: 1.1,
+            LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
+            LogoURL: "logo_url",
+            SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
+        },
+    }
+client.Branding.PatchBrandingTheme(
+        context.TODO(),
+        "themeId",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**themeID:** `string` — The ID of the theme
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**borders:** `*management.BrandingThemeBorders` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**colors:** `*management.BrandingThemeColors` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**displayName:** `*string` — Display Name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fonts:** `*management.BrandingThemeFonts` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identifiers:** `*management.BrandingThemeIdentifiers` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pageBackground:** `*management.BrandingThemePageBackground` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**widget:** `*management.BrandingThemeWidget` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ClientGrants
-<details><summary><code>client.ClientGrants.List() -> *management.ListClientGrantPaginatedResponseContent</code></summary>
+<details><summary><code>client.ClientGrants.GetClientGrants() -> *management.ListClientGrantResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1120,7 +4735,13 @@ Retrieve a list of [client grants](https://auth0.com/docs/get-started/applicatio
 <dd>
 
 ```go
-request := &management.ListClientGrantsRequestParameters{
+request := &management.GetClientGrantsRequest{
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
         IncludeTotals: management.Bool(
             true,
         ),
@@ -1142,7 +4763,7 @@ request := &management.ListClientGrantsRequestParameters{
         SubjectType: management.ClientGrantSubjectTypeEnumClient.Ptr(),
         DefaultFor: management.ClientGrantDefaultForEnumThirdPartyClients.Ptr(),
     }
-client.ClientGrants.List(
+client.ClientGrants.GetClientGrants(
         context.TODO(),
         request,
     )
@@ -1157,6 +4778,22 @@ client.ClientGrants.List(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -1229,7 +4866,7 @@ client.ClientGrants.List(
 </dl>
 </details>
 
-<details><summary><code>client.ClientGrants.Create(request) -> *management.CreateClientGrantResponseContent</code></summary>
+<details><summary><code>client.ClientGrants.PostClientGrants(request) -> *management.CreateClientGrantResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1259,7 +4896,7 @@ Create a client grant for a machine-to-machine login flow. To learn more, read [
 request := &management.CreateClientGrantRequestContent{
         Audience: "audience",
     }
-client.ClientGrants.Create(
+client.ClientGrants.PostClientGrants(
         context.TODO(),
         request,
     )
@@ -1354,7 +4991,7 @@ client.ClientGrants.Create(
 </dl>
 </details>
 
-<details><summary><code>client.ClientGrants.Get(ID) -> *management.GetClientGrantResponseContent</code></summary>
+<details><summary><code>client.ClientGrants.GetClientGrant(ID) -> *management.GetClientGrantResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1382,7 +5019,7 @@ scopes associated with the application/API pair.
 <dd>
 
 ```go
-client.ClientGrants.Get(
+client.ClientGrants.GetClientGrant(
         context.TODO(),
         "id",
     )
@@ -1413,7 +5050,7 @@ client.ClientGrants.Get(
 </dl>
 </details>
 
-<details><summary><code>client.ClientGrants.Delete(ID) -> error</code></summary>
+<details><summary><code>client.ClientGrants.DeleteClientGrantsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -1440,7 +5077,7 @@ Delete the [Client Credential Flow](https://www.auth0.com/docs/get-started/authe
 <dd>
 
 ```go
-client.ClientGrants.Delete(
+client.ClientGrants.DeleteClientGrantsByID(
         context.TODO(),
         "id",
     )
@@ -1471,7 +5108,7 @@ client.ClientGrants.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.ClientGrants.Update(ID, request) -> *management.UpdateClientGrantResponseContent</code></summary>
+<details><summary><code>client.ClientGrants.PatchClientGrantsByID(ID, request) -> *management.UpdateClientGrantResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1499,7 +5136,7 @@ Update a client grant.
 
 ```go
 request := &management.UpdateClientGrantRequestContent{}
-client.ClientGrants.Update(
+client.ClientGrants.PatchClientGrantsByID(
         context.TODO(),
         "id",
         request,
@@ -1571,8 +5208,110 @@ client.ClientGrants.Update(
 </dl>
 </details>
 
+<details><summary><code>client.ClientGrants.GetClientGrantOrganizations(ID) -> *management.ListClientGrantOrganizationsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetClientGrantOrganizationsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.ClientGrants.GetClientGrantOrganizations(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the client grant
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Clients
-<details><summary><code>client.Clients.List() -> *management.ListClientsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Clients.GetClients() -> *management.GetClientsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1623,7 +5362,7 @@ For more information, read [Applications in Auth0](https://www.auth0.com/docs/ge
 <dd>
 
 ```go
-request := &management.ListClientsRequestParameters{
+request := &management.GetClientsRequest{
         Fields: management.String(
             "fields",
         ),
@@ -1638,6 +5377,12 @@ request := &management.ListClientsRequestParameters{
         ),
         IncludeTotals: management.Bool(
             true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
         ),
         IsGlobal: management.Bool(
             true,
@@ -1655,7 +5400,7 @@ request := &management.ListClientsRequestParameters{
             "q",
         ),
     }
-client.Clients.List(
+client.Clients.GetClients(
         context.TODO(),
         request,
     )
@@ -1714,6 +5459,22 @@ client.Clients.List(
 <dl>
 <dd>
 
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **isGlobal:** `*bool` — Optional filter on the global client parameter.
     
 </dd>
@@ -1758,7 +5519,7 @@ client.Clients.List(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Create(request) -> *management.CreateClientResponseContent</code></summary>
+<details><summary><code>client.Clients.PostClients(request) -> *management.CreateClientResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1801,7 +5562,7 @@ SSO Integrations created via this endpoint will accept login requests and share 
 request := &management.CreateClientRequestContent{
         Name: "name",
     }
-client.Clients.Create(
+client.Clients.PostClients(
         context.TODO(),
         request,
     )
@@ -2284,7 +6045,7 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 </dl>
 </details>
 
-<details><summary><code>client.Clients.PreviewCimdMetadata(request) -> *management.PreviewCimdMetadataResponseContent</code></summary>
+<details><summary><code>client.Clients.PostClientsCimdPreview(request) -> *management.PreviewCimdMetadataResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -2318,7 +6079,7 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 request := &management.PreviewCimdMetadataRequestContent{
         ExternalClientID: "external_client_id",
     }
-client.Clients.PreviewCimdMetadata(
+client.Clients.PostClientsCimdPreview(
         context.TODO(),
         request,
     )
@@ -2349,7 +6110,7 @@ client.Clients.PreviewCimdMetadata(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.RegisterCimdClient(request) -> *management.RegisterCimdClientResponseContent</code></summary>
+<details><summary><code>client.Clients.PostClientsCimdRegister(request) -> *management.RegisterCimdClientResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -2389,7 +6150,7 @@ This endpoint automatically:
 request := &management.RegisterCimdClientRequestContent{
         ExternalClientID: "external_client_id",
     }
-client.Clients.RegisterCimdClient(
+client.Clients.PostClientsCimdRegister(
         context.TODO(),
         request,
     )
@@ -2420,7 +6181,462 @@ client.Clients.RegisterCimdClient(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Get(ID) -> *management.GetClientResponseContent</code></summary>
+<details><summary><code>client.Clients.GetCredentials(ClientID) -> []*management.ClientCredential</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the details of a client credential.
+
+**Important**: To enable credentials to be used for a client authentication method, set the `client_authentication_methods` property on the client. To enable credentials to be used for JWT-Secured Authorization requests set the `signed_request_object` property on the client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Clients.GetCredentials(
+        context.TODO(),
+        "client_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**clientID:** `string` — ID of the client.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Clients.PostCredentials(ClientID, request) -> *management.PostClientCredentialResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a client credential associated to your application. Credentials can be used to configure Private Key JWT and mTLS authentication methods, as well as for JWT-secured Authorization requests.
+
+**Public Key**
+
+Public Key credentials can be used to set up Private Key JWT client authentication and JWT-secured Authorization requests.
+
+Sample: 
+
+```json
+{
+  "credential_type": "public_key",
+  "name": "string",
+  "pem": "string",
+  "alg": "RS256",
+  "parse_expiry_from_cert": false,
+  "expires_at": "2022-12-31T23:59:59Z"
+}
+```
+
+**Certificate (CA-signed & self-signed)**
+
+Certificate credentials can be used to set up mTLS client authentication. CA-signed certificates can be configured either with a signed certificate or with just the certificate Subject DN.
+
+CA-signed Certificate Sample (pem): 
+
+```json
+{
+  "credential_type": "x509_cert",
+  "name": "string",
+  "pem": "string"
+}
+```
+
+CA-signed Certificate Sample (subject_dn): 
+
+```json
+{
+  "credential_type": "cert_subject_dn",
+  "name": "string",
+  "subject_dn": "string"
+}
+```
+
+Self-signed Certificate Sample: 
+
+```json
+{
+  "credential_type": "cert_subject_dn",
+  "name": "string",
+  "pem": "string"
+}
+```
+
+The credential will be created but not yet enabled for use until you set the corresponding properties in the client:
+
+- To enable the credential for Private Key JWT or mTLS authentication methods, set the `client_authentication_methods` property on the client. For more information, read [Configure Private Key JWT Authentication](https://auth0.com/docs/get-started/applications/configure-private-key-jwt) and [Configure mTLS Authentication](https://auth0.com/docs/get-started/applications/configure-mtls)
+- To enable the credential for JWT-secured Authorization requests, set the `signed_request_object`property on the client. For more information, read [Configure JWT-secured Authorization Requests (JAR)](https://auth0.com/docs/get-started/applications/configure-jar)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.PostClientCredentialRequestContent{
+        CredentialType: management.ClientCredentialTypeEnumPublicKey,
+    }
+client.Clients.PostCredentials(
+        context.TODO(),
+        "client_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**clientID:** `string` — ID of the client.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentialType:** `*management.ClientCredentialTypeEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — Friendly name for a credential.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subjectDn:** `*string` — Subject Distinguished Name. Mutually exclusive with `pem` property. Applies to `cert_subject_dn` credential type.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pem:** `*string` — PEM-formatted public key (SPKI and PKCS1) or X509 certificate. Must be JSON escaped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alg:** `*management.PublicKeyCredentialAlgorithmEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parseExpiryFromCert:** `*bool` — Parse expiry from x509 certificate. If true, attempts to parse the expiry date from the provided PEM. Applies to `public_key` credential type.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expiresAt:** `*time.Time` — The ISO 8601 formatted date representing the expiration of the credential. If not specified (not recommended), the credential never expires. Applies to `public_key` credential type.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**kid:** `*string` — Optional kid (Key ID), used to uniquely identify the credential. If not specified, a kid value will be auto-generated. The kid header parameter in JWTs sent by your client should match this value. Valid format is [0-9a-zA-Z-_]{10,64}
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Clients.GetCredentialsByCredentialID(ClientID, CredentialID) -> *management.GetClientCredentialResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the details of a client credential.
+
+**Important**: To enable credentials to be used for a client authentication method, set the `client_authentication_methods` property on the client. To enable credentials to be used for JWT-Secured Authorization requests set the `signed_request_object` property on the client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Clients.GetCredentialsByCredentialID(
+        context.TODO(),
+        "client_id",
+        "credential_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**clientID:** `string` — ID of the client.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentialID:** `string` — ID of the credential.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Clients.DeleteCredentialsByCredentialID(ClientID, CredentialID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a client credential you previously created. May be enabled or disabled. For more information, read <a href="https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">Client Credential Flow</a>.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Clients.DeleteCredentialsByCredentialID(
+        context.TODO(),
+        "client_id",
+        "credential_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**clientID:** `string` — ID of the client.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentialID:** `string` — ID of the credential to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Clients.PatchCredentialsByCredentialID(ClientID, CredentialID, request) -> *management.PatchClientCredentialResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Change a client credential you previously created. May be enabled or disabled. For more information, read <a href="https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">Client Credential Flow</a>.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.PatchClientCredentialRequestContent{}
+client.Clients.PatchCredentialsByCredentialID(
+        context.TODO(),
+        "client_id",
+        "credential_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**clientID:** `string` — ID of the client.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentialID:** `string` — ID of the credential.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expiresAt:** `*time.Time` — The ISO 8601 formatted date representing the expiration of the credential.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Clients.GetClientsByID(ID) -> *management.GetClientResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -2470,7 +6686,7 @@ For more information, read [Applications in Auth0](https://www.auth0.com/docs/ge
 <dd>
 
 ```go
-request := &management.GetClientRequestParameters{
+request := &management.GetClientsByIDRequest{
         Fields: management.String(
             "fields",
         ),
@@ -2478,7 +6694,7 @@ request := &management.GetClientRequestParameters{
             true,
         ),
     }
-client.Clients.Get(
+client.Clients.GetClientsByID(
         context.TODO(),
         "id",
         request,
@@ -2526,7 +6742,7 @@ client.Clients.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Clients.DeleteClientsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -2553,7 +6769,7 @@ Delete a client and related configuration (rules, connections, etc).
 <dd>
 
 ```go
-client.Clients.Delete(
+client.Clients.DeleteClientsByID(
         context.TODO(),
         "id",
     )
@@ -2584,7 +6800,7 @@ client.Clients.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Clients.Update(ID, request) -> *management.UpdateClientResponseContent</code></summary>
+<details><summary><code>client.Clients.PatchClientsByID(ID, request) -> *management.UpdateClientResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -2620,7 +6836,7 @@ Notes:
 
 ```go
 request := &management.UpdateClientRequestContent{}
-client.Clients.Update(
+client.Clients.PatchClientsByID(
         context.TODO(),
         "id",
         request,
@@ -3112,7 +7328,126 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 </dl>
 </details>
 
-<details><summary><code>client.Clients.RotateSecret(ID) -> *management.RotateClientSecretResponseContent</code></summary>
+<details><summary><code>client.Clients.GetClientConnections(ID) -> *management.ListClientConnectionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all connections that are enabled for the specified [Application](https://www.auth0.com/docs/get-started/applications), using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
+
+- This endpoint requires the `read:connections` scope and any one of `read:clients` or `read:client_summary`.
+- **Note**: The first time you call this endpoint, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no further results are remaining.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetClientConnectionsRequest{
+        Strategy: []*management.ConnectionStrategyEnum{
+            management.ConnectionStrategyEnumAd.Ptr(),
+        },
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
+client.Clients.GetClientConnections(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the client for which to retrieve enabled connections.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**strategy:** `*management.ConnectionStrategyEnum` — Provide strategies to only retrieve connections with such strategies
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — <code>true</code> if the fields specified are to be included in the result, <code>false</code> otherwise (defaults to <code>true</code>)
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Clients.PostRotateSecret(ID) -> *management.RotateClientSecretResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3143,7 +7478,7 @@ For more information, read [Rotate Client Secrets](https://www.auth0.com/docs/ge
 <dd>
 
 ```go
-client.Clients.RotateSecret(
+client.Clients.PostRotateSecret(
         context.TODO(),
         "id",
     )
@@ -3175,7 +7510,7 @@ client.Clients.RotateSecret(
 </details>
 
 ## ConnectionProfiles
-<details><summary><code>client.ConnectionProfiles.List() -> *management.ListConnectionProfilesPaginatedResponseContent</code></summary>
+<details><summary><code>client.ConnectionProfiles.GetConnectionProfiles() -> *management.ListConnectionProfilesPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3202,7 +7537,7 @@ Retrieve a list of Connection Profiles. This endpoint supports Checkpoint pagina
 <dd>
 
 ```go
-request := &management.ListConnectionProfileRequestParameters{
+request := &management.GetConnectionProfilesRequest{
         From: management.String(
             "from",
         ),
@@ -3210,7 +7545,7 @@ request := &management.ListConnectionProfileRequestParameters{
             1,
         ),
     }
-client.ConnectionProfiles.List(
+client.ConnectionProfiles.GetConnectionProfiles(
         context.TODO(),
         request,
     )
@@ -3249,7 +7584,7 @@ client.ConnectionProfiles.List(
 </dl>
 </details>
 
-<details><summary><code>client.ConnectionProfiles.Create(request) -> *management.CreateConnectionProfileResponseContent</code></summary>
+<details><summary><code>client.ConnectionProfiles.PostConnectionProfiles(request) -> *management.CreateConnectionProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3279,7 +7614,7 @@ Create a Connection Profile.
 request := &management.CreateConnectionProfileRequestContent{
         Name: "name",
     }
-client.ConnectionProfiles.Create(
+client.ConnectionProfiles.PostConnectionProfiles(
         context.TODO(),
         request,
     )
@@ -3366,7 +7701,7 @@ client.ConnectionProfiles.Create(
 </dl>
 </details>
 
-<details><summary><code>client.ConnectionProfiles.ListTemplates() -> *management.ListConnectionProfileTemplateResponseContent</code></summary>
+<details><summary><code>client.ConnectionProfiles.GetConnectionProfileTemplates() -> *management.ListConnectionProfileTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3393,7 +7728,7 @@ Retrieve a list of Connection Profile Templates.
 <dd>
 
 ```go
-client.ConnectionProfiles.ListTemplates(
+client.ConnectionProfiles.GetConnectionProfileTemplates(
         context.TODO(),
     )
 }
@@ -3408,7 +7743,7 @@ client.ConnectionProfiles.ListTemplates(
 </dl>
 </details>
 
-<details><summary><code>client.ConnectionProfiles.GetTemplate(ID) -> *management.GetConnectionProfileTemplateResponseContent</code></summary>
+<details><summary><code>client.ConnectionProfiles.GetConnectionProfileTemplate(ID) -> *management.GetConnectionProfileTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3435,7 +7770,7 @@ Retrieve a Connection Profile Template.
 <dd>
 
 ```go
-client.ConnectionProfiles.GetTemplate(
+client.ConnectionProfiles.GetConnectionProfileTemplate(
         context.TODO(),
         "id",
     )
@@ -3466,7 +7801,7 @@ client.ConnectionProfiles.GetTemplate(
 </dl>
 </details>
 
-<details><summary><code>client.ConnectionProfiles.Get(ID) -> *management.GetConnectionProfileResponseContent</code></summary>
+<details><summary><code>client.ConnectionProfiles.GetConnectionProfilesByID(ID) -> *management.GetConnectionProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3493,7 +7828,7 @@ Retrieve details about a single Connection Profile specified by ID.
 <dd>
 
 ```go
-client.ConnectionProfiles.Get(
+client.ConnectionProfiles.GetConnectionProfilesByID(
         context.TODO(),
         "id",
     )
@@ -3524,7 +7859,7 @@ client.ConnectionProfiles.Get(
 </dl>
 </details>
 
-<details><summary><code>client.ConnectionProfiles.Delete(ID) -> error</code></summary>
+<details><summary><code>client.ConnectionProfiles.DeleteConnectionProfilesByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -3551,7 +7886,7 @@ Delete a single Connection Profile specified by ID.
 <dd>
 
 ```go
-client.ConnectionProfiles.Delete(
+client.ConnectionProfiles.DeleteConnectionProfilesByID(
         context.TODO(),
         "id",
     )
@@ -3582,7 +7917,7 @@ client.ConnectionProfiles.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.ConnectionProfiles.Update(ID, request) -> *management.UpdateConnectionProfileResponseContent</code></summary>
+<details><summary><code>client.ConnectionProfiles.PatchConnectionProfilesByID(ID, request) -> *management.UpdateConnectionProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3610,7 +7945,7 @@ Update the details of a specific Connection Profile.
 
 ```go
 request := &management.UpdateConnectionProfileRequestContent{}
-client.ConnectionProfiles.Update(
+client.ConnectionProfiles.PatchConnectionProfilesByID(
         context.TODO(),
         "id",
         request,
@@ -3707,7 +8042,7 @@ client.ConnectionProfiles.Update(
 </details>
 
 ## Connections
-<details><summary><code>client.Connections.List() -> *management.ListConnectionsCheckpointPaginatedResponseContent</code></summary>
+<details><summary><code>client.Connections.GetConnections() -> *management.ListConnectionsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3750,7 +8085,13 @@ To search by checkpoint, use the following parameters:
 <dd>
 
 ```go
-request := &management.ListConnectionsQueryParameters{
+request := &management.GetConnectionsRequest{
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
         IncludeTotals: management.Bool(
             true,
         ),
@@ -3773,7 +8114,7 @@ request := &management.ListConnectionsQueryParameters{
             true,
         ),
     }
-client.Connections.List(
+client.Connections.GetConnections(
         context.TODO(),
         request,
     )
@@ -3788,6 +8129,22 @@ client.Connections.List(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — The amount of entries per page. Defaults to 100 if not provided
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — The page number. Zero based
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -3852,7 +8209,7 @@ client.Connections.List(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Create(request) -> *management.CreateConnectionResponseContent</code></summary>
+<details><summary><code>client.Connections.PostConnections(request) -> *management.CreateConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -3885,7 +8242,7 @@ request := &management.CreateConnectionRequestContent{
         Name: "name",
         Strategy: management.ConnectionIdentityProviderEnumAd,
     }
-client.Connections.Create(
+client.Connections.PostConnections(
         context.TODO(),
         request,
     )
@@ -4012,7 +8369,7 @@ client.Connections.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Get(ID) -> *management.GetConnectionResponseContent</code></summary>
+<details><summary><code>client.Connections.GetConnectionsByID(ID) -> *management.GetConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4039,7 +8396,7 @@ Retrieve details for a specified [connection](https://auth0.com/docs/authenticat
 <dd>
 
 ```go
-request := &management.GetConnectionRequestParameters{
+request := &management.GetConnectionsByIDRequest{
         Fields: management.String(
             "fields",
         ),
@@ -4047,7 +8404,7 @@ request := &management.GetConnectionRequestParameters{
             true,
         ),
     }
-client.Connections.Get(
+client.Connections.GetConnectionsByID(
         context.TODO(),
         "id",
         request,
@@ -4095,7 +8452,7 @@ client.Connections.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Connections.DeleteConnectionsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -4124,7 +8481,7 @@ Removes a specific [connection](https://auth0.com/docs/authenticate/identity-pro
 <dd>
 
 ```go
-client.Connections.Delete(
+client.Connections.DeleteConnectionsByID(
         context.TODO(),
         "id",
     )
@@ -4155,7 +8512,7 @@ client.Connections.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.Update(ID, request) -> *management.UpdateConnectionResponseContent</code></summary>
+<details><summary><code>client.Connections.PatchConnectionsByID(ID, request) -> *management.UpdateConnectionResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4185,7 +8542,7 @@ Update details for a specific [connection](https://auth0.com/docs/authenticate/i
 
 ```go
 request := &management.UpdateConnectionRequestContent{}
-client.Connections.Update(
+client.Connections.PatchConnectionsByID(
         context.TODO(),
         "id",
         request,
@@ -4305,7 +8662,1553 @@ client.Connections.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Connections.CheckStatus(ID) -> error</code></summary>
+<details><summary><code>client.Connections.GetConnectionClients(ID) -> *management.GetConnectionEnabledClientsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all clients that have the specified [connection](https://auth0.com/docs/authenticate/identity-providers) enabled.
+
+**Note**: The first time you call this endpoint, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no further results are remaining.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetConnectionClientsRequest{
+        Take: management.Int(
+            1,
+        ),
+        From: management.String(
+            "from",
+        ),
+    }
+client.Connections.GetConnectionClients(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection for which enabled clients are to be retrieved
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PatchClients(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := []*management.UpdateEnabledClientConnectionsRequestContentItem{
+        &management.UpdateEnabledClientConnectionsRequestContentItem{
+            ClientID: "client_id",
+            Status: true,
+        },
+    }
+client.Connections.PatchClients(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to modify
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `management.UpdateEnabledClientConnectionsRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.GetDirectoryProvisioning(ID) -> *management.GetDirectoryProvisioningResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the directory provisioning configuration of a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.GetDirectoryProvisioning(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to retrieve its directory provisioning configuration
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PostDirectoryProvisioning(ID, request) -> *management.CreateDirectoryProvisioningResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a directory provisioning configuration for a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateDirectoryProvisioningRequestContent{}
+client.Connections.PostDirectoryProvisioning(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to create its directory provisioning configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.CreateDirectoryProvisioningRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DeleteDirectoryProvisioning(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete the directory provisioning configuration of a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.DeleteDirectoryProvisioning(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to delete its directory provisioning configuration
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PatchDirectoryProvisioning(ID, request) -> *management.UpdateDirectoryProvisioningResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the directory provisioning configuration of a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateDirectoryProvisioningRequestContent{}
+client.Connections.PatchDirectoryProvisioning(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to create its directory provisioning configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.UpdateDirectoryProvisioningRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.GetDirectoryProvisioningDefaultMapping(ID) -> *management.GetDirectoryProvisioningDefaultMappingResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the directory provisioning default attribute mapping of a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.GetDirectoryProvisioningDefaultMapping(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to retrieve its directory provisioning configuration
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PostSynchronizations(ID) -> *management.CreateDirectorySynchronizationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Request an on-demand synchronization of the directory.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.PostSynchronizations(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to trigger synchronization for
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.GetSynchronizedGroups(ID) -> *management.ListSynchronizedGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the configured synchronized groups for a connection directory provisioning configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetSynchronizedGroupsRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Q: management.String(
+            "q",
+        ),
+    }
+client.Connections.GetSynchronizedGroups(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to list synchronized groups for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `*string` — Query in <a target='_new' href ='https://lucene.apache.org/core/2_9_4/queryparsersyntax.html'>Lucene query string syntax</a>. Only prefix search on "name" or "email" fields are allowed, with a single wildcard suffix. Operators, modifiers, and groupings are not allowed. Terms are treated as case-insensitive. Example query: "name:engineering*".
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PostSynchronizedGroups(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add synchronized group selections to a directory provisioning configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AddSynchronizedGroupsRequestContent{
+        Groups: []*management.SynchronizedGroupPayload{
+            &management.SynchronizedGroupPayload{
+                ID: "id",
+            },
+        },
+    }
+client.Connections.PostSynchronizedGroups(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to add synchronized groups to
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]*management.SynchronizedGroupPayload` — Array of Google Workspace Directory group objects to synchronize.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PutSynchronizedGroups(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or replace the selected groups for a connection directory provisioning configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ReplaceSynchronizedGroupsRequestContent{
+        Groups: []*management.SynchronizedGroupPayload{
+            &management.SynchronizedGroupPayload{
+                ID: "id",
+            },
+        },
+    }
+client.Connections.PutSynchronizedGroups(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to create or replace synchronized groups for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]*management.SynchronizedGroupPayload` — Array of Google Workspace Directory group objects to synchronize.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DeleteSynchronizedGroups(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete synchronized group selections for a directory provisioning configuration
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteSynchronizedGroupsRequestContent{
+        Groups: []*management.SynchronizedGroupSelectionID{
+            &management.SynchronizedGroupSelectionID{
+                ID: "id",
+            },
+        },
+    }
+client.Connections.DeleteSynchronizedGroups(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to delete synchronized group selections for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]*management.SynchronizedGroupSelectionID` — Array of groups to remove from the selection set.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.GetKeys(ID) -> []*management.ConnectionKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the connection keys for the Okta or OIDC connection strategy.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.GetKeys(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the connection
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PostKeys(ID, request) -> management.PostConnectionsKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Provision initial connection keys for Okta or OIDC connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.PostConnectionKeysRequestContent{}
+client.Connections.PostKeys(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the connection
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.PostConnectionKeysRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PostRotate(ID, request) -> *management.RotateConnectionsKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rotates the connection keys for the Okta or OIDC connection strategies.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.RotateConnectionKeysRequestContent{}
+client.Connections.PostRotate(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the connection
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.RotateConnectionKeysRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.GetSCIMConfiguration(ID) -> *management.GetSCIMConfigurationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a scim configuration by its `connectionId`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.GetSCIMConfiguration(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to retrieve its SCIM configuration
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PostSCIMConfiguration(ID, request) -> *management.CreateSCIMConfigurationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a scim configuration for a connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateSCIMConfigurationRequestContent{}
+client.Connections.PostSCIMConfiguration(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to create its SCIM configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*management.CreateSCIMConfigurationRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DeleteSCIMConfiguration(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a scim configuration by its `connectionId`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.DeleteSCIMConfiguration(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to delete its SCIM configuration
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PatchSCIMConfiguration(ID, request) -> *management.UpdateSCIMConfigurationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a scim configuration by its `connectionId`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateSCIMConfigurationRequestContent{
+        UserIDAttribute: "user_id_attribute",
+        Mapping: []*management.SCIMMappingItem{
+            &management.SCIMMappingItem{},
+        },
+    }
+client.Connections.PatchSCIMConfiguration(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to update its SCIM configuration
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userIDAttribute:** `string` — User ID attribute for generating unique user ids
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mapping:** `[]*management.SCIMMappingItem` — The mapping between auth0 and SCIM
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.GetDefaultMapping(ID) -> *management.GetSCIMConfigurationDefaultMappingResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a scim configuration's default mapping by its `connectionId`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.GetDefaultMapping(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to retrieve its default SCIM mapping
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.GetSCIMTokens(ID) -> management.GetSCIMTokensResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves all scim tokens by its connection `id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.GetSCIMTokens(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to retrieve its SCIM configuration
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.PostSCIMToken(ID, request) -> *management.CreateSCIMTokenResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a scim token for a scim client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateSCIMTokenRequestContent{}
+client.Connections.PostSCIMToken(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection to create its SCIM token
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scopes:** `[]string` — The scopes of the scim token
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tokenLifetime:** `*int` — Lifetime of the token in seconds. Must be greater than 900
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.DeleteTokensByTokenID(ID, TokenID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a scim token by its connection `id` and `tokenId`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Connections.DeleteTokensByTokenID(
+        context.TODO(),
+        "id",
+        "tokenId",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The connection id that owns the SCIM token to delete
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tokenID:** `string` — The id of the scim token to delete
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Connections.GetStatus(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -4332,7 +10235,7 @@ Retrieves the status of an ad/ldap connection referenced by its `ID`. `200 OK` h
 <dd>
 
 ```go
-client.Connections.CheckStatus(
+client.Connections.GetStatus(
         context.TODO(),
         "id",
     )
@@ -4363,8 +10266,228 @@ client.Connections.CheckStatus(
 </dl>
 </details>
 
+<details><summary><code>client.Connections.DeleteUsersByEmail(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a specified connection user by its email (you cannot delete all users from specific connection). Currently, only Database Connections are supported.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteUsersByEmailRequest{
+        Email: "email",
+    }
+client.Connections.DeleteUsersByEmail(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the connection (currently only database connections are supported)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `string` — The email of the user to delete
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConnectionsDirectoryProvisionings
+<details><summary><code>client.ConnectionsDirectoryProvisionings.GetConnectionsDirectoryProvisionings() -> *management.ListDirectoryProvisioningsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of directory provisioning configurations of a tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetConnectionsDirectoryProvisioningsRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.ConnectionsDirectoryProvisionings.GetConnectionsDirectoryProvisionings(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConnectionsSCIMConfigurations
+<details><summary><code>client.ConnectionsSCIMConfigurations.GetConnectionsSCIMConfigurations() -> *management.ListSCIMConfigurationsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of SCIM configurations of a tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetConnectionsSCIMConfigurationsRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.ConnectionsSCIMConfigurations.GetConnectionsSCIMConfigurations(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## CustomDomains
-<details><summary><code>client.CustomDomains.List() -> management.ListCustomDomainsResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.GetCustomDomains() -> *management.ListCustomDomainsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4391,7 +10514,13 @@ Retrieve details on [custom domains](https://auth0.com/docs/custom-domains).
 <dd>
 
 ```go
-request := &management.ListCustomDomainsRequestParameters{
+request := &management.GetCustomDomainsRequest{
+        Take: management.Int(
+            1,
+        ),
+        From: management.String(
+            "from",
+        ),
         Q: management.String(
             "q",
         ),
@@ -4405,7 +10534,7 @@ request := &management.ListCustomDomainsRequestParameters{
             "sort",
         ),
     }
-client.CustomDomains.List(
+client.CustomDomains.GetCustomDomains(
         context.TODO(),
         request,
     )
@@ -4420,6 +10549,22 @@ client.CustomDomains.List(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -4460,7 +10605,7 @@ client.CustomDomains.List(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Create(request) -> *management.CreateCustomDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.PostCustomDomains(request) -> *management.CreateCustomDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4503,7 +10648,7 @@ request := &management.CreateCustomDomainRequestContent{
         Domain: "domain",
         Type: management.CustomDomainProvisioningTypeEnumAuth0ManagedCerts,
     }
-client.CustomDomains.Create(
+client.CustomDomains.PostCustomDomains(
         context.TODO(),
         request,
     )
@@ -4624,7 +10769,7 @@ client.CustomDomains.GetDefault(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.SetDefault(request) -> *management.UpdateDefaultDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.PatchDefault(request) -> *management.UpdateDefaultDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4654,7 +10799,7 @@ Set the default custom domain for the tenant.
 request := &management.SetDefaultCustomDomainRequestContent{
         Domain: "domain",
     }
-client.CustomDomains.SetDefault(
+client.CustomDomains.PatchDefault(
         context.TODO(),
         request,
     )
@@ -4685,7 +10830,7 @@ client.CustomDomains.SetDefault(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Get(ID) -> *management.GetCustomDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.GetCustomDomainsByID(ID) -> *management.GetCustomDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4712,7 +10857,7 @@ Retrieve a custom domain configuration and status.
 <dd>
 
 ```go
-client.CustomDomains.Get(
+client.CustomDomains.GetCustomDomainsByID(
         context.TODO(),
         "id",
     )
@@ -4743,7 +10888,7 @@ client.CustomDomains.Get(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Delete(ID) -> error</code></summary>
+<details><summary><code>client.CustomDomains.DeleteCustomDomainsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -4770,7 +10915,7 @@ Delete a custom domain and stop serving requests for it.
 <dd>
 
 ```go
-client.CustomDomains.Delete(
+client.CustomDomains.DeleteCustomDomainsByID(
         context.TODO(),
         "id",
     )
@@ -4801,7 +10946,7 @@ client.CustomDomains.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Update(ID, request) -> *management.UpdateCustomDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.PatchCustomDomainsByID(ID, request) -> *management.UpdateCustomDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4860,7 +11005,7 @@ Some considerations:
 
 ```go
 request := &management.UpdateCustomDomainRequestContent{}
-client.CustomDomains.Update(
+client.CustomDomains.PatchCustomDomainsByID(
         context.TODO(),
         "id",
         request,
@@ -4924,7 +11069,7 @@ client.CustomDomains.Update(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Test(ID) -> *management.TestCustomDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.PostTestDomain(ID) -> *management.TestCustomDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -4951,7 +11096,7 @@ Run the test process on a custom domain.
 <dd>
 
 ```go
-client.CustomDomains.Test(
+client.CustomDomains.PostTestDomain(
         context.TODO(),
         "id",
     )
@@ -4982,7 +11127,7 @@ client.CustomDomains.Test(
 </dl>
 </details>
 
-<details><summary><code>client.CustomDomains.Verify(ID) -> *management.VerifyCustomDomainResponseContent</code></summary>
+<details><summary><code>client.CustomDomains.PostVerify(ID) -> *management.VerifyCustomDomainResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5016,7 +11161,7 @@ For `self_managed_certs`, when the custom domain is verified for the first time,
 <dd>
 
 ```go
-client.CustomDomains.Verify(
+client.CustomDomains.PostVerify(
         context.TODO(),
         "id",
     )
@@ -5048,7 +11193,7 @@ client.CustomDomains.Verify(
 </details>
 
 ## DeviceCredentials
-<details><summary><code>client.DeviceCredentials.List() -> *management.ListDeviceCredentialsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.DeviceCredentials.GetDeviceCredentials() -> *management.ListDeviceCredentialsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5075,7 +11220,7 @@ Retrieve device credential information (`public_key`, `refresh_token`, or `rotat
 <dd>
 
 ```go
-request := &management.ListDeviceCredentialsRequestParameters{
+request := &management.GetDeviceCredentialsRequest{
         Page: management.Int(
             1,
         ),
@@ -5099,7 +11244,7 @@ request := &management.ListDeviceCredentialsRequestParameters{
         ),
         Type: management.DeviceCredentialTypeEnumPublicKey.Ptr(),
     }
-client.DeviceCredentials.List(
+client.DeviceCredentials.GetDeviceCredentials(
         context.TODO(),
         request,
     )
@@ -5186,7 +11331,7 @@ client.DeviceCredentials.List(
 </dl>
 </details>
 
-<details><summary><code>client.DeviceCredentials.CreatePublicKey(request) -> *management.CreatePublicKeyDeviceCredentialResponseContent</code></summary>
+<details><summary><code>client.DeviceCredentials.PostDeviceCredentials(request) -> *management.CreatePublicKeyDeviceCredentialResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5221,7 +11366,7 @@ request := &management.CreatePublicKeyDeviceCredentialRequestContent{
         Value: "value",
         DeviceID: "device_id",
     }
-client.DeviceCredentials.CreatePublicKey(
+client.DeviceCredentials.PostDeviceCredentials(
         context.TODO(),
         request,
     )
@@ -5284,7 +11429,7 @@ client.DeviceCredentials.CreatePublicKey(
 </dl>
 </details>
 
-<details><summary><code>client.DeviceCredentials.Delete(ID) -> error</code></summary>
+<details><summary><code>client.DeviceCredentials.DeleteDeviceCredentialsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -5311,7 +11456,7 @@ Permanently delete a device credential (such as a refresh token or public key) w
 <dd>
 
 ```go
-client.DeviceCredentials.Delete(
+client.DeviceCredentials.DeleteDeviceCredentialsByID(
         context.TODO(),
         "id",
     )
@@ -5343,7 +11488,7 @@ client.DeviceCredentials.Delete(
 </details>
 
 ## EmailTemplates
-<details><summary><code>client.EmailTemplates.Create(request) -> *management.CreateEmailTemplateResponseContent</code></summary>
+<details><summary><code>client.EmailTemplates.PostEmailTemplates(request) -> *management.CreateEmailTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5373,7 +11518,7 @@ Create an email template.
 request := &management.CreateEmailTemplateRequestContent{
         Template: management.EmailTemplateNameEnumVerifyEmail,
     }
-client.EmailTemplates.Create(
+client.EmailTemplates.PostEmailTemplates(
         context.TODO(),
         request,
     )
@@ -5468,7 +11613,7 @@ client.EmailTemplates.Create(
 </dl>
 </details>
 
-<details><summary><code>client.EmailTemplates.Get(TemplateName) -> *management.GetEmailTemplateResponseContent</code></summary>
+<details><summary><code>client.EmailTemplates.GetEmailTemplatesByTemplateName(TemplateName) -> *management.GetEmailTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5495,7 +11640,7 @@ Retrieve an email template by pre-defined name. These names are `verify_email`, 
 <dd>
 
 ```go
-client.EmailTemplates.Get(
+client.EmailTemplates.GetEmailTemplatesByTemplateName(
         context.TODO(),
         management.EmailTemplateNameEnumVerifyEmail.Ptr(),
     )
@@ -5526,7 +11671,7 @@ client.EmailTemplates.Get(
 </dl>
 </details>
 
-<details><summary><code>client.EmailTemplates.Set(TemplateName, request) -> *management.SetEmailTemplateResponseContent</code></summary>
+<details><summary><code>client.EmailTemplates.PutEmailTemplatesByTemplateName(TemplateName, request) -> *management.SetEmailTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5556,7 +11701,7 @@ Update an email template.
 request := &management.SetEmailTemplateRequestContent{
         Template: management.EmailTemplateNameEnumVerifyEmail,
     }
-client.EmailTemplates.Set(
+client.EmailTemplates.PutEmailTemplatesByTemplateName(
         context.TODO(),
         management.EmailTemplateNameEnumVerifyEmail.Ptr(),
         request,
@@ -5660,7 +11805,7 @@ client.EmailTemplates.Set(
 </dl>
 </details>
 
-<details><summary><code>client.EmailTemplates.Update(TemplateName, request) -> *management.UpdateEmailTemplateResponseContent</code></summary>
+<details><summary><code>client.EmailTemplates.PatchEmailTemplatesByTemplateName(TemplateName, request) -> *management.UpdateEmailTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5688,7 +11833,7 @@ Modify an email template.
 
 ```go
 request := &management.UpdateEmailTemplateRequestContent{}
-client.EmailTemplates.Update(
+client.EmailTemplates.PatchEmailTemplatesByTemplateName(
         context.TODO(),
         management.EmailTemplateNameEnumVerifyEmail.Ptr(),
         request,
@@ -5792,8 +11937,363 @@ client.EmailTemplates.Update(
 </dl>
 </details>
 
+## Emails
+<details><summary><code>client.Emails.GetProvider() -> *management.GetEmailProviderResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of the [email provider configuration](https://auth0.com/docs/customize/email/smtp-email-providers) in your tenant. A list of fields to include or exclude may also be specified.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetProviderRequest{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
+client.Emails.GetProvider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (dependent upon include_fields) from the result. Leave empty to retrieve `name` and `enabled`. Additional fields available include `credentials`, `default_from_address`, and `settings`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Emails.PostProvider(request) -> *management.CreateEmailProviderResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an [email provider](https://auth0.com/docs/email/providers). The `credentials` object
+requires different properties depending on the email provider (which is specified using the `name` property):
+
+- `mandrill` requires `api_key`
+- `sendgrid` requires `api_key`
+- `sparkpost` requires `api_key`. Optionally, set `region` to `eu` to use
+    the SparkPost service hosted in Western Europe; set to `null` to use the SparkPost service hosted in
+    North America. `eu` or `null` are the only valid values for `region`.
+- `mailgun` requires `api_key` and `domain`. Optionally, set `region` to
+    `eu` to use the Mailgun service hosted in Europe; set to `null` otherwise. `eu` or
+    `null` are the only valid values for `region`.
+- `ses` requires `accessKeyId`, `secretAccessKey`, and `region`
+- `smtp` requires `smtp_host`, `smtp_port`, `smtp_user`, and
+    `smtp_pass`
+
+Depending on the type of provider it is possible to specify `settings` object with different configuration
+options, which will be used when sending an email:
+
+- `smtp` provider, `settings` may contain `headers` object.
+    - When using AWS SES SMTP host, you may provide a name of configuration set in
+      `X-SES-Configuration-Set` header. Value must be a string.
+    - When using Sparkpost host, you may provide value for
+      `X-MSYS_API` header. Value must be an object.
+- For `ses` provider, `settings` may contain `message` object, where you can provide
+  a name of configuration set in `configuration_set_name` property. Value must be a string.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateEmailProviderRequestContent{
+        Name: management.EmailProviderNameEnumMailgun,
+        Credentials: &management.EmailProviderCredentialsSchema{
+            EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
+                APIKey: "api_key",
+            },
+        },
+    }
+client.Emails.PostProvider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `*management.EmailProviderNameEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabled:** `*bool` — Whether the provider is enabled (true) or disabled (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**defaultFromAddress:** `*string` — Email address to use as "from" when no other address specified.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentials:** `*management.EmailProviderCredentialsSchema` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `*management.EmailSpecificProviderSettingsWithAdditionalProperties` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Emails.DeleteProvider() -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete the email provider.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Emails.DeleteProvider(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Emails.PatchProvider(request) -> *management.UpdateEmailProviderResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an [email provider](https://auth0.com/docs/email/providers). The `credentials` object
+requires different properties depending on the email provider (which is specified using the `name` property):
+
+- `mandrill` requires `api_key`
+- `sendgrid` requires `api_key`
+- `sparkpost` requires `api_key`. Optionally, set `region` to `eu` to use
+    the SparkPost service hosted in Western Europe; set to `null` to use the SparkPost service hosted in
+    North America. `eu` or `null` are the only valid values for `region`.
+- `mailgun` requires `api_key` and `domain`. Optionally, set `region` to
+    `eu` to use the Mailgun service hosted in Europe; set to `null` otherwise. `eu` or
+    `null` are the only valid values for `region`.
+- `ses` requires `accessKeyId`, `secretAccessKey`, and `region`
+- `smtp` requires `smtp_host`, `smtp_port`, `smtp_user`, and
+    `smtp_pass`
+
+Depending on the type of provider it is possible to specify `settings` object with different configuration
+options, which will be used when sending an email:
+
+- `smtp` provider, `settings` may contain `headers` object.
+    - When using AWS SES SMTP host, you may provide a name of configuration set in
+      `X-SES-Configuration-Set` header. Value must be a string.
+    - When using Sparkpost host, you may provide value for
+      `X-MSYS_API` header. Value must be an object.
+
+  For `ses` provider, `settings` may contain `message` object, where you can provide
+  a name of configuration set in `configuration_set_name` property. Value must be a string.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateEmailProviderRequestContent{}
+client.Emails.PatchProvider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `*management.EmailProviderNameEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabled:** `*bool` — Whether the provider is enabled (true) or disabled (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**defaultFromAddress:** `*string` — Email address to use as "from" when no other address specified.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**credentials:** `*management.EmailProviderCredentialsSchema` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**settings:** `*management.EmailSpecificProviderSettingsWithAdditionalProperties` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## EventStreams
-<details><summary><code>client.EventStreams.List() -> *management.ListEventStreamsResponseContent</code></summary>
+<details><summary><code>client.EventStreams.GetEventStreams() -> *management.ListEventStreamsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5806,7 +12306,7 @@ client.EmailTemplates.Update(
 <dd>
 
 ```go
-request := &management.ListEventStreamsRequestParameters{
+request := &management.GetEventStreamsRequest{
         From: management.String(
             "from",
         ),
@@ -5814,7 +12314,7 @@ request := &management.ListEventStreamsRequestParameters{
             1,
         ),
     }
-client.EventStreams.List(
+client.EventStreams.GetEventStreams(
         context.TODO(),
         request,
     )
@@ -5853,7 +12353,7 @@ client.EventStreams.List(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Create(request) -> *management.CreateEventStreamResponseContent</code></summary>
+<details><summary><code>client.EventStreams.PostEventStreams(request) -> *management.CreateEventStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5866,7 +12366,7 @@ client.EventStreams.List(
 <dd>
 
 ```go
-request := &management.EventStreamsCreateRequest{
+request := &management.PostEventStreamsRequest{
         CreateEventStreamWebHookRequestContent: &management.CreateEventStreamWebHookRequestContent{
             Destination: &management.EventStreamWebhookDestination{
                 Type: management.EventStreamWebhookDestinationTypeEnumWebhook,
@@ -5882,7 +12382,7 @@ request := &management.EventStreamsCreateRequest{
             },
         },
     }
-client.EventStreams.Create(
+client.EventStreams.PostEventStreams(
         context.TODO(),
         request,
     )
@@ -5901,7 +12401,7 @@ client.EventStreams.Create(
 <dl>
 <dd>
 
-**request:** `*management.EventStreamsCreateRequest` 
+**request:** `*management.PostEventStreamsRequest` 
     
 </dd>
 </dl>
@@ -5913,7 +12413,7 @@ client.EventStreams.Create(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Get(ID) -> *management.GetEventStreamResponseContent</code></summary>
+<details><summary><code>client.EventStreams.GetEventStreamsByID(ID) -> *management.GetEventStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -5926,7 +12426,7 @@ client.EventStreams.Create(
 <dd>
 
 ```go
-client.EventStreams.Get(
+client.EventStreams.GetEventStreamsByID(
         context.TODO(),
         "id",
     )
@@ -5957,7 +12457,7 @@ client.EventStreams.Get(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Delete(ID) -> error</code></summary>
+<details><summary><code>client.EventStreams.DeleteEventStreamsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -5970,7 +12470,7 @@ client.EventStreams.Get(
 <dd>
 
 ```go
-client.EventStreams.Delete(
+client.EventStreams.DeleteEventStreamsByID(
         context.TODO(),
         "id",
     )
@@ -6001,7 +12501,7 @@ client.EventStreams.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Update(ID, request) -> *management.UpdateEventStreamResponseContent</code></summary>
+<details><summary><code>client.EventStreams.PatchEventStreamsByID(ID, request) -> *management.UpdateEventStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6015,7 +12515,7 @@ client.EventStreams.Delete(
 
 ```go
 request := &management.UpdateEventStreamRequestContent{}
-client.EventStreams.Update(
+client.EventStreams.PatchEventStreamsByID(
         context.TODO(),
         "id",
         request,
@@ -6079,7 +12579,304 @@ client.EventStreams.Update(
 </dl>
 </details>
 
-<details><summary><code>client.EventStreams.Test(ID, request) -> *management.CreateEventStreamTestEventResponseContent</code></summary>
+<details><summary><code>client.EventStreams.GetEventDeliveries(ID) -> *management.ListEventStreamDeliveriesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetEventDeliveriesRequest{
+        Statuses: management.String(
+            "statuses",
+        ),
+        EventTypes: management.String(
+            "event_types",
+        ),
+        DateFrom: management.String(
+            "date_from",
+        ),
+        DateTo: management.String(
+            "date_to",
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.EventStreams.GetEventDeliveries(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the event stream.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**statuses:** `*string` — Comma-separated list of statuses by which to filter
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eventTypes:** `*string` — Comma-separated list of event types by which to filter
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dateFrom:** `*string` — An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dateTo:** `*string` — An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.EventStreams.GetDeliveriesByEventID(ID, EventID) -> *management.GetEventStreamDeliveryHistoryResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.EventStreams.GetDeliveriesByEventID(
+        context.TODO(),
+        "id",
+        "event_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the event stream.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eventID:** `string` — Unique identifier for the event
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.EventStreams.PostRedeliver(ID, request) -> *management.CreateEventStreamRedeliveryResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateEventStreamRedeliveryRequestContent{}
+client.EventStreams.PostRedeliver(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the event stream.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dateFrom:** `*time.Time` — An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dateTo:** `*time.Time` — An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**statuses:** `[]*management.EventStreamDeliveryStatusEnum` — Filter by status
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eventTypes:** `[]*management.EventStreamEventTypeEnum` — Filter by event type
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.EventStreams.PostRedeliverByEventID(ID, EventID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.EventStreams.PostRedeliverByEventID(
+        context.TODO(),
+        "id",
+        "event_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the event stream.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eventID:** `string` — Unique identifier for the event
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.EventStreams.PostTestEvent(ID, request) -> *management.CreateEventStreamTestEventResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6095,7 +12892,7 @@ client.EventStreams.Update(
 request := &management.CreateEventStreamTestEventRequestContent{
         EventType: management.EventStreamTestEventTypeEnumConnectionCreated,
     }
-client.EventStreams.Test(
+client.EventStreams.PostTestEvent(
         context.TODO(),
         "id",
         request,
@@ -6144,7 +12941,7 @@ client.EventStreams.Test(
 </details>
 
 ## Events
-<details><summary><code>client.Events.Subscribe() -> management.EventStreamSubscribeEventsResponseContent</code></summary>
+<details><summary><code>client.Events.SubscribeEvents() -> management.EventStreamSubscribeEventsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6171,7 +12968,7 @@ Subscribe to events via Server-Sent Events (SSE)
 <dd>
 
 ```go
-request := &management.SubscribeEventsRequestParameters{
+request := &management.SubscribeEventsRequest{
         From: management.String(
             "from",
         ),
@@ -6182,7 +12979,7 @@ request := &management.SubscribeEventsRequestParameters{
             management.EventStreamSubscribeEventsEventTypeEnumConnectionCreated.Ptr(),
         },
     }
-client.Events.Subscribe(
+client.Events.SubscribeEvents(
         context.TODO(),
         request,
     )
@@ -6230,7 +13027,7 @@ client.Events.Subscribe(
 </details>
 
 ## Flows
-<details><summary><code>client.Flows.List() -> *management.ListFlowsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Flows.GetFlows() -> *management.ListFlowsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6243,7 +13040,7 @@ client.Events.Subscribe(
 <dd>
 
 ```go
-request := &management.ListFlowsRequestParameters{
+request := &management.GetFlowsRequest{
         Page: management.Int(
             1,
         ),
@@ -6260,7 +13057,7 @@ request := &management.ListFlowsRequestParameters{
             true,
         ),
     }
-client.Flows.List(
+client.Flows.GetFlows(
         context.TODO(),
         request,
     )
@@ -6323,7 +13120,7 @@ client.Flows.List(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Create(request) -> *management.CreateFlowResponseContent</code></summary>
+<details><summary><code>client.Flows.PostFlows(request) -> *management.CreateFlowResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6339,7 +13136,7 @@ client.Flows.List(
 request := &management.CreateFlowRequestContent{
         Name: "name",
     }
-client.Flows.Create(
+client.Flows.PostFlows(
         context.TODO(),
         request,
     )
@@ -6378,7 +13175,7 @@ client.Flows.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Get(ID) -> *management.GetFlowResponseContent</code></summary>
+<details><summary><code>client.Flows.GetFlowsVaultConnections() -> *management.ListFlowsVaultConnectionsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6391,12 +13188,512 @@ client.Flows.Create(
 <dd>
 
 ```go
-request := &management.GetFlowRequestParameters{
+request := &management.GetFlowsVaultConnectionsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
+client.Flows.GetFlowsVaultConnections(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.PostFlowsVaultConnections(request) -> *management.CreateFlowsVaultConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateFlowsVaultConnectionRequestContent{
+        CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
+            CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
+                Name: "name",
+                AppID: management.FlowsVaultConnectionAppIDActivecampaignEnumActivecampaign,
+                Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
+                    Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnumAPIKey,
+                    APIKey: "api_key",
+                    BaseURL: "base_url",
+                },
+            },
+        },
+    }
+client.Flows.PostFlowsVaultConnections(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*management.CreateFlowsVaultConnectionRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.GetFlowsVaultConnectionsByID(ID) -> *management.GetFlowsVaultConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Flows.GetFlowsVaultConnectionsByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Flows Vault connection ID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.DeleteFlowsVaultConnectionsByID(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Flows.DeleteFlowsVaultConnectionsByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Vault connection id
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.PatchFlowsVaultConnectionsByID(ID, request) -> *management.UpdateFlowsVaultConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateFlowsVaultConnectionRequestContent{}
+client.Flows.PatchFlowsVaultConnectionsByID(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Flows Vault connection ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — Flows Vault Connection name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**setup:** `*management.UpdateFlowsVaultConnectionSetup` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.GetFlowsExecutions(FlowID) -> *management.GetFlowsExecutionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetFlowsExecutionsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Flows.GetFlowsExecutions(
+        context.TODO(),
+        "flow_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**flowID:** `string` — Flow id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.GetFlowsExecutionsByExecutionID(FlowID, ExecutionID) -> *management.GetFlowExecutionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetFlowsExecutionsByExecutionIDRequest{
+        Hydrate: []*management.GetFlowExecutionRequestParametersHydrateEnum{
+            management.GetFlowExecutionRequestParametersHydrateEnumDebug.Ptr(),
+        },
+    }
+client.Flows.GetFlowsExecutionsByExecutionID(
+        context.TODO(),
+        "flow_id",
+        "execution_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**flowID:** `string` — Flow id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**executionID:** `string` — Flow execution id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hydrate:** `*management.GetFlowExecutionRequestParametersHydrateEnum` — Hydration param
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.DeleteFlowsExecutionsByExecutionID(FlowID, ExecutionID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Flows.DeleteFlowsExecutionsByExecutionID(
+        context.TODO(),
+        "flow_id",
+        "execution_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**flowID:** `string` — Flows id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**executionID:** `string` — Flow execution identifier
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Flows.GetFlowsByID(ID) -> *management.GetFlowResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetFlowsByIDRequest{
         Hydrate: []*management.GetFlowRequestParametersHydrateEnum{
             management.GetFlowRequestParametersHydrateEnumFormCount.Ptr(),
         },
     }
-client.Flows.Get(
+client.Flows.GetFlowsByID(
         context.TODO(),
         "id",
         request,
@@ -6436,7 +13733,7 @@ client.Flows.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Flows.DeleteFlowsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -6449,7 +13746,7 @@ client.Flows.Get(
 <dd>
 
 ```go
-client.Flows.Delete(
+client.Flows.DeleteFlowsByID(
         context.TODO(),
         "id",
     )
@@ -6480,7 +13777,7 @@ client.Flows.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Flows.Update(ID, request) -> *management.UpdateFlowResponseContent</code></summary>
+<details><summary><code>client.Flows.PatchFlowsByID(ID, request) -> *management.UpdateFlowResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6494,7 +13791,7 @@ client.Flows.Delete(
 
 ```go
 request := &management.UpdateFlowRequestContent{}
-client.Flows.Update(
+client.Flows.PatchFlowsByID(
         context.TODO(),
         "id",
         request,
@@ -6543,7 +13840,7 @@ client.Flows.Update(
 </details>
 
 ## Forms
-<details><summary><code>client.Forms.List() -> *management.ListFormsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Forms.GetForms() -> *management.ListFormsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6556,7 +13853,7 @@ client.Flows.Update(
 <dd>
 
 ```go
-request := &management.ListFormsRequestParameters{
+request := &management.GetFormsRequest{
         Page: management.Int(
             1,
         ),
@@ -6570,7 +13867,7 @@ request := &management.ListFormsRequestParameters{
             management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
         },
     }
-client.Forms.List(
+client.Forms.GetForms(
         context.TODO(),
         request,
     )
@@ -6625,7 +13922,7 @@ client.Forms.List(
 </dl>
 </details>
 
-<details><summary><code>client.Forms.Create(request) -> *management.CreateFormResponseContent</code></summary>
+<details><summary><code>client.Forms.CreateForm(request) -> *management.CreateFormResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6641,7 +13938,7 @@ client.Forms.List(
 request := &management.CreateFormRequestContent{
         Name: "name",
     }
-client.Forms.Create(
+client.Forms.CreateForm(
         context.TODO(),
         request,
     )
@@ -6728,7 +14025,7 @@ client.Forms.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Forms.Get(ID) -> *management.GetFormResponseContent</code></summary>
+<details><summary><code>client.Forms.GetForm(ID) -> *management.GetFormResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6741,12 +14038,12 @@ client.Forms.Create(
 <dd>
 
 ```go
-request := &management.GetFormRequestParameters{
+request := &management.GetFormRequest{
         Hydrate: []*management.FormsRequestParametersHydrateEnum{
             management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
         },
     }
-client.Forms.Get(
+client.Forms.GetForm(
         context.TODO(),
         "id",
         request,
@@ -6786,7 +14083,7 @@ client.Forms.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Forms.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Forms.DeleteForm(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -6799,7 +14096,7 @@ client.Forms.Get(
 <dd>
 
 ```go
-client.Forms.Delete(
+client.Forms.DeleteForm(
         context.TODO(),
         "id",
     )
@@ -6830,7 +14127,7 @@ client.Forms.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Forms.Update(ID, request) -> *management.UpdateFormResponseContent</code></summary>
+<details><summary><code>client.Forms.PatchForm(ID, request) -> *management.UpdateFormResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6844,7 +14141,7 @@ client.Forms.Delete(
 
 ```go
 request := &management.UpdateFormRequestContent{}
-client.Forms.Update(
+client.Forms.PatchForm(
         context.TODO(),
         "id",
         request,
@@ -6940,8 +14237,8 @@ client.Forms.Update(
 </dl>
 </details>
 
-## UserGrants
-<details><summary><code>client.UserGrants.List() -> *management.ListUserGrantsOffsetPaginatedResponseContent</code></summary>
+## Grants
+<details><summary><code>client.Grants.GetGrants() -> *management.ListUserGrantsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -6968,7 +14265,7 @@ Retrieve the [grants](https://auth0.com/docs/api-auth/which-oauth-flow-to-use) a
 <dd>
 
 ```go
-request := &management.ListUserGrantsRequestParameters{
+request := &management.GetGrantsRequest{
         PerPage: management.Int(
             1,
         ),
@@ -6988,7 +14285,7 @@ request := &management.ListUserGrantsRequestParameters{
             "audience",
         ),
     }
-client.UserGrants.List(
+client.Grants.GetGrants(
         context.TODO(),
         request,
     )
@@ -7059,7 +14356,7 @@ client.UserGrants.List(
 </dl>
 </details>
 
-<details><summary><code>client.UserGrants.DeleteByUserID() -> error</code></summary>
+<details><summary><code>client.Grants.DeleteGrantsByUserID() -> error</code></summary>
 <dl>
 <dd>
 
@@ -7086,10 +14383,10 @@ Delete a grant associated with your account.
 <dd>
 
 ```go
-request := &management.DeleteUserGrantByUserIDRequestParameters{
+request := &management.DeleteGrantsByUserIDRequest{
         UserID: "user_id",
     }
-client.UserGrants.DeleteByUserID(
+client.Grants.DeleteGrantsByUserID(
         context.TODO(),
         request,
     )
@@ -7120,7 +14417,7 @@ client.UserGrants.DeleteByUserID(
 </dl>
 </details>
 
-<details><summary><code>client.UserGrants.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Grants.DeleteGrantsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -7147,7 +14444,7 @@ Delete a grant associated with your account.
 <dd>
 
 ```go
-client.UserGrants.Delete(
+client.Grants.DeleteGrantsByID(
         context.TODO(),
         "id",
     )
@@ -7179,7 +14476,7 @@ client.UserGrants.Delete(
 </details>
 
 ## Groups
-<details><summary><code>client.Groups.List() -> *management.ListGroupsPaginatedResponseContent</code></summary>
+<details><summary><code>client.Groups.GetGroups() -> *management.ListGroupsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7206,7 +14503,7 @@ List all groups in your tenant.
 <dd>
 
 ```go
-request := &management.ListGroupsRequestParameters{
+request := &management.GetGroupsRequest{
         ConnectionID: management.String(
             "connection_id",
         ),
@@ -7225,6 +14522,12 @@ request := &management.ListGroupsRequestParameters{
         IncludeFields: management.Bool(
             true,
         ),
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
         IncludeTotals: management.Bool(
             true,
         ),
@@ -7235,7 +14538,7 @@ request := &management.ListGroupsRequestParameters{
             1,
         ),
     }
-client.Groups.List(
+client.Groups.GetGroups(
         context.TODO(),
         request,
     )
@@ -7302,6 +14605,22 @@ client.Groups.List(
 <dl>
 <dd>
 
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
@@ -7330,7 +14649,7 @@ client.Groups.List(
 </dl>
 </details>
 
-<details><summary><code>client.Groups.Get(ID) -> *management.GetGroupResponseContent</code></summary>
+<details><summary><code>client.Groups.GetGroup(ID) -> *management.GetGroupResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7357,7 +14676,7 @@ Retrieve a group by its ID.
 <dd>
 
 ```go
-client.Groups.Get(
+client.Groups.GetGroup(
         context.TODO(),
         "id",
     )
@@ -7388,7 +14707,7 @@ client.Groups.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Groups.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Groups.DeleteGroup(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -7415,7 +14734,7 @@ Delete a group by its ID.
 <dd>
 
 ```go
-client.Groups.Delete(
+client.Groups.DeleteGroup(
         context.TODO(),
         "id",
     )
@@ -7446,8 +14765,2511 @@ client.Groups.Delete(
 </dl>
 </details>
 
+<details><summary><code>client.Groups.GetGroupMembers(ID) -> *management.GetGroupMembersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all users that are a member of this group.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetGroupMembersRequest{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Groups.GetGroupMembers(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the group (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Groups.GetGroupRoles(ID) -> *management.ListGroupRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the [roles](https://auth0.com/docs/manage-users/access-control/rbac) assigned to a group.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetGroupRolesRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Groups.GetGroupRoles(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the group (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Groups.PostGroupRoles(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign one or more [roles](https://auth0.com/docs/manage-users/access-control/rbac) to a specified group.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AssignGroupRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Groups.PostGroupRoles(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the group (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — Array of role IDs to assign to the group.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Groups.DeleteGroupRoles(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Unassign one or more [roles](https://auth0.com/docs/manage-users/access-control/rbac) from a specified group.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteGroupRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Groups.DeleteGroupRoles(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the group (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — Array of role IDs to remove from the group.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Guardian
+<details><summary><code>client.Guardian.PostTicket(request) -> *management.CreateGuardianEnrollmentTicketResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a [multi-factor authentication (MFA) enrollment ticket](https://auth0.com/docs/secure/multi-factor-authentication/auth0-guardian/create-custom-enrollment-tickets), and optionally send an email with the created ticket to a given user. Enrollment tickets can specify which factor users must enroll with or allow existing MFA users to enroll in additional factors.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateGuardianEnrollmentTicketRequestContent{
+        UserID: "user_id",
+    }
+client.Guardian.PostTicket(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**auth0CustomDomain:** `*string` — Custom domain to be used for this request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — user_id for the enrollment ticket
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `*string` — alternate email to which the enrollment email will be sent. Optional - by default, the email will be sent to the user's default address
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sendMail:** `*bool` — Send an email to the user to start the enrollment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**emailLocale:** `*string` — Optional. Specify the locale of the enrollment email. Used with send_email.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**factor:** `*management.GuardianEnrollmentFactorEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowMultipleEnrollments:** `*bool` — Optional. Allows a user who has previously enrolled in MFA to enroll with additional factors.<br />Note: Parameter can only be used with Universal Login; it cannot be used with Classic Login or custom MFA pages.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetEnrollmentsByID(ID) -> *management.GetGuardianEnrollmentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details, such as status and type, for a specific multi-factor authentication enrollment registered to a user account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetEnrollmentsByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the enrollment to be retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.DeleteEnrollmentsByID(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a specific multi-factor authentication (MFA) enrollment from a user's account. This allows the user to re-enroll with MFA. For more information, review [Reset User Multi-Factor Authentication and Recovery Codes](https://auth0.com/docs/secure/multi-factor-authentication/reset-user-mfa).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.DeleteEnrollmentsByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the enrollment to be deleted.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetFactors() -> []*management.GuardianFactor</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of all <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors">multi-factor authentication factors</a> associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetFactors(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetFactorDuoSettings() -> *management.GetGuardianFactorDuoSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves the DUO account and factor configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetFactorDuoSettings(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutFactorDuoSettings(request) -> *management.SetGuardianFactorDuoSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set the DUO account configuration and other properties specific to this factor.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorDuoSettingsRequestContent{}
+client.Guardian.PutFactorDuoSettings(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ikey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**skey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PatchFactorDuoSettings(request) -> *management.UpdateGuardianFactorDuoSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorDuoSettingsRequestContent{}
+client.Guardian.PatchFactorDuoSettings(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ikey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**skey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**host:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetMessageTypes() -> *management.GetGuardianFactorPhoneMessageTypesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve list of <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">phone-type MFA factors</a> (i.e., sms and voice) that are enabled for your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetMessageTypes(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutMessageTypes(request) -> *management.SetGuardianFactorPhoneMessageTypesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replace the list of <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">phone-type MFA factors</a> (i.e., sms and voice) that are enabled for your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorPhoneMessageTypesRequestContent{
+        MessageTypes: []management.GuardianFactorPhoneFactorMessageTypeEnum{
+            management.GuardianFactorPhoneFactorMessageTypeEnumSms,
+        },
+    }
+client.Guardian.PutMessageTypes(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**messageTypes:** `[]*management.GuardianFactorPhoneFactorMessageTypeEnum` — The list of phone factors to enable on the tenant. Can include `sms` and `voice`.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetPhoneTwilioFactorProvider() -> *management.GetGuardianFactorsProviderPhoneTwilioResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve configuration details for a Twilio phone provider that has been set up in your tenant. To learn more, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">Configure SMS and Voice Notifications for MFA</a>. 
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetPhoneTwilioFactorProvider(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutTwilio(request) -> *management.SetGuardianFactorsProviderPhoneTwilioResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the configuration of a Twilio phone provider that has been set up in your tenant. To learn more, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">Configure SMS and Voice Notifications for MFA</a>. 
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorsProviderPhoneTwilioRequestContent{}
+client.Guardian.PutTwilio(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — From number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**messagingServiceSid:** `*string` — Copilot SID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authToken:** `*string` — Twilio Authentication token
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sid:** `*string` — Twilio SID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetGuardianPhoneProviders() -> *management.GetGuardianFactorsProviderPhoneResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of the multi-factor authentication phone provider configured for your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetGuardianPhoneProviders(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutPhoneProviders(request) -> *management.SetGuardianFactorsProviderPhoneResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorsProviderPhoneRequestContent{
+        Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
+    }
+client.Guardian.PutPhoneProviders(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**provider:** `*management.GuardianFactorsProviderSmsProviderEnum` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetFactorPhoneTemplates() -> *management.GetGuardianFactorPhoneTemplatesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of the multi-factor authentication enrollment and verification templates for phone-type factors available in your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetFactorPhoneTemplates(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutFactorPhoneTemplates(request) -> *management.SetGuardianFactorPhoneTemplatesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Customize the messages sent to complete phone enrollment and verification (subscription required).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorPhoneTemplatesRequestContent{
+        EnrollmentMessage: "enrollment_message",
+        VerificationMessage: "verification_message",
+    }
+client.Guardian.PutFactorPhoneTemplates(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**enrollmentMessage:** `string` — Message sent to the user when they are invited to enroll with a phone number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verificationMessage:** `string` — Message sent to the user when they are prompted to verify their account.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetApns() -> *management.GetGuardianFactorsProviderApnsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve configuration details for the multi-factor authentication APNS provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetApns(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutApns(request) -> *management.SetGuardianFactorsProviderPushNotificationApnsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Overwrite all configuration details of the multi-factor authentication APNS provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorsProviderPushNotificationApnsRequestContent{}
+client.Guardian.PutApns(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sandbox:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bundleID:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**p12:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PatchApns(request) -> *management.UpdateGuardianFactorsProviderPushNotificationApnsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify configuration details of the multi-factor authentication APNS provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent{}
+client.Guardian.PatchApns(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sandbox:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bundleID:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**p12:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutFcm(request) -> management.SetGuardianFactorsProviderPushNotificationFcmResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Overwrite all configuration details of the multi-factor authentication FCM provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorsProviderPushNotificationFcmRequestContent{}
+client.Guardian.PutFcm(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serverKey:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PatchFcm(request) -> management.UpdateGuardianFactorsProviderPushNotificationFcmResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify configuration details of the multi-factor authentication FCM provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent{}
+client.Guardian.PatchFcm(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serverKey:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutFcmv1(request) -> management.SetGuardianFactorsProviderPushNotificationFcmv1ResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Overwrite all configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
+client.Guardian.PutFcmv1(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serverCredentials:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PatchFcmv1(request) -> management.UpdateGuardianFactorsProviderPushNotificationFcmv1ResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
+client.Guardian.PatchFcmv1(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**serverCredentials:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetSns() -> *management.GetGuardianFactorsProviderSnsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve configuration details for an AWS SNS push notification provider that has been enabled for MFA. To learn more, review [Configure Push Notifications for MFA](https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetSns(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutSns(request) -> *management.SetGuardianFactorsProviderPushNotificationSnsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Configure the [AWS SNS push notification provider configuration](https://auth0.com/docs/multifactor-authentication/developer/sns-configuration) (subscription required).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorsProviderPushNotificationSnsRequestContent{}
+client.Guardian.PutSns(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**awsAccessKeyID:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**awsSecretAccessKey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**awsRegion:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**snsApnsPlatformApplicationArn:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**snsGcmPlatformApplicationArn:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PatchSns(request) -> *management.UpdateGuardianFactorsProviderPushNotificationSnsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Configure the [AWS SNS push notification provider configuration](https://auth0.com/docs/multifactor-authentication/developer/sns-configuration) (subscription required).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent{}
+client.Guardian.PatchSns(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**awsAccessKeyID:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**awsSecretAccessKey:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**awsRegion:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**snsApnsPlatformApplicationArn:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**snsGcmPlatformApplicationArn:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetPnProviders() -> *management.GetGuardianFactorsProviderPushNotificationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify the push notification provider configured for your tenant. For more information, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa">Configure Push Notifications for MFA</a>. 
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetPnProviders(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutPnProviders(request) -> *management.SetGuardianFactorsProviderPushNotificationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify the push notification provider configured for your tenant. For more information, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa">Configure Push Notifications for MFA</a>. 
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorsProviderPushNotificationRequestContent{
+        Provider: management.GuardianFactorsProviderPushNotificationProviderDataEnumGuardian,
+    }
+client.Guardian.PutPnProviders(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**provider:** `*management.GuardianFactorsProviderPushNotificationProviderDataEnum` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetSmsTwilioFactorProvider() -> *management.GetGuardianFactorsProviderSmsTwilioResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the <a href="https://auth0.com/docs/multifactor-authentication/twilio-configuration">Twilio SMS provider configuration</a> (subscription required).
+
+    A new endpoint is available to retrieve the Twilio configuration related to phone factors (<a href='https://auth0.com/docs/api/management/v2/#!/Guardian/get_twilio'>phone Twilio configuration</a>). It has the same payload as this one. Please use it instead.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetSmsTwilioFactorProvider(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutSmsTwilioFactorProvider(request) -> *management.SetGuardianFactorsProviderSmsTwilioResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/put-twilio">Update Twilio phone configuration</a> endpoint.
+
+    <b>Previous functionality</b>: Update the Twilio SMS provider configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorsProviderSmsTwilioRequestContent{}
+client.Guardian.PutSmsTwilioFactorProvider(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — From number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**messagingServiceSid:** `*string` — Copilot SID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authToken:** `*string` — Twilio Authentication token
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sid:** `*string` — Twilio SID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetSmsProviders() -> *management.GetGuardianFactorsProviderSmsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/get-phone-providers">Retrieve phone configuration</a> endpoint instead.
+
+    <b>Previous functionality</b>: Retrieve details for the multi-factor authentication SMS provider configured for your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetSmsProviders(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutSmsProviders(request) -> *management.SetGuardianFactorsProviderSmsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/put-phone-providers">Update phone configuration</a> endpoint instead.
+
+    <b>Previous functionality</b>: Update the multi-factor authentication SMS provider configuration in your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorsProviderSmsRequestContent{
+        Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
+    }
+client.Guardian.PutSmsProviders(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**provider:** `*management.GuardianFactorsProviderSmsProviderEnum` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetFactorSmsTemplates() -> *management.GetGuardianFactorSmsTemplatesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/get-factor-phone-templates">Retrieve enrollment and verification phone templates</a> endpoint instead.
+
+    <b>Previous function</b>: Retrieve details of SMS enrollment and verification templates configured for your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetFactorSmsTemplates(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutFactorSmsTemplates(request) -> *management.SetGuardianFactorSmsTemplatesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/put-factor-phone-templates">Update enrollment and verification phone templates</a> endpoint instead.
+
+    <b>Previous functionality</b>: Customize the messages sent to complete SMS enrollment and verification.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorSmsTemplatesRequestContent{
+        EnrollmentMessage: "enrollment_message",
+        VerificationMessage: "verification_message",
+    }
+client.Guardian.PutFactorSmsTemplates(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**enrollmentMessage:** `string` — Message sent to the user when they are invited to enroll with a phone number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verificationMessage:** `string` — Message sent to the user when they are prompted to verify their account.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutFactorsByName(Name, request) -> *management.SetGuardianFactorResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the status (i.e., enabled or disabled) of a specific multi-factor authentication factor.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetGuardianFactorRequestContent{
+        Enabled: true,
+    }
+client.Guardian.PutFactorsByName(
+        context.TODO(),
+        management.GuardianFactorNameEnumPushNotification.Ptr(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `*management.GuardianFactorNameEnum` — Factor name. Can be `sms`, `push-notification`, `email`, `duo` `otp` `webauthn-roaming`, `webauthn-platform`, or `recovery-code`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabled:** `bool` — Whether this factor is enabled (true) or disabled (false).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.GetPolicies() -> management.ListGuardianPoliciesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the [multi-factor authentication (MFA) policies](https://auth0.com/docs/secure/multi-factor-authentication/enable-mfa) configured for your tenant.
+
+The following policies are supported:
+
+- `all-applications` policy prompts with MFA for all logins.
+- `confidence-score` policy prompts with MFA only for low confidence logins.
+
+**Note**: The `confidence-score` policy is part of the [Adaptive MFA feature](https://auth0.com/docs/secure/multi-factor-authentication/adaptive-mfa). Adaptive MFA requires an add-on for the Enterprise plan; review [Auth0 Pricing](https://auth0.com/pricing) for more details.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Guardian.GetPolicies(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Guardian.PutPolicies(request) -> management.SetGuardianPoliciesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set [multi-factor authentication (MFA) policies](https://auth0.com/docs/secure/multi-factor-authentication/enable-mfa) for your tenant.
+
+The following policies are supported:
+
+- `all-applications` policy prompts with MFA for all logins.
+- `confidence-score` policy prompts with MFA only for low confidence logins.
+
+**Note**: The `confidence-score` policy is part of the [Adaptive MFA feature](https://auth0.com/docs/secure/multi-factor-authentication/adaptive-mfa). Adaptive MFA requires an add-on for the Enterprise plan; review [Auth0 Pricing](https://auth0.com/pricing) for more details.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := []management.MfaPolicyEnum{
+        management.MfaPolicyEnumAllApplications,
+    }
+client.Guardian.PutPolicies(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `management.SetGuardianPoliciesRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Hooks
-<details><summary><code>client.Hooks.List() -> *management.ListHooksOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Hooks.GetHooks() -> *management.ListHooksResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7474,7 +17296,7 @@ Retrieve all [hooks](https://auth0.com/docs/hooks). Accepts a list of fields to 
 <dd>
 
 ```go
-request := &management.ListHooksRequestParameters{
+request := &management.GetHooksRequest{
         Page: management.Int(
             1,
         ),
@@ -7492,7 +17314,7 @@ request := &management.ListHooksRequestParameters{
         ),
         TriggerID: management.HookTriggerIDEnumCredentialsExchange.Ptr(),
     }
-client.Hooks.List(
+client.Hooks.GetHooks(
         context.TODO(),
         request,
     )
@@ -7563,7 +17385,7 @@ client.Hooks.List(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Create(request) -> *management.CreateHookResponseContent</code></summary>
+<details><summary><code>client.Hooks.PostHooks(request) -> *management.CreateHookResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7595,7 +17417,7 @@ request := &management.CreateHookRequestContent{
         Script: "script",
         TriggerID: management.HookTriggerIDEnumCredentialsExchange,
     }
-client.Hooks.Create(
+client.Hooks.PostHooks(
         context.TODO(),
         request,
     )
@@ -7658,7 +17480,7 @@ client.Hooks.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Get(ID) -> *management.GetHookResponseContent</code></summary>
+<details><summary><code>client.Hooks.GetHooksByID(ID) -> *management.GetHookResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7685,12 +17507,12 @@ Retrieve [a hook](https://auth0.com/docs/hooks) by its ID. Accepts a list of fie
 <dd>
 
 ```go
-request := &management.GetHookRequestParameters{
+request := &management.GetHooksByIDRequest{
         Fields: management.String(
             "fields",
         ),
     }
-client.Hooks.Get(
+client.Hooks.GetHooksByID(
         context.TODO(),
         "id",
         request,
@@ -7730,7 +17552,7 @@ client.Hooks.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Hooks.DeleteHooksByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -7757,7 +17579,7 @@ Delete a hook.
 <dd>
 
 ```go
-client.Hooks.Delete(
+client.Hooks.DeleteHooksByID(
         context.TODO(),
         "id",
     )
@@ -7788,7 +17610,7 @@ client.Hooks.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Hooks.Update(ID, request) -> *management.UpdateHookResponseContent</code></summary>
+<details><summary><code>client.Hooks.PatchHooksByID(ID, request) -> *management.UpdateHookResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7816,7 +17638,7 @@ Update an existing hook.
 
 ```go
 request := &management.UpdateHookRequestContent{}
-client.Hooks.Update(
+client.Hooks.PatchHooksByID(
         context.TODO(),
         "id",
         request,
@@ -7880,8 +17702,503 @@ client.Hooks.Update(
 </dl>
 </details>
 
+<details><summary><code>client.Hooks.GetSecrets(ID) -> management.GetHookSecretResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a hook's secrets by the ID of the hook.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Hooks.GetSecrets(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the hook to retrieve secrets from.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hooks.PostSecrets(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add one or more secrets to an existing hook. Accepts an object of key-value pairs, where the key is the name of the secret. A hook can have a maximum of 20 secrets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[string]string{
+        "key": "value",
+    }
+client.Hooks.PostSecrets(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The id of the hook to retrieve
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `management.CreateHookSecretRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hooks.DeleteSecrets(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete one or more existing secrets for a given hook. Accepts an array of secret names to delete.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := []string{
+        "string",
+    }
+client.Hooks.DeleteSecrets(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the hook whose secrets to delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `management.DeleteHookSecretRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Hooks.PatchSecrets(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update one or more existing secrets for an existing hook. Accepts an object of key-value pairs, where the key is the name of the existing secret.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[string]string{
+        "key": "value",
+    }
+client.Hooks.PatchSecrets(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the hook whose secrets to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `management.UpdateHookSecretRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Jobs
-<details><summary><code>client.Jobs.Get(ID) -> *management.GetJobResponseContent</code></summary>
+<details><summary><code>client.Jobs.PostUsersExports(request) -> *management.CreateExportUsersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Export all users to a file via a long-running job.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateExportUsersRequestContent{}
+client.Jobs.PostUsersExports(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**connectionID:** `*string` — connection_id of the connection from which users will be exported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**format:** `*management.JobFileFormatEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `*int` — Limit the number of records.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `[]*management.CreateExportUsersFields` — List of fields to be included in the CSV. Defaults to a predefined set of fields.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Jobs.PostUsersImports(request) -> *management.CreateImportUsersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Import users from a <a href="https://auth0.com/docs/users/references/bulk-import-database-schema-examples">formatted file</a> into a connection via a long-running job. When importing users, with or without upsert, the `email_verified` is set to `false` when the email address is added or updated. Users must verify their email address. To avoid this behavior, set `email_verified` to `true` in the imported data.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateImportUsersRequestContent{
+        Users: strings.NewReader(
+            "",
+        ),
+        ConnectionID: "connection_id",
+    }
+client.Jobs.PostUsersImports(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Jobs.PostVerificationEmail(request) -> *management.CreateVerificationEmailResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Send an email to the specified user that asks them to click a link to [verify their email address](https://auth0.com/docs/email/custom#verification-email).
+
+Note: You must have the `Status` toggle enabled for the verification email template for the email to be sent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateVerificationEmailRequestContent{
+        UserID: "user_id",
+    }
+client.Jobs.PostVerificationEmail(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**auth0CustomDomain:** `*string` — Custom domain to be used for this request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — user_id of the user to send the verification email to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `*string` — client_id of the client (application). If no value provided, the global Client ID will be used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identity:** `*management.Identity` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationID:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Jobs.GetJobsByID(ID) -> *management.GetJobResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -7908,7 +18225,7 @@ Retrieves a job. Useful to check its status.
 <dd>
 
 ```go
-client.Jobs.Get(
+client.Jobs.GetJobsByID(
         context.TODO(),
         "id",
     )
@@ -7939,8 +18256,1085 @@ client.Jobs.Get(
 </dl>
 </details>
 
+<details><summary><code>client.Jobs.GetErrors(ID) -> *management.GetErrorsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve error details of a failed job.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Jobs.GetErrors(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the job.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Keys
+<details><summary><code>client.Keys.GetCustomSigningKeys() -> *management.GetCustomSigningKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get entire jwks representation of custom signing keys.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.GetCustomSigningKeys(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.PutCustomSigningKeys(request) -> *management.SetCustomSigningKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or replace entire jwks representation of custom signing keys.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SetCustomSigningKeysRequestContent{
+        Keys: []*management.CustomSigningKeyJwk{
+            &management.CustomSigningKeyJwk{
+                Kty: management.CustomSigningKeyTypeEnumEc,
+            },
+        },
+    }
+client.Keys.PutCustomSigningKeys(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**keys:** `[]*management.CustomSigningKeyJwk` — An array of custom public signing keys.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.DeleteCustomSigningKeys() -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete entire jwks representation of custom signing keys.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.DeleteCustomSigningKeys(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.GetEncryptionKeys() -> *management.ListEncryptionKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of all the encryption keys associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetEncryptionKeysRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
+client.Keys.GetEncryptionKeys(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Default value is 50, maximum value is 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.PostEncryption(request) -> *management.CreateEncryptionKeyResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create the new, pre-activated encryption key, without the key material.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateEncryptionKeyRequestContent{
+        Type: management.CreateEncryptionKeyTypeCustomerProvidedRootKey,
+    }
+client.Keys.PostEncryption(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**type_:** `*management.CreateEncryptionKeyType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.PostEncryptionRekey() -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Perform rekeying operation on the key hierarchy.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.PostEncryptionRekey(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.GetEncryptionKey(Kid) -> *management.GetEncryptionKeyResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of the encryption key with the given ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.GetEncryptionKey(
+        context.TODO(),
+        "kid",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**kid:** `string` — Encryption key ID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.PostEncryptionKey(Kid, request) -> *management.ImportEncryptionKeyResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Import wrapped key material and activate encryption key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ImportEncryptionKeyRequestContent{
+        WrappedKey: "wrapped_key",
+    }
+client.Keys.PostEncryptionKey(
+        context.TODO(),
+        "kid",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**kid:** `string` — Encryption key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**wrappedKey:** `string` — Base64 encoded ciphertext of key material wrapped by public wrapping key.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.DeleteEncryptionKey(Kid) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete the custom provided encryption key with the given ID and move back to using native encryption key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.DeleteEncryptionKey(
+        context.TODO(),
+        "kid",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**kid:** `string` — Encryption key ID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.PostEncryptionWrappingKey(Kid) -> *management.CreateEncryptionKeyPublicWrappingResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create the public wrapping key to wrap your own encryption key material.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.PostEncryptionWrappingKey(
+        context.TODO(),
+        "kid",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**kid:** `string` — Encryption key ID
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.GetAllKeysNetworkACLs() -> *management.GetAllKeysNetworkACLsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all keys used to verify HTTP Message Signatures on Network ACL rules, ordered by creation time descending.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.GetAllKeysNetworkACLs(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.CreateKeysNetworkACLs(request) -> *management.CreateKeysNetworkACLsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new key used to verify HTTP Message Signatures on Network ACL rules.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateKeysNetworkACLsRequestContent{
+        Name: "name",
+        Alg: management.NetworkACLKeyAlgorithmEnumHmacSha256,
+        Value: "value",
+    }
+client.Keys.CreateKeysNetworkACLs(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — Customer-supplied label with no cryptographic meaning. Must be unique across all Network ACL keys for the tenant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alg:** `*management.NetworkACLKeyAlgorithmEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**value:** `string` — Base64-encoded raw key material. Constraints on the decoded value depend on the algorithm specified. Currently only HMAC-SHA256 is supported.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.GetKeysNetworkACLs(ID) -> *management.NetworkACLKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific key used to verify HTTP Message Signatures on Network ACL rules.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.GetKeysNetworkACLs(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the Network ACL Key to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.DeleteKeysNetworkACLs(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a key used to verify HTTP Message Signatures on Network ACL rules
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.DeleteKeysNetworkACLs(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the Network ACL Key to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.GetSigningKeys() -> []*management.SigningKeys</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of all the application signing keys associated with your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.GetSigningKeys(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.PostSigningKeys() -> *management.RotateSigningKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rotate the application signing key of your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.PostSigningKeys(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.GetSigningKey(Kid) -> *management.GetSigningKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of the application signing key with the given ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.GetSigningKey(
+        context.TODO(),
+        "kid",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**kid:** `string` — Key id of the key to retrieve
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Keys.PutSigningKeys(Kid) -> *management.RevokedSigningKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Revoke the application signing key with the given ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Keys.PutSigningKeys(
+        context.TODO(),
+        "kid",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**kid:** `string` — Key id of the key to revoke
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## LogStreams
-<details><summary><code>client.LogStreams.List() -> []*management.LogStreamResponseSchema</code></summary>
+<details><summary><code>client.LogStreams.GetLogStreams() -> []*management.LogStreamResponseSchema</code></summary>
 <dl>
 <dd>
 
@@ -8037,7 +19431,7 @@ Retrieve details on [log streams](https://auth0.com/docs/logs/streams).
 <dd>
 
 ```go
-client.LogStreams.List(
+client.LogStreams.GetLogStreams(
         context.TODO(),
     )
 }
@@ -8052,7 +19446,7 @@ client.LogStreams.List(
 </dl>
 </details>
 
-<details><summary><code>client.LogStreams.Create(request) -> *management.CreateLogStreamResponseContent</code></summary>
+<details><summary><code>client.LogStreams.PostLogStreams(request) -> *management.CreateLogStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -8283,7 +19677,7 @@ request := &management.CreateLogStreamRequestContent{
             },
         },
     }
-client.LogStreams.Create(
+client.LogStreams.PostLogStreams(
         context.TODO(),
         request,
     )
@@ -8314,7 +19708,7 @@ client.LogStreams.Create(
 </dl>
 </details>
 
-<details><summary><code>client.LogStreams.Get(ID) -> *management.GetLogStreamResponseContent</code></summary>
+<details><summary><code>client.LogStreams.GetLogStreamsByID(ID) -> *management.GetLogStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -8492,7 +19886,7 @@ The `status` of a log stream maybe any of the following:
 <dd>
 
 ```go
-client.LogStreams.Get(
+client.LogStreams.GetLogStreamsByID(
         context.TODO(),
         "id",
     )
@@ -8523,7 +19917,7 @@ client.LogStreams.Get(
 </dl>
 </details>
 
-<details><summary><code>client.LogStreams.Delete(ID) -> error</code></summary>
+<details><summary><code>client.LogStreams.DeleteLogStreamsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -8550,7 +19944,7 @@ Delete a log stream.
 <dd>
 
 ```go
-client.LogStreams.Delete(
+client.LogStreams.DeleteLogStreamsByID(
         context.TODO(),
         "id",
     )
@@ -8581,7 +19975,7 @@ client.LogStreams.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.LogStreams.Update(ID, request) -> *management.UpdateLogStreamResponseContent</code></summary>
+<details><summary><code>client.LogStreams.PatchLogStreamsByID(ID, request) -> *management.UpdateLogStreamResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -8682,7 +20076,7 @@ Note: For log streams of type `eventbridge` and `eventgrid`, updating the `sink`
 
 ```go
 request := &management.UpdateLogStreamRequestContent{}
-client.LogStreams.Update(
+client.LogStreams.PatchLogStreamsByID(
         context.TODO(),
         "id",
         request,
@@ -8763,7 +20157,7 @@ client.LogStreams.Update(
 </details>
 
 ## Logs
-<details><summary><code>client.Logs.List() -> *management.ListLogOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Logs.GetLogs() -> *management.ListLogResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -8815,7 +20209,7 @@ Auth0 [limits the number of logs](https://auth0.com/docs/logs/retrieve-log-event
 <dd>
 
 ```go
-request := &management.ListLogsRequestParameters{
+request := &management.GetLogsRequest{
         Page: management.Int(
             1,
         ),
@@ -8834,11 +20228,17 @@ request := &management.ListLogsRequestParameters{
         IncludeTotals: management.Bool(
             true,
         ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
         Search: management.String(
             "search",
         ),
     }
-client.Logs.List(
+client.Logs.GetLogs(
         context.TODO(),
         request,
     )
@@ -8905,6 +20305,22 @@ client.Logs.List(
 <dl>
 <dd>
 
+**from:** `*string` — Log Event Id from which to start selection from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of entries to retrieve when using the <code>from</code> parameter. Default <code>50</code>, max <code>100</code>
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **search:** `*string` 
 
 Retrieves logs that match the specified search criteria. This parameter can be combined with all the others in the /api/logs endpoint but is specified separately for clarity.
@@ -8921,7 +20337,7 @@ Values specified without quotes are matched using a case insensitive 'starts wit
 </dl>
 </details>
 
-<details><summary><code>client.Logs.Get(ID) -> *management.GetLogResponseContent</code></summary>
+<details><summary><code>client.Logs.GetLogsByID(ID) -> *management.GetLogResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -8948,7 +20364,7 @@ Retrieve an individual log event.
 <dd>
 
 ```go
-client.Logs.Get(
+client.Logs.GetLogsByID(
         context.TODO(),
         "id",
     )
@@ -8980,7 +20396,7 @@ client.Logs.Get(
 </details>
 
 ## NetworkACLs
-<details><summary><code>client.NetworkACLs.List() -> *management.ListNetworkACLsOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.NetworkACLs.GetNetworkACLs() -> *management.ListNetworkACLsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9007,7 +20423,7 @@ Get all access control list entries for your client.
 <dd>
 
 ```go
-request := &management.ListNetworkACLsRequestParameters{
+request := &management.GetNetworkACLsRequest{
         Page: management.Int(
             1,
         ),
@@ -9018,7 +20434,7 @@ request := &management.ListNetworkACLsRequestParameters{
             true,
         ),
     }
-client.NetworkACLs.List(
+client.NetworkACLs.GetNetworkACLs(
         context.TODO(),
         request,
     )
@@ -9065,7 +20481,7 @@ client.NetworkACLs.List(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkACLs.Create(request) -> error</code></summary>
+<details><summary><code>client.NetworkACLs.PostNetworkACLs(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -9100,7 +20516,7 @@ request := &management.CreateNetworkACLRequestContent{
             Scope: management.NetworkACLRuleScopeEnumManagement,
         },
     }
-client.NetworkACLs.Create(
+client.NetworkACLs.PostNetworkACLs(
         context.TODO(),
         request,
     )
@@ -9155,7 +20571,7 @@ client.NetworkACLs.Create(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkACLs.Get(ID) -> *management.GetNetworkACLsResponseContent</code></summary>
+<details><summary><code>client.NetworkACLs.GetNetworkACLsByID(ID) -> *management.GetNetworkACLsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9182,7 +20598,7 @@ Get a specific access control list entry for your client.
 <dd>
 
 ```go
-client.NetworkACLs.Get(
+client.NetworkACLs.GetNetworkACLsByID(
         context.TODO(),
         "id",
     )
@@ -9213,7 +20629,7 @@ client.NetworkACLs.Get(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkACLs.Set(ID, request) -> *management.SetNetworkACLsResponseContent</code></summary>
+<details><summary><code>client.NetworkACLs.PutNetworkACLsByID(ID, request) -> *management.SetNetworkACLsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9248,7 +20664,7 @@ request := &management.SetNetworkACLRequestContent{
             Scope: management.NetworkACLRuleScopeEnumManagement,
         },
     }
-client.NetworkACLs.Set(
+client.NetworkACLs.PutNetworkACLsByID(
         context.TODO(),
         "id",
         request,
@@ -9312,7 +20728,7 @@ client.NetworkACLs.Set(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkACLs.Delete(ID) -> error</code></summary>
+<details><summary><code>client.NetworkACLs.DeleteNetworkACLsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -9339,7 +20755,7 @@ Delete existing access control list for your client.
 <dd>
 
 ```go
-client.NetworkACLs.Delete(
+client.NetworkACLs.DeleteNetworkACLsByID(
         context.TODO(),
         "id",
     )
@@ -9370,7 +20786,7 @@ client.NetworkACLs.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.NetworkACLs.Update(ID, request) -> *management.UpdateNetworkACLResponseContent</code></summary>
+<details><summary><code>client.NetworkACLs.PatchNetworkACLsByID(ID, request) -> *management.UpdateNetworkACLResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9398,7 +20814,7 @@ Update existing access control list for your client.
 
 ```go
 request := &management.UpdateNetworkACLRequestContent{}
-client.NetworkACLs.Update(
+client.NetworkACLs.PatchNetworkACLsByID(
         context.TODO(),
         "id",
         request,
@@ -9463,7 +20879,7 @@ client.NetworkACLs.Update(
 </details>
 
 ## OrganizationTemplates
-<details><summary><code>client.OrganizationTemplates.List() -> *management.ListOrganizationTemplatesPaginatedResponseContent</code></summary>
+<details><summary><code>client.OrganizationTemplates.GetOrganizationTemplates() -> *management.ListOrganizationTemplatesPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9490,7 +20906,7 @@ Retrieve a list of Organization Templates. This endpoint supports Checkpoint pag
 <dd>
 
 ```go
-request := &management.ListOrganizationTemplatesRequestParameters{
+request := &management.GetOrganizationTemplatesRequest{
         From: management.String(
             "from",
         ),
@@ -9498,7 +20914,7 @@ request := &management.ListOrganizationTemplatesRequestParameters{
             1,
         ),
     }
-client.OrganizationTemplates.List(
+client.OrganizationTemplates.GetOrganizationTemplates(
         context.TODO(),
         request,
     )
@@ -9537,7 +20953,7 @@ client.OrganizationTemplates.List(
 </dl>
 </details>
 
-<details><summary><code>client.OrganizationTemplates.Create(request) -> *management.OrganizationTemplate</code></summary>
+<details><summary><code>client.OrganizationTemplates.PostOrganizationTemplates(request) -> *management.OrganizationTemplate</code></summary>
 <dl>
 <dd>
 
@@ -9570,7 +20986,7 @@ request := &management.CreateOrganizationTemplateRequestContent{
         EnforcePermissionCeiling: true,
         EnforceSelfAssignmentRestriction: true,
     }
-client.OrganizationTemplates.Create(
+client.OrganizationTemplates.PostOrganizationTemplates(
         context.TODO(),
         request,
     )
@@ -9697,7 +21113,7 @@ client.OrganizationTemplates.Create(
 </dl>
 </details>
 
-<details><summary><code>client.OrganizationTemplates.Get(ID) -> *management.OrganizationTemplate</code></summary>
+<details><summary><code>client.OrganizationTemplates.GetOrganizationTemplatesByID(ID) -> *management.OrganizationTemplate</code></summary>
 <dl>
 <dd>
 
@@ -9724,7 +21140,7 @@ Retrieve details about a single Organization Template specified by ID.
 <dd>
 
 ```go
-client.OrganizationTemplates.Get(
+client.OrganizationTemplates.GetOrganizationTemplatesByID(
         context.TODO(),
         "id",
     )
@@ -9755,7 +21171,7 @@ client.OrganizationTemplates.Get(
 </dl>
 </details>
 
-<details><summary><code>client.OrganizationTemplates.Update(ID, request) -> *management.OrganizationTemplate</code></summary>
+<details><summary><code>client.OrganizationTemplates.PatchOrganizationTemplatesByID(ID, request) -> *management.OrganizationTemplate</code></summary>
 <dl>
 <dd>
 
@@ -9783,7 +21199,7 @@ Update the details of a specific Organization Template.
 
 ```go
 request := &management.UpdateOrganizationTemplateRequestContent{}
-client.OrganizationTemplates.Update(
+client.OrganizationTemplates.PatchOrganizationTemplatesByID(
         context.TODO(),
         "id",
         request,
@@ -9919,7 +21335,7 @@ client.OrganizationTemplates.Update(
 </dl>
 </details>
 
-<details><summary><code>client.OrganizationTemplates.ListOrganizations(ID) -> *management.ListTemplateOrganizationsPaginatedResponseContent</code></summary>
+<details><summary><code>client.OrganizationTemplates.GetOrganizationTemplatesByIDOrganizations(ID) -> *management.ListTemplateOrganizationsPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -9946,7 +21362,7 @@ Retrieve a list of organizations assigned to an Organization Template. This endp
 <dd>
 
 ```go
-request := &management.ListTemplateOrganizationsRequestParameters{
+request := &management.GetOrganizationTemplatesByIDOrganizationsRequest{
         From: management.String(
             "from",
         ),
@@ -9954,7 +21370,7 @@ request := &management.ListTemplateOrganizationsRequestParameters{
             1,
         ),
     }
-client.OrganizationTemplates.ListOrganizations(
+client.OrganizationTemplates.GetOrganizationTemplatesByIDOrganizations(
         context.TODO(),
         "id",
         request,
@@ -10003,7 +21419,7 @@ client.OrganizationTemplates.ListOrganizations(
 </details>
 
 ## Organizations
-<details><summary><code>client.Organizations.List() -> *management.ListOrganizationsPaginatedResponseContent</code></summary>
+<details><summary><code>client.Organizations.GetOrganizations() -> *management.ListOrganizationsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10046,7 +21462,13 @@ To search by checkpoint, use the following parameters:
 <dd>
 
 ```go
-request := &management.ListOrganizationsRequestParameters{
+request := &management.GetOrganizationsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
         IncludeTotals: management.Bool(
             true,
         ),
@@ -10063,7 +21485,7 @@ request := &management.ListOrganizationsRequestParameters{
             "include_client_association_for",
         ),
     }
-client.Organizations.List(
+client.Organizations.GetOrganizations(
         context.TODO(),
         request,
     )
@@ -10078,6 +21500,22 @@ client.Organizations.List(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -10126,7 +21564,7 @@ client.Organizations.List(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Create(request) -> *management.CreateOrganizationResponseContent</code></summary>
+<details><summary><code>client.Organizations.PostOrganizations(request) -> *management.CreateOrganizationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10156,7 +21594,7 @@ Create a new Organization within your tenant.  To learn more about Organization 
 request := &management.CreateOrganizationRequestContent{
         Name: "name",
     }
-client.Organizations.Create(
+client.Organizations.PostOrganizations(
         context.TODO(),
         request,
     )
@@ -10243,7 +21681,7 @@ client.Organizations.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.GetByName(Name) -> *management.GetOrganizationByNameResponseContent</code></summary>
+<details><summary><code>client.Organizations.GetNameByName(Name) -> *management.GetOrganizationByNameResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10270,7 +21708,7 @@ Retrieve details about a single Organization specified by name.
 <dd>
 
 ```go
-client.Organizations.GetByName(
+client.Organizations.GetNameByName(
         context.TODO(),
         "name",
     )
@@ -10301,7 +21739,7 @@ client.Organizations.GetByName(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Get(ID) -> *management.GetOrganizationResponseContent</code></summary>
+<details><summary><code>client.Organizations.GetOrganizationsByID(ID) -> *management.GetOrganizationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10328,7 +21766,7 @@ Retrieve details about a single Organization specified by ID.
 <dd>
 
 ```go
-client.Organizations.Get(
+client.Organizations.GetOrganizationsByID(
         context.TODO(),
         "id",
     )
@@ -10359,7 +21797,7 @@ client.Organizations.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Organizations.DeleteOrganizationsByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -10388,7 +21826,7 @@ Remove an Organization from your tenant.  This action cannot be undone.
 <dd>
 
 ```go
-client.Organizations.Delete(
+client.Organizations.DeleteOrganizationsByID(
         context.TODO(),
         "id",
     )
@@ -10419,7 +21857,7 @@ client.Organizations.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Update(ID, request) -> *management.UpdateOrganizationResponseContent</code></summary>
+<details><summary><code>client.Organizations.PatchOrganizationsByID(ID, request) -> *management.UpdateOrganizationResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10447,7 +21885,7 @@ Update the details of a specific [Organization](https://auth0.com/docs/manage-us
 
 ```go
 request := &management.UpdateOrganizationRequestContent{}
-client.Organizations.Update(
+client.Organizations.PatchOrganizationsByID(
         context.TODO(),
         "id",
         request,
@@ -10535,8 +21973,3789 @@ client.Organizations.Update(
 </dl>
 </details>
 
+<details><summary><code>client.Organizations.GetOrganizationClientGrants(ID) -> *management.ListOrganizationClientGrantsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationClientGrantsRequest{
+        Audience: management.String(
+            "audience",
+        ),
+        ClientID: management.String(
+            "client_id",
+        ),
+        GrantIDs: []*string{
+            management.String(
+                "grant_ids",
+            ),
+        },
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.GetOrganizationClientGrants(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**audience:** `*string` — Optional filter on audience of the client grant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `*string` — Optional filter on client_id of the client grant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grantIDs:** `*string` — Optional filter on the ID of the client grant. Must be URL encoded and may be specified multiple times (max 10).<br /><b>e.g.</b> <i>../client-grants?grant_ids=id1&grant_ids=id2</i>
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.CreateOrganizationClientGrants(ID, request) -> *management.AssociateOrganizationClientGrantResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AssociateOrganizationClientGrantRequestContent{
+        GrantID: "grant_id",
+    }
+client.Organizations.CreateOrganizationClientGrants(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grantID:** `string` — A Client Grant ID to add to the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteClientGrantsByGrantID(ID, GrantID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DeleteClientGrantsByGrantID(
+        context.TODO(),
+        "id",
+        "grant_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grantID:** `string` — The Client Grant ID to remove from the organization
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationClients(ID) -> *management.ListOrganizationClientsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all clients associated with an organization, using checkpoint pagination.
+<ul>
+  <li>
+    <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+  </li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationClientsRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.GetOrganizationClients(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50. Values greater than the maximum of 100 are capped at 100.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PostOrganizationClients(ID, request) -> management.CreateOrganizationClientsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Associate one or more clients with an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationClientsRequestContent{
+        Clients: []*management.CreateOrganizationClientRequestItem{
+            &management.CreateOrganizationClientRequestItem{
+                ClientID: "client_id",
+                UseForMemberAccess: true,
+            },
+        },
+    }
+client.Organizations.PostOrganizationClients(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clients:** `[]*management.CreateOrganizationClientRequestItem` — List of clients to associate with the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteOrganizationClients(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove one or more client associations from an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteOrganizationClientsRequestContent{
+        Clients: []string{
+            "clients",
+        },
+    }
+client.Organizations.DeleteOrganizationClients(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clients:** `[]string` — List of client IDs to disassociate from the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationClient(ID, ClientID) -> *management.GetOrganizationClientResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific client association for an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.GetOrganizationClient(
+        context.TODO(),
+        "id",
+        "client_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `string` — ID of the client association to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PatchOrganizationClient(ID, ClientID, request) -> *management.UpdateOrganizationClientResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an organization client association.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateOrganizationClientRequestContent{}
+client.Organizations.PatchOrganizationClient(
+        context.TODO(),
+        "id",
+        "client_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `string` — ID of the client association to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForMemberAccess:** `*bool` — Whether this client is used for member access to the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationConnections(ID) -> *management.ListOrganizationAllConnectionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationConnectionsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        IsEnabled: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.GetOrganizationConnections(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isEnabled:** `*bool` — Filter connections by enabled status.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PostOrganizationConnection(ID, request) -> *management.CreateOrganizationAllConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationAllConnectionRequestContent{
+        ConnectionID: "connection_id",
+    }
+client.Organizations.PostOrganizationConnection(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationConnectionName:** `*string` — Name of the connection in the scope of this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationAccessLevel:** `*management.OrganizationAccessLevelEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isEnabled:** `*bool` — Whether the connection is enabled for the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationConnection(ID, ConnectionID) -> *management.GetOrganizationAllConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.GetOrganizationConnection(
+        context.TODO(),
+        "id",
+        "connection_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteOrganizationConnection(ID, ConnectionID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DeleteOrganizationConnection(
+        context.TODO(),
+        "id",
+        "connection_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PatchOrganizationConnection(ID, ConnectionID, request) -> *management.UpdateOrganizationAllConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateOrganizationAllConnectionRequestContent{}
+client.Organizations.PatchOrganizationConnection(
+        context.TODO(),
+        "id",
+        "connection_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationConnectionName:** `*string` — Name of the connection in the scope of this organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationAccessLevel:** `*management.OrganizationAccessLevelEnumWithNull` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isEnabled:** `*bool` — Whether the connection is enabled for the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetDiscoveryDomains(ID) -> *management.ListOrganizationDiscoveryDomainsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve list of all organization discovery domains associated with the specified organization.
+This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetDiscoveryDomainsRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.GetDiscoveryDomains(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PostDiscoveryDomains(ID, request) -> *management.CreateOrganizationDiscoveryDomainResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new discovery domain for an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationDiscoveryDomainRequestContent{
+        Domain: "domain",
+    }
+client.Organizations.PostDiscoveryDomains(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domain:** `string` — The domain name to associate with the organization e.g. acme.com.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.OrganizationDiscoveryDomainStatus` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*bool` — Indicates whether this domain should be used for organization discovery.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetNameByDiscoveryDomain(ID, DiscoveryDomain) -> *management.GetOrganizationDiscoveryDomainByNameResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a single organization discovery domain specified by domain name.
+This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.GetNameByDiscoveryDomain(
+        context.TODO(),
+        "id",
+        "discovery_domain",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**discoveryDomain:** `string` — Domain name of the discovery domain.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetDiscoveryDomainsByDiscoveryDomainID(ID, DiscoveryDomainID) -> *management.GetOrganizationDiscoveryDomainResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a single organization discovery domain specified by ID.
+This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.GetDiscoveryDomainsByDiscoveryDomainID(
+        context.TODO(),
+        "id",
+        "discovery_domain_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**discoveryDomainID:** `string` — ID of the discovery domain.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteDiscoveryDomainsByDiscoveryDomainID(ID, DiscoveryDomainID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a discovery domain from an organization. This action cannot be undone.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DeleteDiscoveryDomainsByDiscoveryDomainID(
+        context.TODO(),
+        "id",
+        "discovery_domain_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**discoveryDomainID:** `string` — ID of the discovery domain.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PatchDiscoveryDomainsByDiscoveryDomainID(ID, DiscoveryDomainID, request) -> *management.UpdateOrganizationDiscoveryDomainResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The `status` field must be either `pending` or `verified`. The `use_for_organization_discovery` field can be `true` or `false` (default: `true`).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateOrganizationDiscoveryDomainRequestContent{}
+client.Organizations.PatchDiscoveryDomainsByDiscoveryDomainID(
+        context.TODO(),
+        "id",
+        "discovery_domain_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**discoveryDomainID:** `string` — ID of the discovery domain to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.OrganizationDiscoveryDomainStatus` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForOrganizationDiscovery:** `*bool` — Indicates whether this domain should be used for organization discovery.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetEnabledConnections(ID) -> *management.ListOrganizationConnectionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a specific connection currently enabled for an Organization. Information returned includes details such as connection ID, name, strategy, and whether the connection automatically grants membership upon login.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetEnabledConnectionsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.GetEnabledConnections(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PostEnabledConnections(ID, request) -> *management.AddOrganizationConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Enable a specific connection for a given Organization. To enable a connection, it must already exist within your tenant; connections cannot be created through this action.
+
+[Connections](https://auth0.com/docs/authenticate/identity-providers) represent the relationship between Auth0 and a source of users. Available types of connections include database, enterprise, and social.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AddOrganizationConnectionRequestContent{
+        ConnectionID: "connection_id",
+    }
+client.Organizations.PostEnabledConnections(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Single connection ID to add to the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetEnabledConnectionsByConnectionID(ID, ConnectionID) -> *management.GetOrganizationConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a specific connection currently enabled for an Organization. Information returned includes details such as connection ID, name, strategy, and whether the connection automatically grants membership upon login.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.GetEnabledConnectionsByConnectionID(
+        context.TODO(),
+        "id",
+        "connectionId",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteEnabledConnectionsByConnectionID(ID, ConnectionID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Disable a specific connection for an Organization. Once disabled, Organization members can no longer use that connection to authenticate. 
+
+**Note**: This action does not remove the connection from your tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DeleteEnabledConnectionsByConnectionID(
+        context.TODO(),
+        "id",
+        "connectionId",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PatchEnabledConnectionsByConnectionID(ID, ConnectionID, request) -> *management.UpdateOrganizationConnectionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Modify the details of a specific connection currently enabled for an Organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateOrganizationConnectionRequestContent{}
+client.Organizations.PatchEnabledConnectionsByConnectionID(
+        context.TODO(),
+        "id",
+        "connectionId",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `string` — Connection identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetInvitations(ID) -> *management.ListOrganizationInvitationsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a detailed list of invitations sent to users for a specific Organization. The list includes details such as inviter and invitee information, invitation URLs, and dates of creation and expiration. To learn more about Organization invitations, review [Invite Organization Members](https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetInvitationsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+    }
+client.Organizations.GetInvitations(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — When true, return results inside an object that also contains the start and limit.  When false (default), a direct array of results is returned.  We do not yet support returning the total invitations count.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `*string` — Field to sort by. Use field:order where order is 1 for ascending and -1 for descending Defaults to created_at:-1.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PostInvitations(ID, request) -> *management.CreateOrganizationInvitationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a user invitation for a specific Organization. Upon creation, the listed user receives an email inviting them to join the Organization. To learn more about Organization invitations, review [Invite Organization Members](https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationInvitationRequestContent{
+        Inviter: &management.OrganizationInvitationInviter{
+            Name: "name",
+        },
+        Invitee: &management.OrganizationInvitationInvitee{
+            Email: "email",
+        },
+        ClientID: "client_id",
+    }
+client.Organizations.PostInvitations(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth0CustomDomain:** `*string` — Custom domain to be used for this request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inviter:** `*management.OrganizationInvitationInviter` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**invitee:** `*management.OrganizationInvitationInvitee` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `string` — Auth0 client ID. Used to resolve the application's login initiation endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `*string` — The id of the connection to force invitee to authenticate with.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appMetadata:** `*management.AppMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userMetadata:** `*management.UserMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ttlSec:** `*int` — Number of seconds for which the invitation is valid before expiration. If unspecified or set to 0, this value defaults to 604800 seconds (7 days). Max value: 2592000 seconds (30 days).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — List of roles IDs to associated with the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sendInvitationEmail:** `*bool` — Whether the user will receive an invitation email (true) or no email (false), true by default
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetInvitationsByInvitationID(ID, InvitationID) -> *management.GetOrganizationInvitationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetInvitationsByInvitationIDRequest{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.GetInvitationsByInvitationID(
+        context.TODO(),
+        "id",
+        "invitation_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**invitationID:** `string` — The id of the user invitation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteInvitationsByInvitationID(ID, InvitationID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DeleteInvitationsByInvitationID(
+        context.TODO(),
+        "id",
+        "invitation_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**invitationID:** `string` — The id of the user invitation.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationMembers(ID) -> *management.ListOrganizationMembersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List organization members.
+This endpoint is subject to eventual consistency. New users may not be immediately included in the response and deleted users may not be immediately removed from it.
+
+- Use the `fields` parameter to optionally define the specific member details retrieved. If `fields` is left blank, all fields (except roles) are returned.
+- Member roles are not sent by default. Use `fields=roles` to retrieve the roles assigned to each listed member. To use this parameter, you must include the `read:organization_member_roles` scope in the token. Only directly assigned roles are returned. To also include group-based role assignments, use `GET /api/v2/organizations/{id}/members/{user_id}/effective-roles`.
+
+This endpoint supports two types of pagination:
+
+- Offset pagination
+- Checkpoint pagination
+
+Checkpoint pagination must be used if you need to retrieve more than 1000 organization members.
+
+**Checkpoint Pagination**
+
+To search by checkpoint, use the following parameters: - from: Optional id from which to start selection. - take: The total amount of entries to retrieve when using the from parameter. Defaults to 50. Note: The first time you call this endpoint using Checkpoint Pagination, you should omit the `from` parameter. If there are more results, a `next` value will be included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, this indicates there are no more pages remaining.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationMembersRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.GetOrganizationMembers(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PostMembers(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set one or more existing users as members of a specific [Organization](https://auth0.com/docs/manage-users/organizations).
+
+To add a user to an Organization through this action, the user must already exist in your tenant. If a user does not yet exist, you can [invite them to create an account](https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members), manually create them through the Auth0 Dashboard, or use the Management API.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationMemberRequestContent{
+        Members: []string{
+            "members",
+        },
+    }
+client.Organizations.PostMembers(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**members:** `[]string` — List of user IDs to add to the organization as members.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteMembers(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteOrganizationMembersRequestContent{
+        Members: []string{
+            "members",
+        },
+    }
+client.Organizations.DeleteMembers(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**members:** `[]string` — List of user IDs to remove from the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationMemberEffectiveRoles(ID, UserID) -> *management.ListOrganizationMemberEffectiveRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the roles assigned to an organization member directly or through group membership.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationMemberEffectiveRolesRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.GetOrganizationMemberEffectiveRoles(
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to list effective roles for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationMemberRoleSourceGroups(ID, UserID) -> *management.ListOrganizationMemberRoleSourceGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the groups which grant the org member a given role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationMemberRoleSourceGroupsRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        RoleID: "role_id",
+    }
+client.Organizations.GetOrganizationMemberRoleSourceGroups(
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to list role source groups for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleID:** `string` — The role ID to get group sources for.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationMemberRoles(ID, UserID) -> *management.ListOrganizationMemberRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve detailed list of roles assigned to a given user within the context of a specific Organization. 
+
+Users can be members of multiple Organizations with unique roles assigned for each membership. This action only returns the roles associated with the specified Organization; any roles assigned to the user within other Organizations are not included.
+
+**Note**: Returns only direct role assignments for this member. To also include group-based role assignments, use `GET /api/v2/organizations/{id}/members/{user_id}/effective-roles`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationMemberRolesRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.GetOrganizationMemberRoles(
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to associate roles with.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PostOrganizationMemberRoles(ID, UserID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign one or more [roles](https://auth0.com/docs/manage-users/access-control/rbac) to a user to determine their access for a specific Organization.
+
+Users can be members of multiple Organizations with unique roles assigned for each membership. This action assigns roles to a user only for the specified Organization. Roles cannot be assigned to a user across multiple Organizations in the same call.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AssignOrganizationMemberRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Organizations.PostOrganizationMemberRoles(
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to associate roles with.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — List of roles IDs to associated with the user.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteOrganizationMemberRoles(ID, UserID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove one or more Organization-specific [roles](https://auth0.com/docs/manage-users/access-control/rbac) from a given user.
+
+Users can be members of multiple Organizations with unique roles assigned for each membership. This action removes roles from a user in relation to the specified Organization. Roles assigned to the user within a different Organization cannot be managed in the same call.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteOrganizationMemberRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Organizations.DeleteOrganizationMemberRoles(
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Organization identifier.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — User ID of the organization member to remove roles from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — List of roles IDs associated with the organization member to remove.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationsByIDOrganizationTemplates(ID) -> *management.OrganizationTemplate</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the organization template assigned to a specific organization. Returns the template object if one is explicitly assigned, or a 404 if no template is assigned.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.GetOrganizationsByIDOrganizationTemplates(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PutOrganizationsByIDOrganizationTemplatesByTemplateID(ID, TemplateID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign an Organization Template to an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.PutOrganizationsByIDOrganizationTemplatesByTemplateID(
+        context.TODO(),
+        "id",
+        "template_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**templateID:** `string` — The ID of the organization template to assign.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteOrganizationsByIDOrganizationTemplatesByTemplateID(ID, TemplateID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove an Organization Template assignment from an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Organizations.DeleteOrganizationsByIDOrganizationTemplatesByTemplateID(
+        context.TODO(),
+        "id",
+        "template_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**templateID:** `string` — The ID of the organization template to unassign.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationRoleMembers(ID, RoleID) -> *management.ListOrganizationRoleMembersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the organization members assigned a specific role within the context of an organization.
+<ul>
+  <li>
+    <b>Note</b>: Returns only members with direct role assignments. For groups assigned to this role within the organization, use <code>GET /api/v2/organizations/{organization_id}/roles/{role_id}/groups</code>.
+  </li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationRoleMembersRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
+client.Organizations.GetOrganizationRoleMembers(
+        context.TODO(),
+        "id",
+        "role_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleID:** `string` — ID of the role to retrieve the assigned members for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50. Values above the maximum permitted size are capped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationGroups(OrganizationID) -> *management.ListOrganizationGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the groups that are assigned to the specified organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationGroupsRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.GetOrganizationGroups(
+        context.TODO(),
+        "organization_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationGroupRoles(OrganizationID, GroupID) -> *management.ListOrganizationGroupRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the roles assigned to the specified group in the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationGroupRolesRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.GetOrganizationGroupRoles(
+        context.TODO(),
+        "organization_id",
+        "group_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groupID:** `string` — ID of the group
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.PostOrganizationGroupRoles(OrganizationID, GroupID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign one or more roles to a specified group in the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateOrganizationGroupRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Organizations.PostOrganizationGroupRoles(
+        context.TODO(),
+        "organization_id",
+        "group_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groupID:** `string` — ID of the group
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — Array of role IDs to assign to organization group.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.DeleteOrganizationGroupRoles(OrganizationID, GroupID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Unassign one or more roles from a specified group in the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteOrganizationGroupRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Organizations.DeleteOrganizationGroupRoles(
+        context.TODO(),
+        "organization_id",
+        "group_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groupID:** `string` — ID of the group
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — Array of role IDs to delete from organization group.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Organizations.GetOrganizationRoleGroups(OrganizationID, RoleID) -> *management.ListOrganizationRoleGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the list of groups assigned to a role in the context of an organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetOrganizationRoleGroupsRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Organizations.GetOrganizationRoleGroups(
+        context.TODO(),
+        "organization_id",
+        "role_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**organizationID:** `string` — ID of the organization.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roleID:** `string` — ID of the role.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Prompts
-<details><summary><code>client.Prompts.GetSettings() -> *management.GetSettingsResponseContent</code></summary>
+<details><summary><code>client.Prompts.GetPrompts() -> *management.GetSettingsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10563,7 +25782,7 @@ Retrieve details of the Universal Login configuration of your tenant. This inclu
 <dd>
 
 ```go
-client.Prompts.GetSettings(
+client.Prompts.GetPrompts(
         context.TODO(),
     )
 }
@@ -10578,7 +25797,7 @@ client.Prompts.GetSettings(
 </dl>
 </details>
 
-<details><summary><code>client.Prompts.UpdateSettings(request) -> *management.UpdateSettingsResponseContent</code></summary>
+<details><summary><code>client.Prompts.PatchPrompts(request) -> *management.UpdateSettingsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10606,7 +25825,7 @@ Update the Universal Login configuration of your tenant. This includes the <a hr
 
 ```go
 request := &management.UpdateSettingsRequestContent{}
-client.Prompts.UpdateSettings(
+client.Prompts.PatchPrompts(
         context.TODO(),
         request,
     )
@@ -10653,8 +25872,670 @@ client.Prompts.UpdateSettings(
 </dl>
 </details>
 
+<details><summary><code>client.Prompts.GetAllRendering() -> *management.ListAculsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get render setting configurations for all screens.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetAllRenderingRequest{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Prompt: management.String(
+            "prompt",
+        ),
+        Screen: management.String(
+            "screen",
+        ),
+        RenderingMode: management.AculRenderingModeEnumAdvanced.Ptr(),
+    }
+client.Prompts.GetAllRendering(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (default: true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Maximum value is 100, default value is 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total configuration count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `*string` — Name of the prompt to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**screen:** `*string` — Name of the screen to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**renderingMode:** `*management.AculRenderingModeEnum` — Rendering mode to filter by
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Prompts.PatchBulkRendering(request) -> *management.BulkUpdateAculResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Learn more about [configuring render settings](https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens) for advanced customization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.BulkUpdateAculRequestContent{
+        Configs: []*management.AculConfigsItem{
+            &management.AculConfigsItem{
+                Prompt: management.PromptGroupNameEnumLogin,
+                Screen: management.ScreenGroupNameEnumLogin,
+            },
+        },
+    }
+client.Prompts.PatchBulkRendering(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**configs:** `management.AculConfigs` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Prompts.GetCustomTextByLanguage(Prompt, Language) -> management.GetCustomTextsByLanguageResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve custom text for a specific prompt and language.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Prompts.GetCustomTextByLanguage(
+        context.TODO(),
+        management.PromptGroupNameEnumLogin.Ptr(),
+        management.PromptLanguageEnumAm.Ptr(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt:** `*management.PromptGroupNameEnum` — Name of the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `*management.PromptLanguageEnum` — Language to update.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Prompts.PutCustomTextByLanguage(Prompt, Language, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set custom text for a specific prompt. Existing texts will be overwritten.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[string]any{
+        "key": "value",
+    }
+client.Prompts.PutCustomTextByLanguage(
+        context.TODO(),
+        management.PromptGroupNameEnumLogin.Ptr(),
+        management.PromptLanguageEnumAm.Ptr(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt:** `*management.PromptGroupNameEnum` — Name of the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `*management.PromptLanguageEnum` — Language to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `management.SetsCustomTextsByLanguageRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Prompts.GetPartials(Prompt) -> management.GetPartialsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get template partials for a prompt
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Prompts.GetPartials(
+        context.TODO(),
+        management.PartialGroupsEnumLogin.Ptr(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt:** `*management.PartialGroupsEnum` — Name of the prompt.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Prompts.PutPartials(Prompt, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set template partials for a prompt
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[string]any{
+        "key": "value",
+    }
+client.Prompts.PutPartials(
+        context.TODO(),
+        management.PartialGroupsEnumLogin.Ptr(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt:** `*management.PartialGroupsEnum` — Name of the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `management.SetPartialsRequestContent` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Prompts.GetRendering(Prompt, Screen) -> *management.GetAculResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get render settings for a screen.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Prompts.GetRendering(
+        context.TODO(),
+        management.PromptGroupNameEnumLogin.Ptr(),
+        management.ScreenGroupNameEnumLogin.Ptr(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt:** `*management.PromptGroupNameEnum` — Name of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**screen:** `*management.ScreenGroupNameEnum` — Name of the screen
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Prompts.PatchRendering(Prompt, Screen, request) -> *management.UpdateAculResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Learn more about [configuring render settings](https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens) for advanced customization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateAculRequestContent{}
+client.Prompts.PatchRendering(
+        context.TODO(),
+        management.PromptGroupNameEnumLogin.Ptr(),
+        management.ScreenGroupNameEnumLogin.Ptr(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt:** `*management.PromptGroupNameEnum` — Name of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**screen:** `*management.ScreenGroupNameEnum` — Name of the screen
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**renderingMode:** `*management.AculRenderingModeEnum` — Rendering mode
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**contextConfiguration:** `*management.AculContextConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**defaultHeadTagsDisabled:** `*bool` — Override Universal Login default head tags
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**usePageTemplate:** `*bool` — Use page template with ACUL
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**headTags:** `[]*management.AculHeadTag` — An array of head tags
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filters:** `*management.AculFilters` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## RateLimitPolicies
-<details><summary><code>client.RateLimitPolicies.List() -> *management.ListRateLimitPoliciesPaginatedResponseContent</code></summary>
+<details><summary><code>client.RateLimitPolicies.GetRateLimitPolicies() -> *management.ListRateLimitPoliciesPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10667,7 +26548,7 @@ client.Prompts.UpdateSettings(
 <dd>
 
 ```go
-request := &management.ListRateLimitPoliciesRequestParameters{
+request := &management.GetRateLimitPoliciesRequest{
         Resource: management.RateLimitPolicyResourceEnumOauthAuthenticationAPI.Ptr(),
         Consumer: management.RateLimitPolicyConsumerEnumClient.Ptr(),
         ConsumerSelector: management.String(
@@ -10680,7 +26561,7 @@ request := &management.ListRateLimitPoliciesRequestParameters{
             "from",
         ),
     }
-client.RateLimitPolicies.List(
+client.RateLimitPolicies.GetRateLimitPolicies(
         context.TODO(),
         request,
     )
@@ -10743,7 +26624,7 @@ client.RateLimitPolicies.List(
 </dl>
 </details>
 
-<details><summary><code>client.RateLimitPolicies.Create(request) -> *management.CreateRateLimitPolicyResponseContent</code></summary>
+<details><summary><code>client.RateLimitPolicies.PostRateLimitPolicies(request) -> *management.CreateRateLimitPolicyResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10766,7 +26647,7 @@ request := &management.CreateRateLimitPolicyRequestContent{
             },
         },
     }
-client.RateLimitPolicies.Create(
+client.RateLimitPolicies.PostRateLimitPolicies(
         context.TODO(),
         request,
     )
@@ -10821,7 +26702,7 @@ client.RateLimitPolicies.Create(
 </dl>
 </details>
 
-<details><summary><code>client.RateLimitPolicies.Get(ID) -> *management.GetRateLimitPolicyResponseContent</code></summary>
+<details><summary><code>client.RateLimitPolicies.GetRateLimitPoliciesByID(ID) -> *management.GetRateLimitPolicyResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10834,7 +26715,7 @@ client.RateLimitPolicies.Create(
 <dd>
 
 ```go
-client.RateLimitPolicies.Get(
+client.RateLimitPolicies.GetRateLimitPoliciesByID(
         context.TODO(),
         "id",
     )
@@ -10865,7 +26746,7 @@ client.RateLimitPolicies.Get(
 </dl>
 </details>
 
-<details><summary><code>client.RateLimitPolicies.Delete(ID) -> error</code></summary>
+<details><summary><code>client.RateLimitPolicies.DeleteRateLimitPoliciesByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -10878,7 +26759,7 @@ client.RateLimitPolicies.Get(
 <dd>
 
 ```go
-client.RateLimitPolicies.Delete(
+client.RateLimitPolicies.DeleteRateLimitPoliciesByID(
         context.TODO(),
         "id",
     )
@@ -10909,7 +26790,7 @@ client.RateLimitPolicies.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.RateLimitPolicies.Update(ID, request) -> *management.UpdateRateLimitPolicyResponseContent</code></summary>
+<details><summary><code>client.RateLimitPolicies.PatchRateLimitPoliciesByID(ID, request) -> *management.UpdateRateLimitPolicyResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10929,7 +26810,7 @@ request := &management.PatchRateLimitPolicyRequestContent{
             },
         },
     }
-client.RateLimitPolicies.Update(
+client.RateLimitPolicies.PatchRateLimitPoliciesByID(
         context.TODO(),
         "id",
         request,
@@ -10970,7 +26851,7 @@ client.RateLimitPolicies.Update(
 </details>
 
 ## RefreshTokens
-<details><summary><code>client.RefreshTokens.List() -> *management.GetRefreshTokensPaginatedResponseContent</code></summary>
+<details><summary><code>client.RefreshTokens.GetRefreshTokens() -> *management.GetRefreshTokensPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -10997,7 +26878,7 @@ Retrieve a paginated list of refresh tokens for a specific user, with optional f
 <dd>
 
 ```go
-request := &management.GetRefreshTokensRequestParameters{
+request := &management.GetRefreshTokensRequest{
         UserID: "user_id",
         ClientID: management.String(
             "client_id",
@@ -11015,7 +26896,7 @@ request := &management.GetRefreshTokensRequestParameters{
             true,
         ),
     }
-client.RefreshTokens.List(
+client.RefreshTokens.GetRefreshTokens(
         context.TODO(),
         request,
     )
@@ -11086,7 +26967,7 @@ client.RefreshTokens.List(
 </dl>
 </details>
 
-<details><summary><code>client.RefreshTokens.Revoke(request) -> error</code></summary>
+<details><summary><code>client.RefreshTokens.RevokeRefreshTokens(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -11114,7 +26995,7 @@ Revoke refresh tokens in bulk by ID list, user, user+client, or user+client+audi
 
 ```go
 request := &management.RevokeRefreshTokensRequestContent{}
-client.RefreshTokens.Revoke(
+client.RefreshTokens.RevokeRefreshTokens(
         context.TODO(),
         request,
     )
@@ -11169,7 +27050,7 @@ client.RefreshTokens.Revoke(
 </dl>
 </details>
 
-<details><summary><code>client.RefreshTokens.Get(ID) -> *management.GetRefreshTokenResponseContent</code></summary>
+<details><summary><code>client.RefreshTokens.GetRefreshToken(ID) -> *management.GetRefreshTokenResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11196,7 +27077,7 @@ Retrieve refresh token information.
 <dd>
 
 ```go
-client.RefreshTokens.Get(
+client.RefreshTokens.GetRefreshToken(
         context.TODO(),
         "id",
     )
@@ -11227,7 +27108,7 @@ client.RefreshTokens.Get(
 </dl>
 </details>
 
-<details><summary><code>client.RefreshTokens.Delete(ID) -> error</code></summary>
+<details><summary><code>client.RefreshTokens.DeleteRefreshToken(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -11254,7 +27135,7 @@ Delete a refresh token by its ID.
 <dd>
 
 ```go
-client.RefreshTokens.Delete(
+client.RefreshTokens.DeleteRefreshToken(
         context.TODO(),
         "id",
     )
@@ -11285,7 +27166,7 @@ client.RefreshTokens.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.RefreshTokens.Update(ID, request) -> *management.UpdateRefreshTokenResponseContent</code></summary>
+<details><summary><code>client.RefreshTokens.PatchRefreshTokensByID(ID, request) -> *management.UpdateRefreshTokenResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11313,7 +27194,7 @@ Update a refresh token by its ID.
 
 ```go
 request := &management.UpdateRefreshTokenRequestContent{}
-client.RefreshTokens.Update(
+client.RefreshTokens.PatchRefreshTokensByID(
         context.TODO(),
         "id",
         request,
@@ -11354,7 +27235,7 @@ client.RefreshTokens.Update(
 </details>
 
 ## ResourceServers
-<details><summary><code>client.ResourceServers.List() -> *management.ListResourceServerOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.ResourceServers.GetResourceServers() -> *management.ListResourceServerResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11381,7 +27262,7 @@ Retrieve details of all APIs associated with your tenant.
 <dd>
 
 ```go
-request := &management.ListResourceServerRequestParameters{
+request := &management.GetResourceServersRequest{
         Identifiers: []*string{
             management.String(
                 "identifiers",
@@ -11400,7 +27281,7 @@ request := &management.ListResourceServerRequestParameters{
             true,
         ),
     }
-client.ResourceServers.List(
+client.ResourceServers.GetResourceServers(
         context.TODO(),
         request,
     )
@@ -11463,7 +27344,7 @@ client.ResourceServers.List(
 </dl>
 </details>
 
-<details><summary><code>client.ResourceServers.Create(request) -> *management.CreateResourceServerResponseContent</code></summary>
+<details><summary><code>client.ResourceServers.PostResourceServers(request) -> *management.CreateResourceServerResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11493,7 +27374,7 @@ Create a new API associated with your tenant. Note that all new APIs must be reg
 request := &management.CreateResourceServerRequestContent{
         Identifier: "identifier",
     }
-client.ResourceServers.Create(
+client.ResourceServers.PostResourceServers(
         context.TODO(),
         request,
     )
@@ -11660,7 +27541,7 @@ client.ResourceServers.Create(
 </dl>
 </details>
 
-<details><summary><code>client.ResourceServers.Get(ID) -> *management.GetResourceServerResponseContent</code></summary>
+<details><summary><code>client.ResourceServers.GetResourceServersByID(ID) -> *management.GetResourceServerResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11687,12 +27568,12 @@ Retrieve <a href="https://auth0.com/docs/apis">API</a> details with the given ID
 <dd>
 
 ```go
-request := &management.GetResourceServerRequestParameters{
+request := &management.GetResourceServersByIDRequest{
         IncludeFields: management.Bool(
             true,
         ),
     }
-client.ResourceServers.Get(
+client.ResourceServers.GetResourceServersByID(
         context.TODO(),
         "id",
         request,
@@ -11732,7 +27613,7 @@ client.ResourceServers.Get(
 </dl>
 </details>
 
-<details><summary><code>client.ResourceServers.Delete(ID) -> error</code></summary>
+<details><summary><code>client.ResourceServers.DeleteResourceServersByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -11759,7 +27640,7 @@ Delete an existing API by ID. For more information, read <a href="https://www.au
 <dd>
 
 ```go
-client.ResourceServers.Delete(
+client.ResourceServers.DeleteResourceServersByID(
         context.TODO(),
         "id",
     )
@@ -11790,7 +27671,7 @@ client.ResourceServers.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.ResourceServers.Update(ID, request) -> *management.UpdateResourceServerResponseContent</code></summary>
+<details><summary><code>client.ResourceServers.PatchResourceServersByID(ID, request) -> *management.UpdateResourceServerResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -11818,7 +27699,7 @@ Change an existing API setting by resource server ID. For more information, read
 
 ```go
 request := &management.UpdateResourceServerRequestContent{}
-client.ResourceServers.Update(
+client.ResourceServers.PatchResourceServersByID(
         context.TODO(),
         "id",
         request,
@@ -11986,8 +27867,215 @@ client.ResourceServers.Update(
 </dl>
 </details>
 
+## RiskAssessments
+<details><summary><code>client.RiskAssessments.GetRiskAssessmentsSettings() -> *management.GetRiskAssessmentsSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the tenant settings for risk assessments
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.RiskAssessments.GetRiskAssessmentsSettings(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.RiskAssessments.PatchRiskAssessmentsSettings(request) -> *management.UpdateRiskAssessmentsSettingsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the tenant settings for risk assessments
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateRiskAssessmentsSettingsRequestContent{
+        Enabled: true,
+    }
+client.RiskAssessments.PatchRiskAssessmentsSettings(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**enabled:** `bool` — Whether or not risk assessment is enabled.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.RiskAssessments.GetNewDevice() -> *management.GetRiskAssessmentsSettingsNewDeviceResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the risk assessment settings for the new device assessor
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.RiskAssessments.GetNewDevice(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.RiskAssessments.PatchNewDevice(request) -> *management.UpdateRiskAssessmentsSettingsNewDeviceResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the risk assessment settings for the new device assessor
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateRiskAssessmentsSettingsNewDeviceRequestContent{
+        RememberFor: 1,
+    }
+client.RiskAssessments.PatchNewDevice(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**rememberFor:** `int` — Length of time to remember devices for, in days.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Roles
-<details><summary><code>client.Roles.List() -> *management.ListRolesOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Roles.GetRoles() -> *management.ListRolesResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12016,7 +28104,7 @@ Retrieve detailed list of user roles created in your tenant.
 <dd>
 
 ```go
-request := &management.ListRolesRequestParameters{
+request := &management.GetRolesRequest{
         PerPage: management.Int(
             1,
         ),
@@ -12033,8 +28121,14 @@ request := &management.ListRolesRequestParameters{
         OwnerID: management.String(
             "owner_id",
         ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
     }
-client.Roles.List(
+client.Roles.GetRoles(
         context.TODO(),
         request,
     )
@@ -12097,6 +28191,22 @@ client.Roles.List(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -12105,7 +28215,7 @@ client.Roles.List(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Create(request) -> *management.CreateRoleResponseContent</code></summary>
+<details><summary><code>client.Roles.PostRoles(request) -> *management.CreateRoleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12137,7 +28247,7 @@ Create a user role for [Role-Based Access Control](https://auth0.com/docs/manage
 request := &management.CreateRoleRequestContent{
         Name: "name",
     }
-client.Roles.Create(
+client.Roles.PostRoles(
         context.TODO(),
         request,
     )
@@ -12192,7 +28302,7 @@ client.Roles.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Get(ID) -> *management.GetRoleResponseContent</code></summary>
+<details><summary><code>client.Roles.GetRolesByID(ID) -> *management.GetRoleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12219,7 +28329,7 @@ Retrieve details about a specific [user role](https://auth0.com/docs/manage-user
 <dd>
 
 ```go
-client.Roles.Get(
+client.Roles.GetRolesByID(
         context.TODO(),
         "id",
     )
@@ -12250,7 +28360,7 @@ client.Roles.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Roles.DeleteRolesByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -12277,7 +28387,7 @@ Delete a specific [user role](https://auth0.com/docs/manage-users/access-control
 <dd>
 
 ```go
-client.Roles.Delete(
+client.Roles.DeleteRolesByID(
         context.TODO(),
         "id",
     )
@@ -12308,7 +28418,7 @@ client.Roles.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Roles.Update(ID, request) -> *management.UpdateRoleResponseContent</code></summary>
+<details><summary><code>client.Roles.PatchRolesByID(ID, request) -> *management.UpdateRoleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12336,7 +28446,7 @@ Modify the details of a specific [user role](https://auth0.com/docs/manage-users
 
 ```go
 request := &management.UpdateRoleRequestContent{}
-client.Roles.Update(
+client.Roles.PatchRolesByID(
         context.TODO(),
         "id",
         request,
@@ -12384,8 +28494,687 @@ client.Roles.Update(
 </dl>
 </details>
 
+<details><summary><code>client.Roles.GetRoleGroups(ID) -> *management.ListRoleGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the groups to which the specified role is assigned.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetRoleGroupsRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Roles.GetRoleGroups(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the role (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Roles.PostRoleGroups(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign one or more groups to a specified role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AssignRoleGroupsRequestContent{
+        Groups: []string{
+            "groups",
+        },
+    }
+client.Roles.PostRoleGroups(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the role (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]string` — Array of group IDs to assign to the role.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Roles.DeleteRoleGroups(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Unassign one or more groups from a specified role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteRoleGroupsRequestContent{
+        Groups: []string{
+            "groups",
+        },
+    }
+client.Roles.DeleteRoleGroups(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — Unique identifier for the role (service-generated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `[]string` — Array of group IDs to remove from the role.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Roles.GetRolePermission(ID) -> *management.ListRolePermissionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve detailed list (name, description, resource server) of permissions granted by a specified user role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetRolePermissionRequest{
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
+client.Roles.GetRolePermission(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the role to list granted permissions.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Roles.PostRolePermissionAssignment(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add one or more [permissions](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/manage-permissions) to a specified user role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AddRolePermissionsRequestContent{
+        Permissions: []*management.PermissionRequestPayload{
+            &management.PermissionRequestPayload{
+                ResourceServerIdentifier: "resource_server_identifier",
+                PermissionName: "permission_name",
+            },
+        },
+    }
+client.Roles.PostRolePermissionAssignment(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the role to add permissions to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `[]*management.PermissionRequestPayload` — array of resource_server_identifier, permission_name pairs.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Roles.DeleteRolePermissionAssignment(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove one or more [permissions](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/manage-permissions) from a specified user role.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteRolePermissionsRequestContent{
+        Permissions: []*management.PermissionRequestPayload{
+            &management.PermissionRequestPayload{
+                ResourceServerIdentifier: "resource_server_identifier",
+                PermissionName: "permission_name",
+            },
+        },
+    }
+client.Roles.DeleteRolePermissionAssignment(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the role to remove permissions from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `[]*management.PermissionRequestPayload` — array of resource_server_identifier, permission_name pairs.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Roles.GetRoleUser(ID) -> *management.ListRoleUsersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve list of users associated with a specific role. For Dashboard instructions, review [View Users Assigned to Roles](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/roles/view-users-assigned-to-roles).
+
+**Note**: Returns only users with direct role assignments. For groups assigned to this role, use `GET /api/v2/roles/{id}/groups`.
+
+This endpoint supports two types of pagination:
+
+- Offset pagination
+- Checkpoint pagination
+
+Checkpoint pagination must be used if you need to retrieve more than 1000 organization members.
+
+**Checkpoint Pagination**
+
+To search by checkpoint, use the following parameters:
+
+- `from`: Optional id from which to start selection.
+- `take`: The total amount of entries to retrieve when using the from parameter. Defaults to 50.
+
+**Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetRoleUserRequest{
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Roles.GetRoleUser(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the role to retrieve a list of users associated with.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Roles.PostRoleUsers(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign one or more users to an existing user role. To learn more, review [Role-Based Access Control](https://auth0.com/docs/manage-users/access-control/rbac).
+
+**Note**: New roles cannot be created through this action.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AssignRoleUsersRequestContent{
+        Users: []string{
+            "users",
+        },
+    }
+client.Roles.PostRoleUsers(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the role to assign users to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**users:** `[]string` — user_id's of the users to assign the role to.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Rules
-<details><summary><code>client.Rules.List() -> *management.ListRulesOffsetPaginatedResponseContent</code></summary>
+<details><summary><code>client.Rules.GetRules() -> *management.ListRulesResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12412,7 +29201,7 @@ Retrieve a filtered list of [rules](https://auth0.com/docs/rules). Accepts a lis
 <dd>
 
 ```go
-request := &management.ListRulesRequestParameters{
+request := &management.GetRulesRequest{
         Page: management.Int(
             1,
         ),
@@ -12432,7 +29221,7 @@ request := &management.ListRulesRequestParameters{
             true,
         ),
     }
-client.Rules.List(
+client.Rules.GetRules(
         context.TODO(),
         request,
     )
@@ -12503,7 +29292,7 @@ client.Rules.List(
 </dl>
 </details>
 
-<details><summary><code>client.Rules.Create(request) -> *management.CreateRuleResponseContent</code></summary>
+<details><summary><code>client.Rules.PostRules(request) -> *management.CreateRuleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12536,7 +29325,7 @@ request := &management.CreateRuleRequestContent{
         Name: "name",
         Script: "script",
     }
-client.Rules.Create(
+client.Rules.PostRules(
         context.TODO(),
         request,
     )
@@ -12591,7 +29380,7 @@ client.Rules.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Rules.Get(ID) -> *management.GetRuleResponseContent</code></summary>
+<details><summary><code>client.Rules.GetRulesByID(ID) -> *management.GetRuleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12618,7 +29407,7 @@ Retrieve [rule](https://auth0.com/docs/rules) details. Accepts a list of fields 
 <dd>
 
 ```go
-request := &management.GetRuleRequestParameters{
+request := &management.GetRulesByIDRequest{
         Fields: management.String(
             "fields",
         ),
@@ -12626,7 +29415,7 @@ request := &management.GetRuleRequestParameters{
             true,
         ),
     }
-client.Rules.Get(
+client.Rules.GetRulesByID(
         context.TODO(),
         "id",
         request,
@@ -12674,7 +29463,7 @@ client.Rules.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Rules.Delete(ID) -> error</code></summary>
+<details><summary><code>client.Rules.DeleteRulesByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -12701,7 +29490,7 @@ Delete a rule.
 <dd>
 
 ```go
-client.Rules.Delete(
+client.Rules.DeleteRulesByID(
         context.TODO(),
         "id",
     )
@@ -12732,7 +29521,7 @@ client.Rules.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Rules.Update(ID, request) -> *management.UpdateRuleResponseContent</code></summary>
+<details><summary><code>client.Rules.PatchRulesByID(ID, request) -> *management.UpdateRuleResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12760,7 +29549,7 @@ Update an existing rule.
 
 ```go
 request := &management.UpdateRuleRequestContent{}
-client.Rules.Update(
+client.Rules.PatchRulesByID(
         context.TODO(),
         "id",
         request,
@@ -12825,7 +29614,7 @@ client.Rules.Update(
 </details>
 
 ## RulesConfigs
-<details><summary><code>client.RulesConfigs.List() -> []*management.RulesConfig</code></summary>
+<details><summary><code>client.RulesConfigs.GetRulesConfigs() -> []*management.RulesConfig</code></summary>
 <dl>
 <dd>
 
@@ -12854,7 +29643,7 @@ Retrieve rules config variable keys.
 <dd>
 
 ```go
-client.RulesConfigs.List(
+client.RulesConfigs.GetRulesConfigs(
         context.TODO(),
     )
 }
@@ -12869,7 +29658,7 @@ client.RulesConfigs.List(
 </dl>
 </details>
 
-<details><summary><code>client.RulesConfigs.Set(Key, request) -> *management.SetRulesConfigResponseContent</code></summary>
+<details><summary><code>client.RulesConfigs.PutRulesConfigsByKey(Key, request) -> *management.SetRulesConfigResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -12899,7 +29688,7 @@ Sets a rules config variable.
 request := &management.SetRulesConfigRequestContent{
         Value: "value",
     }
-client.RulesConfigs.Set(
+client.RulesConfigs.PutRulesConfigsByKey(
         context.TODO(),
         "key",
         request,
@@ -12939,7 +29728,7 @@ client.RulesConfigs.Set(
 </dl>
 </details>
 
-<details><summary><code>client.RulesConfigs.Delete(Key) -> error</code></summary>
+<details><summary><code>client.RulesConfigs.DeleteRulesConfigsByKey(Key) -> error</code></summary>
 <dl>
 <dd>
 
@@ -12966,7 +29755,7 @@ Delete a rules config variable identified by its key.
 <dd>
 
 ```go
-client.RulesConfigs.Delete(
+client.RulesConfigs.DeleteRulesConfigsByKey(
         context.TODO(),
         "key",
     )
@@ -12998,7 +29787,7 @@ client.RulesConfigs.Delete(
 </details>
 
 ## SelfServiceProfiles
-<details><summary><code>client.SelfServiceProfiles.List() -> *management.ListSelfServiceProfilesPaginatedResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.GetSelfServiceProfiles() -> *management.ListSelfServiceProfilesResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13025,7 +29814,7 @@ Retrieves self-service profiles.
 <dd>
 
 ```go
-request := &management.ListSelfServiceProfilesRequestParameters{
+request := &management.GetSelfServiceProfilesRequest{
         Page: management.Int(
             1,
         ),
@@ -13036,7 +29825,7 @@ request := &management.ListSelfServiceProfilesRequestParameters{
             true,
         ),
     }
-client.SelfServiceProfiles.List(
+client.SelfServiceProfiles.GetSelfServiceProfiles(
         context.TODO(),
         request,
     )
@@ -13083,7 +29872,7 @@ client.SelfServiceProfiles.List(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.Create(request) -> *management.CreateSelfServiceProfileResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.PostSelfServiceProfiles(request) -> *management.CreateSelfServiceProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13113,7 +29902,7 @@ Creates a self-service profile.
 request := &management.CreateSelfServiceProfileRequestContent{
         Name: "name",
     }
-client.SelfServiceProfiles.Create(
+client.SelfServiceProfiles.PostSelfServiceProfiles(
         context.TODO(),
         request,
     )
@@ -13184,7 +29973,7 @@ client.SelfServiceProfiles.Create(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.Get(ID) -> *management.GetSelfServiceProfileResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.GetSelfServiceProfilesByID(ID) -> *management.GetSelfServiceProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13211,7 +30000,7 @@ Retrieves a self-service profile by Id.
 <dd>
 
 ```go
-client.SelfServiceProfiles.Get(
+client.SelfServiceProfiles.GetSelfServiceProfilesByID(
         context.TODO(),
         "id",
     )
@@ -13242,7 +30031,7 @@ client.SelfServiceProfiles.Get(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.Delete(ID) -> error</code></summary>
+<details><summary><code>client.SelfServiceProfiles.DeleteSelfServiceProfilesByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -13269,7 +30058,7 @@ Deletes a self-service profile by Id.
 <dd>
 
 ```go
-client.SelfServiceProfiles.Delete(
+client.SelfServiceProfiles.DeleteSelfServiceProfilesByID(
         context.TODO(),
         "id",
     )
@@ -13300,7 +30089,7 @@ client.SelfServiceProfiles.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.Update(ID, request) -> *management.UpdateSelfServiceProfileResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.PatchSelfServiceProfilesByID(ID, request) -> *management.UpdateSelfServiceProfileResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -13328,7 +30117,7 @@ Updates a self-service profile.
 
 ```go
 request := &management.UpdateSelfServiceProfileRequestContent{}
-client.SelfServiceProfiles.Update(
+client.SelfServiceProfiles.PatchSelfServiceProfilesByID(
         context.TODO(),
         "id",
         request,
@@ -13408,19408 +30197,7 @@ client.SelfServiceProfiles.Update(
 </dl>
 </details>
 
-## Sessions
-<details><summary><code>client.Sessions.Get(ID) -> *management.GetSessionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve session information.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Sessions.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of session to retrieve
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Sessions.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a session by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Sessions.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the session to delete.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Sessions.Update(ID, request) -> *management.UpdateSessionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update session information.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateSessionRequestContent{}
-client.Sessions.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the session to update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sessionMetadata:** `*management.SessionMetadata` — Metadata associated with the session. Pass null or {} to remove all session_metadata.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Sessions.Revoke(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Revokes a session by ID and all associated refresh tokens.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Sessions.Revoke(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the session to revoke.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Stats
-<details><summary><code>client.Stats.GetActiveUsersCount() -> management.GetActiveUsersCountStatsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the number of active users that logged in during the last 30 days.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Stats.GetActiveUsersCount(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Stats.GetDaily() -> []*management.DailyStats</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the number of logins, signups and breached-password detections (subscription required) that occurred each day within a specified date range.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetDailyStatsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        To: management.String(
-            "to",
-        ),
-    }
-client.Stats.GetDaily(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional first day of the date range (inclusive) in YYYYMMDD format.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**to:** `*string` — Optional last day of the date range (inclusive) in YYYYMMDD format.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## SupplementalSignals
-<details><summary><code>client.SupplementalSignals.Get() -> *management.GetSupplementalSignalsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the supplemental signals configuration for a tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.SupplementalSignals.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.SupplementalSignals.Patch(request) -> *management.PatchSupplementalSignalsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the supplemental signals configuration for a tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateSupplementalSignalsRequestContent{
-        AkamaiEnabled: true,
-    }
-client.SupplementalSignals.Patch(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**akamaiEnabled:** `bool` — Indicates if incoming Akamai Headers should be processed
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Tickets
-<details><summary><code>client.Tickets.VerifyEmail(request) -> *management.VerifyEmailTicketResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create an email verification ticket for a given user. An email verification ticket is a generated URL that the user can consume to verify their email address.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.VerifyEmailTicketRequestContent{
-        UserID: "user_id",
-    }
-client.Tickets.VerifyEmail(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**resultURL:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `string` — user_id of for whom the ticket should be created.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientID:** `*string` — ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target='' href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target='' href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organizationID:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ttlSec:** `*int` — Number of seconds for which the ticket is valid before expiration. If unspecified or set to 0, this value defaults to 432000 seconds (5 days).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeEmailInRedirect:** `*bool` — Whether to include the email address as part of the returnUrl in the reset_email (true), or not (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**identity:** `*management.Identity` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Tickets.ChangePassword(request) -> *management.ChangePasswordTicketResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a password change ticket for a given user. A password change ticket is a generated URL that the user can consume to start a reset password flow.
-
-Note: This endpoint does not verify the given user’s identity. If you call this endpoint within your application, you must design your application to verify the user’s identity.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ChangePasswordTicketRequestContent{}
-client.Tickets.ChangePassword(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**resultURL:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using organization_id. May be specified together with client_id when the tenant has a custom password reset page enabled and a password-reset-post-challenge Action bound.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `*string` — user_id of for whom the ticket should be created.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientID:** `*string` — ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target='' href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target='' href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organizationID:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `*string` — ID of the connection. If provided, allows the user to be specified using email instead of user_id. If you set this value, you must also send the email parameter. You cannot send user_id when specifying a connection_id.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `*string` — Email address of the user for whom the tickets should be created. Requires the connection_id parameter. Cannot be specified when using user_id.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ttlSec:** `*int` — Number of seconds for which the ticket is valid before expiration. If unspecified or set to 0, this value defaults to 432000 seconds (5 days).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**markEmailAsVerified:** `*bool` — Whether to set the email_verified attribute to true (true) or whether it should not be updated (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeEmailInRedirect:** `*bool` — Whether to include the email address as part of the returnUrl in the reset_email (true), or not (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**identity:** `*management.ChangePasswordTicketIdentity` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## TokenExchangeProfiles
-<details><summary><code>client.TokenExchangeProfiles.List() -> *management.ListTokenExchangeProfileResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a list of all Token Exchange Profiles available in your tenant.
-
-By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
-
-This endpoint supports Checkpoint pagination. To search by checkpoint, use the following parameters:
-
-- `from`: Optional id from which to start selection.
-- `take`: The total amount of entries to retrieve when using the from parameter. Defaults to 50.
-
-**Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.TokenExchangeProfilesListRequest{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.TokenExchangeProfiles.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.TokenExchangeProfiles.Create(request) -> *management.CreateTokenExchangeProfileResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new Token Exchange Profile within your tenant.
-
-By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateTokenExchangeProfileRequestContent{
-        Name: "name",
-        SubjectTokenType: "subject_token_type",
-        ActionID: "action_id",
-        Type: management.TokenExchangeProfileTypeEnumCustomAuthentication,
-    }
-client.TokenExchangeProfiles.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `string` — Friendly name of this profile.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**subjectTokenType:** `string` — Subject token type for this profile. When receiving a token exchange request on the Authentication API, the corresponding token exchange profile with a matching subject_token_type will be executed. This must be a URI.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**actionID:** `string` — The ID of the Custom Token Exchange action to execute for this profile, in order to validate the subject_token. The action must use the custom-token-exchange trigger.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type_:** `*management.TokenExchangeProfileTypeEnum` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.TokenExchangeProfiles.Get(ID) -> *management.GetTokenExchangeProfileResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details about a single Token Exchange Profile specified by ID.
-
-By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.TokenExchangeProfiles.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the Token Exchange Profile to retrieve.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.TokenExchangeProfiles.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a Token Exchange Profile within your tenant.
-
-By using this feature, you agree to the applicable Free Trial terms in [Okta's Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user's subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.TokenExchangeProfiles.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the Token Exchange Profile to delete.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.TokenExchangeProfiles.Update(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a Token Exchange Profile within your tenant.
-
-By using this feature, you agree to the applicable Free Trial terms in [Okta's Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user's subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateTokenExchangeProfileRequestContent{}
-client.TokenExchangeProfiles.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the Token Exchange Profile to update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `*string` — Friendly name of this profile.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**subjectTokenType:** `*string` — Subject token type for this profile. When receiving a token exchange request on the Authentication API, the corresponding token exchange profile with a matching subject_token_type will be executed. This must be a URI.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## UserAttributeProfiles
-<details><summary><code>client.UserAttributeProfiles.List() -> *management.ListUserAttributeProfilesPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a list of User Attribute Profiles. This endpoint supports Checkpoint pagination.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUserAttributeProfileRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.UserAttributeProfiles.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 5.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.UserAttributeProfiles.Create(request) -> *management.CreateUserAttributeProfileResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a User Attribute Profile.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateUserAttributeProfileRequestContent{
-        Name: "name",
-        UserAttributes: map[string]*management.UserAttributeProfileUserAttributeAdditionalProperties{
-            "key": &management.UserAttributeProfileUserAttributeAdditionalProperties{
-                Description: "description",
-                Label: "label",
-                ProfileRequired: true,
-                Auth0Mapping: "auth0_mapping",
-            },
-        },
-    }
-client.UserAttributeProfiles.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `management.UserAttributeProfileName` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `*management.UserAttributeProfileUserID` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userAttributes:** `management.UserAttributeProfileUserAttributes` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.UserAttributeProfiles.ListTemplates() -> *management.ListUserAttributeProfileTemplateResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a list of User Attribute Profile Templates.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.UserAttributeProfiles.ListTemplates(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.UserAttributeProfiles.GetTemplate(ID) -> *management.GetUserAttributeProfileTemplateResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a User Attribute Profile Template.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.UserAttributeProfiles.GetTemplate(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user-attribute-profile-template to retrieve.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.UserAttributeProfiles.Get(ID) -> *management.GetUserAttributeProfileResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details about a single User Attribute Profile specified by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.UserAttributeProfiles.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user-attribute-profile to retrieve.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.UserAttributeProfiles.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a single User Attribute Profile specified by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.UserAttributeProfiles.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user-attribute-profile to delete.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.UserAttributeProfiles.Update(ID, request) -> *management.UpdateUserAttributeProfileResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the details of a specific User attribute profile, such as name, user_id and user_attributes.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateUserAttributeProfileRequestContent{}
-client.UserAttributeProfiles.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user attribute profile to update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `*management.UserAttributeProfileName` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `*management.UserAttributeProfilePatchUserID` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userAttributes:** `*management.UserAttributeProfileUserAttributes` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## UserBlocks
-<details><summary><code>client.UserBlocks.ListByIdentifier() -> *management.ListUserBlocksByIdentifierResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for a user with the given identifier (username, phone number, or email).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUserBlocksByIdentifierRequestParameters{
-        Identifier: "identifier",
-        ConsiderBruteForceEnablement: management.Bool(
-            true,
-        ),
-    }
-client.UserBlocks.ListByIdentifier(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**identifier:** `string` — Should be any of a username, phone number, or email.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**considerBruteForceEnablement:** `*bool` 
-
-
-          If true and Brute Force Protection is enabled and configured to block logins, will return a list of blocked IP addresses.
-          If true and Brute Force Protection is disabled, will return an empty list.
-        
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.UserBlocks.DeleteByIdentifier() -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given identifier (username, phone number, or email).
-
-Note: This endpoint does not unblock users that were [blocked by a tenant administrator](https://auth0.com/docs/user-profile#block-and-unblock-a-user).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteUserBlocksByIdentifierRequestParameters{
-        Identifier: "identifier",
-    }
-client.UserBlocks.DeleteByIdentifier(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**identifier:** `string` — Should be any of a username, phone number, or email.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.UserBlocks.List(ID) -> *management.ListUserBlocksResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUserBlocksRequestParameters{
-        ConsiderBruteForceEnablement: management.Bool(
-            true,
-        ),
-    }
-client.UserBlocks.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — user_id of the user blocks to retrieve.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**considerBruteForceEnablement:** `*bool` 
-
-
-          If true and Brute Force Protection is enabled and configured to block logins, will return a list of blocked IP addresses.
-          If true and Brute Force Protection is disabled, will return an empty list.
-        
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.UserBlocks.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given ID.
-
-Note: This endpoint does not unblock users that were [blocked by a tenant administrator](https://auth0.com/docs/user-profile#block-and-unblock-a-user).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.UserBlocks.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The user_id of the user to update.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users
-<details><summary><code>client.Users.List() -> *management.ListUsersOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of users. It is possible to:
-
-- Specify a search criteria for users
-- Sort the users to be returned
-- Select the fields to be returned
-- Specify the number of users to retrieve per page and the page index
-
-
-
-The `q` query parameter can be used to get users that match the specified criteria [using query string syntax.](https://auth0.com/docs/users/search/v3/query-syntax)
-
-[Learn more about searching for users.](https://auth0.com/docs/users/search/v3)
-
-Read about [best practices](https://auth0.com/docs/users/search/best-practices) when working with the API endpoints for retrieving users.
-
-
-
-Auth0 limits the number of users you can return. If you exceed this threshold, please redefine your search, use the [export job](https://auth0.com/docs/api/management/v2#!/Jobs/post_users_exports), or the [User Import / Export](https://auth0.com/docs/extensions/user-import-export) extension.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUsersRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        Sort: management.String(
-            "sort",
-        ),
-        Connection: management.String(
-            "connection",
-        ),
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-        Q: management.String(
-            "q",
-        ),
-        SearchEngine: management.SearchEngineVersionsEnumV1.Ptr(),
-        PrimaryOrder: management.Bool(
-            true,
-        ),
-    }
-client.Users.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort:** `*string` — Field to sort by. Use <code>field:order</code> where order is <code>1</code> for ascending and <code>-1</code> for descending. e.g. <code>created_at:1</code>
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connection:** `*string` — Connection filter. Only applies when using <code>search_engine=v1</code>. To filter by connection with <code>search_engine=v2|v3</code>, use <code>q=identities.connection:"connection_name"</code>
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**q:** `*string` — Query in <a target='_new' href ='https://lucene.apache.org/core/2_9_4/queryparsersyntax.html'>Lucene query string syntax</a>. Some query types cannot be used on metadata fields, for details see <a href='https://auth0.com/docs/users/search/v3/query-syntax#searchable-fields'>Searchable Fields</a>.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**searchEngine:** `*management.SearchEngineVersionsEnum` — The version of the search engine
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**primaryOrder:** `*bool` — If true (default), results are returned in a deterministic order. If false, results may be returned in a non-deterministic order, which can enhance performance for complex queries targeting a small number of users. Set to false only when consistent ordering and pagination is not required.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Create(request) -> *management.CreateUserResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new user for a given [database](https://auth0.com/docs/connections/database) or [passwordless](https://auth0.com/docs/connections/passwordless) connection.
-
-Note: `connection` is required but other parameters such as `email` and `password` are dependent upon the type of connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateUserRequestContent{
-        Connection: "connection",
-    }
-client.Users.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**email:** `*string` — The user's email.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phoneNumber:** `*string` — The user's phone number (following the E.164 recommendation).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userMetadata:** `*management.UserMetadata` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**blocked:** `*bool` — Whether this user was blocked by an administrator (true) or not (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**emailVerified:** `*bool` — Whether this email address is verified (true) or unverified (false). User will receive a verification email after creation if `email_verified` is false or not specified
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phoneVerified:** `*bool` — Whether this phone number has been verified (true) or not (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**appMetadata:** `*management.AppMetadata` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**givenName:** `*string` — The user's given name(s).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**familyName:** `*string` — The user's family name(s).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `*string` — The user's full name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**nickname:** `*string` — The user's nickname.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**picture:** `*string` — A URI pointing to the user's picture.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `*string` — The external user's id provided by the identity provider.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connection:** `string` — Name of the connection this user should be created in.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `*string` — Initial password for this user. Only valid for auth0 connection strategy.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verifyEmail:** `*bool` — Whether the user will receive a verification email after creation (true) or no email (false). Overrides behavior of `email_verified` parameter.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `*string` — The user's username. Only valid if the connection requires a username.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.ListUsersByEmail() -> []*management.UserResponseSchema</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Find users by email. If Auth0 is the identity provider (idP), the email address associated with a user is saved in lower case, regardless of how you initially provided it. 
-
-For example, if you register a user as JohnSmith@example.com, Auth0 saves the user's email as johnsmith@example.com. 
-
-Therefore, when using this endpoint, make sure that you are searching for users via email addresses using the correct case.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUsersByEmailRequestParameters{
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-        Email: "email",
-    }
-client.Users.ListUsersByEmail(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `string` — Email address to search for (case-sensitive).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Get(ID) -> *management.GetUserResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve user details. A list of fields to include or exclude may also be specified. For more information, see [Retrieve Users with the Get Users Endpoint](https://auth0.com/docs/manage-users/user-search/retrieve-users-with-get-users-endpoint).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetUserRequestParameters{
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-    }
-client.Users.Get(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to retrieve.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a user by user ID. This action cannot be undone. For Auth0 Dashboard instructions, see [Delete Users](https://auth0.com/docs/manage-users/user-accounts/delete-users).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to delete.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Update(ID, request) -> *management.UpdateUserResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a user.
-
-These are the attributes that can be updated at the root level:
-
-- app_metadata
-- blocked
-- email
-- email_verified
-- family_name
-- given_name
-- name
-- nickname
-- password
-- phone_number
-- phone_verified
-- picture
-- username
-- user_metadata
-- verify_email
-
-Some considerations:
-
-- The properties of the new object will replace the old ones.
-- The metadata fields are an exception to this rule (`user_metadata` and `app_metadata`). These properties are merged instead of being replaced but be careful, the merge only occurs on the first level.
-- If you are updating `email`, `email_verified`, `phone_number`, `phone_verified`, `username` or `password` of a secondary identity, you need to specify the `connection` property too.
-- If you are updating `email` or `phone_number` you can specify, optionally, the `client_id` property.
-- Updating `email_verified` is not supported for enterprise and passwordless sms connections.
-- Updating the `blocked` to `false` does not affect the user's blocked state from an excessive amount of incorrectly provided credentials. Use the "Unblock a user" endpoint from the "User Blocks" API to change the user's state.
-- Supported attributes can be unset by supplying `null` as the value.
-
-**Updating a field (non-metadata property)**
-
-To mark the email address of a user as verified, the body to send should be:
-
-```json
-{ "email_verified": true }
-```
-
-**Updating a user metadata root property**
-
-Let's assume that our test user has the following `user_metadata`:
-
-```json
-{ "user_metadata" : { "profileCode": 1479 } }
-```
-
-To add the field `addresses` the body to send should be:
-
-```json
-{ "user_metadata" : { "addresses": {"work_address": "100 Industrial Way"} }}
-```
-
-The modified object ends up with the following `user_metadata` property:
-
-```json
-{
-  "user_metadata": {
-    "profileCode": 1479,
-    "addresses": { "work_address": "100 Industrial Way" }
-  }
-}
-```
-
-**Updating an inner user metadata property**
-
-If there's existing user metadata to which we want to add  `"home_address": "742 Evergreen Terrace"` (using the `addresses` property) we should send the whole `addresses` object. Since this is a first-level object, the object will be merged in, but its own properties will not be. The body to send should be:
-
-```json
-{
-  "user_metadata": {
-    "addresses": {
-      "work_address": "100 Industrial Way",
-      "home_address": "742 Evergreen Terrace"
-    }
-  }
-}
-```
-
-The modified object ends up with the following `user_metadata` property:
-
-```json
-{
-  "user_metadata": {
-    "profileCode": 1479,
-    "addresses": {
-      "work_address": "100 Industrial Way",
-      "home_address": "742 Evergreen Terrace"
-    }
-  }
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateUserRequestContent{}
-client.Users.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**blocked:** `*bool` — Whether this user was blocked by an administrator (true) or not (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**emailVerified:** `*bool` — Whether this email address is verified (true) or unverified (false). If set to false the user will not receive a verification email unless `verify_email` is set to true.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `*string` — Email address of this user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phoneNumber:** `*string` — The user's phone number (following the E.164 recommendation).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phoneVerified:** `*bool` — Whether this phone number has been verified (true) or not (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userMetadata:** `*management.UserMetadata` — User metadata to which this user has read/write access.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**appMetadata:** `*management.AppMetadata` — User metadata to which this user has read-only access.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**givenName:** `*string` — Given name/first name/forename of this user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**familyName:** `*string` — Family name/last name/surname of this user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `*string` — Name of this user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**nickname:** `*string` — Preferred nickname or alias of this user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**picture:** `*string` — URL to picture, photo, or avatar of this user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verifyEmail:** `*bool` — Whether this user will receive a verification email after creation (true) or no email (false). Overrides behavior of `email_verified` parameter.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verifyPhoneNumber:** `*bool` — Whether this user will receive a text after changing the phone number (true) or no text (false). Only valid when changing phone number for SMS connections.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `*string` — New password for this user. Only valid for database connections.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connection:** `*string` — Name of the connection to target for this user update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientID:** `*string` — Auth0 client ID. Only valid when updating email address.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `*string` — The user's username. Only valid if the connection requires a username.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.RegenerateRecoveryCode(ID) -> *management.RegenerateUsersRecoveryCodeResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove an existing multi-factor authentication (MFA) [recovery code](https://auth0.com/docs/secure/multi-factor-authentication/reset-user-mfa) and generate a new one. If a user cannot access the original device or account used for MFA enrollment, they can use a recovery code to authenticate.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.RegenerateRecoveryCode(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to regenerate a multi-factor authentication recovery code for.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.RevokeAccess(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Revokes selected resources related to a user (sessions, refresh tokens, ...).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.RevokeUserAccessRequestContent{}
-client.Users.RevokeAccess(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sessionID:** `*string` — ID of the session to revoke.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**preserveRefreshTokens:** `*bool` — Whether to preserve the refresh tokens associated with the session.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Actions Versions
-<details><summary><code>client.Actions.Versions.List(ActionID) -> *management.ListActionVersionsPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve all of an action's versions. An action version is created whenever an action is deployed. An action version is immutable, once created.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListActionVersionsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-    }
-client.Actions.Versions.List(
-        context.TODO(),
-        "actionId",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**actionID:** `string` — The ID of the action.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Use this field to request a specific page of the list results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — This field specify the maximum number of results to be returned by the server. 20 by default
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Versions.Get(ActionID, ID) -> *management.GetActionVersionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a specific version of an action. An action version is created whenever an action is deployed. An action version is immutable, once created.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Actions.Versions.Get(
-        context.TODO(),
-        "actionId",
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**actionID:** `string` — The ID of the action.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the action version.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Versions.Deploy(ActionID, ID, request) -> *management.DeployActionVersionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Performs the equivalent of a roll-back of an action to an earlier, specified version. Creates a new, deployed action version that is identical to the specified version. If this action is currently bound to a trigger, the system will begin executing the newly-created version immediately.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeployActionVersionRequestContent{}
-client.Actions.Versions.Deploy(
-        context.TODO(),
-        "actionId",
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**actionID:** `string` — The ID of an action.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of an action version.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*management.DeployActionVersionRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Actions Executions
-<details><summary><code>client.Actions.Executions.Get(ID) -> *management.GetActionExecutionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve information about a specific execution of a trigger. Relevant execution IDs will be included in tenant logs generated as part of that authentication flow. Executions will only be stored for 10 days after their creation.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Actions.Executions.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the execution to retrieve.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Actions Modules
-<details><summary><code>client.Actions.Modules.List() -> *management.GetActionModulesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a paginated list of all Actions Modules with optional filtering and totals.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetActionModulesRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-    }
-client.Actions.Modules.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Paging is disabled if parameter not sent.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Modules.Create(request) -> *management.CreateActionModuleResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new Actions Module for reusable code across actions.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateActionModuleRequestContent{
-        Name: "name",
-        Code: "code",
-    }
-client.Actions.Modules.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `string` — The name of the action module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**code:** `string` — The source code of the action module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secrets:** `[]*management.ActionModuleSecretRequest` — The secrets to associate with the action module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dependencies:** `[]*management.ActionModuleDependencyRequest` — The npm dependencies of the action module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**apiVersion:** `*string` — The API version of the module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**publish:** `*bool` — Whether to publish the module immediately after creation.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Modules.Get(ID) -> *management.GetActionModuleResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of a specific Actions Module by its unique identifier.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Actions.Modules.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the action module to retrieve.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Modules.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Permanently delete an Actions Module. This will fail if the module is still in use by any actions.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Actions.Modules.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the Actions Module to delete.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Modules.Update(ID, request) -> *management.UpdateActionModuleResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update properties of an existing Actions Module, such as code, dependencies, or secrets.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateActionModuleRequestContent{}
-client.Actions.Modules.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the action module to update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**code:** `*string` — The source code of the action module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**secrets:** `[]*management.ActionModuleSecretRequest` — The secrets to associate with the action module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dependencies:** `[]*management.ActionModuleDependencyRequest` — The npm dependencies of the action module.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Modules.ListActions(ID) -> *management.GetActionModuleActionsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists all actions that are using a specific Actions Module, showing which deployed action versions reference this Actions Module.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetActionModuleActionsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-    }
-client.Actions.Modules.ListActions(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The unique ID of the module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Modules.Rollback(ID, request) -> *management.RollbackActionModuleResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Rolls back an Actions Module's draft to a previously created version. This action copies the code, dependencies, and secrets from the specified version into the current draft.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.RollbackActionModuleRequestParameters{
-        ModuleVersionID: "module_version_id",
-    }
-client.Actions.Modules.Rollback(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The unique ID of the module to roll back.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**moduleVersionID:** `string` — The unique ID of the module version to roll back to.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Actions Triggers
-<details><summary><code>client.Actions.Triggers.List() -> *management.ListActionTriggersResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the set of triggers currently available within actions. A trigger is an extensibility point to which actions can be bound.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Actions.Triggers.List(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Actions Modules Versions
-<details><summary><code>client.Actions.Modules.Versions.List(ID) -> *management.GetActionModuleVersionsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all published versions of a specific Actions Module.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetActionModuleVersionsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-    }
-client.Actions.Modules.Versions.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The unique ID of the module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Use this field to request a specific page of the list results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — The maximum number of results to be returned by the server in a single response. 20 by default.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Modules.Versions.Create(ID) -> *management.CreateActionModuleVersionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new immutable version of an Actions Module from the current draft version. This publishes the draft as a new version that can be referenced by actions, while maintaining the existing draft for continued development.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Actions.Modules.Versions.Create(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the action module to create a version for.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Modules.Versions.Get(ID, VersionID) -> *management.GetActionModuleVersionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the details of a specific, immutable version of an Actions Module.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Actions.Modules.Versions.Get(
-        context.TODO(),
-        "id",
-        "versionId",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The unique ID of the module.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**versionID:** `string` — The unique ID of the module version to retrieve.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Actions Triggers Bindings
-<details><summary><code>client.Actions.Triggers.Bindings.List(TriggerID) -> *management.ListActionBindingsPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the actions that are bound to a trigger. Once an action is created and deployed, it must be attached (i.e. bound) to a trigger so that it will be executed as part of a flow. The list of actions returned reflects the order in which they will be executed during the appropriate flow.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListActionTriggerBindingsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-    }
-client.Actions.Triggers.Bindings.List(
-        context.TODO(),
-        management.ActionTriggerTypeEnumPostLogin.Ptr(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**triggerID:** `*management.ActionTriggerTypeEnum` — An actions extensibility point.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Use this field to request a specific page of the list results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — The maximum number of results to be returned in a single request. 20 by default
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Actions.Triggers.Bindings.UpdateMany(TriggerID, request) -> *management.UpdateActionBindingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the actions that are bound (i.e. attached) to a trigger. Once an action is created and deployed, it must be attached (i.e. bound) to a trigger so that it will be executed as part of a flow. The order in which the actions are provided will determine the order in which they are executed.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateActionBindingsRequestContent{}
-client.Actions.Triggers.Bindings.UpdateMany(
-        context.TODO(),
-        management.ActionTriggerTypeEnumPostLogin.Ptr(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**triggerID:** `*management.ActionTriggerTypeEnum` — An actions extensibility point.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bindings:** `[]*management.ActionBindingWithRef` — The actions that will be bound to this trigger. The order in which they are included will be the order in which they are executed.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Anomaly Blocks
-<details><summary><code>client.Anomaly.Blocks.CheckIP(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Check if the given IP address is blocked via the <a href="https://auth0.com/docs/configure/attack-protection/suspicious-ip-throttling">Suspicious IP Throttling</a> due to multiple suspicious attempts.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Anomaly.Blocks.CheckIP(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `management.AnomalyIPFormat` — IP address to check.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Anomaly.Blocks.UnblockIP(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove a block imposed by <a href="https://auth0.com/docs/configure/attack-protection/suspicious-ip-throttling">Suspicious IP Throttling</a> for the given IP address.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Anomaly.Blocks.UnblockIP(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `management.AnomalyIPFormat` — IP address to unblock.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AttackProtection BotDetection
-<details><summary><code>client.AttackProtection.BotDetection.Get() -> *management.GetBotDetectionSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the Bot Detection configuration of your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.AttackProtection.BotDetection.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.AttackProtection.BotDetection.Update(request) -> *management.UpdateBotDetectionSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the Bot Detection configuration of your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateBotDetectionSettingsRequestContent{}
-client.AttackProtection.BotDetection.Update(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**botDetectionLevel:** `*management.BotDetectionLevelEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**challengePasswordPolicy:** `*management.BotDetectionChallengePolicyPasswordFlowEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**challengePasswordlessPolicy:** `*management.BotDetectionChallengePolicyPasswordlessFlowEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**challengePasswordResetPolicy:** `*management.BotDetectionChallengePolicyPasswordResetFlowEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**allowlist:** `*management.BotDetectionAllowlist` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**monitoringModeEnabled:** `*management.BotDetectionMonitoringModeEnabled` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AttackProtection BreachedPasswordDetection
-<details><summary><code>client.AttackProtection.BreachedPasswordDetection.Get() -> *management.GetBreachedPasswordDetectionSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of the Breached Password Detection configuration of your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.AttackProtection.BreachedPasswordDetection.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.AttackProtection.BreachedPasswordDetection.Update(request) -> *management.UpdateBreachedPasswordDetectionSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update details of the Breached Password Detection configuration of your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateBreachedPasswordDetectionSettingsRequestContent{}
-client.AttackProtection.BreachedPasswordDetection.Update(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**enabled:** `*bool` — Whether or not breached password detection is active.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**shields:** `[]*management.BreachedPasswordDetectionShieldsEnum` 
-
-Action to take when a breached password is detected during a login.
-      Possible values: <code>block</code>, <code>user_notification</code>, <code>admin_notification</code>.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**adminNotificationFrequency:** `[]*management.BreachedPasswordDetectionAdminNotificationFrequencyEnum` 
-
-When "admin_notification" is enabled, determines how often email notifications are sent.
-        Possible values: <code>immediately</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**method:** `*management.BreachedPasswordDetectionMethodEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stage:** `*management.BreachedPasswordDetectionStage` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AttackProtection BruteForceProtection
-<details><summary><code>client.AttackProtection.BruteForceProtection.Get() -> *management.GetBruteForceSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of the Brute-force Protection configuration of your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.AttackProtection.BruteForceProtection.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.AttackProtection.BruteForceProtection.Update(request) -> *management.UpdateBruteForceSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the Brute-force Protection configuration of your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateBruteForceSettingsRequestContent{}
-client.AttackProtection.BruteForceProtection.Update(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**enabled:** `*bool` — Whether or not brute force attack protections are active.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**shields:** `[]*management.BruteForceProtectionShieldsEnum` 
-
-Action to take when a brute force protection threshold is violated.
-        Possible values: <code>block</code>, <code>user_notification</code>.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**allowlist:** `[]string` — List of trusted IP addresses that will not have attack protection enforced against them.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**mode:** `*management.BruteForceProtectionModeEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maxAttempts:** `*int` — Maximum number of unsuccessful attempts.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AttackProtection Captcha
-<details><summary><code>client.AttackProtection.Captcha.Get() -> *management.GetAttackProtectionCaptchaResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the CAPTCHA configuration for your client.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.AttackProtection.Captcha.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.AttackProtection.Captcha.Update(request) -> *management.UpdateAttackProtectionCaptchaResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update existing CAPTCHA configuration for your client.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateAttackProtectionCaptchaRequestContent{}
-client.AttackProtection.Captcha.Update(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**activeProviderID:** `*management.AttackProtectionCaptchaProviderID` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**arkose:** `*management.AttackProtectionUpdateCaptchaArkose` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**authChallenge:** `*management.AttackProtectionCaptchaAuthChallengeRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**hcaptcha:** `*management.AttackProtectionUpdateCaptchaHcaptcha` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**friendlyCaptcha:** `*management.AttackProtectionUpdateCaptchaFriendlyCaptcha` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recaptchaEnterprise:** `*management.AttackProtectionUpdateCaptchaRecaptchaEnterprise` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recaptchaV2:** `*management.AttackProtectionUpdateCaptchaRecaptchaV2` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**simpleCaptcha:** `*management.AttackProtectionCaptchaSimpleCaptchaResponseContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AttackProtection PhoneProviderProtection
-<details><summary><code>client.AttackProtection.PhoneProviderProtection.Get() -> *management.GetPhoneProviderProtectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the phone provider protection configuration for a tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.AttackProtection.PhoneProviderProtection.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.AttackProtection.PhoneProviderProtection.Patch(request) -> *management.PatchPhoneProviderProtectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the phone provider protection configuration for a tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.PatchPhoneProviderProtectionRequestContent{
-        Type: management.PhoneProviderProtectionBackoffStrategyEnumExponential,
-    }
-client.AttackProtection.PhoneProviderProtection.Patch(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**type_:** `*management.PhoneProviderProtectionBackoffStrategyEnum` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AttackProtection SuspiciousIPThrottling
-<details><summary><code>client.AttackProtection.SuspiciousIPThrottling.Get() -> *management.GetSuspiciousIPThrottlingSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of the Suspicious IP Throttling configuration of your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.AttackProtection.SuspiciousIPThrottling.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.AttackProtection.SuspiciousIPThrottling.Update(request) -> *management.UpdateSuspiciousIPThrottlingSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the details of the Suspicious IP Throttling configuration of your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateSuspiciousIPThrottlingSettingsRequestContent{}
-client.AttackProtection.SuspiciousIPThrottling.Update(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**enabled:** `*bool` — Whether or not suspicious IP throttling attack protections are active.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**shields:** `[]*management.SuspiciousIPThrottlingShieldsEnum` 
-
-Action to take when a suspicious IP throttling threshold is violated.
-          Possible values: <code>block</code>, <code>admin_notification</code>.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**allowlist:** `*management.SuspiciousIPThrottlingAllowlist` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stage:** `*management.SuspiciousIPThrottlingStage` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Branding Templates
-<details><summary><code>client.Branding.Templates.GetUniversalLogin() -> *management.GetUniversalLoginTemplateResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Branding.Templates.GetUniversalLogin(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Templates.UpdateUniversalLogin(request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the Universal Login branding template.
-
-When `content-type` header is set to `application/json`:
-
-```json
-{
-  "template": "<!DOCTYPE html>{% assign resolved_dir = dir | default: \"auto\" %}<html lang=\"{{locale}}\" dir=\"{{resolved_dir}}\"><head>{%- auth0:head -%}</head><body class=\"_widget-auto-layout\">{%- auth0:widget -%}</body></html>"
-}
-```
-
-When `content-type` header is set to `text/html`:
-
-```html
-<!DOCTYPE html>
-{% assign resolved_dir = dir | default: "auto" %}
-<html lang="{{locale}}" dir="{{resolved_dir}}">
-  <head>
-    {%- auth0:head -%}
-  </head>
-  <body class="_widget-auto-layout">
-    {%- auth0:widget -%}
-  </body>
-</html>
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateUniversalLoginTemplateRequestContent{
-        String: "string",
-    }
-client.Branding.Templates.UpdateUniversalLogin(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `*management.UpdateUniversalLoginTemplateRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Templates.DeleteUniversalLogin() -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Branding.Templates.DeleteUniversalLogin(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Branding Themes
-<details><summary><code>client.Branding.Themes.Create(request) -> *management.CreateBrandingThemeResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create branding theme.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateBrandingThemeRequestContent{
-        Borders: &management.BrandingThemeBorders{
-            ButtonBorderRadius: 1.1,
-            ButtonBorderWeight: 1.1,
-            ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
-            InputBorderRadius: 1.1,
-            InputBorderWeight: 1.1,
-            InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
-            ShowWidgetShadow: true,
-            WidgetBorderWeight: 1.1,
-            WidgetCornerRadius: 1.1,
-        },
-        Colors: &management.BrandingThemeColors{
-            BodyText: "body_text",
-            Error: "error",
-            Header: "header",
-            Icons: "icons",
-            InputBackground: "input_background",
-            InputBorder: "input_border",
-            InputFilledText: "input_filled_text",
-            InputLabelsPlaceholders: "input_labels_placeholders",
-            LinksFocusedComponents: "links_focused_components",
-            PrimaryButton: "primary_button",
-            PrimaryButtonLabel: "primary_button_label",
-            SecondaryButtonBorder: "secondary_button_border",
-            SecondaryButtonLabel: "secondary_button_label",
-            Success: "success",
-            WidgetBackground: "widget_background",
-            WidgetBorder: "widget_border",
-        },
-        Fonts: &management.BrandingThemeFonts{
-            BodyText: &management.BrandingThemeFontBodyText{
-                Bold: true,
-                Size: 1.1,
-            },
-            ButtonsText: &management.BrandingThemeFontButtonsText{
-                Bold: true,
-                Size: 1.1,
-            },
-            FontURL: "font_url",
-            InputLabels: &management.BrandingThemeFontInputLabels{
-                Bold: true,
-                Size: 1.1,
-            },
-            Links: &management.BrandingThemeFontLinks{
-                Bold: true,
-                Size: 1.1,
-            },
-            LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
-            ReferenceTextSize: 1.1,
-            Subtitle: &management.BrandingThemeFontSubtitle{
-                Bold: true,
-                Size: 1.1,
-            },
-            Title: &management.BrandingThemeFontTitle{
-                Bold: true,
-                Size: 1.1,
-            },
-        },
-        PageBackground: &management.BrandingThemePageBackground{
-            BackgroundColor: "background_color",
-            BackgroundImageURL: "background_image_url",
-            PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
-        },
-        Widget: &management.BrandingThemeWidget{
-            HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
-            LogoHeight: 1.1,
-            LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
-            LogoURL: "logo_url",
-            SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
-        },
-    }
-client.Branding.Themes.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**borders:** `*management.BrandingThemeBorders` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**colors:** `*management.BrandingThemeColors` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**displayName:** `*string` — Display Name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fonts:** `*management.BrandingThemeFonts` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**identifiers:** `*management.BrandingThemeIdentifiers` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pageBackground:** `*management.BrandingThemePageBackground` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**widget:** `*management.BrandingThemeWidget` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Themes.GetDefault() -> *management.GetBrandingDefaultThemeResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve default branding theme.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Branding.Themes.GetDefault(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Themes.Get(ThemeID) -> *management.GetBrandingThemeResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve branding theme.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Branding.Themes.Get(
-        context.TODO(),
-        "themeId",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**themeID:** `string` — The ID of the theme
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Themes.Delete(ThemeID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete branding theme.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Branding.Themes.Delete(
-        context.TODO(),
-        "themeId",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**themeID:** `string` — The ID of the theme
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Themes.Update(ThemeID, request) -> *management.UpdateBrandingThemeResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update branding theme.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateBrandingThemeRequestContent{
-        Borders: &management.BrandingThemeBorders{
-            ButtonBorderRadius: 1.1,
-            ButtonBorderWeight: 1.1,
-            ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
-            InputBorderRadius: 1.1,
-            InputBorderWeight: 1.1,
-            InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
-            ShowWidgetShadow: true,
-            WidgetBorderWeight: 1.1,
-            WidgetCornerRadius: 1.1,
-        },
-        Colors: &management.BrandingThemeColors{
-            BodyText: "body_text",
-            Error: "error",
-            Header: "header",
-            Icons: "icons",
-            InputBackground: "input_background",
-            InputBorder: "input_border",
-            InputFilledText: "input_filled_text",
-            InputLabelsPlaceholders: "input_labels_placeholders",
-            LinksFocusedComponents: "links_focused_components",
-            PrimaryButton: "primary_button",
-            PrimaryButtonLabel: "primary_button_label",
-            SecondaryButtonBorder: "secondary_button_border",
-            SecondaryButtonLabel: "secondary_button_label",
-            Success: "success",
-            WidgetBackground: "widget_background",
-            WidgetBorder: "widget_border",
-        },
-        Fonts: &management.BrandingThemeFonts{
-            BodyText: &management.BrandingThemeFontBodyText{
-                Bold: true,
-                Size: 1.1,
-            },
-            ButtonsText: &management.BrandingThemeFontButtonsText{
-                Bold: true,
-                Size: 1.1,
-            },
-            FontURL: "font_url",
-            InputLabels: &management.BrandingThemeFontInputLabels{
-                Bold: true,
-                Size: 1.1,
-            },
-            Links: &management.BrandingThemeFontLinks{
-                Bold: true,
-                Size: 1.1,
-            },
-            LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
-            ReferenceTextSize: 1.1,
-            Subtitle: &management.BrandingThemeFontSubtitle{
-                Bold: true,
-                Size: 1.1,
-            },
-            Title: &management.BrandingThemeFontTitle{
-                Bold: true,
-                Size: 1.1,
-            },
-        },
-        PageBackground: &management.BrandingThemePageBackground{
-            BackgroundColor: "background_color",
-            BackgroundImageURL: "background_image_url",
-            PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
-        },
-        Widget: &management.BrandingThemeWidget{
-            HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
-            LogoHeight: 1.1,
-            LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
-            LogoURL: "logo_url",
-            SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
-        },
-    }
-client.Branding.Themes.Update(
-        context.TODO(),
-        "themeId",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**themeID:** `string` — The ID of the theme
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**borders:** `*management.BrandingThemeBorders` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**colors:** `*management.BrandingThemeColors` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**displayName:** `*string` — Display Name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fonts:** `*management.BrandingThemeFonts` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**identifiers:** `*management.BrandingThemeIdentifiers` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pageBackground:** `*management.BrandingThemePageBackground` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**widget:** `*management.BrandingThemeWidget` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Branding Phone Providers
-<details><summary><code>client.Branding.Phone.Providers.List() -> *management.ListBrandingPhoneProvidersResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a list of [phone providers](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers) details set for a Tenant. A list of fields to include or exclude may also be specified.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListBrandingPhoneProvidersRequestParameters{
-        Disabled: management.Bool(
-            true,
-        ),
-    }
-client.Branding.Phone.Providers.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**disabled:** `*bool` — Whether the provider is enabled (false) or disabled (true).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Providers.Create(request) -> *management.CreateBrandingPhoneProviderResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a [phone provider](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers).
-The `credentials` object requires different properties depending on the phone provider (which is specified using the `name` property).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateBrandingPhoneProviderRequestContent{
-        Name: management.PhoneProviderNameEnumTwilio,
-        Credentials: &management.PhoneProviderCredentials{
-            TwilioProviderCredentials: &management.TwilioProviderCredentials{
-                AuthToken: "auth_token",
-            },
-        },
-    }
-client.Branding.Phone.Providers.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `*management.PhoneProviderNameEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**disabled:** `*bool` — Whether the provider is enabled (false) or disabled (true).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**configuration:** `*management.PhoneProviderConfiguration` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credentials:** `*management.PhoneProviderCredentials` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Providers.Get(ID) -> *management.GetBrandingPhoneProviderResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve [phone provider](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers) details. A list of fields to include or exclude may also be specified.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Branding.Phone.Providers.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Providers.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete the configured phone provider.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Branding.Phone.Providers.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Providers.Update(ID, request) -> *management.UpdateBrandingPhoneProviderResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a [phone provider](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers).
-The `credentials` object requires different properties depending on the phone provider (which is specified using the `name` property).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateBrandingPhoneProviderRequestContent{}
-client.Branding.Phone.Providers.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `*management.PhoneProviderNameEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**disabled:** `*bool` — Whether the provider is enabled (false) or disabled (true).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credentials:** `*management.PhoneProviderCredentials` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**configuration:** `*management.PhoneProviderConfiguration` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Providers.Test(ID, request) -> *management.CreatePhoneProviderSendTestResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreatePhoneProviderSendTestRequestContent{
-        To: "to",
-    }
-client.Branding.Phone.Providers.Test(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**to:** `string` — The recipient phone number to receive a given notification.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**deliveryMethod:** `*management.PhoneProviderDeliveryMethodEnum` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Branding Phone Templates
-<details><summary><code>client.Branding.Phone.Templates.List() -> *management.ListPhoneTemplatesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListPhoneTemplatesRequestParameters{
-        Disabled: management.Bool(
-            true,
-        ),
-    }
-client.Branding.Phone.Templates.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**disabled:** `*bool` — Whether the template is enabled (false) or disabled (true).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Templates.Create(request) -> *management.CreatePhoneTemplateResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreatePhoneTemplateRequestContent{}
-client.Branding.Phone.Templates.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**type_:** `*management.PhoneTemplateNotificationTypeEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**disabled:** `*bool` — Whether the template is enabled (false) or disabled (true).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**content:** `*management.PhoneTemplateContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Templates.Get(ID) -> *management.GetPhoneTemplateResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Branding.Phone.Templates.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Templates.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Branding.Phone.Templates.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Templates.Update(ID, request) -> *management.UpdatePhoneTemplateResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdatePhoneTemplateRequestContent{}
-client.Branding.Phone.Templates.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**content:** `*management.PartialPhoneTemplateContent` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**disabled:** `*bool` — Whether the template is enabled (false) or disabled (true).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Templates.Reset(ID, request) -> *management.ResetPhoneTemplateResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := map[string]any{
-        "key": "value",
-    }
-client.Branding.Phone.Templates.Reset(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `management.ResetPhoneTemplateRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Branding.Phone.Templates.Test(ID, request) -> *management.CreatePhoneTemplateTestNotificationResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreatePhoneTemplateTestNotificationRequestContent{
-        To: "to",
-    }
-client.Branding.Phone.Templates.Test(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**to:** `string` — Destination of the testing phone notification
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**deliveryMethod:** `*management.PhoneProviderDeliveryMethodEnum` — Medium to use to send the notification
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ClientGrants Organizations
-<details><summary><code>client.ClientGrants.Organizations.List(ID) -> *management.ListClientGrantOrganizationsPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListClientGrantOrganizationsRequestParameters{
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.ClientGrants.Organizations.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the client grant
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Clients Credentials
-<details><summary><code>client.Clients.Credentials.List(ClientID) -> []*management.ClientCredential</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the details of a client credential.
-
-**Important**: To enable credentials to be used for a client authentication method, set the `client_authentication_methods` property on the client. To enable credentials to be used for JWT-Secured Authorization requests set the `signed_request_object` property on the client.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Clients.Credentials.List(
-        context.TODO(),
-        "client_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**clientID:** `string` — ID of the client.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Clients.Credentials.Create(ClientID, request) -> *management.PostClientCredentialResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a client credential associated to your application. Credentials can be used to configure Private Key JWT and mTLS authentication methods, as well as for JWT-secured Authorization requests.
-
-**Public Key**
-
-Public Key credentials can be used to set up Private Key JWT client authentication and JWT-secured Authorization requests.
-
-Sample: 
-
-```json
-{
-  "credential_type": "public_key",
-  "name": "string",
-  "pem": "string",
-  "alg": "RS256",
-  "parse_expiry_from_cert": false,
-  "expires_at": "2022-12-31T23:59:59Z"
-}
-```
-
-**Certificate (CA-signed & self-signed)**
-
-Certificate credentials can be used to set up mTLS client authentication. CA-signed certificates can be configured either with a signed certificate or with just the certificate Subject DN.
-
-CA-signed Certificate Sample (pem): 
-
-```json
-{
-  "credential_type": "x509_cert",
-  "name": "string",
-  "pem": "string"
-}
-```
-
-CA-signed Certificate Sample (subject_dn): 
-
-```json
-{
-  "credential_type": "cert_subject_dn",
-  "name": "string",
-  "subject_dn": "string"
-}
-```
-
-Self-signed Certificate Sample: 
-
-```json
-{
-  "credential_type": "cert_subject_dn",
-  "name": "string",
-  "pem": "string"
-}
-```
-
-The credential will be created but not yet enabled for use until you set the corresponding properties in the client:
-
-- To enable the credential for Private Key JWT or mTLS authentication methods, set the `client_authentication_methods` property on the client. For more information, read [Configure Private Key JWT Authentication](https://auth0.com/docs/get-started/applications/configure-private-key-jwt) and [Configure mTLS Authentication](https://auth0.com/docs/get-started/applications/configure-mtls)
-- To enable the credential for JWT-secured Authorization requests, set the `signed_request_object`property on the client. For more information, read [Configure JWT-secured Authorization Requests (JAR)](https://auth0.com/docs/get-started/applications/configure-jar)
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.PostClientCredentialRequestContent{
-        CredentialType: management.ClientCredentialTypeEnumPublicKey,
-    }
-client.Clients.Credentials.Create(
-        context.TODO(),
-        "client_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**clientID:** `string` — ID of the client.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credentialType:** `*management.ClientCredentialTypeEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `*string` — Friendly name for a credential.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**subjectDn:** `*string` — Subject Distinguished Name. Mutually exclusive with `pem` property. Applies to `cert_subject_dn` credential type.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pem:** `*string` — PEM-formatted public key (SPKI and PKCS1) or X509 certificate. Must be JSON escaped.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**alg:** `*management.PublicKeyCredentialAlgorithmEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**parseExpiryFromCert:** `*bool` — Parse expiry from x509 certificate. If true, attempts to parse the expiry date from the provided PEM. Applies to `public_key` credential type.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**expiresAt:** `*time.Time` — The ISO 8601 formatted date representing the expiration of the credential. If not specified (not recommended), the credential never expires. Applies to `public_key` credential type.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**kid:** `*string` — Optional kid (Key ID), used to uniquely identify the credential. If not specified, a kid value will be auto-generated. The kid header parameter in JWTs sent by your client should match this value. Valid format is [0-9a-zA-Z-_]{10,64}
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Clients.Credentials.Get(ClientID, CredentialID) -> *management.GetClientCredentialResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the details of a client credential.
-
-**Important**: To enable credentials to be used for a client authentication method, set the `client_authentication_methods` property on the client. To enable credentials to be used for JWT-Secured Authorization requests set the `signed_request_object` property on the client.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Clients.Credentials.Get(
-        context.TODO(),
-        "client_id",
-        "credential_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**clientID:** `string` — ID of the client.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credentialID:** `string` — ID of the credential.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Clients.Credentials.Delete(ClientID, CredentialID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a client credential you previously created. May be enabled or disabled. For more information, read <a href="https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">Client Credential Flow</a>.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Clients.Credentials.Delete(
-        context.TODO(),
-        "client_id",
-        "credential_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**clientID:** `string` — ID of the client.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credentialID:** `string` — ID of the credential to delete.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Clients.Credentials.Update(ClientID, CredentialID, request) -> *management.PatchClientCredentialResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Change a client credential you previously created. May be enabled or disabled. For more information, read <a href="https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">Client Credential Flow</a>.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.PatchClientCredentialRequestContent{}
-client.Clients.Credentials.Update(
-        context.TODO(),
-        "client_id",
-        "credential_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**clientID:** `string` — ID of the client.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credentialID:** `string` — ID of the credential.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**expiresAt:** `*time.Time` — The ISO 8601 formatted date representing the expiration of the credential.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Clients Connections
-<details><summary><code>client.Clients.Connections.Get(ID) -> *management.ListClientConnectionsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve all connections that are enabled for the specified [Application](https://www.auth0.com/docs/get-started/applications), using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
-
-- This endpoint requires the `read:connections` scope and any one of `read:clients` or `read:client_summary`.
-- **Note**: The first time you call this endpoint, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no further results are remaining.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ConnectionsGetRequest{
-        Strategy: []*management.ConnectionStrategyEnum{
-            management.ConnectionStrategyEnumAd.Ptr(),
-        },
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-    }
-client.Clients.Connections.Get(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the client for which to retrieve enabled connections.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**strategy:** `*management.ConnectionStrategyEnum` — Provide strategies to only retrieve connections with such strategies
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — <code>true</code> if the fields specified are to be included in the result, <code>false</code> otherwise (defaults to <code>true</code>)
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Connections DirectoryProvisioning
-<details><summary><code>client.Connections.DirectoryProvisioning.List() -> *management.ListDirectoryProvisioningsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a list of directory provisioning configurations of a tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListDirectoryProvisioningsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Connections.DirectoryProvisioning.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.DirectoryProvisioning.Get(ID) -> *management.GetDirectoryProvisioningResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the directory provisioning configuration of a connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.DirectoryProvisioning.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to retrieve its directory provisioning configuration
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.DirectoryProvisioning.Create(ID, request) -> *management.CreateDirectoryProvisioningResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a directory provisioning configuration for a connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateDirectoryProvisioningRequestContent{}
-client.Connections.DirectoryProvisioning.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to create its directory provisioning configuration
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*management.CreateDirectoryProvisioningRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.DirectoryProvisioning.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete the directory provisioning configuration of a connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.DirectoryProvisioning.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to delete its directory provisioning configuration
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.DirectoryProvisioning.Update(ID, request) -> *management.UpdateDirectoryProvisioningResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the directory provisioning configuration of a connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateDirectoryProvisioningRequestContent{}
-client.Connections.DirectoryProvisioning.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to create its directory provisioning configuration
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*management.UpdateDirectoryProvisioningRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.DirectoryProvisioning.GetDefaultMapping(ID) -> *management.GetDirectoryProvisioningDefaultMappingResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the directory provisioning default attribute mapping of a connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.DirectoryProvisioning.GetDefaultMapping(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to retrieve its directory provisioning configuration
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.DirectoryProvisioning.ListSynchronizedGroups(ID) -> *management.ListSynchronizedGroupsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the configured synchronized groups for a connection directory provisioning configuration.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListSynchronizedGroupsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-        Q: management.String(
-            "q",
-        ),
-    }
-client.Connections.DirectoryProvisioning.ListSynchronizedGroups(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to list synchronized groups for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**q:** `*string` — Query in <a target='_new' href ='https://lucene.apache.org/core/2_9_4/queryparsersyntax.html'>Lucene query string syntax</a>. Only prefix search on "name" or "email" fields are allowed, with a single wildcard suffix. Operators, modifiers, and groupings are not allowed. Terms are treated as case-insensitive. Example query: "name:engineering*".
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.DirectoryProvisioning.AddSynchronizedGroupSelections(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Add synchronized group selections to a directory provisioning configuration.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.AddSynchronizedGroupsRequestContent{
-        Groups: []*management.SynchronizedGroupPayload{
-            &management.SynchronizedGroupPayload{
-                ID: "id",
-            },
-        },
-    }
-client.Connections.DirectoryProvisioning.AddSynchronizedGroupSelections(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to add synchronized groups to
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**groups:** `[]*management.SynchronizedGroupPayload` — Array of Google Workspace Directory group objects to synchronize.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.DirectoryProvisioning.Set(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create or replace the selected groups for a connection directory provisioning configuration.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ReplaceSynchronizedGroupsRequestContent{
-        Groups: []*management.SynchronizedGroupPayload{
-            &management.SynchronizedGroupPayload{
-                ID: "id",
-            },
-        },
-    }
-client.Connections.DirectoryProvisioning.Set(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to create or replace synchronized groups for
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**groups:** `[]*management.SynchronizedGroupPayload` — Array of Google Workspace Directory group objects to synchronize.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.DirectoryProvisioning.DeleteSynchronizedGroupSelections(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete synchronized group selections for a directory provisioning configuration
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteSynchronizedGroupsRequestContent{
-        Groups: []*management.SynchronizedGroupSelectionID{
-            &management.SynchronizedGroupSelectionID{
-                ID: "id",
-            },
-        },
-    }
-client.Connections.DirectoryProvisioning.DeleteSynchronizedGroupSelections(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to delete synchronized group selections for
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**groups:** `[]*management.SynchronizedGroupSelectionID` — Array of groups to remove from the selection set.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Connections SCIMConfiguration
-<details><summary><code>client.Connections.SCIMConfiguration.List() -> *management.ListSCIMConfigurationsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a list of SCIM configurations of a tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListSCIMConfigurationsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Connections.SCIMConfiguration.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.SCIMConfiguration.Get(ID) -> *management.GetSCIMConfigurationResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves a scim configuration by its `connectionId`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.SCIMConfiguration.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to retrieve its SCIM configuration
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.SCIMConfiguration.Create(ID, request) -> *management.CreateSCIMConfigurationResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a scim configuration for a connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateSCIMConfigurationRequestContent{}
-client.Connections.SCIMConfiguration.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to create its SCIM configuration
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*management.CreateSCIMConfigurationRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.SCIMConfiguration.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes a scim configuration by its `connectionId`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.SCIMConfiguration.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to delete its SCIM configuration
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.SCIMConfiguration.Update(ID, request) -> *management.UpdateSCIMConfigurationResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a scim configuration by its `connectionId`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateSCIMConfigurationRequestContent{
-        UserIDAttribute: "user_id_attribute",
-        Mapping: []*management.SCIMMappingItem{
-            &management.SCIMMappingItem{},
-        },
-    }
-client.Connections.SCIMConfiguration.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to update its SCIM configuration
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userIDAttribute:** `string` — User ID attribute for generating unique user ids
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**mapping:** `[]*management.SCIMMappingItem` — The mapping between auth0 and SCIM
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.SCIMConfiguration.GetDefaultMapping(ID) -> *management.GetSCIMConfigurationDefaultMappingResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves a scim configuration's default mapping by its `connectionId`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.SCIMConfiguration.GetDefaultMapping(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to retrieve its default SCIM mapping
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Connections Clients
-<details><summary><code>client.Connections.Clients.Get(ID) -> *management.GetConnectionEnabledClientsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve all clients that have the specified [connection](https://auth0.com/docs/authenticate/identity-providers) enabled.
-
-**Note**: The first time you call this endpoint, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no further results are remaining.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetConnectionEnabledClientsRequestParameters{
-        Take: management.Int(
-            1,
-        ),
-        From: management.String(
-            "from",
-        ),
-    }
-client.Connections.Clients.Get(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection for which enabled clients are to be retrieved
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.Clients.Update(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := []*management.UpdateEnabledClientConnectionsRequestContentItem{
-        &management.UpdateEnabledClientConnectionsRequestContentItem{
-            ClientID: "client_id",
-            Status: true,
-        },
-    }
-client.Connections.Clients.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to modify
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `management.UpdateEnabledClientConnectionsRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Connections Keys
-<details><summary><code>client.Connections.Keys.Get(ID) -> []*management.ConnectionKey</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets the connection keys for the Okta or OIDC connection strategy.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.Keys.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the connection
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.Keys.Create(ID, request) -> management.PostConnectionsKeysResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Provision initial connection keys for Okta or OIDC connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.PostConnectionKeysRequestContent{}
-client.Connections.Keys.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the connection
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*management.PostConnectionKeysRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.Keys.Rotate(ID, request) -> *management.RotateConnectionsKeysResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Rotates the connection keys for the Okta or OIDC connection strategies.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.RotateConnectionKeysRequestContent{}
-client.Connections.Keys.Rotate(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the connection
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*management.RotateConnectionKeysRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Connections Users
-<details><summary><code>client.Connections.Users.DeleteByEmail(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes a specified connection user by its email (you cannot delete all users from specific connection). Currently, only Database Connections are supported.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteConnectionUsersByEmailQueryParameters{
-        Email: "email",
-    }
-client.Connections.Users.DeleteByEmail(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection (currently only database connections are supported)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `string` — The email of the user to delete
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Connections DirectoryProvisioning Synchronizations
-<details><summary><code>client.Connections.DirectoryProvisioning.Synchronizations.Create(ID) -> *management.CreateDirectorySynchronizationResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Request an on-demand synchronization of the directory.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.DirectoryProvisioning.Synchronizations.Create(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to trigger synchronization for
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Connections SCIMConfiguration Tokens
-<details><summary><code>client.Connections.SCIMConfiguration.Tokens.Get(ID) -> management.GetSCIMTokensResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves all scim tokens by its connection `id`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.SCIMConfiguration.Tokens.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to retrieve its SCIM configuration
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.SCIMConfiguration.Tokens.Create(ID, request) -> *management.CreateSCIMTokenResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a scim token for a scim client.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateSCIMTokenRequestContent{}
-client.Connections.SCIMConfiguration.Tokens.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the connection to create its SCIM token
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scopes:** `[]string` — The scopes of the scim token
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tokenLifetime:** `*int` — Lifetime of the token in seconds. Must be greater than 900
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Connections.SCIMConfiguration.Tokens.Delete(ID, TokenID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes a scim token by its connection `id` and `tokenId`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Connections.SCIMConfiguration.Tokens.Delete(
-        context.TODO(),
-        "id",
-        "tokenId",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The connection id that owns the SCIM token to delete
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tokenID:** `string` — The id of the scim token to delete
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Emails Provider
-<details><summary><code>client.Emails.Provider.Get() -> *management.GetEmailProviderResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of the [email provider configuration](https://auth0.com/docs/customize/email/smtp-email-providers) in your tenant. A list of fields to include or exclude may also be specified.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetEmailProviderRequestParameters{
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-    }
-client.Emails.Provider.Get(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**fields:** `*string` — Comma-separated list of fields to include or exclude (dependent upon include_fields) from the result. Leave empty to retrieve `name` and `enabled`. Additional fields available include `credentials`, `default_from_address`, and `settings`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Emails.Provider.Create(request) -> *management.CreateEmailProviderResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create an [email provider](https://auth0.com/docs/email/providers). The `credentials` object
-requires different properties depending on the email provider (which is specified using the `name` property):
-
-- `mandrill` requires `api_key`
-- `sendgrid` requires `api_key`
-- `sparkpost` requires `api_key`. Optionally, set `region` to `eu` to use
-    the SparkPost service hosted in Western Europe; set to `null` to use the SparkPost service hosted in
-    North America. `eu` or `null` are the only valid values for `region`.
-- `mailgun` requires `api_key` and `domain`. Optionally, set `region` to
-    `eu` to use the Mailgun service hosted in Europe; set to `null` otherwise. `eu` or
-    `null` are the only valid values for `region`.
-- `ses` requires `accessKeyId`, `secretAccessKey`, and `region`
-- `smtp` requires `smtp_host`, `smtp_port`, `smtp_user`, and
-    `smtp_pass`
-
-Depending on the type of provider it is possible to specify `settings` object with different configuration
-options, which will be used when sending an email:
-
-- `smtp` provider, `settings` may contain `headers` object.
-    - When using AWS SES SMTP host, you may provide a name of configuration set in
-      `X-SES-Configuration-Set` header. Value must be a string.
-    - When using Sparkpost host, you may provide value for
-      `X-MSYS_API` header. Value must be an object.
-- For `ses` provider, `settings` may contain `message` object, where you can provide
-  a name of configuration set in `configuration_set_name` property. Value must be a string.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateEmailProviderRequestContent{
-        Name: management.EmailProviderNameEnumMailgun,
-        Credentials: &management.EmailProviderCredentialsSchema{
-            EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
-                APIKey: "api_key",
-            },
-        },
-    }
-client.Emails.Provider.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `*management.EmailProviderNameEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enabled:** `*bool` — Whether the provider is enabled (true) or disabled (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**defaultFromAddress:** `*string` — Email address to use as "from" when no other address specified.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credentials:** `*management.EmailProviderCredentialsSchema` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**settings:** `*management.EmailSpecificProviderSettingsWithAdditionalProperties` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Emails.Provider.Delete() -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete the email provider.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Emails.Provider.Delete(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Emails.Provider.Update(request) -> *management.UpdateEmailProviderResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update an [email provider](https://auth0.com/docs/email/providers). The `credentials` object
-requires different properties depending on the email provider (which is specified using the `name` property):
-
-- `mandrill` requires `api_key`
-- `sendgrid` requires `api_key`
-- `sparkpost` requires `api_key`. Optionally, set `region` to `eu` to use
-    the SparkPost service hosted in Western Europe; set to `null` to use the SparkPost service hosted in
-    North America. `eu` or `null` are the only valid values for `region`.
-- `mailgun` requires `api_key` and `domain`. Optionally, set `region` to
-    `eu` to use the Mailgun service hosted in Europe; set to `null` otherwise. `eu` or
-    `null` are the only valid values for `region`.
-- `ses` requires `accessKeyId`, `secretAccessKey`, and `region`
-- `smtp` requires `smtp_host`, `smtp_port`, `smtp_user`, and
-    `smtp_pass`
-
-Depending on the type of provider it is possible to specify `settings` object with different configuration
-options, which will be used when sending an email:
-
-- `smtp` provider, `settings` may contain `headers` object.
-    - When using AWS SES SMTP host, you may provide a name of configuration set in
-      `X-SES-Configuration-Set` header. Value must be a string.
-    - When using Sparkpost host, you may provide value for
-      `X-MSYS_API` header. Value must be an object.
-
-  For `ses` provider, `settings` may contain `message` object, where you can provide
-  a name of configuration set in `configuration_set_name` property. Value must be a string.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateEmailProviderRequestContent{}
-client.Emails.Provider.Update(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `*management.EmailProviderNameEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enabled:** `*bool` — Whether the provider is enabled (true) or disabled (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**defaultFromAddress:** `*string` — Email address to use as "from" when no other address specified.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credentials:** `*management.EmailProviderCredentialsSchema` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**settings:** `*management.EmailSpecificProviderSettingsWithAdditionalProperties` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EventStreams Deliveries
-<details><summary><code>client.EventStreams.Deliveries.List(ID) -> *management.ListEventStreamDeliveriesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListEventStreamDeliveriesRequestParameters{
-        Statuses: management.String(
-            "statuses",
-        ),
-        EventTypes: management.String(
-            "event_types",
-        ),
-        DateFrom: management.String(
-            "date_from",
-        ),
-        DateTo: management.String(
-            "date_to",
-        ),
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.EventStreams.Deliveries.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the event stream.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**statuses:** `*string` — Comma-separated list of statuses by which to filter
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**eventTypes:** `*string` — Comma-separated list of event types by which to filter
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dateFrom:** `*string` — An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dateTo:** `*string` — An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.EventStreams.Deliveries.GetHistory(ID, EventID) -> *management.GetEventStreamDeliveryHistoryResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.EventStreams.Deliveries.GetHistory(
-        context.TODO(),
-        "id",
-        "event_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the event stream.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**eventID:** `string` — Unique identifier for the event
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EventStreams Redeliveries
-<details><summary><code>client.EventStreams.Redeliveries.Create(ID, request) -> *management.CreateEventStreamRedeliveryResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateEventStreamRedeliveryRequestContent{}
-client.EventStreams.Redeliveries.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the event stream.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dateFrom:** `*time.Time` — An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dateTo:** `*time.Time` — An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**statuses:** `[]*management.EventStreamDeliveryStatusEnum` — Filter by status
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**eventTypes:** `[]*management.EventStreamEventTypeEnum` — Filter by event type
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.EventStreams.Redeliveries.CreateByID(ID, EventID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.EventStreams.Redeliveries.CreateByID(
-        context.TODO(),
-        "id",
-        "event_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the event stream.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**eventID:** `string` — Unique identifier for the event
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Flows Executions
-<details><summary><code>client.Flows.Executions.List(FlowID) -> *management.ListFlowExecutionsPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListFlowExecutionsRequestParameters{
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Flows.Executions.List(
-        context.TODO(),
-        "flow_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**flowID:** `string` — Flow id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Flows.Executions.Get(FlowID, ExecutionID) -> *management.GetFlowExecutionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetFlowExecutionRequestParameters{
-        Hydrate: []*management.GetFlowExecutionRequestParametersHydrateEnum{
-            management.GetFlowExecutionRequestParametersHydrateEnumDebug.Ptr(),
-        },
-    }
-client.Flows.Executions.Get(
-        context.TODO(),
-        "flow_id",
-        "execution_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**flowID:** `string` — Flow id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**executionID:** `string` — Flow execution id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**hydrate:** `*management.GetFlowExecutionRequestParametersHydrateEnum` — Hydration param
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Flows.Executions.Delete(FlowID, ExecutionID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Flows.Executions.Delete(
-        context.TODO(),
-        "flow_id",
-        "execution_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**flowID:** `string` — Flows id
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**executionID:** `string` — Flow execution identifier
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Flows Vault Connections
-<details><summary><code>client.Flows.Vault.Connections.List() -> *management.ListFlowsVaultConnectionsOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListFlowsVaultConnectionsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Flows.Vault.Connections.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Flows.Vault.Connections.Create(request) -> *management.CreateFlowsVaultConnectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateFlowsVaultConnectionRequestContent{
-        CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
-            CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
-                Name: "name",
-                AppID: management.FlowsVaultConnectionAppIDActivecampaignEnumActivecampaign,
-                Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
-                    Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnumAPIKey,
-                    APIKey: "api_key",
-                    BaseURL: "base_url",
-                },
-            },
-        },
-    }
-client.Flows.Vault.Connections.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `*management.CreateFlowsVaultConnectionRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Flows.Vault.Connections.Get(ID) -> *management.GetFlowsVaultConnectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Flows.Vault.Connections.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Flows Vault connection ID
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Flows.Vault.Connections.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Flows.Vault.Connections.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Vault connection id
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Flows.Vault.Connections.Update(ID, request) -> *management.UpdateFlowsVaultConnectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateFlowsVaultConnectionRequestContent{}
-client.Flows.Vault.Connections.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Flows Vault connection ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `*string` — Flows Vault Connection name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**setup:** `*management.UpdateFlowsVaultConnectionSetup` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Groups Members
-<details><summary><code>client.Groups.Members.Get(ID) -> *management.GetGroupMembersResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all users that are a member of this group.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetGroupMembersRequestParameters{
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Groups.Members.Get(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the group (service-generated).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Groups Roles
-<details><summary><code>client.Groups.Roles.List(ID) -> *management.ListGroupRolesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists the [roles](https://auth0.com/docs/manage-users/access-control/rbac) assigned to a group.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListGroupRolesRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Groups.Roles.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the group (service-generated).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Groups.Roles.Create(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Assign one or more [roles](https://auth0.com/docs/manage-users/access-control/rbac) to a specified group.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateGroupRolesRequestParameters{
-        Roles: []string{
-            "roles",
-        },
-    }
-client.Groups.Roles.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the group (service-generated).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `[]string` — Array of role IDs to assign to the group.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Groups.Roles.Delete(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Unassign one or more [roles](https://auth0.com/docs/manage-users/access-control/rbac) from a specified group.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteGroupRolesRequestContent{
-        Roles: []string{
-            "roles",
-        },
-    }
-client.Groups.Roles.Delete(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the group (service-generated).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `[]string` — Array of role IDs to remove from the group.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Guardian Enrollments
-<details><summary><code>client.Guardian.Enrollments.CreateTicket(request) -> *management.CreateGuardianEnrollmentTicketResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a [multi-factor authentication (MFA) enrollment ticket](https://auth0.com/docs/secure/multi-factor-authentication/auth0-guardian/create-custom-enrollment-tickets), and optionally send an email with the created ticket to a given user. Enrollment tickets can specify which factor users must enroll with or allow existing MFA users to enroll in additional factors.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateGuardianEnrollmentTicketRequestContent{
-        UserID: "user_id",
-    }
-client.Guardian.Enrollments.CreateTicket(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userID:** `string` — user_id for the enrollment ticket
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `*string` — alternate email to which the enrollment email will be sent. Optional - by default, the email will be sent to the user's default address
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sendMail:** `*bool` — Send an email to the user to start the enrollment
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**emailLocale:** `*string` — Optional. Specify the locale of the enrollment email. Used with send_email.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**factor:** `*management.GuardianEnrollmentFactorEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**allowMultipleEnrollments:** `*bool` — Optional. Allows a user who has previously enrolled in MFA to enroll with additional factors.<br />Note: Parameter can only be used with Universal Login; it cannot be used with Classic Login or custom MFA pages.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Enrollments.Get(ID) -> *management.GetGuardianEnrollmentResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details, such as status and type, for a specific multi-factor authentication enrollment registered to a user account.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Enrollments.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the enrollment to be retrieve.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Enrollments.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove a specific multi-factor authentication (MFA) enrollment from a user's account. This allows the user to re-enroll with MFA. For more information, review [Reset User Multi-Factor Authentication and Recovery Codes](https://auth0.com/docs/secure/multi-factor-authentication/reset-user-mfa).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Enrollments.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the enrollment to be deleted.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Guardian Factors
-<details><summary><code>client.Guardian.Factors.List() -> []*management.GuardianFactor</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of all <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors">multi-factor authentication factors</a> associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.List(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Set(Name, request) -> *management.SetGuardianFactorResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the status (i.e., enabled or disabled) of a specific multi-factor authentication factor.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorRequestContent{
-        Enabled: true,
-    }
-client.Guardian.Factors.Set(
-        context.TODO(),
-        management.GuardianFactorNameEnumPushNotification.Ptr(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `*management.GuardianFactorNameEnum` — Factor name. Can be `sms`, `push-notification`, `email`, `duo` `otp` `webauthn-roaming`, `webauthn-platform`, or `recovery-code`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enabled:** `bool` — Whether this factor is enabled (true) or disabled (false).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Guardian Policies
-<details><summary><code>client.Guardian.Policies.List() -> management.ListGuardianPoliciesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the [multi-factor authentication (MFA) policies](https://auth0.com/docs/secure/multi-factor-authentication/enable-mfa) configured for your tenant.
-
-The following policies are supported:
-
-- `all-applications` policy prompts with MFA for all logins.
-- `confidence-score` policy prompts with MFA only for low confidence logins.
-
-**Note**: The `confidence-score` policy is part of the [Adaptive MFA feature](https://auth0.com/docs/secure/multi-factor-authentication/adaptive-mfa). Adaptive MFA requires an add-on for the Enterprise plan; review [Auth0 Pricing](https://auth0.com/pricing) for more details.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Policies.List(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Policies.Set(request) -> management.SetGuardianPoliciesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Set [multi-factor authentication (MFA) policies](https://auth0.com/docs/secure/multi-factor-authentication/enable-mfa) for your tenant.
-
-The following policies are supported:
-
-- `all-applications` policy prompts with MFA for all logins.
-- `confidence-score` policy prompts with MFA only for low confidence logins.
-
-**Note**: The `confidence-score` policy is part of the [Adaptive MFA feature](https://auth0.com/docs/secure/multi-factor-authentication/adaptive-mfa). Adaptive MFA requires an add-on for the Enterprise plan; review [Auth0 Pricing](https://auth0.com/pricing) for more details.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := []management.MfaPolicyEnum{
-        management.MfaPolicyEnumAllApplications,
-    }
-client.Guardian.Policies.Set(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `management.SetGuardianPoliciesRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Guardian Factors Phone
-<details><summary><code>client.Guardian.Factors.Phone.GetMessageTypes() -> *management.GetGuardianFactorPhoneMessageTypesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve list of <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">phone-type MFA factors</a> (i.e., sms and voice) that are enabled for your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.Phone.GetMessageTypes(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Phone.SetMessageTypes(request) -> *management.SetGuardianFactorPhoneMessageTypesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Replace the list of <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">phone-type MFA factors</a> (i.e., sms and voice) that are enabled for your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorPhoneMessageTypesRequestContent{
-        MessageTypes: []management.GuardianFactorPhoneFactorMessageTypeEnum{
-            management.GuardianFactorPhoneFactorMessageTypeEnumSms,
-        },
-    }
-client.Guardian.Factors.Phone.SetMessageTypes(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**messageTypes:** `[]*management.GuardianFactorPhoneFactorMessageTypeEnum` — The list of phone factors to enable on the tenant. Can include `sms` and `voice`.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Phone.GetTwilioProvider() -> *management.GetGuardianFactorsProviderPhoneTwilioResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve configuration details for a Twilio phone provider that has been set up in your tenant. To learn more, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">Configure SMS and Voice Notifications for MFA</a>. 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.Phone.GetTwilioProvider(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Phone.SetTwilioProvider(request) -> *management.SetGuardianFactorsProviderPhoneTwilioResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the configuration of a Twilio phone provider that has been set up in your tenant. To learn more, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">Configure SMS and Voice Notifications for MFA</a>. 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorsProviderPhoneTwilioRequestContent{}
-client.Guardian.Factors.Phone.SetTwilioProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**from:** `*string` — From number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**messagingServiceSid:** `*string` — Copilot SID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**authToken:** `*string` — Twilio Authentication token
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sid:** `*string` — Twilio SID
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Phone.GetSelectedProvider() -> *management.GetGuardianFactorsProviderPhoneResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of the multi-factor authentication phone provider configured for your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.Phone.GetSelectedProvider(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Phone.SetProvider(request) -> *management.SetGuardianFactorsProviderPhoneResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorsProviderPhoneRequestContent{
-        Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
-    }
-client.Guardian.Factors.Phone.SetProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider:** `*management.GuardianFactorsProviderSmsProviderEnum` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Phone.GetTemplates() -> *management.GetGuardianFactorPhoneTemplatesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of the multi-factor authentication enrollment and verification templates for phone-type factors available in your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.Phone.GetTemplates(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Phone.SetTemplates(request) -> *management.SetGuardianFactorPhoneTemplatesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Customize the messages sent to complete phone enrollment and verification (subscription required).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorPhoneTemplatesRequestContent{
-        EnrollmentMessage: "enrollment_message",
-        VerificationMessage: "verification_message",
-    }
-client.Guardian.Factors.Phone.SetTemplates(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**enrollmentMessage:** `string` — Message sent to the user when they are invited to enroll with a phone number.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verificationMessage:** `string` — Message sent to the user when they are prompted to verify their account.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Guardian Factors PushNotification
-<details><summary><code>client.Guardian.Factors.PushNotification.GetApnsProvider() -> *management.GetGuardianFactorsProviderApnsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve configuration details for the multi-factor authentication APNS provider associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.PushNotification.GetApnsProvider(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.SetApnsProvider(request) -> *management.SetGuardianFactorsProviderPushNotificationApnsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Overwrite all configuration details of the multi-factor authentication APNS provider associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorsProviderPushNotificationApnsRequestContent{}
-client.Guardian.Factors.PushNotification.SetApnsProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**sandbox:** `*bool` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bundleID:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**p12:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.UpdateApnsProvider(request) -> *management.UpdateGuardianFactorsProviderPushNotificationApnsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Modify configuration details of the multi-factor authentication APNS provider associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent{}
-client.Guardian.Factors.PushNotification.UpdateApnsProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**sandbox:** `*bool` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bundleID:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**p12:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.SetFcmProvider(request) -> management.SetGuardianFactorsProviderPushNotificationFcmResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Overwrite all configuration details of the multi-factor authentication FCM provider associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorsProviderPushNotificationFcmRequestContent{}
-client.Guardian.Factors.PushNotification.SetFcmProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**serverKey:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.UpdateFcmProvider(request) -> management.UpdateGuardianFactorsProviderPushNotificationFcmResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Modify configuration details of the multi-factor authentication FCM provider associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent{}
-client.Guardian.Factors.PushNotification.UpdateFcmProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**serverKey:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.SetFcmv1Provider(request) -> management.SetGuardianFactorsProviderPushNotificationFcmv1ResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Overwrite all configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
-client.Guardian.Factors.PushNotification.SetFcmv1Provider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**serverCredentials:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(request) -> management.UpdateGuardianFactorsProviderPushNotificationFcmv1ResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Modify configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
-client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**serverCredentials:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.GetSnsProvider() -> *management.GetGuardianFactorsProviderSnsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve configuration details for an AWS SNS push notification provider that has been enabled for MFA. To learn more, review [Configure Push Notifications for MFA](https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.PushNotification.GetSnsProvider(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.SetSnsProvider(request) -> *management.SetGuardianFactorsProviderPushNotificationSnsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Configure the [AWS SNS push notification provider configuration](https://auth0.com/docs/multifactor-authentication/developer/sns-configuration) (subscription required).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorsProviderPushNotificationSnsRequestContent{}
-client.Guardian.Factors.PushNotification.SetSnsProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**awsAccessKeyID:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**awsSecretAccessKey:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**awsRegion:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**snsApnsPlatformApplicationArn:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**snsGcmPlatformApplicationArn:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.UpdateSnsProvider(request) -> *management.UpdateGuardianFactorsProviderPushNotificationSnsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Configure the [AWS SNS push notification provider configuration](https://auth0.com/docs/multifactor-authentication/developer/sns-configuration) (subscription required).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent{}
-client.Guardian.Factors.PushNotification.UpdateSnsProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**awsAccessKeyID:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**awsSecretAccessKey:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**awsRegion:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**snsApnsPlatformApplicationArn:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**snsGcmPlatformApplicationArn:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.GetSelectedProvider() -> *management.GetGuardianFactorsProviderPushNotificationResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Modify the push notification provider configured for your tenant. For more information, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa">Configure Push Notifications for MFA</a>. 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.PushNotification.GetSelectedProvider(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.PushNotification.SetProvider(request) -> *management.SetGuardianFactorsProviderPushNotificationResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Modify the push notification provider configured for your tenant. For more information, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa">Configure Push Notifications for MFA</a>. 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorsProviderPushNotificationRequestContent{
-        Provider: management.GuardianFactorsProviderPushNotificationProviderDataEnumGuardian,
-    }
-client.Guardian.Factors.PushNotification.SetProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider:** `*management.GuardianFactorsProviderPushNotificationProviderDataEnum` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Guardian Factors Sms
-<details><summary><code>client.Guardian.Factors.Sms.GetTwilioProvider() -> *management.GetGuardianFactorsProviderSmsTwilioResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the <a href="https://auth0.com/docs/multifactor-authentication/twilio-configuration">Twilio SMS provider configuration</a> (subscription required).
-
-    A new endpoint is available to retrieve the Twilio configuration related to phone factors (<a href='https://auth0.com/docs/api/management/v2/#!/Guardian/get_twilio'>phone Twilio configuration</a>). It has the same payload as this one. Please use it instead.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.Sms.GetTwilioProvider(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Sms.SetTwilioProvider(request) -> *management.SetGuardianFactorsProviderSmsTwilioResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/put-twilio">Update Twilio phone configuration</a> endpoint.
-
-    <b>Previous functionality</b>: Update the Twilio SMS provider configuration.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorsProviderSmsTwilioRequestContent{}
-client.Guardian.Factors.Sms.SetTwilioProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**from:** `*string` — From number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**messagingServiceSid:** `*string` — Copilot SID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**authToken:** `*string` — Twilio Authentication token
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sid:** `*string` — Twilio SID
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Sms.GetSelectedProvider() -> *management.GetGuardianFactorsProviderSmsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/get-phone-providers">Retrieve phone configuration</a> endpoint instead.
-
-    <b>Previous functionality</b>: Retrieve details for the multi-factor authentication SMS provider configured for your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.Sms.GetSelectedProvider(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Sms.SetProvider(request) -> *management.SetGuardianFactorsProviderSmsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/put-phone-providers">Update phone configuration</a> endpoint instead.
-
-    <b>Previous functionality</b>: Update the multi-factor authentication SMS provider configuration in your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorsProviderSmsRequestContent{
-        Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
-    }
-client.Guardian.Factors.Sms.SetProvider(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider:** `*management.GuardianFactorsProviderSmsProviderEnum` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Sms.GetTemplates() -> *management.GetGuardianFactorSmsTemplatesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/get-factor-phone-templates">Retrieve enrollment and verification phone templates</a> endpoint instead.
-
-    <b>Previous function</b>: Retrieve details of SMS enrollment and verification templates configured for your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.Sms.GetTemplates(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Sms.SetTemplates(request) -> *management.SetGuardianFactorSmsTemplatesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-This endpoint has been deprecated. To complete this action, use the <a href="https://auth0.com/docs/api/management/v2/guardian/put-factor-phone-templates">Update enrollment and verification phone templates</a> endpoint instead.
-
-    <b>Previous functionality</b>: Customize the messages sent to complete SMS enrollment and verification.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorSmsTemplatesRequestContent{
-        EnrollmentMessage: "enrollment_message",
-        VerificationMessage: "verification_message",
-    }
-client.Guardian.Factors.Sms.SetTemplates(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**enrollmentMessage:** `string` — Message sent to the user when they are invited to enroll with a phone number.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**verificationMessage:** `string` — Message sent to the user when they are prompted to verify their account.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Guardian Factors Duo Settings
-<details><summary><code>client.Guardian.Factors.Duo.Settings.Get() -> *management.GetGuardianFactorDuoSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves the DUO account and factor configuration.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Guardian.Factors.Duo.Settings.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Duo.Settings.Set(request) -> *management.SetGuardianFactorDuoSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Set the DUO account configuration and other properties specific to this factor.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetGuardianFactorDuoSettingsRequestContent{}
-client.Guardian.Factors.Duo.Settings.Set(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ikey:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**skey:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Guardian.Factors.Duo.Settings.Update(request) -> *management.UpdateGuardianFactorDuoSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateGuardianFactorDuoSettingsRequestContent{}
-client.Guardian.Factors.Duo.Settings.Update(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ikey:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**skey:** `*string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**host:** `*string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Hooks Secrets
-<details><summary><code>client.Hooks.Secrets.Get(ID) -> management.GetHookSecretResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a hook's secrets by the ID of the hook.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Hooks.Secrets.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the hook to retrieve secrets from.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Hooks.Secrets.Create(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Add one or more secrets to an existing hook. Accepts an object of key-value pairs, where the key is the name of the secret. A hook can have a maximum of 20 secrets.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := map[string]string{
-        "key": "value",
-    }
-client.Hooks.Secrets.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The id of the hook to retrieve
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `management.CreateHookSecretRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Hooks.Secrets.Delete(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete one or more existing secrets for a given hook. Accepts an array of secret names to delete.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := []string{
-        "string",
-    }
-client.Hooks.Secrets.Delete(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the hook whose secrets to delete.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `management.DeleteHookSecretRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Hooks.Secrets.Update(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update one or more existing secrets for an existing hook. Accepts an object of key-value pairs, where the key is the name of the existing secret.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := map[string]string{
-        "key": "value",
-    }
-client.Hooks.Secrets.Update(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the hook whose secrets to update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `management.UpdateHookSecretRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Jobs UsersExports
-<details><summary><code>client.Jobs.UsersExports.Create(request) -> *management.CreateExportUsersResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Export all users to a file via a long-running job.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateExportUsersRequestContent{}
-client.Jobs.UsersExports.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**connectionID:** `*string` — connection_id of the connection from which users will be exported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**format:** `*management.JobFileFormatEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `*int` — Limit the number of records.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `[]*management.CreateExportUsersFields` — List of fields to be included in the CSV. Defaults to a predefined set of fields.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Jobs UsersImports
-<details><summary><code>client.Jobs.UsersImports.Create(request) -> *management.CreateImportUsersResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Import users from a <a href="https://auth0.com/docs/users/references/bulk-import-database-schema-examples">formatted file</a> into a connection via a long-running job. When importing users, with or without upsert, the `email_verified` is set to `false` when the email address is added or updated. Users must verify their email address. To avoid this behavior, set `email_verified` to `true` in the imported data.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateImportUsersRequestContent{
-        Users: strings.NewReader(
-            "",
-        ),
-        ConnectionID: "connection_id",
-    }
-client.Jobs.UsersImports.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Jobs VerificationEmail
-<details><summary><code>client.Jobs.VerificationEmail.Create(request) -> *management.CreateVerificationEmailResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Send an email to the specified user that asks them to click a link to [verify their email address](https://auth0.com/docs/email/custom#verification-email).
-
-Note: You must have the `Status` toggle enabled for the verification email template for the email to be sent.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateVerificationEmailRequestContent{
-        UserID: "user_id",
-    }
-client.Jobs.VerificationEmail.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userID:** `string` — user_id of the user to send the verification email to.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientID:** `*string` — client_id of the client (application). If no value provided, the global Client ID will be used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**identity:** `*management.Identity` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organizationID:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Jobs Errors
-<details><summary><code>client.Jobs.Errors.Get(ID) -> *jobs.ErrorsGetResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve error details of a failed job.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Jobs.Errors.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the job.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Keys CustomSigning
-<details><summary><code>client.Keys.CustomSigning.Get() -> *management.GetCustomSigningKeysResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get entire jwks representation of custom signing keys.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.CustomSigning.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.CustomSigning.Set(request) -> *management.SetCustomSigningKeysResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create or replace entire jwks representation of custom signing keys.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.SetCustomSigningKeysRequestContent{
-        Keys: []*management.CustomSigningKeyJwk{
-            &management.CustomSigningKeyJwk{
-                Kty: management.CustomSigningKeyTypeEnumEc,
-            },
-        },
-    }
-client.Keys.CustomSigning.Set(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**keys:** `[]*management.CustomSigningKeyJwk` — An array of custom public signing keys.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.CustomSigning.Delete() -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete entire jwks representation of custom signing keys.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.CustomSigning.Delete(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Keys Encryption
-<details><summary><code>client.Keys.Encryption.List() -> *management.ListEncryptionKeyOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of all the encryption keys associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListEncryptionKeysRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Keys.Encryption.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Default value is 50, maximum value is 100.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.Encryption.Create(request) -> *management.CreateEncryptionKeyResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create the new, pre-activated encryption key, without the key material.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateEncryptionKeyRequestContent{
-        Type: management.CreateEncryptionKeyTypeCustomerProvidedRootKey,
-    }
-client.Keys.Encryption.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**type_:** `*management.CreateEncryptionKeyType` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.Encryption.Rekey() -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Perform rekeying operation on the key hierarchy.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.Encryption.Rekey(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.Encryption.Get(Kid) -> *management.GetEncryptionKeyResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of the encryption key with the given ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.Encryption.Get(
-        context.TODO(),
-        "kid",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**kid:** `string` — Encryption key ID
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.Encryption.Import(Kid, request) -> *management.ImportEncryptionKeyResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Import wrapped key material and activate encryption key.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ImportEncryptionKeyRequestContent{
-        WrappedKey: "wrapped_key",
-    }
-client.Keys.Encryption.Import(
-        context.TODO(),
-        "kid",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**kid:** `string` — Encryption key ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**wrappedKey:** `string` — Base64 encoded ciphertext of key material wrapped by public wrapping key.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.Encryption.Delete(Kid) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete the custom provided encryption key with the given ID and move back to using native encryption key.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.Encryption.Delete(
-        context.TODO(),
-        "kid",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**kid:** `string` — Encryption key ID
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.Encryption.CreatePublicWrappingKey(Kid) -> *management.CreateEncryptionKeyPublicWrappingResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create the public wrapping key to wrap your own encryption key material.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.Encryption.CreatePublicWrappingKey(
-        context.TODO(),
-        "kid",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**kid:** `string` — Encryption key ID
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Keys NetworkACLs
-<details><summary><code>client.Keys.NetworkACLs.List() -> *management.GetAllKeysNetworkACLsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve all keys used to verify HTTP Message Signatures on Network ACL rules, ordered by creation time descending.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.NetworkACLs.List(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.NetworkACLs.Create(request) -> *management.CreateKeysNetworkACLsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new key used to verify HTTP Message Signatures on Network ACL rules.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateKeysNetworkACLsRequestContent{
-        Name: "name",
-        Alg: management.NetworkACLKeyAlgorithmEnumHmacSha256,
-        Value: "value",
-    }
-client.Keys.NetworkACLs.Create(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `string` — Customer-supplied label with no cryptographic meaning. Must be unique across all Network ACL keys for the tenant.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**alg:** `*management.NetworkACLKeyAlgorithmEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**value:** `string` — Base64-encoded raw key material. Constraints on the decoded value depend on the algorithm specified. Currently only HMAC-SHA256 is supported.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.NetworkACLs.Get(ID) -> *management.NetworkACLKey</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a specific key used to verify HTTP Message Signatures on Network ACL rules.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.NetworkACLs.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the Network ACL Key to retrieve.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.NetworkACLs.Delete(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a key used to verify HTTP Message Signatures on Network ACL rules
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.NetworkACLs.Delete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the Network ACL Key to delete.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Keys Signing
-<details><summary><code>client.Keys.Signing.List() -> []*management.SigningKeys</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of all the application signing keys associated with your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.Signing.List(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.Signing.Rotate() -> *management.RotateSigningKeysResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Rotate the application signing key of your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.Signing.Rotate(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.Signing.Get(Kid) -> *management.GetSigningKeysResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details of the application signing key with the given ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.Signing.Get(
-        context.TODO(),
-        "kid",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**kid:** `string` — Key id of the key to retrieve
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Keys.Signing.Revoke(Kid) -> *management.RevokedSigningKeysResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Revoke the application signing key with the given ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Keys.Signing.Revoke(
-        context.TODO(),
-        "kid",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**kid:** `string` — Key id of the key to revoke
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations ClientGrants
-<details><summary><code>client.Organizations.ClientGrants.List(ID) -> *management.ListOrganizationClientGrantsOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationClientGrantsRequestParameters{
-        Audience: management.String(
-            "audience",
-        ),
-        ClientID: management.String(
-            "client_id",
-        ),
-        GrantIDs: []*string{
-            management.String(
-                "grant_ids",
-            ),
-        },
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Organizations.ClientGrants.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**audience:** `*string` — Optional filter on audience of the client grant.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientID:** `*string` — Optional filter on client_id of the client grant.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**grantIDs:** `*string` — Optional filter on the ID of the client grant. Must be URL encoded and may be specified multiple times (max 10).<br /><b>e.g.</b> <i>../client-grants?grant_ids=id1&grant_ids=id2</i>
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.ClientGrants.Create(ID, request) -> *management.AssociateOrganizationClientGrantResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.AssociateOrganizationClientGrantRequestContent{
-        GrantID: "grant_id",
-    }
-client.Organizations.ClientGrants.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**grantID:** `string` — A Client Grant ID to add to the organization.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.ClientGrants.Delete(ID, GrantID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.ClientGrants.Delete(
-        context.TODO(),
-        "id",
-        "grant_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**grantID:** `string` — The Client Grant ID to remove from the organization
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Clients
-<details><summary><code>client.Organizations.Clients.List(ID) -> *management.ListOrganizationClientsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all clients associated with an organization, using checkpoint pagination.
-<ul>
-  <li>
-    <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
-  </li>
-</ul>
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationClientsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Organizations.Clients.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50. Values greater than the maximum of 100 are capped at 100.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Clients.Create(ID, request) -> management.CreateOrganizationClientsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Associate one or more clients with an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateOrganizationClientsRequestContent{
-        Clients: []*management.CreateOrganizationClientRequestItem{
-            &management.CreateOrganizationClientRequestItem{
-                ClientID: "client_id",
-                UseForMemberAccess: true,
-            },
-        },
-    }
-client.Organizations.Clients.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clients:** `[]*management.CreateOrganizationClientRequestItem` — List of clients to associate with the organization.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Clients.Delete(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove one or more client associations from an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteOrganizationClientsRequestContent{
-        Clients: []string{
-            "clients",
-        },
-    }
-client.Organizations.Clients.Delete(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clients:** `[]string` — List of client IDs to disassociate from the organization.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Clients.Get(ID, ClientID) -> *management.GetOrganizationClientResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a specific client association for an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.Clients.Get(
-        context.TODO(),
-        "id",
-        "client_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientID:** `string` — ID of the client association to retrieve.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Clients.Update(ID, ClientID, request) -> *management.UpdateOrganizationClientResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update an organization client association.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateOrganizationClientRequestContent{}
-client.Organizations.Clients.Update(
-        context.TODO(),
-        "id",
-        "client_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientID:** `string` — ID of the client association to update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**useForMemberAccess:** `*bool` — Whether this client is used for member access to the organization.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Connections
-<details><summary><code>client.Organizations.Connections.List(ID) -> *management.ListOrganizationAllConnectionsOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationAllConnectionsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        IsEnabled: management.Bool(
-            true,
-        ),
-    }
-client.Organizations.Connections.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**isEnabled:** `*bool` — Filter connections by enabled status.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Connections.Create(ID, request) -> *management.CreateOrganizationAllConnectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateOrganizationAllConnectionRequestParameters{
-        ConnectionID: "connection_id",
-    }
-client.Organizations.Connections.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organizationConnectionName:** `*string` — Name of the connection in the scope of this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organizationAccessLevel:** `*management.OrganizationAccessLevelEnum` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**isEnabled:** `*bool` — Whether the connection is enabled for the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `string` — Connection identifier.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Connections.Get(ID, ConnectionID) -> *management.GetOrganizationAllConnectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.Connections.Get(
-        context.TODO(),
-        "id",
-        "connection_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `string` — Connection identifier.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Connections.Delete(ID, ConnectionID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.Connections.Delete(
-        context.TODO(),
-        "id",
-        "connection_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `string` — Connection identifier.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Connections.Update(ID, ConnectionID, request) -> *management.UpdateOrganizationAllConnectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateOrganizationConnectionRequestParameters{}
-client.Organizations.Connections.Update(
-        context.TODO(),
-        "id",
-        "connection_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `string` — Connection identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organizationConnectionName:** `*string` — Name of the connection in the scope of this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organizationAccessLevel:** `*management.OrganizationAccessLevelEnumWithNull` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**isEnabled:** `*bool` — Whether the connection is enabled for the organization.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations DiscoveryDomains
-<details><summary><code>client.Organizations.DiscoveryDomains.List(ID) -> *management.ListOrganizationDiscoveryDomainsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve list of all organization discovery domains associated with the specified organization.
-This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationDiscoveryDomainsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Organizations.DiscoveryDomains.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.DiscoveryDomains.Create(ID, request) -> *management.CreateOrganizationDiscoveryDomainResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new discovery domain for an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateOrganizationDiscoveryDomainRequestContent{
-        Domain: "domain",
-    }
-client.Organizations.DiscoveryDomains.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**domain:** `string` — The domain name to associate with the organization e.g. acme.com.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `*management.OrganizationDiscoveryDomainStatus` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**useForOrganizationDiscovery:** `*bool` — Indicates whether this domain should be used for organization discovery.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.DiscoveryDomains.GetByName(ID, DiscoveryDomain) -> *management.GetOrganizationDiscoveryDomainByNameResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details about a single organization discovery domain specified by domain name.
-This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.DiscoveryDomains.GetByName(
-        context.TODO(),
-        "id",
-        "discovery_domain",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**discoveryDomain:** `string` — Domain name of the discovery domain.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.DiscoveryDomains.Get(ID, DiscoveryDomainID) -> *management.GetOrganizationDiscoveryDomainResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details about a single organization discovery domain specified by ID.
-This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.DiscoveryDomains.Get(
-        context.TODO(),
-        "id",
-        "discovery_domain_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**discoveryDomainID:** `string` — ID of the discovery domain.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.DiscoveryDomains.Delete(ID, DiscoveryDomainID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove a discovery domain from an organization. This action cannot be undone.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.DiscoveryDomains.Delete(
-        context.TODO(),
-        "id",
-        "discovery_domain_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**discoveryDomainID:** `string` — ID of the discovery domain.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.DiscoveryDomains.Update(ID, DiscoveryDomainID, request) -> *management.UpdateOrganizationDiscoveryDomainResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The `status` field must be either `pending` or `verified`. The `use_for_organization_discovery` field can be `true` or `false` (default: `true`).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateOrganizationDiscoveryDomainRequestContent{}
-client.Organizations.DiscoveryDomains.Update(
-        context.TODO(),
-        "id",
-        "discovery_domain_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**discoveryDomainID:** `string` — ID of the discovery domain to update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `*management.OrganizationDiscoveryDomainStatus` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**useForOrganizationDiscovery:** `*bool` — Indicates whether this domain should be used for organization discovery.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations EnabledConnections
-<details><summary><code>client.Organizations.EnabledConnections.List(ID) -> *management.ListOrganizationConnectionsOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details about a specific connection currently enabled for an Organization. Information returned includes details such as connection ID, name, strategy, and whether the connection automatically grants membership upon login.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationConnectionsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Organizations.EnabledConnections.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.EnabledConnections.Add(ID, request) -> *management.AddOrganizationConnectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Enable a specific connection for a given Organization. To enable a connection, it must already exist within your tenant; connections cannot be created through this action.
-
-[Connections](https://auth0.com/docs/authenticate/identity-providers) represent the relationship between Auth0 and a source of users. Available types of connections include database, enterprise, and social.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.AddOrganizationConnectionRequestContent{
-        ConnectionID: "connection_id",
-    }
-client.Organizations.EnabledConnections.Add(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `string` — Single connection ID to add to the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.EnabledConnections.Get(ID, ConnectionID) -> *management.GetOrganizationConnectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details about a specific connection currently enabled for an Organization. Information returned includes details such as connection ID, name, strategy, and whether the connection automatically grants membership upon login.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.EnabledConnections.Get(
-        context.TODO(),
-        "id",
-        "connectionId",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `string` — Connection identifier.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.EnabledConnections.Delete(ID, ConnectionID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Disable a specific connection for an Organization. Once disabled, Organization members can no longer use that connection to authenticate. 
-
-**Note**: This action does not remove the connection from your tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.EnabledConnections.Delete(
-        context.TODO(),
-        "id",
-        "connectionId",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `string` — Connection identifier.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.EnabledConnections.Update(ID, ConnectionID, request) -> *management.UpdateOrganizationConnectionResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Modify the details of a specific connection currently enabled for an Organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateOrganizationConnectionRequestContent{}
-client.Organizations.EnabledConnections.Update(
-        context.TODO(),
-        "id",
-        "connectionId",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `string` — Connection identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assignMembershipOnLogin:** `*bool` — When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**isSignupEnabled:** `*bool` — Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**showAsButton:** `*bool` — Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Invitations
-<details><summary><code>client.Organizations.Invitations.List(ID) -> *management.ListOrganizationInvitationsOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve a detailed list of invitations sent to users for a specific Organization. The list includes details such as inviter and invitee information, invitation URLs, and dates of creation and expiration. To learn more about Organization invitations, review [Invite Organization Members](https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationInvitationsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-        Sort: management.String(
-            "sort",
-        ),
-    }
-client.Organizations.Invitations.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — When true, return results inside an object that also contains the start and limit.  When false (default), a direct array of results is returned.  We do not yet support returning the total invitations count.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort:** `*string` — Field to sort by. Use field:order where order is 1 for ascending and -1 for descending Defaults to created_at:-1.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Invitations.Create(ID, request) -> *management.CreateOrganizationInvitationResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a user invitation for a specific Organization. Upon creation, the listed user receives an email inviting them to join the Organization. To learn more about Organization invitations, review [Invite Organization Members](https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateOrganizationInvitationRequestContent{
-        Inviter: &management.OrganizationInvitationInviter{
-            Name: "name",
-        },
-        Invitee: &management.OrganizationInvitationInvitee{
-            Email: "email",
-        },
-        ClientID: "client_id",
-    }
-client.Organizations.Invitations.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**inviter:** `*management.OrganizationInvitationInviter` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**invitee:** `*management.OrganizationInvitationInvitee` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientID:** `string` — Auth0 client ID. Used to resolve the application's login initiation endpoint.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `*string` — The id of the connection to force invitee to authenticate with.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**appMetadata:** `*management.AppMetadata` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userMetadata:** `*management.UserMetadata` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ttlSec:** `*int` — Number of seconds for which the invitation is valid before expiration. If unspecified or set to 0, this value defaults to 604800 seconds (7 days). Max value: 2592000 seconds (30 days).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `[]string` — List of roles IDs to associated with the user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sendInvitationEmail:** `*bool` — Whether the user will receive an invitation email (true) or no email (false), true by default
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Invitations.Get(ID, InvitationID) -> *management.GetOrganizationInvitationResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetOrganizationInvitationRequestParameters{
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-    }
-client.Organizations.Invitations.Get(
-        context.TODO(),
-        "id",
-        "invitation_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**invitationID:** `string` — The id of the user invitation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Invitations.Delete(ID, InvitationID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.Invitations.Delete(
-        context.TODO(),
-        "id",
-        "invitation_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**invitationID:** `string` — The id of the user invitation.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Members
-<details><summary><code>client.Organizations.Members.List(ID) -> *management.ListOrganizationMembersPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List organization members.
-This endpoint is subject to eventual consistency. New users may not be immediately included in the response and deleted users may not be immediately removed from it.
-
-- Use the `fields` parameter to optionally define the specific member details retrieved. If `fields` is left blank, all fields (except roles) are returned.
-- Member roles are not sent by default. Use `fields=roles` to retrieve the roles assigned to each listed member. To use this parameter, you must include the `read:organization_member_roles` scope in the token. Only directly assigned roles are returned. To also include group-based role assignments, use `GET /api/v2/organizations/{id}/members/{user_id}/effective-roles`.
-
-This endpoint supports two types of pagination:
-
-- Offset pagination
-- Checkpoint pagination
-
-Checkpoint pagination must be used if you need to retrieve more than 1000 organization members.
-
-**Checkpoint Pagination**
-
-To search by checkpoint, use the following parameters: - from: Optional id from which to start selection. - take: The total amount of entries to retrieve when using the from parameter. Defaults to 50. Note: The first time you call this endpoint using Checkpoint Pagination, you should omit the `from` parameter. If there are more results, a `next` value will be included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, this indicates there are no more pages remaining.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationMembersRequestParameters{
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-    }
-client.Organizations.Members.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Members.Create(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Set one or more existing users as members of a specific [Organization](https://auth0.com/docs/manage-users/organizations).
-
-To add a user to an Organization through this action, the user must already exist in your tenant. If a user does not yet exist, you can [invite them to create an account](https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members), manually create them through the Auth0 Dashboard, or use the Management API.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateOrganizationMemberRequestContent{
-        Members: []string{
-            "members",
-        },
-    }
-client.Organizations.Members.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**members:** `[]string` — List of user IDs to add to the organization as members.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Members.Delete(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteOrganizationMembersRequestContent{
-        Members: []string{
-            "members",
-        },
-    }
-client.Organizations.Members.Delete(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**members:** `[]string` — List of user IDs to remove from the organization.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations OrganizationTemplate
-<details><summary><code>client.Organizations.OrganizationTemplate.Get(ID) -> *management.OrganizationTemplate</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the organization template assigned to a specific organization. Returns the template object if one is explicitly assigned, or a 404 if no template is assigned.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.OrganizationTemplate.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.OrganizationTemplate.AssignOrganizationTemplate(ID, TemplateID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Assign an Organization Template to an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.OrganizationTemplate.AssignOrganizationTemplate(
-        context.TODO(),
-        "id",
-        "template_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**templateID:** `string` — The ID of the organization template to assign.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.OrganizationTemplate.UnassignOrganizationTemplate(ID, TemplateID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove an Organization Template assignment from an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.OrganizationTemplate.UnassignOrganizationTemplate(
-        context.TODO(),
-        "id",
-        "template_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**templateID:** `string` — The ID of the organization template to unassign.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Groups
-<details><summary><code>client.Organizations.Groups.List(OrganizationID) -> *management.ListOrganizationGroupsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists the groups that are assigned to the specified organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationGroupsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Organizations.Groups.List(
-        context.TODO(),
-        "organization_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**organizationID:** `string` — ID of the organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Groups Roles
-<details><summary><code>client.Organizations.Groups.Roles.List(OrganizationID, GroupID) -> *management.ListOrganizationGroupRolesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists the roles assigned to the specified group in the context of an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationGroupRolesRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Organizations.Groups.Roles.List(
-        context.TODO(),
-        "organization_id",
-        "group_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**organizationID:** `string` — ID of the organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**groupID:** `string` — ID of the group
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Groups.Roles.Create(OrganizationID, GroupID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Assign one or more roles to a specified group in the context of an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateOrganizationGroupRolesRequestContent{
-        Roles: []string{
-            "roles",
-        },
-    }
-client.Organizations.Groups.Roles.Create(
-        context.TODO(),
-        "organization_id",
-        "group_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**organizationID:** `string` — ID of the organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**groupID:** `string` — ID of the group
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `[]string` — Array of role IDs to assign to organization group.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Groups.Roles.Delete(OrganizationID, GroupID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Unassign one or more roles from a specified group in the context of an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteOrganizationGroupRolesRequestContent{
-        Roles: []string{
-            "roles",
-        },
-    }
-client.Organizations.Groups.Roles.Delete(
-        context.TODO(),
-        "organization_id",
-        "group_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**organizationID:** `string` — ID of the organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**groupID:** `string` — ID of the group
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `[]string` — Array of role IDs to delete from organization group.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Members EffectiveRoles
-<details><summary><code>client.Organizations.Members.EffectiveRoles.List(ID, UserID) -> *management.ListOrganizationMemberEffectiveRolesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists the roles assigned to an organization member directly or through group membership.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationMemberEffectiveRolesRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Organizations.Members.EffectiveRoles.List(
-        context.TODO(),
-        "id",
-        "user_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `string` — ID of the user to list effective roles for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Members Roles
-<details><summary><code>client.Organizations.Members.Roles.List(ID, UserID) -> *management.ListOrganizationMemberRolesOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve detailed list of roles assigned to a given user within the context of a specific Organization. 
-
-Users can be members of multiple Organizations with unique roles assigned for each membership. This action only returns the roles associated with the specified Organization; any roles assigned to the user within other Organizations are not included.
-
-**Note**: Returns only direct role assignments for this member. To also include group-based role assignments, use `GET /api/v2/organizations/{id}/members/{user_id}/effective-roles`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationMemberRolesRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Organizations.Members.Roles.List(
-        context.TODO(),
-        "id",
-        "user_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `string` — ID of the user to associate roles with.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Members.Roles.Assign(ID, UserID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Assign one or more [roles](https://auth0.com/docs/manage-users/access-control/rbac) to a user to determine their access for a specific Organization.
-
-Users can be members of multiple Organizations with unique roles assigned for each membership. This action assigns roles to a user only for the specified Organization. Roles cannot be assigned to a user across multiple Organizations in the same call.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.AssignOrganizationMemberRolesRequestContent{
-        Roles: []string{
-            "roles",
-        },
-    }
-client.Organizations.Members.Roles.Assign(
-        context.TODO(),
-        "id",
-        "user_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `string` — ID of the user to associate roles with.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `[]string` — List of roles IDs to associated with the user.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.Members.Roles.Delete(ID, UserID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove one or more Organization-specific [roles](https://auth0.com/docs/manage-users/access-control/rbac) from a given user.
-
-Users can be members of multiple Organizations with unique roles assigned for each membership. This action removes roles from a user in relation to the specified Organization. Roles assigned to the user within a different Organization cannot be managed in the same call.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteOrganizationMemberRolesRequestContent{
-        Roles: []string{
-            "roles",
-        },
-    }
-client.Organizations.Members.Roles.Delete(
-        context.TODO(),
-        "id",
-        "user_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `string` — User ID of the organization member to remove roles from.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `[]string` — List of roles IDs associated with the organization member to remove.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Members EffectiveRoles Sources Groups
-<details><summary><code>client.Organizations.Members.EffectiveRoles.Sources.Groups.List(ID, UserID) -> *management.ListOrganizationMemberRoleSourceGroupsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists the groups which grant the org member a given role.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationMemberRoleSourceGroupsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-        RoleID: "role_id",
-    }
-client.Organizations.Members.EffectiveRoles.Sources.Groups.List(
-        context.TODO(),
-        "id",
-        "user_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Organization identifier.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `string` — ID of the user to list role source groups for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roleID:** `string` — The role ID to get group sources for.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Roles Members
-<details><summary><code>client.Organizations.Roles.Members.List(ID, RoleID) -> *management.ListOrganizationRoleMembersResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List the organization members assigned a specific role within the context of an organization.
-<ul>
-  <li>
-    <b>Note</b>: Returns only members with direct role assignments. For groups assigned to this role within the organization, use <code>GET /api/v2/organizations/{organization_id}/roles/{role_id}/groups</code>.
-  </li>
-</ul>
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationRoleMembersRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-    }
-client.Organizations.Roles.Members.List(
-        context.TODO(),
-        "id",
-        "role_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roleID:** `string` — ID of the role to retrieve the assigned members for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50. Values above the maximum permitted size are capped.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations Roles Groups
-<details><summary><code>client.Organizations.Roles.Groups.List(OrganizationID, RoleID) -> *management.ListOrganizationRoleGroupsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the list of groups assigned to a role in the context of an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListOrganizationRoleGroupsRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Organizations.Roles.Groups.List(
-        context.TODO(),
-        "organization_id",
-        "role_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**organizationID:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roleID:** `string` — ID of the role.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Prompts Rendering
-<details><summary><code>client.Prompts.Rendering.List() -> *management.ListAculsOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get render setting configurations for all screens.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListAculsRequestParameters{
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        Prompt: management.String(
-            "prompt",
-        ),
-        Screen: management.String(
-            "screen",
-        ),
-        RenderingMode: management.AculRenderingModeEnumAdvanced.Ptr(),
-    }
-client.Prompts.Rendering.List(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (default: true) or excluded (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Maximum value is 100, default value is 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total configuration count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `*string` — Name of the prompt to filter by
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**screen:** `*string` — Name of the screen to filter by
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**renderingMode:** `*management.AculRenderingModeEnum` — Rendering mode to filter by
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Prompts.Rendering.BulkUpdate(request) -> *management.BulkUpdateAculResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Learn more about [configuring render settings](https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens) for advanced customization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.BulkUpdateAculRequestContent{
-        Configs: []*management.AculConfigsItem{
-            &management.AculConfigsItem{
-                Prompt: management.PromptGroupNameEnumLogin,
-                Screen: management.ScreenGroupNameEnumLogin,
-            },
-        },
-    }
-client.Prompts.Rendering.BulkUpdate(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**configs:** `management.AculConfigs` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Prompts.Rendering.Get(Prompt, Screen) -> *management.GetAculResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get render settings for a screen.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Prompts.Rendering.Get(
-        context.TODO(),
-        management.PromptGroupNameEnumLogin.Ptr(),
-        management.ScreenGroupNameEnumLogin.Ptr(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**prompt:** `*management.PromptGroupNameEnum` — Name of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**screen:** `*management.ScreenGroupNameEnum` — Name of the screen
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Prompts.Rendering.Update(Prompt, Screen, request) -> *management.UpdateAculResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Learn more about [configuring render settings](https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens) for advanced customization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateAculRequestContent{}
-client.Prompts.Rendering.Update(
-        context.TODO(),
-        management.PromptGroupNameEnumLogin.Ptr(),
-        management.ScreenGroupNameEnumLogin.Ptr(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**prompt:** `*management.PromptGroupNameEnum` — Name of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**screen:** `*management.ScreenGroupNameEnum` — Name of the screen
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**renderingMode:** `*management.AculRenderingModeEnum` — Rendering mode
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**contextConfiguration:** `*management.AculContextConfiguration` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**defaultHeadTagsDisabled:** `*bool` — Override Universal Login default head tags
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**usePageTemplate:** `*bool` — Use page template with ACUL
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**headTags:** `[]*management.AculHeadTag` — An array of head tags
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filters:** `*management.AculFilters` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Prompts CustomText
-<details><summary><code>client.Prompts.CustomText.Get(Prompt, Language) -> management.GetCustomTextsByLanguageResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve custom text for a specific prompt and language.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Prompts.CustomText.Get(
-        context.TODO(),
-        management.PromptGroupNameEnumLogin.Ptr(),
-        management.PromptLanguageEnumAm.Ptr(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**prompt:** `*management.PromptGroupNameEnum` — Name of the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**language:** `*management.PromptLanguageEnum` — Language to update.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Prompts.CustomText.Set(Prompt, Language, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Set custom text for a specific prompt. Existing texts will be overwritten.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := map[string]any{
-        "key": "value",
-    }
-client.Prompts.CustomText.Set(
-        context.TODO(),
-        management.PromptGroupNameEnumLogin.Ptr(),
-        management.PromptLanguageEnumAm.Ptr(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**prompt:** `*management.PromptGroupNameEnum` — Name of the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**language:** `*management.PromptLanguageEnum` — Language to update.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `management.SetsCustomTextsByLanguageRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Prompts Partials
-<details><summary><code>client.Prompts.Partials.Get(Prompt) -> management.GetPartialsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get template partials for a prompt
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Prompts.Partials.Get(
-        context.TODO(),
-        management.PartialGroupsEnumLogin.Ptr(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**prompt:** `*management.PartialGroupsEnum` — Name of the prompt.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Prompts.Partials.Set(Prompt, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Set template partials for a prompt
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := map[string]any{
-        "key": "value",
-    }
-client.Prompts.Partials.Set(
-        context.TODO(),
-        management.PartialGroupsEnumLogin.Ptr(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**prompt:** `*management.PartialGroupsEnum` — Name of the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `management.SetPartialsRequestContent` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## RiskAssessments Settings
-<details><summary><code>client.RiskAssessments.Settings.Get() -> *management.GetRiskAssessmentsSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets the tenant settings for risk assessments
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.RiskAssessments.Settings.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.RiskAssessments.Settings.Update(request) -> *management.UpdateRiskAssessmentsSettingsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Updates the tenant settings for risk assessments
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateRiskAssessmentsSettingsRequestContent{
-        Enabled: true,
-    }
-client.RiskAssessments.Settings.Update(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**enabled:** `bool` — Whether or not risk assessment is enabled.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## RiskAssessments Settings NewDevice
-<details><summary><code>client.RiskAssessments.Settings.NewDevice.Get() -> *management.GetRiskAssessmentsSettingsNewDeviceResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets the risk assessment settings for the new device assessor
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.RiskAssessments.Settings.NewDevice.Get(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.RiskAssessments.Settings.NewDevice.Update(request) -> *management.UpdateRiskAssessmentsSettingsNewDeviceResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Updates the risk assessment settings for the new device assessor
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateRiskAssessmentsSettingsNewDeviceRequestContent{
-        RememberFor: 1,
-    }
-client.RiskAssessments.Settings.NewDevice.Update(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**rememberFor:** `int` — Length of time to remember devices for, in days.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Roles Groups
-<details><summary><code>client.Roles.Groups.Get(ID) -> *management.ListRoleGroupsResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists the groups to which the specified role is assigned.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListRoleGroupsParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Roles.Groups.Get(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the role (service-generated).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Roles.Groups.Create(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Assign one or more groups to a specified role.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.AssignRoleGroupsRequestContent{
-        Groups: []string{
-            "groups",
-        },
-    }
-client.Roles.Groups.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the role (service-generated).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**groups:** `[]string` — Array of group IDs to assign to the role.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Roles.Groups.Delete(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Unassign one or more groups from a specified role.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteRoleGroupsRequestContent{
-        Groups: []string{
-            "groups",
-        },
-    }
-client.Roles.Groups.Delete(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — Unique identifier for the role (service-generated).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**groups:** `[]string` — Array of group IDs to remove from the role.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Roles Permissions
-<details><summary><code>client.Roles.Permissions.List(ID) -> *management.ListRolePermissionsOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve detailed list (name, description, resource server) of permissions granted by a specified user role.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListRolePermissionsRequestParameters{
-        PerPage: management.Int(
-            1,
-        ),
-        Page: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Roles.Permissions.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the role to list granted permissions.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Roles.Permissions.Add(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Add one or more [permissions](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/manage-permissions) to a specified user role.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.AddRolePermissionsRequestContent{
-        Permissions: []*management.PermissionRequestPayload{
-            &management.PermissionRequestPayload{
-                ResourceServerIdentifier: "resource_server_identifier",
-                PermissionName: "permission_name",
-            },
-        },
-    }
-client.Roles.Permissions.Add(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the role to add permissions to.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permissions:** `[]*management.PermissionRequestPayload` — array of resource_server_identifier, permission_name pairs.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Roles.Permissions.Delete(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove one or more [permissions](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/manage-permissions) from a specified user role.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteRolePermissionsRequestContent{
-        Permissions: []*management.PermissionRequestPayload{
-            &management.PermissionRequestPayload{
-                ResourceServerIdentifier: "resource_server_identifier",
-                PermissionName: "permission_name",
-            },
-        },
-    }
-client.Roles.Permissions.Delete(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the role to remove permissions from.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permissions:** `[]*management.PermissionRequestPayload` — array of resource_server_identifier, permission_name pairs.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Roles Users
-<details><summary><code>client.Roles.Users.List(ID) -> *management.ListRoleUsersPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve list of users associated with a specific role. For Dashboard instructions, review [View Users Assigned to Roles](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/roles/view-users-assigned-to-roles).
-
-**Note**: Returns only users with direct role assignments. For groups assigned to this role, use `GET /api/v2/roles/{id}/groups`.
-
-This endpoint supports two types of pagination:
-
-- Offset pagination
-- Checkpoint pagination
-
-Checkpoint pagination must be used if you need to retrieve more than 1000 organization members.
-
-**Checkpoint Pagination**
-
-To search by checkpoint, use the following parameters:
-
-- `from`: Optional id from which to start selection.
-- `take`: The total amount of entries to retrieve when using the from parameter. Defaults to 50.
-
-**Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListRoleUsersRequestParameters{
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Roles.Users.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the role to retrieve a list of users associated with.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Roles.Users.Assign(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Assign one or more users to an existing user role. To learn more, review [Role-Based Access Control](https://auth0.com/docs/manage-users/access-control/rbac).
-
-**Note**: New roles cannot be created through this action.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.AssignRoleUsersRequestContent{
-        Users: []string{
-            "users",
-        },
-    }
-client.Roles.Users.Assign(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the role to assign users to.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**users:** `[]string` — user_id's of the users to assign the role to.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## SelfServiceProfiles CustomText
-<details><summary><code>client.SelfServiceProfiles.CustomText.List(ID, Language, Page) -> management.ListSelfServiceProfileCustomTextResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.GetSelfServiceProfileCustomText(ID, Language, Page) -> management.ListSelfServiceProfileCustomTextResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -32836,7 +30224,7 @@ Retrieves text customizations for a given self-service profile, language and Sel
 <dd>
 
 ```go
-client.SelfServiceProfiles.CustomText.List(
+client.SelfServiceProfiles.GetSelfServiceProfileCustomText(
         context.TODO(),
         "id",
         management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
@@ -32885,7 +30273,7 @@ client.SelfServiceProfiles.CustomText.List(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.CustomText.Set(ID, Language, Page, request) -> management.SetSelfServiceProfileCustomTextResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.PutSelfServiceProfileCustomText(ID, Language, Page, request) -> management.SetSelfServiceProfileCustomTextResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -32915,7 +30303,7 @@ Updates text customizations for a given self-service profile, language and Self-
 request := map[string]string{
         "key": "value",
     }
-client.SelfServiceProfiles.CustomText.Set(
+client.SelfServiceProfiles.PutSelfServiceProfileCustomText(
         context.TODO(),
         "id",
         management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
@@ -32973,8 +30361,7 @@ client.SelfServiceProfiles.CustomText.Set(
 </dl>
 </details>
 
-## SelfServiceProfiles SSOTicket
-<details><summary><code>client.SelfServiceProfiles.SSOTicket.Create(ID, request) -> *management.CreateSelfServiceProfileSSOTicketResponseContent</code></summary>
+<details><summary><code>client.SelfServiceProfiles.PostSSOTicket(ID, request) -> *management.CreateSelfServiceProfileSSOTicketResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -33002,7 +30389,7 @@ Creates an access ticket to initiate the Self-Service Enterprise Configuration f
 
 ```go
 request := &management.CreateSelfServiceProfileSSOTicketRequestContent{}
-client.SelfServiceProfiles.SSOTicket.Create(
+client.SelfServiceProfiles.PostSSOTicket(
         context.TODO(),
         "id",
         request,
@@ -33023,6 +30410,14 @@ client.SelfServiceProfiles.SSOTicket.Create(
 <dd>
 
 **id:** `string` — The id of the self-service profile to retrieve
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth0CustomDomain:** `*string` — Custom domain to be used for this request
     
 </dd>
 </dl>
@@ -33114,7 +30509,7 @@ client.SelfServiceProfiles.SSOTicket.Create(
 </dl>
 </details>
 
-<details><summary><code>client.SelfServiceProfiles.SSOTicket.Revoke(ProfileID, ID) -> error</code></summary>
+<details><summary><code>client.SelfServiceProfiles.PostRevoke(ProfileID, ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -33142,7 +30537,7 @@ Clients should treat these `202` responses as an acknowledgment that the request
 <dd>
 
 ```go
-client.SelfServiceProfiles.SSOTicket.Revoke(
+client.SelfServiceProfiles.PostRevoke(
         context.TODO(),
         "profileId",
         "id",
@@ -33182,8 +30577,472 @@ client.SelfServiceProfiles.SSOTicket.Revoke(
 </dl>
 </details>
 
-## Tenants Settings
-<details><summary><code>client.Tenants.Settings.Get() -> *management.GetTenantSettingsResponseContent</code></summary>
+## Sessions
+<details><summary><code>client.Sessions.GetSession(ID) -> *management.GetSessionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve session information.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Sessions.GetSession(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of session to retrieve
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Sessions.DeleteSession(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a session by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Sessions.DeleteSession(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the session to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Sessions.PatchSessionsByID(ID, request) -> *management.UpdateSessionResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update session information.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateSessionRequestContent{}
+client.Sessions.PatchSessionsByID(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the session to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sessionMetadata:** `*management.SessionMetadata` — Metadata associated with the session. Pass null or {} to remove all session_metadata.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Sessions.RevokeSession(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Revokes a session by ID and all associated refresh tokens.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Sessions.RevokeSession(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the session to revoke.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Stats
+<details><summary><code>client.Stats.GetActiveUsers() -> management.GetActiveUsersCountStatsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the number of active users that logged in during the last 30 days.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Stats.GetActiveUsers(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Stats.GetDaily() -> []*management.DailyStats</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the number of logins, signups and breached-password detections (subscription required) that occurred each day within a specified date range.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetDailyRequest{
+        From: management.String(
+            "from",
+        ),
+        To: management.String(
+            "to",
+        ),
+    }
+client.Stats.GetDaily(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional first day of the date range (inclusive) in YYYYMMDD format.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `*string` — Optional last day of the date range (inclusive) in YYYYMMDD format.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SupplementalSignals
+<details><summary><code>client.SupplementalSignals.GetSupplementalSignals() -> *management.GetSupplementalSignalsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the supplemental signals configuration for a tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.SupplementalSignals.GetSupplementalSignals(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.SupplementalSignals.PatchSupplementalSignals(request) -> *management.PatchSupplementalSignalsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the supplemental signals configuration for a tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateSupplementalSignalsRequestContent{
+        AkamaiEnabled: true,
+    }
+client.SupplementalSignals.PatchSupplementalSignals(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**akamaiEnabled:** `bool` — Indicates if incoming Akamai Headers should be processed
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Tenants
+<details><summary><code>client.Tenants.TenantSettingsRoute() -> *management.GetTenantSettingsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -33210,7 +31069,7 @@ Retrieve tenant settings. A list of fields to include or exclude may also be spe
 <dd>
 
 ```go
-request := &management.GetTenantSettingsRequestParameters{
+request := &management.TenantSettingsRouteRequest{
         Fields: management.String(
             "fields",
         ),
@@ -33218,7 +31077,7 @@ request := &management.GetTenantSettingsRequestParameters{
             true,
         ),
     }
-client.Tenants.Settings.Get(
+client.Tenants.TenantSettingsRoute(
         context.TODO(),
         request,
     )
@@ -33257,7 +31116,7 @@ client.Tenants.Settings.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Tenants.Settings.Update(request) -> *management.UpdateTenantSettingsResponseContent</code></summary>
+<details><summary><code>client.Tenants.PatchSettings(request) -> *management.UpdateTenantSettingsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -33285,7 +31144,7 @@ Update settings for a tenant.
 
 ```go
 request := &management.UpdateTenantSettingsRequestContent{}
-client.Tenants.Settings.Update(
+client.Tenants.PatchSettings(
         context.TODO(),
         request,
     )
@@ -33656,8 +31515,2196 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 </dl>
 </details>
 
-## Users AuthenticationMethods
-<details><summary><code>client.Users.AuthenticationMethods.List(ID) -> *management.ListUserAuthenticationMethodsOffsetPaginatedResponseContent</code></summary>
+## Tickets
+<details><summary><code>client.Tickets.PostEmailVerification(request) -> *management.VerifyEmailTicketResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an email verification ticket for a given user. An email verification ticket is a generated URL that the user can consume to verify their email address.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.VerifyEmailTicketRequestContent{
+        UserID: "user_id",
+    }
+client.Tickets.PostEmailVerification(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**auth0CustomDomain:** `*string` — Custom domain to be used for this request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resultURL:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using client_id or organization_id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — user_id of for whom the ticket should be created.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `*string` — ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target='' href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target='' href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationID:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ttlSec:** `*int` — Number of seconds for which the ticket is valid before expiration. If unspecified or set to 0, this value defaults to 432000 seconds (5 days).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeEmailInRedirect:** `*bool` — Whether to include the email address as part of the returnUrl in the reset_email (true), or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identity:** `*management.Identity` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Tickets.PostPasswordChange(request) -> *management.ChangePasswordTicketResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a password change ticket for a given user. A password change ticket is a generated URL that the user can consume to start a reset password flow.
+
+Note: This endpoint does not verify the given user’s identity. If you call this endpoint within your application, you must design your application to verify the user’s identity.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ChangePasswordTicketRequestContent{}
+client.Tickets.PostPasswordChange(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**auth0CustomDomain:** `*string` — Custom domain to be used for this request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resultURL:** `*string` — URL the user will be redirected to in the classic Universal Login experience once the ticket is used. Cannot be specified when using organization_id. May be specified together with client_id when the tenant has a custom password reset page enabled and a password-reset-post-challenge Action bound.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `*string` — user_id of for whom the ticket should be created.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `*string` — ID of the client (application). If provided for tenants using the New Universal Login experience, the email template and UI displays application details, and the user is prompted to redirect to the application's <a target='' href='https://auth0.com/docs/authenticate/login/auth0-universal-login/configure-default-login-routes#completing-the-password-reset-flow'>default login route</a> after the ticket is used. client_id is required to use the <a target='' href='https://auth0.com/docs/customize/actions/flows-and-triggers/post-change-password-flow'>Password Reset Post Challenge</a> trigger.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationID:** `*string` — (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `*string` — ID of the connection. If provided, allows the user to be specified using email instead of user_id. If you set this value, you must also send the email parameter. You cannot send user_id when specifying a connection_id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `*string` — Email address of the user for whom the tickets should be created. Requires the connection_id parameter. Cannot be specified when using user_id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ttlSec:** `*int` — Number of seconds for which the ticket is valid before expiration. If unspecified or set to 0, this value defaults to 432000 seconds (5 days).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**markEmailAsVerified:** `*bool` — Whether to set the email_verified attribute to true (true) or whether it should not be updated (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeEmailInRedirect:** `*bool` — Whether to include the email address as part of the returnUrl in the reset_email (true), or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**identity:** `*management.ChangePasswordTicketIdentity` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## TokenExchangeProfiles
+<details><summary><code>client.TokenExchangeProfiles.GetTokenExchangeProfiles() -> *management.ListTokenExchangeProfileResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of all Token Exchange Profiles available in your tenant.
+
+By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
+
+This endpoint supports Checkpoint pagination. To search by checkpoint, use the following parameters:
+
+- `from`: Optional id from which to start selection.
+- `take`: The total amount of entries to retrieve when using the from parameter. Defaults to 50.
+
+**Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetTokenExchangeProfilesRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.TokenExchangeProfiles.GetTokenExchangeProfiles(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.TokenExchangeProfiles.PostTokenExchangeProfiles(request) -> *management.CreateTokenExchangeProfileResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new Token Exchange Profile within your tenant.
+
+By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateTokenExchangeProfileRequestContent{
+        Name: "name",
+        SubjectTokenType: "subject_token_type",
+        ActionID: "action_id",
+        Type: management.TokenExchangeProfileTypeEnumCustomAuthentication,
+    }
+client.TokenExchangeProfiles.PostTokenExchangeProfiles(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — Friendly name of this profile.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subjectTokenType:** `string` — Subject token type for this profile. When receiving a token exchange request on the Authentication API, the corresponding token exchange profile with a matching subject_token_type will be executed. This must be a URI.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**actionID:** `string` — The ID of the Custom Token Exchange action to execute for this profile, in order to validate the subject_token. The action must use the custom-token-exchange trigger.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type_:** `*management.TokenExchangeProfileTypeEnum` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.TokenExchangeProfiles.GetTokenExchangeProfilesByID(ID) -> *management.GetTokenExchangeProfileResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a single Token Exchange Profile specified by ID.
+
+By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.TokenExchangeProfiles.GetTokenExchangeProfilesByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the Token Exchange Profile to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.TokenExchangeProfiles.DeleteTokenExchangeProfilesByID(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a Token Exchange Profile within your tenant.
+
+By using this feature, you agree to the applicable Free Trial terms in [Okta's Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user's subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.TokenExchangeProfiles.DeleteTokenExchangeProfilesByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the Token Exchange Profile to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.TokenExchangeProfiles.PatchTokenExchangeProfilesByID(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a Token Exchange Profile within your tenant.
+
+By using this feature, you agree to the applicable Free Trial terms in [Okta's Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user's subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateTokenExchangeProfileRequestContent{}
+client.TokenExchangeProfiles.PatchTokenExchangeProfilesByID(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the Token Exchange Profile to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — Friendly name of this profile.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subjectTokenType:** `*string` — Subject token type for this profile. When receiving a token exchange request on the Authentication API, the corresponding token exchange profile with a matching subject_token_type will be executed. This must be a URI.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UserAttributeProfiles
+<details><summary><code>client.UserAttributeProfiles.GetUserAttributeProfiles() -> *management.ListUserAttributeProfilesPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of User Attribute Profiles. This endpoint supports Checkpoint pagination.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUserAttributeProfilesRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.UserAttributeProfiles.GetUserAttributeProfiles(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 5.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.UserAttributeProfiles.PostUserAttributeProfiles(request) -> *management.CreateUserAttributeProfileResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a User Attribute Profile.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateUserAttributeProfileRequestContent{
+        Name: "name",
+        UserAttributes: map[string]*management.UserAttributeProfileUserAttributeAdditionalProperties{
+            "key": &management.UserAttributeProfileUserAttributeAdditionalProperties{
+                Description: "description",
+                Label: "label",
+                ProfileRequired: true,
+                Auth0Mapping: "auth0_mapping",
+            },
+        },
+    }
+client.UserAttributeProfiles.PostUserAttributeProfiles(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `management.UserAttributeProfileName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `*management.UserAttributeProfileUserID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userAttributes:** `management.UserAttributeProfileUserAttributes` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.UserAttributeProfiles.GetUserAttributeProfileTemplates() -> *management.ListUserAttributeProfileTemplateResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of User Attribute Profile Templates.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.UserAttributeProfiles.GetUserAttributeProfileTemplates(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.UserAttributeProfiles.GetUserAttributeProfileTemplate(ID) -> *management.GetUserAttributeProfileTemplateResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a User Attribute Profile Template.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.UserAttributeProfiles.GetUserAttributeProfileTemplate(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user-attribute-profile-template to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.UserAttributeProfiles.GetUserAttributeProfilesByID(ID) -> *management.GetUserAttributeProfileResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a single User Attribute Profile specified by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.UserAttributeProfiles.GetUserAttributeProfilesByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user-attribute-profile to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.UserAttributeProfiles.DeleteUserAttributeProfilesByID(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a single User Attribute Profile specified by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.UserAttributeProfiles.DeleteUserAttributeProfilesByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user-attribute-profile to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.UserAttributeProfiles.PatchUserAttributeProfilesByID(ID, request) -> *management.UpdateUserAttributeProfileResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the details of a specific User attribute profile, such as name, user_id and user_attributes.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateUserAttributeProfileRequestContent{}
+client.UserAttributeProfiles.PatchUserAttributeProfilesByID(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user attribute profile to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*management.UserAttributeProfileName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `*management.UserAttributeProfilePatchUserID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userAttributes:** `*management.UserAttributeProfileUserAttributes` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UserBlocks
+<details><summary><code>client.UserBlocks.GetUserBlocks() -> *management.ListUserBlocksByIdentifierResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for a user with the given identifier (username, phone number, or email).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUserBlocksRequest{
+        Identifier: "identifier",
+        ConsiderBruteForceEnablement: management.Bool(
+            true,
+        ),
+    }
+client.UserBlocks.GetUserBlocks(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**identifier:** `string` — Should be any of a username, phone number, or email.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**considerBruteForceEnablement:** `*bool` 
+
+
+          If true and Brute Force Protection is enabled and configured to block logins, will return a list of blocked IP addresses.
+          If true and Brute Force Protection is disabled, will return an empty list.
+        
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.UserBlocks.DeleteUserBlocks() -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given identifier (username, phone number, or email).
+
+Note: This endpoint does not unblock users that were [blocked by a tenant administrator](https://auth0.com/docs/user-profile#block-and-unblock-a-user).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteUserBlocksRequest{
+        Identifier: "identifier",
+    }
+client.UserBlocks.DeleteUserBlocks(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**identifier:** `string` — Should be any of a username, phone number, or email.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.UserBlocks.GetUserBlocksByID(ID) -> *management.ListUserBlocksResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUserBlocksByIDRequest{
+        ConsiderBruteForceEnablement: management.Bool(
+            true,
+        ),
+    }
+client.UserBlocks.GetUserBlocksByID(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — user_id of the user blocks to retrieve.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**considerBruteForceEnablement:** `*bool` 
+
+
+          If true and Brute Force Protection is enabled and configured to block logins, will return a list of blocked IP addresses.
+          If true and Brute Force Protection is disabled, will return an empty list.
+        
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.UserBlocks.DeleteUserBlocksByID(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given ID.
+
+Note: This endpoint does not unblock users that were [blocked by a tenant administrator](https://auth0.com/docs/user-profile#block-and-unblock-a-user).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.UserBlocks.DeleteUserBlocksByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The user_id of the user to update.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Users
+<details><summary><code>client.Users.GetUsers() -> *management.ListUsersResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details of users. It is possible to:
+
+- Specify a search criteria for users
+- Sort the users to be returned
+- Select the fields to be returned
+- Specify the number of users to retrieve per page and the page index
+
+
+
+The `q` query parameter can be used to get users that match the specified criteria [using query string syntax.](https://auth0.com/docs/users/search/v3/query-syntax)
+
+[Learn more about searching for users.](https://auth0.com/docs/users/search/v3)
+
+Read about [best practices](https://auth0.com/docs/users/search/best-practices) when working with the API endpoints for retrieving users.
+
+
+
+Auth0 limits the number of users you can return. If you exceed this threshold, please redefine your search, use the [export job](https://auth0.com/docs/api/management/v2#!/Jobs/post_users_exports), or the [User Import / Export](https://auth0.com/docs/extensions/user-import-export) extension.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUsersRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+        Connection: management.String(
+            "connection",
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Q: management.String(
+            "q",
+        ),
+        SearchEngine: management.SearchEngineVersionsEnumV1.Ptr(),
+        PrimaryOrder: management.Bool(
+            true,
+        ),
+    }
+client.Users.GetUsers(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `*string` — Field to sort by. Use <code>field:order</code> where order is <code>1</code> for ascending and <code>-1</code> for descending. e.g. <code>created_at:1</code>
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connection:** `*string` — Connection filter. Only applies when using <code>search_engine=v1</code>. To filter by connection with <code>search_engine=v2|v3</code>, use <code>q=identities.connection:"connection_name"</code>
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `*string` — Query in <a target='_new' href ='https://lucene.apache.org/core/2_9_4/queryparsersyntax.html'>Lucene query string syntax</a>. Some query types cannot be used on metadata fields, for details see <a href='https://auth0.com/docs/users/search/v3/query-syntax#searchable-fields'>Searchable Fields</a>.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**searchEngine:** `*management.SearchEngineVersionsEnum` — The version of the search engine
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**primaryOrder:** `*bool` — If true (default), results are returned in a deterministic order. If false, results may be returned in a non-deterministic order, which can enhance performance for complex queries targeting a small number of users. Set to false only when consistent ordering and pagination is not required.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.PostUsers(request) -> *management.CreateUserResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user for a given [database](https://auth0.com/docs/connections/database) or [passwordless](https://auth0.com/docs/connections/passwordless) connection.
+
+Note: `connection` is required but other parameters such as `email` and `password` are dependent upon the type of connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateUserRequestContent{
+        Connection: "connection",
+    }
+client.Users.PostUsers(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**auth0CustomDomain:** `*string` — Custom domain to be used for this request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `*string` — The user's email.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneNumber:** `*string` — The user's phone number (following the E.164 recommendation).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userMetadata:** `*management.UserMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**blocked:** `*bool` — Whether this user was blocked by an administrator (true) or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**emailVerified:** `*bool` — Whether this email address is verified (true) or unverified (false). User will receive a verification email after creation if `email_verified` is false or not specified
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneVerified:** `*bool` — Whether this phone number has been verified (true) or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appMetadata:** `*management.AppMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**givenName:** `*string` — The user's given name(s).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**familyName:** `*string` — The user's family name(s).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — The user's full name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**nickname:** `*string` — The user's nickname.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**picture:** `*string` — A URI pointing to the user's picture.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `*string` — The external user's id provided by the identity provider.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connection:** `string` — Name of the connection this user should be created in.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `*string` — Initial password for this user. Only valid for auth0 connection strategy.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verifyEmail:** `*bool` — Whether the user will receive a verification email after creation (true) or no email (false). Overrides behavior of `email_verified` parameter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `*string` — The user's username. Only valid if the connection requires a username.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetUsersByID(ID) -> *management.GetUserResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve user details. A list of fields to include or exclude may also be specified. For more information, see [Retrieve Users with the Get Users Endpoint](https://auth0.com/docs/manage-users/user-search/retrieve-users-with-get-users-endpoint).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUsersByIDRequest{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
+client.Users.GetUsersByID(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to retrieve.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.DeleteUsersByID(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a user by user ID. This action cannot be undone. For Auth0 Dashboard instructions, see [Delete Users](https://auth0.com/docs/manage-users/user-accounts/delete-users).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.DeleteUsersByID(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.PatchUsersByID(ID, request) -> *management.UpdateUserResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user.
+
+These are the attributes that can be updated at the root level:
+
+- app_metadata
+- blocked
+- email
+- email_verified
+- family_name
+- given_name
+- name
+- nickname
+- password
+- phone_number
+- phone_verified
+- picture
+- username
+- user_metadata
+- verify_email
+
+Some considerations:
+
+- The properties of the new object will replace the old ones.
+- The metadata fields are an exception to this rule (`user_metadata` and `app_metadata`). These properties are merged instead of being replaced but be careful, the merge only occurs on the first level.
+- If you are updating `email`, `email_verified`, `phone_number`, `phone_verified`, `username` or `password` of a secondary identity, you need to specify the `connection` property too.
+- If you are updating `email` or `phone_number` you can specify, optionally, the `client_id` property.
+- Updating `email_verified` is not supported for enterprise and passwordless sms connections.
+- Updating the `blocked` to `false` does not affect the user's blocked state from an excessive amount of incorrectly provided credentials. Use the "Unblock a user" endpoint from the "User Blocks" API to change the user's state.
+- Supported attributes can be unset by supplying `null` as the value.
+
+**Updating a field (non-metadata property)**
+
+To mark the email address of a user as verified, the body to send should be:
+
+```json
+{ "email_verified": true }
+```
+
+**Updating a user metadata root property**
+
+Let's assume that our test user has the following `user_metadata`:
+
+```json
+{ "user_metadata" : { "profileCode": 1479 } }
+```
+
+To add the field `addresses` the body to send should be:
+
+```json
+{ "user_metadata" : { "addresses": {"work_address": "100 Industrial Way"} }}
+```
+
+The modified object ends up with the following `user_metadata` property:
+
+```json
+{
+  "user_metadata": {
+    "profileCode": 1479,
+    "addresses": { "work_address": "100 Industrial Way" }
+  }
+}
+```
+
+**Updating an inner user metadata property**
+
+If there's existing user metadata to which we want to add  `"home_address": "742 Evergreen Terrace"` (using the `addresses` property) we should send the whole `addresses` object. Since this is a first-level object, the object will be merged in, but its own properties will not be. The body to send should be:
+
+```json
+{
+  "user_metadata": {
+    "addresses": {
+      "work_address": "100 Industrial Way",
+      "home_address": "742 Evergreen Terrace"
+    }
+  }
+}
+```
+
+The modified object ends up with the following `user_metadata` property:
+
+```json
+{
+  "user_metadata": {
+    "profileCode": 1479,
+    "addresses": {
+      "work_address": "100 Industrial Way",
+      "home_address": "742 Evergreen Terrace"
+    }
+  }
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateUserRequestContent{}
+client.Users.PatchUsersByID(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth0CustomDomain:** `*string` — Custom domain to be used for this request
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**blocked:** `*bool` — Whether this user was blocked by an administrator (true) or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**emailVerified:** `*bool` — Whether this email address is verified (true) or unverified (false). If set to false the user will not receive a verification email unless `verify_email` is set to true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `*string` — Email address of this user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneNumber:** `*string` — The user's phone number (following the E.164 recommendation).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneVerified:** `*bool` — Whether this phone number has been verified (true) or not (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userMetadata:** `*management.UserMetadata` — User metadata to which this user has read/write access.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appMetadata:** `*management.AppMetadata` — User metadata to which this user has read-only access.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**givenName:** `*string` — Given name/first name/forename of this user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**familyName:** `*string` — Family name/last name/surname of this user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — Name of this user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**nickname:** `*string` — Preferred nickname or alias of this user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**picture:** `*string` — URL to picture, photo, or avatar of this user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verifyEmail:** `*bool` — Whether this user will receive a verification email after creation (true) or no email (false). Overrides behavior of `email_verified` parameter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verifyPhoneNumber:** `*bool` — Whether this user will receive a text after changing the phone number (true) or no text (false). Only valid when changing phone number for SMS connections.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `*string` — New password for this user. Only valid for database connections.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connection:** `*string` — Name of the connection to target for this user update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientID:** `*string` — Auth0 client ID. Only valid when updating email address.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `*string` — The user's username. Only valid if the connection requires a username.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetAuthenticationMethods(ID) -> *management.ListUserAuthenticationMethodsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -33684,7 +33731,7 @@ Retrieve detailed list of authentication methods associated with a specified use
 <dd>
 
 ```go
-request := &management.ListUserAuthenticationMethodsRequestParameters{
+request := &management.GetAuthenticationMethodsRequest{
         Page: management.Int(
             1,
         ),
@@ -33695,7 +33742,7 @@ request := &management.ListUserAuthenticationMethodsRequestParameters{
             true,
         ),
     }
-client.Users.AuthenticationMethods.List(
+client.Users.GetAuthenticationMethods(
         context.TODO(),
         "id",
         request,
@@ -33751,7 +33798,7 @@ client.Users.AuthenticationMethods.List(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Create(ID, request) -> *management.CreateUserAuthenticationMethodResponseContent</code></summary>
+<details><summary><code>client.Users.PostAuthenticationMethods(ID, request) -> *management.CreateUserAuthenticationMethodResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -33781,7 +33828,7 @@ Create an authentication method. Authentication methods created via this endpoin
 request := &management.CreateUserAuthenticationMethodRequestContent{
         Type: management.CreatedUserAuthenticationMethodTypeEnumPhone,
     }
-client.Users.AuthenticationMethods.Create(
+client.Users.PostAuthenticationMethods(
         context.TODO(),
         "id",
         request,
@@ -33941,7 +33988,7 @@ client.Users.AuthenticationMethods.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Set(ID, request) -> []*management.SetUserAuthenticationMethodResponseContent</code></summary>
+<details><summary><code>client.Users.PutAuthenticationMethods(ID, request) -> []*management.SetUserAuthenticationMethodResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -33975,7 +34022,7 @@ request := []*management.SetUserAuthenticationMethods{
             Type: management.AuthenticationTypeEnumPhone,
         },
     }
-client.Users.AuthenticationMethods.Set(
+client.Users.PutAuthenticationMethods(
         context.TODO(),
         "id",
         request,
@@ -34015,7 +34062,7 @@ client.Users.AuthenticationMethods.Set(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.DeleteAll(ID) -> error</code></summary>
+<details><summary><code>client.Users.DeleteAuthenticationMethods(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -34042,7 +34089,7 @@ Remove all authentication methods (i.e., enrolled MFA factors) from the specifie
 <dd>
 
 ```go
-client.Users.AuthenticationMethods.DeleteAll(
+client.Users.DeleteAuthenticationMethods(
         context.TODO(),
         "id",
     )
@@ -34073,7 +34120,7 @@ client.Users.AuthenticationMethods.DeleteAll(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Get(ID, AuthenticationMethodID) -> *management.GetUserAuthenticationMethodResponseContent</code></summary>
+<details><summary><code>client.Users.GetAuthenticationMethodsByAuthenticationMethodID(ID, AuthenticationMethodID) -> *management.GetUserAuthenticationMethodResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -34086,7 +34133,7 @@ client.Users.AuthenticationMethods.DeleteAll(
 <dd>
 
 ```go
-client.Users.AuthenticationMethods.Get(
+client.Users.GetAuthenticationMethodsByAuthenticationMethodID(
         context.TODO(),
         "id",
         "authentication_method_id",
@@ -34126,7 +34173,7 @@ client.Users.AuthenticationMethods.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Delete(ID, AuthenticationMethodID) -> error</code></summary>
+<details><summary><code>client.Users.DeleteAuthenticationMethodsByAuthenticationMethodID(ID, AuthenticationMethodID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -34153,7 +34200,7 @@ Remove the authentication method with the given ID from the specified user. For 
 <dd>
 
 ```go
-client.Users.AuthenticationMethods.Delete(
+client.Users.DeleteAuthenticationMethodsByAuthenticationMethodID(
         context.TODO(),
         "id",
         "authentication_method_id",
@@ -34193,7 +34240,7 @@ client.Users.AuthenticationMethods.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.Users.AuthenticationMethods.Update(ID, AuthenticationMethodID, request) -> *management.UpdateUserAuthenticationMethodResponseContent</code></summary>
+<details><summary><code>client.Users.PatchAuthenticationMethodsByAuthenticationMethodID(ID, AuthenticationMethodID, request) -> *management.UpdateUserAuthenticationMethodResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -34221,7 +34268,7 @@ Modify the authentication method with the given ID from the specified user. For 
 
 ```go
 request := &management.UpdateUserAuthenticationMethodRequestContent{}
-client.Users.AuthenticationMethods.Update(
+client.Users.PatchAuthenticationMethodsByAuthenticationMethodID(
         context.TODO(),
         "id",
         "authentication_method_id",
@@ -34278,8 +34325,7 @@ client.Users.AuthenticationMethods.Update(
 </dl>
 </details>
 
-## Users Authenticators
-<details><summary><code>client.Users.Authenticators.DeleteAll(ID) -> error</code></summary>
+<details><summary><code>client.Users.DeleteAuthenticators(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -34306,7 +34352,7 @@ Remove all authenticators registered to a given user ID, such as OTP, email, pho
 <dd>
 
 ```go
-client.Users.Authenticators.DeleteAll(
+client.Users.DeleteAuthenticators(
         context.TODO(),
         "id",
     )
@@ -34337,8 +34383,7 @@ client.Users.Authenticators.DeleteAll(
 </dl>
 </details>
 
-## Users ConnectedAccounts
-<details><summary><code>client.Users.ConnectedAccounts.List(ID) -> *management.ListUserConnectedAccountsResponseContent</code></summary>
+<details><summary><code>client.Users.GetConnectedAccounts(ID) -> *management.ListUserConnectedAccountsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -34365,7 +34410,7 @@ Retrieve all connected accounts associated with the user.
 <dd>
 
 ```go
-request := &management.GetUserConnectedAccountsRequestParameters{
+request := &management.GetConnectedAccountsRequest{
         From: management.String(
             "from",
         ),
@@ -34373,7 +34418,7 @@ request := &management.GetUserConnectedAccountsRequestParameters{
             1,
         ),
     }
-client.Users.ConnectedAccounts.List(
+client.Users.GetConnectedAccounts(
         context.TODO(),
         "id",
         request,
@@ -34421,8 +34466,7 @@ client.Users.ConnectedAccounts.List(
 </dl>
 </details>
 
-## Users EffectivePermissions
-<details><summary><code>client.Users.EffectivePermissions.List(ID) -> *management.ListUserEffectivePermissionsResponseContent</code></summary>
+<details><summary><code>client.Users.GetUserEffectivePermissions(ID) -> *management.ListUserEffectivePermissionsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -34449,7 +34493,7 @@ Returns the list of effective permissions for a user, taking into account permis
 <dd>
 
 ```go
-request := &management.ListUserEffectivePermissionsRequestParameters{
+request := &management.GetUserEffectivePermissionsRequest{
         From: management.String(
             "from",
         ),
@@ -34458,7 +34502,7 @@ request := &management.ListUserEffectivePermissionsRequestParameters{
         ),
         ResourceServerIdentifier: "resource_server_identifier",
     }
-client.Users.EffectivePermissions.List(
+client.Users.GetUserEffectivePermissions(
         context.TODO(),
         "id",
         request,
@@ -34514,1698 +34558,7 @@ client.Users.EffectivePermissions.List(
 </dl>
 </details>
 
-## Users EffectiveRoles
-<details><summary><code>client.Users.EffectiveRoles.List(ID) -> *management.ListUserEffectiveRolesResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve detailed list of effective roles for a user, including roles assigned directly and through group memberships.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUserEffectiveRolesRequestParameters{
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Users.EffectiveRoles.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to list effective roles for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Enrollments
-<details><summary><code>client.Users.Enrollments.Get(ID) -> []*management.UsersEnrollment</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the first [multi-factor authentication](https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors) enrollment that a specific user has confirmed.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.Enrollments.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to list enrollments for.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Groups
-<details><summary><code>client.Users.Groups.Get(ID) -> *management.GetUserGroupsPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all groups to which this user belongs.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.GetUserGroupsRequestParameters{
-        Fields: management.String(
-            "fields",
-        ),
-        IncludeFields: management.Bool(
-            true,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Users.Groups.Get(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to list groups for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — Optional Id from which to start selection.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Identities
-<details><summary><code>client.Users.Identities.Link(ID, request) -> []*management.UserIdentity</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Link two user accounts together forming a primary and secondary relationship. On successful linking, the endpoint returns the new array of the primary account identities.
-
-Note: There are two ways of invoking the endpoint:
-
-- With the authenticated primary account's JWT in the Authorization header, which has the `update:current_user_identities` scope:
-
-  ```http
-  POST /api/v2/users/PRIMARY_ACCOUNT_USER_ID/identities
-  Authorization: "Bearer PRIMARY_ACCOUNT_JWT"
-  {
-    "link_with": "SECONDARY_ACCOUNT_JWT"
-  }
-  ```
-
-  In this case, only the `link_with` param is required in the body, which also contains the JWT obtained upon the secondary account's authentication.
-
-- With a token generated by the API V2 containing the `update:users` scope:
-
-  ```http
-  POST /api/v2/users/PRIMARY_ACCOUNT_USER_ID/identities
-  Authorization: "Bearer YOUR_API_V2_TOKEN"
-  {
-    "provider": "SECONDARY_ACCOUNT_PROVIDER",
-    "connection_id": "SECONDARY_ACCOUNT_CONNECTION_ID(OPTIONAL)",
-    "user_id": "SECONDARY_ACCOUNT_USER_ID"
-  }
-  ```
-
-  In this case you need to send `provider` and `user_id` in the body. Optionally you can also send the `connection_id` param which is suitable for identifying a particular database connection for the 'auth0' provider.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.LinkUserIdentityRequestContent{}
-client.Users.Identities.Link(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the primary user account to link a second user account to.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider:** `*management.UserIdentityProviderEnum` — Identity provider of the secondary user account being linked.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connectionID:** `*string` — connection_id of the secondary user account being linked when more than one `auth0` database provider exists.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `*management.UserID` — user_id of the secondary user account being linked.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**linkWith:** `*string` — JWT for the secondary account being linked. If sending this parameter, `provider`, `user_id`, and `connection_id` must not be sent.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Identities.Delete(ID, Provider, UserID) -> management.DeleteUserIdentityResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Unlink a specific secondary account from a target user. This action requires the ID of both the target user and the secondary account. 
-
-Unlinking the secondary account removes it from the identities array of the target user and creates a new standalone profile for the secondary account. To learn more, review [Unlink User Accounts](https://auth0.com/docs/manage-users/user-accounts/user-account-linking/unlink-user-accounts).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.Identities.Delete(
-        context.TODO(),
-        "id",
-        management.UserIdentityProviderEnumAd.Ptr(),
-        "user_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the primary user account.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider:** `*management.UserIdentityProviderEnum` — Identity provider name of the secondary linked account (e.g. `google-oauth2`).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userID:** `string` — ID of the secondary linked account (e.g. `123456789081523216417` part after the `|` in `google-oauth2|123456789081523216417`).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Logs
-<details><summary><code>client.Users.Logs.List(ID) -> *management.UserListLogOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve log events for a specific user.
-
-Note: For more information on all possible event types, their respective acronyms and descriptions, see <a href="https://auth0.com/docs/logs/log-event-type-codes">Log Event Type Codes</a>.
-
-For more information on the list of fields that can be used in `sort`, see <a href="https://auth0.com/docs/logs/log-search-query-syntax#searchable-fields">Searchable Fields</a>.
-
-Auth0 <a href="https://auth0.com/docs/logs/retrieve-log-events-using-mgmt-api#limitations">limits the number of logs</a> you can return by search criteria to 100 logs per request. Furthermore, you may only paginate through up to 1,000 search results. If you exceed this threshold, please redefine your search.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUserLogsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        Sort: management.String(
-            "sort",
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Users.Logs.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user of the logs to retrieve
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Paging is disabled if parameter not sent.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort:** `*string` — Field to sort by. Use `fieldname:1` for ascending order and `fieldname:-1` for descending.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Multifactor
-<details><summary><code>client.Users.Multifactor.InvalidateRememberBrowser(ID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Invalidate all remembered browsers across all [authentication factors](https://auth0.com/docs/multifactor-authentication) for a user.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.Multifactor.InvalidateRememberBrowser(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to invalidate all remembered browsers and authentication factors for.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Multifactor.DeleteProvider(ID, Provider) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove a [multifactor](https://auth0.com/docs/multifactor-authentication) authentication configuration from a user's account. This forces the user to manually reconfigure the multi-factor provider.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.Multifactor.DeleteProvider(
-        context.TODO(),
-        "id",
-        management.UserMultifactorProviderEnumDuo.Ptr(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to remove a multifactor configuration from.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider:** `*management.UserMultifactorProviderEnum` — The multi-factor provider. Supported values 'duo' or 'google-authenticator'
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Organizations
-<details><summary><code>client.Users.Organizations.List(ID) -> *management.ListUserOrganizationsOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve list of the specified user's current Organization memberships. User must be specified by user ID. For more information, review [Auth0 Organizations](https://auth0.com/docs/manage-users/organizations).
-
-This endpoint supports two types of pagination:
-
-- Offset pagination
-- Checkpoint pagination
-
-Checkpoint pagination must be used if you need to retrieve more than 1000 organizations.
-
-**Checkpoint Pagination**
-
-To search by checkpoint, use the following parameters:
-
-- `from`: Optional id from which to start selection.
-- `take`: The total number of entries to retrieve when using the `from` parameter. Defaults to 50.
-
-**Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUserOrganizationsRequestParameters{
-        Page: management.Int(
-            1,
-        ),
-        PerPage: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Users.Organizations.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to retrieve the organizations for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Permissions
-<details><summary><code>client.Users.Permissions.List(ID) -> *management.ListUserPermissionsOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve all permissions associated with the user.
-
-**Note**: Returns only permissions from direct assignments and directly assigned roles. For permissions a user has via group-based role assignments, use `GET /api/v2/users/{id}/effective-permissions`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUserPermissionsRequestParameters{
-        PerPage: management.Int(
-            1,
-        ),
-        Page: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Users.Permissions.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to retrieve the permissions for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Permissions.Create(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Assign permissions to a user.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.CreateUserPermissionsRequestContent{
-        Permissions: []*management.PermissionRequestPayload{
-            &management.PermissionRequestPayload{
-                ResourceServerIdentifier: "resource_server_identifier",
-                PermissionName: "permission_name",
-            },
-        },
-    }
-client.Users.Permissions.Create(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to assign permissions to.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permissions:** `[]*management.PermissionRequestPayload` — List of permissions to add to this user.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Permissions.Delete(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove permissions from a user.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteUserPermissionsRequestContent{
-        Permissions: []*management.PermissionRequestPayload{
-            &management.PermissionRequestPayload{
-                ResourceServerIdentifier: "resource_server_identifier",
-                PermissionName: "permission_name",
-            },
-        },
-    }
-client.Users.Permissions.Delete(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to remove permissions from.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permissions:** `[]*management.PermissionRequestPayload` — List of permissions to remove from this user.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users RiskAssessments
-<details><summary><code>client.Users.RiskAssessments.Clear(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Clear risk assessment assessors for a specific user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ClearAssessorsRequestContent{
-        Connection: "connection",
-        Assessors: []management.AssessorsTypeEnum{
-            management.AssessorsTypeEnumNewDevice,
-        },
-    }
-client.Users.RiskAssessments.Clear(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to clear assessors for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connection:** `string` — The name of the connection containing the user whose assessors should be cleared.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assessors:** `[]*management.AssessorsTypeEnum` — List of assessors to clear.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Roles
-<details><summary><code>client.Users.Roles.List(ID) -> *management.ListUserRolesOffsetPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve detailed list of all user roles currently assigned to a user.
-
-**Note**: This action retrieves all roles assigned to a user in the context of your whole tenant. To retrieve Organization-specific roles, use the following endpoint: [Get user roles assigned to an Organization member](https://auth0.com/docs/api/management/v2/organizations/get-organization-member-roles).
-
-**Note**: Returns only direct role assignments. To also include group-based role assignments, use `GET /api/v2/users/{id}/effective-roles`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUserRolesRequestParameters{
-        PerPage: management.Int(
-            1,
-        ),
-        Page: management.Int(
-            1,
-        ),
-        IncludeTotals: management.Bool(
-            true,
-        ),
-    }
-client.Users.Roles.List(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to list roles for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**perPage:** `*int` — Number of results per page.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `*int` — Page index of the results to return. First page is 0.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Roles.Assign(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Assign one or more existing user roles to a user. For more information, review [Role-Based Access Control](https://auth0.com/docs/manage-users/access-control/rbac).
-
-**Note**: New roles cannot be created through this action. Additionally, this action is used to assign roles to a user in the context of your whole tenant. To assign roles in the context of a specific Organization, use the following endpoint: [Assign user roles to an Organization member](https://auth0.com/docs/api/management/v2/organizations/post-organization-member-roles).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.AssignUserRolesRequestContent{
-        Roles: []string{
-            "roles",
-        },
-    }
-client.Users.Roles.Assign(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to associate roles with.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `[]string` — List of roles IDs to associated with the user.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Roles.Delete(ID, request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove one or more specified user roles assigned to a user.
-
-**Note**: This action removes a role from a user in the context of your whole tenant. If you want to unassign a role from a user in the context of a specific Organization, use the following endpoint: [Delete user roles from an Organization member](https://auth0.com/docs/api/management/v2/organizations/delete-organization-member-roles).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.DeleteUserRolesRequestContent{
-        Roles: []string{
-            "roles",
-        },
-    }
-client.Users.Roles.Delete(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the user to remove roles from.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**roles:** `[]string` — List of roles IDs to remove from the user.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users RefreshToken
-<details><summary><code>client.Users.RefreshToken.List(UserID) -> *management.ListRefreshTokensPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details for a user's refresh tokens.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListRefreshTokensRequestParameters{
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Users.RefreshToken.List(
-        context.TODO(),
-        "user_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userID:** `string` — ID of the user to get refresh tokens for
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — An optional cursor from which to start the selection (exclusive).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.RefreshToken.Delete(UserID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete all refresh tokens for a user.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.RefreshToken.Delete(
-        context.TODO(),
-        "user_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userID:** `string` — ID of the user to get remove refresh tokens for
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users Sessions
-<details><summary><code>client.Users.Sessions.List(UserID) -> *management.ListUserSessionsPaginatedResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details for a user's sessions.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.ListUserSessionsRequestParameters{
-        IncludeTotals: management.Bool(
-            true,
-        ),
-        From: management.String(
-            "from",
-        ),
-        Take: management.Int(
-            1,
-        ),
-    }
-client.Users.Sessions.List(
-        context.TODO(),
-        "user_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userID:** `string` — ID of the user to get sessions for
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from:** `*string` — An optional cursor from which to start the selection (exclusive).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**take:** `*int` — Number of results per page. Defaults to 50.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.Sessions.Delete(UserID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete all sessions for a user.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Users.Sessions.Delete(
-        context.TODO(),
-        "user_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userID:** `string` — ID of the user to get sessions for
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users EffectivePermissions Sources Roles
-<details><summary><code>client.Users.EffectivePermissions.Sources.Roles.List(ID) -> *management.ListUserEffectivePermissionRoleSourcesResponseContent</code></summary>
+<details><summary><code>client.Users.GetUserEffectivePermissionRoleSources(ID) -> *management.ListUserEffectivePermissionRoleSourcesResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -36232,7 +34585,7 @@ Lists the roles which grant the user a given permission, including roles assigne
 <dd>
 
 ```go
-request := &management.ListUserEffectivePermissionRoleSourceRequestParameters{
+request := &management.GetUserEffectivePermissionRoleSourcesRequest{
         From: management.String(
             "from",
         ),
@@ -36242,7 +34595,7 @@ request := &management.ListUserEffectivePermissionRoleSourceRequestParameters{
         ResourceServerIdentifier: "resource_server_identifier",
         PermissionName: "permission_name",
     }
-client.Users.EffectivePermissions.Sources.Roles.List(
+client.Users.GetUserEffectivePermissionRoleSources(
         context.TODO(),
         "id",
         request,
@@ -36306,8 +34659,90 @@ client.Users.EffectivePermissions.Sources.Roles.List(
 </dl>
 </details>
 
-## Users EffectiveRoles Sources Groups
-<details><summary><code>client.Users.EffectiveRoles.Sources.Groups.List(ID) -> *management.ListUserRoleSourceGroupsResponseContent</code></summary>
+<details><summary><code>client.Users.GetUserEffectiveRoles(ID) -> *management.ListUserEffectiveRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve detailed list of effective roles for a user, including roles assigned directly and through group memberships.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUserEffectiveRolesRequest{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Users.GetUserEffectiveRoles(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to list effective roles for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetUserRoleSourceGroups(ID) -> *management.ListUserRoleSourceGroupsResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -36334,7 +34769,7 @@ Lists the groups that grant a user a specific role.
 <dd>
 
 ```go
-request := &management.ListUserRoleSourceGroupsRequestParameters{
+request := &management.GetUserRoleSourceGroupsRequest{
         RoleID: "role_id",
         From: management.String(
             "from",
@@ -36343,7 +34778,7 @@ request := &management.ListUserRoleSourceGroupsRequestParameters{
             1,
         ),
     }
-client.Users.EffectiveRoles.Sources.Groups.List(
+client.Users.GetUserRoleSourceGroups(
         context.TODO(),
         "id",
         request,
@@ -36399,8 +34834,1869 @@ client.Users.EffectiveRoles.Sources.Groups.List(
 </dl>
 </details>
 
-## VerifiableCredentials Verification Templates
-<details><summary><code>client.VerifiableCredentials.Verification.Templates.List() -> *management.ListVerifiableCredentialTemplatesPaginatedResponseContent</code></summary>
+<details><summary><code>client.Users.GetEnrollments(ID) -> []*management.UsersEnrollment</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the first [multi-factor authentication](https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors) enrollment that a specific user has confirmed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.GetEnrollments(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to list enrollments for.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetUserGroups(ID) -> *management.GetUserGroupsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all groups to which this user belongs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUserGroupsRequest{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Users.GetUserGroups(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to list groups for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.PostIdentities(ID, request) -> []*management.UserIdentity</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Link two user accounts together forming a primary and secondary relationship. On successful linking, the endpoint returns the new array of the primary account identities.
+
+Note: There are two ways of invoking the endpoint:
+
+- With the authenticated primary account's JWT in the Authorization header, which has the `update:current_user_identities` scope:
+
+  ```http
+  POST /api/v2/users/PRIMARY_ACCOUNT_USER_ID/identities
+  Authorization: "Bearer PRIMARY_ACCOUNT_JWT"
+  {
+    "link_with": "SECONDARY_ACCOUNT_JWT"
+  }
+  ```
+
+  In this case, only the `link_with` param is required in the body, which also contains the JWT obtained upon the secondary account's authentication.
+
+- With a token generated by the API V2 containing the `update:users` scope:
+
+  ```http
+  POST /api/v2/users/PRIMARY_ACCOUNT_USER_ID/identities
+  Authorization: "Bearer YOUR_API_V2_TOKEN"
+  {
+    "provider": "SECONDARY_ACCOUNT_PROVIDER",
+    "connection_id": "SECONDARY_ACCOUNT_CONNECTION_ID(OPTIONAL)",
+    "user_id": "SECONDARY_ACCOUNT_USER_ID"
+  }
+  ```
+
+  In this case you need to send `provider` and `user_id` in the body. Optionally you can also send the `connection_id` param which is suitable for identifying a particular database connection for the 'auth0' provider.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.LinkUserIdentityRequestContent{}
+client.Users.PostIdentities(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the primary user account to link a second user account to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider:** `*management.UserIdentityProviderEnum` — Identity provider of the secondary user account being linked.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connectionID:** `*string` — connection_id of the secondary user account being linked when more than one `auth0` database provider exists.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `*management.UserID` — user_id of the secondary user account being linked.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**linkWith:** `*string` — JWT for the secondary account being linked. If sending this parameter, `provider`, `user_id`, and `connection_id` must not be sent.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.DeleteUserIdentityByUserID(ID, Provider, UserID) -> management.DeleteUserIdentityResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Unlink a specific secondary account from a target user. This action requires the ID of both the target user and the secondary account. 
+
+Unlinking the secondary account removes it from the identities array of the target user and creates a new standalone profile for the secondary account. To learn more, review [Unlink User Accounts](https://auth0.com/docs/manage-users/user-accounts/user-account-linking/unlink-user-accounts).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.DeleteUserIdentityByUserID(
+        context.TODO(),
+        "id",
+        management.UserIdentityProviderEnumAd.Ptr(),
+        "user_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the primary user account.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider:** `*management.UserIdentityProviderEnum` — Identity provider name of the secondary linked account (e.g. `google-oauth2`).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the secondary linked account (e.g. `123456789081523216417` part after the `|` in `google-oauth2|123456789081523216417`).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetLogsByUser(ID) -> *management.UserListLogResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve log events for a specific user.
+
+Note: For more information on all possible event types, their respective acronyms and descriptions, see <a href="https://auth0.com/docs/logs/log-event-type-codes">Log Event Type Codes</a>.
+
+For more information on the list of fields that can be used in `sort`, see <a href="https://auth0.com/docs/logs/log-search-query-syntax#searchable-fields">Searchable Fields</a>.
+
+Auth0 <a href="https://auth0.com/docs/logs/retrieve-log-events-using-mgmt-api#limitations">limits the number of logs</a> you can return by search criteria to 100 logs per request. Furthermore, you may only paginate through up to 1,000 search results. If you exceed this threshold, please redefine your search.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetLogsByUserRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
+client.Users.GetLogsByUser(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user of the logs to retrieve
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Paging is disabled if parameter not sent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `*string` — Field to sort by. Use `fieldname:1` for ascending order and `fieldname:-1` for descending.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.PostInvalidateRememberBrowser(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Invalidate all remembered browsers across all [authentication factors](https://auth0.com/docs/multifactor-authentication) for a user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.PostInvalidateRememberBrowser(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to invalidate all remembered browsers and authentication factors for.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.DeleteMultifactorByProvider(ID, Provider) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a [multifactor](https://auth0.com/docs/multifactor-authentication) authentication configuration from a user's account. This forces the user to manually reconfigure the multi-factor provider.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.DeleteMultifactorByProvider(
+        context.TODO(),
+        "id",
+        management.UserMultifactorProviderEnumDuo.Ptr(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to remove a multifactor configuration from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider:** `*management.UserMultifactorProviderEnum` — The multi-factor provider. Supported values 'duo' or 'google-authenticator'
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetUserOrganizations(ID) -> *management.ListUserOrganizationsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve list of the specified user's current Organization memberships. User must be specified by user ID. For more information, review [Auth0 Organizations](https://auth0.com/docs/manage-users/organizations).
+
+This endpoint supports two types of pagination:
+
+- Offset pagination
+- Checkpoint pagination
+
+Checkpoint pagination must be used if you need to retrieve more than 1000 organizations.
+
+**Checkpoint Pagination**
+
+To search by checkpoint, use the following parameters:
+
+- `from`: Optional id from which to start selection.
+- `take`: The total number of entries to retrieve when using the `from` parameter. Defaults to 50.
+
+**Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUserOrganizationsRequest{
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Users.GetUserOrganizations(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to retrieve the organizations for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetPermissions(ID) -> *management.ListUserPermissionsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all permissions associated with the user.
+
+**Note**: Returns only permissions from direct assignments and directly assigned roles. For permissions a user has via group-based role assignments, use `GET /api/v2/users/{id}/effective-permissions`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetPermissionsRequest{
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
+client.Users.GetPermissions(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to retrieve the permissions for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.PostPermissions(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign permissions to a user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateUserPermissionsRequestContent{
+        Permissions: []*management.PermissionRequestPayload{
+            &management.PermissionRequestPayload{
+                ResourceServerIdentifier: "resource_server_identifier",
+                PermissionName: "permission_name",
+            },
+        },
+    }
+client.Users.PostPermissions(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to assign permissions to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `[]*management.PermissionRequestPayload` — List of permissions to add to this user.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.DeletePermissions(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove permissions from a user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteUserPermissionsRequestContent{
+        Permissions: []*management.PermissionRequestPayload{
+            &management.PermissionRequestPayload{
+                ResourceServerIdentifier: "resource_server_identifier",
+                PermissionName: "permission_name",
+            },
+        },
+    }
+client.Users.DeletePermissions(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to remove permissions from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `[]*management.PermissionRequestPayload` — List of permissions to remove from this user.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.PostRecoveryCodeRegeneration(ID) -> *management.RegenerateUsersRecoveryCodeResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove an existing multi-factor authentication (MFA) [recovery code](https://auth0.com/docs/secure/multi-factor-authentication/reset-user-mfa) and generate a new one. If a user cannot access the original device or account used for MFA enrollment, they can use a recovery code to authenticate.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.PostRecoveryCodeRegeneration(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to regenerate a multi-factor authentication recovery code for.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.UserRevokeAccess(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Revokes selected resources related to a user (sessions, refresh tokens, ...).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.RevokeUserAccessRequestContent{}
+client.Users.UserRevokeAccess(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sessionID:** `*string` — ID of the session to revoke.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**preserveRefreshTokens:** `*bool` — Whether to preserve the refresh tokens associated with the session.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.PostClearAssessors(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Clear risk assessment assessors for a specific user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ClearAssessorsRequestContent{
+        Connection: "connection",
+        Assessors: []management.AssessorsTypeEnum{
+            management.AssessorsTypeEnumNewDevice,
+        },
+    }
+client.Users.PostClearAssessors(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to clear assessors for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connection:** `string` — The name of the connection containing the user whose assessors should be cleared.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assessors:** `[]*management.AssessorsTypeEnum` — List of assessors to clear.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetUserRoles(ID) -> *management.ListUserRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve detailed list of all user roles currently assigned to a user.
+
+**Note**: This action retrieves all roles assigned to a user in the context of your whole tenant. To retrieve Organization-specific roles, use the following endpoint: [Get user roles assigned to an Organization member](https://auth0.com/docs/api/management/v2/organizations/get-organization-member-roles).
+
+**Note**: Returns only direct role assignments. To also include group-based role assignments, use `GET /api/v2/users/{id}/effective-roles`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUserRolesRequest{
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
+client.Users.GetUserRoles(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to list roles for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Number of results per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `*int` — Page index of the results to return. First page is 0.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.PostUserRoles(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign one or more existing user roles to a user. For more information, review [Role-Based Access Control](https://auth0.com/docs/manage-users/access-control/rbac).
+
+**Note**: New roles cannot be created through this action. Additionally, this action is used to assign roles to a user in the context of your whole tenant. To assign roles in the context of a specific Organization, use the following endpoint: [Assign user roles to an Organization member](https://auth0.com/docs/api/management/v2/organizations/post-organization-member-roles).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.AssignUserRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Users.PostUserRoles(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to associate roles with.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — List of roles IDs to associated with the user.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.DeleteUserRoles(ID, request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove one or more specified user roles assigned to a user.
+
+**Note**: This action removes a role from a user in the context of your whole tenant. If you want to unassign a role from a user in the context of a specific Organization, use the following endpoint: [Delete user roles from an Organization member](https://auth0.com/docs/api/management/v2/organizations/delete-organization-member-roles).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.DeleteUserRolesRequestContent{
+        Roles: []string{
+            "roles",
+        },
+    }
+client.Users.DeleteUserRoles(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — ID of the user to remove roles from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `[]string` — List of roles IDs to remove from the user.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetRefreshTokensForUser(UserID) -> *management.ListRefreshTokensPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details for a user's refresh tokens.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetRefreshTokensForUserRequest{
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Users.GetRefreshTokensForUser(
+        context.TODO(),
+        "user_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to get refresh tokens for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — An optional cursor from which to start the selection (exclusive).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.DeleteRefreshTokensForUser(UserID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete all refresh tokens for a user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.DeleteRefreshTokensForUser(
+        context.TODO(),
+        "user_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to get remove refresh tokens for
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetSessionsForUser(UserID) -> *management.ListUserSessionsPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details for a user's sessions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetSessionsForUserRequest{
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
+client.Users.GetSessionsForUser(
+        context.TODO(),
+        "user_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to get sessions for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — An optional cursor from which to start the selection (exclusive).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.DeleteSessionsForUser(UserID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete all sessions for a user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.DeleteSessionsForUser(
+        context.TODO(),
+        "user_id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userID:** `string` — ID of the user to get sessions for
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UsersByEmail
+<details><summary><code>client.UsersByEmail.GetUsersByEmail() -> []*management.UserResponseSchema</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Find users by email. If Auth0 is the identity provider (idP), the email address associated with a user is saved in lower case, regardless of how you initially provided it. 
+
+For example, if you register a user as JohnSmith@example.com, Auth0 saves the user's email as johnsmith@example.com. 
+
+Therefore, when using this endpoint, make sure that you are searching for users via email addresses using the correct case.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.GetUsersByEmailRequest{
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Email: "email",
+    }
+client.UsersByEmail.GetUsersByEmail(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Whether specified fields are to be included (true) or excluded (false). Defaults to true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `string` — Email address to search for (case-sensitive).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## VerifiableCredentials
+<details><summary><code>client.VerifiableCredentials.GetVcTemplates() -> *management.ListVerifiableCredentialTemplatesPaginatedResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -36427,7 +36723,7 @@ List verifiable credential templates.
 <dd>
 
 ```go
-request := &management.ListVerifiableCredentialTemplatesRequestParameters{
+request := &management.GetVcTemplatesRequest{
         From: management.String(
             "from",
         ),
@@ -36435,7 +36731,7 @@ request := &management.ListVerifiableCredentialTemplatesRequestParameters{
             1,
         ),
     }
-client.VerifiableCredentials.Verification.Templates.List(
+client.VerifiableCredentials.GetVcTemplates(
         context.TODO(),
         request,
     )
@@ -36474,7 +36770,7 @@ client.VerifiableCredentials.Verification.Templates.List(
 </dl>
 </details>
 
-<details><summary><code>client.VerifiableCredentials.Verification.Templates.Create(request) -> *management.CreateVerifiableCredentialTemplateResponseContent</code></summary>
+<details><summary><code>client.VerifiableCredentials.PostVcTemplates(request) -> *management.CreateVerifiableCredentialTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -36512,7 +36808,7 @@ request := &management.CreateVerifiableCredentialTemplateRequestContent{
         },
         WellKnownTrustedIssuers: "well_known_trusted_issuers",
     }
-client.VerifiableCredentials.Verification.Templates.Create(
+client.VerifiableCredentials.PostVcTemplates(
         context.TODO(),
         request,
     )
@@ -36583,7 +36879,7 @@ client.VerifiableCredentials.Verification.Templates.Create(
 </dl>
 </details>
 
-<details><summary><code>client.VerifiableCredentials.Verification.Templates.Get(ID) -> *management.GetVerifiableCredentialTemplateResponseContent</code></summary>
+<details><summary><code>client.VerifiableCredentials.GetVcTemplatesByID(ID) -> *management.GetVerifiableCredentialTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -36610,7 +36906,7 @@ Get a verifiable credential template.
 <dd>
 
 ```go
-client.VerifiableCredentials.Verification.Templates.Get(
+client.VerifiableCredentials.GetVcTemplatesByID(
         context.TODO(),
         "id",
     )
@@ -36641,7 +36937,7 @@ client.VerifiableCredentials.Verification.Templates.Get(
 </dl>
 </details>
 
-<details><summary><code>client.VerifiableCredentials.Verification.Templates.Delete(ID) -> error</code></summary>
+<details><summary><code>client.VerifiableCredentials.DeleteVcTemplatesByID(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -36668,7 +36964,7 @@ Delete a verifiable credential template.
 <dd>
 
 ```go
-client.VerifiableCredentials.Verification.Templates.Delete(
+client.VerifiableCredentials.DeleteVcTemplatesByID(
         context.TODO(),
         "id",
     )
@@ -36699,7 +36995,7 @@ client.VerifiableCredentials.Verification.Templates.Delete(
 </dl>
 </details>
 
-<details><summary><code>client.VerifiableCredentials.Verification.Templates.Update(ID, request) -> *management.UpdateVerifiableCredentialTemplateResponseContent</code></summary>
+<details><summary><code>client.VerifiableCredentials.PatchVcTemplatesByID(ID, request) -> *management.UpdateVerifiableCredentialTemplateResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -36727,7 +37023,7 @@ Update a verifiable credential template.
 
 ```go
 request := &management.UpdateVerifiableCredentialTemplateRequestContent{}
-client.VerifiableCredentials.Verification.Templates.Update(
+client.VerifiableCredentials.PatchVcTemplatesByID(
         context.TODO(),
         "id",
         request,

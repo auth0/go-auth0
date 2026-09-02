@@ -4,7 +4,6 @@ package tokenexchangeprofiles
 
 import (
 	context "context"
-	http "net/http"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -45,80 +44,31 @@ func NewClient(options *core.RequestOptions) *Client {
 // - `take`: The total amount of entries to retrieve when using the from parameter. Defaults to 50.
 //
 // **Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
-func (c *Client) List(
+func (c *Client) GetTokenExchangeProfiles(
 	ctx context.Context,
-	request *management.TokenExchangeProfilesListRequest,
+	request *management.GetTokenExchangeProfilesRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *management.TokenExchangeProfileResponseContent, *management.ListTokenExchangeProfileResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/token-exchange-profiles"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.ListTokenExchangeProfileResponseContent, error) {
+	response, err := c.WithRawResponse.GetTokenExchangeProfiles(
+		ctx,
 		request,
-		map[string]any{
-			"take": 50,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("from", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	readPageResponse := func(response *management.ListTokenExchangeProfileResponseContent) *core.PageResponse[*string, *management.TokenExchangeProfileResponseContent, *management.ListTokenExchangeProfileResponseContent] {
-		var zeroValue *string
-		next := response.Next
-		results := response.TokenExchangeProfiles
-		return &core.PageResponse[*string, *management.TokenExchangeProfileResponseContent, *management.ListTokenExchangeProfileResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.From)
+	return response.Body, nil
 }
 
 // Create a new Token Exchange Profile within your tenant.
 //
 // By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
-func (c *Client) Create(
+func (c *Client) PostTokenExchangeProfiles(
 	ctx context.Context,
 	request *management.CreateTokenExchangeProfileRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateTokenExchangeProfileResponseContent, error) {
-	response, err := c.WithRawResponse.Create(
+	response, err := c.WithRawResponse.PostTokenExchangeProfiles(
 		ctx,
 		request,
 		opts...,
@@ -132,13 +82,13 @@ func (c *Client) Create(
 // Retrieve details about a single Token Exchange Profile specified by ID.
 //
 // By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
-func (c *Client) Get(
+func (c *Client) GetTokenExchangeProfilesByID(
 	ctx context.Context,
 	// ID of the Token Exchange Profile to retrieve.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetTokenExchangeProfileResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetTokenExchangeProfilesByID(
 		ctx,
 		id,
 		opts...,
@@ -152,13 +102,13 @@ func (c *Client) Get(
 // Delete a Token Exchange Profile within your tenant.
 //
 // By using this feature, you agree to the applicable Free Trial terms in [Okta's Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user's subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
-func (c *Client) Delete(
+func (c *Client) DeleteTokenExchangeProfilesByID(
 	ctx context.Context,
 	// ID of the Token Exchange Profile to delete.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteTokenExchangeProfilesByID(
 		ctx,
 		id,
 		opts...,
@@ -172,14 +122,14 @@ func (c *Client) Delete(
 // Update a Token Exchange Profile within your tenant.
 //
 // By using this feature, you agree to the applicable Free Trial terms in [Okta's Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user's subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
-func (c *Client) Update(
+func (c *Client) PatchTokenExchangeProfilesByID(
 	ctx context.Context,
 	// ID of the Token Exchange Profile to update.
 	id string,
 	request *management.UpdateTokenExchangeProfileRequestContent,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Update(
+	_, err := c.WithRawResponse.PatchTokenExchangeProfilesByID(
 		ctx,
 		id,
 		request,

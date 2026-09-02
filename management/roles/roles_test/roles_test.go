@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestRolesListWithWireMock(
+func TestRolesGetRolesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestRolesListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListRolesRequestParameters{
+	request := &management.GetRolesRequest{
 		PerPage: management.Int(
 			1,
 		),
@@ -105,20 +105,26 @@ func TestRolesListWithWireMock(
 		OwnerID: management.String(
 			"owner_id",
 		),
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
 	}
-	_, invocationErr := client.Roles.List(
+	_, invocationErr := client.Roles.GetRoles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRolesListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRolesGetRolesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRolesListWithWireMock", "GET", "/roles", map[string]interface{}{"per_page": "1", "page": "1", "include_totals": "true", "name_filter": "name_filter", "type": "tenant", "owner_id": "owner_id"}, 1)
+	VerifyRequestCount(t, "TestRolesGetRolesWithWireMock", "GET", "/roles", map[string]interface{}{"per_page": "1", "page": "1", "include_totals": "true", "name_filter": "name_filter", "type": "tenant", "owner_id": "owner_id", "from": "from", "take": "1"}, 1)
 }
 
-func TestRolesCreateWithWireMock(
+func TestRolesPostRolesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -132,19 +138,19 @@ func TestRolesCreateWithWireMock(
 	request := &management.CreateRoleRequestContent{
 		Name: "name",
 	}
-	_, invocationErr := client.Roles.Create(
+	_, invocationErr := client.Roles.PostRoles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRolesCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRolesPostRolesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRolesCreateWithWireMock", "POST", "/roles", nil, 1)
+	VerifyRequestCount(t, "TestRolesPostRolesWithWireMock", "POST", "/roles", nil, 1)
 }
 
-func TestRolesGetWithWireMock(
+func TestRolesGetRolesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -155,19 +161,19 @@ func TestRolesGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Roles.Get(
+	_, invocationErr := client.Roles.GetRolesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRolesGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRolesGetRolesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRolesGetWithWireMock", "GET", "/roles/id", nil, 1)
+	VerifyRequestCount(t, "TestRolesGetRolesByIDWithWireMock", "GET", "/roles/id", nil, 1)
 }
 
-func TestRolesDeleteWithWireMock(
+func TestRolesDeleteRolesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -178,19 +184,19 @@ func TestRolesDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Roles.Delete(
+	invocationErr := client.Roles.DeleteRolesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRolesDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRolesDeleteRolesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRolesDeleteWithWireMock", "DELETE", "/roles/id", nil, 1)
+	VerifyRequestCount(t, "TestRolesDeleteRolesByIDWithWireMock", "DELETE", "/roles/id", nil, 1)
 }
 
-func TestRolesUpdateWithWireMock(
+func TestRolesPatchRolesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -202,15 +208,274 @@ func TestRolesUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateRoleRequestContent{}
-	_, invocationErr := client.Roles.Update(
+	_, invocationErr := client.Roles.PatchRolesByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRolesUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRolesPatchRolesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRolesUpdateWithWireMock", "PATCH", "/roles/id", nil, 1)
+	VerifyRequestCount(t, "TestRolesPatchRolesByIDWithWireMock", "PATCH", "/roles/id", nil, 1)
+}
+
+func TestRolesGetRoleGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetRoleGroupsRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Roles.GetRoleGroups(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestRolesGetRoleGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestRolesGetRoleGroupsWithWireMock", "GET", "/roles/id/groups", map[string]interface{}{"from": "from", "take": "1"}, 1)
+}
+
+func TestRolesPostRoleGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.AssignRoleGroupsRequestContent{
+		Groups: []string{
+			"groups",
+		},
+	}
+	invocationErr := client.Roles.PostRoleGroups(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestRolesPostRoleGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestRolesPostRoleGroupsWithWireMock", "POST", "/roles/id/groups", nil, 1)
+}
+
+func TestRolesDeleteRoleGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteRoleGroupsRequestContent{
+		Groups: []string{
+			"groups",
+		},
+	}
+	invocationErr := client.Roles.DeleteRoleGroups(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestRolesDeleteRoleGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestRolesDeleteRoleGroupsWithWireMock", "DELETE", "/roles/id/groups", nil, 1)
+}
+
+func TestRolesGetRolePermissionWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetRolePermissionRequest{
+		PerPage: management.Int(
+			1,
+		),
+		Page: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Roles.GetRolePermission(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestRolesGetRolePermissionWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestRolesGetRolePermissionWithWireMock", "GET", "/roles/id/permissions", map[string]interface{}{"per_page": "1", "page": "1", "include_totals": "true"}, 1)
+}
+
+func TestRolesPostRolePermissionAssignmentWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.AddRolePermissionsRequestContent{
+		Permissions: []*management.PermissionRequestPayload{
+			&management.PermissionRequestPayload{
+				ResourceServerIdentifier: "resource_server_identifier",
+				PermissionName:           "permission_name",
+			},
+		},
+	}
+	invocationErr := client.Roles.PostRolePermissionAssignment(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestRolesPostRolePermissionAssignmentWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestRolesPostRolePermissionAssignmentWithWireMock", "POST", "/roles/id/permissions", nil, 1)
+}
+
+func TestRolesDeleteRolePermissionAssignmentWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteRolePermissionsRequestContent{
+		Permissions: []*management.PermissionRequestPayload{
+			&management.PermissionRequestPayload{
+				ResourceServerIdentifier: "resource_server_identifier",
+				PermissionName:           "permission_name",
+			},
+		},
+	}
+	invocationErr := client.Roles.DeleteRolePermissionAssignment(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestRolesDeleteRolePermissionAssignmentWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestRolesDeleteRolePermissionAssignmentWithWireMock", "DELETE", "/roles/id/permissions", nil, 1)
+}
+
+func TestRolesGetRoleUserWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetRoleUserRequest{
+		PerPage: management.Int(
+			1,
+		),
+		Page: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Roles.GetRoleUser(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestRolesGetRoleUserWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestRolesGetRoleUserWithWireMock", "GET", "/roles/id/users", map[string]interface{}{"per_page": "1", "page": "1", "include_totals": "true", "from": "from", "take": "1"}, 1)
+}
+
+func TestRolesPostRoleUsersWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.AssignRoleUsersRequestContent{
+		Users: []string{
+			"users",
+		},
+	}
+	invocationErr := client.Roles.PostRoleUsers(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestRolesPostRoleUsersWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestRolesPostRoleUsersWithWireMock", "POST", "/roles/id/users", nil, 1)
 }

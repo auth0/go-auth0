@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
+	time "time"
 )
 
 // Custom color settings.
@@ -273,6 +274,3592 @@ func (b *BrandingPageBackground) Accept(visitor BrandingPageBackgroundVisitor) e
 }
 
 var (
+	brandingThemeBordersFieldButtonBorderRadius = big.NewInt(1 << 0)
+	brandingThemeBordersFieldButtonBorderWeight = big.NewInt(1 << 1)
+	brandingThemeBordersFieldButtonsStyle       = big.NewInt(1 << 2)
+	brandingThemeBordersFieldInputBorderRadius  = big.NewInt(1 << 3)
+	brandingThemeBordersFieldInputBorderWeight  = big.NewInt(1 << 4)
+	brandingThemeBordersFieldInputsStyle        = big.NewInt(1 << 5)
+	brandingThemeBordersFieldShowWidgetShadow   = big.NewInt(1 << 6)
+	brandingThemeBordersFieldWidgetBorderWeight = big.NewInt(1 << 7)
+	brandingThemeBordersFieldWidgetCornerRadius = big.NewInt(1 << 8)
+)
+
+type BrandingThemeBorders struct {
+	// Button border radius
+	ButtonBorderRadius float64 `json:"button_border_radius" url:"button_border_radius"`
+	// Button border weight
+	ButtonBorderWeight float64                              `json:"button_border_weight" url:"button_border_weight"`
+	ButtonsStyle       BrandingThemeBordersButtonsStyleEnum `json:"buttons_style" url:"buttons_style"`
+	// Input border radius
+	InputBorderRadius float64 `json:"input_border_radius" url:"input_border_radius"`
+	// Input border weight
+	InputBorderWeight float64                             `json:"input_border_weight" url:"input_border_weight"`
+	InputsStyle       BrandingThemeBordersInputsStyleEnum `json:"inputs_style" url:"inputs_style"`
+	// Show widget shadow
+	ShowWidgetShadow bool `json:"show_widget_shadow" url:"show_widget_shadow"`
+	// Widget border weight
+	WidgetBorderWeight float64 `json:"widget_border_weight" url:"widget_border_weight"`
+	// Widget corner radius
+	WidgetCornerRadius float64 `json:"widget_corner_radius" url:"widget_corner_radius"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeBorders) GetButtonBorderRadius() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.ButtonBorderRadius
+}
+
+func (b *BrandingThemeBorders) GetButtonBorderWeight() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.ButtonBorderWeight
+}
+
+func (b *BrandingThemeBorders) GetButtonsStyle() BrandingThemeBordersButtonsStyleEnum {
+	if b == nil {
+		return ""
+	}
+	return b.ButtonsStyle
+}
+
+func (b *BrandingThemeBorders) GetInputBorderRadius() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.InputBorderRadius
+}
+
+func (b *BrandingThemeBorders) GetInputBorderWeight() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.InputBorderWeight
+}
+
+func (b *BrandingThemeBorders) GetInputsStyle() BrandingThemeBordersInputsStyleEnum {
+	if b == nil {
+		return ""
+	}
+	return b.InputsStyle
+}
+
+func (b *BrandingThemeBorders) GetShowWidgetShadow() bool {
+	if b == nil {
+		return false
+	}
+	return b.ShowWidgetShadow
+}
+
+func (b *BrandingThemeBorders) GetWidgetBorderWeight() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.WidgetBorderWeight
+}
+
+func (b *BrandingThemeBorders) GetWidgetCornerRadius() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.WidgetCornerRadius
+}
+
+func (b *BrandingThemeBorders) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeBorders) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetButtonBorderRadius sets the ButtonBorderRadius field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeBorders) SetButtonBorderRadius(buttonBorderRadius float64) {
+	b.ButtonBorderRadius = buttonBorderRadius
+	b.require(brandingThemeBordersFieldButtonBorderRadius)
+}
+
+// SetButtonBorderWeight sets the ButtonBorderWeight field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeBorders) SetButtonBorderWeight(buttonBorderWeight float64) {
+	b.ButtonBorderWeight = buttonBorderWeight
+	b.require(brandingThemeBordersFieldButtonBorderWeight)
+}
+
+// SetButtonsStyle sets the ButtonsStyle field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeBorders) SetButtonsStyle(buttonsStyle BrandingThemeBordersButtonsStyleEnum) {
+	b.ButtonsStyle = buttonsStyle
+	b.require(brandingThemeBordersFieldButtonsStyle)
+}
+
+// SetInputBorderRadius sets the InputBorderRadius field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeBorders) SetInputBorderRadius(inputBorderRadius float64) {
+	b.InputBorderRadius = inputBorderRadius
+	b.require(brandingThemeBordersFieldInputBorderRadius)
+}
+
+// SetInputBorderWeight sets the InputBorderWeight field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeBorders) SetInputBorderWeight(inputBorderWeight float64) {
+	b.InputBorderWeight = inputBorderWeight
+	b.require(brandingThemeBordersFieldInputBorderWeight)
+}
+
+// SetInputsStyle sets the InputsStyle field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeBorders) SetInputsStyle(inputsStyle BrandingThemeBordersInputsStyleEnum) {
+	b.InputsStyle = inputsStyle
+	b.require(brandingThemeBordersFieldInputsStyle)
+}
+
+// SetShowWidgetShadow sets the ShowWidgetShadow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeBorders) SetShowWidgetShadow(showWidgetShadow bool) {
+	b.ShowWidgetShadow = showWidgetShadow
+	b.require(brandingThemeBordersFieldShowWidgetShadow)
+}
+
+// SetWidgetBorderWeight sets the WidgetBorderWeight field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeBorders) SetWidgetBorderWeight(widgetBorderWeight float64) {
+	b.WidgetBorderWeight = widgetBorderWeight
+	b.require(brandingThemeBordersFieldWidgetBorderWeight)
+}
+
+// SetWidgetCornerRadius sets the WidgetCornerRadius field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeBorders) SetWidgetCornerRadius(widgetCornerRadius float64) {
+	b.WidgetCornerRadius = widgetCornerRadius
+	b.require(brandingThemeBordersFieldWidgetCornerRadius)
+}
+
+func (b *BrandingThemeBorders) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeBorders
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeBorders(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeBorders) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeBorders
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeBorders) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Buttons style
+type BrandingThemeBordersButtonsStyleEnum string
+
+const (
+	BrandingThemeBordersButtonsStyleEnumPill    BrandingThemeBordersButtonsStyleEnum = "pill"
+	BrandingThemeBordersButtonsStyleEnumRounded BrandingThemeBordersButtonsStyleEnum = "rounded"
+	BrandingThemeBordersButtonsStyleEnumSharp   BrandingThemeBordersButtonsStyleEnum = "sharp"
+)
+
+func NewBrandingThemeBordersButtonsStyleEnumFromString(s string) (BrandingThemeBordersButtonsStyleEnum, error) {
+	switch s {
+	case "pill":
+		return BrandingThemeBordersButtonsStyleEnumPill, nil
+	case "rounded":
+		return BrandingThemeBordersButtonsStyleEnumRounded, nil
+	case "sharp":
+		return BrandingThemeBordersButtonsStyleEnumSharp, nil
+	}
+	var t BrandingThemeBordersButtonsStyleEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeBordersButtonsStyleEnum) Ptr() *BrandingThemeBordersButtonsStyleEnum {
+	return &b
+}
+
+// Inputs style
+type BrandingThemeBordersInputsStyleEnum string
+
+const (
+	BrandingThemeBordersInputsStyleEnumPill    BrandingThemeBordersInputsStyleEnum = "pill"
+	BrandingThemeBordersInputsStyleEnumRounded BrandingThemeBordersInputsStyleEnum = "rounded"
+	BrandingThemeBordersInputsStyleEnumSharp   BrandingThemeBordersInputsStyleEnum = "sharp"
+)
+
+func NewBrandingThemeBordersInputsStyleEnumFromString(s string) (BrandingThemeBordersInputsStyleEnum, error) {
+	switch s {
+	case "pill":
+		return BrandingThemeBordersInputsStyleEnumPill, nil
+	case "rounded":
+		return BrandingThemeBordersInputsStyleEnumRounded, nil
+	case "sharp":
+		return BrandingThemeBordersInputsStyleEnumSharp, nil
+	}
+	var t BrandingThemeBordersInputsStyleEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeBordersInputsStyleEnum) Ptr() *BrandingThemeBordersInputsStyleEnum {
+	return &b
+}
+
+var (
+	brandingThemeColorsFieldBaseFocusColor          = big.NewInt(1 << 0)
+	brandingThemeColorsFieldBaseHoverColor          = big.NewInt(1 << 1)
+	brandingThemeColorsFieldBodyText                = big.NewInt(1 << 2)
+	brandingThemeColorsFieldCaptchaWidgetTheme      = big.NewInt(1 << 3)
+	brandingThemeColorsFieldError                   = big.NewInt(1 << 4)
+	brandingThemeColorsFieldHeader                  = big.NewInt(1 << 5)
+	brandingThemeColorsFieldIcons                   = big.NewInt(1 << 6)
+	brandingThemeColorsFieldInputBackground         = big.NewInt(1 << 7)
+	brandingThemeColorsFieldInputBorder             = big.NewInt(1 << 8)
+	brandingThemeColorsFieldInputFilledText         = big.NewInt(1 << 9)
+	brandingThemeColorsFieldInputLabelsPlaceholders = big.NewInt(1 << 10)
+	brandingThemeColorsFieldLinksFocusedComponents  = big.NewInt(1 << 11)
+	brandingThemeColorsFieldPrimaryButton           = big.NewInt(1 << 12)
+	brandingThemeColorsFieldPrimaryButtonLabel      = big.NewInt(1 << 13)
+	brandingThemeColorsFieldReadOnlyBackground      = big.NewInt(1 << 14)
+	brandingThemeColorsFieldSecondaryButtonBorder   = big.NewInt(1 << 15)
+	brandingThemeColorsFieldSecondaryButtonLabel    = big.NewInt(1 << 16)
+	brandingThemeColorsFieldSuccess                 = big.NewInt(1 << 17)
+	brandingThemeColorsFieldWidgetBackground        = big.NewInt(1 << 18)
+	brandingThemeColorsFieldWidgetBorder            = big.NewInt(1 << 19)
+)
+
+type BrandingThemeColors struct {
+	// Base Focus Color
+	BaseFocusColor *string `json:"base_focus_color,omitempty" url:"base_focus_color,omitempty"`
+	// Base Hover Color
+	BaseHoverColor *string `json:"base_hover_color,omitempty" url:"base_hover_color,omitempty"`
+	// Body text
+	BodyText           string                                     `json:"body_text" url:"body_text"`
+	CaptchaWidgetTheme *BrandingThemeColorsCaptchaWidgetThemeEnum `json:"captcha_widget_theme,omitempty" url:"captcha_widget_theme,omitempty"`
+	// Error
+	Error string `json:"error" url:"error"`
+	// Header
+	Header string `json:"header" url:"header"`
+	// Icons
+	Icons string `json:"icons" url:"icons"`
+	// Input background
+	InputBackground string `json:"input_background" url:"input_background"`
+	// Input border
+	InputBorder string `json:"input_border" url:"input_border"`
+	// Input filled text
+	InputFilledText string `json:"input_filled_text" url:"input_filled_text"`
+	// Input labels & placeholders
+	InputLabelsPlaceholders string `json:"input_labels_placeholders" url:"input_labels_placeholders"`
+	// Links & focused components
+	LinksFocusedComponents string `json:"links_focused_components" url:"links_focused_components"`
+	// Primary button
+	PrimaryButton string `json:"primary_button" url:"primary_button"`
+	// Primary button label
+	PrimaryButtonLabel string `json:"primary_button_label" url:"primary_button_label"`
+	// Read only background
+	ReadOnlyBackground *string `json:"read_only_background,omitempty" url:"read_only_background,omitempty"`
+	// Secondary button border
+	SecondaryButtonBorder string `json:"secondary_button_border" url:"secondary_button_border"`
+	// Secondary button label
+	SecondaryButtonLabel string `json:"secondary_button_label" url:"secondary_button_label"`
+	// Success
+	Success string `json:"success" url:"success"`
+	// Widget background
+	WidgetBackground string `json:"widget_background" url:"widget_background"`
+	// Widget border
+	WidgetBorder string `json:"widget_border" url:"widget_border"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeColors) GetBaseFocusColor() string {
+	if b == nil || b.BaseFocusColor == nil {
+		return ""
+	}
+	return *b.BaseFocusColor
+}
+
+func (b *BrandingThemeColors) GetBaseHoverColor() string {
+	if b == nil || b.BaseHoverColor == nil {
+		return ""
+	}
+	return *b.BaseHoverColor
+}
+
+func (b *BrandingThemeColors) GetBodyText() string {
+	if b == nil {
+		return ""
+	}
+	return b.BodyText
+}
+
+func (b *BrandingThemeColors) GetCaptchaWidgetTheme() BrandingThemeColorsCaptchaWidgetThemeEnum {
+	if b == nil || b.CaptchaWidgetTheme == nil {
+		return ""
+	}
+	return *b.CaptchaWidgetTheme
+}
+
+func (b *BrandingThemeColors) GetError() string {
+	if b == nil {
+		return ""
+	}
+	return b.Error
+}
+
+func (b *BrandingThemeColors) GetHeader() string {
+	if b == nil {
+		return ""
+	}
+	return b.Header
+}
+
+func (b *BrandingThemeColors) GetIcons() string {
+	if b == nil {
+		return ""
+	}
+	return b.Icons
+}
+
+func (b *BrandingThemeColors) GetInputBackground() string {
+	if b == nil {
+		return ""
+	}
+	return b.InputBackground
+}
+
+func (b *BrandingThemeColors) GetInputBorder() string {
+	if b == nil {
+		return ""
+	}
+	return b.InputBorder
+}
+
+func (b *BrandingThemeColors) GetInputFilledText() string {
+	if b == nil {
+		return ""
+	}
+	return b.InputFilledText
+}
+
+func (b *BrandingThemeColors) GetInputLabelsPlaceholders() string {
+	if b == nil {
+		return ""
+	}
+	return b.InputLabelsPlaceholders
+}
+
+func (b *BrandingThemeColors) GetLinksFocusedComponents() string {
+	if b == nil {
+		return ""
+	}
+	return b.LinksFocusedComponents
+}
+
+func (b *BrandingThemeColors) GetPrimaryButton() string {
+	if b == nil {
+		return ""
+	}
+	return b.PrimaryButton
+}
+
+func (b *BrandingThemeColors) GetPrimaryButtonLabel() string {
+	if b == nil {
+		return ""
+	}
+	return b.PrimaryButtonLabel
+}
+
+func (b *BrandingThemeColors) GetReadOnlyBackground() string {
+	if b == nil || b.ReadOnlyBackground == nil {
+		return ""
+	}
+	return *b.ReadOnlyBackground
+}
+
+func (b *BrandingThemeColors) GetSecondaryButtonBorder() string {
+	if b == nil {
+		return ""
+	}
+	return b.SecondaryButtonBorder
+}
+
+func (b *BrandingThemeColors) GetSecondaryButtonLabel() string {
+	if b == nil {
+		return ""
+	}
+	return b.SecondaryButtonLabel
+}
+
+func (b *BrandingThemeColors) GetSuccess() string {
+	if b == nil {
+		return ""
+	}
+	return b.Success
+}
+
+func (b *BrandingThemeColors) GetWidgetBackground() string {
+	if b == nil {
+		return ""
+	}
+	return b.WidgetBackground
+}
+
+func (b *BrandingThemeColors) GetWidgetBorder() string {
+	if b == nil {
+		return ""
+	}
+	return b.WidgetBorder
+}
+
+func (b *BrandingThemeColors) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeColors) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetBaseFocusColor sets the BaseFocusColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetBaseFocusColor(baseFocusColor *string) {
+	b.BaseFocusColor = baseFocusColor
+	b.require(brandingThemeColorsFieldBaseFocusColor)
+}
+
+// SetBaseHoverColor sets the BaseHoverColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetBaseHoverColor(baseHoverColor *string) {
+	b.BaseHoverColor = baseHoverColor
+	b.require(brandingThemeColorsFieldBaseHoverColor)
+}
+
+// SetBodyText sets the BodyText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetBodyText(bodyText string) {
+	b.BodyText = bodyText
+	b.require(brandingThemeColorsFieldBodyText)
+}
+
+// SetCaptchaWidgetTheme sets the CaptchaWidgetTheme field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetCaptchaWidgetTheme(captchaWidgetTheme *BrandingThemeColorsCaptchaWidgetThemeEnum) {
+	b.CaptchaWidgetTheme = captchaWidgetTheme
+	b.require(brandingThemeColorsFieldCaptchaWidgetTheme)
+}
+
+// SetError sets the Error field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetError(error_ string) {
+	b.Error = error_
+	b.require(brandingThemeColorsFieldError)
+}
+
+// SetHeader sets the Header field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetHeader(header string) {
+	b.Header = header
+	b.require(brandingThemeColorsFieldHeader)
+}
+
+// SetIcons sets the Icons field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetIcons(icons string) {
+	b.Icons = icons
+	b.require(brandingThemeColorsFieldIcons)
+}
+
+// SetInputBackground sets the InputBackground field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetInputBackground(inputBackground string) {
+	b.InputBackground = inputBackground
+	b.require(brandingThemeColorsFieldInputBackground)
+}
+
+// SetInputBorder sets the InputBorder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetInputBorder(inputBorder string) {
+	b.InputBorder = inputBorder
+	b.require(brandingThemeColorsFieldInputBorder)
+}
+
+// SetInputFilledText sets the InputFilledText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetInputFilledText(inputFilledText string) {
+	b.InputFilledText = inputFilledText
+	b.require(brandingThemeColorsFieldInputFilledText)
+}
+
+// SetInputLabelsPlaceholders sets the InputLabelsPlaceholders field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetInputLabelsPlaceholders(inputLabelsPlaceholders string) {
+	b.InputLabelsPlaceholders = inputLabelsPlaceholders
+	b.require(brandingThemeColorsFieldInputLabelsPlaceholders)
+}
+
+// SetLinksFocusedComponents sets the LinksFocusedComponents field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetLinksFocusedComponents(linksFocusedComponents string) {
+	b.LinksFocusedComponents = linksFocusedComponents
+	b.require(brandingThemeColorsFieldLinksFocusedComponents)
+}
+
+// SetPrimaryButton sets the PrimaryButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetPrimaryButton(primaryButton string) {
+	b.PrimaryButton = primaryButton
+	b.require(brandingThemeColorsFieldPrimaryButton)
+}
+
+// SetPrimaryButtonLabel sets the PrimaryButtonLabel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetPrimaryButtonLabel(primaryButtonLabel string) {
+	b.PrimaryButtonLabel = primaryButtonLabel
+	b.require(brandingThemeColorsFieldPrimaryButtonLabel)
+}
+
+// SetReadOnlyBackground sets the ReadOnlyBackground field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetReadOnlyBackground(readOnlyBackground *string) {
+	b.ReadOnlyBackground = readOnlyBackground
+	b.require(brandingThemeColorsFieldReadOnlyBackground)
+}
+
+// SetSecondaryButtonBorder sets the SecondaryButtonBorder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetSecondaryButtonBorder(secondaryButtonBorder string) {
+	b.SecondaryButtonBorder = secondaryButtonBorder
+	b.require(brandingThemeColorsFieldSecondaryButtonBorder)
+}
+
+// SetSecondaryButtonLabel sets the SecondaryButtonLabel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetSecondaryButtonLabel(secondaryButtonLabel string) {
+	b.SecondaryButtonLabel = secondaryButtonLabel
+	b.require(brandingThemeColorsFieldSecondaryButtonLabel)
+}
+
+// SetSuccess sets the Success field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetSuccess(success string) {
+	b.Success = success
+	b.require(brandingThemeColorsFieldSuccess)
+}
+
+// SetWidgetBackground sets the WidgetBackground field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetWidgetBackground(widgetBackground string) {
+	b.WidgetBackground = widgetBackground
+	b.require(brandingThemeColorsFieldWidgetBackground)
+}
+
+// SetWidgetBorder sets the WidgetBorder field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeColors) SetWidgetBorder(widgetBorder string) {
+	b.WidgetBorder = widgetBorder
+	b.require(brandingThemeColorsFieldWidgetBorder)
+}
+
+func (b *BrandingThemeColors) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeColors
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeColors(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeColors) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeColors
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeColors) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Captcha Widget Theme
+type BrandingThemeColorsCaptchaWidgetThemeEnum string
+
+const (
+	BrandingThemeColorsCaptchaWidgetThemeEnumAuto  BrandingThemeColorsCaptchaWidgetThemeEnum = "auto"
+	BrandingThemeColorsCaptchaWidgetThemeEnumDark  BrandingThemeColorsCaptchaWidgetThemeEnum = "dark"
+	BrandingThemeColorsCaptchaWidgetThemeEnumLight BrandingThemeColorsCaptchaWidgetThemeEnum = "light"
+)
+
+func NewBrandingThemeColorsCaptchaWidgetThemeEnumFromString(s string) (BrandingThemeColorsCaptchaWidgetThemeEnum, error) {
+	switch s {
+	case "auto":
+		return BrandingThemeColorsCaptchaWidgetThemeEnumAuto, nil
+	case "dark":
+		return BrandingThemeColorsCaptchaWidgetThemeEnumDark, nil
+	case "light":
+		return BrandingThemeColorsCaptchaWidgetThemeEnumLight, nil
+	}
+	var t BrandingThemeColorsCaptchaWidgetThemeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeColorsCaptchaWidgetThemeEnum) Ptr() *BrandingThemeColorsCaptchaWidgetThemeEnum {
+	return &b
+}
+
+// Body text
+var (
+	brandingThemeFontBodyTextFieldBold = big.NewInt(1 << 0)
+	brandingThemeFontBodyTextFieldSize = big.NewInt(1 << 1)
+)
+
+type BrandingThemeFontBodyText struct {
+	// Body text bold
+	Bold bool `json:"bold" url:"bold"`
+	// Body text size
+	Size float64 `json:"size" url:"size"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeFontBodyText) GetBold() bool {
+	if b == nil {
+		return false
+	}
+	return b.Bold
+}
+
+func (b *BrandingThemeFontBodyText) GetSize() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.Size
+}
+
+func (b *BrandingThemeFontBodyText) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeFontBodyText) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetBold sets the Bold field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontBodyText) SetBold(bold bool) {
+	b.Bold = bold
+	b.require(brandingThemeFontBodyTextFieldBold)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontBodyText) SetSize(size float64) {
+	b.Size = size
+	b.require(brandingThemeFontBodyTextFieldSize)
+}
+
+func (b *BrandingThemeFontBodyText) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeFontBodyText
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeFontBodyText(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeFontBodyText) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeFontBodyText
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeFontBodyText) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Buttons text
+var (
+	brandingThemeFontButtonsTextFieldBold = big.NewInt(1 << 0)
+	brandingThemeFontButtonsTextFieldSize = big.NewInt(1 << 1)
+)
+
+type BrandingThemeFontButtonsText struct {
+	// Buttons text bold
+	Bold bool `json:"bold" url:"bold"`
+	// Buttons text size
+	Size float64 `json:"size" url:"size"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeFontButtonsText) GetBold() bool {
+	if b == nil {
+		return false
+	}
+	return b.Bold
+}
+
+func (b *BrandingThemeFontButtonsText) GetSize() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.Size
+}
+
+func (b *BrandingThemeFontButtonsText) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeFontButtonsText) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetBold sets the Bold field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontButtonsText) SetBold(bold bool) {
+	b.Bold = bold
+	b.require(brandingThemeFontButtonsTextFieldBold)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontButtonsText) SetSize(size float64) {
+	b.Size = size
+	b.require(brandingThemeFontButtonsTextFieldSize)
+}
+
+func (b *BrandingThemeFontButtonsText) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeFontButtonsText
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeFontButtonsText(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeFontButtonsText) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeFontButtonsText
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeFontButtonsText) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Input Labels
+var (
+	brandingThemeFontInputLabelsFieldBold = big.NewInt(1 << 0)
+	brandingThemeFontInputLabelsFieldSize = big.NewInt(1 << 1)
+)
+
+type BrandingThemeFontInputLabels struct {
+	// Input Labels bold
+	Bold bool `json:"bold" url:"bold"`
+	// Input Labels size
+	Size float64 `json:"size" url:"size"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeFontInputLabels) GetBold() bool {
+	if b == nil {
+		return false
+	}
+	return b.Bold
+}
+
+func (b *BrandingThemeFontInputLabels) GetSize() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.Size
+}
+
+func (b *BrandingThemeFontInputLabels) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeFontInputLabels) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetBold sets the Bold field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontInputLabels) SetBold(bold bool) {
+	b.Bold = bold
+	b.require(brandingThemeFontInputLabelsFieldBold)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontInputLabels) SetSize(size float64) {
+	b.Size = size
+	b.require(brandingThemeFontInputLabelsFieldSize)
+}
+
+func (b *BrandingThemeFontInputLabels) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeFontInputLabels
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeFontInputLabels(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeFontInputLabels) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeFontInputLabels
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeFontInputLabels) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Links
+var (
+	brandingThemeFontLinksFieldBold = big.NewInt(1 << 0)
+	brandingThemeFontLinksFieldSize = big.NewInt(1 << 1)
+)
+
+type BrandingThemeFontLinks struct {
+	// Links bold
+	Bold bool `json:"bold" url:"bold"`
+	// Links size
+	Size float64 `json:"size" url:"size"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeFontLinks) GetBold() bool {
+	if b == nil {
+		return false
+	}
+	return b.Bold
+}
+
+func (b *BrandingThemeFontLinks) GetSize() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.Size
+}
+
+func (b *BrandingThemeFontLinks) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeFontLinks) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetBold sets the Bold field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontLinks) SetBold(bold bool) {
+	b.Bold = bold
+	b.require(brandingThemeFontLinksFieldBold)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontLinks) SetSize(size float64) {
+	b.Size = size
+	b.require(brandingThemeFontLinksFieldSize)
+}
+
+func (b *BrandingThemeFontLinks) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeFontLinks
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeFontLinks(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeFontLinks) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeFontLinks
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeFontLinks) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Links style
+type BrandingThemeFontLinksStyleEnum string
+
+const (
+	BrandingThemeFontLinksStyleEnumNormal     BrandingThemeFontLinksStyleEnum = "normal"
+	BrandingThemeFontLinksStyleEnumUnderlined BrandingThemeFontLinksStyleEnum = "underlined"
+)
+
+func NewBrandingThemeFontLinksStyleEnumFromString(s string) (BrandingThemeFontLinksStyleEnum, error) {
+	switch s {
+	case "normal":
+		return BrandingThemeFontLinksStyleEnumNormal, nil
+	case "underlined":
+		return BrandingThemeFontLinksStyleEnumUnderlined, nil
+	}
+	var t BrandingThemeFontLinksStyleEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeFontLinksStyleEnum) Ptr() *BrandingThemeFontLinksStyleEnum {
+	return &b
+}
+
+// Subtitle
+var (
+	brandingThemeFontSubtitleFieldBold = big.NewInt(1 << 0)
+	brandingThemeFontSubtitleFieldSize = big.NewInt(1 << 1)
+)
+
+type BrandingThemeFontSubtitle struct {
+	// Subtitle bold
+	Bold bool `json:"bold" url:"bold"`
+	// Subtitle size
+	Size float64 `json:"size" url:"size"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeFontSubtitle) GetBold() bool {
+	if b == nil {
+		return false
+	}
+	return b.Bold
+}
+
+func (b *BrandingThemeFontSubtitle) GetSize() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.Size
+}
+
+func (b *BrandingThemeFontSubtitle) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeFontSubtitle) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetBold sets the Bold field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontSubtitle) SetBold(bold bool) {
+	b.Bold = bold
+	b.require(brandingThemeFontSubtitleFieldBold)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontSubtitle) SetSize(size float64) {
+	b.Size = size
+	b.require(brandingThemeFontSubtitleFieldSize)
+}
+
+func (b *BrandingThemeFontSubtitle) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeFontSubtitle
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeFontSubtitle(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeFontSubtitle) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeFontSubtitle
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeFontSubtitle) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Title
+var (
+	brandingThemeFontTitleFieldBold = big.NewInt(1 << 0)
+	brandingThemeFontTitleFieldSize = big.NewInt(1 << 1)
+)
+
+type BrandingThemeFontTitle struct {
+	// Title bold
+	Bold bool `json:"bold" url:"bold"`
+	// Title size
+	Size float64 `json:"size" url:"size"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeFontTitle) GetBold() bool {
+	if b == nil {
+		return false
+	}
+	return b.Bold
+}
+
+func (b *BrandingThemeFontTitle) GetSize() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.Size
+}
+
+func (b *BrandingThemeFontTitle) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeFontTitle) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetBold sets the Bold field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontTitle) SetBold(bold bool) {
+	b.Bold = bold
+	b.require(brandingThemeFontTitleFieldBold)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFontTitle) SetSize(size float64) {
+	b.Size = size
+	b.require(brandingThemeFontTitleFieldSize)
+}
+
+func (b *BrandingThemeFontTitle) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeFontTitle
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeFontTitle(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeFontTitle) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeFontTitle
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeFontTitle) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+var (
+	brandingThemeFontsFieldBodyText          = big.NewInt(1 << 0)
+	brandingThemeFontsFieldButtonsText       = big.NewInt(1 << 1)
+	brandingThemeFontsFieldFontURL           = big.NewInt(1 << 2)
+	brandingThemeFontsFieldInputLabels       = big.NewInt(1 << 3)
+	brandingThemeFontsFieldLinks             = big.NewInt(1 << 4)
+	brandingThemeFontsFieldLinksStyle        = big.NewInt(1 << 5)
+	brandingThemeFontsFieldReferenceTextSize = big.NewInt(1 << 6)
+	brandingThemeFontsFieldSubtitle          = big.NewInt(1 << 7)
+	brandingThemeFontsFieldTitle             = big.NewInt(1 << 8)
+)
+
+type BrandingThemeFonts struct {
+	BodyText    *BrandingThemeFontBodyText    `json:"body_text" url:"body_text"`
+	ButtonsText *BrandingThemeFontButtonsText `json:"buttons_text" url:"buttons_text"`
+	// Font URL
+	FontURL     string                          `json:"font_url" url:"font_url"`
+	InputLabels *BrandingThemeFontInputLabels   `json:"input_labels" url:"input_labels"`
+	Links       *BrandingThemeFontLinks         `json:"links" url:"links"`
+	LinksStyle  BrandingThemeFontLinksStyleEnum `json:"links_style" url:"links_style"`
+	// Reference text size
+	ReferenceTextSize float64                    `json:"reference_text_size" url:"reference_text_size"`
+	Subtitle          *BrandingThemeFontSubtitle `json:"subtitle" url:"subtitle"`
+	Title             *BrandingThemeFontTitle    `json:"title" url:"title"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeFonts) GetBodyText() *BrandingThemeFontBodyText {
+	if b == nil {
+		return nil
+	}
+	return b.BodyText
+}
+
+func (b *BrandingThemeFonts) GetButtonsText() *BrandingThemeFontButtonsText {
+	if b == nil {
+		return nil
+	}
+	return b.ButtonsText
+}
+
+func (b *BrandingThemeFonts) GetFontURL() string {
+	if b == nil {
+		return ""
+	}
+	return b.FontURL
+}
+
+func (b *BrandingThemeFonts) GetInputLabels() *BrandingThemeFontInputLabels {
+	if b == nil {
+		return nil
+	}
+	return b.InputLabels
+}
+
+func (b *BrandingThemeFonts) GetLinks() *BrandingThemeFontLinks {
+	if b == nil {
+		return nil
+	}
+	return b.Links
+}
+
+func (b *BrandingThemeFonts) GetLinksStyle() BrandingThemeFontLinksStyleEnum {
+	if b == nil {
+		return ""
+	}
+	return b.LinksStyle
+}
+
+func (b *BrandingThemeFonts) GetReferenceTextSize() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.ReferenceTextSize
+}
+
+func (b *BrandingThemeFonts) GetSubtitle() *BrandingThemeFontSubtitle {
+	if b == nil {
+		return nil
+	}
+	return b.Subtitle
+}
+
+func (b *BrandingThemeFonts) GetTitle() *BrandingThemeFontTitle {
+	if b == nil {
+		return nil
+	}
+	return b.Title
+}
+
+func (b *BrandingThemeFonts) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeFonts) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetBodyText sets the BodyText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFonts) SetBodyText(bodyText *BrandingThemeFontBodyText) {
+	b.BodyText = bodyText
+	b.require(brandingThemeFontsFieldBodyText)
+}
+
+// SetButtonsText sets the ButtonsText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFonts) SetButtonsText(buttonsText *BrandingThemeFontButtonsText) {
+	b.ButtonsText = buttonsText
+	b.require(brandingThemeFontsFieldButtonsText)
+}
+
+// SetFontURL sets the FontURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFonts) SetFontURL(fontURL string) {
+	b.FontURL = fontURL
+	b.require(brandingThemeFontsFieldFontURL)
+}
+
+// SetInputLabels sets the InputLabels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFonts) SetInputLabels(inputLabels *BrandingThemeFontInputLabels) {
+	b.InputLabels = inputLabels
+	b.require(brandingThemeFontsFieldInputLabels)
+}
+
+// SetLinks sets the Links field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFonts) SetLinks(links *BrandingThemeFontLinks) {
+	b.Links = links
+	b.require(brandingThemeFontsFieldLinks)
+}
+
+// SetLinksStyle sets the LinksStyle field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFonts) SetLinksStyle(linksStyle BrandingThemeFontLinksStyleEnum) {
+	b.LinksStyle = linksStyle
+	b.require(brandingThemeFontsFieldLinksStyle)
+}
+
+// SetReferenceTextSize sets the ReferenceTextSize field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFonts) SetReferenceTextSize(referenceTextSize float64) {
+	b.ReferenceTextSize = referenceTextSize
+	b.require(brandingThemeFontsFieldReferenceTextSize)
+}
+
+// SetSubtitle sets the Subtitle field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFonts) SetSubtitle(subtitle *BrandingThemeFontSubtitle) {
+	b.Subtitle = subtitle
+	b.require(brandingThemeFontsFieldSubtitle)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeFonts) SetTitle(title *BrandingThemeFontTitle) {
+	b.Title = title
+	b.require(brandingThemeFontsFieldTitle)
+}
+
+func (b *BrandingThemeFonts) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeFonts
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeFonts(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeFonts) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeFonts
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeFonts) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+var (
+	brandingThemeIdentifiersFieldLoginDisplay    = big.NewInt(1 << 0)
+	brandingThemeIdentifiersFieldOtpAutocomplete = big.NewInt(1 << 1)
+	brandingThemeIdentifiersFieldPhoneDisplay    = big.NewInt(1 << 2)
+)
+
+type BrandingThemeIdentifiers struct {
+	LoginDisplay BrandingThemeIdentifiersLoginDisplayEnum `json:"login_display" url:"login_display"`
+	// OTP autocomplete
+	OtpAutocomplete bool                                  `json:"otp_autocomplete" url:"otp_autocomplete"`
+	PhoneDisplay    *BrandingThemeIdentifiersPhoneDisplay `json:"phone_display" url:"phone_display"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeIdentifiers) GetLoginDisplay() BrandingThemeIdentifiersLoginDisplayEnum {
+	if b == nil {
+		return ""
+	}
+	return b.LoginDisplay
+}
+
+func (b *BrandingThemeIdentifiers) GetOtpAutocomplete() bool {
+	if b == nil {
+		return false
+	}
+	return b.OtpAutocomplete
+}
+
+func (b *BrandingThemeIdentifiers) GetPhoneDisplay() *BrandingThemeIdentifiersPhoneDisplay {
+	if b == nil {
+		return nil
+	}
+	return b.PhoneDisplay
+}
+
+func (b *BrandingThemeIdentifiers) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeIdentifiers) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetLoginDisplay sets the LoginDisplay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeIdentifiers) SetLoginDisplay(loginDisplay BrandingThemeIdentifiersLoginDisplayEnum) {
+	b.LoginDisplay = loginDisplay
+	b.require(brandingThemeIdentifiersFieldLoginDisplay)
+}
+
+// SetOtpAutocomplete sets the OtpAutocomplete field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeIdentifiers) SetOtpAutocomplete(otpAutocomplete bool) {
+	b.OtpAutocomplete = otpAutocomplete
+	b.require(brandingThemeIdentifiersFieldOtpAutocomplete)
+}
+
+// SetPhoneDisplay sets the PhoneDisplay field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeIdentifiers) SetPhoneDisplay(phoneDisplay *BrandingThemeIdentifiersPhoneDisplay) {
+	b.PhoneDisplay = phoneDisplay
+	b.require(brandingThemeIdentifiersFieldPhoneDisplay)
+}
+
+func (b *BrandingThemeIdentifiers) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeIdentifiers
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeIdentifiers(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeIdentifiers) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeIdentifiers
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeIdentifiers) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Login display
+type BrandingThemeIdentifiersLoginDisplayEnum string
+
+const (
+	BrandingThemeIdentifiersLoginDisplayEnumSeparate BrandingThemeIdentifiersLoginDisplayEnum = "separate"
+	BrandingThemeIdentifiersLoginDisplayEnumUnified  BrandingThemeIdentifiersLoginDisplayEnum = "unified"
+)
+
+func NewBrandingThemeIdentifiersLoginDisplayEnumFromString(s string) (BrandingThemeIdentifiersLoginDisplayEnum, error) {
+	switch s {
+	case "separate":
+		return BrandingThemeIdentifiersLoginDisplayEnumSeparate, nil
+	case "unified":
+		return BrandingThemeIdentifiersLoginDisplayEnumUnified, nil
+	}
+	var t BrandingThemeIdentifiersLoginDisplayEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeIdentifiersLoginDisplayEnum) Ptr() *BrandingThemeIdentifiersLoginDisplayEnum {
+	return &b
+}
+
+// Phone display
+var (
+	brandingThemeIdentifiersPhoneDisplayFieldFormatting = big.NewInt(1 << 0)
+	brandingThemeIdentifiersPhoneDisplayFieldMasking    = big.NewInt(1 << 1)
+)
+
+type BrandingThemeIdentifiersPhoneDisplay struct {
+	Formatting BrandingThemeIdentifiersPhoneDisplayFormattingEnum `json:"formatting" url:"formatting"`
+	Masking    BrandingThemeIdentifiersPhoneDisplayMaskingEnum    `json:"masking" url:"masking"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeIdentifiersPhoneDisplay) GetFormatting() BrandingThemeIdentifiersPhoneDisplayFormattingEnum {
+	if b == nil {
+		return ""
+	}
+	return b.Formatting
+}
+
+func (b *BrandingThemeIdentifiersPhoneDisplay) GetMasking() BrandingThemeIdentifiersPhoneDisplayMaskingEnum {
+	if b == nil {
+		return ""
+	}
+	return b.Masking
+}
+
+func (b *BrandingThemeIdentifiersPhoneDisplay) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeIdentifiersPhoneDisplay) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetFormatting sets the Formatting field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeIdentifiersPhoneDisplay) SetFormatting(formatting BrandingThemeIdentifiersPhoneDisplayFormattingEnum) {
+	b.Formatting = formatting
+	b.require(brandingThemeIdentifiersPhoneDisplayFieldFormatting)
+}
+
+// SetMasking sets the Masking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeIdentifiersPhoneDisplay) SetMasking(masking BrandingThemeIdentifiersPhoneDisplayMaskingEnum) {
+	b.Masking = masking
+	b.require(brandingThemeIdentifiersPhoneDisplayFieldMasking)
+}
+
+func (b *BrandingThemeIdentifiersPhoneDisplay) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeIdentifiersPhoneDisplay
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeIdentifiersPhoneDisplay(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeIdentifiersPhoneDisplay) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeIdentifiersPhoneDisplay
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeIdentifiersPhoneDisplay) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Phone number formatting style
+type BrandingThemeIdentifiersPhoneDisplayFormattingEnum string
+
+const (
+	BrandingThemeIdentifiersPhoneDisplayFormattingEnumInternational BrandingThemeIdentifiersPhoneDisplayFormattingEnum = "international"
+	BrandingThemeIdentifiersPhoneDisplayFormattingEnumRegional      BrandingThemeIdentifiersPhoneDisplayFormattingEnum = "regional"
+)
+
+func NewBrandingThemeIdentifiersPhoneDisplayFormattingEnumFromString(s string) (BrandingThemeIdentifiersPhoneDisplayFormattingEnum, error) {
+	switch s {
+	case "international":
+		return BrandingThemeIdentifiersPhoneDisplayFormattingEnumInternational, nil
+	case "regional":
+		return BrandingThemeIdentifiersPhoneDisplayFormattingEnumRegional, nil
+	}
+	var t BrandingThemeIdentifiersPhoneDisplayFormattingEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeIdentifiersPhoneDisplayFormattingEnum) Ptr() *BrandingThemeIdentifiersPhoneDisplayFormattingEnum {
+	return &b
+}
+
+// Phone number masking strategy
+type BrandingThemeIdentifiersPhoneDisplayMaskingEnum string
+
+const (
+	BrandingThemeIdentifiersPhoneDisplayMaskingEnumHideCountryCode BrandingThemeIdentifiersPhoneDisplayMaskingEnum = "hide_country_code"
+	BrandingThemeIdentifiersPhoneDisplayMaskingEnumMaskDigits      BrandingThemeIdentifiersPhoneDisplayMaskingEnum = "mask_digits"
+	BrandingThemeIdentifiersPhoneDisplayMaskingEnumShowAll         BrandingThemeIdentifiersPhoneDisplayMaskingEnum = "show_all"
+)
+
+func NewBrandingThemeIdentifiersPhoneDisplayMaskingEnumFromString(s string) (BrandingThemeIdentifiersPhoneDisplayMaskingEnum, error) {
+	switch s {
+	case "hide_country_code":
+		return BrandingThemeIdentifiersPhoneDisplayMaskingEnumHideCountryCode, nil
+	case "mask_digits":
+		return BrandingThemeIdentifiersPhoneDisplayMaskingEnumMaskDigits, nil
+	case "show_all":
+		return BrandingThemeIdentifiersPhoneDisplayMaskingEnumShowAll, nil
+	}
+	var t BrandingThemeIdentifiersPhoneDisplayMaskingEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeIdentifiersPhoneDisplayMaskingEnum) Ptr() *BrandingThemeIdentifiersPhoneDisplayMaskingEnum {
+	return &b
+}
+
+var (
+	brandingThemePageBackgroundFieldBackgroundColor    = big.NewInt(1 << 0)
+	brandingThemePageBackgroundFieldBackgroundImageURL = big.NewInt(1 << 1)
+	brandingThemePageBackgroundFieldPageLayout         = big.NewInt(1 << 2)
+)
+
+type BrandingThemePageBackground struct {
+	// Background color
+	BackgroundColor string `json:"background_color" url:"background_color"`
+	// Background image url
+	BackgroundImageURL string                                    `json:"background_image_url" url:"background_image_url"`
+	PageLayout         BrandingThemePageBackgroundPageLayoutEnum `json:"page_layout" url:"page_layout"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemePageBackground) GetBackgroundColor() string {
+	if b == nil {
+		return ""
+	}
+	return b.BackgroundColor
+}
+
+func (b *BrandingThemePageBackground) GetBackgroundImageURL() string {
+	if b == nil {
+		return ""
+	}
+	return b.BackgroundImageURL
+}
+
+func (b *BrandingThemePageBackground) GetPageLayout() BrandingThemePageBackgroundPageLayoutEnum {
+	if b == nil {
+		return ""
+	}
+	return b.PageLayout
+}
+
+func (b *BrandingThemePageBackground) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemePageBackground) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetBackgroundColor sets the BackgroundColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemePageBackground) SetBackgroundColor(backgroundColor string) {
+	b.BackgroundColor = backgroundColor
+	b.require(brandingThemePageBackgroundFieldBackgroundColor)
+}
+
+// SetBackgroundImageURL sets the BackgroundImageURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemePageBackground) SetBackgroundImageURL(backgroundImageURL string) {
+	b.BackgroundImageURL = backgroundImageURL
+	b.require(brandingThemePageBackgroundFieldBackgroundImageURL)
+}
+
+// SetPageLayout sets the PageLayout field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemePageBackground) SetPageLayout(pageLayout BrandingThemePageBackgroundPageLayoutEnum) {
+	b.PageLayout = pageLayout
+	b.require(brandingThemePageBackgroundFieldPageLayout)
+}
+
+func (b *BrandingThemePageBackground) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemePageBackground
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemePageBackground(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemePageBackground) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemePageBackground
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemePageBackground) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Page Layout
+type BrandingThemePageBackgroundPageLayoutEnum string
+
+const (
+	BrandingThemePageBackgroundPageLayoutEnumCenter BrandingThemePageBackgroundPageLayoutEnum = "center"
+	BrandingThemePageBackgroundPageLayoutEnumLeft   BrandingThemePageBackgroundPageLayoutEnum = "left"
+	BrandingThemePageBackgroundPageLayoutEnumRight  BrandingThemePageBackgroundPageLayoutEnum = "right"
+)
+
+func NewBrandingThemePageBackgroundPageLayoutEnumFromString(s string) (BrandingThemePageBackgroundPageLayoutEnum, error) {
+	switch s {
+	case "center":
+		return BrandingThemePageBackgroundPageLayoutEnumCenter, nil
+	case "left":
+		return BrandingThemePageBackgroundPageLayoutEnumLeft, nil
+	case "right":
+		return BrandingThemePageBackgroundPageLayoutEnumRight, nil
+	}
+	var t BrandingThemePageBackgroundPageLayoutEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemePageBackgroundPageLayoutEnum) Ptr() *BrandingThemePageBackgroundPageLayoutEnum {
+	return &b
+}
+
+var (
+	brandingThemeWidgetFieldHeaderTextAlignment = big.NewInt(1 << 0)
+	brandingThemeWidgetFieldLogoHeight          = big.NewInt(1 << 1)
+	brandingThemeWidgetFieldLogoPosition        = big.NewInt(1 << 2)
+	brandingThemeWidgetFieldLogoURL             = big.NewInt(1 << 3)
+	brandingThemeWidgetFieldSocialButtonsLayout = big.NewInt(1 << 4)
+)
+
+type BrandingThemeWidget struct {
+	HeaderTextAlignment BrandingThemeWidgetHeaderTextAlignmentEnum `json:"header_text_alignment" url:"header_text_alignment"`
+	// Logo height
+	LogoHeight   float64                             `json:"logo_height" url:"logo_height"`
+	LogoPosition BrandingThemeWidgetLogoPositionEnum `json:"logo_position" url:"logo_position"`
+	// Logo url
+	LogoURL             string                                     `json:"logo_url" url:"logo_url"`
+	SocialButtonsLayout BrandingThemeWidgetSocialButtonsLayoutEnum `json:"social_buttons_layout" url:"social_buttons_layout"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BrandingThemeWidget) GetHeaderTextAlignment() BrandingThemeWidgetHeaderTextAlignmentEnum {
+	if b == nil {
+		return ""
+	}
+	return b.HeaderTextAlignment
+}
+
+func (b *BrandingThemeWidget) GetLogoHeight() float64 {
+	if b == nil {
+		return 0
+	}
+	return b.LogoHeight
+}
+
+func (b *BrandingThemeWidget) GetLogoPosition() BrandingThemeWidgetLogoPositionEnum {
+	if b == nil {
+		return ""
+	}
+	return b.LogoPosition
+}
+
+func (b *BrandingThemeWidget) GetLogoURL() string {
+	if b == nil {
+		return ""
+	}
+	return b.LogoURL
+}
+
+func (b *BrandingThemeWidget) GetSocialButtonsLayout() BrandingThemeWidgetSocialButtonsLayoutEnum {
+	if b == nil {
+		return ""
+	}
+	return b.SocialButtonsLayout
+}
+
+func (b *BrandingThemeWidget) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BrandingThemeWidget) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetHeaderTextAlignment sets the HeaderTextAlignment field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeWidget) SetHeaderTextAlignment(headerTextAlignment BrandingThemeWidgetHeaderTextAlignmentEnum) {
+	b.HeaderTextAlignment = headerTextAlignment
+	b.require(brandingThemeWidgetFieldHeaderTextAlignment)
+}
+
+// SetLogoHeight sets the LogoHeight field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeWidget) SetLogoHeight(logoHeight float64) {
+	b.LogoHeight = logoHeight
+	b.require(brandingThemeWidgetFieldLogoHeight)
+}
+
+// SetLogoPosition sets the LogoPosition field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeWidget) SetLogoPosition(logoPosition BrandingThemeWidgetLogoPositionEnum) {
+	b.LogoPosition = logoPosition
+	b.require(brandingThemeWidgetFieldLogoPosition)
+}
+
+// SetLogoURL sets the LogoURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeWidget) SetLogoURL(logoURL string) {
+	b.LogoURL = logoURL
+	b.require(brandingThemeWidgetFieldLogoURL)
+}
+
+// SetSocialButtonsLayout sets the SocialButtonsLayout field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BrandingThemeWidget) SetSocialButtonsLayout(socialButtonsLayout BrandingThemeWidgetSocialButtonsLayoutEnum) {
+	b.SocialButtonsLayout = socialButtonsLayout
+	b.require(brandingThemeWidgetFieldSocialButtonsLayout)
+}
+
+func (b *BrandingThemeWidget) UnmarshalJSON(data []byte) error {
+	type unmarshaler BrandingThemeWidget
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BrandingThemeWidget(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BrandingThemeWidget) MarshalJSON() ([]byte, error) {
+	type embed BrandingThemeWidget
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BrandingThemeWidget) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// Header text alignment
+type BrandingThemeWidgetHeaderTextAlignmentEnum string
+
+const (
+	BrandingThemeWidgetHeaderTextAlignmentEnumCenter BrandingThemeWidgetHeaderTextAlignmentEnum = "center"
+	BrandingThemeWidgetHeaderTextAlignmentEnumLeft   BrandingThemeWidgetHeaderTextAlignmentEnum = "left"
+	BrandingThemeWidgetHeaderTextAlignmentEnumRight  BrandingThemeWidgetHeaderTextAlignmentEnum = "right"
+)
+
+func NewBrandingThemeWidgetHeaderTextAlignmentEnumFromString(s string) (BrandingThemeWidgetHeaderTextAlignmentEnum, error) {
+	switch s {
+	case "center":
+		return BrandingThemeWidgetHeaderTextAlignmentEnumCenter, nil
+	case "left":
+		return BrandingThemeWidgetHeaderTextAlignmentEnumLeft, nil
+	case "right":
+		return BrandingThemeWidgetHeaderTextAlignmentEnumRight, nil
+	}
+	var t BrandingThemeWidgetHeaderTextAlignmentEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeWidgetHeaderTextAlignmentEnum) Ptr() *BrandingThemeWidgetHeaderTextAlignmentEnum {
+	return &b
+}
+
+// Logo position
+type BrandingThemeWidgetLogoPositionEnum string
+
+const (
+	BrandingThemeWidgetLogoPositionEnumCenter BrandingThemeWidgetLogoPositionEnum = "center"
+	BrandingThemeWidgetLogoPositionEnumLeft   BrandingThemeWidgetLogoPositionEnum = "left"
+	BrandingThemeWidgetLogoPositionEnumNone   BrandingThemeWidgetLogoPositionEnum = "none"
+	BrandingThemeWidgetLogoPositionEnumRight  BrandingThemeWidgetLogoPositionEnum = "right"
+)
+
+func NewBrandingThemeWidgetLogoPositionEnumFromString(s string) (BrandingThemeWidgetLogoPositionEnum, error) {
+	switch s {
+	case "center":
+		return BrandingThemeWidgetLogoPositionEnumCenter, nil
+	case "left":
+		return BrandingThemeWidgetLogoPositionEnumLeft, nil
+	case "none":
+		return BrandingThemeWidgetLogoPositionEnumNone, nil
+	case "right":
+		return BrandingThemeWidgetLogoPositionEnumRight, nil
+	}
+	var t BrandingThemeWidgetLogoPositionEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeWidgetLogoPositionEnum) Ptr() *BrandingThemeWidgetLogoPositionEnum {
+	return &b
+}
+
+// Social buttons layout
+type BrandingThemeWidgetSocialButtonsLayoutEnum string
+
+const (
+	BrandingThemeWidgetSocialButtonsLayoutEnumBottom BrandingThemeWidgetSocialButtonsLayoutEnum = "bottom"
+	BrandingThemeWidgetSocialButtonsLayoutEnumTop    BrandingThemeWidgetSocialButtonsLayoutEnum = "top"
+)
+
+func NewBrandingThemeWidgetSocialButtonsLayoutEnumFromString(s string) (BrandingThemeWidgetSocialButtonsLayoutEnum, error) {
+	switch s {
+	case "bottom":
+		return BrandingThemeWidgetSocialButtonsLayoutEnumBottom, nil
+	case "top":
+		return BrandingThemeWidgetSocialButtonsLayoutEnumTop, nil
+	}
+	var t BrandingThemeWidgetSocialButtonsLayoutEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BrandingThemeWidgetSocialButtonsLayoutEnum) Ptr() *BrandingThemeWidgetSocialButtonsLayoutEnum {
+	return &b
+}
+
+// Phone provider configuration schema
+var (
+	createBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
+	createBrandingPhoneProviderResponseContentFieldTenant        = big.NewInt(1 << 1)
+	createBrandingPhoneProviderResponseContentFieldName          = big.NewInt(1 << 2)
+	createBrandingPhoneProviderResponseContentFieldChannel       = big.NewInt(1 << 3)
+	createBrandingPhoneProviderResponseContentFieldDisabled      = big.NewInt(1 << 4)
+	createBrandingPhoneProviderResponseContentFieldConfiguration = big.NewInt(1 << 5)
+	createBrandingPhoneProviderResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
+	createBrandingPhoneProviderResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
+)
+
+type CreateBrandingPhoneProviderResponseContent struct {
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the tenant
+	Tenant  *string                   `json:"tenant,omitempty" url:"tenant,omitempty"`
+	Name    PhoneProviderNameEnum     `json:"name" url:"name"`
+	Channel *PhoneProviderChannelEnum `json:"channel,omitempty" url:"channel,omitempty"`
+	// Whether the provider is enabled (false) or disabled (true).
+	Disabled      *bool                       `json:"disabled,omitempty" url:"disabled,omitempty"`
+	Configuration *PhoneProviderConfiguration `json:"configuration,omitempty" url:"configuration,omitempty"`
+	// The provider's creation date and time in ISO 8601 format
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The date and time of the last update to the provider in ISO 8601 format
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) GetTenant() string {
+	if c == nil || c.Tenant == nil {
+		return ""
+	}
+	return *c.Tenant
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) GetName() PhoneProviderNameEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) GetChannel() PhoneProviderChannelEnum {
+	if c == nil || c.Channel == nil {
+		return ""
+	}
+	return *c.Channel
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) GetDisabled() bool {
+	if c == nil || c.Disabled == nil {
+		return false
+	}
+	return *c.Disabled
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) GetConfiguration() PhoneProviderConfiguration {
+	if c == nil || c.Configuration == nil {
+		return PhoneProviderConfiguration{}
+	}
+	return *c.Configuration
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *c.UpdatedAt
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingPhoneProviderResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createBrandingPhoneProviderResponseContentFieldID)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingPhoneProviderResponseContent) SetTenant(tenant *string) {
+	c.Tenant = tenant
+	c.require(createBrandingPhoneProviderResponseContentFieldTenant)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingPhoneProviderResponseContent) SetName(name PhoneProviderNameEnum) {
+	c.Name = name
+	c.require(createBrandingPhoneProviderResponseContentFieldName)
+}
+
+// SetChannel sets the Channel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingPhoneProviderResponseContent) SetChannel(channel *PhoneProviderChannelEnum) {
+	c.Channel = channel
+	c.require(createBrandingPhoneProviderResponseContentFieldChannel)
+}
+
+// SetDisabled sets the Disabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingPhoneProviderResponseContent) SetDisabled(disabled *bool) {
+	c.Disabled = disabled
+	c.require(createBrandingPhoneProviderResponseContentFieldDisabled)
+}
+
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingPhoneProviderResponseContent) SetConfiguration(configuration *PhoneProviderConfiguration) {
+	c.Configuration = configuration
+	c.require(createBrandingPhoneProviderResponseContentFieldConfiguration)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingPhoneProviderResponseContent) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createBrandingPhoneProviderResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingPhoneProviderResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createBrandingPhoneProviderResponseContentFieldUpdatedAt)
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateBrandingPhoneProviderResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateBrandingPhoneProviderResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	c.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateBrandingPhoneProviderResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(c.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateBrandingPhoneProviderResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createBrandingThemeResponseContentFieldBorders        = big.NewInt(1 << 0)
+	createBrandingThemeResponseContentFieldColors         = big.NewInt(1 << 1)
+	createBrandingThemeResponseContentFieldDisplayName    = big.NewInt(1 << 2)
+	createBrandingThemeResponseContentFieldFonts          = big.NewInt(1 << 3)
+	createBrandingThemeResponseContentFieldIdentifiers    = big.NewInt(1 << 4)
+	createBrandingThemeResponseContentFieldPageBackground = big.NewInt(1 << 5)
+	createBrandingThemeResponseContentFieldThemeID        = big.NewInt(1 << 6)
+	createBrandingThemeResponseContentFieldWidget         = big.NewInt(1 << 7)
+)
+
+type CreateBrandingThemeResponseContent struct {
+	Borders *BrandingThemeBorders `json:"borders" url:"borders"`
+	Colors  *BrandingThemeColors  `json:"colors" url:"colors"`
+	// Display Name
+	DisplayName    string                       `json:"displayName" url:"displayName"`
+	Fonts          *BrandingThemeFonts          `json:"fonts" url:"fonts"`
+	Identifiers    *BrandingThemeIdentifiers    `json:"identifiers,omitempty" url:"identifiers,omitempty"`
+	PageBackground *BrandingThemePageBackground `json:"page_background" url:"page_background"`
+	// Theme Id
+	ThemeID string               `json:"themeId" url:"themeId"`
+	Widget  *BrandingThemeWidget `json:"widget" url:"widget"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateBrandingThemeResponseContent) GetBorders() *BrandingThemeBorders {
+	if c == nil {
+		return nil
+	}
+	return c.Borders
+}
+
+func (c *CreateBrandingThemeResponseContent) GetColors() *BrandingThemeColors {
+	if c == nil {
+		return nil
+	}
+	return c.Colors
+}
+
+func (c *CreateBrandingThemeResponseContent) GetDisplayName() string {
+	if c == nil {
+		return ""
+	}
+	return c.DisplayName
+}
+
+func (c *CreateBrandingThemeResponseContent) GetFonts() *BrandingThemeFonts {
+	if c == nil {
+		return nil
+	}
+	return c.Fonts
+}
+
+func (c *CreateBrandingThemeResponseContent) GetIdentifiers() BrandingThemeIdentifiers {
+	if c == nil || c.Identifiers == nil {
+		return BrandingThemeIdentifiers{}
+	}
+	return *c.Identifiers
+}
+
+func (c *CreateBrandingThemeResponseContent) GetPageBackground() *BrandingThemePageBackground {
+	if c == nil {
+		return nil
+	}
+	return c.PageBackground
+}
+
+func (c *CreateBrandingThemeResponseContent) GetThemeID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ThemeID
+}
+
+func (c *CreateBrandingThemeResponseContent) GetWidget() *BrandingThemeWidget {
+	if c == nil {
+		return nil
+	}
+	return c.Widget
+}
+
+func (c *CreateBrandingThemeResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateBrandingThemeResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetBorders sets the Borders field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingThemeResponseContent) SetBorders(borders *BrandingThemeBorders) {
+	c.Borders = borders
+	c.require(createBrandingThemeResponseContentFieldBorders)
+}
+
+// SetColors sets the Colors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingThemeResponseContent) SetColors(colors *BrandingThemeColors) {
+	c.Colors = colors
+	c.require(createBrandingThemeResponseContentFieldColors)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingThemeResponseContent) SetDisplayName(displayName string) {
+	c.DisplayName = displayName
+	c.require(createBrandingThemeResponseContentFieldDisplayName)
+}
+
+// SetFonts sets the Fonts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingThemeResponseContent) SetFonts(fonts *BrandingThemeFonts) {
+	c.Fonts = fonts
+	c.require(createBrandingThemeResponseContentFieldFonts)
+}
+
+// SetIdentifiers sets the Identifiers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingThemeResponseContent) SetIdentifiers(identifiers *BrandingThemeIdentifiers) {
+	c.Identifiers = identifiers
+	c.require(createBrandingThemeResponseContentFieldIdentifiers)
+}
+
+// SetPageBackground sets the PageBackground field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingThemeResponseContent) SetPageBackground(pageBackground *BrandingThemePageBackground) {
+	c.PageBackground = pageBackground
+	c.require(createBrandingThemeResponseContentFieldPageBackground)
+}
+
+// SetThemeID sets the ThemeID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingThemeResponseContent) SetThemeID(themeID string) {
+	c.ThemeID = themeID
+	c.require(createBrandingThemeResponseContentFieldThemeID)
+}
+
+// SetWidget sets the Widget field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateBrandingThemeResponseContent) SetWidget(widget *BrandingThemeWidget) {
+	c.Widget = widget
+	c.require(createBrandingThemeResponseContentFieldWidget)
+}
+
+func (c *CreateBrandingThemeResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateBrandingThemeResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateBrandingThemeResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateBrandingThemeResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateBrandingThemeResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateBrandingThemeResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createPhoneProviderSendTestResponseContentFieldCode    = big.NewInt(1 << 0)
+	createPhoneProviderSendTestResponseContentFieldMessage = big.NewInt(1 << 1)
+)
+
+type CreatePhoneProviderSendTestResponseContent struct {
+	// The status code of the operation.
+	Code *float64 `json:"code,omitempty" url:"code,omitempty"`
+	// The description of the operation status.
+	Message *string `json:"message,omitempty" url:"message,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreatePhoneProviderSendTestResponseContent) GetCode() float64 {
+	if c == nil || c.Code == nil {
+		return 0
+	}
+	return *c.Code
+}
+
+func (c *CreatePhoneProviderSendTestResponseContent) GetMessage() string {
+	if c == nil || c.Message == nil {
+		return ""
+	}
+	return *c.Message
+}
+
+func (c *CreatePhoneProviderSendTestResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreatePhoneProviderSendTestResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneProviderSendTestResponseContent) SetCode(code *float64) {
+	c.Code = code
+	c.require(createPhoneProviderSendTestResponseContentFieldCode)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneProviderSendTestResponseContent) SetMessage(message *string) {
+	c.Message = message
+	c.require(createPhoneProviderSendTestResponseContentFieldMessage)
+}
+
+func (c *CreatePhoneProviderSendTestResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreatePhoneProviderSendTestResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreatePhoneProviderSendTestResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreatePhoneProviderSendTestResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreatePhoneProviderSendTestResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreatePhoneProviderSendTestResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createPhoneTemplateResponseContentFieldID           = big.NewInt(1 << 0)
+	createPhoneTemplateResponseContentFieldChannel      = big.NewInt(1 << 1)
+	createPhoneTemplateResponseContentFieldCustomizable = big.NewInt(1 << 2)
+	createPhoneTemplateResponseContentFieldTenant       = big.NewInt(1 << 3)
+	createPhoneTemplateResponseContentFieldContent      = big.NewInt(1 << 4)
+	createPhoneTemplateResponseContentFieldType         = big.NewInt(1 << 5)
+	createPhoneTemplateResponseContentFieldDisabled     = big.NewInt(1 << 6)
+)
+
+type CreatePhoneTemplateResponseContent struct {
+	ID           *string                           `json:"id,omitempty" url:"id,omitempty"`
+	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
+	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
+	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
+	Content      *PhoneTemplateContent             `json:"content" url:"content"`
+	Type         PhoneTemplateNotificationTypeEnum `json:"type" url:"type"`
+	// Whether the template is enabled (false) or disabled (true).
+	Disabled bool `json:"disabled" url:"disabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreatePhoneTemplateResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+func (c *CreatePhoneTemplateResponseContent) GetChannel() string {
+	if c == nil || c.Channel == nil {
+		return ""
+	}
+	return *c.Channel
+}
+
+func (c *CreatePhoneTemplateResponseContent) GetCustomizable() bool {
+	if c == nil || c.Customizable == nil {
+		return false
+	}
+	return *c.Customizable
+}
+
+func (c *CreatePhoneTemplateResponseContent) GetTenant() string {
+	if c == nil || c.Tenant == nil {
+		return ""
+	}
+	return *c.Tenant
+}
+
+func (c *CreatePhoneTemplateResponseContent) GetContent() *PhoneTemplateContent {
+	if c == nil {
+		return nil
+	}
+	return c.Content
+}
+
+func (c *CreatePhoneTemplateResponseContent) GetType() PhoneTemplateNotificationTypeEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *CreatePhoneTemplateResponseContent) GetDisabled() bool {
+	if c == nil {
+		return false
+	}
+	return c.Disabled
+}
+
+func (c *CreatePhoneTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreatePhoneTemplateResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneTemplateResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createPhoneTemplateResponseContentFieldID)
+}
+
+// SetChannel sets the Channel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneTemplateResponseContent) SetChannel(channel *string) {
+	c.Channel = channel
+	c.require(createPhoneTemplateResponseContentFieldChannel)
+}
+
+// SetCustomizable sets the Customizable field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneTemplateResponseContent) SetCustomizable(customizable *bool) {
+	c.Customizable = customizable
+	c.require(createPhoneTemplateResponseContentFieldCustomizable)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneTemplateResponseContent) SetTenant(tenant *string) {
+	c.Tenant = tenant
+	c.require(createPhoneTemplateResponseContentFieldTenant)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneTemplateResponseContent) SetContent(content *PhoneTemplateContent) {
+	c.Content = content
+	c.require(createPhoneTemplateResponseContentFieldContent)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneTemplateResponseContent) SetType(type_ PhoneTemplateNotificationTypeEnum) {
+	c.Type = type_
+	c.require(createPhoneTemplateResponseContentFieldType)
+}
+
+// SetDisabled sets the Disabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneTemplateResponseContent) SetDisabled(disabled bool) {
+	c.Disabled = disabled
+	c.require(createPhoneTemplateResponseContentFieldDisabled)
+}
+
+func (c *CreatePhoneTemplateResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreatePhoneTemplateResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreatePhoneTemplateResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreatePhoneTemplateResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreatePhoneTemplateResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreatePhoneTemplateResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createPhoneTemplateTestNotificationResponseContentFieldMessage = big.NewInt(1 << 0)
+)
+
+type CreatePhoneTemplateTestNotificationResponseContent struct {
+	Message string `json:"message" url:"message"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *CreatePhoneTemplateTestNotificationResponseContent) GetMessage() string {
+	if c == nil {
+		return ""
+	}
+	return c.Message
+}
+
+func (c *CreatePhoneTemplateTestNotificationResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *CreatePhoneTemplateTestNotificationResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreatePhoneTemplateTestNotificationResponseContent) SetMessage(message string) {
+	c.Message = message
+	c.require(createPhoneTemplateTestNotificationResponseContentFieldMessage)
+}
+
+func (c *CreatePhoneTemplateTestNotificationResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreatePhoneTemplateTestNotificationResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreatePhoneTemplateTestNotificationResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreatePhoneTemplateTestNotificationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreatePhoneTemplateTestNotificationResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *CreatePhoneTemplateTestNotificationResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	customProviderConfigurationFieldDeliveryMethods = big.NewInt(1 << 0)
+)
+
+type CustomProviderConfiguration struct {
+	DeliveryMethods []CustomProviderDeliveryMethodEnum `json:"delivery_methods" url:"delivery_methods"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CustomProviderConfiguration) GetDeliveryMethods() []CustomProviderDeliveryMethodEnum {
+	if c == nil {
+		return nil
+	}
+	return c.DeliveryMethods
+}
+
+func (c *CustomProviderConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CustomProviderConfiguration) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDeliveryMethods sets the DeliveryMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomProviderConfiguration) SetDeliveryMethods(deliveryMethods []CustomProviderDeliveryMethodEnum) {
+	c.DeliveryMethods = deliveryMethods
+	c.require(customProviderConfigurationFieldDeliveryMethods)
+}
+
+func (c *CustomProviderConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler CustomProviderConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CustomProviderConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CustomProviderConfiguration) MarshalJSON() ([]byte, error) {
+	type embed CustomProviderConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CustomProviderConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CustomProviderCredentials struct {
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CustomProviderCredentials) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CustomProviderCredentials) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+func (c *CustomProviderCredentials) UnmarshalJSON(data []byte) error {
+	type unmarshaler CustomProviderCredentials
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CustomProviderCredentials(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CustomProviderCredentials) MarshalJSON() ([]byte, error) {
+	type embed CustomProviderCredentials
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CustomProviderCredentials) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CustomProviderDeliveryMethodEnum string
+
+const (
+	CustomProviderDeliveryMethodEnumText  CustomProviderDeliveryMethodEnum = "text"
+	CustomProviderDeliveryMethodEnumVoice CustomProviderDeliveryMethodEnum = "voice"
+)
+
+func NewCustomProviderDeliveryMethodEnumFromString(s string) (CustomProviderDeliveryMethodEnum, error) {
+	switch s {
+	case "text":
+		return CustomProviderDeliveryMethodEnumText, nil
+	case "voice":
+		return CustomProviderDeliveryMethodEnumVoice, nil
+	}
+	var t CustomProviderDeliveryMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CustomProviderDeliveryMethodEnum) Ptr() *CustomProviderDeliveryMethodEnum {
+	return &c
+}
+
+var (
+	getBrandingDefaultThemeResponseContentFieldBorders        = big.NewInt(1 << 0)
+	getBrandingDefaultThemeResponseContentFieldColors         = big.NewInt(1 << 1)
+	getBrandingDefaultThemeResponseContentFieldDisplayName    = big.NewInt(1 << 2)
+	getBrandingDefaultThemeResponseContentFieldFonts          = big.NewInt(1 << 3)
+	getBrandingDefaultThemeResponseContentFieldIdentifiers    = big.NewInt(1 << 4)
+	getBrandingDefaultThemeResponseContentFieldPageBackground = big.NewInt(1 << 5)
+	getBrandingDefaultThemeResponseContentFieldThemeID        = big.NewInt(1 << 6)
+	getBrandingDefaultThemeResponseContentFieldWidget         = big.NewInt(1 << 7)
+)
+
+type GetBrandingDefaultThemeResponseContent struct {
+	Borders *BrandingThemeBorders `json:"borders" url:"borders"`
+	Colors  *BrandingThemeColors  `json:"colors" url:"colors"`
+	// Display Name
+	DisplayName    string                       `json:"displayName" url:"displayName"`
+	Fonts          *BrandingThemeFonts          `json:"fonts" url:"fonts"`
+	Identifiers    *BrandingThemeIdentifiers    `json:"identifiers,omitempty" url:"identifiers,omitempty"`
+	PageBackground *BrandingThemePageBackground `json:"page_background" url:"page_background"`
+	// Theme Id
+	ThemeID string               `json:"themeId" url:"themeId"`
+	Widget  *BrandingThemeWidget `json:"widget" url:"widget"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) GetBorders() *BrandingThemeBorders {
+	if g == nil {
+		return nil
+	}
+	return g.Borders
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) GetColors() *BrandingThemeColors {
+	if g == nil {
+		return nil
+	}
+	return g.Colors
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) GetDisplayName() string {
+	if g == nil {
+		return ""
+	}
+	return g.DisplayName
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) GetFonts() *BrandingThemeFonts {
+	if g == nil {
+		return nil
+	}
+	return g.Fonts
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) GetIdentifiers() BrandingThemeIdentifiers {
+	if g == nil || g.Identifiers == nil {
+		return BrandingThemeIdentifiers{}
+	}
+	return *g.Identifiers
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) GetPageBackground() *BrandingThemePageBackground {
+	if g == nil {
+		return nil
+	}
+	return g.PageBackground
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) GetThemeID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ThemeID
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) GetWidget() *BrandingThemeWidget {
+	if g == nil {
+		return nil
+	}
+	return g.Widget
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetBorders sets the Borders field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingDefaultThemeResponseContent) SetBorders(borders *BrandingThemeBorders) {
+	g.Borders = borders
+	g.require(getBrandingDefaultThemeResponseContentFieldBorders)
+}
+
+// SetColors sets the Colors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingDefaultThemeResponseContent) SetColors(colors *BrandingThemeColors) {
+	g.Colors = colors
+	g.require(getBrandingDefaultThemeResponseContentFieldColors)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingDefaultThemeResponseContent) SetDisplayName(displayName string) {
+	g.DisplayName = displayName
+	g.require(getBrandingDefaultThemeResponseContentFieldDisplayName)
+}
+
+// SetFonts sets the Fonts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingDefaultThemeResponseContent) SetFonts(fonts *BrandingThemeFonts) {
+	g.Fonts = fonts
+	g.require(getBrandingDefaultThemeResponseContentFieldFonts)
+}
+
+// SetIdentifiers sets the Identifiers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingDefaultThemeResponseContent) SetIdentifiers(identifiers *BrandingThemeIdentifiers) {
+	g.Identifiers = identifiers
+	g.require(getBrandingDefaultThemeResponseContentFieldIdentifiers)
+}
+
+// SetPageBackground sets the PageBackground field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingDefaultThemeResponseContent) SetPageBackground(pageBackground *BrandingThemePageBackground) {
+	g.PageBackground = pageBackground
+	g.require(getBrandingDefaultThemeResponseContentFieldPageBackground)
+}
+
+// SetThemeID sets the ThemeID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingDefaultThemeResponseContent) SetThemeID(themeID string) {
+	g.ThemeID = themeID
+	g.require(getBrandingDefaultThemeResponseContentFieldThemeID)
+}
+
+// SetWidget sets the Widget field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingDefaultThemeResponseContent) SetWidget(widget *BrandingThemeWidget) {
+	g.Widget = widget
+	g.require(getBrandingDefaultThemeResponseContentFieldWidget)
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetBrandingDefaultThemeResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetBrandingDefaultThemeResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetBrandingDefaultThemeResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetBrandingDefaultThemeResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+// Phone provider configuration schema
+var (
+	getBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
+	getBrandingPhoneProviderResponseContentFieldTenant        = big.NewInt(1 << 1)
+	getBrandingPhoneProviderResponseContentFieldName          = big.NewInt(1 << 2)
+	getBrandingPhoneProviderResponseContentFieldChannel       = big.NewInt(1 << 3)
+	getBrandingPhoneProviderResponseContentFieldDisabled      = big.NewInt(1 << 4)
+	getBrandingPhoneProviderResponseContentFieldConfiguration = big.NewInt(1 << 5)
+	getBrandingPhoneProviderResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
+	getBrandingPhoneProviderResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
+)
+
+type GetBrandingPhoneProviderResponseContent struct {
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the tenant
+	Tenant  *string                   `json:"tenant,omitempty" url:"tenant,omitempty"`
+	Name    PhoneProviderNameEnum     `json:"name" url:"name"`
+	Channel *PhoneProviderChannelEnum `json:"channel,omitempty" url:"channel,omitempty"`
+	// Whether the provider is enabled (false) or disabled (true).
+	Disabled      *bool                       `json:"disabled,omitempty" url:"disabled,omitempty"`
+	Configuration *PhoneProviderConfiguration `json:"configuration,omitempty" url:"configuration,omitempty"`
+	// The provider's creation date and time in ISO 8601 format
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The date and time of the last update to the provider in ISO 8601 format
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) GetTenant() string {
+	if g == nil || g.Tenant == nil {
+		return ""
+	}
+	return *g.Tenant
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) GetName() PhoneProviderNameEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Name
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) GetChannel() PhoneProviderChannelEnum {
+	if g == nil || g.Channel == nil {
+		return ""
+	}
+	return *g.Channel
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) GetDisabled() bool {
+	if g == nil || g.Disabled == nil {
+		return false
+	}
+	return *g.Disabled
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) GetConfiguration() PhoneProviderConfiguration {
+	if g == nil || g.Configuration == nil {
+		return PhoneProviderConfiguration{}
+	}
+	return *g.Configuration
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *g.CreatedAt
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) GetUpdatedAt() time.Time {
+	if g == nil || g.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *g.UpdatedAt
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingPhoneProviderResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getBrandingPhoneProviderResponseContentFieldID)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingPhoneProviderResponseContent) SetTenant(tenant *string) {
+	g.Tenant = tenant
+	g.require(getBrandingPhoneProviderResponseContentFieldTenant)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingPhoneProviderResponseContent) SetName(name PhoneProviderNameEnum) {
+	g.Name = name
+	g.require(getBrandingPhoneProviderResponseContentFieldName)
+}
+
+// SetChannel sets the Channel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingPhoneProviderResponseContent) SetChannel(channel *PhoneProviderChannelEnum) {
+	g.Channel = channel
+	g.require(getBrandingPhoneProviderResponseContentFieldChannel)
+}
+
+// SetDisabled sets the Disabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingPhoneProviderResponseContent) SetDisabled(disabled *bool) {
+	g.Disabled = disabled
+	g.require(getBrandingPhoneProviderResponseContentFieldDisabled)
+}
+
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingPhoneProviderResponseContent) SetConfiguration(configuration *PhoneProviderConfiguration) {
+	g.Configuration = configuration
+	g.require(getBrandingPhoneProviderResponseContentFieldConfiguration)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingPhoneProviderResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getBrandingPhoneProviderResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingPhoneProviderResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getBrandingPhoneProviderResponseContentFieldUpdatedAt)
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetBrandingPhoneProviderResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetBrandingPhoneProviderResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	g.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetBrandingPhoneProviderResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetBrandingPhoneProviderResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	getBrandingResponseContentFieldColors     = big.NewInt(1 << 0)
 	getBrandingResponseContentFieldFaviconURL = big.NewInt(1 << 1)
 	getBrandingResponseContentFieldLogoURL    = big.NewInt(1 << 2)
@@ -409,6 +3996,2058 @@ func (g *GetBrandingResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getBrandingThemeResponseContentFieldBorders        = big.NewInt(1 << 0)
+	getBrandingThemeResponseContentFieldColors         = big.NewInt(1 << 1)
+	getBrandingThemeResponseContentFieldDisplayName    = big.NewInt(1 << 2)
+	getBrandingThemeResponseContentFieldFonts          = big.NewInt(1 << 3)
+	getBrandingThemeResponseContentFieldIdentifiers    = big.NewInt(1 << 4)
+	getBrandingThemeResponseContentFieldPageBackground = big.NewInt(1 << 5)
+	getBrandingThemeResponseContentFieldThemeID        = big.NewInt(1 << 6)
+	getBrandingThemeResponseContentFieldWidget         = big.NewInt(1 << 7)
+)
+
+type GetBrandingThemeResponseContent struct {
+	Borders *BrandingThemeBorders `json:"borders" url:"borders"`
+	Colors  *BrandingThemeColors  `json:"colors" url:"colors"`
+	// Display Name
+	DisplayName    string                       `json:"displayName" url:"displayName"`
+	Fonts          *BrandingThemeFonts          `json:"fonts" url:"fonts"`
+	Identifiers    *BrandingThemeIdentifiers    `json:"identifiers,omitempty" url:"identifiers,omitempty"`
+	PageBackground *BrandingThemePageBackground `json:"page_background" url:"page_background"`
+	// Theme Id
+	ThemeID string               `json:"themeId" url:"themeId"`
+	Widget  *BrandingThemeWidget `json:"widget" url:"widget"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetBrandingThemeResponseContent) GetBorders() *BrandingThemeBorders {
+	if g == nil {
+		return nil
+	}
+	return g.Borders
+}
+
+func (g *GetBrandingThemeResponseContent) GetColors() *BrandingThemeColors {
+	if g == nil {
+		return nil
+	}
+	return g.Colors
+}
+
+func (g *GetBrandingThemeResponseContent) GetDisplayName() string {
+	if g == nil {
+		return ""
+	}
+	return g.DisplayName
+}
+
+func (g *GetBrandingThemeResponseContent) GetFonts() *BrandingThemeFonts {
+	if g == nil {
+		return nil
+	}
+	return g.Fonts
+}
+
+func (g *GetBrandingThemeResponseContent) GetIdentifiers() BrandingThemeIdentifiers {
+	if g == nil || g.Identifiers == nil {
+		return BrandingThemeIdentifiers{}
+	}
+	return *g.Identifiers
+}
+
+func (g *GetBrandingThemeResponseContent) GetPageBackground() *BrandingThemePageBackground {
+	if g == nil {
+		return nil
+	}
+	return g.PageBackground
+}
+
+func (g *GetBrandingThemeResponseContent) GetThemeID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ThemeID
+}
+
+func (g *GetBrandingThemeResponseContent) GetWidget() *BrandingThemeWidget {
+	if g == nil {
+		return nil
+	}
+	return g.Widget
+}
+
+func (g *GetBrandingThemeResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetBrandingThemeResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetBorders sets the Borders field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingThemeResponseContent) SetBorders(borders *BrandingThemeBorders) {
+	g.Borders = borders
+	g.require(getBrandingThemeResponseContentFieldBorders)
+}
+
+// SetColors sets the Colors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingThemeResponseContent) SetColors(colors *BrandingThemeColors) {
+	g.Colors = colors
+	g.require(getBrandingThemeResponseContentFieldColors)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingThemeResponseContent) SetDisplayName(displayName string) {
+	g.DisplayName = displayName
+	g.require(getBrandingThemeResponseContentFieldDisplayName)
+}
+
+// SetFonts sets the Fonts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingThemeResponseContent) SetFonts(fonts *BrandingThemeFonts) {
+	g.Fonts = fonts
+	g.require(getBrandingThemeResponseContentFieldFonts)
+}
+
+// SetIdentifiers sets the Identifiers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingThemeResponseContent) SetIdentifiers(identifiers *BrandingThemeIdentifiers) {
+	g.Identifiers = identifiers
+	g.require(getBrandingThemeResponseContentFieldIdentifiers)
+}
+
+// SetPageBackground sets the PageBackground field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingThemeResponseContent) SetPageBackground(pageBackground *BrandingThemePageBackground) {
+	g.PageBackground = pageBackground
+	g.require(getBrandingThemeResponseContentFieldPageBackground)
+}
+
+// SetThemeID sets the ThemeID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingThemeResponseContent) SetThemeID(themeID string) {
+	g.ThemeID = themeID
+	g.require(getBrandingThemeResponseContentFieldThemeID)
+}
+
+// SetWidget sets the Widget field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBrandingThemeResponseContent) SetWidget(widget *BrandingThemeWidget) {
+	g.Widget = widget
+	g.require(getBrandingThemeResponseContentFieldWidget)
+}
+
+func (g *GetBrandingThemeResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetBrandingThemeResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetBrandingThemeResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetBrandingThemeResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetBrandingThemeResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetBrandingThemeResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getPhoneTemplateResponseContentFieldID           = big.NewInt(1 << 0)
+	getPhoneTemplateResponseContentFieldChannel      = big.NewInt(1 << 1)
+	getPhoneTemplateResponseContentFieldCustomizable = big.NewInt(1 << 2)
+	getPhoneTemplateResponseContentFieldTenant       = big.NewInt(1 << 3)
+	getPhoneTemplateResponseContentFieldContent      = big.NewInt(1 << 4)
+	getPhoneTemplateResponseContentFieldType         = big.NewInt(1 << 5)
+	getPhoneTemplateResponseContentFieldDisabled     = big.NewInt(1 << 6)
+)
+
+type GetPhoneTemplateResponseContent struct {
+	ID           *string                           `json:"id,omitempty" url:"id,omitempty"`
+	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
+	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
+	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
+	Content      *PhoneTemplateContent             `json:"content" url:"content"`
+	Type         PhoneTemplateNotificationTypeEnum `json:"type" url:"type"`
+	// Whether the template is enabled (false) or disabled (true).
+	Disabled bool `json:"disabled" url:"disabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetPhoneTemplateResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GetPhoneTemplateResponseContent) GetChannel() string {
+	if g == nil || g.Channel == nil {
+		return ""
+	}
+	return *g.Channel
+}
+
+func (g *GetPhoneTemplateResponseContent) GetCustomizable() bool {
+	if g == nil || g.Customizable == nil {
+		return false
+	}
+	return *g.Customizable
+}
+
+func (g *GetPhoneTemplateResponseContent) GetTenant() string {
+	if g == nil || g.Tenant == nil {
+		return ""
+	}
+	return *g.Tenant
+}
+
+func (g *GetPhoneTemplateResponseContent) GetContent() *PhoneTemplateContent {
+	if g == nil {
+		return nil
+	}
+	return g.Content
+}
+
+func (g *GetPhoneTemplateResponseContent) GetType() PhoneTemplateNotificationTypeEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Type
+}
+
+func (g *GetPhoneTemplateResponseContent) GetDisabled() bool {
+	if g == nil {
+		return false
+	}
+	return g.Disabled
+}
+
+func (g *GetPhoneTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetPhoneTemplateResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetPhoneTemplateResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getPhoneTemplateResponseContentFieldID)
+}
+
+// SetChannel sets the Channel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetPhoneTemplateResponseContent) SetChannel(channel *string) {
+	g.Channel = channel
+	g.require(getPhoneTemplateResponseContentFieldChannel)
+}
+
+// SetCustomizable sets the Customizable field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetPhoneTemplateResponseContent) SetCustomizable(customizable *bool) {
+	g.Customizable = customizable
+	g.require(getPhoneTemplateResponseContentFieldCustomizable)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetPhoneTemplateResponseContent) SetTenant(tenant *string) {
+	g.Tenant = tenant
+	g.require(getPhoneTemplateResponseContentFieldTenant)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetPhoneTemplateResponseContent) SetContent(content *PhoneTemplateContent) {
+	g.Content = content
+	g.require(getPhoneTemplateResponseContentFieldContent)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetPhoneTemplateResponseContent) SetType(type_ PhoneTemplateNotificationTypeEnum) {
+	g.Type = type_
+	g.require(getPhoneTemplateResponseContentFieldType)
+}
+
+// SetDisabled sets the Disabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetPhoneTemplateResponseContent) SetDisabled(disabled bool) {
+	g.Disabled = disabled
+	g.require(getPhoneTemplateResponseContentFieldDisabled)
+}
+
+func (g *GetPhoneTemplateResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetPhoneTemplateResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetPhoneTemplateResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetPhoneTemplateResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetPhoneTemplateResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetPhoneTemplateResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getUniversalLoginTemplateFieldBody = big.NewInt(1 << 0)
+)
+
+type GetUniversalLoginTemplate struct {
+	// The custom page template for the New Universal Login Experience
+	Body *string `json:"body,omitempty" url:"body,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetUniversalLoginTemplate) GetBody() string {
+	if g == nil || g.Body == nil {
+		return ""
+	}
+	return *g.Body
+}
+
+func (g *GetUniversalLoginTemplate) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetUniversalLoginTemplate) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetBody sets the Body field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUniversalLoginTemplate) SetBody(body *string) {
+	g.Body = body
+	g.require(getUniversalLoginTemplateFieldBody)
+}
+
+func (g *GetUniversalLoginTemplate) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetUniversalLoginTemplate
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetUniversalLoginTemplate(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetUniversalLoginTemplate) MarshalJSON() ([]byte, error) {
+	type embed GetUniversalLoginTemplate
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetUniversalLoginTemplate) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+type GetUniversalLoginTemplateResponseContent struct {
+	GetUniversalLoginTemplate *GetUniversalLoginTemplate
+	// The custom page template for the New Universal Login Experience
+	String string
+
+	typ string
+}
+
+func (g *GetUniversalLoginTemplateResponseContent) GetGetUniversalLoginTemplate() *GetUniversalLoginTemplate {
+	if g == nil {
+		return nil
+	}
+	return g.GetUniversalLoginTemplate
+}
+
+func (g *GetUniversalLoginTemplateResponseContent) GetString() string {
+	if g == nil {
+		return ""
+	}
+	return g.String
+}
+
+func (g *GetUniversalLoginTemplateResponseContent) UnmarshalJSON(data []byte) error {
+	valueGetUniversalLoginTemplate := new(GetUniversalLoginTemplate)
+	if err := json.Unmarshal(data, &valueGetUniversalLoginTemplate); err == nil {
+		g.typ = "GetUniversalLoginTemplate"
+		g.GetUniversalLoginTemplate = valueGetUniversalLoginTemplate
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		g.typ = "String"
+		g.String = valueString
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, g)
+}
+
+func (g GetUniversalLoginTemplateResponseContent) MarshalJSON() ([]byte, error) {
+	if g.typ == "GetUniversalLoginTemplate" || g.GetUniversalLoginTemplate != nil {
+		return json.Marshal(g.GetUniversalLoginTemplate)
+	}
+	if g.typ == "String" || g.String != "" {
+		return json.Marshal(g.String)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", g)
+}
+
+type GetUniversalLoginTemplateResponseContentVisitor interface {
+	VisitGetUniversalLoginTemplate(*GetUniversalLoginTemplate) error
+	VisitString(string) error
+}
+
+func (g *GetUniversalLoginTemplateResponseContent) Accept(visitor GetUniversalLoginTemplateResponseContentVisitor) error {
+	if g.typ == "GetUniversalLoginTemplate" || g.GetUniversalLoginTemplate != nil {
+		return visitor.VisitGetUniversalLoginTemplate(g.GetUniversalLoginTemplate)
+	}
+	if g.typ == "String" || g.String != "" {
+		return visitor.VisitString(g.String)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", g)
+}
+
+var (
+	listBrandingPhoneProvidersResponseContentFieldProviders = big.NewInt(1 << 0)
+)
+
+type ListBrandingPhoneProvidersResponseContent struct {
+	Providers []*PhoneProviderSchemaMasked `json:"providers,omitempty" url:"providers,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListBrandingPhoneProvidersResponseContent) GetProviders() []*PhoneProviderSchemaMasked {
+	if l == nil || l.Providers == nil {
+		return nil
+	}
+	return l.Providers
+}
+
+func (l *ListBrandingPhoneProvidersResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListBrandingPhoneProvidersResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetProviders sets the Providers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListBrandingPhoneProvidersResponseContent) SetProviders(providers []*PhoneProviderSchemaMasked) {
+	l.Providers = providers
+	l.require(listBrandingPhoneProvidersResponseContentFieldProviders)
+}
+
+func (l *ListBrandingPhoneProvidersResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListBrandingPhoneProvidersResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListBrandingPhoneProvidersResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListBrandingPhoneProvidersResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListBrandingPhoneProvidersResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListBrandingPhoneProvidersResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listPhoneTemplatesResponseContentFieldTemplates = big.NewInt(1 << 0)
+)
+
+type ListPhoneTemplatesResponseContent struct {
+	Templates []*PhoneTemplate `json:"templates,omitempty" url:"templates,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListPhoneTemplatesResponseContent) GetTemplates() []*PhoneTemplate {
+	if l == nil || l.Templates == nil {
+		return nil
+	}
+	return l.Templates
+}
+
+func (l *ListPhoneTemplatesResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListPhoneTemplatesResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetTemplates sets the Templates field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListPhoneTemplatesResponseContent) SetTemplates(templates []*PhoneTemplate) {
+	l.Templates = templates
+	l.require(listPhoneTemplatesResponseContentFieldTemplates)
+}
+
+func (l *ListPhoneTemplatesResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListPhoneTemplatesResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListPhoneTemplatesResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListPhoneTemplatesResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListPhoneTemplatesResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListPhoneTemplatesResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	partialPhoneTemplateContentFieldFrom = big.NewInt(1 << 0)
+	partialPhoneTemplateContentFieldBody = big.NewInt(1 << 1)
+)
+
+type PartialPhoneTemplateContent struct {
+	// Default phone number to be used as 'from' when sending a phone notification
+	From *string            `json:"from,omitempty" url:"from,omitempty"`
+	Body *PhoneTemplateBody `json:"body,omitempty" url:"body,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PartialPhoneTemplateContent) GetFrom() string {
+	if p == nil || p.From == nil {
+		return ""
+	}
+	return *p.From
+}
+
+func (p *PartialPhoneTemplateContent) GetBody() PhoneTemplateBody {
+	if p == nil || p.Body == nil {
+		return PhoneTemplateBody{}
+	}
+	return *p.Body
+}
+
+func (p *PartialPhoneTemplateContent) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PartialPhoneTemplateContent) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PartialPhoneTemplateContent) SetFrom(from *string) {
+	p.From = from
+	p.require(partialPhoneTemplateContentFieldFrom)
+}
+
+// SetBody sets the Body field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PartialPhoneTemplateContent) SetBody(body *PhoneTemplateBody) {
+	p.Body = body
+	p.require(partialPhoneTemplateContentFieldBody)
+}
+
+func (p *PartialPhoneTemplateContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler PartialPhoneTemplateContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PartialPhoneTemplateContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PartialPhoneTemplateContent) MarshalJSON() ([]byte, error) {
+	type embed PartialPhoneTemplateContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PartialPhoneTemplateContent) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+// This depicts the type of notifications this provider can receive.
+type PhoneProviderChannelEnum string
+
+const (
+	PhoneProviderChannelEnumPhone PhoneProviderChannelEnum = "phone"
+)
+
+func NewPhoneProviderChannelEnumFromString(s string) (PhoneProviderChannelEnum, error) {
+	switch s {
+	case "phone":
+		return PhoneProviderChannelEnumPhone, nil
+	}
+	var t PhoneProviderChannelEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PhoneProviderChannelEnum) Ptr() *PhoneProviderChannelEnum {
+	return &p
+}
+
+type PhoneProviderConfiguration struct {
+	TwilioProviderConfiguration *TwilioProviderConfiguration
+	CustomProviderConfiguration *CustomProviderConfiguration
+
+	typ string
+}
+
+func (p *PhoneProviderConfiguration) GetTwilioProviderConfiguration() *TwilioProviderConfiguration {
+	if p == nil {
+		return nil
+	}
+	return p.TwilioProviderConfiguration
+}
+
+func (p *PhoneProviderConfiguration) GetCustomProviderConfiguration() *CustomProviderConfiguration {
+	if p == nil {
+		return nil
+	}
+	return p.CustomProviderConfiguration
+}
+
+func (p *PhoneProviderConfiguration) UnmarshalJSON(data []byte) error {
+	valueTwilioProviderConfiguration := new(TwilioProviderConfiguration)
+	if err := json.Unmarshal(data, &valueTwilioProviderConfiguration); err == nil {
+		p.typ = "TwilioProviderConfiguration"
+		p.TwilioProviderConfiguration = valueTwilioProviderConfiguration
+		return nil
+	}
+	valueCustomProviderConfiguration := new(CustomProviderConfiguration)
+	if err := json.Unmarshal(data, &valueCustomProviderConfiguration); err == nil {
+		p.typ = "CustomProviderConfiguration"
+		p.CustomProviderConfiguration = valueCustomProviderConfiguration
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, p)
+}
+
+func (p PhoneProviderConfiguration) MarshalJSON() ([]byte, error) {
+	if p.typ == "TwilioProviderConfiguration" || p.TwilioProviderConfiguration != nil {
+		return json.Marshal(p.TwilioProviderConfiguration)
+	}
+	if p.typ == "CustomProviderConfiguration" || p.CustomProviderConfiguration != nil {
+		return json.Marshal(p.CustomProviderConfiguration)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", p)
+}
+
+type PhoneProviderConfigurationVisitor interface {
+	VisitTwilioProviderConfiguration(*TwilioProviderConfiguration) error
+	VisitCustomProviderConfiguration(*CustomProviderConfiguration) error
+}
+
+func (p *PhoneProviderConfiguration) Accept(visitor PhoneProviderConfigurationVisitor) error {
+	if p.typ == "TwilioProviderConfiguration" || p.TwilioProviderConfiguration != nil {
+		return visitor.VisitTwilioProviderConfiguration(p.TwilioProviderConfiguration)
+	}
+	if p.typ == "CustomProviderConfiguration" || p.CustomProviderConfiguration != nil {
+		return visitor.VisitCustomProviderConfiguration(p.CustomProviderConfiguration)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", p)
+}
+
+// Provider credentials required to use authenticate to the provider.
+type PhoneProviderCredentials struct {
+	TwilioProviderCredentials *TwilioProviderCredentials
+	CustomProviderCredentials *CustomProviderCredentials
+
+	typ string
+}
+
+func (p *PhoneProviderCredentials) GetTwilioProviderCredentials() *TwilioProviderCredentials {
+	if p == nil {
+		return nil
+	}
+	return p.TwilioProviderCredentials
+}
+
+func (p *PhoneProviderCredentials) GetCustomProviderCredentials() *CustomProviderCredentials {
+	if p == nil {
+		return nil
+	}
+	return p.CustomProviderCredentials
+}
+
+func (p *PhoneProviderCredentials) UnmarshalJSON(data []byte) error {
+	valueTwilioProviderCredentials := new(TwilioProviderCredentials)
+	if err := json.Unmarshal(data, &valueTwilioProviderCredentials); err == nil {
+		p.typ = "TwilioProviderCredentials"
+		p.TwilioProviderCredentials = valueTwilioProviderCredentials
+		return nil
+	}
+	valueCustomProviderCredentials := new(CustomProviderCredentials)
+	if err := json.Unmarshal(data, &valueCustomProviderCredentials); err == nil {
+		p.typ = "CustomProviderCredentials"
+		p.CustomProviderCredentials = valueCustomProviderCredentials
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, p)
+}
+
+func (p PhoneProviderCredentials) MarshalJSON() ([]byte, error) {
+	if p.typ == "TwilioProviderCredentials" || p.TwilioProviderCredentials != nil {
+		return json.Marshal(p.TwilioProviderCredentials)
+	}
+	if p.typ == "CustomProviderCredentials" || p.CustomProviderCredentials != nil {
+		return json.Marshal(p.CustomProviderCredentials)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", p)
+}
+
+type PhoneProviderCredentialsVisitor interface {
+	VisitTwilioProviderCredentials(*TwilioProviderCredentials) error
+	VisitCustomProviderCredentials(*CustomProviderCredentials) error
+}
+
+func (p *PhoneProviderCredentials) Accept(visitor PhoneProviderCredentialsVisitor) error {
+	if p.typ == "TwilioProviderCredentials" || p.TwilioProviderCredentials != nil {
+		return visitor.VisitTwilioProviderCredentials(p.TwilioProviderCredentials)
+	}
+	if p.typ == "CustomProviderCredentials" || p.CustomProviderCredentials != nil {
+		return visitor.VisitCustomProviderCredentials(p.CustomProviderCredentials)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", p)
+}
+
+// The delivery method for the notification
+type PhoneProviderDeliveryMethodEnum string
+
+const (
+	PhoneProviderDeliveryMethodEnumText  PhoneProviderDeliveryMethodEnum = "text"
+	PhoneProviderDeliveryMethodEnumVoice PhoneProviderDeliveryMethodEnum = "voice"
+)
+
+func NewPhoneProviderDeliveryMethodEnumFromString(s string) (PhoneProviderDeliveryMethodEnum, error) {
+	switch s {
+	case "text":
+		return PhoneProviderDeliveryMethodEnumText, nil
+	case "voice":
+		return PhoneProviderDeliveryMethodEnumVoice, nil
+	}
+	var t PhoneProviderDeliveryMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PhoneProviderDeliveryMethodEnum) Ptr() *PhoneProviderDeliveryMethodEnum {
+	return &p
+}
+
+// Name of the phone notification provider
+type PhoneProviderNameEnum string
+
+const (
+	PhoneProviderNameEnumTwilio PhoneProviderNameEnum = "twilio"
+	PhoneProviderNameEnumCustom PhoneProviderNameEnum = "custom"
+)
+
+func NewPhoneProviderNameEnumFromString(s string) (PhoneProviderNameEnum, error) {
+	switch s {
+	case "twilio":
+		return PhoneProviderNameEnumTwilio, nil
+	case "custom":
+		return PhoneProviderNameEnumCustom, nil
+	}
+	var t PhoneProviderNameEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PhoneProviderNameEnum) Ptr() *PhoneProviderNameEnum {
+	return &p
+}
+
+// Phone provider configuration schema
+var (
+	phoneProviderSchemaMaskedFieldID            = big.NewInt(1 << 0)
+	phoneProviderSchemaMaskedFieldTenant        = big.NewInt(1 << 1)
+	phoneProviderSchemaMaskedFieldName          = big.NewInt(1 << 2)
+	phoneProviderSchemaMaskedFieldChannel       = big.NewInt(1 << 3)
+	phoneProviderSchemaMaskedFieldDisabled      = big.NewInt(1 << 4)
+	phoneProviderSchemaMaskedFieldConfiguration = big.NewInt(1 << 5)
+	phoneProviderSchemaMaskedFieldCreatedAt     = big.NewInt(1 << 6)
+	phoneProviderSchemaMaskedFieldUpdatedAt     = big.NewInt(1 << 7)
+)
+
+type PhoneProviderSchemaMasked struct {
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the tenant
+	Tenant  *string                   `json:"tenant,omitempty" url:"tenant,omitempty"`
+	Name    PhoneProviderNameEnum     `json:"name" url:"name"`
+	Channel *PhoneProviderChannelEnum `json:"channel,omitempty" url:"channel,omitempty"`
+	// Whether the provider is enabled (false) or disabled (true).
+	Disabled      *bool                       `json:"disabled,omitempty" url:"disabled,omitempty"`
+	Configuration *PhoneProviderConfiguration `json:"configuration,omitempty" url:"configuration,omitempty"`
+	// The provider's creation date and time in ISO 8601 format
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The date and time of the last update to the provider in ISO 8601 format
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PhoneProviderSchemaMasked) GetID() string {
+	if p == nil || p.ID == nil {
+		return ""
+	}
+	return *p.ID
+}
+
+func (p *PhoneProviderSchemaMasked) GetTenant() string {
+	if p == nil || p.Tenant == nil {
+		return ""
+	}
+	return *p.Tenant
+}
+
+func (p *PhoneProviderSchemaMasked) GetName() PhoneProviderNameEnum {
+	if p == nil {
+		return ""
+	}
+	return p.Name
+}
+
+func (p *PhoneProviderSchemaMasked) GetChannel() PhoneProviderChannelEnum {
+	if p == nil || p.Channel == nil {
+		return ""
+	}
+	return *p.Channel
+}
+
+func (p *PhoneProviderSchemaMasked) GetDisabled() bool {
+	if p == nil || p.Disabled == nil {
+		return false
+	}
+	return *p.Disabled
+}
+
+func (p *PhoneProviderSchemaMasked) GetConfiguration() PhoneProviderConfiguration {
+	if p == nil || p.Configuration == nil {
+		return PhoneProviderConfiguration{}
+	}
+	return *p.Configuration
+}
+
+func (p *PhoneProviderSchemaMasked) GetCreatedAt() time.Time {
+	if p == nil || p.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *p.CreatedAt
+}
+
+func (p *PhoneProviderSchemaMasked) GetUpdatedAt() time.Time {
+	if p == nil || p.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *p.UpdatedAt
+}
+
+func (p *PhoneProviderSchemaMasked) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PhoneProviderSchemaMasked) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneProviderSchemaMasked) SetID(id *string) {
+	p.ID = id
+	p.require(phoneProviderSchemaMaskedFieldID)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneProviderSchemaMasked) SetTenant(tenant *string) {
+	p.Tenant = tenant
+	p.require(phoneProviderSchemaMaskedFieldTenant)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneProviderSchemaMasked) SetName(name PhoneProviderNameEnum) {
+	p.Name = name
+	p.require(phoneProviderSchemaMaskedFieldName)
+}
+
+// SetChannel sets the Channel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneProviderSchemaMasked) SetChannel(channel *PhoneProviderChannelEnum) {
+	p.Channel = channel
+	p.require(phoneProviderSchemaMaskedFieldChannel)
+}
+
+// SetDisabled sets the Disabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneProviderSchemaMasked) SetDisabled(disabled *bool) {
+	p.Disabled = disabled
+	p.require(phoneProviderSchemaMaskedFieldDisabled)
+}
+
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneProviderSchemaMasked) SetConfiguration(configuration *PhoneProviderConfiguration) {
+	p.Configuration = configuration
+	p.require(phoneProviderSchemaMaskedFieldConfiguration)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneProviderSchemaMasked) SetCreatedAt(createdAt *time.Time) {
+	p.CreatedAt = createdAt
+	p.require(phoneProviderSchemaMaskedFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneProviderSchemaMasked) SetUpdatedAt(updatedAt *time.Time) {
+	p.UpdatedAt = updatedAt
+	p.require(phoneProviderSchemaMaskedFieldUpdatedAt)
+}
+
+func (p *PhoneProviderSchemaMasked) UnmarshalJSON(data []byte) error {
+	type embed PhoneProviderSchemaMasked
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = PhoneProviderSchemaMasked(unmarshaler.embed)
+	p.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	p.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PhoneProviderSchemaMasked) MarshalJSON() ([]byte, error) {
+	type embed PhoneProviderSchemaMasked
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*p),
+		CreatedAt: internal.NewOptionalDateTime(p.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(p.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PhoneProviderSchemaMasked) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
+	phoneTemplateFieldID           = big.NewInt(1 << 0)
+	phoneTemplateFieldChannel      = big.NewInt(1 << 1)
+	phoneTemplateFieldCustomizable = big.NewInt(1 << 2)
+	phoneTemplateFieldTenant       = big.NewInt(1 << 3)
+	phoneTemplateFieldContent      = big.NewInt(1 << 4)
+	phoneTemplateFieldType         = big.NewInt(1 << 5)
+	phoneTemplateFieldDisabled     = big.NewInt(1 << 6)
+)
+
+type PhoneTemplate struct {
+	ID           *string                           `json:"id,omitempty" url:"id,omitempty"`
+	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
+	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
+	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
+	Content      *PhoneTemplateContent             `json:"content" url:"content"`
+	Type         PhoneTemplateNotificationTypeEnum `json:"type" url:"type"`
+	// Whether the template is enabled (false) or disabled (true).
+	Disabled bool `json:"disabled" url:"disabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PhoneTemplate) GetID() string {
+	if p == nil || p.ID == nil {
+		return ""
+	}
+	return *p.ID
+}
+
+func (p *PhoneTemplate) GetChannel() string {
+	if p == nil || p.Channel == nil {
+		return ""
+	}
+	return *p.Channel
+}
+
+func (p *PhoneTemplate) GetCustomizable() bool {
+	if p == nil || p.Customizable == nil {
+		return false
+	}
+	return *p.Customizable
+}
+
+func (p *PhoneTemplate) GetTenant() string {
+	if p == nil || p.Tenant == nil {
+		return ""
+	}
+	return *p.Tenant
+}
+
+func (p *PhoneTemplate) GetContent() *PhoneTemplateContent {
+	if p == nil {
+		return nil
+	}
+	return p.Content
+}
+
+func (p *PhoneTemplate) GetType() PhoneTemplateNotificationTypeEnum {
+	if p == nil {
+		return ""
+	}
+	return p.Type
+}
+
+func (p *PhoneTemplate) GetDisabled() bool {
+	if p == nil {
+		return false
+	}
+	return p.Disabled
+}
+
+func (p *PhoneTemplate) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PhoneTemplate) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplate) SetID(id *string) {
+	p.ID = id
+	p.require(phoneTemplateFieldID)
+}
+
+// SetChannel sets the Channel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplate) SetChannel(channel *string) {
+	p.Channel = channel
+	p.require(phoneTemplateFieldChannel)
+}
+
+// SetCustomizable sets the Customizable field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplate) SetCustomizable(customizable *bool) {
+	p.Customizable = customizable
+	p.require(phoneTemplateFieldCustomizable)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplate) SetTenant(tenant *string) {
+	p.Tenant = tenant
+	p.require(phoneTemplateFieldTenant)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplate) SetContent(content *PhoneTemplateContent) {
+	p.Content = content
+	p.require(phoneTemplateFieldContent)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplate) SetType(type_ PhoneTemplateNotificationTypeEnum) {
+	p.Type = type_
+	p.require(phoneTemplateFieldType)
+}
+
+// SetDisabled sets the Disabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplate) SetDisabled(disabled bool) {
+	p.Disabled = disabled
+	p.require(phoneTemplateFieldDisabled)
+}
+
+func (p *PhoneTemplate) UnmarshalJSON(data []byte) error {
+	type unmarshaler PhoneTemplate
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PhoneTemplate(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PhoneTemplate) MarshalJSON() ([]byte, error) {
+	type embed PhoneTemplate
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PhoneTemplate) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
+	phoneTemplateBodyFieldText  = big.NewInt(1 << 0)
+	phoneTemplateBodyFieldVoice = big.NewInt(1 << 1)
+)
+
+type PhoneTemplateBody struct {
+	// Content of the phone template for text notifications
+	Text *string `json:"text,omitempty" url:"text,omitempty"`
+	// Content of the phone template for voice notifications
+	Voice *string `json:"voice,omitempty" url:"voice,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PhoneTemplateBody) GetText() string {
+	if p == nil || p.Text == nil {
+		return ""
+	}
+	return *p.Text
+}
+
+func (p *PhoneTemplateBody) GetVoice() string {
+	if p == nil || p.Voice == nil {
+		return ""
+	}
+	return *p.Voice
+}
+
+func (p *PhoneTemplateBody) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PhoneTemplateBody) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetText sets the Text field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplateBody) SetText(text *string) {
+	p.Text = text
+	p.require(phoneTemplateBodyFieldText)
+}
+
+// SetVoice sets the Voice field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplateBody) SetVoice(voice *string) {
+	p.Voice = voice
+	p.require(phoneTemplateBodyFieldVoice)
+}
+
+func (p *PhoneTemplateBody) UnmarshalJSON(data []byte) error {
+	type unmarshaler PhoneTemplateBody
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PhoneTemplateBody(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PhoneTemplateBody) MarshalJSON() ([]byte, error) {
+	type embed PhoneTemplateBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PhoneTemplateBody) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
+	phoneTemplateContentFieldSyntax = big.NewInt(1 << 0)
+	phoneTemplateContentFieldFrom   = big.NewInt(1 << 1)
+	phoneTemplateContentFieldBody   = big.NewInt(1 << 2)
+)
+
+type PhoneTemplateContent struct {
+	Syntax *string `json:"syntax,omitempty" url:"syntax,omitempty"`
+	// Default phone number to be used as 'from' when sending a phone notification
+	From *string            `json:"from,omitempty" url:"from,omitempty"`
+	Body *PhoneTemplateBody `json:"body,omitempty" url:"body,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PhoneTemplateContent) GetSyntax() string {
+	if p == nil || p.Syntax == nil {
+		return ""
+	}
+	return *p.Syntax
+}
+
+func (p *PhoneTemplateContent) GetFrom() string {
+	if p == nil || p.From == nil {
+		return ""
+	}
+	return *p.From
+}
+
+func (p *PhoneTemplateContent) GetBody() PhoneTemplateBody {
+	if p == nil || p.Body == nil {
+		return PhoneTemplateBody{}
+	}
+	return *p.Body
+}
+
+func (p *PhoneTemplateContent) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PhoneTemplateContent) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetSyntax sets the Syntax field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplateContent) SetSyntax(syntax *string) {
+	p.Syntax = syntax
+	p.require(phoneTemplateContentFieldSyntax)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplateContent) SetFrom(from *string) {
+	p.From = from
+	p.require(phoneTemplateContentFieldFrom)
+}
+
+// SetBody sets the Body field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PhoneTemplateContent) SetBody(body *PhoneTemplateBody) {
+	p.Body = body
+	p.require(phoneTemplateContentFieldBody)
+}
+
+func (p *PhoneTemplateContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler PhoneTemplateContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PhoneTemplateContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PhoneTemplateContent) MarshalJSON() ([]byte, error) {
+	type embed PhoneTemplateContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PhoneTemplateContent) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+type PhoneTemplateNotificationTypeEnum string
+
+const (
+	PhoneTemplateNotificationTypeEnumOtpVerify      PhoneTemplateNotificationTypeEnum = "otp_verify"
+	PhoneTemplateNotificationTypeEnumOtpEnroll      PhoneTemplateNotificationTypeEnum = "otp_enroll"
+	PhoneTemplateNotificationTypeEnumChangePassword PhoneTemplateNotificationTypeEnum = "change_password"
+	PhoneTemplateNotificationTypeEnumBlockedAccount PhoneTemplateNotificationTypeEnum = "blocked_account"
+	PhoneTemplateNotificationTypeEnumPasswordBreach PhoneTemplateNotificationTypeEnum = "password_breach"
+)
+
+func NewPhoneTemplateNotificationTypeEnumFromString(s string) (PhoneTemplateNotificationTypeEnum, error) {
+	switch s {
+	case "otp_verify":
+		return PhoneTemplateNotificationTypeEnumOtpVerify, nil
+	case "otp_enroll":
+		return PhoneTemplateNotificationTypeEnumOtpEnroll, nil
+	case "change_password":
+		return PhoneTemplateNotificationTypeEnumChangePassword, nil
+	case "blocked_account":
+		return PhoneTemplateNotificationTypeEnumBlockedAccount, nil
+	case "password_breach":
+		return PhoneTemplateNotificationTypeEnumPasswordBreach, nil
+	}
+	var t PhoneTemplateNotificationTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PhoneTemplateNotificationTypeEnum) Ptr() *PhoneTemplateNotificationTypeEnum {
+	return &p
+}
+
+type ResetPhoneTemplateRequestContent = any
+
+var (
+	resetPhoneTemplateResponseContentFieldID           = big.NewInt(1 << 0)
+	resetPhoneTemplateResponseContentFieldChannel      = big.NewInt(1 << 1)
+	resetPhoneTemplateResponseContentFieldCustomizable = big.NewInt(1 << 2)
+	resetPhoneTemplateResponseContentFieldTenant       = big.NewInt(1 << 3)
+	resetPhoneTemplateResponseContentFieldContent      = big.NewInt(1 << 4)
+	resetPhoneTemplateResponseContentFieldType         = big.NewInt(1 << 5)
+	resetPhoneTemplateResponseContentFieldDisabled     = big.NewInt(1 << 6)
+)
+
+type ResetPhoneTemplateResponseContent struct {
+	ID           *string                           `json:"id,omitempty" url:"id,omitempty"`
+	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
+	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
+	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
+	Content      *PhoneTemplateContent             `json:"content" url:"content"`
+	Type         PhoneTemplateNotificationTypeEnum `json:"type" url:"type"`
+	// Whether the template is enabled (false) or disabled (true).
+	Disabled bool `json:"disabled" url:"disabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ResetPhoneTemplateResponseContent) GetID() string {
+	if r == nil || r.ID == nil {
+		return ""
+	}
+	return *r.ID
+}
+
+func (r *ResetPhoneTemplateResponseContent) GetChannel() string {
+	if r == nil || r.Channel == nil {
+		return ""
+	}
+	return *r.Channel
+}
+
+func (r *ResetPhoneTemplateResponseContent) GetCustomizable() bool {
+	if r == nil || r.Customizable == nil {
+		return false
+	}
+	return *r.Customizable
+}
+
+func (r *ResetPhoneTemplateResponseContent) GetTenant() string {
+	if r == nil || r.Tenant == nil {
+		return ""
+	}
+	return *r.Tenant
+}
+
+func (r *ResetPhoneTemplateResponseContent) GetContent() *PhoneTemplateContent {
+	if r == nil {
+		return nil
+	}
+	return r.Content
+}
+
+func (r *ResetPhoneTemplateResponseContent) GetType() PhoneTemplateNotificationTypeEnum {
+	if r == nil {
+		return ""
+	}
+	return r.Type
+}
+
+func (r *ResetPhoneTemplateResponseContent) GetDisabled() bool {
+	if r == nil {
+		return false
+	}
+	return r.Disabled
+}
+
+func (r *ResetPhoneTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ResetPhoneTemplateResponseContent) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResetPhoneTemplateResponseContent) SetID(id *string) {
+	r.ID = id
+	r.require(resetPhoneTemplateResponseContentFieldID)
+}
+
+// SetChannel sets the Channel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResetPhoneTemplateResponseContent) SetChannel(channel *string) {
+	r.Channel = channel
+	r.require(resetPhoneTemplateResponseContentFieldChannel)
+}
+
+// SetCustomizable sets the Customizable field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResetPhoneTemplateResponseContent) SetCustomizable(customizable *bool) {
+	r.Customizable = customizable
+	r.require(resetPhoneTemplateResponseContentFieldCustomizable)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResetPhoneTemplateResponseContent) SetTenant(tenant *string) {
+	r.Tenant = tenant
+	r.require(resetPhoneTemplateResponseContentFieldTenant)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResetPhoneTemplateResponseContent) SetContent(content *PhoneTemplateContent) {
+	r.Content = content
+	r.require(resetPhoneTemplateResponseContentFieldContent)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResetPhoneTemplateResponseContent) SetType(type_ PhoneTemplateNotificationTypeEnum) {
+	r.Type = type_
+	r.require(resetPhoneTemplateResponseContentFieldType)
+}
+
+// SetDisabled sets the Disabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResetPhoneTemplateResponseContent) SetDisabled(disabled bool) {
+	r.Disabled = disabled
+	r.require(resetPhoneTemplateResponseContentFieldDisabled)
+}
+
+func (r *ResetPhoneTemplateResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ResetPhoneTemplateResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ResetPhoneTemplateResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResetPhoneTemplateResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ResetPhoneTemplateResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *ResetPhoneTemplateResponseContent) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	twilioProviderConfigurationFieldDefaultFrom     = big.NewInt(1 << 0)
+	twilioProviderConfigurationFieldMssid           = big.NewInt(1 << 1)
+	twilioProviderConfigurationFieldSid             = big.NewInt(1 << 2)
+	twilioProviderConfigurationFieldDeliveryMethods = big.NewInt(1 << 3)
+)
+
+type TwilioProviderConfiguration struct {
+	DefaultFrom     *string                            `json:"default_from,omitempty" url:"default_from,omitempty"`
+	Mssid           *string                            `json:"mssid,omitempty" url:"mssid,omitempty"`
+	Sid             string                             `json:"sid" url:"sid"`
+	DeliveryMethods []TwilioProviderDeliveryMethodEnum `json:"delivery_methods" url:"delivery_methods"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TwilioProviderConfiguration) GetDefaultFrom() string {
+	if t == nil || t.DefaultFrom == nil {
+		return ""
+	}
+	return *t.DefaultFrom
+}
+
+func (t *TwilioProviderConfiguration) GetMssid() string {
+	if t == nil || t.Mssid == nil {
+		return ""
+	}
+	return *t.Mssid
+}
+
+func (t *TwilioProviderConfiguration) GetSid() string {
+	if t == nil {
+		return ""
+	}
+	return t.Sid
+}
+
+func (t *TwilioProviderConfiguration) GetDeliveryMethods() []TwilioProviderDeliveryMethodEnum {
+	if t == nil {
+		return nil
+	}
+	return t.DeliveryMethods
+}
+
+func (t *TwilioProviderConfiguration) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TwilioProviderConfiguration) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetDefaultFrom sets the DefaultFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TwilioProviderConfiguration) SetDefaultFrom(defaultFrom *string) {
+	t.DefaultFrom = defaultFrom
+	t.require(twilioProviderConfigurationFieldDefaultFrom)
+}
+
+// SetMssid sets the Mssid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TwilioProviderConfiguration) SetMssid(mssid *string) {
+	t.Mssid = mssid
+	t.require(twilioProviderConfigurationFieldMssid)
+}
+
+// SetSid sets the Sid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TwilioProviderConfiguration) SetSid(sid string) {
+	t.Sid = sid
+	t.require(twilioProviderConfigurationFieldSid)
+}
+
+// SetDeliveryMethods sets the DeliveryMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TwilioProviderConfiguration) SetDeliveryMethods(deliveryMethods []TwilioProviderDeliveryMethodEnum) {
+	t.DeliveryMethods = deliveryMethods
+	t.require(twilioProviderConfigurationFieldDeliveryMethods)
+}
+
+func (t *TwilioProviderConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler TwilioProviderConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TwilioProviderConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TwilioProviderConfiguration) MarshalJSON() ([]byte, error) {
+	type embed TwilioProviderConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TwilioProviderConfiguration) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+var (
+	twilioProviderCredentialsFieldAuthToken = big.NewInt(1 << 0)
+)
+
+type TwilioProviderCredentials struct {
+	AuthToken string `json:"auth_token" url:"auth_token"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TwilioProviderCredentials) GetAuthToken() string {
+	if t == nil {
+		return ""
+	}
+	return t.AuthToken
+}
+
+func (t *TwilioProviderCredentials) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TwilioProviderCredentials) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetAuthToken sets the AuthToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TwilioProviderCredentials) SetAuthToken(authToken string) {
+	t.AuthToken = authToken
+	t.require(twilioProviderCredentialsFieldAuthToken)
+}
+
+func (t *TwilioProviderCredentials) UnmarshalJSON(data []byte) error {
+	type unmarshaler TwilioProviderCredentials
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TwilioProviderCredentials(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TwilioProviderCredentials) MarshalJSON() ([]byte, error) {
+	type embed TwilioProviderCredentials
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TwilioProviderCredentials) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+type TwilioProviderDeliveryMethodEnum string
+
+const (
+	TwilioProviderDeliveryMethodEnumText  TwilioProviderDeliveryMethodEnum = "text"
+	TwilioProviderDeliveryMethodEnumVoice TwilioProviderDeliveryMethodEnum = "voice"
+)
+
+func NewTwilioProviderDeliveryMethodEnumFromString(s string) (TwilioProviderDeliveryMethodEnum, error) {
+	switch s {
+	case "text":
+		return TwilioProviderDeliveryMethodEnumText, nil
+	case "voice":
+		return TwilioProviderDeliveryMethodEnumVoice, nil
+	}
+	var t TwilioProviderDeliveryMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (t TwilioProviderDeliveryMethodEnum) Ptr() *TwilioProviderDeliveryMethodEnum {
+	return &t
 }
 
 // Custom color settings.
@@ -674,6 +6313,219 @@ func (u *UpdateBrandingPageBackground) Accept(visitor UpdateBrandingPageBackgrou
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
+// Phone provider configuration schema
+var (
+	updateBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
+	updateBrandingPhoneProviderResponseContentFieldTenant        = big.NewInt(1 << 1)
+	updateBrandingPhoneProviderResponseContentFieldName          = big.NewInt(1 << 2)
+	updateBrandingPhoneProviderResponseContentFieldChannel       = big.NewInt(1 << 3)
+	updateBrandingPhoneProviderResponseContentFieldDisabled      = big.NewInt(1 << 4)
+	updateBrandingPhoneProviderResponseContentFieldConfiguration = big.NewInt(1 << 5)
+	updateBrandingPhoneProviderResponseContentFieldCreatedAt     = big.NewInt(1 << 6)
+	updateBrandingPhoneProviderResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
+)
+
+type UpdateBrandingPhoneProviderResponseContent struct {
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of the tenant
+	Tenant  *string                   `json:"tenant,omitempty" url:"tenant,omitempty"`
+	Name    PhoneProviderNameEnum     `json:"name" url:"name"`
+	Channel *PhoneProviderChannelEnum `json:"channel,omitempty" url:"channel,omitempty"`
+	// Whether the provider is enabled (false) or disabled (true).
+	Disabled      *bool                       `json:"disabled,omitempty" url:"disabled,omitempty"`
+	Configuration *PhoneProviderConfiguration `json:"configuration,omitempty" url:"configuration,omitempty"`
+	// The provider's creation date and time in ISO 8601 format
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The date and time of the last update to the provider in ISO 8601 format
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) GetTenant() string {
+	if u == nil || u.Tenant == nil {
+		return ""
+	}
+	return *u.Tenant
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) GetName() PhoneProviderNameEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) GetChannel() PhoneProviderChannelEnum {
+	if u == nil || u.Channel == nil {
+		return ""
+	}
+	return *u.Channel
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) GetDisabled() bool {
+	if u == nil || u.Disabled == nil {
+		return false
+	}
+	return *u.Disabled
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) GetConfiguration() PhoneProviderConfiguration {
+	if u == nil || u.Configuration == nil {
+		return PhoneProviderConfiguration{}
+	}
+	return *u.Configuration
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) GetUpdatedAt() time.Time {
+	if u == nil || u.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *u.UpdatedAt
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneProviderResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateBrandingPhoneProviderResponseContentFieldID)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneProviderResponseContent) SetTenant(tenant *string) {
+	u.Tenant = tenant
+	u.require(updateBrandingPhoneProviderResponseContentFieldTenant)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneProviderResponseContent) SetName(name PhoneProviderNameEnum) {
+	u.Name = name
+	u.require(updateBrandingPhoneProviderResponseContentFieldName)
+}
+
+// SetChannel sets the Channel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneProviderResponseContent) SetChannel(channel *PhoneProviderChannelEnum) {
+	u.Channel = channel
+	u.require(updateBrandingPhoneProviderResponseContentFieldChannel)
+}
+
+// SetDisabled sets the Disabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneProviderResponseContent) SetDisabled(disabled *bool) {
+	u.Disabled = disabled
+	u.require(updateBrandingPhoneProviderResponseContentFieldDisabled)
+}
+
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneProviderResponseContent) SetConfiguration(configuration *PhoneProviderConfiguration) {
+	u.Configuration = configuration
+	u.require(updateBrandingPhoneProviderResponseContentFieldConfiguration)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneProviderResponseContent) SetCreatedAt(createdAt *time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateBrandingPhoneProviderResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingPhoneProviderResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateBrandingPhoneProviderResponseContentFieldUpdatedAt)
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateBrandingPhoneProviderResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateBrandingPhoneProviderResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateBrandingPhoneProviderResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*u),
+		CreatedAt: internal.NewOptionalDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(u.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateBrandingPhoneProviderResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
 var (
 	updateBrandingResponseContentFieldColors     = big.NewInt(1 << 0)
 	updateBrandingResponseContentFieldFaviconURL = big.NewInt(1 << 1)
@@ -799,6 +6651,531 @@ func (u *UpdateBrandingResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateBrandingResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateBrandingThemeResponseContentFieldBorders        = big.NewInt(1 << 0)
+	updateBrandingThemeResponseContentFieldColors         = big.NewInt(1 << 1)
+	updateBrandingThemeResponseContentFieldDisplayName    = big.NewInt(1 << 2)
+	updateBrandingThemeResponseContentFieldFonts          = big.NewInt(1 << 3)
+	updateBrandingThemeResponseContentFieldIdentifiers    = big.NewInt(1 << 4)
+	updateBrandingThemeResponseContentFieldPageBackground = big.NewInt(1 << 5)
+	updateBrandingThemeResponseContentFieldThemeID        = big.NewInt(1 << 6)
+	updateBrandingThemeResponseContentFieldWidget         = big.NewInt(1 << 7)
+)
+
+type UpdateBrandingThemeResponseContent struct {
+	Borders *BrandingThemeBorders `json:"borders" url:"borders"`
+	Colors  *BrandingThemeColors  `json:"colors" url:"colors"`
+	// Display Name
+	DisplayName    string                       `json:"displayName" url:"displayName"`
+	Fonts          *BrandingThemeFonts          `json:"fonts" url:"fonts"`
+	Identifiers    *BrandingThemeIdentifiers    `json:"identifiers,omitempty" url:"identifiers,omitempty"`
+	PageBackground *BrandingThemePageBackground `json:"page_background" url:"page_background"`
+	// Theme Id
+	ThemeID string               `json:"themeId" url:"themeId"`
+	Widget  *BrandingThemeWidget `json:"widget" url:"widget"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateBrandingThemeResponseContent) GetBorders() *BrandingThemeBorders {
+	if u == nil {
+		return nil
+	}
+	return u.Borders
+}
+
+func (u *UpdateBrandingThemeResponseContent) GetColors() *BrandingThemeColors {
+	if u == nil {
+		return nil
+	}
+	return u.Colors
+}
+
+func (u *UpdateBrandingThemeResponseContent) GetDisplayName() string {
+	if u == nil {
+		return ""
+	}
+	return u.DisplayName
+}
+
+func (u *UpdateBrandingThemeResponseContent) GetFonts() *BrandingThemeFonts {
+	if u == nil {
+		return nil
+	}
+	return u.Fonts
+}
+
+func (u *UpdateBrandingThemeResponseContent) GetIdentifiers() BrandingThemeIdentifiers {
+	if u == nil || u.Identifiers == nil {
+		return BrandingThemeIdentifiers{}
+	}
+	return *u.Identifiers
+}
+
+func (u *UpdateBrandingThemeResponseContent) GetPageBackground() *BrandingThemePageBackground {
+	if u == nil {
+		return nil
+	}
+	return u.PageBackground
+}
+
+func (u *UpdateBrandingThemeResponseContent) GetThemeID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ThemeID
+}
+
+func (u *UpdateBrandingThemeResponseContent) GetWidget() *BrandingThemeWidget {
+	if u == nil {
+		return nil
+	}
+	return u.Widget
+}
+
+func (u *UpdateBrandingThemeResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateBrandingThemeResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetBorders sets the Borders field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingThemeResponseContent) SetBorders(borders *BrandingThemeBorders) {
+	u.Borders = borders
+	u.require(updateBrandingThemeResponseContentFieldBorders)
+}
+
+// SetColors sets the Colors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingThemeResponseContent) SetColors(colors *BrandingThemeColors) {
+	u.Colors = colors
+	u.require(updateBrandingThemeResponseContentFieldColors)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingThemeResponseContent) SetDisplayName(displayName string) {
+	u.DisplayName = displayName
+	u.require(updateBrandingThemeResponseContentFieldDisplayName)
+}
+
+// SetFonts sets the Fonts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingThemeResponseContent) SetFonts(fonts *BrandingThemeFonts) {
+	u.Fonts = fonts
+	u.require(updateBrandingThemeResponseContentFieldFonts)
+}
+
+// SetIdentifiers sets the Identifiers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingThemeResponseContent) SetIdentifiers(identifiers *BrandingThemeIdentifiers) {
+	u.Identifiers = identifiers
+	u.require(updateBrandingThemeResponseContentFieldIdentifiers)
+}
+
+// SetPageBackground sets the PageBackground field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingThemeResponseContent) SetPageBackground(pageBackground *BrandingThemePageBackground) {
+	u.PageBackground = pageBackground
+	u.require(updateBrandingThemeResponseContentFieldPageBackground)
+}
+
+// SetThemeID sets the ThemeID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingThemeResponseContent) SetThemeID(themeID string) {
+	u.ThemeID = themeID
+	u.require(updateBrandingThemeResponseContentFieldThemeID)
+}
+
+// SetWidget sets the Widget field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBrandingThemeResponseContent) SetWidget(widget *BrandingThemeWidget) {
+	u.Widget = widget
+	u.require(updateBrandingThemeResponseContentFieldWidget)
+}
+
+func (u *UpdateBrandingThemeResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateBrandingThemeResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateBrandingThemeResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateBrandingThemeResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateBrandingThemeResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateBrandingThemeResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updatePhoneTemplateResponseContentFieldID           = big.NewInt(1 << 0)
+	updatePhoneTemplateResponseContentFieldChannel      = big.NewInt(1 << 1)
+	updatePhoneTemplateResponseContentFieldCustomizable = big.NewInt(1 << 2)
+	updatePhoneTemplateResponseContentFieldTenant       = big.NewInt(1 << 3)
+	updatePhoneTemplateResponseContentFieldContent      = big.NewInt(1 << 4)
+	updatePhoneTemplateResponseContentFieldType         = big.NewInt(1 << 5)
+	updatePhoneTemplateResponseContentFieldDisabled     = big.NewInt(1 << 6)
+)
+
+type UpdatePhoneTemplateResponseContent struct {
+	ID           *string                           `json:"id,omitempty" url:"id,omitempty"`
+	Channel      *string                           `json:"channel,omitempty" url:"channel,omitempty"`
+	Customizable *bool                             `json:"customizable,omitempty" url:"customizable,omitempty"`
+	Tenant       *string                           `json:"tenant,omitempty" url:"tenant,omitempty"`
+	Content      *PhoneTemplateContent             `json:"content" url:"content"`
+	Type         PhoneTemplateNotificationTypeEnum `json:"type" url:"type"`
+	// Whether the template is enabled (false) or disabled (true).
+	Disabled bool `json:"disabled" url:"disabled"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdatePhoneTemplateResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UpdatePhoneTemplateResponseContent) GetChannel() string {
+	if u == nil || u.Channel == nil {
+		return ""
+	}
+	return *u.Channel
+}
+
+func (u *UpdatePhoneTemplateResponseContent) GetCustomizable() bool {
+	if u == nil || u.Customizable == nil {
+		return false
+	}
+	return *u.Customizable
+}
+
+func (u *UpdatePhoneTemplateResponseContent) GetTenant() string {
+	if u == nil || u.Tenant == nil {
+		return ""
+	}
+	return *u.Tenant
+}
+
+func (u *UpdatePhoneTemplateResponseContent) GetContent() *PhoneTemplateContent {
+	if u == nil {
+		return nil
+	}
+	return u.Content
+}
+
+func (u *UpdatePhoneTemplateResponseContent) GetType() PhoneTemplateNotificationTypeEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UpdatePhoneTemplateResponseContent) GetDisabled() bool {
+	if u == nil {
+		return false
+	}
+	return u.Disabled
+}
+
+func (u *UpdatePhoneTemplateResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdatePhoneTemplateResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdatePhoneTemplateResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updatePhoneTemplateResponseContentFieldID)
+}
+
+// SetChannel sets the Channel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdatePhoneTemplateResponseContent) SetChannel(channel *string) {
+	u.Channel = channel
+	u.require(updatePhoneTemplateResponseContentFieldChannel)
+}
+
+// SetCustomizable sets the Customizable field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdatePhoneTemplateResponseContent) SetCustomizable(customizable *bool) {
+	u.Customizable = customizable
+	u.require(updatePhoneTemplateResponseContentFieldCustomizable)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdatePhoneTemplateResponseContent) SetTenant(tenant *string) {
+	u.Tenant = tenant
+	u.require(updatePhoneTemplateResponseContentFieldTenant)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdatePhoneTemplateResponseContent) SetContent(content *PhoneTemplateContent) {
+	u.Content = content
+	u.require(updatePhoneTemplateResponseContentFieldContent)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdatePhoneTemplateResponseContent) SetType(type_ PhoneTemplateNotificationTypeEnum) {
+	u.Type = type_
+	u.require(updatePhoneTemplateResponseContentFieldType)
+}
+
+// SetDisabled sets the Disabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdatePhoneTemplateResponseContent) SetDisabled(disabled bool) {
+	u.Disabled = disabled
+	u.require(updatePhoneTemplateResponseContentFieldDisabled)
+}
+
+func (u *UpdatePhoneTemplateResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdatePhoneTemplateResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdatePhoneTemplateResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdatePhoneTemplateResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdatePhoneTemplateResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdatePhoneTemplateResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UpdateUniversalLoginTemplateRequestContent struct {
+	String                                             string
+	UpdateUniversalLoginTemplateRequestContentTemplate *UpdateUniversalLoginTemplateRequestContentTemplate
+
+	typ string
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContent) GetString() string {
+	if u == nil {
+		return ""
+	}
+	return u.String
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContent) GetUpdateUniversalLoginTemplateRequestContentTemplate() *UpdateUniversalLoginTemplateRequestContentTemplate {
+	if u == nil {
+		return nil
+	}
+	return u.UpdateUniversalLoginTemplateRequestContentTemplate
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContent) UnmarshalJSON(data []byte) error {
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		u.typ = "String"
+		u.String = valueString
+		return nil
+	}
+	valueUpdateUniversalLoginTemplateRequestContentTemplate := new(UpdateUniversalLoginTemplateRequestContentTemplate)
+	if err := json.Unmarshal(data, &valueUpdateUniversalLoginTemplateRequestContentTemplate); err == nil {
+		u.typ = "UpdateUniversalLoginTemplateRequestContentTemplate"
+		u.UpdateUniversalLoginTemplateRequestContentTemplate = valueUpdateUniversalLoginTemplateRequestContentTemplate
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UpdateUniversalLoginTemplateRequestContent) MarshalJSON() ([]byte, error) {
+	if u.typ == "String" || u.String != "" {
+		return json.Marshal(u.String)
+	}
+	if u.typ == "UpdateUniversalLoginTemplateRequestContentTemplate" || u.UpdateUniversalLoginTemplateRequestContentTemplate != nil {
+		return json.Marshal(u.UpdateUniversalLoginTemplateRequestContentTemplate)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UpdateUniversalLoginTemplateRequestContentVisitor interface {
+	VisitString(string) error
+	VisitUpdateUniversalLoginTemplateRequestContentTemplate(*UpdateUniversalLoginTemplateRequestContentTemplate) error
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContent) Accept(visitor UpdateUniversalLoginTemplateRequestContentVisitor) error {
+	if u.typ == "String" || u.String != "" {
+		return visitor.VisitString(u.String)
+	}
+	if u.typ == "UpdateUniversalLoginTemplateRequestContentTemplate" || u.UpdateUniversalLoginTemplateRequestContentTemplate != nil {
+		return visitor.VisitUpdateUniversalLoginTemplateRequestContentTemplate(u.UpdateUniversalLoginTemplateRequestContentTemplate)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+var (
+	updateUniversalLoginTemplateRequestContentTemplateFieldTemplate = big.NewInt(1 << 0)
+)
+
+type UpdateUniversalLoginTemplateRequestContentTemplate struct {
+	Template string `json:"template" url:"template"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContentTemplate) GetTemplate() string {
+	if u == nil {
+		return ""
+	}
+	return u.Template
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContentTemplate) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContentTemplate) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetTemplate sets the Template field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUniversalLoginTemplateRequestContentTemplate) SetTemplate(template string) {
+	u.Template = template
+	u.require(updateUniversalLoginTemplateRequestContentTemplateFieldTemplate)
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContentTemplate) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateUniversalLoginTemplateRequestContentTemplate
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateUniversalLoginTemplateRequestContentTemplate(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContentTemplate) MarshalJSON() ([]byte, error) {
+	type embed UpdateUniversalLoginTemplateRequestContentTemplate
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateUniversalLoginTemplateRequestContentTemplate) String() string {
 	if u == nil {
 		return "<nil>"
 	}

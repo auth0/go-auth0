@@ -32,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) List(
+func (r *RawClient) GetLogStreams(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*management.LogStreamResponseSchema], error) {
@@ -73,7 +73,7 @@ func (r *RawClient) List(
 	}, nil
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) PostLogStreams(
 	ctx context.Context,
 	request *management.CreateLogStreamRequestContent,
 	opts ...option.RequestOption,
@@ -116,7 +116,7 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetLogStreamsByID(
 	ctx context.Context,
 	// The id of the log stream to get
 	id string,
@@ -162,7 +162,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteLogStreamsByID(
 	ctx context.Context,
 	// The id of the log stream to delete
 	id string,
@@ -206,7 +206,7 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchLogStreamsByID(
 	ctx context.Context,
 	// The id of the log stream to get
 	id string,

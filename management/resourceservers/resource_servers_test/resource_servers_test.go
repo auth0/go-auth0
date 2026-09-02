@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestResourceServersListWithWireMock(
+func TestResourceServersGetResourceServersWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestResourceServersListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListResourceServerRequestParameters{
+	request := &management.GetResourceServersRequest{
 		Identifiers: []*string{
 			management.String(
 				"identifiers",
@@ -107,19 +107,19 @@ func TestResourceServersListWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.ResourceServers.List(
+	_, invocationErr := client.ResourceServers.GetResourceServers(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestResourceServersListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestResourceServersGetResourceServersWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestResourceServersListWithWireMock", "GET", "/resource-servers", map[string]interface{}{"identifiers": "identifiers", "page": "1", "per_page": "1", "include_totals": "true", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestResourceServersGetResourceServersWithWireMock", "GET", "/resource-servers", map[string]interface{}{"identifiers": "identifiers", "page": "1", "per_page": "1", "include_totals": "true", "include_fields": "true"}, 1)
 }
 
-func TestResourceServersCreateWithWireMock(
+func TestResourceServersPostResourceServersWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -133,19 +133,19 @@ func TestResourceServersCreateWithWireMock(
 	request := &management.CreateResourceServerRequestContent{
 		Identifier: "identifier",
 	}
-	_, invocationErr := client.ResourceServers.Create(
+	_, invocationErr := client.ResourceServers.PostResourceServers(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestResourceServersCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestResourceServersPostResourceServersWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestResourceServersCreateWithWireMock", "POST", "/resource-servers", nil, 1)
+	VerifyRequestCount(t, "TestResourceServersPostResourceServersWithWireMock", "POST", "/resource-servers", nil, 1)
 }
 
-func TestResourceServersGetWithWireMock(
+func TestResourceServersGetResourceServersByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -156,25 +156,25 @@ func TestResourceServersGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetResourceServerRequestParameters{
+	request := &management.GetResourceServersByIDRequest{
 		IncludeFields: management.Bool(
 			true,
 		),
 	}
-	_, invocationErr := client.ResourceServers.Get(
+	_, invocationErr := client.ResourceServers.GetResourceServersByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestResourceServersGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestResourceServersGetResourceServersByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestResourceServersGetWithWireMock", "GET", "/resource-servers/id", map[string]interface{}{"include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestResourceServersGetResourceServersByIDWithWireMock", "GET", "/resource-servers/id", map[string]interface{}{"include_fields": "true"}, 1)
 }
 
-func TestResourceServersDeleteWithWireMock(
+func TestResourceServersDeleteResourceServersByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -185,19 +185,19 @@ func TestResourceServersDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.ResourceServers.Delete(
+	invocationErr := client.ResourceServers.DeleteResourceServersByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestResourceServersDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestResourceServersDeleteResourceServersByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestResourceServersDeleteWithWireMock", "DELETE", "/resource-servers/id", nil, 1)
+	VerifyRequestCount(t, "TestResourceServersDeleteResourceServersByIDWithWireMock", "DELETE", "/resource-servers/id", nil, 1)
 }
 
-func TestResourceServersUpdateWithWireMock(
+func TestResourceServersPatchResourceServersByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -209,15 +209,15 @@ func TestResourceServersUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateResourceServerRequestContent{}
-	_, invocationErr := client.ResourceServers.Update(
+	_, invocationErr := client.ResourceServers.PatchResourceServersByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestResourceServersUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestResourceServersPatchResourceServersByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestResourceServersUpdateWithWireMock", "PATCH", "/resource-servers/id", nil, 1)
+	VerifyRequestCount(t, "TestResourceServersPatchResourceServersByIDWithWireMock", "PATCH", "/resource-servers/id", nil, 1)
 }

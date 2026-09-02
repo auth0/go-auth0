@@ -32,7 +32,56 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) GetForms(
+	ctx context.Context,
+	request *management.GetFormsRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ListFormsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/forms"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ListFormsResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ListFormsResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) CreateForm(
 	ctx context.Context,
 	request *management.CreateFormRequestContent,
 	opts ...option.RequestOption,
@@ -76,11 +125,11 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetForm(
 	ctx context.Context,
 	// The ID of the form to retrieve.
 	id string,
-	request *management.GetFormRequestParameters,
+	request *management.GetFormRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetFormResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
@@ -130,7 +179,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteForm(
 	ctx context.Context,
 	// The ID of the form to delete.
 	id string,
@@ -174,7 +223,7 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchForm(
 	ctx context.Context,
 	// The ID of the form to update.
 	id string,

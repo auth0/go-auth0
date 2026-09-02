@@ -38,6 +38,16 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 			APIError: apiError,
 		}
 	},
+	412: func(apiError *core.APIError) error {
+		return &PreconditionFailedError{
+			APIError: apiError,
+		}
+	},
+	402: func(apiError *core.APIError) error {
+		return &PaymentRequiredError{
+			APIError: apiError,
+		}
+	},
 	500: func(apiError *core.APIError) error {
 		return &InternalServerError{
 			APIError: apiError,
@@ -50,6 +60,11 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 	},
 	410: func(apiError *core.APIError) error {
 		return &GoneError{
+			APIError: apiError,
+		}
+	},
+	413: func(apiError *core.APIError) error {
+		return &ContentTooLargeError{
 			APIError: apiError,
 		}
 	},

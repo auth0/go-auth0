@@ -243,6 +243,91 @@ func (c *CreateSelfServiceProfileResponseContent) String() string {
 }
 
 var (
+	createSelfServiceProfileSSOTicketResponseContentFieldTicket = big.NewInt(1 << 0)
+)
+
+type CreateSelfServiceProfileSSOTicketResponseContent struct {
+	// The URL for the created ticket.
+	Ticket *string `json:"ticket,omitempty" url:"ticket,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) GetTicket() string {
+	if c == nil || c.Ticket == nil {
+		return ""
+	}
+	return *c.Ticket
+}
+
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetTicket sets the Ticket field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) SetTicket(ticket *string) {
+	c.Ticket = ticket
+	c.require(createSelfServiceProfileSSOTicketResponseContentFieldTicket)
+}
+
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSelfServiceProfileSSOTicketResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateSelfServiceProfileSSOTicketResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSelfServiceProfileSSOTicketResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateSelfServiceProfileSSOTicketResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
 	getSelfServiceProfileResponseContentFieldID                     = big.NewInt(1 << 0)
 	getSelfServiceProfileResponseContentFieldName                   = big.NewInt(1 << 1)
 	getSelfServiceProfileResponseContentFieldDescription            = big.NewInt(1 << 2)
@@ -474,6 +559,9 @@ func (g *GetSelfServiceProfileResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// The list of custom text keys and values.
+type ListSelfServiceProfileCustomTextResponseContent = map[string]string
+
 var (
 	listSelfServiceProfilesPaginatedResponseContentFieldStart               = big.NewInt(1 << 0)
 	listSelfServiceProfilesPaginatedResponseContentFieldLimit               = big.NewInt(1 << 1)
@@ -604,6 +692,68 @@ func (l *ListSelfServiceProfilesPaginatedResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+type ListSelfServiceProfilesResponseContent struct {
+	SelfServiceProfileList                          []*SelfServiceProfile
+	ListSelfServiceProfilesPaginatedResponseContent *ListSelfServiceProfilesPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListSelfServiceProfilesResponseContent) GetSelfServiceProfileList() []*SelfServiceProfile {
+	if l == nil {
+		return nil
+	}
+	return l.SelfServiceProfileList
+}
+
+func (l *ListSelfServiceProfilesResponseContent) GetListSelfServiceProfilesPaginatedResponseContent() *ListSelfServiceProfilesPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListSelfServiceProfilesPaginatedResponseContent
+}
+
+func (l *ListSelfServiceProfilesResponseContent) UnmarshalJSON(data []byte) error {
+	var valueSelfServiceProfileList []*SelfServiceProfile
+	if err := json.Unmarshal(data, &valueSelfServiceProfileList); err == nil {
+		l.typ = "SelfServiceProfileList"
+		l.SelfServiceProfileList = valueSelfServiceProfileList
+		return nil
+	}
+	valueListSelfServiceProfilesPaginatedResponseContent := new(ListSelfServiceProfilesPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListSelfServiceProfilesPaginatedResponseContent); err == nil {
+		l.typ = "ListSelfServiceProfilesPaginatedResponseContent"
+		l.ListSelfServiceProfilesPaginatedResponseContent = valueListSelfServiceProfilesPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListSelfServiceProfilesResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "SelfServiceProfileList" || l.SelfServiceProfileList != nil {
+		return json.Marshal(l.SelfServiceProfileList)
+	}
+	if l.typ == "ListSelfServiceProfilesPaginatedResponseContent" || l.ListSelfServiceProfilesPaginatedResponseContent != nil {
+		return json.Marshal(l.ListSelfServiceProfilesPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListSelfServiceProfilesResponseContentVisitor interface {
+	VisitSelfServiceProfileList([]*SelfServiceProfile) error
+	VisitListSelfServiceProfilesPaginatedResponseContent(*ListSelfServiceProfilesPaginatedResponseContent) error
+}
+
+func (l *ListSelfServiceProfilesResponseContent) Accept(visitor ListSelfServiceProfilesResponseContentVisitor) error {
+	if l.typ == "SelfServiceProfileList" || l.SelfServiceProfileList != nil {
+		return visitor.VisitSelfServiceProfileList(l.SelfServiceProfileList)
+	}
+	if l.typ == "ListSelfServiceProfilesPaginatedResponseContent" || l.ListSelfServiceProfilesPaginatedResponseContent != nil {
+		return visitor.VisitListSelfServiceProfilesPaginatedResponseContent(l.ListSelfServiceProfilesPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
 }
 
 var (
@@ -1080,8 +1230,1133 @@ func (s *SelfServiceProfileBrandingProperties) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// The language of the custom text.
+type SelfServiceProfileCustomTextLanguageEnum string
+
+const (
+	SelfServiceProfileCustomTextLanguageEnumEn SelfServiceProfileCustomTextLanguageEnum = "en"
+)
+
+func NewSelfServiceProfileCustomTextLanguageEnumFromString(s string) (SelfServiceProfileCustomTextLanguageEnum, error) {
+	switch s {
+	case "en":
+		return SelfServiceProfileCustomTextLanguageEnumEn, nil
+	}
+	var t SelfServiceProfileCustomTextLanguageEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SelfServiceProfileCustomTextLanguageEnum) Ptr() *SelfServiceProfileCustomTextLanguageEnum {
+	return &s
+}
+
+// The page where the custom text is shown.
+type SelfServiceProfileCustomTextPageEnum string
+
+const (
+	SelfServiceProfileCustomTextPageEnumGetStarted SelfServiceProfileCustomTextPageEnum = "get-started"
+)
+
+func NewSelfServiceProfileCustomTextPageEnumFromString(s string) (SelfServiceProfileCustomTextPageEnum, error) {
+	switch s {
+	case "get-started":
+		return SelfServiceProfileCustomTextPageEnumGetStarted, nil
+	}
+	var t SelfServiceProfileCustomTextPageEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SelfServiceProfileCustomTextPageEnum) Ptr() *SelfServiceProfileCustomTextPageEnum {
+	return &s
+}
+
 // The description of the self-service Profile.
 type SelfServiceProfileDescription = *string
+
+// If provided, this will create a new connection for the Self-Service Enterprise Configuration flow with the given configuration
+var (
+	selfServiceProfileSSOTicketConnectionConfigFieldName               = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketConnectionConfigFieldDisplayName        = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketConnectionConfigFieldIsDomainConnection = big.NewInt(1 << 2)
+	selfServiceProfileSSOTicketConnectionConfigFieldShowAsButton       = big.NewInt(1 << 3)
+	selfServiceProfileSSOTicketConnectionConfigFieldMetadata           = big.NewInt(1 << 4)
+	selfServiceProfileSSOTicketConnectionConfigFieldOptions            = big.NewInt(1 << 5)
+)
+
+type SelfServiceProfileSSOTicketConnectionConfig struct {
+	// The name of the connection that will be created as a part of the Self-Service Enterprise Configuration flow.
+	Name string `json:"name" url:"name"`
+	// Connection name used in the new universal login experience
+	DisplayName *string `json:"display_name,omitempty" url:"display_name,omitempty"`
+	// <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
+	IsDomainConnection *bool `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	// Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
+	ShowAsButton *bool                                         `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	Metadata     *ConnectionsMetadata                          `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Options      *SelfServiceProfileSSOTicketConnectionOptions `json:"options,omitempty" url:"options,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetName() string {
+	if s == nil {
+		return ""
+	}
+	return s.Name
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetDisplayName() string {
+	if s == nil || s.DisplayName == nil {
+		return ""
+	}
+	return *s.DisplayName
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetIsDomainConnection() bool {
+	if s == nil || s.IsDomainConnection == nil {
+		return false
+	}
+	return *s.IsDomainConnection
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetShowAsButton() bool {
+	if s == nil || s.ShowAsButton == nil {
+		return false
+	}
+	return *s.ShowAsButton
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetMetadata() ConnectionsMetadata {
+	if s == nil || s.Metadata == nil {
+		return nil
+	}
+	return *s.Metadata
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetOptions() SelfServiceProfileSSOTicketConnectionOptions {
+	if s == nil || s.Options == nil {
+		return SelfServiceProfileSSOTicketConnectionOptions{}
+	}
+	return *s.Options
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetName(name string) {
+	s.Name = name
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldName)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetDisplayName(displayName *string) {
+	s.DisplayName = displayName
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldDisplayName)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetIsDomainConnection(isDomainConnection *bool) {
+	s.IsDomainConnection = isDomainConnection
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldIsDomainConnection)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetShowAsButton(showAsButton *bool) {
+	s.ShowAsButton = showAsButton
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldShowAsButton)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetMetadata(metadata *ConnectionsMetadata) {
+	s.Metadata = metadata
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldMetadata)
+}
+
+// SetOptions sets the Options field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketConnectionConfig) SetOptions(options *SelfServiceProfileSSOTicketConnectionOptions) {
+	s.Options = options
+	s.require(selfServiceProfileSSOTicketConnectionConfigFieldOptions)
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketConnectionConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SelfServiceProfileSSOTicketConnectionConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketConnectionConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionConfig) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// The connection's options (depend on the connection strategy)
+var (
+	selfServiceProfileSSOTicketConnectionOptionsFieldIconURL       = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketConnectionOptionsFieldDomainAliases = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketConnectionOptionsFieldIdpinitiated  = big.NewInt(1 << 2)
+)
+
+type SelfServiceProfileSSOTicketConnectionOptions struct {
+	// URL for the icon. Must use HTTPS.
+	IconURL *string `json:"icon_url,omitempty" url:"icon_url,omitempty"`
+	// List of domain_aliases that can be authenticated in the Identity Provider
+	DomainAliases []string                                        `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
+	Idpinitiated  *SelfServiceProfileSSOTicketIdpInitiatedOptions `json:"idpinitiated,omitempty" url:"idpinitiated,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionOptions) GetIconURL() string {
+	if s == nil || s.IconURL == nil {
+		return ""
+	}
+	return *s.IconURL
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionOptions) GetDomainAliases() []string {
+	if s == nil || s.DomainAliases == nil {
+		return nil
+	}
+	return s.DomainAliases
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionOptions) GetIdpinitiated() SelfServiceProfileSSOTicketIdpInitiatedOptions {
+	if s == nil || s.Idpinitiated == nil {
+		return SelfServiceProfileSSOTicketIdpInitiatedOptions{}
+	}
+	return *s.Idpinitiated
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionOptions) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionOptions) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetIconURL sets the IconURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketConnectionOptions) SetIconURL(iconURL *string) {
+	s.IconURL = iconURL
+	s.require(selfServiceProfileSSOTicketConnectionOptionsFieldIconURL)
+}
+
+// SetDomainAliases sets the DomainAliases field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketConnectionOptions) SetDomainAliases(domainAliases []string) {
+	s.DomainAliases = domainAliases
+	s.require(selfServiceProfileSSOTicketConnectionOptionsFieldDomainAliases)
+}
+
+// SetIdpinitiated sets the Idpinitiated field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketConnectionOptions) SetIdpinitiated(idpinitiated *SelfServiceProfileSSOTicketIdpInitiatedOptions) {
+	s.Idpinitiated = idpinitiated
+	s.require(selfServiceProfileSSOTicketConnectionOptionsFieldIdpinitiated)
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionOptions) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketConnectionOptions
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SelfServiceProfileSSOTicketConnectionOptions(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionOptions) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketConnectionOptions
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SelfServiceProfileSSOTicketConnectionOptions) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// Configuration for the setup of the connection’s domain_aliases in the Self-Service Enterprise Configuration flow.
+var (
+	selfServiceProfileSSOTicketDomainAliasesConfigFieldDomainVerification = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketDomainAliasesConfigFieldPendingDomains     = big.NewInt(1 << 1)
+)
+
+type SelfServiceProfileSSOTicketDomainAliasesConfig struct {
+	DomainVerification SelfServiceProfileSSOTicketDomainVerificationEnum `json:"domain_verification" url:"domain_verification"`
+	// List of domains that will be submitted for verification during the Self-Service Enterprise Configuration flow.
+	PendingDomains []string `json:"pending_domains,omitempty" url:"pending_domains,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) GetDomainVerification() SelfServiceProfileSSOTicketDomainVerificationEnum {
+	if s == nil {
+		return ""
+	}
+	return s.DomainVerification
+}
+
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) GetPendingDomains() []string {
+	if s == nil || s.PendingDomains == nil {
+		return nil
+	}
+	return s.PendingDomains
+}
+
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetDomainVerification sets the DomainVerification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) SetDomainVerification(domainVerification SelfServiceProfileSSOTicketDomainVerificationEnum) {
+	s.DomainVerification = domainVerification
+	s.require(selfServiceProfileSSOTicketDomainAliasesConfigFieldDomainVerification)
+}
+
+// SetPendingDomains sets the PendingDomains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) SetPendingDomains(pendingDomains []string) {
+	s.PendingDomains = pendingDomains
+	s.require(selfServiceProfileSSOTicketDomainAliasesConfigFieldPendingDomains)
+}
+
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketDomainAliasesConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SelfServiceProfileSSOTicketDomainAliasesConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketDomainAliasesConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// Whether the end user should complete the domain verification step. Possible values are 'none' (the step is not shown to the user), 'optional' (the user may add a domain alias in the domain verification step) or 'required' (the user must add a domain alias in order to enable the connection). Defaults to 'none'.
+type SelfServiceProfileSSOTicketDomainVerificationEnum string
+
+const (
+	SelfServiceProfileSSOTicketDomainVerificationEnumNone     SelfServiceProfileSSOTicketDomainVerificationEnum = "none"
+	SelfServiceProfileSSOTicketDomainVerificationEnumOptional SelfServiceProfileSSOTicketDomainVerificationEnum = "optional"
+	SelfServiceProfileSSOTicketDomainVerificationEnumRequired SelfServiceProfileSSOTicketDomainVerificationEnum = "required"
+)
+
+func NewSelfServiceProfileSSOTicketDomainVerificationEnumFromString(s string) (SelfServiceProfileSSOTicketDomainVerificationEnum, error) {
+	switch s {
+	case "none":
+		return SelfServiceProfileSSOTicketDomainVerificationEnumNone, nil
+	case "optional":
+		return SelfServiceProfileSSOTicketDomainVerificationEnumOptional, nil
+	case "required":
+		return SelfServiceProfileSSOTicketDomainVerificationEnumRequired, nil
+	}
+	var t SelfServiceProfileSSOTicketDomainVerificationEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SelfServiceProfileSSOTicketDomainVerificationEnum) Ptr() *SelfServiceProfileSSOTicketDomainVerificationEnum {
+	return &s
+}
+
+// Specifies which features are enabled for an "edit connection" ticket. Only applicable when connection ID is provided.
+var (
+	selfServiceProfileSSOTicketEnabledFeaturesFieldSSO                = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketEnabledFeaturesFieldDomainVerification = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketEnabledFeaturesFieldProvisioning       = big.NewInt(1 << 2)
+)
+
+type SelfServiceProfileSSOTicketEnabledFeatures struct {
+	// Whether SSO configuration is enabled in this ticket.
+	SSO *bool `json:"sso,omitempty" url:"sso,omitempty"`
+	// Whether domain verification is enabled in this ticket.
+	DomainVerification *bool `json:"domain_verification,omitempty" url:"domain_verification,omitempty"`
+	// Whether provisioning configuration is enabled in this ticket.
+	Provisioning *bool `json:"provisioning,omitempty" url:"provisioning,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) GetSSO() bool {
+	if s == nil || s.SSO == nil {
+		return false
+	}
+	return *s.SSO
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) GetDomainVerification() bool {
+	if s == nil || s.DomainVerification == nil {
+		return false
+	}
+	return *s.DomainVerification
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) GetProvisioning() bool {
+	if s == nil || s.Provisioning == nil {
+		return false
+	}
+	return *s.Provisioning
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetSSO sets the SSO field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) SetSSO(sso *bool) {
+	s.SSO = sso
+	s.require(selfServiceProfileSSOTicketEnabledFeaturesFieldSSO)
+}
+
+// SetDomainVerification sets the DomainVerification field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) SetDomainVerification(domainVerification *bool) {
+	s.DomainVerification = domainVerification
+	s.require(selfServiceProfileSSOTicketEnabledFeaturesFieldDomainVerification)
+}
+
+// SetProvisioning sets the Provisioning field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) SetProvisioning(provisioning *bool) {
+	s.Provisioning = provisioning
+	s.require(selfServiceProfileSSOTicketEnabledFeaturesFieldProvisioning)
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketEnabledFeatures
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SelfServiceProfileSSOTicketEnabledFeatures(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketEnabledFeatures
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledFeatures) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	selfServiceProfileSSOTicketEnabledOrganizationFieldOrganizationID          = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketEnabledOrganizationFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketEnabledOrganizationFieldShowAsButton            = big.NewInt(1 << 2)
+)
+
+type SelfServiceProfileSSOTicketEnabledOrganization struct {
+	// Organization identifier.
+	OrganizationID string `json:"organization_id" url:"organization_id"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) GetOrganizationID() string {
+	if s == nil {
+		return ""
+	}
+	return s.OrganizationID
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) GetAssignMembershipOnLogin() bool {
+	if s == nil || s.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *s.AssignMembershipOnLogin
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) GetShowAsButton() bool {
+	if s == nil || s.ShowAsButton == nil {
+		return false
+	}
+	return *s.ShowAsButton
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) SetOrganizationID(organizationID string) {
+	s.OrganizationID = organizationID
+	s.require(selfServiceProfileSSOTicketEnabledOrganizationFieldOrganizationID)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	s.AssignMembershipOnLogin = assignMembershipOnLogin
+	s.require(selfServiceProfileSSOTicketEnabledOrganizationFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) SetShowAsButton(showAsButton *bool) {
+	s.ShowAsButton = showAsButton
+	s.require(selfServiceProfileSSOTicketEnabledOrganizationFieldShowAsButton)
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketEnabledOrganization
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SelfServiceProfileSSOTicketEnabledOrganization(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketEnabledOrganization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SelfServiceProfileSSOTicketEnabledOrganization) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// Configuration for Google Workspace Directory Sync during the self-service flow.
+var (
+	selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncUsers  = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncGroups = big.NewInt(1 << 1)
+)
+
+type SelfServiceProfileSSOTicketGoogleWorkspaceConfig struct {
+	// Whether to enable Google Workspace Directory Sync for users during the self-service flow.
+	SyncUsers bool `json:"sync_users" url:"sync_users"`
+	// Whether to enable Google Workspace Directory Sync for groups during the self-service flow.
+	SyncGroups *bool `json:"sync_groups,omitempty" url:"sync_groups,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) GetSyncUsers() bool {
+	if s == nil {
+		return false
+	}
+	return s.SyncUsers
+}
+
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) GetSyncGroups() bool {
+	if s == nil || s.SyncGroups == nil {
+		return false
+	}
+	return *s.SyncGroups
+}
+
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetSyncUsers sets the SyncUsers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) SetSyncUsers(syncUsers bool) {
+	s.SyncUsers = syncUsers
+	s.require(selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncUsers)
+}
+
+// SetSyncGroups sets the SyncGroups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) SetSyncGroups(syncGroups *bool) {
+	s.SyncGroups = syncGroups
+	s.require(selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncGroups)
+}
+
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketGoogleWorkspaceConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SelfServiceProfileSSOTicketGoogleWorkspaceConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketGoogleWorkspaceConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// The protocol used to connect to the the default application
+type SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum string
+
+const (
+	SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumSamlp  SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum = "samlp"
+	SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumWsfed  SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum = "wsfed"
+	SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumOauth2 SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum = "oauth2"
+)
+
+func NewSelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumFromString(s string) (SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum, error) {
+	switch s {
+	case "samlp":
+		return SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumSamlp, nil
+	case "wsfed":
+		return SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumWsfed, nil
+	case "oauth2":
+		return SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnumOauth2, nil
+	}
+	var t SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum) Ptr() *SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum {
+	return &s
+}
+
+// Allows IdP-initiated login
+var (
+	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldEnabled              = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientID             = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientProtocol       = big.NewInt(1 << 2)
+	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientAuthorizequery = big.NewInt(1 << 3)
+)
+
+type SelfServiceProfileSSOTicketIdpInitiatedOptions struct {
+	// Enables IdP-initiated login for this connection
+	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+	// Default application <code>client_id</code> user is redirected to after validated SAML response
+	ClientID       *string                                                    `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientProtocol *SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum `json:"client_protocol,omitempty" url:"client_protocol,omitempty"`
+	// Query string options to customize the behaviour for OpenID Connect when <code>idpinitiated.client_protocol</code> is <code>oauth2</code>. Allowed parameters: <code>redirect_uri</code>, <code>scope</code>, <code>response_type</code>. For example, <code>redirect_uri=https://jwt.io&scope=openid email&response_type=token</code>
+	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetEnabled() bool {
+	if s == nil || s.Enabled == nil {
+		return false
+	}
+	return *s.Enabled
+}
+
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetClientID() string {
+	if s == nil || s.ClientID == nil {
+		return ""
+	}
+	return *s.ClientID
+}
+
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetClientProtocol() SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum {
+	if s == nil || s.ClientProtocol == nil {
+		return ""
+	}
+	return *s.ClientProtocol
+}
+
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetClientAuthorizequery() string {
+	if s == nil || s.ClientAuthorizequery == nil {
+		return ""
+	}
+	return *s.ClientAuthorizequery
+}
+
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) SetEnabled(enabled *bool) {
+	s.Enabled = enabled
+	s.require(selfServiceProfileSSOTicketIdpInitiatedOptionsFieldEnabled)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) SetClientID(clientID *string) {
+	s.ClientID = clientID
+	s.require(selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientID)
+}
+
+// SetClientProtocol sets the ClientProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) SetClientProtocol(clientProtocol *SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum) {
+	s.ClientProtocol = clientProtocol
+	s.require(selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientProtocol)
+}
+
+// SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) SetClientAuthorizequery(clientAuthorizequery *string) {
+	s.ClientAuthorizequery = clientAuthorizequery
+	s.require(selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientAuthorizequery)
+}
+
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketIdpInitiatedOptions
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SelfServiceProfileSSOTicketIdpInitiatedOptions(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketIdpInitiatedOptions
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// Configuration for the setup of Provisioning in the self-service flow.
+var (
+	selfServiceProfileSSOTicketProvisioningConfigFieldScopes          = big.NewInt(1 << 0)
+	selfServiceProfileSSOTicketProvisioningConfigFieldGoogleWorkspace = big.NewInt(1 << 1)
+	selfServiceProfileSSOTicketProvisioningConfigFieldTokenLifetime   = big.NewInt(1 << 2)
+)
+
+type SelfServiceProfileSSOTicketProvisioningConfig struct {
+	// The scopes of the SCIM tokens generated during the self-service flow.
+	Scopes          []SelfServiceProfileSSOTicketProvisioningScopeEnum `json:"scopes,omitempty" url:"scopes,omitempty"`
+	GoogleWorkspace *SelfServiceProfileSSOTicketGoogleWorkspaceConfig  `json:"google_workspace,omitempty" url:"google_workspace,omitempty"`
+	// Lifetime of the tokens in seconds. Must be greater than 900. If not provided, the tokens don't expire.
+	TokenLifetime *int `json:"token_lifetime,omitempty" url:"token_lifetime,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) GetScopes() []SelfServiceProfileSSOTicketProvisioningScopeEnum {
+	if s == nil || s.Scopes == nil {
+		return nil
+	}
+	return s.Scopes
+}
+
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) GetGoogleWorkspace() SelfServiceProfileSSOTicketGoogleWorkspaceConfig {
+	if s == nil || s.GoogleWorkspace == nil {
+		return SelfServiceProfileSSOTicketGoogleWorkspaceConfig{}
+	}
+	return *s.GoogleWorkspace
+}
+
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) GetTokenLifetime() int {
+	if s == nil || s.TokenLifetime == nil {
+		return 0
+	}
+	return *s.TokenLifetime
+}
+
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) SetScopes(scopes []SelfServiceProfileSSOTicketProvisioningScopeEnum) {
+	s.Scopes = scopes
+	s.require(selfServiceProfileSSOTicketProvisioningConfigFieldScopes)
+}
+
+// SetGoogleWorkspace sets the GoogleWorkspace field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) SetGoogleWorkspace(googleWorkspace *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) {
+	s.GoogleWorkspace = googleWorkspace
+	s.require(selfServiceProfileSSOTicketProvisioningConfigFieldGoogleWorkspace)
+}
+
+// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) SetTokenLifetime(tokenLifetime *int) {
+	s.TokenLifetime = tokenLifetime
+	s.require(selfServiceProfileSSOTicketProvisioningConfigFieldTokenLifetime)
+}
+
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketProvisioningConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SelfServiceProfileSSOTicketProvisioningConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketProvisioningConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SelfServiceProfileSSOTicketProvisioningConfig) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type SelfServiceProfileSSOTicketProvisioningScopeEnum string
+
+const (
+	SelfServiceProfileSSOTicketProvisioningScopeEnumGetUsers     SelfServiceProfileSSOTicketProvisioningScopeEnum = "get:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumPostUsers    SelfServiceProfileSSOTicketProvisioningScopeEnum = "post:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumPutUsers     SelfServiceProfileSSOTicketProvisioningScopeEnum = "put:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumPatchUsers   SelfServiceProfileSSOTicketProvisioningScopeEnum = "patch:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumDeleteUsers  SelfServiceProfileSSOTicketProvisioningScopeEnum = "delete:users"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumGetGroups    SelfServiceProfileSSOTicketProvisioningScopeEnum = "get:groups"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumPostGroups   SelfServiceProfileSSOTicketProvisioningScopeEnum = "post:groups"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumPutGroups    SelfServiceProfileSSOTicketProvisioningScopeEnum = "put:groups"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumPatchGroups  SelfServiceProfileSSOTicketProvisioningScopeEnum = "patch:groups"
+	SelfServiceProfileSSOTicketProvisioningScopeEnumDeleteGroups SelfServiceProfileSSOTicketProvisioningScopeEnum = "delete:groups"
+)
+
+func NewSelfServiceProfileSSOTicketProvisioningScopeEnumFromString(s string) (SelfServiceProfileSSOTicketProvisioningScopeEnum, error) {
+	switch s {
+	case "get:users":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumGetUsers, nil
+	case "post:users":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumPostUsers, nil
+	case "put:users":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumPutUsers, nil
+	case "patch:users":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumPatchUsers, nil
+	case "delete:users":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumDeleteUsers, nil
+	case "get:groups":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumGetGroups, nil
+	case "post:groups":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumPostGroups, nil
+	case "put:groups":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumPutGroups, nil
+	case "patch:groups":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumPatchGroups, nil
+	case "delete:groups":
+		return SelfServiceProfileSSOTicketProvisioningScopeEnumDeleteGroups, nil
+	}
+	var t SelfServiceProfileSSOTicketProvisioningScopeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SelfServiceProfileSSOTicketProvisioningScopeEnum) Ptr() *SelfServiceProfileSSOTicketProvisioningScopeEnum {
+	return &s
+}
 
 var (
 	selfServiceProfileUserAttributeFieldName        = big.NewInt(1 << 0)
@@ -1204,6 +2479,98 @@ func (s *SelfServiceProfileUserAttribute) String() string {
 
 // List of attributes to be mapped that will be shown to the user during the Self-Service Enterprise Configuration flow.
 type SelfServiceProfileUserAttributes = []*SelfServiceProfileUserAttribute
+
+// The list of text keys and values to customize the Self-Service Enterprise Configuration flow page. Values can be plain text or rich HTML content limited to basic styling tags and hyperlinks.
+type SetSelfServiceProfileCustomTextRequestContent = map[string]string
+
+// The resulting list of custom text keys and values.
+type SetSelfServiceProfileCustomTextResponseContent = map[string]string
+
+// Configuration for Third Party Client Access during the Self-Service Enterprise Configuration flow.
+var (
+	thirdPartyClientAccessConfigFieldAllowConfiguration = big.NewInt(1 << 0)
+)
+
+type ThirdPartyClientAccessConfig struct {
+	// Whether third-party applications can configure the connection as a domain-level connection during the Self-Service Enterprise Configuration flow.
+	AllowConfiguration bool `json:"allow_configuration" url:"allow_configuration"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *ThirdPartyClientAccessConfig) GetAllowConfiguration() bool {
+	if t == nil {
+		return false
+	}
+	return t.AllowConfiguration
+}
+
+func (t *ThirdPartyClientAccessConfig) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *ThirdPartyClientAccessConfig) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetAllowConfiguration sets the AllowConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *ThirdPartyClientAccessConfig) SetAllowConfiguration(allowConfiguration bool) {
+	t.AllowConfiguration = allowConfiguration
+	t.require(thirdPartyClientAccessConfigFieldAllowConfiguration)
+}
+
+func (t *ThirdPartyClientAccessConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler ThirdPartyClientAccessConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = ThirdPartyClientAccessConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *ThirdPartyClientAccessConfig) MarshalJSON() ([]byte, error) {
+	type embed ThirdPartyClientAccessConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *ThirdPartyClientAccessConfig) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
 
 var (
 	updateSelfServiceProfileResponseContentFieldID                     = big.NewInt(1 << 0)

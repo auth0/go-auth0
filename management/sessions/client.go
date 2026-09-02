@@ -35,13 +35,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve session information.
-func (c *Client) Get(
+func (c *Client) GetSession(
 	ctx context.Context,
 	// ID of session to retrieve
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetSessionResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetSession(
 		ctx,
 		id,
 		opts...,
@@ -53,13 +53,13 @@ func (c *Client) Get(
 }
 
 // Delete a session by ID.
-func (c *Client) Delete(
+func (c *Client) DeleteSession(
 	ctx context.Context,
 	// ID of the session to delete.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteSession(
 		ctx,
 		id,
 		opts...,
@@ -71,14 +71,14 @@ func (c *Client) Delete(
 }
 
 // Update session information.
-func (c *Client) Update(
+func (c *Client) PatchSessionsByID(
 	ctx context.Context,
 	// ID of the session to update.
 	id string,
 	request *management.UpdateSessionRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateSessionResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchSessionsByID(
 		ctx,
 		id,
 		request,
@@ -91,13 +91,13 @@ func (c *Client) Update(
 }
 
 // Revokes a session by ID and all associated refresh tokens.
-func (c *Client) Revoke(
+func (c *Client) RevokeSession(
 	ctx context.Context,
 	// ID of the session to revoke.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Revoke(
+	_, err := c.WithRawResponse.RevokeSession(
 		ctx,
 		id,
 		opts...,

@@ -314,6 +314,716 @@ func (g *GetRoleResponseContent) String() string {
 }
 
 var (
+	listRoleGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
+	listRoleGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
+)
+
+type ListRoleGroupsResponseContent struct {
+	Groups []*Group `json:"groups" url:"groups"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListRoleGroupsResponseContent) GetGroups() []*Group {
+	if l == nil {
+		return nil
+	}
+	return l.Groups
+}
+
+func (l *ListRoleGroupsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListRoleGroupsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListRoleGroupsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetGroups sets the Groups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleGroupsResponseContent) SetGroups(groups []*Group) {
+	l.Groups = groups
+	l.require(listRoleGroupsResponseContentFieldGroups)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleGroupsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listRoleGroupsResponseContentFieldNext)
+}
+
+func (l *ListRoleGroupsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListRoleGroupsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListRoleGroupsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListRoleGroupsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListRoleGroupsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListRoleGroupsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listRolePermissionsOffsetPaginatedResponseContentFieldStart       = big.NewInt(1 << 0)
+	listRolePermissionsOffsetPaginatedResponseContentFieldLimit       = big.NewInt(1 << 1)
+	listRolePermissionsOffsetPaginatedResponseContentFieldTotal       = big.NewInt(1 << 2)
+	listRolePermissionsOffsetPaginatedResponseContentFieldPermissions = big.NewInt(1 << 3)
+)
+
+type ListRolePermissionsOffsetPaginatedResponseContent struct {
+	Start       *float64                      `json:"start,omitempty" url:"start,omitempty"`
+	Limit       *float64                      `json:"limit,omitempty" url:"limit,omitempty"`
+	Total       *float64                      `json:"total,omitempty" url:"total,omitempty"`
+	Permissions []*PermissionsResponsePayload `json:"permissions,omitempty" url:"permissions,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) GetPermissions() []*PermissionsResponsePayload {
+	if l == nil || l.Permissions == nil {
+		return nil
+	}
+	return l.Permissions
+}
+
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listRolePermissionsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listRolePermissionsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listRolePermissionsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetPermissions sets the Permissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) SetPermissions(permissions []*PermissionsResponsePayload) {
+	l.Permissions = permissions
+	l.require(listRolePermissionsOffsetPaginatedResponseContentFieldPermissions)
+}
+
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListRolePermissionsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListRolePermissionsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListRolePermissionsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListRolePermissionsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListRolePermissionsResponseContent struct {
+	PermissionsResponsePayloadList                    []*PermissionsResponsePayload
+	ListRolePermissionsOffsetPaginatedResponseContent *ListRolePermissionsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListRolePermissionsResponseContent) GetPermissionsResponsePayloadList() []*PermissionsResponsePayload {
+	if l == nil {
+		return nil
+	}
+	return l.PermissionsResponsePayloadList
+}
+
+func (l *ListRolePermissionsResponseContent) GetListRolePermissionsOffsetPaginatedResponseContent() *ListRolePermissionsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListRolePermissionsOffsetPaginatedResponseContent
+}
+
+func (l *ListRolePermissionsResponseContent) UnmarshalJSON(data []byte) error {
+	var valuePermissionsResponsePayloadList []*PermissionsResponsePayload
+	if err := json.Unmarshal(data, &valuePermissionsResponsePayloadList); err == nil {
+		l.typ = "PermissionsResponsePayloadList"
+		l.PermissionsResponsePayloadList = valuePermissionsResponsePayloadList
+		return nil
+	}
+	valueListRolePermissionsOffsetPaginatedResponseContent := new(ListRolePermissionsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListRolePermissionsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListRolePermissionsOffsetPaginatedResponseContent"
+		l.ListRolePermissionsOffsetPaginatedResponseContent = valueListRolePermissionsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListRolePermissionsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "PermissionsResponsePayloadList" || l.PermissionsResponsePayloadList != nil {
+		return json.Marshal(l.PermissionsResponsePayloadList)
+	}
+	if l.typ == "ListRolePermissionsOffsetPaginatedResponseContent" || l.ListRolePermissionsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListRolePermissionsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListRolePermissionsResponseContentVisitor interface {
+	VisitPermissionsResponsePayloadList([]*PermissionsResponsePayload) error
+	VisitListRolePermissionsOffsetPaginatedResponseContent(*ListRolePermissionsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListRolePermissionsResponseContent) Accept(visitor ListRolePermissionsResponseContentVisitor) error {
+	if l.typ == "PermissionsResponsePayloadList" || l.PermissionsResponsePayloadList != nil {
+		return visitor.VisitPermissionsResponsePayloadList(l.PermissionsResponsePayloadList)
+	}
+	if l.typ == "ListRolePermissionsOffsetPaginatedResponseContent" || l.ListRolePermissionsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListRolePermissionsOffsetPaginatedResponseContent(l.ListRolePermissionsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listRoleUsersOffsetPaginatedResponseContentFieldStart = big.NewInt(1 << 0)
+	listRoleUsersOffsetPaginatedResponseContentFieldLimit = big.NewInt(1 << 1)
+	listRoleUsersOffsetPaginatedResponseContentFieldTotal = big.NewInt(1 << 2)
+	listRoleUsersOffsetPaginatedResponseContentFieldUsers = big.NewInt(1 << 3)
+)
+
+type ListRoleUsersOffsetPaginatedResponseContent struct {
+	Start *float64    `json:"start,omitempty" url:"start,omitempty"`
+	Limit *float64    `json:"limit,omitempty" url:"limit,omitempty"`
+	Total *float64    `json:"total,omitempty" url:"total,omitempty"`
+	Users []*RoleUser `json:"users,omitempty" url:"users,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListRoleUsersOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListRoleUsersOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListRoleUsersOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListRoleUsersOffsetPaginatedResponseContent) GetUsers() []*RoleUser {
+	if l == nil || l.Users == nil {
+		return nil
+	}
+	return l.Users
+}
+
+func (l *ListRoleUsersOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListRoleUsersOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleUsersOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listRoleUsersOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleUsersOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listRoleUsersOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleUsersOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listRoleUsersOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleUsersOffsetPaginatedResponseContent) SetUsers(users []*RoleUser) {
+	l.Users = users
+	l.require(listRoleUsersOffsetPaginatedResponseContentFieldUsers)
+}
+
+func (l *ListRoleUsersOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListRoleUsersOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListRoleUsersOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListRoleUsersOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListRoleUsersOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListRoleUsersOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listRoleUsersPaginatedResponseContentFieldNext  = big.NewInt(1 << 0)
+	listRoleUsersPaginatedResponseContentFieldUsers = big.NewInt(1 << 1)
+)
+
+type ListRoleUsersPaginatedResponseContent struct {
+	Next  *string     `json:"next,omitempty" url:"next,omitempty"`
+	Users []*RoleUser `json:"users,omitempty" url:"users,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListRoleUsersPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListRoleUsersPaginatedResponseContent) GetUsers() []*RoleUser {
+	if l == nil || l.Users == nil {
+		return nil
+	}
+	return l.Users
+}
+
+func (l *ListRoleUsersPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListRoleUsersPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleUsersPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listRoleUsersPaginatedResponseContentFieldNext)
+}
+
+// SetUsers sets the Users field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleUsersPaginatedResponseContent) SetUsers(users []*RoleUser) {
+	l.Users = users
+	l.require(listRoleUsersPaginatedResponseContentFieldUsers)
+}
+
+func (l *ListRoleUsersPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListRoleUsersPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListRoleUsersPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListRoleUsersPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListRoleUsersPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListRoleUsersPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListRoleUsersResponseContent struct {
+	RoleUserList                                []*RoleUser
+	ListRoleUsersOffsetPaginatedResponseContent *ListRoleUsersOffsetPaginatedResponseContent
+	ListRoleUsersPaginatedResponseContent       *ListRoleUsersPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListRoleUsersResponseContent) GetRoleUserList() []*RoleUser {
+	if l == nil {
+		return nil
+	}
+	return l.RoleUserList
+}
+
+func (l *ListRoleUsersResponseContent) GetListRoleUsersOffsetPaginatedResponseContent() *ListRoleUsersOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListRoleUsersOffsetPaginatedResponseContent
+}
+
+func (l *ListRoleUsersResponseContent) GetListRoleUsersPaginatedResponseContent() *ListRoleUsersPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListRoleUsersPaginatedResponseContent
+}
+
+func (l *ListRoleUsersResponseContent) UnmarshalJSON(data []byte) error {
+	var valueRoleUserList []*RoleUser
+	if err := json.Unmarshal(data, &valueRoleUserList); err == nil {
+		l.typ = "RoleUserList"
+		l.RoleUserList = valueRoleUserList
+		return nil
+	}
+	valueListRoleUsersOffsetPaginatedResponseContent := new(ListRoleUsersOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListRoleUsersOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListRoleUsersOffsetPaginatedResponseContent"
+		l.ListRoleUsersOffsetPaginatedResponseContent = valueListRoleUsersOffsetPaginatedResponseContent
+		return nil
+	}
+	valueListRoleUsersPaginatedResponseContent := new(ListRoleUsersPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListRoleUsersPaginatedResponseContent); err == nil {
+		l.typ = "ListRoleUsersPaginatedResponseContent"
+		l.ListRoleUsersPaginatedResponseContent = valueListRoleUsersPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListRoleUsersResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "RoleUserList" || l.RoleUserList != nil {
+		return json.Marshal(l.RoleUserList)
+	}
+	if l.typ == "ListRoleUsersOffsetPaginatedResponseContent" || l.ListRoleUsersOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListRoleUsersOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListRoleUsersPaginatedResponseContent" || l.ListRoleUsersPaginatedResponseContent != nil {
+		return json.Marshal(l.ListRoleUsersPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListRoleUsersResponseContentVisitor interface {
+	VisitRoleUserList([]*RoleUser) error
+	VisitListRoleUsersOffsetPaginatedResponseContent(*ListRoleUsersOffsetPaginatedResponseContent) error
+	VisitListRoleUsersPaginatedResponseContent(*ListRoleUsersPaginatedResponseContent) error
+}
+
+func (l *ListRoleUsersResponseContent) Accept(visitor ListRoleUsersResponseContentVisitor) error {
+	if l.typ == "RoleUserList" || l.RoleUserList != nil {
+		return visitor.VisitRoleUserList(l.RoleUserList)
+	}
+	if l.typ == "ListRoleUsersOffsetPaginatedResponseContent" || l.ListRoleUsersOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListRoleUsersOffsetPaginatedResponseContent(l.ListRoleUsersOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListRoleUsersPaginatedResponseContent" || l.ListRoleUsersPaginatedResponseContent != nil {
+		return visitor.VisitListRoleUsersPaginatedResponseContent(l.ListRoleUsersPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listRolesCheckpointPaginatedResponseContentFieldNext  = big.NewInt(1 << 0)
+	listRolesCheckpointPaginatedResponseContentFieldRoles = big.NewInt(1 << 1)
+)
+
+type ListRolesCheckpointPaginatedResponseContent struct {
+	Next  *string `json:"next,omitempty" url:"next,omitempty"`
+	Roles []*Role `json:"roles,omitempty" url:"roles,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListRolesCheckpointPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListRolesCheckpointPaginatedResponseContent) GetRoles() []*Role {
+	if l == nil || l.Roles == nil {
+		return nil
+	}
+	return l.Roles
+}
+
+func (l *ListRolesCheckpointPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListRolesCheckpointPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesCheckpointPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listRolesCheckpointPaginatedResponseContentFieldNext)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesCheckpointPaginatedResponseContent) SetRoles(roles []*Role) {
+	l.Roles = roles
+	l.require(listRolesCheckpointPaginatedResponseContentFieldRoles)
+}
+
+func (l *ListRolesCheckpointPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListRolesCheckpointPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListRolesCheckpointPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListRolesCheckpointPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListRolesCheckpointPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListRolesCheckpointPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
 	listRolesOffsetPaginatedResponseContentFieldStart = big.NewInt(1 << 0)
 	listRolesOffsetPaginatedResponseContentFieldLimit = big.NewInt(1 << 1)
 	listRolesOffsetPaginatedResponseContentFieldTotal = big.NewInt(1 << 2)
@@ -443,6 +1153,361 @@ func (l *ListRolesOffsetPaginatedResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+type ListRolesResponseContent struct {
+	RoleList                                    []*Role
+	ListRolesOffsetPaginatedResponseContent     *ListRolesOffsetPaginatedResponseContent
+	ListRolesCheckpointPaginatedResponseContent *ListRolesCheckpointPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListRolesResponseContent) GetRoleList() []*Role {
+	if l == nil {
+		return nil
+	}
+	return l.RoleList
+}
+
+func (l *ListRolesResponseContent) GetListRolesOffsetPaginatedResponseContent() *ListRolesOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListRolesOffsetPaginatedResponseContent
+}
+
+func (l *ListRolesResponseContent) GetListRolesCheckpointPaginatedResponseContent() *ListRolesCheckpointPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListRolesCheckpointPaginatedResponseContent
+}
+
+func (l *ListRolesResponseContent) UnmarshalJSON(data []byte) error {
+	var valueRoleList []*Role
+	if err := json.Unmarshal(data, &valueRoleList); err == nil {
+		l.typ = "RoleList"
+		l.RoleList = valueRoleList
+		return nil
+	}
+	valueListRolesOffsetPaginatedResponseContent := new(ListRolesOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListRolesOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListRolesOffsetPaginatedResponseContent"
+		l.ListRolesOffsetPaginatedResponseContent = valueListRolesOffsetPaginatedResponseContent
+		return nil
+	}
+	valueListRolesCheckpointPaginatedResponseContent := new(ListRolesCheckpointPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListRolesCheckpointPaginatedResponseContent); err == nil {
+		l.typ = "ListRolesCheckpointPaginatedResponseContent"
+		l.ListRolesCheckpointPaginatedResponseContent = valueListRolesCheckpointPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListRolesResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "RoleList" || l.RoleList != nil {
+		return json.Marshal(l.RoleList)
+	}
+	if l.typ == "ListRolesOffsetPaginatedResponseContent" || l.ListRolesOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListRolesOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListRolesCheckpointPaginatedResponseContent" || l.ListRolesCheckpointPaginatedResponseContent != nil {
+		return json.Marshal(l.ListRolesCheckpointPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListRolesResponseContentVisitor interface {
+	VisitRoleList([]*Role) error
+	VisitListRolesOffsetPaginatedResponseContent(*ListRolesOffsetPaginatedResponseContent) error
+	VisitListRolesCheckpointPaginatedResponseContent(*ListRolesCheckpointPaginatedResponseContent) error
+}
+
+func (l *ListRolesResponseContent) Accept(visitor ListRolesResponseContentVisitor) error {
+	if l.typ == "RoleList" || l.RoleList != nil {
+		return visitor.VisitRoleList(l.RoleList)
+	}
+	if l.typ == "ListRolesOffsetPaginatedResponseContent" || l.ListRolesOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListRolesOffsetPaginatedResponseContent(l.ListRolesOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListRolesCheckpointPaginatedResponseContent" || l.ListRolesCheckpointPaginatedResponseContent != nil {
+		return visitor.VisitListRolesCheckpointPaginatedResponseContent(l.ListRolesCheckpointPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	permissionsResponsePayloadFieldResourceServerIdentifier = big.NewInt(1 << 0)
+	permissionsResponsePayloadFieldPermissionName           = big.NewInt(1 << 1)
+	permissionsResponsePayloadFieldResourceServerName       = big.NewInt(1 << 2)
+	permissionsResponsePayloadFieldDescription              = big.NewInt(1 << 3)
+)
+
+type PermissionsResponsePayload struct {
+	// Resource server (API) identifier that this permission is for.
+	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	// Name of this permission.
+	PermissionName *string `json:"permission_name,omitempty" url:"permission_name,omitempty"`
+	// Resource server (API) name this permission is for.
+	ResourceServerName *string `json:"resource_server_name,omitempty" url:"resource_server_name,omitempty"`
+	// Description of this permission.
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PermissionsResponsePayload) GetResourceServerIdentifier() string {
+	if p == nil || p.ResourceServerIdentifier == nil {
+		return ""
+	}
+	return *p.ResourceServerIdentifier
+}
+
+func (p *PermissionsResponsePayload) GetPermissionName() string {
+	if p == nil || p.PermissionName == nil {
+		return ""
+	}
+	return *p.PermissionName
+}
+
+func (p *PermissionsResponsePayload) GetResourceServerName() string {
+	if p == nil || p.ResourceServerName == nil {
+		return ""
+	}
+	return *p.ResourceServerName
+}
+
+func (p *PermissionsResponsePayload) GetDescription() string {
+	if p == nil || p.Description == nil {
+		return ""
+	}
+	return *p.Description
+}
+
+func (p *PermissionsResponsePayload) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PermissionsResponsePayload) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PermissionsResponsePayload) SetResourceServerIdentifier(resourceServerIdentifier *string) {
+	p.ResourceServerIdentifier = resourceServerIdentifier
+	p.require(permissionsResponsePayloadFieldResourceServerIdentifier)
+}
+
+// SetPermissionName sets the PermissionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PermissionsResponsePayload) SetPermissionName(permissionName *string) {
+	p.PermissionName = permissionName
+	p.require(permissionsResponsePayloadFieldPermissionName)
+}
+
+// SetResourceServerName sets the ResourceServerName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PermissionsResponsePayload) SetResourceServerName(resourceServerName *string) {
+	p.ResourceServerName = resourceServerName
+	p.require(permissionsResponsePayloadFieldResourceServerName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PermissionsResponsePayload) SetDescription(description *string) {
+	p.Description = description
+	p.require(permissionsResponsePayloadFieldDescription)
+}
+
+func (p *PermissionsResponsePayload) UnmarshalJSON(data []byte) error {
+	type unmarshaler PermissionsResponsePayload
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PermissionsResponsePayload(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PermissionsResponsePayload) MarshalJSON() ([]byte, error) {
+	type embed PermissionsResponsePayload
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PermissionsResponsePayload) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
+	roleUserFieldUserID  = big.NewInt(1 << 0)
+	roleUserFieldPicture = big.NewInt(1 << 1)
+	roleUserFieldName    = big.NewInt(1 << 2)
+	roleUserFieldEmail   = big.NewInt(1 << 3)
+)
+
+type RoleUser struct {
+	// ID of this user.
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	// URL to a picture for this user.
+	Picture *string `json:"picture,omitempty" url:"picture,omitempty"`
+	// Name of this user.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Email address of this user.
+	Email *string `json:"email,omitempty" url:"email,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RoleUser) GetUserID() string {
+	if r == nil || r.UserID == nil {
+		return ""
+	}
+	return *r.UserID
+}
+
+func (r *RoleUser) GetPicture() string {
+	if r == nil || r.Picture == nil {
+		return ""
+	}
+	return *r.Picture
+}
+
+func (r *RoleUser) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
+	}
+	return *r.Name
+}
+
+func (r *RoleUser) GetEmail() string {
+	if r == nil || r.Email == nil {
+		return ""
+	}
+	return *r.Email
+}
+
+func (r *RoleUser) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RoleUser) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleUser) SetUserID(userID *string) {
+	r.UserID = userID
+	r.require(roleUserFieldUserID)
+}
+
+// SetPicture sets the Picture field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleUser) SetPicture(picture *string) {
+	r.Picture = picture
+	r.require(roleUserFieldPicture)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleUser) SetName(name *string) {
+	r.Name = name
+	r.require(roleUserFieldName)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleUser) SetEmail(email *string) {
+	r.Email = email
+	r.require(roleUserFieldEmail)
+}
+
+func (r *RoleUser) UnmarshalJSON(data []byte) error {
+	type unmarshaler RoleUser
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RoleUser(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RoleUser) MarshalJSON() ([]byte, error) {
+	type embed RoleUser
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RoleUser) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 var (

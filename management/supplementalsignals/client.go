@@ -35,11 +35,11 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get the supplemental signals configuration for a tenant.
-func (c *Client) Get(
+func (c *Client) GetSupplementalSignals(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*management.GetSupplementalSignalsResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetSupplementalSignals(
 		ctx,
 		opts...,
 	)
@@ -50,12 +50,12 @@ func (c *Client) Get(
 }
 
 // Update the supplemental signals configuration for a tenant.
-func (c *Client) Patch(
+func (c *Client) PatchSupplementalSignals(
 	ctx context.Context,
 	request *management.UpdateSupplementalSignalsRequestContent,
 	opts ...option.RequestOption,
 ) (*management.PatchSupplementalSignalsResponseContent, error) {
-	response, err := c.WithRawResponse.Patch(
+	response, err := c.WithRawResponse.PatchSupplementalSignals(
 		ctx,
 		request,
 		opts...,

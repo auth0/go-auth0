@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestConnectionsListWithWireMock(
+func TestConnectionsGetConnectionsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,13 @@ func TestConnectionsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListConnectionsQueryParameters{
+	request := &management.GetConnectionsRequest{
+		PerPage: management.Int(
+			1,
+		),
+		Page: management.Int(
+			1,
+		),
 		IncludeTotals: management.Bool(
 			true,
 		),
@@ -111,19 +117,19 @@ func TestConnectionsListWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.Connections.List(
+	_, invocationErr := client.Connections.GetConnections(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetConnectionsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsListWithWireMock", "GET", "/connections", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1", "strategy": "ad", "name": "name", "fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestConnectionsGetConnectionsWithWireMock", "GET", "/connections", map[string]interface{}{"per_page": "1", "page": "1", "include_totals": "true", "from": "from", "take": "1", "strategy": "ad", "name": "name", "fields": "fields", "include_fields": "true"}, 1)
 }
 
-func TestConnectionsCreateWithWireMock(
+func TestConnectionsPostConnectionsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -138,19 +144,19 @@ func TestConnectionsCreateWithWireMock(
 		Name:     "name",
 		Strategy: management.ConnectionIdentityProviderEnumAd,
 	}
-	_, invocationErr := client.Connections.Create(
+	_, invocationErr := client.Connections.PostConnections(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionsCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionsPostConnectionsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsCreateWithWireMock", "POST", "/connections", nil, 1)
+	VerifyRequestCount(t, "TestConnectionsPostConnectionsWithWireMock", "POST", "/connections", nil, 1)
 }
 
-func TestConnectionsGetWithWireMock(
+func TestConnectionsGetConnectionsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -161,7 +167,7 @@ func TestConnectionsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetConnectionRequestParameters{
+	request := &management.GetConnectionsByIDRequest{
 		Fields: management.String(
 			"fields",
 		),
@@ -169,20 +175,20 @@ func TestConnectionsGetWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.Connections.Get(
+	_, invocationErr := client.Connections.GetConnectionsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetConnectionsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsGetWithWireMock", "GET", "/connections/id", map[string]interface{}{"fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestConnectionsGetConnectionsByIDWithWireMock", "GET", "/connections/id", map[string]interface{}{"fields": "fields", "include_fields": "true"}, 1)
 }
 
-func TestConnectionsDeleteWithWireMock(
+func TestConnectionsDeleteConnectionsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -193,19 +199,19 @@ func TestConnectionsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Connections.Delete(
+	invocationErr := client.Connections.DeleteConnectionsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionsDeleteConnectionsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsDeleteWithWireMock", "DELETE", "/connections/id", nil, 1)
+	VerifyRequestCount(t, "TestConnectionsDeleteConnectionsByIDWithWireMock", "DELETE", "/connections/id", nil, 1)
 }
 
-func TestConnectionsUpdateWithWireMock(
+func TestConnectionsPatchConnectionsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -217,20 +223,20 @@ func TestConnectionsUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateConnectionRequestContent{}
-	_, invocationErr := client.Connections.Update(
+	_, invocationErr := client.Connections.PatchConnectionsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionsPatchConnectionsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsUpdateWithWireMock", "PATCH", "/connections/id", nil, 1)
+	VerifyRequestCount(t, "TestConnectionsPatchConnectionsByIDWithWireMock", "PATCH", "/connections/id", nil, 1)
 }
 
-func TestConnectionsCheckStatusWithWireMock(
+func TestConnectionsGetConnectionClientsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -241,14 +247,642 @@ func TestConnectionsCheckStatusWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Connections.CheckStatus(
+	request := &management.GetConnectionClientsRequest{
+		Take: management.Int(
+			1,
+		),
+		From: management.String(
+			"from",
+		),
+	}
+	_, invocationErr := client.Connections.GetConnectionClients(
 		context.TODO(),
 		"id",
+		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionsCheckStatusWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetConnectionClientsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionsCheckStatusWithWireMock", "GET", "/connections/id/status", nil, 1)
+	VerifyRequestCount(t, "TestConnectionsGetConnectionClientsWithWireMock", "GET", "/connections/id/clients", map[string]interface{}{"take": "1", "from": "from"}, 1)
+}
+
+func TestConnectionsPatchClientsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := []*management.UpdateEnabledClientConnectionsRequestContentItem{
+		&management.UpdateEnabledClientConnectionsRequestContentItem{
+			ClientID: "client_id",
+			Status:   true,
+		},
+	}
+	invocationErr := client.Connections.PatchClients(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPatchClientsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPatchClientsWithWireMock", "PATCH", "/connections/id/clients", nil, 1)
+}
+
+func TestConnectionsGetDirectoryProvisioningWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Connections.GetDirectoryProvisioning(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetDirectoryProvisioningWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsGetDirectoryProvisioningWithWireMock", "GET", "/connections/id/directory-provisioning", nil, 1)
+}
+
+func TestConnectionsPostDirectoryProvisioningWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateDirectoryProvisioningRequestContent{}
+	_, invocationErr := client.Connections.PostDirectoryProvisioning(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPostDirectoryProvisioningWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPostDirectoryProvisioningWithWireMock", "POST", "/connections/id/directory-provisioning", nil, 1)
+}
+
+func TestConnectionsDeleteDirectoryProvisioningWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Connections.DeleteDirectoryProvisioning(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsDeleteDirectoryProvisioningWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsDeleteDirectoryProvisioningWithWireMock", "DELETE", "/connections/id/directory-provisioning", nil, 1)
+}
+
+func TestConnectionsPatchDirectoryProvisioningWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateDirectoryProvisioningRequestContent{}
+	_, invocationErr := client.Connections.PatchDirectoryProvisioning(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPatchDirectoryProvisioningWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPatchDirectoryProvisioningWithWireMock", "PATCH", "/connections/id/directory-provisioning", nil, 1)
+}
+
+func TestConnectionsGetDirectoryProvisioningDefaultMappingWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Connections.GetDirectoryProvisioningDefaultMapping(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetDirectoryProvisioningDefaultMappingWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsGetDirectoryProvisioningDefaultMappingWithWireMock", "GET", "/connections/id/directory-provisioning/default-mapping", nil, 1)
+}
+
+func TestConnectionsPostSynchronizationsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Connections.PostSynchronizations(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPostSynchronizationsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPostSynchronizationsWithWireMock", "POST", "/connections/id/directory-provisioning/synchronizations", nil, 1)
+}
+
+func TestConnectionsGetSynchronizedGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetSynchronizedGroupsRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+		Q: management.String(
+			"q",
+		),
+	}
+	_, invocationErr := client.Connections.GetSynchronizedGroups(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetSynchronizedGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsGetSynchronizedGroupsWithWireMock", "GET", "/connections/id/directory-provisioning/synchronized-groups", map[string]interface{}{"from": "from", "take": "1", "q": "q"}, 1)
+}
+
+func TestConnectionsPostSynchronizedGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.AddSynchronizedGroupsRequestContent{
+		Groups: []*management.SynchronizedGroupPayload{
+			&management.SynchronizedGroupPayload{
+				ID: "id",
+			},
+		},
+	}
+	invocationErr := client.Connections.PostSynchronizedGroups(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPostSynchronizedGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPostSynchronizedGroupsWithWireMock", "POST", "/connections/id/directory-provisioning/synchronized-groups", nil, 1)
+}
+
+func TestConnectionsPutSynchronizedGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.ReplaceSynchronizedGroupsRequestContent{
+		Groups: []*management.SynchronizedGroupPayload{
+			&management.SynchronizedGroupPayload{
+				ID: "id",
+			},
+		},
+	}
+	invocationErr := client.Connections.PutSynchronizedGroups(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPutSynchronizedGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPutSynchronizedGroupsWithWireMock", "PUT", "/connections/id/directory-provisioning/synchronized-groups", nil, 1)
+}
+
+func TestConnectionsDeleteSynchronizedGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteSynchronizedGroupsRequestContent{
+		Groups: []*management.SynchronizedGroupSelectionID{
+			&management.SynchronizedGroupSelectionID{
+				ID: "id",
+			},
+		},
+	}
+	invocationErr := client.Connections.DeleteSynchronizedGroups(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsDeleteSynchronizedGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsDeleteSynchronizedGroupsWithWireMock", "DELETE", "/connections/id/directory-provisioning/synchronized-groups", nil, 1)
+}
+
+func TestConnectionsGetKeysWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Connections.GetKeys(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetKeysWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsGetKeysWithWireMock", "GET", "/connections/id/keys", nil, 1)
+}
+
+func TestConnectionsPostKeysWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.PostConnectionKeysRequestContent{}
+	_, invocationErr := client.Connections.PostKeys(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPostKeysWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPostKeysWithWireMock", "POST", "/connections/id/keys", nil, 1)
+}
+
+func TestConnectionsPostRotateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.RotateConnectionKeysRequestContent{}
+	_, invocationErr := client.Connections.PostRotate(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPostRotateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPostRotateWithWireMock", "POST", "/connections/id/keys/rotate", nil, 1)
+}
+
+func TestConnectionsGetSCIMConfigurationWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Connections.GetSCIMConfiguration(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetSCIMConfigurationWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsGetSCIMConfigurationWithWireMock", "GET", "/connections/id/scim-configuration", nil, 1)
+}
+
+func TestConnectionsPostSCIMConfigurationWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateSCIMConfigurationRequestContent{}
+	_, invocationErr := client.Connections.PostSCIMConfiguration(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPostSCIMConfigurationWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPostSCIMConfigurationWithWireMock", "POST", "/connections/id/scim-configuration", nil, 1)
+}
+
+func TestConnectionsDeleteSCIMConfigurationWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Connections.DeleteSCIMConfiguration(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsDeleteSCIMConfigurationWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsDeleteSCIMConfigurationWithWireMock", "DELETE", "/connections/id/scim-configuration", nil, 1)
+}
+
+func TestConnectionsPatchSCIMConfigurationWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateSCIMConfigurationRequestContent{
+		UserIDAttribute: "user_id_attribute",
+		Mapping: []*management.SCIMMappingItem{
+			&management.SCIMMappingItem{},
+		},
+	}
+	_, invocationErr := client.Connections.PatchSCIMConfiguration(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPatchSCIMConfigurationWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPatchSCIMConfigurationWithWireMock", "PATCH", "/connections/id/scim-configuration", nil, 1)
+}
+
+func TestConnectionsGetDefaultMappingWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Connections.GetDefaultMapping(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetDefaultMappingWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsGetDefaultMappingWithWireMock", "GET", "/connections/id/scim-configuration/default-mapping", nil, 1)
+}
+
+func TestConnectionsGetSCIMTokensWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Connections.GetSCIMTokens(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetSCIMTokensWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsGetSCIMTokensWithWireMock", "GET", "/connections/id/scim-configuration/tokens", nil, 1)
+}
+
+func TestConnectionsPostSCIMTokenWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateSCIMTokenRequestContent{}
+	_, invocationErr := client.Connections.PostSCIMToken(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsPostSCIMTokenWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsPostSCIMTokenWithWireMock", "POST", "/connections/id/scim-configuration/tokens", nil, 1)
+}
+
+func TestConnectionsDeleteTokensByTokenIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Connections.DeleteTokensByTokenID(
+		context.TODO(),
+		"id",
+		"tokenId",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsDeleteTokensByTokenIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsDeleteTokensByTokenIDWithWireMock", "DELETE", "/connections/id/scim-configuration/tokens/tokenId", nil, 1)
+}
+
+func TestConnectionsGetStatusWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Connections.GetStatus(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsGetStatusWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsGetStatusWithWireMock", "GET", "/connections/id/status", nil, 1)
+}
+
+func TestConnectionsDeleteUsersByEmailWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteUsersByEmailRequest{
+		Email: "email",
+	}
+	invocationErr := client.Connections.DeleteUsersByEmail(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionsDeleteUsersByEmailWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionsDeleteUsersByEmailWithWireMock", "DELETE", "/connections/id/users", map[string]interface{}{"email": "email"}, 1)
 }

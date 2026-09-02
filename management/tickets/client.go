@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Create an email verification ticket for a given user. An email verification ticket is a generated URL that the user can consume to verify their email address.
-func (c *Client) VerifyEmail(
+func (c *Client) PostEmailVerification(
 	ctx context.Context,
 	request *management.VerifyEmailTicketRequestContent,
 	opts ...option.RequestOption,
 ) (*management.VerifyEmailTicketResponseContent, error) {
-	response, err := c.WithRawResponse.VerifyEmail(
+	response, err := c.WithRawResponse.PostEmailVerification(
 		ctx,
 		request,
 		opts...,
@@ -54,12 +54,12 @@ func (c *Client) VerifyEmail(
 // Create a password change ticket for a given user. A password change ticket is a generated URL that the user can consume to start a reset password flow.
 //
 // Note: This endpoint does not verify the given user’s identity. If you call this endpoint within your application, you must design your application to verify the user’s identity.
-func (c *Client) ChangePassword(
+func (c *Client) PostPasswordChange(
 	ctx context.Context,
 	request *management.ChangePasswordTicketRequestContent,
 	opts ...option.RequestOption,
 ) (*management.ChangePasswordTicketResponseContent, error) {
-	response, err := c.WithRawResponse.ChangePassword(
+	response, err := c.WithRawResponse.PostPasswordChange(
 		ctx,
 		request,
 		opts...,

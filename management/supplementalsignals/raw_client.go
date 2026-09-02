@@ -32,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetSupplementalSignals(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.GetSupplementalSignalsResponseContent], error) {
@@ -73,7 +73,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Patch(
+func (r *RawClient) PatchSupplementalSignals(
 	ctx context.Context,
 	request *management.UpdateSupplementalSignalsRequestContent,
 	opts ...option.RequestOption,

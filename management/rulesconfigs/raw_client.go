@@ -32,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) List(
+func (r *RawClient) GetRulesConfigs(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*management.RulesConfig], error) {
@@ -73,7 +73,7 @@ func (r *RawClient) List(
 	}, nil
 }
 
-func (r *RawClient) Set(
+func (r *RawClient) PutRulesConfigsByKey(
 	ctx context.Context,
 	// Key of the rules config variable to set (max length: 127 characters).
 	key string,
@@ -122,7 +122,7 @@ func (r *RawClient) Set(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteRulesConfigsByKey(
 	ctx context.Context,
 	// Key of the rules config variable to delete.
 	key string,

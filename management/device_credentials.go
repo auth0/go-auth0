@@ -446,3 +446,65 @@ func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) String() string {
 	}
 	return fmt.Sprintf("%#v", l)
 }
+
+type ListDeviceCredentialsResponseContent struct {
+	DeviceCredentialList                                []*DeviceCredential
+	ListDeviceCredentialsOffsetPaginatedResponseContent *ListDeviceCredentialsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListDeviceCredentialsResponseContent) GetDeviceCredentialList() []*DeviceCredential {
+	if l == nil {
+		return nil
+	}
+	return l.DeviceCredentialList
+}
+
+func (l *ListDeviceCredentialsResponseContent) GetListDeviceCredentialsOffsetPaginatedResponseContent() *ListDeviceCredentialsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListDeviceCredentialsOffsetPaginatedResponseContent
+}
+
+func (l *ListDeviceCredentialsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueDeviceCredentialList []*DeviceCredential
+	if err := json.Unmarshal(data, &valueDeviceCredentialList); err == nil {
+		l.typ = "DeviceCredentialList"
+		l.DeviceCredentialList = valueDeviceCredentialList
+		return nil
+	}
+	valueListDeviceCredentialsOffsetPaginatedResponseContent := new(ListDeviceCredentialsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListDeviceCredentialsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListDeviceCredentialsOffsetPaginatedResponseContent"
+		l.ListDeviceCredentialsOffsetPaginatedResponseContent = valueListDeviceCredentialsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListDeviceCredentialsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "DeviceCredentialList" || l.DeviceCredentialList != nil {
+		return json.Marshal(l.DeviceCredentialList)
+	}
+	if l.typ == "ListDeviceCredentialsOffsetPaginatedResponseContent" || l.ListDeviceCredentialsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListDeviceCredentialsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListDeviceCredentialsResponseContentVisitor interface {
+	VisitDeviceCredentialList([]*DeviceCredential) error
+	VisitListDeviceCredentialsOffsetPaginatedResponseContent(*ListDeviceCredentialsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListDeviceCredentialsResponseContent) Accept(visitor ListDeviceCredentialsResponseContentVisitor) error {
+	if l.typ == "DeviceCredentialList" || l.DeviceCredentialList != nil {
+		return visitor.VisitDeviceCredentialList(l.DeviceCredentialList)
+	}
+	if l.typ == "ListDeviceCredentialsOffsetPaginatedResponseContent" || l.ListDeviceCredentialsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListDeviceCredentialsOffsetPaginatedResponseContent(l.ListDeviceCredentialsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}

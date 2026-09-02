@@ -32,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetActiveUsersCount(
+func (r *RawClient) GetActiveUsers(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[management.GetActiveUsersCountStatsResponseContent], error) {
@@ -75,7 +75,7 @@ func (r *RawClient) GetActiveUsersCount(
 
 func (r *RawClient) GetDaily(
 	ctx context.Context,
-	request *management.GetDailyStatsRequestParameters,
+	request *management.GetDailyRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*management.DailyStats], error) {
 	options := core.NewRequestOptions(opts...)

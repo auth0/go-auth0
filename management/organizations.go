@@ -7,7 +7,329 @@ import (
 	fmt "fmt"
 	internal "github.com/auth0/go-auth0/v3/management/internal"
 	big "math/big"
+	time "time"
 )
+
+var (
+	addOrganizationConnectionResponseContentFieldConnectionID            = big.NewInt(1 << 0)
+	addOrganizationConnectionResponseContentFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
+	addOrganizationConnectionResponseContentFieldShowAsButton            = big.NewInt(1 << 2)
+	addOrganizationConnectionResponseContentFieldIsSignupEnabled         = big.NewInt(1 << 3)
+	addOrganizationConnectionResponseContentFieldConnection              = big.NewInt(1 << 4)
+)
+
+type AddOrganizationConnectionResponseContent struct {
+	// ID of the connection.
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	Connection      *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AddOrganizationConnectionResponseContent) GetConnectionID() string {
+	if a == nil || a.ConnectionID == nil {
+		return ""
+	}
+	return *a.ConnectionID
+}
+
+func (a *AddOrganizationConnectionResponseContent) GetAssignMembershipOnLogin() bool {
+	if a == nil || a.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *a.AssignMembershipOnLogin
+}
+
+func (a *AddOrganizationConnectionResponseContent) GetShowAsButton() bool {
+	if a == nil || a.ShowAsButton == nil {
+		return false
+	}
+	return *a.ShowAsButton
+}
+
+func (a *AddOrganizationConnectionResponseContent) GetIsSignupEnabled() bool {
+	if a == nil || a.IsSignupEnabled == nil {
+		return false
+	}
+	return *a.IsSignupEnabled
+}
+
+func (a *AddOrganizationConnectionResponseContent) GetConnection() OrganizationConnectionInformation {
+	if a == nil || a.Connection == nil {
+		return OrganizationConnectionInformation{}
+	}
+	return *a.Connection
+}
+
+func (a *AddOrganizationConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AddOrganizationConnectionResponseContent) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AddOrganizationConnectionResponseContent) SetConnectionID(connectionID *string) {
+	a.ConnectionID = connectionID
+	a.require(addOrganizationConnectionResponseContentFieldConnectionID)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AddOrganizationConnectionResponseContent) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	a.AssignMembershipOnLogin = assignMembershipOnLogin
+	a.require(addOrganizationConnectionResponseContentFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AddOrganizationConnectionResponseContent) SetShowAsButton(showAsButton *bool) {
+	a.ShowAsButton = showAsButton
+	a.require(addOrganizationConnectionResponseContentFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AddOrganizationConnectionResponseContent) SetIsSignupEnabled(isSignupEnabled *bool) {
+	a.IsSignupEnabled = isSignupEnabled
+	a.require(addOrganizationConnectionResponseContentFieldIsSignupEnabled)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AddOrganizationConnectionResponseContent) SetConnection(connection *OrganizationConnectionInformation) {
+	a.Connection = connection
+	a.require(addOrganizationConnectionResponseContentFieldConnection)
+}
+
+func (a *AddOrganizationConnectionResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler AddOrganizationConnectionResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AddOrganizationConnectionResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AddOrganizationConnectionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed AddOrganizationConnectionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AddOrganizationConnectionResponseContent) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	associateOrganizationClientGrantResponseContentFieldID                   = big.NewInt(1 << 0)
+	associateOrganizationClientGrantResponseContentFieldClientID             = big.NewInt(1 << 1)
+	associateOrganizationClientGrantResponseContentFieldAudience             = big.NewInt(1 << 2)
+	associateOrganizationClientGrantResponseContentFieldScope                = big.NewInt(1 << 3)
+	associateOrganizationClientGrantResponseContentFieldOrganizationUsage    = big.NewInt(1 << 4)
+	associateOrganizationClientGrantResponseContentFieldAllowAnyOrganization = big.NewInt(1 << 5)
+)
+
+type AssociateOrganizationClientGrantResponseContent struct {
+	// ID of the client grant.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// ID of the client.
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The audience (API identifier) of this client grant
+	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
+	// Scopes allowed for this client grant.
+	Scope             []string               `json:"scope,omitempty" url:"scope,omitempty"`
+	OrganizationUsage *OrganizationUsageEnum `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
+	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
+	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) GetID() string {
+	if a == nil || a.ID == nil {
+		return ""
+	}
+	return *a.ID
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) GetClientID() string {
+	if a == nil || a.ClientID == nil {
+		return ""
+	}
+	return *a.ClientID
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) GetAudience() string {
+	if a == nil || a.Audience == nil {
+		return ""
+	}
+	return *a.Audience
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) GetScope() []string {
+	if a == nil || a.Scope == nil {
+		return nil
+	}
+	return a.Scope
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) GetOrganizationUsage() OrganizationUsageEnum {
+	if a == nil || a.OrganizationUsage == nil {
+		return ""
+	}
+	return *a.OrganizationUsage
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) GetAllowAnyOrganization() bool {
+	if a == nil || a.AllowAnyOrganization == nil {
+		return false
+	}
+	return *a.AllowAnyOrganization
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AssociateOrganizationClientGrantResponseContent) SetID(id *string) {
+	a.ID = id
+	a.require(associateOrganizationClientGrantResponseContentFieldID)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AssociateOrganizationClientGrantResponseContent) SetClientID(clientID *string) {
+	a.ClientID = clientID
+	a.require(associateOrganizationClientGrantResponseContentFieldClientID)
+}
+
+// SetAudience sets the Audience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AssociateOrganizationClientGrantResponseContent) SetAudience(audience *string) {
+	a.Audience = audience
+	a.require(associateOrganizationClientGrantResponseContentFieldAudience)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AssociateOrganizationClientGrantResponseContent) SetScope(scope []string) {
+	a.Scope = scope
+	a.require(associateOrganizationClientGrantResponseContentFieldScope)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AssociateOrganizationClientGrantResponseContent) SetOrganizationUsage(organizationUsage *OrganizationUsageEnum) {
+	a.OrganizationUsage = organizationUsage
+	a.require(associateOrganizationClientGrantResponseContentFieldOrganizationUsage)
+}
+
+// SetAllowAnyOrganization sets the AllowAnyOrganization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AssociateOrganizationClientGrantResponseContent) SetAllowAnyOrganization(allowAnyOrganization *bool) {
+	a.AllowAnyOrganization = allowAnyOrganization
+	a.require(associateOrganizationClientGrantResponseContentFieldAllowAnyOrganization)
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler AssociateOrganizationClientGrantResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AssociateOrganizationClientGrantResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) MarshalJSON() ([]byte, error) {
+	type embed AssociateOrganizationClientGrantResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AssociateOrganizationClientGrantResponseContent) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
 
 // Connection to be added to the organization.
 var (
@@ -132,6 +454,778 @@ func (c *ConnectionForOrganization) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionForOrganization) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createOrganizationAllConnectionResponseContentFieldOrganizationConnectionName = big.NewInt(1 << 0)
+	createOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
+	createOrganizationAllConnectionResponseContentFieldShowAsButton               = big.NewInt(1 << 2)
+	createOrganizationAllConnectionResponseContentFieldIsSignupEnabled            = big.NewInt(1 << 3)
+	createOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
+	createOrganizationAllConnectionResponseContentFieldIsEnabled                  = big.NewInt(1 << 5)
+	createOrganizationAllConnectionResponseContentFieldConnectionID               = big.NewInt(1 << 6)
+	createOrganizationAllConnectionResponseContentFieldConnection                 = big.NewInt(1 << 7)
+)
+
+type CreateOrganizationAllConnectionResponseContent struct {
+	// Name of the connection in the scope of this organization.
+	OrganizationConnectionName *string `json:"organization_connection_name,omitempty" url:"organization_connection_name,omitempty"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled         *bool                        `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	OrganizationAccessLevel *OrganizationAccessLevelEnum `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	// Whether the connection is enabled for the organization.
+	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+	// Connection identifier.
+	ConnectionID string                             `json:"connection_id" url:"connection_id"`
+	Connection   *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetOrganizationConnectionName() string {
+	if c == nil || c.OrganizationConnectionName == nil {
+		return ""
+	}
+	return *c.OrganizationConnectionName
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetAssignMembershipOnLogin() bool {
+	if c == nil || c.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *c.AssignMembershipOnLogin
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetShowAsButton() bool {
+	if c == nil || c.ShowAsButton == nil {
+		return false
+	}
+	return *c.ShowAsButton
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetIsSignupEnabled() bool {
+	if c == nil || c.IsSignupEnabled == nil {
+		return false
+	}
+	return *c.IsSignupEnabled
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetOrganizationAccessLevel() OrganizationAccessLevelEnum {
+	if c == nil || c.OrganizationAccessLevel == nil {
+		return ""
+	}
+	return *c.OrganizationAccessLevel
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetIsEnabled() bool {
+	if c == nil || c.IsEnabled == nil {
+		return false
+	}
+	return *c.IsEnabled
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetConnectionID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionID
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetConnection() OrganizationConnectionInformation {
+	if c == nil || c.Connection == nil {
+		return OrganizationConnectionInformation{}
+	}
+	return *c.Connection
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionResponseContent) SetOrganizationConnectionName(organizationConnectionName *string) {
+	c.OrganizationConnectionName = organizationConnectionName
+	c.require(createOrganizationAllConnectionResponseContentFieldOrganizationConnectionName)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionResponseContent) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	c.AssignMembershipOnLogin = assignMembershipOnLogin
+	c.require(createOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionResponseContent) SetShowAsButton(showAsButton *bool) {
+	c.ShowAsButton = showAsButton
+	c.require(createOrganizationAllConnectionResponseContentFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionResponseContent) SetIsSignupEnabled(isSignupEnabled *bool) {
+	c.IsSignupEnabled = isSignupEnabled
+	c.require(createOrganizationAllConnectionResponseContentFieldIsSignupEnabled)
+}
+
+// SetOrganizationAccessLevel sets the OrganizationAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionResponseContent) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnum) {
+	c.OrganizationAccessLevel = organizationAccessLevel
+	c.require(createOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel)
+}
+
+// SetIsEnabled sets the IsEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionResponseContent) SetIsEnabled(isEnabled *bool) {
+	c.IsEnabled = isEnabled
+	c.require(createOrganizationAllConnectionResponseContentFieldIsEnabled)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionResponseContent) SetConnectionID(connectionID string) {
+	c.ConnectionID = connectionID
+	c.require(createOrganizationAllConnectionResponseContentFieldConnectionID)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionResponseContent) SetConnection(connection *OrganizationConnectionInformation) {
+	c.Connection = connection
+	c.require(createOrganizationAllConnectionResponseContentFieldConnection)
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateOrganizationAllConnectionResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateOrganizationAllConnectionResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateOrganizationAllConnectionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createOrganizationClientRequestItemFieldClientID           = big.NewInt(1 << 0)
+	createOrganizationClientRequestItemFieldUseForMemberAccess = big.NewInt(1 << 1)
+)
+
+type CreateOrganizationClientRequestItem struct {
+	// The identifier of the client to associate.
+	ClientID string `json:"client_id" url:"client_id"`
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess bool `json:"use_for_member_access" url:"use_for_member_access"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateOrganizationClientRequestItem) GetClientID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ClientID
+}
+
+func (c *CreateOrganizationClientRequestItem) GetUseForMemberAccess() bool {
+	if c == nil {
+		return false
+	}
+	return c.UseForMemberAccess
+}
+
+func (c *CreateOrganizationClientRequestItem) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateOrganizationClientRequestItem) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationClientRequestItem) SetClientID(clientID string) {
+	c.ClientID = clientID
+	c.require(createOrganizationClientRequestItemFieldClientID)
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationClientRequestItem) SetUseForMemberAccess(useForMemberAccess bool) {
+	c.UseForMemberAccess = useForMemberAccess
+	c.require(createOrganizationClientRequestItemFieldUseForMemberAccess)
+}
+
+func (c *CreateOrganizationClientRequestItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateOrganizationClientRequestItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateOrganizationClientRequestItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateOrganizationClientRequestItem) MarshalJSON() ([]byte, error) {
+	type embed CreateOrganizationClientRequestItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateOrganizationClientRequestItem) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type CreateOrganizationClientsResponseContent = []*OrganizationClient
+
+var (
+	createOrganizationDiscoveryDomainResponseContentFieldID                          = big.NewInt(1 << 0)
+	createOrganizationDiscoveryDomainResponseContentFieldDomain                      = big.NewInt(1 << 1)
+	createOrganizationDiscoveryDomainResponseContentFieldStatus                      = big.NewInt(1 << 2)
+	createOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	createOrganizationDiscoveryDomainResponseContentFieldVerificationTxt             = big.NewInt(1 << 4)
+	createOrganizationDiscoveryDomainResponseContentFieldVerificationHost            = big.NewInt(1 << 5)
+)
+
+type CreateOrganizationDiscoveryDomainResponseContent struct {
+	// Organization discovery domain identifier.
+	ID string `json:"id" url:"id"`
+	// The domain name to associate with the organization e.g. acme.com.
+	Domain string                            `json:"domain" url:"domain"`
+	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
+	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
+	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
+	// The full domain where the TXT record should be added.
+	VerificationHost string `json:"verification_host" url:"verification_host"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) GetDomain() string {
+	if c == nil {
+		return ""
+	}
+	return c.Domain
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) GetStatus() OrganizationDiscoveryDomainStatus {
+	if c == nil {
+		return ""
+	}
+	return c.Status
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) GetUseForOrganizationDiscovery() bool {
+	if c == nil || c.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *c.UseForOrganizationDiscovery
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) GetVerificationTxt() string {
+	if c == nil {
+		return ""
+	}
+	return c.VerificationTxt
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) GetVerificationHost() string {
+	if c == nil {
+		return ""
+	}
+	return c.VerificationHost
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationDiscoveryDomainResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createOrganizationDiscoveryDomainResponseContentFieldID)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationDiscoveryDomainResponseContent) SetDomain(domain string) {
+	c.Domain = domain
+	c.require(createOrganizationDiscoveryDomainResponseContentFieldDomain)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationDiscoveryDomainResponseContent) SetStatus(status OrganizationDiscoveryDomainStatus) {
+	c.Status = status
+	c.require(createOrganizationDiscoveryDomainResponseContentFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationDiscoveryDomainResponseContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	c.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	c.require(createOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery)
+}
+
+// SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationDiscoveryDomainResponseContent) SetVerificationTxt(verificationTxt string) {
+	c.VerificationTxt = verificationTxt
+	c.require(createOrganizationDiscoveryDomainResponseContentFieldVerificationTxt)
+}
+
+// SetVerificationHost sets the VerificationHost field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationDiscoveryDomainResponseContent) SetVerificationHost(verificationHost string) {
+	c.VerificationHost = verificationHost
+	c.require(createOrganizationDiscoveryDomainResponseContentFieldVerificationHost)
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateOrganizationDiscoveryDomainResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateOrganizationDiscoveryDomainResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateOrganizationDiscoveryDomainResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateOrganizationDiscoveryDomainResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createOrganizationInvitationResponseContentFieldID             = big.NewInt(1 << 0)
+	createOrganizationInvitationResponseContentFieldOrganizationID = big.NewInt(1 << 1)
+	createOrganizationInvitationResponseContentFieldInviter        = big.NewInt(1 << 2)
+	createOrganizationInvitationResponseContentFieldInvitee        = big.NewInt(1 << 3)
+	createOrganizationInvitationResponseContentFieldInvitationURL  = big.NewInt(1 << 4)
+	createOrganizationInvitationResponseContentFieldCreatedAt      = big.NewInt(1 << 5)
+	createOrganizationInvitationResponseContentFieldExpiresAt      = big.NewInt(1 << 6)
+	createOrganizationInvitationResponseContentFieldClientID       = big.NewInt(1 << 7)
+	createOrganizationInvitationResponseContentFieldConnectionID   = big.NewInt(1 << 8)
+	createOrganizationInvitationResponseContentFieldAppMetadata    = big.NewInt(1 << 9)
+	createOrganizationInvitationResponseContentFieldUserMetadata   = big.NewInt(1 << 10)
+	createOrganizationInvitationResponseContentFieldRoles          = big.NewInt(1 << 11)
+	createOrganizationInvitationResponseContentFieldTicketID       = big.NewInt(1 << 12)
+)
+
+type CreateOrganizationInvitationResponseContent struct {
+	// The id of the user invitation.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Organization identifier.
+	OrganizationID *string                        `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	Inviter        *OrganizationInvitationInviter `json:"inviter,omitempty" url:"inviter,omitempty"`
+	Invitee        *OrganizationInvitationInvitee `json:"invitee,omitempty" url:"invitee,omitempty"`
+	// The invitation url to be send to the invitee.
+	InvitationURL *string `json:"invitation_url,omitempty" url:"invitation_url,omitempty"`
+	// The ISO 8601 formatted timestamp representing the creation time of the invitation.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 formatted timestamp representing the expiration time of the invitation.
+	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+	// Auth0 client ID. Used to resolve the application's login initiation endpoint.
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The id of the connection to force invitee to authenticate with.
+	ConnectionID *string       `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	AppMetadata  *AppMetadata  `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
+	UserMetadata *UserMetadata `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
+	// List of roles IDs to associated with the user.
+	Roles []string `json:"roles,omitempty" url:"roles,omitempty"`
+	// The id of the invitation ticket
+	TicketID *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetOrganizationID() string {
+	if c == nil || c.OrganizationID == nil {
+		return ""
+	}
+	return *c.OrganizationID
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetInviter() OrganizationInvitationInviter {
+	if c == nil || c.Inviter == nil {
+		return OrganizationInvitationInviter{}
+	}
+	return *c.Inviter
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetInvitee() OrganizationInvitationInvitee {
+	if c == nil || c.Invitee == nil {
+		return OrganizationInvitationInvitee{}
+	}
+	return *c.Invitee
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetInvitationURL() string {
+	if c == nil || c.InvitationURL == nil {
+		return ""
+	}
+	return *c.InvitationURL
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetExpiresAt() time.Time {
+	if c == nil || c.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *c.ExpiresAt
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetConnectionID() string {
+	if c == nil || c.ConnectionID == nil {
+		return ""
+	}
+	return *c.ConnectionID
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetAppMetadata() AppMetadata {
+	if c == nil || c.AppMetadata == nil {
+		return nil
+	}
+	return *c.AppMetadata
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetUserMetadata() UserMetadata {
+	if c == nil || c.UserMetadata == nil {
+		return nil
+	}
+	return *c.UserMetadata
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetRoles() []string {
+	if c == nil || c.Roles == nil {
+		return nil
+	}
+	return c.Roles
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetTicketID() string {
+	if c == nil || c.TicketID == nil {
+		return ""
+	}
+	return *c.TicketID
+}
+
+func (c *CreateOrganizationInvitationResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateOrganizationInvitationResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createOrganizationInvitationResponseContentFieldID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetOrganizationID(organizationID *string) {
+	c.OrganizationID = organizationID
+	c.require(createOrganizationInvitationResponseContentFieldOrganizationID)
+}
+
+// SetInviter sets the Inviter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetInviter(inviter *OrganizationInvitationInviter) {
+	c.Inviter = inviter
+	c.require(createOrganizationInvitationResponseContentFieldInviter)
+}
+
+// SetInvitee sets the Invitee field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetInvitee(invitee *OrganizationInvitationInvitee) {
+	c.Invitee = invitee
+	c.require(createOrganizationInvitationResponseContentFieldInvitee)
+}
+
+// SetInvitationURL sets the InvitationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetInvitationURL(invitationURL *string) {
+	c.InvitationURL = invitationURL
+	c.require(createOrganizationInvitationResponseContentFieldInvitationURL)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createOrganizationInvitationResponseContentFieldCreatedAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetExpiresAt(expiresAt *time.Time) {
+	c.ExpiresAt = expiresAt
+	c.require(createOrganizationInvitationResponseContentFieldExpiresAt)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(createOrganizationInvitationResponseContentFieldClientID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetConnectionID(connectionID *string) {
+	c.ConnectionID = connectionID
+	c.require(createOrganizationInvitationResponseContentFieldConnectionID)
+}
+
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetAppMetadata(appMetadata *AppMetadata) {
+	c.AppMetadata = appMetadata
+	c.require(createOrganizationInvitationResponseContentFieldAppMetadata)
+}
+
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetUserMetadata(userMetadata *UserMetadata) {
+	c.UserMetadata = userMetadata
+	c.require(createOrganizationInvitationResponseContentFieldUserMetadata)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetRoles(roles []string) {
+	c.Roles = roles
+	c.require(createOrganizationInvitationResponseContentFieldRoles)
+}
+
+// SetTicketID sets the TicketID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationInvitationResponseContent) SetTicketID(ticketID *string) {
+	c.TicketID = ticketID
+	c.require(createOrganizationInvitationResponseContentFieldTicketID)
+}
+
+func (c *CreateOrganizationInvitationResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateOrganizationInvitationResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateOrganizationInvitationResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	c.ExpiresAt = unmarshaler.ExpiresAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateOrganizationInvitationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateOrganizationInvitationResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+		ExpiresAt: internal.NewOptionalDateTime(c.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateOrganizationInvitationResponseContent) String() string {
 	if c == nil {
 		return "<nil>"
 	}
@@ -384,6 +1478,208 @@ func (c *CreateOrganizationResponseContent) String() string {
 }
 
 var (
+	getOrganizationAllConnectionResponseContentFieldOrganizationConnectionName = big.NewInt(1 << 0)
+	getOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
+	getOrganizationAllConnectionResponseContentFieldShowAsButton               = big.NewInt(1 << 2)
+	getOrganizationAllConnectionResponseContentFieldIsSignupEnabled            = big.NewInt(1 << 3)
+	getOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
+	getOrganizationAllConnectionResponseContentFieldIsEnabled                  = big.NewInt(1 << 5)
+	getOrganizationAllConnectionResponseContentFieldConnectionID               = big.NewInt(1 << 6)
+	getOrganizationAllConnectionResponseContentFieldConnection                 = big.NewInt(1 << 7)
+)
+
+type GetOrganizationAllConnectionResponseContent struct {
+	// Name of the connection in the scope of this organization.
+	OrganizationConnectionName *string `json:"organization_connection_name,omitempty" url:"organization_connection_name,omitempty"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled         *bool                        `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	OrganizationAccessLevel *OrganizationAccessLevelEnum `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	// Whether the connection is enabled for the organization.
+	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+	// Connection identifier.
+	ConnectionID string                             `json:"connection_id" url:"connection_id"`
+	Connection   *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetOrganizationConnectionName() string {
+	if g == nil || g.OrganizationConnectionName == nil {
+		return ""
+	}
+	return *g.OrganizationConnectionName
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetAssignMembershipOnLogin() bool {
+	if g == nil || g.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *g.AssignMembershipOnLogin
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetShowAsButton() bool {
+	if g == nil || g.ShowAsButton == nil {
+		return false
+	}
+	return *g.ShowAsButton
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetIsSignupEnabled() bool {
+	if g == nil || g.IsSignupEnabled == nil {
+		return false
+	}
+	return *g.IsSignupEnabled
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetOrganizationAccessLevel() OrganizationAccessLevelEnum {
+	if g == nil || g.OrganizationAccessLevel == nil {
+		return ""
+	}
+	return *g.OrganizationAccessLevel
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetIsEnabled() bool {
+	if g == nil || g.IsEnabled == nil {
+		return false
+	}
+	return *g.IsEnabled
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetConnectionID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ConnectionID
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetConnection() OrganizationConnectionInformation {
+	if g == nil || g.Connection == nil {
+		return OrganizationConnectionInformation{}
+	}
+	return *g.Connection
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationAllConnectionResponseContent) SetOrganizationConnectionName(organizationConnectionName *string) {
+	g.OrganizationConnectionName = organizationConnectionName
+	g.require(getOrganizationAllConnectionResponseContentFieldOrganizationConnectionName)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationAllConnectionResponseContent) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	g.AssignMembershipOnLogin = assignMembershipOnLogin
+	g.require(getOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationAllConnectionResponseContent) SetShowAsButton(showAsButton *bool) {
+	g.ShowAsButton = showAsButton
+	g.require(getOrganizationAllConnectionResponseContentFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationAllConnectionResponseContent) SetIsSignupEnabled(isSignupEnabled *bool) {
+	g.IsSignupEnabled = isSignupEnabled
+	g.require(getOrganizationAllConnectionResponseContentFieldIsSignupEnabled)
+}
+
+// SetOrganizationAccessLevel sets the OrganizationAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationAllConnectionResponseContent) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnum) {
+	g.OrganizationAccessLevel = organizationAccessLevel
+	g.require(getOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel)
+}
+
+// SetIsEnabled sets the IsEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationAllConnectionResponseContent) SetIsEnabled(isEnabled *bool) {
+	g.IsEnabled = isEnabled
+	g.require(getOrganizationAllConnectionResponseContentFieldIsEnabled)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationAllConnectionResponseContent) SetConnectionID(connectionID string) {
+	g.ConnectionID = connectionID
+	g.require(getOrganizationAllConnectionResponseContentFieldConnectionID)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationAllConnectionResponseContent) SetConnection(connection *OrganizationConnectionInformation) {
+	g.Connection = connection
+	g.require(getOrganizationAllConnectionResponseContentFieldConnection)
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetOrganizationAllConnectionResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetOrganizationAllConnectionResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetOrganizationAllConnectionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	getOrganizationByNameResponseContentFieldID                     = big.NewInt(1 << 0)
 	getOrganizationByNameResponseContentFieldName                   = big.NewInt(1 << 1)
 	getOrganizationByNameResponseContentFieldDisplayName            = big.NewInt(1 << 2)
@@ -590,6 +1886,911 @@ func (g *GetOrganizationByNameResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetOrganizationByNameResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getOrganizationClientResponseContentFieldClientID           = big.NewInt(1 << 0)
+	getOrganizationClientResponseContentFieldUseForMemberAccess = big.NewInt(1 << 1)
+	getOrganizationClientResponseContentFieldClient             = big.NewInt(1 << 2)
+)
+
+type GetOrganizationClientResponseContent struct {
+	// The identifier of the client associated with the organization.
+	ClientID string `json:"client_id" url:"client_id"`
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess bool                        `json:"use_for_member_access" url:"use_for_member_access"`
+	Client             *OrganizationClientMetadata `json:"client" url:"client"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetOrganizationClientResponseContent) GetClientID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ClientID
+}
+
+func (g *GetOrganizationClientResponseContent) GetUseForMemberAccess() bool {
+	if g == nil {
+		return false
+	}
+	return g.UseForMemberAccess
+}
+
+func (g *GetOrganizationClientResponseContent) GetClient() *OrganizationClientMetadata {
+	if g == nil {
+		return nil
+	}
+	return g.Client
+}
+
+func (g *GetOrganizationClientResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetOrganizationClientResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationClientResponseContent) SetClientID(clientID string) {
+	g.ClientID = clientID
+	g.require(getOrganizationClientResponseContentFieldClientID)
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationClientResponseContent) SetUseForMemberAccess(useForMemberAccess bool) {
+	g.UseForMemberAccess = useForMemberAccess
+	g.require(getOrganizationClientResponseContentFieldUseForMemberAccess)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationClientResponseContent) SetClient(client *OrganizationClientMetadata) {
+	g.Client = client
+	g.require(getOrganizationClientResponseContentFieldClient)
+}
+
+func (g *GetOrganizationClientResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetOrganizationClientResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetOrganizationClientResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetOrganizationClientResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetOrganizationClientResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetOrganizationClientResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getOrganizationConnectionResponseContentFieldConnectionID            = big.NewInt(1 << 0)
+	getOrganizationConnectionResponseContentFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
+	getOrganizationConnectionResponseContentFieldShowAsButton            = big.NewInt(1 << 2)
+	getOrganizationConnectionResponseContentFieldIsSignupEnabled         = big.NewInt(1 << 3)
+	getOrganizationConnectionResponseContentFieldConnection              = big.NewInt(1 << 4)
+)
+
+type GetOrganizationConnectionResponseContent struct {
+	// ID of the connection.
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	Connection      *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetOrganizationConnectionResponseContent) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
+		return ""
+	}
+	return *g.ConnectionID
+}
+
+func (g *GetOrganizationConnectionResponseContent) GetAssignMembershipOnLogin() bool {
+	if g == nil || g.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *g.AssignMembershipOnLogin
+}
+
+func (g *GetOrganizationConnectionResponseContent) GetShowAsButton() bool {
+	if g == nil || g.ShowAsButton == nil {
+		return false
+	}
+	return *g.ShowAsButton
+}
+
+func (g *GetOrganizationConnectionResponseContent) GetIsSignupEnabled() bool {
+	if g == nil || g.IsSignupEnabled == nil {
+		return false
+	}
+	return *g.IsSignupEnabled
+}
+
+func (g *GetOrganizationConnectionResponseContent) GetConnection() OrganizationConnectionInformation {
+	if g == nil || g.Connection == nil {
+		return OrganizationConnectionInformation{}
+	}
+	return *g.Connection
+}
+
+func (g *GetOrganizationConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetOrganizationConnectionResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationConnectionResponseContent) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(getOrganizationConnectionResponseContentFieldConnectionID)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationConnectionResponseContent) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	g.AssignMembershipOnLogin = assignMembershipOnLogin
+	g.require(getOrganizationConnectionResponseContentFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationConnectionResponseContent) SetShowAsButton(showAsButton *bool) {
+	g.ShowAsButton = showAsButton
+	g.require(getOrganizationConnectionResponseContentFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationConnectionResponseContent) SetIsSignupEnabled(isSignupEnabled *bool) {
+	g.IsSignupEnabled = isSignupEnabled
+	g.require(getOrganizationConnectionResponseContentFieldIsSignupEnabled)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationConnectionResponseContent) SetConnection(connection *OrganizationConnectionInformation) {
+	g.Connection = connection
+	g.require(getOrganizationConnectionResponseContentFieldConnection)
+}
+
+func (g *GetOrganizationConnectionResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetOrganizationConnectionResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetOrganizationConnectionResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetOrganizationConnectionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetOrganizationConnectionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetOrganizationConnectionResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getOrganizationDiscoveryDomainByNameResponseContentFieldID                          = big.NewInt(1 << 0)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldDomain                      = big.NewInt(1 << 1)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldStatus                      = big.NewInt(1 << 2)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldVerificationTxt             = big.NewInt(1 << 4)
+	getOrganizationDiscoveryDomainByNameResponseContentFieldVerificationHost            = big.NewInt(1 << 5)
+)
+
+type GetOrganizationDiscoveryDomainByNameResponseContent struct {
+	// Organization discovery domain identifier.
+	ID string `json:"id" url:"id"`
+	// The domain name to associate with the organization e.g. acme.com.
+	Domain string                            `json:"domain" url:"domain"`
+	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
+	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
+	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
+	// The full domain where the TXT record should be added.
+	VerificationHost string `json:"verification_host" url:"verification_host"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetDomain() string {
+	if g == nil {
+		return ""
+	}
+	return g.Domain
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetStatus() OrganizationDiscoveryDomainStatus {
+	if g == nil {
+		return ""
+	}
+	return g.Status
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetUseForOrganizationDiscovery() bool {
+	if g == nil || g.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *g.UseForOrganizationDiscovery
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetVerificationTxt() string {
+	if g == nil {
+		return ""
+	}
+	return g.VerificationTxt
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetVerificationHost() string {
+	if g == nil {
+		return ""
+	}
+	return g.VerificationHost
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldID)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetDomain(domain string) {
+	g.Domain = domain
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldDomain)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetStatus(status OrganizationDiscoveryDomainStatus) {
+	g.Status = status
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	g.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldUseForOrganizationDiscovery)
+}
+
+// SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetVerificationTxt(verificationTxt string) {
+	g.VerificationTxt = verificationTxt
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldVerificationTxt)
+}
+
+// SetVerificationHost sets the VerificationHost field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) SetVerificationHost(verificationHost string) {
+	g.VerificationHost = verificationHost
+	g.require(getOrganizationDiscoveryDomainByNameResponseContentFieldVerificationHost)
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetOrganizationDiscoveryDomainByNameResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetOrganizationDiscoveryDomainByNameResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetOrganizationDiscoveryDomainByNameResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetOrganizationDiscoveryDomainByNameResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getOrganizationDiscoveryDomainResponseContentFieldID                          = big.NewInt(1 << 0)
+	getOrganizationDiscoveryDomainResponseContentFieldDomain                      = big.NewInt(1 << 1)
+	getOrganizationDiscoveryDomainResponseContentFieldStatus                      = big.NewInt(1 << 2)
+	getOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	getOrganizationDiscoveryDomainResponseContentFieldVerificationTxt             = big.NewInt(1 << 4)
+	getOrganizationDiscoveryDomainResponseContentFieldVerificationHost            = big.NewInt(1 << 5)
+)
+
+type GetOrganizationDiscoveryDomainResponseContent struct {
+	// Organization discovery domain identifier.
+	ID string `json:"id" url:"id"`
+	// The domain name to associate with the organization e.g. acme.com.
+	Domain string                            `json:"domain" url:"domain"`
+	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
+	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
+	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
+	// The full domain where the TXT record should be added.
+	VerificationHost string `json:"verification_host" url:"verification_host"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) GetDomain() string {
+	if g == nil {
+		return ""
+	}
+	return g.Domain
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) GetStatus() OrganizationDiscoveryDomainStatus {
+	if g == nil {
+		return ""
+	}
+	return g.Status
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) GetUseForOrganizationDiscovery() bool {
+	if g == nil || g.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *g.UseForOrganizationDiscovery
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) GetVerificationTxt() string {
+	if g == nil {
+		return ""
+	}
+	return g.VerificationTxt
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) GetVerificationHost() string {
+	if g == nil {
+		return ""
+	}
+	return g.VerificationHost
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getOrganizationDiscoveryDomainResponseContentFieldID)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainResponseContent) SetDomain(domain string) {
+	g.Domain = domain
+	g.require(getOrganizationDiscoveryDomainResponseContentFieldDomain)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainResponseContent) SetStatus(status OrganizationDiscoveryDomainStatus) {
+	g.Status = status
+	g.require(getOrganizationDiscoveryDomainResponseContentFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainResponseContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	g.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	g.require(getOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery)
+}
+
+// SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainResponseContent) SetVerificationTxt(verificationTxt string) {
+	g.VerificationTxt = verificationTxt
+	g.require(getOrganizationDiscoveryDomainResponseContentFieldVerificationTxt)
+}
+
+// SetVerificationHost sets the VerificationHost field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationDiscoveryDomainResponseContent) SetVerificationHost(verificationHost string) {
+	g.VerificationHost = verificationHost
+	g.require(getOrganizationDiscoveryDomainResponseContentFieldVerificationHost)
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetOrganizationDiscoveryDomainResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetOrganizationDiscoveryDomainResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetOrganizationDiscoveryDomainResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetOrganizationDiscoveryDomainResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getOrganizationInvitationResponseContentFieldID             = big.NewInt(1 << 0)
+	getOrganizationInvitationResponseContentFieldOrganizationID = big.NewInt(1 << 1)
+	getOrganizationInvitationResponseContentFieldInviter        = big.NewInt(1 << 2)
+	getOrganizationInvitationResponseContentFieldInvitee        = big.NewInt(1 << 3)
+	getOrganizationInvitationResponseContentFieldInvitationURL  = big.NewInt(1 << 4)
+	getOrganizationInvitationResponseContentFieldCreatedAt      = big.NewInt(1 << 5)
+	getOrganizationInvitationResponseContentFieldExpiresAt      = big.NewInt(1 << 6)
+	getOrganizationInvitationResponseContentFieldClientID       = big.NewInt(1 << 7)
+	getOrganizationInvitationResponseContentFieldConnectionID   = big.NewInt(1 << 8)
+	getOrganizationInvitationResponseContentFieldAppMetadata    = big.NewInt(1 << 9)
+	getOrganizationInvitationResponseContentFieldUserMetadata   = big.NewInt(1 << 10)
+	getOrganizationInvitationResponseContentFieldRoles          = big.NewInt(1 << 11)
+	getOrganizationInvitationResponseContentFieldTicketID       = big.NewInt(1 << 12)
+)
+
+type GetOrganizationInvitationResponseContent struct {
+	// The id of the user invitation.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Organization identifier.
+	OrganizationID *string                        `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	Inviter        *OrganizationInvitationInviter `json:"inviter,omitempty" url:"inviter,omitempty"`
+	Invitee        *OrganizationInvitationInvitee `json:"invitee,omitempty" url:"invitee,omitempty"`
+	// The invitation url to be send to the invitee.
+	InvitationURL *string `json:"invitation_url,omitempty" url:"invitation_url,omitempty"`
+	// The ISO 8601 formatted timestamp representing the creation time of the invitation.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 formatted timestamp representing the expiration time of the invitation.
+	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+	// Auth0 client ID. Used to resolve the application's login initiation endpoint.
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The id of the connection to force invitee to authenticate with.
+	ConnectionID *string       `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	AppMetadata  *AppMetadata  `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
+	UserMetadata *UserMetadata `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
+	// List of roles IDs to associated with the user.
+	Roles []string `json:"roles,omitempty" url:"roles,omitempty"`
+	// The id of the invitation ticket
+	TicketID *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetOrganizationID() string {
+	if g == nil || g.OrganizationID == nil {
+		return ""
+	}
+	return *g.OrganizationID
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetInviter() OrganizationInvitationInviter {
+	if g == nil || g.Inviter == nil {
+		return OrganizationInvitationInviter{}
+	}
+	return *g.Inviter
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetInvitee() OrganizationInvitationInvitee {
+	if g == nil || g.Invitee == nil {
+		return OrganizationInvitationInvitee{}
+	}
+	return *g.Invitee
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetInvitationURL() string {
+	if g == nil || g.InvitationURL == nil {
+		return ""
+	}
+	return *g.InvitationURL
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *g.CreatedAt
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetExpiresAt() time.Time {
+	if g == nil || g.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *g.ExpiresAt
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetClientID() string {
+	if g == nil || g.ClientID == nil {
+		return ""
+	}
+	return *g.ClientID
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
+		return ""
+	}
+	return *g.ConnectionID
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetAppMetadata() AppMetadata {
+	if g == nil || g.AppMetadata == nil {
+		return nil
+	}
+	return *g.AppMetadata
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetUserMetadata() UserMetadata {
+	if g == nil || g.UserMetadata == nil {
+		return nil
+	}
+	return *g.UserMetadata
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetRoles() []string {
+	if g == nil || g.Roles == nil {
+		return nil
+	}
+	return g.Roles
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetTicketID() string {
+	if g == nil || g.TicketID == nil {
+		return ""
+	}
+	return *g.TicketID
+}
+
+func (g *GetOrganizationInvitationResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetOrganizationInvitationResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getOrganizationInvitationResponseContentFieldID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetOrganizationID(organizationID *string) {
+	g.OrganizationID = organizationID
+	g.require(getOrganizationInvitationResponseContentFieldOrganizationID)
+}
+
+// SetInviter sets the Inviter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetInviter(inviter *OrganizationInvitationInviter) {
+	g.Inviter = inviter
+	g.require(getOrganizationInvitationResponseContentFieldInviter)
+}
+
+// SetInvitee sets the Invitee field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetInvitee(invitee *OrganizationInvitationInvitee) {
+	g.Invitee = invitee
+	g.require(getOrganizationInvitationResponseContentFieldInvitee)
+}
+
+// SetInvitationURL sets the InvitationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetInvitationURL(invitationURL *string) {
+	g.InvitationURL = invitationURL
+	g.require(getOrganizationInvitationResponseContentFieldInvitationURL)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getOrganizationInvitationResponseContentFieldCreatedAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetExpiresAt(expiresAt *time.Time) {
+	g.ExpiresAt = expiresAt
+	g.require(getOrganizationInvitationResponseContentFieldExpiresAt)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetClientID(clientID *string) {
+	g.ClientID = clientID
+	g.require(getOrganizationInvitationResponseContentFieldClientID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(getOrganizationInvitationResponseContentFieldConnectionID)
+}
+
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetAppMetadata(appMetadata *AppMetadata) {
+	g.AppMetadata = appMetadata
+	g.require(getOrganizationInvitationResponseContentFieldAppMetadata)
+}
+
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetUserMetadata(userMetadata *UserMetadata) {
+	g.UserMetadata = userMetadata
+	g.require(getOrganizationInvitationResponseContentFieldUserMetadata)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetRoles(roles []string) {
+	g.Roles = roles
+	g.require(getOrganizationInvitationResponseContentFieldRoles)
+}
+
+// SetTicketID sets the TicketID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationInvitationResponseContent) SetTicketID(ticketID *string) {
+	g.TicketID = ticketID
+	g.require(getOrganizationInvitationResponseContentFieldTicketID)
+}
+
+func (g *GetOrganizationInvitationResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetOrganizationInvitationResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetOrganizationInvitationResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	g.ExpiresAt = unmarshaler.ExpiresAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetOrganizationInvitationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetOrganizationInvitationResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
+		ExpiresAt: internal.NewOptionalDateTime(g.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetOrganizationInvitationResponseContent) String() string {
 	if g == nil {
 		return "<nil>"
 	}
@@ -826,6 +3027,2222 @@ func (g *GetOrganizationResponseContent) String() string {
 }
 
 var (
+	listOrganizationAllConnectionsOffsetPaginatedResponseContentFieldStart       = big.NewInt(1 << 0)
+	listOrganizationAllConnectionsOffsetPaginatedResponseContentFieldLimit       = big.NewInt(1 << 1)
+	listOrganizationAllConnectionsOffsetPaginatedResponseContentFieldTotal       = big.NewInt(1 << 2)
+	listOrganizationAllConnectionsOffsetPaginatedResponseContentFieldConnections = big.NewInt(1 << 3)
+)
+
+type ListOrganizationAllConnectionsOffsetPaginatedResponseContent struct {
+	Start       *float64                         `json:"start,omitempty" url:"start,omitempty"`
+	Limit       *float64                         `json:"limit,omitempty" url:"limit,omitempty"`
+	Total       *float64                         `json:"total,omitempty" url:"total,omitempty"`
+	Connections []*OrganizationAllConnectionPost `json:"connections,omitempty" url:"connections,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) GetConnections() []*OrganizationAllConnectionPost {
+	if l == nil || l.Connections == nil {
+		return nil
+	}
+	return l.Connections
+}
+
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listOrganizationAllConnectionsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listOrganizationAllConnectionsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listOrganizationAllConnectionsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetConnections sets the Connections field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) SetConnections(connections []*OrganizationAllConnectionPost) {
+	l.Connections = connections
+	l.require(listOrganizationAllConnectionsOffsetPaginatedResponseContentFieldConnections)
+}
+
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationAllConnectionsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationAllConnectionsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationAllConnectionsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListOrganizationAllConnectionsResponseContent struct {
+	OrganizationAllConnectionPostList                            []*OrganizationAllConnectionPost
+	ListOrganizationAllConnectionsOffsetPaginatedResponseContent *ListOrganizationAllConnectionsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListOrganizationAllConnectionsResponseContent) GetOrganizationAllConnectionPostList() []*OrganizationAllConnectionPost {
+	if l == nil {
+		return nil
+	}
+	return l.OrganizationAllConnectionPostList
+}
+
+func (l *ListOrganizationAllConnectionsResponseContent) GetListOrganizationAllConnectionsOffsetPaginatedResponseContent() *ListOrganizationAllConnectionsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListOrganizationAllConnectionsOffsetPaginatedResponseContent
+}
+
+func (l *ListOrganizationAllConnectionsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueOrganizationAllConnectionPostList []*OrganizationAllConnectionPost
+	if err := json.Unmarshal(data, &valueOrganizationAllConnectionPostList); err == nil {
+		l.typ = "OrganizationAllConnectionPostList"
+		l.OrganizationAllConnectionPostList = valueOrganizationAllConnectionPostList
+		return nil
+	}
+	valueListOrganizationAllConnectionsOffsetPaginatedResponseContent := new(ListOrganizationAllConnectionsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListOrganizationAllConnectionsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListOrganizationAllConnectionsOffsetPaginatedResponseContent"
+		l.ListOrganizationAllConnectionsOffsetPaginatedResponseContent = valueListOrganizationAllConnectionsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListOrganizationAllConnectionsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "OrganizationAllConnectionPostList" || l.OrganizationAllConnectionPostList != nil {
+		return json.Marshal(l.OrganizationAllConnectionPostList)
+	}
+	if l.typ == "ListOrganizationAllConnectionsOffsetPaginatedResponseContent" || l.ListOrganizationAllConnectionsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListOrganizationAllConnectionsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListOrganizationAllConnectionsResponseContentVisitor interface {
+	VisitOrganizationAllConnectionPostList([]*OrganizationAllConnectionPost) error
+	VisitListOrganizationAllConnectionsOffsetPaginatedResponseContent(*ListOrganizationAllConnectionsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListOrganizationAllConnectionsResponseContent) Accept(visitor ListOrganizationAllConnectionsResponseContentVisitor) error {
+	if l.typ == "OrganizationAllConnectionPostList" || l.OrganizationAllConnectionPostList != nil {
+		return visitor.VisitOrganizationAllConnectionPostList(l.OrganizationAllConnectionPostList)
+	}
+	if l.typ == "ListOrganizationAllConnectionsOffsetPaginatedResponseContent" || l.ListOrganizationAllConnectionsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListOrganizationAllConnectionsOffsetPaginatedResponseContent(l.ListOrganizationAllConnectionsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listOrganizationClientGrantsOffsetPaginatedResponseContentFieldStart        = big.NewInt(1 << 0)
+	listOrganizationClientGrantsOffsetPaginatedResponseContentFieldLimit        = big.NewInt(1 << 1)
+	listOrganizationClientGrantsOffsetPaginatedResponseContentFieldTotal        = big.NewInt(1 << 2)
+	listOrganizationClientGrantsOffsetPaginatedResponseContentFieldClientGrants = big.NewInt(1 << 3)
+)
+
+type ListOrganizationClientGrantsOffsetPaginatedResponseContent struct {
+	Start        *float64                   `json:"start,omitempty" url:"start,omitempty"`
+	Limit        *float64                   `json:"limit,omitempty" url:"limit,omitempty"`
+	Total        *float64                   `json:"total,omitempty" url:"total,omitempty"`
+	ClientGrants []*OrganizationClientGrant `json:"client_grants,omitempty" url:"client_grants,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) GetClientGrants() []*OrganizationClientGrant {
+	if l == nil || l.ClientGrants == nil {
+		return nil
+	}
+	return l.ClientGrants
+}
+
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listOrganizationClientGrantsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listOrganizationClientGrantsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listOrganizationClientGrantsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetClientGrants sets the ClientGrants field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) SetClientGrants(clientGrants []*OrganizationClientGrant) {
+	l.ClientGrants = clientGrants
+	l.require(listOrganizationClientGrantsOffsetPaginatedResponseContentFieldClientGrants)
+}
+
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationClientGrantsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationClientGrantsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationClientGrantsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListOrganizationClientGrantsResponseContent struct {
+	OrganizationClientGrantList                                []*OrganizationClientGrant
+	ListOrganizationClientGrantsOffsetPaginatedResponseContent *ListOrganizationClientGrantsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListOrganizationClientGrantsResponseContent) GetOrganizationClientGrantList() []*OrganizationClientGrant {
+	if l == nil {
+		return nil
+	}
+	return l.OrganizationClientGrantList
+}
+
+func (l *ListOrganizationClientGrantsResponseContent) GetListOrganizationClientGrantsOffsetPaginatedResponseContent() *ListOrganizationClientGrantsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListOrganizationClientGrantsOffsetPaginatedResponseContent
+}
+
+func (l *ListOrganizationClientGrantsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueOrganizationClientGrantList []*OrganizationClientGrant
+	if err := json.Unmarshal(data, &valueOrganizationClientGrantList); err == nil {
+		l.typ = "OrganizationClientGrantList"
+		l.OrganizationClientGrantList = valueOrganizationClientGrantList
+		return nil
+	}
+	valueListOrganizationClientGrantsOffsetPaginatedResponseContent := new(ListOrganizationClientGrantsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListOrganizationClientGrantsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListOrganizationClientGrantsOffsetPaginatedResponseContent"
+		l.ListOrganizationClientGrantsOffsetPaginatedResponseContent = valueListOrganizationClientGrantsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListOrganizationClientGrantsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "OrganizationClientGrantList" || l.OrganizationClientGrantList != nil {
+		return json.Marshal(l.OrganizationClientGrantList)
+	}
+	if l.typ == "ListOrganizationClientGrantsOffsetPaginatedResponseContent" || l.ListOrganizationClientGrantsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListOrganizationClientGrantsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListOrganizationClientGrantsResponseContentVisitor interface {
+	VisitOrganizationClientGrantList([]*OrganizationClientGrant) error
+	VisitListOrganizationClientGrantsOffsetPaginatedResponseContent(*ListOrganizationClientGrantsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListOrganizationClientGrantsResponseContent) Accept(visitor ListOrganizationClientGrantsResponseContentVisitor) error {
+	if l.typ == "OrganizationClientGrantList" || l.OrganizationClientGrantList != nil {
+		return visitor.VisitOrganizationClientGrantList(l.OrganizationClientGrantList)
+	}
+	if l.typ == "ListOrganizationClientGrantsOffsetPaginatedResponseContent" || l.ListOrganizationClientGrantsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListOrganizationClientGrantsOffsetPaginatedResponseContent(l.ListOrganizationClientGrantsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listOrganizationClientsResponseContentFieldClients = big.NewInt(1 << 0)
+	listOrganizationClientsResponseContentFieldNext    = big.NewInt(1 << 1)
+)
+
+type ListOrganizationClientsResponseContent struct {
+	// The list of clients associated with the organization.
+	Clients []*OrganizationClient `json:"clients" url:"clients"`
+	// An opaque token that, when present, can be passed as the `from` query parameter to retrieve the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationClientsResponseContent) GetClients() []*OrganizationClient {
+	if l == nil {
+		return nil
+	}
+	return l.Clients
+}
+
+func (l *ListOrganizationClientsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationClientsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationClientsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationClientsResponseContent) SetClients(clients []*OrganizationClient) {
+	l.Clients = clients
+	l.require(listOrganizationClientsResponseContentFieldClients)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationClientsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationClientsResponseContentFieldNext)
+}
+
+func (l *ListOrganizationClientsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationClientsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationClientsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationClientsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationClientsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationClientsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationConnectionsOffsetPaginatedResponseContentFieldStart              = big.NewInt(1 << 0)
+	listOrganizationConnectionsOffsetPaginatedResponseContentFieldLimit              = big.NewInt(1 << 1)
+	listOrganizationConnectionsOffsetPaginatedResponseContentFieldTotal              = big.NewInt(1 << 2)
+	listOrganizationConnectionsOffsetPaginatedResponseContentFieldEnabledConnections = big.NewInt(1 << 3)
+)
+
+type ListOrganizationConnectionsOffsetPaginatedResponseContent struct {
+	Start              *float64                  `json:"start,omitempty" url:"start,omitempty"`
+	Limit              *float64                  `json:"limit,omitempty" url:"limit,omitempty"`
+	Total              *float64                  `json:"total,omitempty" url:"total,omitempty"`
+	EnabledConnections []*OrganizationConnection `json:"enabled_connections,omitempty" url:"enabled_connections,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) GetEnabledConnections() []*OrganizationConnection {
+	if l == nil || l.EnabledConnections == nil {
+		return nil
+	}
+	return l.EnabledConnections
+}
+
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listOrganizationConnectionsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listOrganizationConnectionsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listOrganizationConnectionsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetEnabledConnections sets the EnabledConnections field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) SetEnabledConnections(enabledConnections []*OrganizationConnection) {
+	l.EnabledConnections = enabledConnections
+	l.require(listOrganizationConnectionsOffsetPaginatedResponseContentFieldEnabledConnections)
+}
+
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationConnectionsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationConnectionsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationConnectionsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListOrganizationConnectionsResponseContent struct {
+	OrganizationConnectionList                                []*OrganizationConnection
+	ListOrganizationConnectionsOffsetPaginatedResponseContent *ListOrganizationConnectionsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListOrganizationConnectionsResponseContent) GetOrganizationConnectionList() []*OrganizationConnection {
+	if l == nil {
+		return nil
+	}
+	return l.OrganizationConnectionList
+}
+
+func (l *ListOrganizationConnectionsResponseContent) GetListOrganizationConnectionsOffsetPaginatedResponseContent() *ListOrganizationConnectionsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListOrganizationConnectionsOffsetPaginatedResponseContent
+}
+
+func (l *ListOrganizationConnectionsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueOrganizationConnectionList []*OrganizationConnection
+	if err := json.Unmarshal(data, &valueOrganizationConnectionList); err == nil {
+		l.typ = "OrganizationConnectionList"
+		l.OrganizationConnectionList = valueOrganizationConnectionList
+		return nil
+	}
+	valueListOrganizationConnectionsOffsetPaginatedResponseContent := new(ListOrganizationConnectionsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListOrganizationConnectionsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListOrganizationConnectionsOffsetPaginatedResponseContent"
+		l.ListOrganizationConnectionsOffsetPaginatedResponseContent = valueListOrganizationConnectionsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListOrganizationConnectionsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "OrganizationConnectionList" || l.OrganizationConnectionList != nil {
+		return json.Marshal(l.OrganizationConnectionList)
+	}
+	if l.typ == "ListOrganizationConnectionsOffsetPaginatedResponseContent" || l.ListOrganizationConnectionsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListOrganizationConnectionsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListOrganizationConnectionsResponseContentVisitor interface {
+	VisitOrganizationConnectionList([]*OrganizationConnection) error
+	VisitListOrganizationConnectionsOffsetPaginatedResponseContent(*ListOrganizationConnectionsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListOrganizationConnectionsResponseContent) Accept(visitor ListOrganizationConnectionsResponseContentVisitor) error {
+	if l.typ == "OrganizationConnectionList" || l.OrganizationConnectionList != nil {
+		return visitor.VisitOrganizationConnectionList(l.OrganizationConnectionList)
+	}
+	if l.typ == "ListOrganizationConnectionsOffsetPaginatedResponseContent" || l.ListOrganizationConnectionsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListOrganizationConnectionsOffsetPaginatedResponseContent(l.ListOrganizationConnectionsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listOrganizationDiscoveryDomainsResponseContentFieldNext    = big.NewInt(1 << 0)
+	listOrganizationDiscoveryDomainsResponseContentFieldDomains = big.NewInt(1 << 1)
+)
+
+type ListOrganizationDiscoveryDomainsResponseContent struct {
+	Next    *string                        `json:"next,omitempty" url:"next,omitempty"`
+	Domains []*OrganizationDiscoveryDomain `json:"domains" url:"domains"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationDiscoveryDomainsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationDiscoveryDomainsResponseContent) GetDomains() []*OrganizationDiscoveryDomain {
+	if l == nil {
+		return nil
+	}
+	return l.Domains
+}
+
+func (l *ListOrganizationDiscoveryDomainsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationDiscoveryDomainsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationDiscoveryDomainsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationDiscoveryDomainsResponseContentFieldNext)
+}
+
+// SetDomains sets the Domains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationDiscoveryDomainsResponseContent) SetDomains(domains []*OrganizationDiscoveryDomain) {
+	l.Domains = domains
+	l.require(listOrganizationDiscoveryDomainsResponseContentFieldDomains)
+}
+
+func (l *ListOrganizationDiscoveryDomainsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationDiscoveryDomainsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationDiscoveryDomainsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationDiscoveryDomainsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationDiscoveryDomainsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationDiscoveryDomainsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationGroupRolesResponseContentFieldRoles = big.NewInt(1 << 0)
+	listOrganizationGroupRolesResponseContentFieldNext  = big.NewInt(1 << 1)
+)
+
+type ListOrganizationGroupRolesResponseContent struct {
+	Roles []*Role `json:"roles" url:"roles"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationGroupRolesResponseContent) GetRoles() []*Role {
+	if l == nil {
+		return nil
+	}
+	return l.Roles
+}
+
+func (l *ListOrganizationGroupRolesResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationGroupRolesResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationGroupRolesResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationGroupRolesResponseContent) SetRoles(roles []*Role) {
+	l.Roles = roles
+	l.require(listOrganizationGroupRolesResponseContentFieldRoles)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationGroupRolesResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationGroupRolesResponseContentFieldNext)
+}
+
+func (l *ListOrganizationGroupRolesResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationGroupRolesResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationGroupRolesResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationGroupRolesResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationGroupRolesResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationGroupRolesResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
+	listOrganizationGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
+)
+
+type ListOrganizationGroupsResponseContent struct {
+	Groups []*Group `json:"groups" url:"groups"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationGroupsResponseContent) GetGroups() []*Group {
+	if l == nil {
+		return nil
+	}
+	return l.Groups
+}
+
+func (l *ListOrganizationGroupsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationGroupsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationGroupsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetGroups sets the Groups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationGroupsResponseContent) SetGroups(groups []*Group) {
+	l.Groups = groups
+	l.require(listOrganizationGroupsResponseContentFieldGroups)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationGroupsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationGroupsResponseContentFieldNext)
+}
+
+func (l *ListOrganizationGroupsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationGroupsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationGroupsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationGroupsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationGroupsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationGroupsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationInvitationsOffsetPaginatedResponseContentFieldStart       = big.NewInt(1 << 0)
+	listOrganizationInvitationsOffsetPaginatedResponseContentFieldLimit       = big.NewInt(1 << 1)
+	listOrganizationInvitationsOffsetPaginatedResponseContentFieldInvitations = big.NewInt(1 << 2)
+)
+
+type ListOrganizationInvitationsOffsetPaginatedResponseContent struct {
+	Start       *float64                  `json:"start,omitempty" url:"start,omitempty"`
+	Limit       *float64                  `json:"limit,omitempty" url:"limit,omitempty"`
+	Invitations []*OrganizationInvitation `json:"invitations,omitempty" url:"invitations,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) GetInvitations() []*OrganizationInvitation {
+	if l == nil || l.Invitations == nil {
+		return nil
+	}
+	return l.Invitations
+}
+
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listOrganizationInvitationsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listOrganizationInvitationsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetInvitations sets the Invitations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) SetInvitations(invitations []*OrganizationInvitation) {
+	l.Invitations = invitations
+	l.require(listOrganizationInvitationsOffsetPaginatedResponseContentFieldInvitations)
+}
+
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationInvitationsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationInvitationsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationInvitationsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListOrganizationInvitationsResponseContent struct {
+	OrganizationInvitationList                                []*OrganizationInvitation
+	ListOrganizationInvitationsOffsetPaginatedResponseContent *ListOrganizationInvitationsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListOrganizationInvitationsResponseContent) GetOrganizationInvitationList() []*OrganizationInvitation {
+	if l == nil {
+		return nil
+	}
+	return l.OrganizationInvitationList
+}
+
+func (l *ListOrganizationInvitationsResponseContent) GetListOrganizationInvitationsOffsetPaginatedResponseContent() *ListOrganizationInvitationsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListOrganizationInvitationsOffsetPaginatedResponseContent
+}
+
+func (l *ListOrganizationInvitationsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueOrganizationInvitationList []*OrganizationInvitation
+	if err := json.Unmarshal(data, &valueOrganizationInvitationList); err == nil {
+		l.typ = "OrganizationInvitationList"
+		l.OrganizationInvitationList = valueOrganizationInvitationList
+		return nil
+	}
+	valueListOrganizationInvitationsOffsetPaginatedResponseContent := new(ListOrganizationInvitationsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListOrganizationInvitationsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListOrganizationInvitationsOffsetPaginatedResponseContent"
+		l.ListOrganizationInvitationsOffsetPaginatedResponseContent = valueListOrganizationInvitationsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListOrganizationInvitationsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "OrganizationInvitationList" || l.OrganizationInvitationList != nil {
+		return json.Marshal(l.OrganizationInvitationList)
+	}
+	if l.typ == "ListOrganizationInvitationsOffsetPaginatedResponseContent" || l.ListOrganizationInvitationsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListOrganizationInvitationsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListOrganizationInvitationsResponseContentVisitor interface {
+	VisitOrganizationInvitationList([]*OrganizationInvitation) error
+	VisitListOrganizationInvitationsOffsetPaginatedResponseContent(*ListOrganizationInvitationsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListOrganizationInvitationsResponseContent) Accept(visitor ListOrganizationInvitationsResponseContentVisitor) error {
+	if l.typ == "OrganizationInvitationList" || l.OrganizationInvitationList != nil {
+		return visitor.VisitOrganizationInvitationList(l.OrganizationInvitationList)
+	}
+	if l.typ == "ListOrganizationInvitationsOffsetPaginatedResponseContent" || l.ListOrganizationInvitationsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListOrganizationInvitationsOffsetPaginatedResponseContent(l.ListOrganizationInvitationsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listOrganizationMemberEffectiveRolesResponseContentFieldRoles = big.NewInt(1 << 0)
+	listOrganizationMemberEffectiveRolesResponseContentFieldNext  = big.NewInt(1 << 1)
+)
+
+type ListOrganizationMemberEffectiveRolesResponseContent struct {
+	Roles []*OrganizationMemberEffectiveRole `json:"roles" url:"roles"`
+	// Cursor for the next page of results
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationMemberEffectiveRolesResponseContent) GetRoles() []*OrganizationMemberEffectiveRole {
+	if l == nil {
+		return nil
+	}
+	return l.Roles
+}
+
+func (l *ListOrganizationMemberEffectiveRolesResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationMemberEffectiveRolesResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationMemberEffectiveRolesResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberEffectiveRolesResponseContent) SetRoles(roles []*OrganizationMemberEffectiveRole) {
+	l.Roles = roles
+	l.require(listOrganizationMemberEffectiveRolesResponseContentFieldRoles)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberEffectiveRolesResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationMemberEffectiveRolesResponseContentFieldNext)
+}
+
+func (l *ListOrganizationMemberEffectiveRolesResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationMemberEffectiveRolesResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationMemberEffectiveRolesResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationMemberEffectiveRolesResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationMemberEffectiveRolesResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationMemberEffectiveRolesResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationMemberRoleSourceGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
+	listOrganizationMemberRoleSourceGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
+)
+
+type ListOrganizationMemberRoleSourceGroupsResponseContent struct {
+	Groups []*Group `json:"groups" url:"groups"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) GetGroups() []*Group {
+	if l == nil {
+		return nil
+	}
+	return l.Groups
+}
+
+func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetGroups sets the Groups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) SetGroups(groups []*Group) {
+	l.Groups = groups
+	l.require(listOrganizationMemberRoleSourceGroupsResponseContentFieldGroups)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationMemberRoleSourceGroupsResponseContentFieldNext)
+}
+
+func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationMemberRoleSourceGroupsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationMemberRoleSourceGroupsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationMemberRoleSourceGroupsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationMemberRolesOffsetPaginatedResponseContentFieldStart = big.NewInt(1 << 0)
+	listOrganizationMemberRolesOffsetPaginatedResponseContentFieldLimit = big.NewInt(1 << 1)
+	listOrganizationMemberRolesOffsetPaginatedResponseContentFieldTotal = big.NewInt(1 << 2)
+	listOrganizationMemberRolesOffsetPaginatedResponseContentFieldRoles = big.NewInt(1 << 3)
+)
+
+type ListOrganizationMemberRolesOffsetPaginatedResponseContent struct {
+	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
+	Limit *float64 `json:"limit,omitempty" url:"limit,omitempty"`
+	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
+	Roles []*Role  `json:"roles,omitempty" url:"roles,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) GetRoles() []*Role {
+	if l == nil || l.Roles == nil {
+		return nil
+	}
+	return l.Roles
+}
+
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listOrganizationMemberRolesOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listOrganizationMemberRolesOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listOrganizationMemberRolesOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) SetRoles(roles []*Role) {
+	l.Roles = roles
+	l.require(listOrganizationMemberRolesOffsetPaginatedResponseContentFieldRoles)
+}
+
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationMemberRolesOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationMemberRolesOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationMemberRolesOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListOrganizationMemberRolesResponseContent struct {
+	RoleList                                                  []*Role
+	ListOrganizationMemberRolesOffsetPaginatedResponseContent *ListOrganizationMemberRolesOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListOrganizationMemberRolesResponseContent) GetRoleList() []*Role {
+	if l == nil {
+		return nil
+	}
+	return l.RoleList
+}
+
+func (l *ListOrganizationMemberRolesResponseContent) GetListOrganizationMemberRolesOffsetPaginatedResponseContent() *ListOrganizationMemberRolesOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListOrganizationMemberRolesOffsetPaginatedResponseContent
+}
+
+func (l *ListOrganizationMemberRolesResponseContent) UnmarshalJSON(data []byte) error {
+	var valueRoleList []*Role
+	if err := json.Unmarshal(data, &valueRoleList); err == nil {
+		l.typ = "RoleList"
+		l.RoleList = valueRoleList
+		return nil
+	}
+	valueListOrganizationMemberRolesOffsetPaginatedResponseContent := new(ListOrganizationMemberRolesOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListOrganizationMemberRolesOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListOrganizationMemberRolesOffsetPaginatedResponseContent"
+		l.ListOrganizationMemberRolesOffsetPaginatedResponseContent = valueListOrganizationMemberRolesOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListOrganizationMemberRolesResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "RoleList" || l.RoleList != nil {
+		return json.Marshal(l.RoleList)
+	}
+	if l.typ == "ListOrganizationMemberRolesOffsetPaginatedResponseContent" || l.ListOrganizationMemberRolesOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListOrganizationMemberRolesOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListOrganizationMemberRolesResponseContentVisitor interface {
+	VisitRoleList([]*Role) error
+	VisitListOrganizationMemberRolesOffsetPaginatedResponseContent(*ListOrganizationMemberRolesOffsetPaginatedResponseContent) error
+}
+
+func (l *ListOrganizationMemberRolesResponseContent) Accept(visitor ListOrganizationMemberRolesResponseContentVisitor) error {
+	if l.typ == "RoleList" || l.RoleList != nil {
+		return visitor.VisitRoleList(l.RoleList)
+	}
+	if l.typ == "ListOrganizationMemberRolesOffsetPaginatedResponseContent" || l.ListOrganizationMemberRolesOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListOrganizationMemberRolesOffsetPaginatedResponseContent(l.ListOrganizationMemberRolesOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listOrganizationMembersOffsetPaginatedResponseContentFieldStart   = big.NewInt(1 << 0)
+	listOrganizationMembersOffsetPaginatedResponseContentFieldLimit   = big.NewInt(1 << 1)
+	listOrganizationMembersOffsetPaginatedResponseContentFieldTotal   = big.NewInt(1 << 2)
+	listOrganizationMembersOffsetPaginatedResponseContentFieldMembers = big.NewInt(1 << 3)
+)
+
+type ListOrganizationMembersOffsetPaginatedResponseContent struct {
+	Start   *float64              `json:"start,omitempty" url:"start,omitempty"`
+	Limit   *float64              `json:"limit,omitempty" url:"limit,omitempty"`
+	Total   *float64              `json:"total,omitempty" url:"total,omitempty"`
+	Members []*OrganizationMember `json:"members,omitempty" url:"members,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) GetMembers() []*OrganizationMember {
+	if l == nil || l.Members == nil {
+		return nil
+	}
+	return l.Members
+}
+
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listOrganizationMembersOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listOrganizationMembersOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listOrganizationMembersOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetMembers sets the Members field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) SetMembers(members []*OrganizationMember) {
+	l.Members = members
+	l.require(listOrganizationMembersOffsetPaginatedResponseContentFieldMembers)
+}
+
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationMembersOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationMembersOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationMembersOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationMembersOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationMembersPaginatedResponseContentFieldNext    = big.NewInt(1 << 0)
+	listOrganizationMembersPaginatedResponseContentFieldMembers = big.NewInt(1 << 1)
+)
+
+type ListOrganizationMembersPaginatedResponseContent struct {
+	Next    *string               `json:"next,omitempty" url:"next,omitempty"`
+	Members []*OrganizationMember `json:"members,omitempty" url:"members,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (l *ListOrganizationMembersPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationMembersPaginatedResponseContent) GetMembers() []*OrganizationMember {
+	if l == nil || l.Members == nil {
+		return nil
+	}
+	return l.Members
+}
+
+func (l *ListOrganizationMembersPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.ExtraProperties
+}
+
+func (l *ListOrganizationMembersPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMembersPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationMembersPaginatedResponseContentFieldNext)
+}
+
+// SetMembers sets the Members field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationMembersPaginatedResponseContent) SetMembers(members []*OrganizationMember) {
+	l.Members = members
+	l.require(listOrganizationMembersPaginatedResponseContentFieldMembers)
+}
+
+func (l *ListOrganizationMembersPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type embed ListOrganizationMembersPaginatedResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*l = ListOrganizationMembersPaginatedResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.ExtraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationMembersPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationMembersPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
+}
+
+func (l *ListOrganizationMembersPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListOrganizationMembersResponseContent struct {
+	OrganizationMemberList                                []*OrganizationMember
+	ListOrganizationMembersOffsetPaginatedResponseContent *ListOrganizationMembersOffsetPaginatedResponseContent
+	ListOrganizationMembersPaginatedResponseContent       *ListOrganizationMembersPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListOrganizationMembersResponseContent) GetOrganizationMemberList() []*OrganizationMember {
+	if l == nil {
+		return nil
+	}
+	return l.OrganizationMemberList
+}
+
+func (l *ListOrganizationMembersResponseContent) GetListOrganizationMembersOffsetPaginatedResponseContent() *ListOrganizationMembersOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListOrganizationMembersOffsetPaginatedResponseContent
+}
+
+func (l *ListOrganizationMembersResponseContent) GetListOrganizationMembersPaginatedResponseContent() *ListOrganizationMembersPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListOrganizationMembersPaginatedResponseContent
+}
+
+func (l *ListOrganizationMembersResponseContent) UnmarshalJSON(data []byte) error {
+	var valueOrganizationMemberList []*OrganizationMember
+	if err := json.Unmarshal(data, &valueOrganizationMemberList); err == nil {
+		l.typ = "OrganizationMemberList"
+		l.OrganizationMemberList = valueOrganizationMemberList
+		return nil
+	}
+	valueListOrganizationMembersOffsetPaginatedResponseContent := new(ListOrganizationMembersOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListOrganizationMembersOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListOrganizationMembersOffsetPaginatedResponseContent"
+		l.ListOrganizationMembersOffsetPaginatedResponseContent = valueListOrganizationMembersOffsetPaginatedResponseContent
+		return nil
+	}
+	valueListOrganizationMembersPaginatedResponseContent := new(ListOrganizationMembersPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListOrganizationMembersPaginatedResponseContent); err == nil {
+		l.typ = "ListOrganizationMembersPaginatedResponseContent"
+		l.ListOrganizationMembersPaginatedResponseContent = valueListOrganizationMembersPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListOrganizationMembersResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "OrganizationMemberList" || l.OrganizationMemberList != nil {
+		return json.Marshal(l.OrganizationMemberList)
+	}
+	if l.typ == "ListOrganizationMembersOffsetPaginatedResponseContent" || l.ListOrganizationMembersOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListOrganizationMembersOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListOrganizationMembersPaginatedResponseContent" || l.ListOrganizationMembersPaginatedResponseContent != nil {
+		return json.Marshal(l.ListOrganizationMembersPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListOrganizationMembersResponseContentVisitor interface {
+	VisitOrganizationMemberList([]*OrganizationMember) error
+	VisitListOrganizationMembersOffsetPaginatedResponseContent(*ListOrganizationMembersOffsetPaginatedResponseContent) error
+	VisitListOrganizationMembersPaginatedResponseContent(*ListOrganizationMembersPaginatedResponseContent) error
+}
+
+func (l *ListOrganizationMembersResponseContent) Accept(visitor ListOrganizationMembersResponseContentVisitor) error {
+	if l.typ == "OrganizationMemberList" || l.OrganizationMemberList != nil {
+		return visitor.VisitOrganizationMemberList(l.OrganizationMemberList)
+	}
+	if l.typ == "ListOrganizationMembersOffsetPaginatedResponseContent" || l.ListOrganizationMembersOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListOrganizationMembersOffsetPaginatedResponseContent(l.ListOrganizationMembersOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListOrganizationMembersPaginatedResponseContent" || l.ListOrganizationMembersPaginatedResponseContent != nil {
+		return visitor.VisitListOrganizationMembersPaginatedResponseContent(l.ListOrganizationMembersPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+// Checkpoint paginated list of groups assigned to a role within an organization.
+var (
+	listOrganizationRoleGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
+	listOrganizationRoleGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
+)
+
+type ListOrganizationRoleGroupsResponseContent struct {
+	Groups []*RoleGroup `json:"groups" url:"groups"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) GetGroups() []*RoleGroup {
+	if l == nil {
+		return nil
+	}
+	return l.Groups
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetGroups sets the Groups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleGroupsResponseContent) SetGroups(groups []*RoleGroup) {
+	l.Groups = groups
+	l.require(listOrganizationRoleGroupsResponseContentFieldGroups)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleGroupsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationRoleGroupsResponseContentFieldNext)
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationRoleGroupsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationRoleGroupsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationRoleGroupsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationRoleGroupsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationRoleMembersResponseContentFieldMembers = big.NewInt(1 << 0)
+	listOrganizationRoleMembersResponseContentFieldNext    = big.NewInt(1 << 1)
+)
+
+type ListOrganizationRoleMembersResponseContent struct {
+	// List of members assigned to the role within the organization.
+	Members []*RoleMember `json:"members" url:"members"`
+	// Cursor for the next page of results. Absent when there are no more results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationRoleMembersResponseContent) GetMembers() []*RoleMember {
+	if l == nil {
+		return nil
+	}
+	return l.Members
+}
+
+func (l *ListOrganizationRoleMembersResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListOrganizationRoleMembersResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationRoleMembersResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetMembers sets the Members field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleMembersResponseContent) SetMembers(members []*RoleMember) {
+	l.Members = members
+	l.require(listOrganizationRoleMembersResponseContentFieldMembers)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationRoleMembersResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listOrganizationRoleMembersResponseContentFieldNext)
+}
+
+func (l *ListOrganizationRoleMembersResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationRoleMembersResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationRoleMembersResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationRoleMembersResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationRoleMembersResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationRoleMembersResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listOrganizationsOffsetPaginatedResponseContentFieldStart         = big.NewInt(1 << 0)
+	listOrganizationsOffsetPaginatedResponseContentFieldLimit         = big.NewInt(1 << 1)
+	listOrganizationsOffsetPaginatedResponseContentFieldTotal         = big.NewInt(1 << 2)
+	listOrganizationsOffsetPaginatedResponseContentFieldOrganizations = big.NewInt(1 << 3)
+)
+
+type ListOrganizationsOffsetPaginatedResponseContent struct {
+	Start         *float64        `json:"start,omitempty" url:"start,omitempty"`
+	Limit         *float64        `json:"limit,omitempty" url:"limit,omitempty"`
+	Total         *float64        `json:"total,omitempty" url:"total,omitempty"`
+	Organizations []*Organization `json:"organizations,omitempty" url:"organizations,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListOrganizationsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListOrganizationsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListOrganizationsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListOrganizationsOffsetPaginatedResponseContent) GetOrganizations() []*Organization {
+	if l == nil || l.Organizations == nil {
+		return nil
+	}
+	return l.Organizations
+}
+
+func (l *ListOrganizationsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListOrganizationsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listOrganizationsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listOrganizationsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listOrganizationsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetOrganizations sets the Organizations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsOffsetPaginatedResponseContent) SetOrganizations(organizations []*Organization) {
+	l.Organizations = organizations
+	l.require(listOrganizationsOffsetPaginatedResponseContentFieldOrganizations)
+}
+
+func (l *ListOrganizationsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListOrganizationsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListOrganizationsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListOrganizationsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListOrganizationsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListOrganizationsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
 	listOrganizationsPaginatedResponseContentFieldNext          = big.NewInt(1 << 0)
 	listOrganizationsPaginatedResponseContentFieldOrganizations = big.NewInt(1 << 1)
 )
@@ -923,6 +5340,1283 @@ func (l *ListOrganizationsPaginatedResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+type ListOrganizationsResponseContent struct {
+	OrganizationList                                []*Organization
+	ListOrganizationsOffsetPaginatedResponseContent *ListOrganizationsOffsetPaginatedResponseContent
+	ListOrganizationsPaginatedResponseContent       *ListOrganizationsPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListOrganizationsResponseContent) GetOrganizationList() []*Organization {
+	if l == nil {
+		return nil
+	}
+	return l.OrganizationList
+}
+
+func (l *ListOrganizationsResponseContent) GetListOrganizationsOffsetPaginatedResponseContent() *ListOrganizationsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListOrganizationsOffsetPaginatedResponseContent
+}
+
+func (l *ListOrganizationsResponseContent) GetListOrganizationsPaginatedResponseContent() *ListOrganizationsPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListOrganizationsPaginatedResponseContent
+}
+
+func (l *ListOrganizationsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueOrganizationList []*Organization
+	if err := json.Unmarshal(data, &valueOrganizationList); err == nil {
+		l.typ = "OrganizationList"
+		l.OrganizationList = valueOrganizationList
+		return nil
+	}
+	valueListOrganizationsOffsetPaginatedResponseContent := new(ListOrganizationsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListOrganizationsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListOrganizationsOffsetPaginatedResponseContent"
+		l.ListOrganizationsOffsetPaginatedResponseContent = valueListOrganizationsOffsetPaginatedResponseContent
+		return nil
+	}
+	valueListOrganizationsPaginatedResponseContent := new(ListOrganizationsPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListOrganizationsPaginatedResponseContent); err == nil {
+		l.typ = "ListOrganizationsPaginatedResponseContent"
+		l.ListOrganizationsPaginatedResponseContent = valueListOrganizationsPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListOrganizationsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "OrganizationList" || l.OrganizationList != nil {
+		return json.Marshal(l.OrganizationList)
+	}
+	if l.typ == "ListOrganizationsOffsetPaginatedResponseContent" || l.ListOrganizationsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListOrganizationsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListOrganizationsPaginatedResponseContent" || l.ListOrganizationsPaginatedResponseContent != nil {
+		return json.Marshal(l.ListOrganizationsPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListOrganizationsResponseContentVisitor interface {
+	VisitOrganizationList([]*Organization) error
+	VisitListOrganizationsOffsetPaginatedResponseContent(*ListOrganizationsOffsetPaginatedResponseContent) error
+	VisitListOrganizationsPaginatedResponseContent(*ListOrganizationsPaginatedResponseContent) error
+}
+
+func (l *ListOrganizationsResponseContent) Accept(visitor ListOrganizationsResponseContentVisitor) error {
+	if l.typ == "OrganizationList" || l.OrganizationList != nil {
+		return visitor.VisitOrganizationList(l.OrganizationList)
+	}
+	if l.typ == "ListOrganizationsOffsetPaginatedResponseContent" || l.ListOrganizationsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListOrganizationsOffsetPaginatedResponseContent(l.ListOrganizationsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListOrganizationsPaginatedResponseContent" || l.ListOrganizationsPaginatedResponseContent != nil {
+		return visitor.VisitListOrganizationsPaginatedResponseContent(l.ListOrganizationsPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+// Access level for the organization (e.g., "none", "full").
+type OrganizationAccessLevelEnum string
+
+const (
+	OrganizationAccessLevelEnumNone     OrganizationAccessLevelEnum = "none"
+	OrganizationAccessLevelEnumReadonly OrganizationAccessLevelEnum = "readonly"
+	OrganizationAccessLevelEnumLimited  OrganizationAccessLevelEnum = "limited"
+	OrganizationAccessLevelEnumFull     OrganizationAccessLevelEnum = "full"
+)
+
+func NewOrganizationAccessLevelEnumFromString(s string) (OrganizationAccessLevelEnum, error) {
+	switch s {
+	case "none":
+		return OrganizationAccessLevelEnumNone, nil
+	case "readonly":
+		return OrganizationAccessLevelEnumReadonly, nil
+	case "limited":
+		return OrganizationAccessLevelEnumLimited, nil
+	case "full":
+		return OrganizationAccessLevelEnumFull, nil
+	}
+	var t OrganizationAccessLevelEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationAccessLevelEnum) Ptr() *OrganizationAccessLevelEnum {
+	return &o
+}
+
+// Access level for the organization (e.g., "none", "full").
+type OrganizationAccessLevelEnumWithNull string
+
+const (
+	OrganizationAccessLevelEnumWithNullNone     OrganizationAccessLevelEnumWithNull = "none"
+	OrganizationAccessLevelEnumWithNullReadonly OrganizationAccessLevelEnumWithNull = "readonly"
+	OrganizationAccessLevelEnumWithNullLimited  OrganizationAccessLevelEnumWithNull = "limited"
+	OrganizationAccessLevelEnumWithNullFull     OrganizationAccessLevelEnumWithNull = "full"
+)
+
+func NewOrganizationAccessLevelEnumWithNullFromString(s string) (OrganizationAccessLevelEnumWithNull, error) {
+	switch s {
+	case "none":
+		return OrganizationAccessLevelEnumWithNullNone, nil
+	case "readonly":
+		return OrganizationAccessLevelEnumWithNullReadonly, nil
+	case "limited":
+		return OrganizationAccessLevelEnumWithNullLimited, nil
+	case "full":
+		return OrganizationAccessLevelEnumWithNullFull, nil
+	}
+	var t OrganizationAccessLevelEnumWithNull
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationAccessLevelEnumWithNull) Ptr() *OrganizationAccessLevelEnumWithNull {
+	return &o
+}
+
+var (
+	organizationAllConnectionPostFieldOrganizationConnectionName = big.NewInt(1 << 0)
+	organizationAllConnectionPostFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
+	organizationAllConnectionPostFieldShowAsButton               = big.NewInt(1 << 2)
+	organizationAllConnectionPostFieldIsSignupEnabled            = big.NewInt(1 << 3)
+	organizationAllConnectionPostFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
+	organizationAllConnectionPostFieldIsEnabled                  = big.NewInt(1 << 5)
+	organizationAllConnectionPostFieldConnectionID               = big.NewInt(1 << 6)
+	organizationAllConnectionPostFieldConnection                 = big.NewInt(1 << 7)
+)
+
+type OrganizationAllConnectionPost struct {
+	// Name of the connection in the scope of this organization.
+	OrganizationConnectionName *string `json:"organization_connection_name,omitempty" url:"organization_connection_name,omitempty"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled         *bool                        `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	OrganizationAccessLevel *OrganizationAccessLevelEnum `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	// Whether the connection is enabled for the organization.
+	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+	// Connection identifier.
+	ConnectionID string                             `json:"connection_id" url:"connection_id"`
+	Connection   *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationAllConnectionPost) GetOrganizationConnectionName() string {
+	if o == nil || o.OrganizationConnectionName == nil {
+		return ""
+	}
+	return *o.OrganizationConnectionName
+}
+
+func (o *OrganizationAllConnectionPost) GetAssignMembershipOnLogin() bool {
+	if o == nil || o.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *o.AssignMembershipOnLogin
+}
+
+func (o *OrganizationAllConnectionPost) GetShowAsButton() bool {
+	if o == nil || o.ShowAsButton == nil {
+		return false
+	}
+	return *o.ShowAsButton
+}
+
+func (o *OrganizationAllConnectionPost) GetIsSignupEnabled() bool {
+	if o == nil || o.IsSignupEnabled == nil {
+		return false
+	}
+	return *o.IsSignupEnabled
+}
+
+func (o *OrganizationAllConnectionPost) GetOrganizationAccessLevel() OrganizationAccessLevelEnum {
+	if o == nil || o.OrganizationAccessLevel == nil {
+		return ""
+	}
+	return *o.OrganizationAccessLevel
+}
+
+func (o *OrganizationAllConnectionPost) GetIsEnabled() bool {
+	if o == nil || o.IsEnabled == nil {
+		return false
+	}
+	return *o.IsEnabled
+}
+
+func (o *OrganizationAllConnectionPost) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
+}
+
+func (o *OrganizationAllConnectionPost) GetConnection() OrganizationConnectionInformation {
+	if o == nil || o.Connection == nil {
+		return OrganizationConnectionInformation{}
+	}
+	return *o.Connection
+}
+
+func (o *OrganizationAllConnectionPost) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationAllConnectionPost) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationAllConnectionPost) SetOrganizationConnectionName(organizationConnectionName *string) {
+	o.OrganizationConnectionName = organizationConnectionName
+	o.require(organizationAllConnectionPostFieldOrganizationConnectionName)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationAllConnectionPost) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	o.AssignMembershipOnLogin = assignMembershipOnLogin
+	o.require(organizationAllConnectionPostFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationAllConnectionPost) SetShowAsButton(showAsButton *bool) {
+	o.ShowAsButton = showAsButton
+	o.require(organizationAllConnectionPostFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationAllConnectionPost) SetIsSignupEnabled(isSignupEnabled *bool) {
+	o.IsSignupEnabled = isSignupEnabled
+	o.require(organizationAllConnectionPostFieldIsSignupEnabled)
+}
+
+// SetOrganizationAccessLevel sets the OrganizationAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationAllConnectionPost) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnum) {
+	o.OrganizationAccessLevel = organizationAccessLevel
+	o.require(organizationAllConnectionPostFieldOrganizationAccessLevel)
+}
+
+// SetIsEnabled sets the IsEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationAllConnectionPost) SetIsEnabled(isEnabled *bool) {
+	o.IsEnabled = isEnabled
+	o.require(organizationAllConnectionPostFieldIsEnabled)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationAllConnectionPost) SetConnectionID(connectionID string) {
+	o.ConnectionID = connectionID
+	o.require(organizationAllConnectionPostFieldConnectionID)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationAllConnectionPost) SetConnection(connection *OrganizationConnectionInformation) {
+	o.Connection = connection
+	o.require(organizationAllConnectionPostFieldConnection)
+}
+
+func (o *OrganizationAllConnectionPost) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationAllConnectionPost
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationAllConnectionPost(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationAllConnectionPost) MarshalJSON() ([]byte, error) {
+	type embed OrganizationAllConnectionPost
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationAllConnectionPost) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	organizationClientFieldClientID           = big.NewInt(1 << 0)
+	organizationClientFieldUseForMemberAccess = big.NewInt(1 << 1)
+	organizationClientFieldClient             = big.NewInt(1 << 2)
+)
+
+type OrganizationClient struct {
+	// The identifier of the client associated with the organization.
+	ClientID string `json:"client_id" url:"client_id"`
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess bool                        `json:"use_for_member_access" url:"use_for_member_access"`
+	Client             *OrganizationClientMetadata `json:"client" url:"client"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationClient) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *OrganizationClient) GetUseForMemberAccess() bool {
+	if o == nil {
+		return false
+	}
+	return o.UseForMemberAccess
+}
+
+func (o *OrganizationClient) GetClient() *OrganizationClientMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Client
+}
+
+func (o *OrganizationClient) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationClient) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClient) SetClientID(clientID string) {
+	o.ClientID = clientID
+	o.require(organizationClientFieldClientID)
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClient) SetUseForMemberAccess(useForMemberAccess bool) {
+	o.UseForMemberAccess = useForMemberAccess
+	o.require(organizationClientFieldUseForMemberAccess)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClient) SetClient(client *OrganizationClientMetadata) {
+	o.Client = client
+	o.require(organizationClientFieldClient)
+}
+
+func (o *OrganizationClient) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationClient
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationClient(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationClient) MarshalJSON() ([]byte, error) {
+	type embed OrganizationClient
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationClient) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	organizationClientGrantFieldID                   = big.NewInt(1 << 0)
+	organizationClientGrantFieldClientID             = big.NewInt(1 << 1)
+	organizationClientGrantFieldAudience             = big.NewInt(1 << 2)
+	organizationClientGrantFieldScope                = big.NewInt(1 << 3)
+	organizationClientGrantFieldOrganizationUsage    = big.NewInt(1 << 4)
+	organizationClientGrantFieldAllowAnyOrganization = big.NewInt(1 << 5)
+)
+
+type OrganizationClientGrant struct {
+	// ID of the client grant.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// ID of the client.
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The audience (API identifier) of this client grant
+	Audience *string `json:"audience,omitempty" url:"audience,omitempty"`
+	// Scopes allowed for this client grant.
+	Scope             []string               `json:"scope,omitempty" url:"scope,omitempty"`
+	OrganizationUsage *OrganizationUsageEnum `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
+	// If enabled, any organization can be used with this grant. If disabled (default), the grant must be explicitly assigned to the desired organizations.
+	AllowAnyOrganization *bool `json:"allow_any_organization,omitempty" url:"allow_any_organization,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationClientGrant) GetID() string {
+	if o == nil || o.ID == nil {
+		return ""
+	}
+	return *o.ID
+}
+
+func (o *OrganizationClientGrant) GetClientID() string {
+	if o == nil || o.ClientID == nil {
+		return ""
+	}
+	return *o.ClientID
+}
+
+func (o *OrganizationClientGrant) GetAudience() string {
+	if o == nil || o.Audience == nil {
+		return ""
+	}
+	return *o.Audience
+}
+
+func (o *OrganizationClientGrant) GetScope() []string {
+	if o == nil || o.Scope == nil {
+		return nil
+	}
+	return o.Scope
+}
+
+func (o *OrganizationClientGrant) GetOrganizationUsage() OrganizationUsageEnum {
+	if o == nil || o.OrganizationUsage == nil {
+		return ""
+	}
+	return *o.OrganizationUsage
+}
+
+func (o *OrganizationClientGrant) GetAllowAnyOrganization() bool {
+	if o == nil || o.AllowAnyOrganization == nil {
+		return false
+	}
+	return *o.AllowAnyOrganization
+}
+
+func (o *OrganizationClientGrant) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationClientGrant) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientGrant) SetID(id *string) {
+	o.ID = id
+	o.require(organizationClientGrantFieldID)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientGrant) SetClientID(clientID *string) {
+	o.ClientID = clientID
+	o.require(organizationClientGrantFieldClientID)
+}
+
+// SetAudience sets the Audience field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientGrant) SetAudience(audience *string) {
+	o.Audience = audience
+	o.require(organizationClientGrantFieldAudience)
+}
+
+// SetScope sets the Scope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientGrant) SetScope(scope []string) {
+	o.Scope = scope
+	o.require(organizationClientGrantFieldScope)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientGrant) SetOrganizationUsage(organizationUsage *OrganizationUsageEnum) {
+	o.OrganizationUsage = organizationUsage
+	o.require(organizationClientGrantFieldOrganizationUsage)
+}
+
+// SetAllowAnyOrganization sets the AllowAnyOrganization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientGrant) SetAllowAnyOrganization(allowAnyOrganization *bool) {
+	o.AllowAnyOrganization = allowAnyOrganization
+	o.require(organizationClientGrantFieldAllowAnyOrganization)
+}
+
+func (o *OrganizationClientGrant) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationClientGrant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationClientGrant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationClientGrant) MarshalJSON() ([]byte, error) {
+	type embed OrganizationClientGrant
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationClientGrant) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Metadata about the associated client.
+var (
+	organizationClientMetadataFieldName              = big.NewInt(1 << 0)
+	organizationClientMetadataFieldAppType           = big.NewInt(1 << 1)
+	organizationClientMetadataFieldLogoURI           = big.NewInt(1 << 2)
+	organizationClientMetadataFieldIsFirstParty      = big.NewInt(1 << 3)
+	organizationClientMetadataFieldGrantTypes        = big.NewInt(1 << 4)
+	organizationClientMetadataFieldOrganizationUsage = big.NewInt(1 << 5)
+)
+
+type OrganizationClientMetadata struct {
+	// The name of the client.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The type of the client application.
+	AppType *string `json:"app_type,omitempty" url:"app_type,omitempty"`
+	// The URI of the client logo.
+	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
+	// Whether this client is a first-party client (true) or not (false).
+	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// The grant types enabled for the client.
+	GrantTypes        []string                                         `json:"grant_types,omitempty" url:"grant_types,omitempty"`
+	OrganizationUsage *OrganizationClientMetadataOrganizationUsageEnum `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationClientMetadata) GetName() string {
+	if o == nil || o.Name == nil {
+		return ""
+	}
+	return *o.Name
+}
+
+func (o *OrganizationClientMetadata) GetAppType() string {
+	if o == nil || o.AppType == nil {
+		return ""
+	}
+	return *o.AppType
+}
+
+func (o *OrganizationClientMetadata) GetLogoURI() string {
+	if o == nil || o.LogoURI == nil {
+		return ""
+	}
+	return *o.LogoURI
+}
+
+func (o *OrganizationClientMetadata) GetIsFirstParty() bool {
+	if o == nil || o.IsFirstParty == nil {
+		return false
+	}
+	return *o.IsFirstParty
+}
+
+func (o *OrganizationClientMetadata) GetGrantTypes() []string {
+	if o == nil || o.GrantTypes == nil {
+		return nil
+	}
+	return o.GrantTypes
+}
+
+func (o *OrganizationClientMetadata) GetOrganizationUsage() OrganizationClientMetadataOrganizationUsageEnum {
+	if o == nil || o.OrganizationUsage == nil {
+		return ""
+	}
+	return *o.OrganizationUsage
+}
+
+func (o *OrganizationClientMetadata) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationClientMetadata) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetName(name *string) {
+	o.Name = name
+	o.require(organizationClientMetadataFieldName)
+}
+
+// SetAppType sets the AppType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetAppType(appType *string) {
+	o.AppType = appType
+	o.require(organizationClientMetadataFieldAppType)
+}
+
+// SetLogoURI sets the LogoURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetLogoURI(logoURI *string) {
+	o.LogoURI = logoURI
+	o.require(organizationClientMetadataFieldLogoURI)
+}
+
+// SetIsFirstParty sets the IsFirstParty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetIsFirstParty(isFirstParty *bool) {
+	o.IsFirstParty = isFirstParty
+	o.require(organizationClientMetadataFieldIsFirstParty)
+}
+
+// SetGrantTypes sets the GrantTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetGrantTypes(grantTypes []string) {
+	o.GrantTypes = grantTypes
+	o.require(organizationClientMetadataFieldGrantTypes)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationClientMetadata) SetOrganizationUsage(organizationUsage *OrganizationClientMetadataOrganizationUsageEnum) {
+	o.OrganizationUsage = organizationUsage
+	o.require(organizationClientMetadataFieldOrganizationUsage)
+}
+
+func (o *OrganizationClientMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationClientMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationClientMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationClientMetadata) MarshalJSON() ([]byte, error) {
+	type embed OrganizationClientMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationClientMetadata) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Whether organizations may be used with the client.
+type OrganizationClientMetadataOrganizationUsageEnum string
+
+const (
+	OrganizationClientMetadataOrganizationUsageEnumDeny    OrganizationClientMetadataOrganizationUsageEnum = "deny"
+	OrganizationClientMetadataOrganizationUsageEnumAllow   OrganizationClientMetadataOrganizationUsageEnum = "allow"
+	OrganizationClientMetadataOrganizationUsageEnumRequire OrganizationClientMetadataOrganizationUsageEnum = "require"
+)
+
+func NewOrganizationClientMetadataOrganizationUsageEnumFromString(s string) (OrganizationClientMetadataOrganizationUsageEnum, error) {
+	switch s {
+	case "deny":
+		return OrganizationClientMetadataOrganizationUsageEnumDeny, nil
+	case "allow":
+		return OrganizationClientMetadataOrganizationUsageEnumAllow, nil
+	case "require":
+		return OrganizationClientMetadataOrganizationUsageEnumRequire, nil
+	}
+	var t OrganizationClientMetadataOrganizationUsageEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationClientMetadataOrganizationUsageEnum) Ptr() *OrganizationClientMetadataOrganizationUsageEnum {
+	return &o
+}
+
+var (
+	organizationConnectionFieldConnectionID            = big.NewInt(1 << 0)
+	organizationConnectionFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
+	organizationConnectionFieldShowAsButton            = big.NewInt(1 << 2)
+	organizationConnectionFieldIsSignupEnabled         = big.NewInt(1 << 3)
+	organizationConnectionFieldConnection              = big.NewInt(1 << 4)
+)
+
+type OrganizationConnection struct {
+	// ID of the connection.
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	Connection      *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationConnection) GetConnectionID() string {
+	if o == nil || o.ConnectionID == nil {
+		return ""
+	}
+	return *o.ConnectionID
+}
+
+func (o *OrganizationConnection) GetAssignMembershipOnLogin() bool {
+	if o == nil || o.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *o.AssignMembershipOnLogin
+}
+
+func (o *OrganizationConnection) GetShowAsButton() bool {
+	if o == nil || o.ShowAsButton == nil {
+		return false
+	}
+	return *o.ShowAsButton
+}
+
+func (o *OrganizationConnection) GetIsSignupEnabled() bool {
+	if o == nil || o.IsSignupEnabled == nil {
+		return false
+	}
+	return *o.IsSignupEnabled
+}
+
+func (o *OrganizationConnection) GetConnection() OrganizationConnectionInformation {
+	if o == nil || o.Connection == nil {
+		return OrganizationConnectionInformation{}
+	}
+	return *o.Connection
+}
+
+func (o *OrganizationConnection) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationConnection) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationConnection) SetConnectionID(connectionID *string) {
+	o.ConnectionID = connectionID
+	o.require(organizationConnectionFieldConnectionID)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationConnection) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	o.AssignMembershipOnLogin = assignMembershipOnLogin
+	o.require(organizationConnectionFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationConnection) SetShowAsButton(showAsButton *bool) {
+	o.ShowAsButton = showAsButton
+	o.require(organizationConnectionFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationConnection) SetIsSignupEnabled(isSignupEnabled *bool) {
+	o.IsSignupEnabled = isSignupEnabled
+	o.require(organizationConnectionFieldIsSignupEnabled)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationConnection) SetConnection(connection *OrganizationConnectionInformation) {
+	o.Connection = connection
+	o.require(organizationConnectionFieldConnection)
+}
+
+func (o *OrganizationConnection) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationConnection
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationConnection(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationConnection) MarshalJSON() ([]byte, error) {
+	type embed OrganizationConnection
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationConnection) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	organizationConnectionInformationFieldName     = big.NewInt(1 << 0)
+	organizationConnectionInformationFieldStrategy = big.NewInt(1 << 1)
+)
+
+type OrganizationConnectionInformation struct {
+	// The name of the enabled connection.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The strategy of the enabled connection.
+	Strategy *string `json:"strategy,omitempty" url:"strategy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (o *OrganizationConnectionInformation) GetName() string {
+	if o == nil || o.Name == nil {
+		return ""
+	}
+	return *o.Name
+}
+
+func (o *OrganizationConnectionInformation) GetStrategy() string {
+	if o == nil || o.Strategy == nil {
+		return ""
+	}
+	return *o.Strategy
+}
+
+func (o *OrganizationConnectionInformation) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.ExtraProperties
+}
+
+func (o *OrganizationConnectionInformation) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationConnectionInformation) SetName(name *string) {
+	o.Name = name
+	o.require(organizationConnectionInformationFieldName)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationConnectionInformation) SetStrategy(strategy *string) {
+	o.Strategy = strategy
+	o.require(organizationConnectionInformationFieldStrategy)
+}
+
+func (o *OrganizationConnectionInformation) UnmarshalJSON(data []byte) error {
+	type embed OrganizationConnectionInformation
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*o = OrganizationConnectionInformation(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.ExtraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationConnectionInformation) MarshalJSON() ([]byte, error) {
+	type embed OrganizationConnectionInformation
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, o.ExtraProperties)
+}
+
+func (o *OrganizationConnectionInformation) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	organizationDiscoveryDomainFieldID                          = big.NewInt(1 << 0)
+	organizationDiscoveryDomainFieldDomain                      = big.NewInt(1 << 1)
+	organizationDiscoveryDomainFieldStatus                      = big.NewInt(1 << 2)
+	organizationDiscoveryDomainFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	organizationDiscoveryDomainFieldVerificationTxt             = big.NewInt(1 << 4)
+	organizationDiscoveryDomainFieldVerificationHost            = big.NewInt(1 << 5)
+)
+
+type OrganizationDiscoveryDomain struct {
+	// Organization discovery domain identifier.
+	ID string `json:"id" url:"id"`
+	// The domain name to associate with the organization e.g. acme.com.
+	Domain string                            `json:"domain" url:"domain"`
+	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
+	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
+	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
+	// The full domain where the TXT record should be added.
+	VerificationHost string `json:"verification_host" url:"verification_host"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationDiscoveryDomain) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *OrganizationDiscoveryDomain) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *OrganizationDiscoveryDomain) GetStatus() OrganizationDiscoveryDomainStatus {
+	if o == nil {
+		return ""
+	}
+	return o.Status
+}
+
+func (o *OrganizationDiscoveryDomain) GetUseForOrganizationDiscovery() bool {
+	if o == nil || o.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *o.UseForOrganizationDiscovery
+}
+
+func (o *OrganizationDiscoveryDomain) GetVerificationTxt() string {
+	if o == nil {
+		return ""
+	}
+	return o.VerificationTxt
+}
+
+func (o *OrganizationDiscoveryDomain) GetVerificationHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.VerificationHost
+}
+
+func (o *OrganizationDiscoveryDomain) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationDiscoveryDomain) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationDiscoveryDomain) SetID(id string) {
+	o.ID = id
+	o.require(organizationDiscoveryDomainFieldID)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationDiscoveryDomain) SetDomain(domain string) {
+	o.Domain = domain
+	o.require(organizationDiscoveryDomainFieldDomain)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationDiscoveryDomain) SetStatus(status OrganizationDiscoveryDomainStatus) {
+	o.Status = status
+	o.require(organizationDiscoveryDomainFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationDiscoveryDomain) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	o.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	o.require(organizationDiscoveryDomainFieldUseForOrganizationDiscovery)
+}
+
+// SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationDiscoveryDomain) SetVerificationTxt(verificationTxt string) {
+	o.VerificationTxt = verificationTxt
+	o.require(organizationDiscoveryDomainFieldVerificationTxt)
+}
+
+// SetVerificationHost sets the VerificationHost field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationDiscoveryDomain) SetVerificationHost(verificationHost string) {
+	o.VerificationHost = verificationHost
+	o.require(organizationDiscoveryDomainFieldVerificationHost)
+}
+
+func (o *OrganizationDiscoveryDomain) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationDiscoveryDomain
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationDiscoveryDomain(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationDiscoveryDomain) MarshalJSON() ([]byte, error) {
+	type embed OrganizationDiscoveryDomain
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationDiscoveryDomain) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// The verification status of the discovery domain.
+type OrganizationDiscoveryDomainStatus string
+
+const (
+	OrganizationDiscoveryDomainStatusPending  OrganizationDiscoveryDomainStatus = "pending"
+	OrganizationDiscoveryDomainStatusVerified OrganizationDiscoveryDomainStatus = "verified"
+)
+
+func NewOrganizationDiscoveryDomainStatusFromString(s string) (OrganizationDiscoveryDomainStatus, error) {
+	switch s {
+	case "pending":
+		return OrganizationDiscoveryDomainStatusPending, nil
+	case "verified":
+		return OrganizationDiscoveryDomainStatusVerified, nil
+	}
+	var t OrganizationDiscoveryDomainStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationDiscoveryDomainStatus) Ptr() *OrganizationDiscoveryDomainStatus {
+	return &o
 }
 
 var (
@@ -1080,6 +6774,1922 @@ func (o *OrganizationEnabledConnection) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	organizationInvitationFieldID             = big.NewInt(1 << 0)
+	organizationInvitationFieldOrganizationID = big.NewInt(1 << 1)
+	organizationInvitationFieldInviter        = big.NewInt(1 << 2)
+	organizationInvitationFieldInvitee        = big.NewInt(1 << 3)
+	organizationInvitationFieldInvitationURL  = big.NewInt(1 << 4)
+	organizationInvitationFieldCreatedAt      = big.NewInt(1 << 5)
+	organizationInvitationFieldExpiresAt      = big.NewInt(1 << 6)
+	organizationInvitationFieldClientID       = big.NewInt(1 << 7)
+	organizationInvitationFieldConnectionID   = big.NewInt(1 << 8)
+	organizationInvitationFieldAppMetadata    = big.NewInt(1 << 9)
+	organizationInvitationFieldUserMetadata   = big.NewInt(1 << 10)
+	organizationInvitationFieldRoles          = big.NewInt(1 << 11)
+	organizationInvitationFieldTicketID       = big.NewInt(1 << 12)
+)
+
+type OrganizationInvitation struct {
+	// The id of the user invitation.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Organization identifier.
+	OrganizationID *string                        `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	Inviter        *OrganizationInvitationInviter `json:"inviter,omitempty" url:"inviter,omitempty"`
+	Invitee        *OrganizationInvitationInvitee `json:"invitee,omitempty" url:"invitee,omitempty"`
+	// The invitation url to be send to the invitee.
+	InvitationURL *string `json:"invitation_url,omitempty" url:"invitation_url,omitempty"`
+	// The ISO 8601 formatted timestamp representing the creation time of the invitation.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 formatted timestamp representing the expiration time of the invitation.
+	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+	// Auth0 client ID. Used to resolve the application's login initiation endpoint.
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The id of the connection to force invitee to authenticate with.
+	ConnectionID *string       `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	AppMetadata  *AppMetadata  `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
+	UserMetadata *UserMetadata `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
+	// List of roles IDs to associated with the user.
+	Roles []string `json:"roles,omitempty" url:"roles,omitempty"`
+	// The id of the invitation ticket
+	TicketID *string `json:"ticket_id,omitempty" url:"ticket_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationInvitation) GetID() string {
+	if o == nil || o.ID == nil {
+		return ""
+	}
+	return *o.ID
+}
+
+func (o *OrganizationInvitation) GetOrganizationID() string {
+	if o == nil || o.OrganizationID == nil {
+		return ""
+	}
+	return *o.OrganizationID
+}
+
+func (o *OrganizationInvitation) GetInviter() OrganizationInvitationInviter {
+	if o == nil || o.Inviter == nil {
+		return OrganizationInvitationInviter{}
+	}
+	return *o.Inviter
+}
+
+func (o *OrganizationInvitation) GetInvitee() OrganizationInvitationInvitee {
+	if o == nil || o.Invitee == nil {
+		return OrganizationInvitationInvitee{}
+	}
+	return *o.Invitee
+}
+
+func (o *OrganizationInvitation) GetInvitationURL() string {
+	if o == nil || o.InvitationURL == nil {
+		return ""
+	}
+	return *o.InvitationURL
+}
+
+func (o *OrganizationInvitation) GetCreatedAt() time.Time {
+	if o == nil || o.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *o.CreatedAt
+}
+
+func (o *OrganizationInvitation) GetExpiresAt() time.Time {
+	if o == nil || o.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *o.ExpiresAt
+}
+
+func (o *OrganizationInvitation) GetClientID() string {
+	if o == nil || o.ClientID == nil {
+		return ""
+	}
+	return *o.ClientID
+}
+
+func (o *OrganizationInvitation) GetConnectionID() string {
+	if o == nil || o.ConnectionID == nil {
+		return ""
+	}
+	return *o.ConnectionID
+}
+
+func (o *OrganizationInvitation) GetAppMetadata() AppMetadata {
+	if o == nil || o.AppMetadata == nil {
+		return nil
+	}
+	return *o.AppMetadata
+}
+
+func (o *OrganizationInvitation) GetUserMetadata() UserMetadata {
+	if o == nil || o.UserMetadata == nil {
+		return nil
+	}
+	return *o.UserMetadata
+}
+
+func (o *OrganizationInvitation) GetRoles() []string {
+	if o == nil || o.Roles == nil {
+		return nil
+	}
+	return o.Roles
+}
+
+func (o *OrganizationInvitation) GetTicketID() string {
+	if o == nil || o.TicketID == nil {
+		return ""
+	}
+	return *o.TicketID
+}
+
+func (o *OrganizationInvitation) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationInvitation) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetID(id *string) {
+	o.ID = id
+	o.require(organizationInvitationFieldID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetOrganizationID(organizationID *string) {
+	o.OrganizationID = organizationID
+	o.require(organizationInvitationFieldOrganizationID)
+}
+
+// SetInviter sets the Inviter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetInviter(inviter *OrganizationInvitationInviter) {
+	o.Inviter = inviter
+	o.require(organizationInvitationFieldInviter)
+}
+
+// SetInvitee sets the Invitee field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetInvitee(invitee *OrganizationInvitationInvitee) {
+	o.Invitee = invitee
+	o.require(organizationInvitationFieldInvitee)
+}
+
+// SetInvitationURL sets the InvitationURL field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetInvitationURL(invitationURL *string) {
+	o.InvitationURL = invitationURL
+	o.require(organizationInvitationFieldInvitationURL)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetCreatedAt(createdAt *time.Time) {
+	o.CreatedAt = createdAt
+	o.require(organizationInvitationFieldCreatedAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetExpiresAt(expiresAt *time.Time) {
+	o.ExpiresAt = expiresAt
+	o.require(organizationInvitationFieldExpiresAt)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetClientID(clientID *string) {
+	o.ClientID = clientID
+	o.require(organizationInvitationFieldClientID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetConnectionID(connectionID *string) {
+	o.ConnectionID = connectionID
+	o.require(organizationInvitationFieldConnectionID)
+}
+
+// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetAppMetadata(appMetadata *AppMetadata) {
+	o.AppMetadata = appMetadata
+	o.require(organizationInvitationFieldAppMetadata)
+}
+
+// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetUserMetadata(userMetadata *UserMetadata) {
+	o.UserMetadata = userMetadata
+	o.require(organizationInvitationFieldUserMetadata)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetRoles(roles []string) {
+	o.Roles = roles
+	o.require(organizationInvitationFieldRoles)
+}
+
+// SetTicketID sets the TicketID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitation) SetTicketID(ticketID *string) {
+	o.TicketID = ticketID
+	o.require(organizationInvitationFieldTicketID)
+}
+
+func (o *OrganizationInvitation) UnmarshalJSON(data []byte) error {
+	type embed OrganizationInvitation
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*o = OrganizationInvitation(unmarshaler.embed)
+	o.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	o.ExpiresAt = unmarshaler.ExpiresAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationInvitation) MarshalJSON() ([]byte, error) {
+	type embed OrganizationInvitation
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed:     embed(*o),
+		CreatedAt: internal.NewOptionalDateTime(o.CreatedAt),
+		ExpiresAt: internal.NewOptionalDateTime(o.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationInvitation) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	organizationInvitationInviteeFieldEmail = big.NewInt(1 << 0)
+)
+
+type OrganizationInvitationInvitee struct {
+	// The invitee's email.
+	Email string `json:"email" url:"email"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationInvitationInvitee) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *OrganizationInvitationInvitee) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationInvitationInvitee) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitationInvitee) SetEmail(email string) {
+	o.Email = email
+	o.require(organizationInvitationInviteeFieldEmail)
+}
+
+func (o *OrganizationInvitationInvitee) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationInvitationInvitee
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationInvitationInvitee(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationInvitationInvitee) MarshalJSON() ([]byte, error) {
+	type embed OrganizationInvitationInvitee
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationInvitationInvitee) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	organizationInvitationInviterFieldName = big.NewInt(1 << 0)
+)
+
+type OrganizationInvitationInviter struct {
+	// The inviter's name.
+	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationInvitationInviter) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *OrganizationInvitationInviter) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationInvitationInviter) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationInvitationInviter) SetName(name string) {
+	o.Name = name
+	o.require(organizationInvitationInviterFieldName)
+}
+
+func (o *OrganizationInvitationInviter) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationInvitationInviter
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationInvitationInviter(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationInvitationInviter) MarshalJSON() ([]byte, error) {
+	type embed OrganizationInvitationInviter
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationInvitationInviter) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	organizationMemberFieldUserID  = big.NewInt(1 << 0)
+	organizationMemberFieldPicture = big.NewInt(1 << 1)
+	organizationMemberFieldName    = big.NewInt(1 << 2)
+	organizationMemberFieldEmail   = big.NewInt(1 << 3)
+	organizationMemberFieldRoles   = big.NewInt(1 << 4)
+)
+
+type OrganizationMember struct {
+	// ID of this user.
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	// URL to a picture for this user.
+	Picture *string `json:"picture,omitempty" url:"picture,omitempty"`
+	// Name of this user.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Email address of this user.
+	Email *string                   `json:"email,omitempty" url:"email,omitempty"`
+	Roles []*OrganizationMemberRole `json:"roles,omitempty" url:"roles,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationMember) GetUserID() string {
+	if o == nil || o.UserID == nil {
+		return ""
+	}
+	return *o.UserID
+}
+
+func (o *OrganizationMember) GetPicture() string {
+	if o == nil || o.Picture == nil {
+		return ""
+	}
+	return *o.Picture
+}
+
+func (o *OrganizationMember) GetName() string {
+	if o == nil || o.Name == nil {
+		return ""
+	}
+	return *o.Name
+}
+
+func (o *OrganizationMember) GetEmail() string {
+	if o == nil || o.Email == nil {
+		return ""
+	}
+	return *o.Email
+}
+
+func (o *OrganizationMember) GetRoles() []*OrganizationMemberRole {
+	if o == nil || o.Roles == nil {
+		return nil
+	}
+	return o.Roles
+}
+
+func (o *OrganizationMember) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationMember) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMember) SetUserID(userID *string) {
+	o.UserID = userID
+	o.require(organizationMemberFieldUserID)
+}
+
+// SetPicture sets the Picture field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMember) SetPicture(picture *string) {
+	o.Picture = picture
+	o.require(organizationMemberFieldPicture)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMember) SetName(name *string) {
+	o.Name = name
+	o.require(organizationMemberFieldName)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMember) SetEmail(email *string) {
+	o.Email = email
+	o.require(organizationMemberFieldEmail)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMember) SetRoles(roles []*OrganizationMemberRole) {
+	o.Roles = roles
+	o.require(organizationMemberFieldRoles)
+}
+
+func (o *OrganizationMember) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationMember
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationMember(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationMember) MarshalJSON() ([]byte, error) {
+	type embed OrganizationMember
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationMember) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+var (
+	organizationMemberEffectiveRoleFieldID          = big.NewInt(1 << 0)
+	organizationMemberEffectiveRoleFieldName        = big.NewInt(1 << 1)
+	organizationMemberEffectiveRoleFieldDescription = big.NewInt(1 << 2)
+	organizationMemberEffectiveRoleFieldSources     = big.NewInt(1 << 3)
+)
+
+type OrganizationMemberEffectiveRole struct {
+	// Role ID
+	ID string `json:"id" url:"id"`
+	// Role name
+	Name string `json:"name" url:"name"`
+	// Role description
+	Description string `json:"description" url:"description"`
+	// Sources of the role assignment (direct or through group membership)
+	Sources []OrganizationMemberEffectiveRoleSource `json:"sources" url:"sources"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationMemberEffectiveRole) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *OrganizationMemberEffectiveRole) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *OrganizationMemberEffectiveRole) GetDescription() string {
+	if o == nil {
+		return ""
+	}
+	return o.Description
+}
+
+func (o *OrganizationMemberEffectiveRole) GetSources() []OrganizationMemberEffectiveRoleSource {
+	if o == nil {
+		return nil
+	}
+	return o.Sources
+}
+
+func (o *OrganizationMemberEffectiveRole) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationMemberEffectiveRole) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMemberEffectiveRole) SetID(id string) {
+	o.ID = id
+	o.require(organizationMemberEffectiveRoleFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMemberEffectiveRole) SetName(name string) {
+	o.Name = name
+	o.require(organizationMemberEffectiveRoleFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMemberEffectiveRole) SetDescription(description string) {
+	o.Description = description
+	o.require(organizationMemberEffectiveRoleFieldDescription)
+}
+
+// SetSources sets the Sources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMemberEffectiveRole) SetSources(sources []OrganizationMemberEffectiveRoleSource) {
+	o.Sources = sources
+	o.require(organizationMemberEffectiveRoleFieldSources)
+}
+
+func (o *OrganizationMemberEffectiveRole) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationMemberEffectiveRole
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationMemberEffectiveRole(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationMemberEffectiveRole) MarshalJSON() ([]byte, error) {
+	type embed OrganizationMemberEffectiveRole
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationMemberEffectiveRole) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type OrganizationMemberEffectiveRoleSource string
+
+const (
+	OrganizationMemberEffectiveRoleSourceDirect OrganizationMemberEffectiveRoleSource = "direct"
+	OrganizationMemberEffectiveRoleSourceGroups OrganizationMemberEffectiveRoleSource = "groups"
+)
+
+func NewOrganizationMemberEffectiveRoleSourceFromString(s string) (OrganizationMemberEffectiveRoleSource, error) {
+	switch s {
+	case "direct":
+		return OrganizationMemberEffectiveRoleSourceDirect, nil
+	case "groups":
+		return OrganizationMemberEffectiveRoleSourceGroups, nil
+	}
+	var t OrganizationMemberEffectiveRoleSource
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationMemberEffectiveRoleSource) Ptr() *OrganizationMemberEffectiveRoleSource {
+	return &o
+}
+
+var (
+	organizationMemberRoleFieldID   = big.NewInt(1 << 0)
+	organizationMemberRoleFieldName = big.NewInt(1 << 1)
+)
+
+type OrganizationMemberRole struct {
+	// ID for this role.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Name of this role.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *OrganizationMemberRole) GetID() string {
+	if o == nil || o.ID == nil {
+		return ""
+	}
+	return *o.ID
+}
+
+func (o *OrganizationMemberRole) GetName() string {
+	if o == nil || o.Name == nil {
+		return ""
+	}
+	return *o.Name
+}
+
+func (o *OrganizationMemberRole) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *OrganizationMemberRole) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMemberRole) SetID(id *string) {
+	o.ID = id
+	o.require(organizationMemberRoleFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationMemberRole) SetName(name *string) {
+	o.Name = name
+	o.require(organizationMemberRoleFieldName)
+}
+
+func (o *OrganizationMemberRole) UnmarshalJSON(data []byte) error {
+	type unmarshaler OrganizationMemberRole
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = OrganizationMemberRole(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *OrganizationMemberRole) MarshalJSON() ([]byte, error) {
+	type embed OrganizationMemberRole
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *OrganizationMemberRole) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Defines whether organizations can be used with client credentials exchanges for this grant.
+type OrganizationUsageEnum string
+
+const (
+	OrganizationUsageEnumDeny    OrganizationUsageEnum = "deny"
+	OrganizationUsageEnumAllow   OrganizationUsageEnum = "allow"
+	OrganizationUsageEnumRequire OrganizationUsageEnum = "require"
+)
+
+func NewOrganizationUsageEnumFromString(s string) (OrganizationUsageEnum, error) {
+	switch s {
+	case "deny":
+		return OrganizationUsageEnumDeny, nil
+	case "allow":
+		return OrganizationUsageEnumAllow, nil
+	case "require":
+		return OrganizationUsageEnumRequire, nil
+	}
+	var t OrganizationUsageEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationUsageEnum) Ptr() *OrganizationUsageEnum {
+	return &o
+}
+
+// A group assigned to a role in the context of an organization.
+var (
+	roleGroupFieldID             = big.NewInt(1 << 0)
+	roleGroupFieldName           = big.NewInt(1 << 1)
+	roleGroupFieldExternalID     = big.NewInt(1 << 2)
+	roleGroupFieldConnectionID   = big.NewInt(1 << 3)
+	roleGroupFieldOrganizationID = big.NewInt(1 << 4)
+	roleGroupFieldTenantName     = big.NewInt(1 << 5)
+	roleGroupFieldDescription    = big.NewInt(1 << 6)
+	roleGroupFieldCreatedAt      = big.NewInt(1 << 7)
+	roleGroupFieldUpdatedAt      = big.NewInt(1 << 8)
+)
+
+type RoleGroup struct {
+	// Unique identifier for the group (service-generated).
+	ID string `json:"id" url:"id"`
+	// Name of the group. Must be unique within its connection. Must contain between 1 and 128 printable ASCII characters.
+	Name string `json:"name" url:"name"`
+	// External identifier for the group, often used for SCIM synchronization. Max length of 256 characters.
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
+	// Identifier for the connection this group belongs to (if a connection group).
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// Identifier for the organization this group belongs to (if an organization group).
+	OrganizationID *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	// Identifier for the tenant this group belongs to.
+	TenantName *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
+	// Description of the group.
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// Timestamp of when the group was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp of when the group was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RoleGroup) GetID() string {
+	if r == nil {
+		return ""
+	}
+	return r.ID
+}
+
+func (r *RoleGroup) GetName() string {
+	if r == nil {
+		return ""
+	}
+	return r.Name
+}
+
+func (r *RoleGroup) GetExternalID() string {
+	if r == nil || r.ExternalID == nil {
+		return ""
+	}
+	return *r.ExternalID
+}
+
+func (r *RoleGroup) GetConnectionID() string {
+	if r == nil || r.ConnectionID == nil {
+		return ""
+	}
+	return *r.ConnectionID
+}
+
+func (r *RoleGroup) GetOrganizationID() string {
+	if r == nil || r.OrganizationID == nil {
+		return ""
+	}
+	return *r.OrganizationID
+}
+
+func (r *RoleGroup) GetTenantName() string {
+	if r == nil || r.TenantName == nil {
+		return ""
+	}
+	return *r.TenantName
+}
+
+func (r *RoleGroup) GetDescription() string {
+	if r == nil || r.Description == nil {
+		return ""
+	}
+	return *r.Description
+}
+
+func (r *RoleGroup) GetCreatedAt() time.Time {
+	if r == nil || r.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *r.CreatedAt
+}
+
+func (r *RoleGroup) GetUpdatedAt() time.Time {
+	if r == nil || r.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *r.UpdatedAt
+}
+
+func (r *RoleGroup) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RoleGroup) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetID(id string) {
+	r.ID = id
+	r.require(roleGroupFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetName(name string) {
+	r.Name = name
+	r.require(roleGroupFieldName)
+}
+
+// SetExternalID sets the ExternalID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetExternalID(externalID *string) {
+	r.ExternalID = externalID
+	r.require(roleGroupFieldExternalID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetConnectionID(connectionID *string) {
+	r.ConnectionID = connectionID
+	r.require(roleGroupFieldConnectionID)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetOrganizationID(organizationID *string) {
+	r.OrganizationID = organizationID
+	r.require(roleGroupFieldOrganizationID)
+}
+
+// SetTenantName sets the TenantName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetTenantName(tenantName *string) {
+	r.TenantName = tenantName
+	r.require(roleGroupFieldTenantName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetDescription(description *string) {
+	r.Description = description
+	r.require(roleGroupFieldDescription)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetCreatedAt(createdAt *time.Time) {
+	r.CreatedAt = createdAt
+	r.require(roleGroupFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleGroup) SetUpdatedAt(updatedAt *time.Time) {
+	r.UpdatedAt = updatedAt
+	r.require(roleGroupFieldUpdatedAt)
+}
+
+func (r *RoleGroup) UnmarshalJSON(data []byte) error {
+	type embed RoleGroup
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*r),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*r = RoleGroup(unmarshaler.embed)
+	r.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	r.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RoleGroup) MarshalJSON() ([]byte, error) {
+	type embed RoleGroup
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*r),
+		CreatedAt: internal.NewOptionalDateTime(r.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(r.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RoleGroup) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	roleMemberFieldUserID  = big.NewInt(1 << 0)
+	roleMemberFieldPicture = big.NewInt(1 << 1)
+	roleMemberFieldName    = big.NewInt(1 << 2)
+	roleMemberFieldEmail   = big.NewInt(1 << 3)
+)
+
+type RoleMember struct {
+	// ID of this user.
+	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
+	// URL to a picture for this user.
+	Picture *string `json:"picture,omitempty" url:"picture,omitempty"`
+	// Name of this user.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Email address of this user.
+	Email *string `json:"email,omitempty" url:"email,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *RoleMember) GetUserID() string {
+	if r == nil || r.UserID == nil {
+		return ""
+	}
+	return *r.UserID
+}
+
+func (r *RoleMember) GetPicture() string {
+	if r == nil || r.Picture == nil {
+		return ""
+	}
+	return *r.Picture
+}
+
+func (r *RoleMember) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
+	}
+	return *r.Name
+}
+
+func (r *RoleMember) GetEmail() string {
+	if r == nil || r.Email == nil {
+		return ""
+	}
+	return *r.Email
+}
+
+func (r *RoleMember) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *RoleMember) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleMember) SetUserID(userID *string) {
+	r.UserID = userID
+	r.require(roleMemberFieldUserID)
+}
+
+// SetPicture sets the Picture field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleMember) SetPicture(picture *string) {
+	r.Picture = picture
+	r.require(roleMemberFieldPicture)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleMember) SetName(name *string) {
+	r.Name = name
+	r.require(roleMemberFieldName)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RoleMember) SetEmail(email *string) {
+	r.Email = email
+	r.require(roleMemberFieldEmail)
+}
+
+func (r *RoleMember) UnmarshalJSON(data []byte) error {
+	type unmarshaler RoleMember
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RoleMember(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *RoleMember) MarshalJSON() ([]byte, error) {
+	type embed RoleMember
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *RoleMember) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	updateOrganizationAllConnectionResponseContentFieldOrganizationConnectionName = big.NewInt(1 << 0)
+	updateOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
+	updateOrganizationAllConnectionResponseContentFieldShowAsButton               = big.NewInt(1 << 2)
+	updateOrganizationAllConnectionResponseContentFieldIsSignupEnabled            = big.NewInt(1 << 3)
+	updateOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
+	updateOrganizationAllConnectionResponseContentFieldIsEnabled                  = big.NewInt(1 << 5)
+	updateOrganizationAllConnectionResponseContentFieldConnectionID               = big.NewInt(1 << 6)
+	updateOrganizationAllConnectionResponseContentFieldConnection                 = big.NewInt(1 << 7)
+)
+
+type UpdateOrganizationAllConnectionResponseContent struct {
+	// Name of the connection in the scope of this organization.
+	OrganizationConnectionName *string `json:"organization_connection_name,omitempty" url:"organization_connection_name,omitempty"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled         *bool                        `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	OrganizationAccessLevel *OrganizationAccessLevelEnum `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	// Whether the connection is enabled for the organization.
+	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+	// Connection identifier.
+	ConnectionID string                             `json:"connection_id" url:"connection_id"`
+	Connection   *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetOrganizationConnectionName() string {
+	if u == nil || u.OrganizationConnectionName == nil {
+		return ""
+	}
+	return *u.OrganizationConnectionName
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetAssignMembershipOnLogin() bool {
+	if u == nil || u.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *u.AssignMembershipOnLogin
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetShowAsButton() bool {
+	if u == nil || u.ShowAsButton == nil {
+		return false
+	}
+	return *u.ShowAsButton
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetIsSignupEnabled() bool {
+	if u == nil || u.IsSignupEnabled == nil {
+		return false
+	}
+	return *u.IsSignupEnabled
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetOrganizationAccessLevel() OrganizationAccessLevelEnum {
+	if u == nil || u.OrganizationAccessLevel == nil {
+		return ""
+	}
+	return *u.OrganizationAccessLevel
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetIsEnabled() bool {
+	if u == nil || u.IsEnabled == nil {
+		return false
+	}
+	return *u.IsEnabled
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetConnectionID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ConnectionID
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetConnection() OrganizationConnectionInformation {
+	if u == nil || u.Connection == nil {
+		return OrganizationConnectionInformation{}
+	}
+	return *u.Connection
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationAllConnectionResponseContent) SetOrganizationConnectionName(organizationConnectionName *string) {
+	u.OrganizationConnectionName = organizationConnectionName
+	u.require(updateOrganizationAllConnectionResponseContentFieldOrganizationConnectionName)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationAllConnectionResponseContent) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	u.AssignMembershipOnLogin = assignMembershipOnLogin
+	u.require(updateOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationAllConnectionResponseContent) SetShowAsButton(showAsButton *bool) {
+	u.ShowAsButton = showAsButton
+	u.require(updateOrganizationAllConnectionResponseContentFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationAllConnectionResponseContent) SetIsSignupEnabled(isSignupEnabled *bool) {
+	u.IsSignupEnabled = isSignupEnabled
+	u.require(updateOrganizationAllConnectionResponseContentFieldIsSignupEnabled)
+}
+
+// SetOrganizationAccessLevel sets the OrganizationAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationAllConnectionResponseContent) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnum) {
+	u.OrganizationAccessLevel = organizationAccessLevel
+	u.require(updateOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel)
+}
+
+// SetIsEnabled sets the IsEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationAllConnectionResponseContent) SetIsEnabled(isEnabled *bool) {
+	u.IsEnabled = isEnabled
+	u.require(updateOrganizationAllConnectionResponseContentFieldIsEnabled)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationAllConnectionResponseContent) SetConnectionID(connectionID string) {
+	u.ConnectionID = connectionID
+	u.require(updateOrganizationAllConnectionResponseContentFieldConnectionID)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationAllConnectionResponseContent) SetConnection(connection *OrganizationConnectionInformation) {
+	u.Connection = connection
+	u.require(updateOrganizationAllConnectionResponseContentFieldConnection)
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateOrganizationAllConnectionResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateOrganizationAllConnectionResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateOrganizationAllConnectionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateOrganizationClientResponseContentFieldClientID           = big.NewInt(1 << 0)
+	updateOrganizationClientResponseContentFieldUseForMemberAccess = big.NewInt(1 << 1)
+	updateOrganizationClientResponseContentFieldClient             = big.NewInt(1 << 2)
+)
+
+type UpdateOrganizationClientResponseContent struct {
+	// The identifier of the client associated with the organization.
+	ClientID string `json:"client_id" url:"client_id"`
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess bool                        `json:"use_for_member_access" url:"use_for_member_access"`
+	Client             *OrganizationClientMetadata `json:"client,omitempty" url:"client,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateOrganizationClientResponseContent) GetClientID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ClientID
+}
+
+func (u *UpdateOrganizationClientResponseContent) GetUseForMemberAccess() bool {
+	if u == nil {
+		return false
+	}
+	return u.UseForMemberAccess
+}
+
+func (u *UpdateOrganizationClientResponseContent) GetClient() OrganizationClientMetadata {
+	if u == nil || u.Client == nil {
+		return OrganizationClientMetadata{}
+	}
+	return *u.Client
+}
+
+func (u *UpdateOrganizationClientResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateOrganizationClientResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationClientResponseContent) SetClientID(clientID string) {
+	u.ClientID = clientID
+	u.require(updateOrganizationClientResponseContentFieldClientID)
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationClientResponseContent) SetUseForMemberAccess(useForMemberAccess bool) {
+	u.UseForMemberAccess = useForMemberAccess
+	u.require(updateOrganizationClientResponseContentFieldUseForMemberAccess)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationClientResponseContent) SetClient(client *OrganizationClientMetadata) {
+	u.Client = client
+	u.require(updateOrganizationClientResponseContentFieldClient)
+}
+
+func (u *UpdateOrganizationClientResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateOrganizationClientResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateOrganizationClientResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateOrganizationClientResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateOrganizationClientResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateOrganizationClientResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateOrganizationConnectionResponseContentFieldConnectionID            = big.NewInt(1 << 0)
+	updateOrganizationConnectionResponseContentFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
+	updateOrganizationConnectionResponseContentFieldShowAsButton            = big.NewInt(1 << 2)
+	updateOrganizationConnectionResponseContentFieldIsSignupEnabled         = big.NewInt(1 << 3)
+	updateOrganizationConnectionResponseContentFieldConnection              = big.NewInt(1 << 4)
+)
+
+type UpdateOrganizationConnectionResponseContent struct {
+	// ID of the connection.
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	Connection      *OrganizationConnectionInformation `json:"connection,omitempty" url:"connection,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) GetConnectionID() string {
+	if u == nil || u.ConnectionID == nil {
+		return ""
+	}
+	return *u.ConnectionID
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) GetAssignMembershipOnLogin() bool {
+	if u == nil || u.AssignMembershipOnLogin == nil {
+		return false
+	}
+	return *u.AssignMembershipOnLogin
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) GetShowAsButton() bool {
+	if u == nil || u.ShowAsButton == nil {
+		return false
+	}
+	return *u.ShowAsButton
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) GetIsSignupEnabled() bool {
+	if u == nil || u.IsSignupEnabled == nil {
+		return false
+	}
+	return *u.IsSignupEnabled
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) GetConnection() OrganizationConnectionInformation {
+	if u == nil || u.Connection == nil {
+		return OrganizationConnectionInformation{}
+	}
+	return *u.Connection
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionResponseContent) SetConnectionID(connectionID *string) {
+	u.ConnectionID = connectionID
+	u.require(updateOrganizationConnectionResponseContentFieldConnectionID)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionResponseContent) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	u.AssignMembershipOnLogin = assignMembershipOnLogin
+	u.require(updateOrganizationConnectionResponseContentFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionResponseContent) SetShowAsButton(showAsButton *bool) {
+	u.ShowAsButton = showAsButton
+	u.require(updateOrganizationConnectionResponseContentFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionResponseContent) SetIsSignupEnabled(isSignupEnabled *bool) {
+	u.IsSignupEnabled = isSignupEnabled
+	u.require(updateOrganizationConnectionResponseContentFieldIsSignupEnabled)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionResponseContent) SetConnection(connection *OrganizationConnectionInformation) {
+	u.Connection = connection
+	u.require(updateOrganizationConnectionResponseContentFieldConnection)
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateOrganizationConnectionResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateOrganizationConnectionResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateOrganizationConnectionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateOrganizationConnectionResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateOrganizationDiscoveryDomainResponseContentFieldID                          = big.NewInt(1 << 0)
+	updateOrganizationDiscoveryDomainResponseContentFieldDomain                      = big.NewInt(1 << 1)
+	updateOrganizationDiscoveryDomainResponseContentFieldStatus                      = big.NewInt(1 << 2)
+	updateOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 3)
+	updateOrganizationDiscoveryDomainResponseContentFieldVerificationTxt             = big.NewInt(1 << 4)
+	updateOrganizationDiscoveryDomainResponseContentFieldVerificationHost            = big.NewInt(1 << 5)
+)
+
+type UpdateOrganizationDiscoveryDomainResponseContent struct {
+	// Organization discovery domain identifier.
+	ID string `json:"id" url:"id"`
+	// The domain name to associate with the organization e.g. acme.com.
+	Domain string                            `json:"domain" url:"domain"`
+	Status OrganizationDiscoveryDomainStatus `json:"status" url:"status"`
+	// Indicates whether this domain should be used for organization discovery.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
+	// A unique token generated for the discovery domain. This must be placed in a DNS TXT record at the location specified by the verification_host field to prove domain ownership.
+	VerificationTxt string `json:"verification_txt" url:"verification_txt"`
+	// The full domain where the TXT record should be added.
+	VerificationHost string `json:"verification_host" url:"verification_host"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ID
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetDomain() string {
+	if u == nil {
+		return ""
+	}
+	return u.Domain
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetStatus() OrganizationDiscoveryDomainStatus {
+	if u == nil {
+		return ""
+	}
+	return u.Status
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetUseForOrganizationDiscovery() bool {
+	if u == nil || u.UseForOrganizationDiscovery == nil {
+		return false
+	}
+	return *u.UseForOrganizationDiscovery
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetVerificationTxt() string {
+	if u == nil {
+		return ""
+	}
+	return u.VerificationTxt
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetVerificationHost() string {
+	if u == nil {
+		return ""
+	}
+	return u.VerificationHost
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) SetID(id string) {
+	u.ID = id
+	u.require(updateOrganizationDiscoveryDomainResponseContentFieldID)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) SetDomain(domain string) {
+	u.Domain = domain
+	u.require(updateOrganizationDiscoveryDomainResponseContentFieldDomain)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) SetStatus(status OrganizationDiscoveryDomainStatus) {
+	u.Status = status
+	u.require(updateOrganizationDiscoveryDomainResponseContentFieldStatus)
+}
+
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	u.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	u.require(updateOrganizationDiscoveryDomainResponseContentFieldUseForOrganizationDiscovery)
+}
+
+// SetVerificationTxt sets the VerificationTxt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) SetVerificationTxt(verificationTxt string) {
+	u.VerificationTxt = verificationTxt
+	u.require(updateOrganizationDiscoveryDomainResponseContentFieldVerificationTxt)
+}
+
+// SetVerificationHost sets the VerificationHost field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) SetVerificationHost(verificationHost string) {
+	u.VerificationHost = verificationHost
+	u.require(updateOrganizationDiscoveryDomainResponseContentFieldVerificationHost)
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateOrganizationDiscoveryDomainResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateOrganizationDiscoveryDomainResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateOrganizationDiscoveryDomainResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateOrganizationDiscoveryDomainResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 var (

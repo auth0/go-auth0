@@ -32,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) VerifyEmail(
+func (r *RawClient) PostEmailVerification(
 	ctx context.Context,
 	request *management.VerifyEmailTicketRequestContent,
 	opts ...option.RequestOption,
@@ -48,6 +48,9 @@ func (r *RawClient) VerifyEmail(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	if request.Auth0CustomDomain != nil {
+		headers.Add("auth0-custom-domain", *request.Auth0CustomDomain)
+	}
 	headers.Add("Content-Type", "application/json")
 	var response *management.VerifyEmailTicketResponseContent
 	raw, err := r.caller.Call(
@@ -76,7 +79,7 @@ func (r *RawClient) VerifyEmail(
 	}, nil
 }
 
-func (r *RawClient) ChangePassword(
+func (r *RawClient) PostPasswordChange(
 	ctx context.Context,
 	request *management.ChangePasswordTicketRequestContent,
 	opts ...option.RequestOption,
@@ -92,6 +95,9 @@ func (r *RawClient) ChangePassword(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	if request.Auth0CustomDomain != nil {
+		headers.Add("auth0-custom-domain", *request.Auth0CustomDomain)
+	}
 	headers.Add("Content-Type", "application/json")
 	var response *management.ChangePasswordTicketResponseContent
 	raw, err := r.caller.Call(

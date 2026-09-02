@@ -4,9 +4,6 @@ package logs
 
 import (
 	context "context"
-	fmt "fmt"
-	http "net/http"
-	strconv "strconv"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -63,87 +60,30 @@ func NewClient(options *core.RequestOptions) *Client {
 // - **take:** Number of entries to retrieve when using the `from` parameter.
 //
 // **Important:** When fetching logs from a checkpoint log ID, any parameter other than `from` and `take` will be ignored, and date ordering is not guaranteed.
-func (c *Client) List(
+func (c *Client) GetLogs(
 	ctx context.Context,
-	request *management.ListLogsRequestParameters,
+	request *management.GetLogsRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *management.Log, *management.ListLogOffsetPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/logs"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.ListLogResponseContent, error) {
+	response, err := c.WithRawResponse.GetLogs(
+		ctx,
 		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	next := 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *management.ListLogOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.Log, *management.ListLogOffsetPaginatedResponseContent] {
-		next += 1
-		results := response.Logs
-		return &core.PageResponse[*int, *management.Log, *management.ListLogOffsetPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
+	return response.Body, nil
 }
 
 // Retrieve an individual log event.
-func (c *Client) Get(
+func (c *Client) GetLogsByID(
 	ctx context.Context,
 	// log_id of the log to retrieve.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetLogResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetLogsByID(
 		ctx,
 		id,
 		opts...,

@@ -32,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetSession(
 	ctx context.Context,
 	// ID of session to retrieve
 	id string,
@@ -78,7 +78,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteSession(
 	ctx context.Context,
 	// ID of the session to delete.
 	id string,
@@ -122,7 +122,7 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchSessionsByID(
 	ctx context.Context,
 	// ID of the session to update.
 	id string,
@@ -171,7 +171,7 @@ func (r *RawClient) Update(
 	}, nil
 }
 
-func (r *RawClient) Revoke(
+func (r *RawClient) RevokeSession(
 	ctx context.Context,
 	// ID of the session to revoke.
 	id string,

@@ -35,11 +35,11 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve the number of active users that logged in during the last 30 days.
-func (c *Client) GetActiveUsersCount(
+func (c *Client) GetActiveUsers(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (management.GetActiveUsersCountStatsResponseContent, error) {
-	response, err := c.WithRawResponse.GetActiveUsersCount(
+	response, err := c.WithRawResponse.GetActiveUsers(
 		ctx,
 		opts...,
 	)
@@ -52,7 +52,7 @@ func (c *Client) GetActiveUsersCount(
 // Retrieve the number of logins, signups and breached-password detections (subscription required) that occurred each day within a specified date range.
 func (c *Client) GetDaily(
 	ctx context.Context,
-	request *management.GetDailyStatsRequestParameters,
+	request *management.GetDailyRequest,
 	opts ...option.RequestOption,
 ) ([]*management.DailyStats, error) {
 	response, err := c.WithRawResponse.GetDaily(

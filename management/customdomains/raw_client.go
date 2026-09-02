@@ -32,11 +32,11 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) List(
+func (r *RawClient) GetCustomDomains(
 	ctx context.Context,
-	request *management.ListCustomDomainsRequestParameters,
+	request *management.GetCustomDomainsRequest,
 	opts ...option.RequestOption,
-) (*core.Response[management.ListCustomDomainsResponseContent], error) {
+) (*core.Response[*management.ListCustomDomainsResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -55,7 +55,7 @@ func (r *RawClient) List(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response management.ListCustomDomainsResponseContent
+	var response *management.ListCustomDomainsResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -74,14 +74,14 @@ func (r *RawClient) List(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[management.ListCustomDomainsResponseContent]{
+	return &core.Response[*management.ListCustomDomainsResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
 	}, nil
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) PostCustomDomains(
 	ctx context.Context,
 	request *management.CreateCustomDomainRequestContent,
 	opts ...option.RequestOption,
@@ -166,7 +166,7 @@ func (r *RawClient) GetDefault(
 	}, nil
 }
 
-func (r *RawClient) SetDefault(
+func (r *RawClient) PatchDefault(
 	ctx context.Context,
 	request *management.SetDefaultCustomDomainRequestContent,
 	opts ...option.RequestOption,
@@ -210,7 +210,7 @@ func (r *RawClient) SetDefault(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetCustomDomainsByID(
 	ctx context.Context,
 	// ID of the custom domain to retrieve.
 	id string,
@@ -256,7 +256,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteCustomDomainsByID(
 	ctx context.Context,
 	// ID of the custom domain to delete.
 	id string,
@@ -300,7 +300,7 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchCustomDomainsByID(
 	ctx context.Context,
 	// The id of the custom domain to update
 	id string,
@@ -349,7 +349,7 @@ func (r *RawClient) Update(
 	}, nil
 }
 
-func (r *RawClient) Test(
+func (r *RawClient) PostTestDomain(
 	ctx context.Context,
 	// ID of the custom domain to test.
 	id string,
@@ -395,7 +395,7 @@ func (r *RawClient) Test(
 	}, nil
 }
 
-func (r *RawClient) Verify(
+func (r *RawClient) PostVerify(
 	ctx context.Context,
 	// ID of the custom domain to verify.
 	id string,

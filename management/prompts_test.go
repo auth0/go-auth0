@@ -9,6 +9,2520 @@ import (
 	testing "testing"
 )
 
+func TestGettersAculClientFilter(t *testing.T) {
+	t.Run("GetAculClientFilterByID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilter{}
+		var expected *AculClientFilterByID
+		obj.AculClientFilterByID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAculClientFilterByID(), "getter should return the property value")
+	})
+
+	t.Run("GetAculClientFilterByID_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilter{}
+		obj.AculClientFilterByID = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAculClientFilterByID(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAculClientFilterByID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculClientFilter
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAculClientFilterByID() // Should return zero value
+	})
+
+	t.Run("GetAculClientFilterByMetadata", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilter{}
+		var expected *AculClientFilterByMetadata
+		obj.AculClientFilterByMetadata = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAculClientFilterByMetadata(), "getter should return the property value")
+	})
+
+	t.Run("GetAculClientFilterByMetadata_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilter{}
+		obj.AculClientFilterByMetadata = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAculClientFilterByMetadata(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAculClientFilterByMetadata_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculClientFilter
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAculClientFilterByMetadata() // Should return zero value
+	})
+
+}
+
+func TestSettersAculClientFilterByID(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
+		obj := &AculClientFilterByID{}
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAculClientFilterByID(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilterByID{}
+		var expected string
+		obj.ID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
+	})
+
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculClientFilterByID
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetID() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAculClientFilterByID(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilterByID{}
+		var fernTestValueID string
+
+		// Act
+		obj.SetID(fernTestValueID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersAculClientFilterByMetadata(t *testing.T) {
+	t.Run("SetMetadata", func(t *testing.T) {
+		obj := &AculClientFilterByMetadata{}
+		var fernTestValueMetadata AculClientMetadata
+		obj.SetMetadata(fernTestValueMetadata)
+		assert.Equal(t, fernTestValueMetadata, obj.Metadata)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAculClientFilterByMetadata(t *testing.T) {
+	t.Run("GetMetadata", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilterByMetadata{}
+		var expected AculClientMetadata
+		obj.Metadata = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMetadata(), "getter should return the property value")
+	})
+
+	t.Run("GetMetadata_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculClientFilterByMetadata
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMetadata() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAculClientFilterByMetadata(t *testing.T) {
+	t.Run("SetMetadata_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilterByMetadata{}
+		var fernTestValueMetadata AculClientMetadata
+
+		// Act
+		obj.SetMetadata(fernTestValueMetadata)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersAculConfigsItem(t *testing.T) {
+	t.Run("SetPrompt", func(t *testing.T) {
+		obj := &AculConfigsItem{}
+		var fernTestValuePrompt PromptGroupNameEnum
+		obj.SetPrompt(fernTestValuePrompt)
+		assert.Equal(t, fernTestValuePrompt, obj.Prompt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetScreen", func(t *testing.T) {
+		obj := &AculConfigsItem{}
+		var fernTestValueScreen ScreenGroupNameEnum
+		obj.SetScreen(fernTestValueScreen)
+		assert.Equal(t, fernTestValueScreen, obj.Screen)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRenderingMode", func(t *testing.T) {
+		obj := &AculConfigsItem{}
+		var fernTestValueRenderingMode *AculRenderingModeEnum
+		obj.SetRenderingMode(fernTestValueRenderingMode)
+		assert.Equal(t, fernTestValueRenderingMode, obj.RenderingMode)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetContextConfiguration", func(t *testing.T) {
+		obj := &AculConfigsItem{}
+		var fernTestValueContextConfiguration *AculContextConfiguration
+		obj.SetContextConfiguration(fernTestValueContextConfiguration)
+		assert.Equal(t, fernTestValueContextConfiguration, obj.ContextConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDefaultHeadTagsDisabled", func(t *testing.T) {
+		obj := &AculConfigsItem{}
+		var fernTestValueDefaultHeadTagsDisabled *bool
+		obj.SetDefaultHeadTagsDisabled(fernTestValueDefaultHeadTagsDisabled)
+		assert.Equal(t, fernTestValueDefaultHeadTagsDisabled, obj.DefaultHeadTagsDisabled)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetUsePageTemplate", func(t *testing.T) {
+		obj := &AculConfigsItem{}
+		var fernTestValueUsePageTemplate *bool
+		obj.SetUsePageTemplate(fernTestValueUsePageTemplate)
+		assert.Equal(t, fernTestValueUsePageTemplate, obj.UsePageTemplate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHeadTags", func(t *testing.T) {
+		obj := &AculConfigsItem{}
+		var fernTestValueHeadTags []*AculHeadTag
+		obj.SetHeadTags(fernTestValueHeadTags)
+		assert.Equal(t, fernTestValueHeadTags, obj.HeadTags)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetFilters", func(t *testing.T) {
+		obj := &AculConfigsItem{}
+		var fernTestValueFilters *AculFilters
+		obj.SetFilters(fernTestValueFilters)
+		assert.Equal(t, fernTestValueFilters, obj.Filters)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAculConfigsItem(t *testing.T) {
+	t.Run("GetPrompt", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var expected PromptGroupNameEnum
+		obj.Prompt = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPrompt(), "getter should return the property value")
+	})
+
+	t.Run("GetPrompt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPrompt() // Should return zero value
+	})
+
+	t.Run("GetScreen", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var expected ScreenGroupNameEnum
+		obj.Screen = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetScreen(), "getter should return the property value")
+	})
+
+	t.Run("GetScreen_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetScreen() // Should return zero value
+	})
+
+	t.Run("GetRenderingMode", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var value AculRenderingModeEnum
+		obj.RenderingMode = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRenderingMode(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRenderingMode_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		obj.RenderingMode = nil
+		var expectedZero AculRenderingModeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRenderingMode(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRenderingMode_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRenderingMode() // Should return zero value
+	})
+
+	t.Run("GetContextConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var value AculContextConfiguration
+		obj.ContextConfiguration = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetContextConfiguration(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetContextConfiguration_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		obj.ContextConfiguration = nil
+		var expectedZero AculContextConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetContextConfiguration(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetContextConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetContextConfiguration() // Should return zero value
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var value bool
+		obj.DefaultHeadTagsDisabled = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefaultHeadTagsDisabled(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		obj.DefaultHeadTagsDisabled = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefaultHeadTagsDisabled(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultHeadTagsDisabled() // Should return zero value
+	})
+
+	t.Run("GetUsePageTemplate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var value bool
+		obj.UsePageTemplate = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUsePageTemplate(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUsePageTemplate_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		obj.UsePageTemplate = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUsePageTemplate(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUsePageTemplate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUsePageTemplate() // Should return zero value
+	})
+
+	t.Run("GetHeadTags", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var expected []*AculHeadTag
+		obj.HeadTags = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetHeadTags(), "getter should return the property value")
+	})
+
+	t.Run("GetHeadTags_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		obj.HeadTags = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHeadTags(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHeadTags_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHeadTags() // Should return zero value
+	})
+
+	t.Run("GetFilters", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var value AculFilters
+		obj.Filters = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetFilters(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetFilters_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		obj.Filters = nil
+		var expectedZero AculFilters
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetFilters(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetFilters_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFilters() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAculConfigsItem(t *testing.T) {
+	t.Run("SetPrompt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var fernTestValuePrompt PromptGroupNameEnum
+
+		// Act
+		obj.SetPrompt(fernTestValuePrompt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetScreen_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var fernTestValueScreen ScreenGroupNameEnum
+
+		// Act
+		obj.SetScreen(fernTestValueScreen)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRenderingMode_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var fernTestValueRenderingMode *AculRenderingModeEnum
+
+		// Act
+		obj.SetRenderingMode(fernTestValueRenderingMode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetContextConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var fernTestValueContextConfiguration *AculContextConfiguration
+
+		// Act
+		obj.SetContextConfiguration(fernTestValueContextConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDefaultHeadTagsDisabled_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var fernTestValueDefaultHeadTagsDisabled *bool
+
+		// Act
+		obj.SetDefaultHeadTagsDisabled(fernTestValueDefaultHeadTagsDisabled)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUsePageTemplate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var fernTestValueUsePageTemplate *bool
+
+		// Act
+		obj.SetUsePageTemplate(fernTestValueUsePageTemplate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHeadTags_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var fernTestValueHeadTags []*AculHeadTag
+
+		// Act
+		obj.SetHeadTags(fernTestValueHeadTags)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetFilters_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+		var fernTestValueFilters *AculFilters
+
+		// Act
+		obj.SetFilters(fernTestValueFilters)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestGettersAculContextConfigurationItem(t *testing.T) {
+	t.Run("GetAculContextEnum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculContextConfigurationItem{}
+		var expected AculContextEnum
+		obj.AculContextEnum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAculContextEnum(), "getter should return the property value")
+	})
+
+	t.Run("GetAculContextEnum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculContextConfigurationItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAculContextEnum() // Should return zero value
+	})
+
+	t.Run("GetString", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculContextConfigurationItem{}
+		var expected string
+		obj.String = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetString(), "getter should return the property value")
+	})
+
+	t.Run("GetString_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculContextConfigurationItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetString() // Should return zero value
+	})
+
+}
+
+func TestGettersAculDomainFilter(t *testing.T) {
+	t.Run("GetAculDomainFilterByID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilter{}
+		var expected *AculDomainFilterByID
+		obj.AculDomainFilterByID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAculDomainFilterByID(), "getter should return the property value")
+	})
+
+	t.Run("GetAculDomainFilterByID_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilter{}
+		obj.AculDomainFilterByID = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAculDomainFilterByID(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAculDomainFilterByID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculDomainFilter
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAculDomainFilterByID() // Should return zero value
+	})
+
+	t.Run("GetAculDomainFilterByMetadata", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilter{}
+		var expected *AculDomainFilterByMetadata
+		obj.AculDomainFilterByMetadata = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAculDomainFilterByMetadata(), "getter should return the property value")
+	})
+
+	t.Run("GetAculDomainFilterByMetadata_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilter{}
+		obj.AculDomainFilterByMetadata = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAculDomainFilterByMetadata(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAculDomainFilterByMetadata_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculDomainFilter
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAculDomainFilterByMetadata() // Should return zero value
+	})
+
+}
+
+func TestSettersAculDomainFilterByID(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
+		obj := &AculDomainFilterByID{}
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAculDomainFilterByID(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilterByID{}
+		var expected string
+		obj.ID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
+	})
+
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculDomainFilterByID
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetID() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAculDomainFilterByID(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilterByID{}
+		var fernTestValueID string
+
+		// Act
+		obj.SetID(fernTestValueID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersAculDomainFilterByMetadata(t *testing.T) {
+	t.Run("SetMetadata", func(t *testing.T) {
+		obj := &AculDomainFilterByMetadata{}
+		var fernTestValueMetadata AculDomainMetadata
+		obj.SetMetadata(fernTestValueMetadata)
+		assert.Equal(t, fernTestValueMetadata, obj.Metadata)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAculDomainFilterByMetadata(t *testing.T) {
+	t.Run("GetMetadata", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilterByMetadata{}
+		var expected AculDomainMetadata
+		obj.Metadata = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMetadata(), "getter should return the property value")
+	})
+
+	t.Run("GetMetadata_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculDomainFilterByMetadata
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMetadata() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAculDomainFilterByMetadata(t *testing.T) {
+	t.Run("SetMetadata_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilterByMetadata{}
+		var fernTestValueMetadata AculDomainMetadata
+
+		// Act
+		obj.SetMetadata(fernTestValueMetadata)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersAculFilters(t *testing.T) {
+	t.Run("SetMatchType", func(t *testing.T) {
+		obj := &AculFilters{}
+		var fernTestValueMatchType *AculMatchTypeEnum
+		obj.SetMatchType(fernTestValueMatchType)
+		assert.Equal(t, fernTestValueMatchType, obj.MatchType)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetClients", func(t *testing.T) {
+		obj := &AculFilters{}
+		var fernTestValueClients []*AculClientFilter
+		obj.SetClients(fernTestValueClients)
+		assert.Equal(t, fernTestValueClients, obj.Clients)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOrganizations", func(t *testing.T) {
+		obj := &AculFilters{}
+		var fernTestValueOrganizations []*AculOrganizationFilter
+		obj.SetOrganizations(fernTestValueOrganizations)
+		assert.Equal(t, fernTestValueOrganizations, obj.Organizations)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDomains", func(t *testing.T) {
+		obj := &AculFilters{}
+		var fernTestValueDomains []*AculDomainFilter
+		obj.SetDomains(fernTestValueDomains)
+		assert.Equal(t, fernTestValueDomains, obj.Domains)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAculFilters(t *testing.T) {
+	t.Run("GetMatchType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		var value AculMatchTypeEnum
+		obj.MatchType = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMatchType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMatchType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		obj.MatchType = nil
+		var expectedZero AculMatchTypeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMatchType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMatchType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculFilters
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMatchType() // Should return zero value
+	})
+
+	t.Run("GetClients", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		var expected []*AculClientFilter
+		obj.Clients = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetClients(), "getter should return the property value")
+	})
+
+	t.Run("GetClients_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		obj.Clients = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetClients(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetClients_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculFilters
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClients() // Should return zero value
+	})
+
+	t.Run("GetOrganizations", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		var expected []*AculOrganizationFilter
+		obj.Organizations = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetOrganizations(), "getter should return the property value")
+	})
+
+	t.Run("GetOrganizations_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		obj.Organizations = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetOrganizations(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetOrganizations_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculFilters
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOrganizations() // Should return zero value
+	})
+
+	t.Run("GetDomains", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		var expected []*AculDomainFilter
+		obj.Domains = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDomains(), "getter should return the property value")
+	})
+
+	t.Run("GetDomains_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		obj.Domains = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDomains(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDomains_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculFilters
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDomains() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAculFilters(t *testing.T) {
+	t.Run("SetMatchType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		var fernTestValueMatchType *AculMatchTypeEnum
+
+		// Act
+		obj.SetMatchType(fernTestValueMatchType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClients_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		var fernTestValueClients []*AculClientFilter
+
+		// Act
+		obj.SetClients(fernTestValueClients)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOrganizations_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		var fernTestValueOrganizations []*AculOrganizationFilter
+
+		// Act
+		obj.SetOrganizations(fernTestValueOrganizations)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDomains_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+		var fernTestValueDomains []*AculDomainFilter
+
+		// Act
+		obj.SetDomains(fernTestValueDomains)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersAculHeadTag(t *testing.T) {
+	t.Run("SetTag", func(t *testing.T) {
+		obj := &AculHeadTag{}
+		var fernTestValueTag *string
+		obj.SetTag(fernTestValueTag)
+		assert.Equal(t, fernTestValueTag, obj.Tag)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAttributes", func(t *testing.T) {
+		obj := &AculHeadTag{}
+		var fernTestValueAttributes *AculHeadTagAttributes
+		obj.SetAttributes(fernTestValueAttributes)
+		assert.Equal(t, fernTestValueAttributes, obj.Attributes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetContent", func(t *testing.T) {
+		obj := &AculHeadTag{}
+		var fernTestValueContent *AculHeadTagContent
+		obj.SetContent(fernTestValueContent)
+		assert.Equal(t, fernTestValueContent, obj.Content)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAculHeadTag(t *testing.T) {
+	t.Run("GetTag", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+		var value string
+		obj.Tag = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTag(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTag_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+		obj.Tag = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTag(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTag_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculHeadTag
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTag() // Should return zero value
+	})
+
+	t.Run("GetAttributes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+		var value AculHeadTagAttributes
+		obj.Attributes = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAttributes(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAttributes_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+		obj.Attributes = nil
+		var expectedZero AculHeadTagAttributes
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAttributes(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAttributes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculHeadTag
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAttributes() // Should return zero value
+	})
+
+	t.Run("GetContent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+		var value AculHeadTagContent
+		obj.Content = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetContent(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetContent_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+		obj.Content = nil
+		var expectedZero AculHeadTagContent
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetContent(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetContent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculHeadTag
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetContent() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAculHeadTag(t *testing.T) {
+	t.Run("SetTag_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+		var fernTestValueTag *string
+
+		// Act
+		obj.SetTag(fernTestValueTag)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAttributes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+		var fernTestValueAttributes *AculHeadTagAttributes
+
+		// Act
+		obj.SetAttributes(fernTestValueAttributes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetContent_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+		var fernTestValueContent *AculHeadTagContent
+
+		// Act
+		obj.SetContent(fernTestValueContent)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestGettersAculOrganizationFilter(t *testing.T) {
+	t.Run("GetAculOrganizationFilterByID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilter{}
+		var expected *AculOrganizationFilterByID
+		obj.AculOrganizationFilterByID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAculOrganizationFilterByID(), "getter should return the property value")
+	})
+
+	t.Run("GetAculOrganizationFilterByID_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilter{}
+		obj.AculOrganizationFilterByID = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAculOrganizationFilterByID(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAculOrganizationFilterByID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculOrganizationFilter
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAculOrganizationFilterByID() // Should return zero value
+	})
+
+	t.Run("GetAculOrganizationFilterByMetadata", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilter{}
+		var expected *AculOrganizationFilterByMetadata
+		obj.AculOrganizationFilterByMetadata = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAculOrganizationFilterByMetadata(), "getter should return the property value")
+	})
+
+	t.Run("GetAculOrganizationFilterByMetadata_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilter{}
+		obj.AculOrganizationFilterByMetadata = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAculOrganizationFilterByMetadata(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAculOrganizationFilterByMetadata_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculOrganizationFilter
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAculOrganizationFilterByMetadata() // Should return zero value
+	})
+
+}
+
+func TestSettersAculOrganizationFilterByID(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
+		obj := &AculOrganizationFilterByID{}
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAculOrganizationFilterByID(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilterByID{}
+		var expected string
+		obj.ID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
+	})
+
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculOrganizationFilterByID
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetID() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAculOrganizationFilterByID(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilterByID{}
+		var fernTestValueID string
+
+		// Act
+		obj.SetID(fernTestValueID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersAculOrganizationFilterByMetadata(t *testing.T) {
+	t.Run("SetMetadata", func(t *testing.T) {
+		obj := &AculOrganizationFilterByMetadata{}
+		var fernTestValueMetadata AculOrganizationMetadata
+		obj.SetMetadata(fernTestValueMetadata)
+		assert.Equal(t, fernTestValueMetadata, obj.Metadata)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAculOrganizationFilterByMetadata(t *testing.T) {
+	t.Run("GetMetadata", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilterByMetadata{}
+		var expected AculOrganizationMetadata
+		obj.Metadata = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMetadata(), "getter should return the property value")
+	})
+
+	t.Run("GetMetadata_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculOrganizationFilterByMetadata
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMetadata() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAculOrganizationFilterByMetadata(t *testing.T) {
+	t.Run("SetMetadata_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilterByMetadata{}
+		var fernTestValueMetadata AculOrganizationMetadata
+
+		// Act
+		obj.SetMetadata(fernTestValueMetadata)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersBulkUpdateAculResponseContent(t *testing.T) {
+	t.Run("SetConfigs", func(t *testing.T) {
+		obj := &BulkUpdateAculResponseContent{}
+		var fernTestValueConfigs AculConfigs
+		obj.SetConfigs(fernTestValueConfigs)
+		assert.Equal(t, fernTestValueConfigs, obj.Configs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersBulkUpdateAculResponseContent(t *testing.T) {
+	t.Run("GetConfigs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BulkUpdateAculResponseContent{}
+		var expected AculConfigs
+		obj.Configs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetConfigs(), "getter should return the property value")
+	})
+
+	t.Run("GetConfigs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BulkUpdateAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetConfigs() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitBulkUpdateAculResponseContent(t *testing.T) {
+	t.Run("SetConfigs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BulkUpdateAculResponseContent{}
+		var fernTestValueConfigs AculConfigs
+
+		// Act
+		obj.SetConfigs(fernTestValueConfigs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersGetAculResponseContent(t *testing.T) {
+	t.Run("SetTenant", func(t *testing.T) {
+		obj := &GetAculResponseContent{}
+		var fernTestValueTenant *string
+		obj.SetTenant(fernTestValueTenant)
+		assert.Equal(t, fernTestValueTenant, obj.Tenant)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPrompt", func(t *testing.T) {
+		obj := &GetAculResponseContent{}
+		var fernTestValuePrompt *string
+		obj.SetPrompt(fernTestValuePrompt)
+		assert.Equal(t, fernTestValuePrompt, obj.Prompt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetScreen", func(t *testing.T) {
+		obj := &GetAculResponseContent{}
+		var fernTestValueScreen *string
+		obj.SetScreen(fernTestValueScreen)
+		assert.Equal(t, fernTestValueScreen, obj.Screen)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRenderingMode", func(t *testing.T) {
+		obj := &GetAculResponseContent{}
+		var fernTestValueRenderingMode *AculRenderingModeEnum
+		obj.SetRenderingMode(fernTestValueRenderingMode)
+		assert.Equal(t, fernTestValueRenderingMode, obj.RenderingMode)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetContextConfiguration", func(t *testing.T) {
+		obj := &GetAculResponseContent{}
+		var fernTestValueContextConfiguration *AculContextConfiguration
+		obj.SetContextConfiguration(fernTestValueContextConfiguration)
+		assert.Equal(t, fernTestValueContextConfiguration, obj.ContextConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDefaultHeadTagsDisabled", func(t *testing.T) {
+		obj := &GetAculResponseContent{}
+		var fernTestValueDefaultHeadTagsDisabled *bool
+		obj.SetDefaultHeadTagsDisabled(fernTestValueDefaultHeadTagsDisabled)
+		assert.Equal(t, fernTestValueDefaultHeadTagsDisabled, obj.DefaultHeadTagsDisabled)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetUsePageTemplate", func(t *testing.T) {
+		obj := &GetAculResponseContent{}
+		var fernTestValueUsePageTemplate *bool
+		obj.SetUsePageTemplate(fernTestValueUsePageTemplate)
+		assert.Equal(t, fernTestValueUsePageTemplate, obj.UsePageTemplate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHeadTags", func(t *testing.T) {
+		obj := &GetAculResponseContent{}
+		var fernTestValueHeadTags []*AculHeadTag
+		obj.SetHeadTags(fernTestValueHeadTags)
+		assert.Equal(t, fernTestValueHeadTags, obj.HeadTags)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetFilters", func(t *testing.T) {
+		obj := &GetAculResponseContent{}
+		var fernTestValueFilters *AculFilters
+		obj.SetFilters(fernTestValueFilters)
+		assert.Equal(t, fernTestValueFilters, obj.Filters)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersGetAculResponseContent(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var value string
+		obj.Tenant = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTenant(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTenant_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		obj.Tenant = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTenant(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTenant() // Should return zero value
+	})
+
+	t.Run("GetPrompt", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var value string
+		obj.Prompt = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetPrompt(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetPrompt_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		obj.Prompt = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetPrompt(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetPrompt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPrompt() // Should return zero value
+	})
+
+	t.Run("GetScreen", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var value string
+		obj.Screen = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetScreen(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetScreen_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		obj.Screen = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetScreen(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetScreen_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetScreen() // Should return zero value
+	})
+
+	t.Run("GetRenderingMode", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var value AculRenderingModeEnum
+		obj.RenderingMode = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRenderingMode(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRenderingMode_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		obj.RenderingMode = nil
+		var expectedZero AculRenderingModeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRenderingMode(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRenderingMode_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRenderingMode() // Should return zero value
+	})
+
+	t.Run("GetContextConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var value AculContextConfiguration
+		obj.ContextConfiguration = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetContextConfiguration(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetContextConfiguration_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		obj.ContextConfiguration = nil
+		var expectedZero AculContextConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetContextConfiguration(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetContextConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetContextConfiguration() // Should return zero value
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var value bool
+		obj.DefaultHeadTagsDisabled = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefaultHeadTagsDisabled(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		obj.DefaultHeadTagsDisabled = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefaultHeadTagsDisabled(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultHeadTagsDisabled() // Should return zero value
+	})
+
+	t.Run("GetUsePageTemplate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var value bool
+		obj.UsePageTemplate = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUsePageTemplate(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUsePageTemplate_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		obj.UsePageTemplate = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUsePageTemplate(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUsePageTemplate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUsePageTemplate() // Should return zero value
+	})
+
+	t.Run("GetHeadTags", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var expected []*AculHeadTag
+		obj.HeadTags = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetHeadTags(), "getter should return the property value")
+	})
+
+	t.Run("GetHeadTags_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		obj.HeadTags = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHeadTags(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHeadTags_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHeadTags() // Should return zero value
+	})
+
+	t.Run("GetFilters", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var value AculFilters
+		obj.Filters = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetFilters(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetFilters_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		obj.Filters = nil
+		var expectedZero AculFilters
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetFilters(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetFilters_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFilters() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitGetAculResponseContent(t *testing.T) {
+	t.Run("SetTenant_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var fernTestValueTenant *string
+
+		// Act
+		obj.SetTenant(fernTestValueTenant)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPrompt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var fernTestValuePrompt *string
+
+		// Act
+		obj.SetPrompt(fernTestValuePrompt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetScreen_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var fernTestValueScreen *string
+
+		// Act
+		obj.SetScreen(fernTestValueScreen)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRenderingMode_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var fernTestValueRenderingMode *AculRenderingModeEnum
+
+		// Act
+		obj.SetRenderingMode(fernTestValueRenderingMode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetContextConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var fernTestValueContextConfiguration *AculContextConfiguration
+
+		// Act
+		obj.SetContextConfiguration(fernTestValueContextConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDefaultHeadTagsDisabled_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var fernTestValueDefaultHeadTagsDisabled *bool
+
+		// Act
+		obj.SetDefaultHeadTagsDisabled(fernTestValueDefaultHeadTagsDisabled)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUsePageTemplate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var fernTestValueUsePageTemplate *bool
+
+		// Act
+		obj.SetUsePageTemplate(fernTestValueUsePageTemplate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHeadTags_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var fernTestValueHeadTags []*AculHeadTag
+
+		// Act
+		obj.SetHeadTags(fernTestValueHeadTags)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetFilters_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+		var fernTestValueFilters *AculFilters
+
+		// Act
+		obj.SetFilters(fernTestValueFilters)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersGetSettingsResponseContent(t *testing.T) {
 	t.Run("SetUniversalLoginExperience", func(t *testing.T) {
 		obj := &GetSettingsResponseContent{}
@@ -212,6 +2726,1486 @@ func TestSettersMarkExplicitGetSettingsResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetWebauthnPlatformFirstFactor(fernTestValueWebauthnPlatformFirstFactor)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersListAculsOffsetPaginatedResponseContent(t *testing.T) {
+	t.Run("SetConfigs", func(t *testing.T) {
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var fernTestValueConfigs []*ListAculsResponseContentItem
+		obj.SetConfigs(fernTestValueConfigs)
+		assert.Equal(t, fernTestValueConfigs, obj.Configs)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetStart", func(t *testing.T) {
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var fernTestValueStart *float64
+		obj.SetStart(fernTestValueStart)
+		assert.Equal(t, fernTestValueStart, obj.Start)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetLimit", func(t *testing.T) {
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var fernTestValueLimit *float64
+		obj.SetLimit(fernTestValueLimit)
+		assert.Equal(t, fernTestValueLimit, obj.Limit)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetTotal", func(t *testing.T) {
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var fernTestValueTotal *float64
+		obj.SetTotal(fernTestValueTotal)
+		assert.Equal(t, fernTestValueTotal, obj.Total)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersListAculsOffsetPaginatedResponseContent(t *testing.T) {
+	t.Run("GetConfigs", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var expected []*ListAculsResponseContentItem
+		obj.Configs = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetConfigs(), "getter should return the property value")
+	})
+
+	t.Run("GetConfigs_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		obj.Configs = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetConfigs(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetConfigs_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsOffsetPaginatedResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetConfigs() // Should return zero value
+	})
+
+	t.Run("GetStart", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var value float64
+		obj.Start = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetStart(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetStart_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		obj.Start = nil
+		var expectedZero float64
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetStart(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetStart_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsOffsetPaginatedResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStart() // Should return zero value
+	})
+
+	t.Run("GetLimit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var value float64
+		obj.Limit = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetLimit(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetLimit_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		obj.Limit = nil
+		var expectedZero float64
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetLimit(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetLimit_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsOffsetPaginatedResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetLimit() // Should return zero value
+	})
+
+	t.Run("GetTotal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var value float64
+		obj.Total = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTotal(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTotal_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		obj.Total = nil
+		var expectedZero float64
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTotal(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTotal_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsOffsetPaginatedResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTotal() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitListAculsOffsetPaginatedResponseContent(t *testing.T) {
+	t.Run("SetConfigs_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var fernTestValueConfigs []*ListAculsResponseContentItem
+
+		// Act
+		obj.SetConfigs(fernTestValueConfigs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetStart_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var fernTestValueStart *float64
+
+		// Act
+		obj.SetStart(fernTestValueStart)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetLimit_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var fernTestValueLimit *float64
+
+		// Act
+		obj.SetLimit(fernTestValueLimit)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetTotal_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		var fernTestValueTotal *float64
+
+		// Act
+		obj.SetTotal(fernTestValueTotal)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestGettersListAculsResponseContent(t *testing.T) {
+	t.Run("GetListAculsResponseContentItemList", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContent{}
+		var expected []*ListAculsResponseContentItem
+		obj.ListAculsResponseContentItemList = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetListAculsResponseContentItemList(), "getter should return the property value")
+	})
+
+	t.Run("GetListAculsResponseContentItemList_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContent{}
+		obj.ListAculsResponseContentItemList = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetListAculsResponseContentItemList(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetListAculsResponseContentItemList_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetListAculsResponseContentItemList() // Should return zero value
+	})
+
+	t.Run("GetListAculsOffsetPaginatedResponseContent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContent{}
+		var expected *ListAculsOffsetPaginatedResponseContent
+		obj.ListAculsOffsetPaginatedResponseContent = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetListAculsOffsetPaginatedResponseContent(), "getter should return the property value")
+	})
+
+	t.Run("GetListAculsOffsetPaginatedResponseContent_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContent{}
+		obj.ListAculsOffsetPaginatedResponseContent = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetListAculsOffsetPaginatedResponseContent(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetListAculsOffsetPaginatedResponseContent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetListAculsOffsetPaginatedResponseContent() // Should return zero value
+	})
+
+}
+
+func TestSettersListAculsResponseContentItem(t *testing.T) {
+	t.Run("SetTenant", func(t *testing.T) {
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueTenant *string
+		obj.SetTenant(fernTestValueTenant)
+		assert.Equal(t, fernTestValueTenant, obj.Tenant)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPrompt", func(t *testing.T) {
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValuePrompt *string
+		obj.SetPrompt(fernTestValuePrompt)
+		assert.Equal(t, fernTestValuePrompt, obj.Prompt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetScreen", func(t *testing.T) {
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueScreen *string
+		obj.SetScreen(fernTestValueScreen)
+		assert.Equal(t, fernTestValueScreen, obj.Screen)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRenderingMode", func(t *testing.T) {
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueRenderingMode *AculRenderingModeEnum
+		obj.SetRenderingMode(fernTestValueRenderingMode)
+		assert.Equal(t, fernTestValueRenderingMode, obj.RenderingMode)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetContextConfiguration", func(t *testing.T) {
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueContextConfiguration *AculContextConfiguration
+		obj.SetContextConfiguration(fernTestValueContextConfiguration)
+		assert.Equal(t, fernTestValueContextConfiguration, obj.ContextConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDefaultHeadTagsDisabled", func(t *testing.T) {
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueDefaultHeadTagsDisabled *bool
+		obj.SetDefaultHeadTagsDisabled(fernTestValueDefaultHeadTagsDisabled)
+		assert.Equal(t, fernTestValueDefaultHeadTagsDisabled, obj.DefaultHeadTagsDisabled)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetUsePageTemplate", func(t *testing.T) {
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueUsePageTemplate *bool
+		obj.SetUsePageTemplate(fernTestValueUsePageTemplate)
+		assert.Equal(t, fernTestValueUsePageTemplate, obj.UsePageTemplate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHeadTags", func(t *testing.T) {
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueHeadTags []*AculHeadTag
+		obj.SetHeadTags(fernTestValueHeadTags)
+		assert.Equal(t, fernTestValueHeadTags, obj.HeadTags)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetFilters", func(t *testing.T) {
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueFilters *AculFilters
+		obj.SetFilters(fernTestValueFilters)
+		assert.Equal(t, fernTestValueFilters, obj.Filters)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersListAculsResponseContentItem(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var value string
+		obj.Tenant = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetTenant(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetTenant_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		obj.Tenant = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetTenant(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTenant() // Should return zero value
+	})
+
+	t.Run("GetPrompt", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var value string
+		obj.Prompt = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetPrompt(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetPrompt_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		obj.Prompt = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetPrompt(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetPrompt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPrompt() // Should return zero value
+	})
+
+	t.Run("GetScreen", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var value string
+		obj.Screen = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetScreen(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetScreen_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		obj.Screen = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetScreen(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetScreen_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetScreen() // Should return zero value
+	})
+
+	t.Run("GetRenderingMode", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var value AculRenderingModeEnum
+		obj.RenderingMode = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRenderingMode(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRenderingMode_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		obj.RenderingMode = nil
+		var expectedZero AculRenderingModeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRenderingMode(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRenderingMode_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRenderingMode() // Should return zero value
+	})
+
+	t.Run("GetContextConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var value AculContextConfiguration
+		obj.ContextConfiguration = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetContextConfiguration(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetContextConfiguration_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		obj.ContextConfiguration = nil
+		var expectedZero AculContextConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetContextConfiguration(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetContextConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetContextConfiguration() // Should return zero value
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var value bool
+		obj.DefaultHeadTagsDisabled = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefaultHeadTagsDisabled(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		obj.DefaultHeadTagsDisabled = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefaultHeadTagsDisabled(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultHeadTagsDisabled() // Should return zero value
+	})
+
+	t.Run("GetUsePageTemplate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var value bool
+		obj.UsePageTemplate = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUsePageTemplate(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUsePageTemplate_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		obj.UsePageTemplate = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUsePageTemplate(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUsePageTemplate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUsePageTemplate() // Should return zero value
+	})
+
+	t.Run("GetHeadTags", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var expected []*AculHeadTag
+		obj.HeadTags = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetHeadTags(), "getter should return the property value")
+	})
+
+	t.Run("GetHeadTags_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		obj.HeadTags = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHeadTags(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHeadTags_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHeadTags() // Should return zero value
+	})
+
+	t.Run("GetFilters", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var value AculFilters
+		obj.Filters = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetFilters(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetFilters_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		obj.Filters = nil
+		var expectedZero AculFilters
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetFilters(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetFilters_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFilters() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitListAculsResponseContentItem(t *testing.T) {
+	t.Run("SetTenant_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueTenant *string
+
+		// Act
+		obj.SetTenant(fernTestValueTenant)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPrompt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValuePrompt *string
+
+		// Act
+		obj.SetPrompt(fernTestValuePrompt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetScreen_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueScreen *string
+
+		// Act
+		obj.SetScreen(fernTestValueScreen)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRenderingMode_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueRenderingMode *AculRenderingModeEnum
+
+		// Act
+		obj.SetRenderingMode(fernTestValueRenderingMode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetContextConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueContextConfiguration *AculContextConfiguration
+
+		// Act
+		obj.SetContextConfiguration(fernTestValueContextConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDefaultHeadTagsDisabled_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueDefaultHeadTagsDisabled *bool
+
+		// Act
+		obj.SetDefaultHeadTagsDisabled(fernTestValueDefaultHeadTagsDisabled)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUsePageTemplate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueUsePageTemplate *bool
+
+		// Act
+		obj.SetUsePageTemplate(fernTestValueUsePageTemplate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHeadTags_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueHeadTags []*AculHeadTag
+
+		// Act
+		obj.SetHeadTags(fernTestValueHeadTags)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetFilters_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+		var fernTestValueFilters *AculFilters
+
+		// Act
+		obj.SetFilters(fernTestValueFilters)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersUpdateAculResponseContent(t *testing.T) {
+	t.Run("SetRenderingMode", func(t *testing.T) {
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueRenderingMode *AculRenderingModeEnum
+		obj.SetRenderingMode(fernTestValueRenderingMode)
+		assert.Equal(t, fernTestValueRenderingMode, obj.RenderingMode)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetContextConfiguration", func(t *testing.T) {
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueContextConfiguration *AculContextConfiguration
+		obj.SetContextConfiguration(fernTestValueContextConfiguration)
+		assert.Equal(t, fernTestValueContextConfiguration, obj.ContextConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDefaultHeadTagsDisabled", func(t *testing.T) {
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueDefaultHeadTagsDisabled *bool
+		obj.SetDefaultHeadTagsDisabled(fernTestValueDefaultHeadTagsDisabled)
+		assert.Equal(t, fernTestValueDefaultHeadTagsDisabled, obj.DefaultHeadTagsDisabled)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetUsePageTemplate", func(t *testing.T) {
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueUsePageTemplate *bool
+		obj.SetUsePageTemplate(fernTestValueUsePageTemplate)
+		assert.Equal(t, fernTestValueUsePageTemplate, obj.UsePageTemplate)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHeadTags", func(t *testing.T) {
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueHeadTags []*AculHeadTag
+		obj.SetHeadTags(fernTestValueHeadTags)
+		assert.Equal(t, fernTestValueHeadTags, obj.HeadTags)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetFilters", func(t *testing.T) {
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueFilters *AculFilters
+		obj.SetFilters(fernTestValueFilters)
+		assert.Equal(t, fernTestValueFilters, obj.Filters)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersUpdateAculResponseContent(t *testing.T) {
+	t.Run("GetRenderingMode", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var value AculRenderingModeEnum
+		obj.RenderingMode = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRenderingMode(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRenderingMode_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		obj.RenderingMode = nil
+		var expectedZero AculRenderingModeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRenderingMode(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRenderingMode_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRenderingMode() // Should return zero value
+	})
+
+	t.Run("GetContextConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var value AculContextConfiguration
+		obj.ContextConfiguration = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetContextConfiguration(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetContextConfiguration_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		obj.ContextConfiguration = nil
+		var expectedZero AculContextConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetContextConfiguration(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetContextConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetContextConfiguration() // Should return zero value
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var value bool
+		obj.DefaultHeadTagsDisabled = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefaultHeadTagsDisabled(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		obj.DefaultHeadTagsDisabled = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefaultHeadTagsDisabled(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefaultHeadTagsDisabled_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultHeadTagsDisabled() // Should return zero value
+	})
+
+	t.Run("GetUsePageTemplate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var value bool
+		obj.UsePageTemplate = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUsePageTemplate(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUsePageTemplate_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		obj.UsePageTemplate = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUsePageTemplate(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUsePageTemplate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUsePageTemplate() // Should return zero value
+	})
+
+	t.Run("GetHeadTags", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var expected []*AculHeadTag
+		obj.HeadTags = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetHeadTags(), "getter should return the property value")
+	})
+
+	t.Run("GetHeadTags_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		obj.HeadTags = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHeadTags(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHeadTags_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHeadTags() // Should return zero value
+	})
+
+	t.Run("GetFilters", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var value AculFilters
+		obj.Filters = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetFilters(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetFilters_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		obj.Filters = nil
+		var expectedZero AculFilters
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetFilters(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetFilters_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateAculResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFilters() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitUpdateAculResponseContent(t *testing.T) {
+	t.Run("SetRenderingMode_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueRenderingMode *AculRenderingModeEnum
+
+		// Act
+		obj.SetRenderingMode(fernTestValueRenderingMode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetContextConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueContextConfiguration *AculContextConfiguration
+
+		// Act
+		obj.SetContextConfiguration(fernTestValueContextConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDefaultHeadTagsDisabled_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueDefaultHeadTagsDisabled *bool
+
+		// Act
+		obj.SetDefaultHeadTagsDisabled(fernTestValueDefaultHeadTagsDisabled)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUsePageTemplate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueUsePageTemplate *bool
+
+		// Act
+		obj.SetUsePageTemplate(fernTestValueUsePageTemplate)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHeadTags_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueHeadTags []*AculHeadTag
+
+		// Act
+		obj.SetHeadTags(fernTestValueHeadTags)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetFilters_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+		var fernTestValueFilters *AculFilters
+
+		// Act
+		obj.SetFilters(fernTestValueFilters)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -465,6 +4459,369 @@ func TestSettersMarkExplicitUpdateSettingsResponseContent(t *testing.T) {
 
 }
 
+func TestJSONMarshalingAculClientFilterByID(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilterByID{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AculClientFilterByID
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AculClientFilterByID
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AculClientFilterByID
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAculClientFilterByMetadata(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculClientFilterByMetadata{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AculClientFilterByMetadata
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AculClientFilterByMetadata
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AculClientFilterByMetadata
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAculConfigsItem(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculConfigsItem{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AculConfigsItem
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AculConfigsItem
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AculConfigsItem
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAculDomainFilterByID(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilterByID{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AculDomainFilterByID
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AculDomainFilterByID
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AculDomainFilterByID
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAculDomainFilterByMetadata(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculDomainFilterByMetadata{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AculDomainFilterByMetadata
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AculDomainFilterByMetadata
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AculDomainFilterByMetadata
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAculFilters(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculFilters{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AculFilters
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AculFilters
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AculFilters
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAculHeadTag(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculHeadTag{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AculHeadTag
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AculHeadTag
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AculHeadTag
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAculOrganizationFilterByID(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilterByID{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AculOrganizationFilterByID
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AculOrganizationFilterByID
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AculOrganizationFilterByID
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAculOrganizationFilterByMetadata(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AculOrganizationFilterByMetadata{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AculOrganizationFilterByMetadata
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AculOrganizationFilterByMetadata
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AculOrganizationFilterByMetadata
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingBulkUpdateAculResponseContent(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BulkUpdateAculResponseContent{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled BulkUpdateAculResponseContent
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj BulkUpdateAculResponseContent
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj BulkUpdateAculResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingGetAculResponseContent(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetAculResponseContent{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled GetAculResponseContent
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj GetAculResponseContent
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj GetAculResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingGetSettingsResponseContent(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -493,6 +4850,105 @@ func TestJSONMarshalingGetSettingsResponseContent(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj GetSettingsResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingListAculsOffsetPaginatedResponseContent(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ListAculsOffsetPaginatedResponseContent
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ListAculsOffsetPaginatedResponseContent
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ListAculsOffsetPaginatedResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingListAculsResponseContentItem(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListAculsResponseContentItem{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ListAculsResponseContentItem
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ListAculsResponseContentItem
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ListAculsResponseContentItem
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingUpdateAculResponseContent(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateAculResponseContent{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled UpdateAculResponseContent
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj UpdateAculResponseContent
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj UpdateAculResponseContent
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -531,6 +4987,182 @@ func TestJSONMarshalingUpdateSettingsResponseContent(t *testing.T) {
 	})
 }
 
+func TestStringAculClientFilterByID(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculClientFilterByID{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculClientFilterByID
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAculClientFilterByMetadata(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculClientFilterByMetadata{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculClientFilterByMetadata
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAculConfigsItem(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculConfigsItem{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAculDomainFilterByID(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculDomainFilterByID{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculDomainFilterByID
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAculDomainFilterByMetadata(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculDomainFilterByMetadata{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculDomainFilterByMetadata
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAculFilters(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculFilters{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculFilters
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAculHeadTag(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculHeadTag{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculHeadTag
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAculOrganizationFilterByID(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculOrganizationFilterByID{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculOrganizationFilterByID
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAculOrganizationFilterByMetadata(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculOrganizationFilterByMetadata{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculOrganizationFilterByMetadata
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringBulkUpdateAculResponseContent(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &BulkUpdateAculResponseContent{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BulkUpdateAculResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringGetAculResponseContent(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &GetAculResponseContent{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringGetSettingsResponseContent(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -542,6 +5174,54 @@ func TestStringGetSettingsResponseContent(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetSettingsResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringListAculsOffsetPaginatedResponseContent(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsOffsetPaginatedResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringListAculsResponseContentItem(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ListAculsResponseContentItem{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringUpdateAculResponseContent(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &UpdateAculResponseContent{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateAculResponseContent
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -560,6 +5240,1812 @@ func TestStringUpdateSettingsResponseContent(t *testing.T) {
 		var obj *UpdateSettingsResponseContent
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestEnumAculContextEnum(t *testing.T) {
+	t.Run("NewFromString_branding_settings", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("branding.settings")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("branding.settings"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_branding_themes_default", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("branding.themes.default")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("branding.themes.default"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_country_codes", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("country_codes")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("country_codes"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_client_logo_uri", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("client.logo_uri")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("client.logo_uri"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_client_description", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("client.description")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("client.description"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organization_display_name", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("organization.display_name")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("organization.display_name"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organization_branding", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("organization.branding")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("organization.branding"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_screen_texts", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("screen.texts")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("screen.texts"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_tenant_name", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("tenant.name")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("tenant.name"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_tenant_friendly_name", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("tenant.friendly_name")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("tenant.friendly_name"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_tenant_logo_url", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("tenant.logo_url")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("tenant.logo_url"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_tenant_enabled_locales", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("tenant.enabled_locales")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("tenant.enabled_locales"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_untrusted_data_submitted_form_data", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("untrusted_data.submitted_form_data")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("untrusted_data.submitted_form_data"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_untrusted_data_authorization_params_login_hint", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("untrusted_data.authorization_params.login_hint")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("untrusted_data.authorization_params.login_hint"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_untrusted_data_authorization_params_screen_hint", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("untrusted_data.authorization_params.screen_hint")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("untrusted_data.authorization_params.screen_hint"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_untrusted_data_authorization_params_ui_locales", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("untrusted_data.authorization_params.ui_locales")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("untrusted_data.authorization_params.ui_locales"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_user_organizations", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("user.organizations")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("user.organizations"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_transaction_custom_domain_domain", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("transaction.custom_domain.domain")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("transaction.custom_domain.domain"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_experiment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculContextEnumFromString("experiment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculContextEnum("experiment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewAculContextEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewAculContextEnumFromString("branding.settings")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumAculMatchTypeEnum(t *testing.T) {
+	t.Run("NewFromString_includes_any", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculMatchTypeEnumFromString("includes_any")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculMatchTypeEnum("includes_any"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_excludes_any", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculMatchTypeEnumFromString("excludes_any")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculMatchTypeEnum("excludes_any"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewAculMatchTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewAculMatchTypeEnumFromString("includes_any")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumAculRenderingModeEnum(t *testing.T) {
+	t.Run("NewFromString_advanced", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculRenderingModeEnumFromString("advanced")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculRenderingModeEnum("advanced"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_standard", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAculRenderingModeEnumFromString("standard")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AculRenderingModeEnum("standard"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewAculRenderingModeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewAculRenderingModeEnumFromString("advanced")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPartialGroupsEnum(t *testing.T) {
+	t.Run("NewFromString_login", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("login")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("login"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_id", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("login-id")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("login-id"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_password", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("login-password")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("login-password"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_passwordless", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("login-passwordless")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("login-passwordless"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_signup", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("signup")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("signup"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_signup_id", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("signup-id")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("signup-id"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_signup_password", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("signup-password")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("signup-password"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_customized_consent", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("customized-consent")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("customized-consent"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_passkeys", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("passkeys")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("passkeys"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_confirmation", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPartialGroupsEnumFromString("confirmation")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PartialGroupsEnum("confirmation"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPartialGroupsEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPartialGroupsEnumFromString("login")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPromptGroupNameEnum(t *testing.T) {
+	t.Run("NewFromString_login", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("login")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("login"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_id", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("login-id")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("login-id"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_password", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("login-password")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("login-password"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_passwordless", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("login-passwordless")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("login-passwordless"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_email_verification", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("login-email-verification")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("login-email-verification"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_signup", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("signup")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("signup"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_signup_id", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("signup-id")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("signup-id"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_signup_password", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("signup-password")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("signup-password"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_phone_identifier_enrollment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("phone-identifier-enrollment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("phone-identifier-enrollment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_phone_identifier_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("phone-identifier-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("phone-identifier-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_email_identifier_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("email-identifier-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("email-identifier-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("reset-password")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("reset-password"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_custom_form", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("custom-form")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("custom-form"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_consent", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("consent")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("consent"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_customized_consent", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("customized-consent")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("customized-consent"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_logout", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("logout")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("logout"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_push", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("mfa-push")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("mfa-push"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_otp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("mfa-otp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("mfa-otp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_voice", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("mfa-voice")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("mfa-voice"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_phone", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("mfa-phone")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("mfa-phone"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_webauthn", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("mfa-webauthn")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("mfa-webauthn"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_sms", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("mfa-sms")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("mfa-sms"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_email", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("mfa-email")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("mfa-email"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_recovery_code", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("mfa-recovery-code")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("mfa-recovery-code"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("mfa")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("mfa"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_status", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("status")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("status"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_device_flow", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("device-flow")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("device-flow"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_email_verification", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("email-verification")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("email-verification"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_email_otp_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("email-otp-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("email-otp-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organizations", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("organizations")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("organizations"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_invitation", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("invitation")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("invitation"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_common", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("common")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("common"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_passkeys", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("passkeys")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("passkeys"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_captcha", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("captcha")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("captcha"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_brute_force_protection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("brute-force-protection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("brute-force-protection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_async_approval_flow", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("async-approval-flow")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("async-approval-flow"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_confirmation", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptGroupNameEnumFromString("confirmation")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptGroupNameEnum("confirmation"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPromptGroupNameEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPromptGroupNameEnumFromString("login")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPromptLanguageEnum(t *testing.T) {
+	t.Run("NewFromString_am", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("am")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("am"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ar", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ar")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ar"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ar_EG", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ar-EG")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ar-EG"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ar_SA", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ar-SA")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ar-SA"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_az", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("az")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("az"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_bg", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("bg")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("bg"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_bn", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("bn")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("bn"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_bs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("bs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("bs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ca_ES", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ca-ES")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ca-ES"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_cnr", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("cnr")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("cnr"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_cs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("cs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("cs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_cy", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("cy")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("cy"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_da", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("da")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("da"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_de", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("de")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("de"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_el", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("el")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("el"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_en", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("en")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("en"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_en_CA", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("en-CA")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("en-CA"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_es", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("es")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("es"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_es_419", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("es-419")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("es-419"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_es_AR", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("es-AR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("es-AR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_es_MX", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("es-MX")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("es-MX"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_et", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("et")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("et"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_eu_ES", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("eu-ES")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("eu-ES"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_fa", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("fa")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("fa"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_fi", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("fi")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("fi"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_fr", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("fr")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("fr"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_fr_CA", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("fr-CA")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("fr-CA"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_fr_FR", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("fr-FR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("fr-FR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_gl_ES", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("gl-ES")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("gl-ES"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_gu", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("gu")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("gu"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_he", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("he")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("he"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_hi", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("hi")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("hi"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_hr", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("hr")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("hr"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_hu", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("hu")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("hu"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_hy", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("hy")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("hy"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_id", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("id")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("id"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_is", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("is")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("is"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_it", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("it")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("it"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ja", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ja")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ja"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ka", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ka")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ka"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_kk", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("kk")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("kk"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_kn", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("kn")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("kn"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ko", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ko")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ko"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_lt", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("lt")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("lt"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_lv", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("lv")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("lv"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mk", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("mk")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("mk"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ml", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ml")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ml"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mn", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("mn")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("mn"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mr", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("mr")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("mr"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ms", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ms")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ms"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_my", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("my")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("my"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_nb", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("nb")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("nb"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_nl", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("nl")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("nl"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_nn", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("nn")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("nn"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_no", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("no")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("no"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_pa", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("pa")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("pa"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_pl", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("pl")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("pl"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_pt", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("pt")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("pt"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_pt_BR", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("pt-BR")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("pt-BR"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_pt_PT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("pt-PT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("pt-PT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ro", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ro")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ro"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ru", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ru")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ru"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_sk", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("sk")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("sk"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_sl", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("sl")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("sl"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_so", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("so")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("so"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_sq", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("sq")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("sq"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_sr", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("sr")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("sr"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_sv", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("sv")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("sv"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_sw", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("sw")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("sw"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_te", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("te")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("te"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_th", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("th")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("th"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_tl", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("tl")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("tl"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_tr", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("tr")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("tr"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_uk", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("uk")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("uk"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ur", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("ur")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("ur"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_vi", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("vi")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("vi"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_zgh", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("zgh")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("zgh"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_zh_CN", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("zh-CN")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("zh-CN"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_zh_HK", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("zh-HK")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("zh-HK"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_zh_MO", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("zh-MO")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("zh-MO"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_zh_TW", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPromptLanguageEnumFromString("zh-TW")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, PromptLanguageEnum("zh-TW"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPromptLanguageEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPromptLanguageEnumFromString("am")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumScreenGroupNameEnum(t *testing.T) {
+	t.Run("NewFromString_login", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("login")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("login"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_id", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("login-id")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("login-id"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_password", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("login-password")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("login-password"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_passwordless_email_code", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("login-passwordless-email-code")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("login-passwordless-email-code"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_passwordless_email_link", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("login-passwordless-email-link")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("login-passwordless-email-link"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_passwordless_sms_otp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("login-passwordless-sms-otp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("login-passwordless-sms-otp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_login_email_verification", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("login-email-verification")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("login-email-verification"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_signup", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("signup")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("signup"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_signup_id", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("signup-id")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("signup-id"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_signup_password", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("signup-password")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("signup-password"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_phone_identifier_enrollment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("phone-identifier-enrollment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("phone-identifier-enrollment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_phone_identifier_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("phone-identifier-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("phone-identifier-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_email_identifier_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("email-identifier-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("email-identifier-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_request", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-request")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-request"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_email", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-email")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-email"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_success", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-success")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-success"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_error", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-error")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-error"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_mfa_email_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-mfa-email-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-mfa-email-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_mfa_otp_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-mfa-otp-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-mfa-otp-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_mfa_phone_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-mfa-phone-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-mfa-phone-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_mfa_push_challenge_push", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-mfa-push-challenge-push")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-mfa-push-challenge-push"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_mfa_recovery_code_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-mfa-recovery-code-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-mfa-recovery-code-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_mfa_sms_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-mfa-sms-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-mfa-sms-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_mfa_voice_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-mfa-voice-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-mfa-voice-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_mfa_webauthn_platform_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-mfa-webauthn-platform-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-mfa-webauthn-platform-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_reset_password_mfa_webauthn_roaming_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("reset-password-mfa-webauthn-roaming-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("reset-password-mfa-webauthn-roaming-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_custom_form", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("custom-form")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("custom-form"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_consent", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("consent")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("consent"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_consent_tenant_scopes", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("consent-tenant-scopes")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("consent-tenant-scopes"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_customized_consent", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("customized-consent")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("customized-consent"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_logout", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("logout")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("logout"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_logout_complete", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("logout-complete")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("logout-complete"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_logout_aborted", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("logout-aborted")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("logout-aborted"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_push_welcome", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-push-welcome")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-push-welcome"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_push_enrollment_qr", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-push-enrollment-qr")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-push-enrollment-qr"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_push_enrollment_code", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-push-enrollment-code")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-push-enrollment-code"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_push_success", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-push-success")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-push-success"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_push_challenge_push", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-push-challenge-push")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-push-challenge-push"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_push_list", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-push-list")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-push-list"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_otp_enrollment_qr", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-otp-enrollment-qr")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-otp-enrollment-qr"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_otp_enrollment_code", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-otp-enrollment-code")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-otp-enrollment-code"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_otp_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-otp-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-otp-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_voice_enrollment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-voice-enrollment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-voice-enrollment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_voice_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-voice-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-voice-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_phone_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-phone-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-phone-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_phone_enrollment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-phone-enrollment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-phone-enrollment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_webauthn_platform_enrollment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-webauthn-platform-enrollment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-webauthn-platform-enrollment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_webauthn_roaming_enrollment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-webauthn-roaming-enrollment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-webauthn-roaming-enrollment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_webauthn_platform_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-webauthn-platform-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-webauthn-platform-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_webauthn_roaming_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-webauthn-roaming-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-webauthn-roaming-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_webauthn_change_key_nickname", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-webauthn-change-key-nickname")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-webauthn-change-key-nickname"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_webauthn_enrollment_success", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-webauthn-enrollment-success")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-webauthn-enrollment-success"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_webauthn_error", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-webauthn-error")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-webauthn-error"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_webauthn_not_available_error", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-webauthn-not-available-error")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-webauthn-not-available-error"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_country_codes", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-country-codes")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-country-codes"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_sms_enrollment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-sms-enrollment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-sms-enrollment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_sms_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-sms-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-sms-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_sms_list", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-sms-list")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-sms-list"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_email_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-email-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-email-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_email_list", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-email-list")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-email-list"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_recovery_code_enrollment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-recovery-code-enrollment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-recovery-code-enrollment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_recovery_code_challenge_new_code", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-recovery-code-challenge-new-code")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-recovery-code-challenge-new-code"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_recovery_code_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-recovery-code-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-recovery-code-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_detect_browser_capabilities", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-detect-browser-capabilities")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-detect-browser-capabilities"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_enroll_result", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-enroll-result")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-enroll-result"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_login_options", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-login-options")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-login-options"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_mfa_begin_enroll_options", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("mfa-begin-enroll-options")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("mfa-begin-enroll-options"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_status", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("status")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("status"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_device_code_activation", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("device-code-activation")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("device-code-activation"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_device_code_activation_allowed", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("device-code-activation-allowed")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("device-code-activation-allowed"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_device_code_activation_denied", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("device-code-activation-denied")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("device-code-activation-denied"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_device_code_confirmation", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("device-code-confirmation")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("device-code-confirmation"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_email_verification_result", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("email-verification-result")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("email-verification-result"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_email_otp_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("email-otp-challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("email-otp-challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organization_selection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("organization-selection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("organization-selection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_organization_picker", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("organization-picker")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("organization-picker"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_pre_login_organization_picker", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("pre-login-organization-picker")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("pre-login-organization-picker"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_accept_invitation", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("accept-invitation")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("accept-invitation"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_redeem_ticket", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("redeem-ticket")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("redeem-ticket"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_passkey_enrollment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("passkey-enrollment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("passkey-enrollment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_passkey_enrollment_local", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("passkey-enrollment-local")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("passkey-enrollment-local"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_interstitial_captcha", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("interstitial-captcha")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("interstitial-captcha"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_brute_force_protection_unblock", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("brute-force-protection-unblock")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("brute-force-protection-unblock"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_brute_force_protection_unblock_success", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("brute-force-protection-unblock-success")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("brute-force-protection-unblock-success"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_brute_force_protection_unblock_failure", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("brute-force-protection-unblock-failure")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("brute-force-protection-unblock-failure"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_async_approval_error", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("async-approval-error")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("async-approval-error"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_async_approval_accepted", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("async-approval-accepted")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("async-approval-accepted"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_async_approval_denied", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("async-approval-denied")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("async-approval-denied"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_confirmation", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("confirmation")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("confirmation"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_async_approval_wrong_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("async-approval-wrong-user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("async-approval-wrong-user"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewScreenGroupNameEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewScreenGroupNameEnumFromString("login")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
 	})
 }
 
@@ -592,6 +7078,259 @@ func TestEnumUniversalLoginExperienceEnum(t *testing.T) {
 	})
 }
 
+func TestExtraPropertiesAculClientFilterByID(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculClientFilterByID{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculClientFilterByID
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAculClientFilterByMetadata(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculClientFilterByMetadata{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculClientFilterByMetadata
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAculConfigsItem(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculConfigsItem{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculConfigsItem
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAculDomainFilterByID(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculDomainFilterByID{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculDomainFilterByID
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAculDomainFilterByMetadata(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculDomainFilterByMetadata{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculDomainFilterByMetadata
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAculFilters(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculFilters{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculFilters
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAculHeadTag(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculHeadTag{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculHeadTag
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAculOrganizationFilterByID(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculOrganizationFilterByID{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculOrganizationFilterByID
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAculOrganizationFilterByMetadata(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AculOrganizationFilterByMetadata{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AculOrganizationFilterByMetadata
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesBulkUpdateAculResponseContent(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &BulkUpdateAculResponseContent{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BulkUpdateAculResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesGetAculResponseContent(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &GetAculResponseContent{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetAculResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesGetSettingsResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -610,6 +7349,75 @@ func TestExtraPropertiesGetSettingsResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetSettingsResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesListAculsOffsetPaginatedResponseContent(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ListAculsOffsetPaginatedResponseContent{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsOffsetPaginatedResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesListAculsResponseContentItem(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ListAculsResponseContentItem{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListAculsResponseContentItem
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesUpdateAculResponseContent(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &UpdateAculResponseContent{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateAculResponseContent
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -4,7 +4,6 @@ package organizationtemplates
 
 import (
 	context "context"
-	http "net/http"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -36,78 +35,29 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a list of Organization Templates. This endpoint supports Checkpoint pagination. Results are returned in a stable order, sorted by their identifier (`id`) in ascending order.
-func (c *Client) List(
+func (c *Client) GetOrganizationTemplates(
 	ctx context.Context,
-	request *management.ListOrganizationTemplatesRequestParameters,
+	request *management.GetOrganizationTemplatesRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *management.OrganizationTemplate, *management.ListOrganizationTemplatesPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/organization-templates"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.ListOrganizationTemplatesPaginatedResponseContent, error) {
+	response, err := c.WithRawResponse.GetOrganizationTemplates(
+		ctx,
 		request,
-		map[string]any{
-			"take": 5,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("from", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	readPageResponse := func(response *management.ListOrganizationTemplatesPaginatedResponseContent) *core.PageResponse[*string, *management.OrganizationTemplate, *management.ListOrganizationTemplatesPaginatedResponseContent] {
-		var zeroValue *string
-		next := response.Next
-		results := response.OrganizationTemplates
-		return &core.PageResponse[*string, *management.OrganizationTemplate, *management.ListOrganizationTemplatesPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.From)
+	return response.Body, nil
 }
 
 // Create an Organization Template.
-func (c *Client) Create(
+func (c *Client) PostOrganizationTemplates(
 	ctx context.Context,
 	request *management.CreateOrganizationTemplateRequestContent,
 	opts ...option.RequestOption,
 ) (*management.OrganizationTemplate, error) {
-	response, err := c.WithRawResponse.Create(
+	response, err := c.WithRawResponse.PostOrganizationTemplates(
 		ctx,
 		request,
 		opts...,
@@ -119,13 +69,13 @@ func (c *Client) Create(
 }
 
 // Retrieve details about a single Organization Template specified by ID.
-func (c *Client) Get(
+func (c *Client) GetOrganizationTemplatesByID(
 	ctx context.Context,
 	// Organization Template identifier.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.OrganizationTemplate, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetOrganizationTemplatesByID(
 		ctx,
 		id,
 		opts...,
@@ -137,14 +87,14 @@ func (c *Client) Get(
 }
 
 // Update the details of a specific Organization Template.
-func (c *Client) Update(
+func (c *Client) PatchOrganizationTemplatesByID(
 	ctx context.Context,
 	// Organization Template identifier.
 	id string,
 	request *management.UpdateOrganizationTemplateRequestContent,
 	opts ...option.RequestOption,
 ) (*management.OrganizationTemplate, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchOrganizationTemplatesByID(
 		ctx,
 		id,
 		request,
@@ -157,72 +107,21 @@ func (c *Client) Update(
 }
 
 // Retrieve a list of organizations assigned to an Organization Template. This endpoint supports Checkpoint pagination. Results are returned in a stable order, sorted by their identifier (`id`) in ascending order.
-func (c *Client) ListOrganizations(
+func (c *Client) GetOrganizationTemplatesByIDOrganizations(
 	ctx context.Context,
 	// The ID of the organization template.
 	id string,
-	request *management.ListTemplateOrganizationsRequestParameters,
+	request *management.GetOrganizationTemplatesByIDOrganizationsRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *management.OrganizationTemplateAssignedOrganization, *management.ListTemplateOrganizationsPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/organization-templates/%v/organizations",
+) (*management.ListTemplateOrganizationsPaginatedResponseContent, error) {
+	response, err := c.WithRawResponse.GetOrganizationTemplatesByIDOrganizations(
+		ctx,
 		id,
-	)
-	queryParams, err := internal.QueryValuesWithDefaults(
 		request,
-		map[string]any{
-			"take": 5,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("from", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	readPageResponse := func(response *management.ListTemplateOrganizationsPaginatedResponseContent) *core.PageResponse[*string, *management.OrganizationTemplateAssignedOrganization, *management.ListTemplateOrganizationsPaginatedResponseContent] {
-		var zeroValue *string
-		next := response.Next
-		results := response.Organizations
-		return &core.PageResponse[*string, *management.OrganizationTemplateAssignedOrganization, *management.ListTemplateOrganizationsPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.From)
+	return response.Body, nil
 }

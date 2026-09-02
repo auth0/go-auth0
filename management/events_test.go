@@ -296056,51 +296056,28 @@ func TestGettersEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSoci
 }
 
 func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamSubscribeEventsResponseContent{}
-		var expected string
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamSubscribeEventsResponseContent
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-	t.Run("GetConnectionCreated", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventConnectionCreated", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventConnectionCreated
-		obj.ConnectionCreated = expected
+		obj.EventStreamCloudEventConnectionCreated = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetConnectionCreated(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreated(), "getter should return the property value")
 	})
 
-	t.Run("GetConnectionCreated_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventConnectionCreated_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.ConnectionCreated = nil
+		obj.EventStreamCloudEventConnectionCreated = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetConnectionCreated(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreated(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetConnectionCreated_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventConnectionCreated_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296109,31 +296086,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetConnectionCreated() // Should return zero value
+		_ = obj.GetEventStreamCloudEventConnectionCreated() // Should return zero value
 	})
 
-	t.Run("GetConnectionDeleted", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventConnectionDeleted", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventConnectionDeleted
-		obj.ConnectionDeleted = expected
+		obj.EventStreamCloudEventConnectionDeleted = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetConnectionDeleted(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeleted(), "getter should return the property value")
 	})
 
-	t.Run("GetConnectionDeleted_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventConnectionDeleted_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.ConnectionDeleted = nil
+		obj.EventStreamCloudEventConnectionDeleted = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetConnectionDeleted(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeleted(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetConnectionDeleted_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventConnectionDeleted_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296142,31 +296119,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetConnectionDeleted() // Should return zero value
+		_ = obj.GetEventStreamCloudEventConnectionDeleted() // Should return zero value
 	})
 
-	t.Run("GetConnectionUpdated", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventConnectionUpdated", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventConnectionUpdated
-		obj.ConnectionUpdated = expected
+		obj.EventStreamCloudEventConnectionUpdated = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetConnectionUpdated(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdated(), "getter should return the property value")
 	})
 
-	t.Run("GetConnectionUpdated_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventConnectionUpdated_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.ConnectionUpdated = nil
+		obj.EventStreamCloudEventConnectionUpdated = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetConnectionUpdated(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdated(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetConnectionUpdated_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventConnectionUpdated_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296175,31 +296152,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetConnectionUpdated() // Should return zero value
+		_ = obj.GetEventStreamCloudEventConnectionUpdated() // Should return zero value
 	})
 
-	t.Run("GetGroupCreated", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupCreated", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventGroupCreated
-		obj.GroupCreated = expected
+		obj.EventStreamCloudEventGroupCreated = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGroupCreated(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupCreated(), "getter should return the property value")
 	})
 
-	t.Run("GetGroupCreated_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupCreated_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.GroupCreated = nil
+		obj.EventStreamCloudEventGroupCreated = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGroupCreated(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventGroupCreated(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGroupCreated_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupCreated_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296208,31 +296185,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGroupCreated() // Should return zero value
+		_ = obj.GetEventStreamCloudEventGroupCreated() // Should return zero value
 	})
 
-	t.Run("GetGroupDeleted", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupDeleted", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventGroupDeleted
-		obj.GroupDeleted = expected
+		obj.EventStreamCloudEventGroupDeleted = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGroupDeleted(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupDeleted(), "getter should return the property value")
 	})
 
-	t.Run("GetGroupDeleted_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupDeleted_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.GroupDeleted = nil
+		obj.EventStreamCloudEventGroupDeleted = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGroupDeleted(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventGroupDeleted(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGroupDeleted_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupDeleted_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296241,31 +296218,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGroupDeleted() // Should return zero value
+		_ = obj.GetEventStreamCloudEventGroupDeleted() // Should return zero value
 	})
 
-	t.Run("GetGroupMemberAdded", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupMemberAdded", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventGroupMemberAdded
-		obj.GroupMemberAdded = expected
+		obj.EventStreamCloudEventGroupMemberAdded = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGroupMemberAdded(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAdded(), "getter should return the property value")
 	})
 
-	t.Run("GetGroupMemberAdded_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupMemberAdded_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.GroupMemberAdded = nil
+		obj.EventStreamCloudEventGroupMemberAdded = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGroupMemberAdded(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAdded(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGroupMemberAdded_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupMemberAdded_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296274,31 +296251,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGroupMemberAdded() // Should return zero value
+		_ = obj.GetEventStreamCloudEventGroupMemberAdded() // Should return zero value
 	})
 
-	t.Run("GetGroupMemberDeleted", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupMemberDeleted", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventGroupMemberDeleted
-		obj.GroupMemberDeleted = expected
+		obj.EventStreamCloudEventGroupMemberDeleted = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGroupMemberDeleted(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeleted(), "getter should return the property value")
 	})
 
-	t.Run("GetGroupMemberDeleted_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupMemberDeleted_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.GroupMemberDeleted = nil
+		obj.EventStreamCloudEventGroupMemberDeleted = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGroupMemberDeleted(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeleted(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGroupMemberDeleted_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupMemberDeleted_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296307,31 +296284,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGroupMemberDeleted() // Should return zero value
+		_ = obj.GetEventStreamCloudEventGroupMemberDeleted() // Should return zero value
 	})
 
-	t.Run("GetGroupRoleAssigned", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupRoleAssigned", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventGroupRoleAssigned
-		obj.GroupRoleAssigned = expected
+		obj.EventStreamCloudEventGroupRoleAssigned = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGroupRoleAssigned(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleAssigned(), "getter should return the property value")
 	})
 
-	t.Run("GetGroupRoleAssigned_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupRoleAssigned_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.GroupRoleAssigned = nil
+		obj.EventStreamCloudEventGroupRoleAssigned = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGroupRoleAssigned(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleAssigned(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGroupRoleAssigned_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupRoleAssigned_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296340,31 +296317,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGroupRoleAssigned() // Should return zero value
+		_ = obj.GetEventStreamCloudEventGroupRoleAssigned() // Should return zero value
 	})
 
-	t.Run("GetGroupRoleDeleted", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupRoleDeleted", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventGroupRoleDeleted
-		obj.GroupRoleDeleted = expected
+		obj.EventStreamCloudEventGroupRoleDeleted = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGroupRoleDeleted(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleDeleted(), "getter should return the property value")
 	})
 
-	t.Run("GetGroupRoleDeleted_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupRoleDeleted_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.GroupRoleDeleted = nil
+		obj.EventStreamCloudEventGroupRoleDeleted = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGroupRoleDeleted(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleDeleted(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGroupRoleDeleted_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupRoleDeleted_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296373,31 +296350,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGroupRoleDeleted() // Should return zero value
+		_ = obj.GetEventStreamCloudEventGroupRoleDeleted() // Should return zero value
 	})
 
-	t.Run("GetGroupUpdated", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupUpdated", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventGroupUpdated
-		obj.GroupUpdated = expected
+		obj.EventStreamCloudEventGroupUpdated = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGroupUpdated(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupUpdated(), "getter should return the property value")
 	})
 
-	t.Run("GetGroupUpdated_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupUpdated_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.GroupUpdated = nil
+		obj.EventStreamCloudEventGroupUpdated = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGroupUpdated(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventGroupUpdated(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGroupUpdated_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventGroupUpdated_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296406,31 +296383,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGroupUpdated() // Should return zero value
+		_ = obj.GetEventStreamCloudEventGroupUpdated() // Should return zero value
 	})
 
-	t.Run("GetOrganizationConnectionAdded", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionAdded", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgConnectionAdded
-		obj.OrganizationConnectionAdded = expected
+		obj.EventStreamCloudEventOrgConnectionAdded = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationConnectionAdded(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionAdded(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationConnectionAdded_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionAdded_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationConnectionAdded = nil
+		obj.EventStreamCloudEventOrgConnectionAdded = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationConnectionAdded(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgConnectionAdded(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationConnectionAdded_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionAdded_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296439,31 +296416,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationConnectionAdded() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgConnectionAdded() // Should return zero value
 	})
 
-	t.Run("GetOrganizationConnectionRemoved", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionRemoved", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgConnectionRemoved
-		obj.OrganizationConnectionRemoved = expected
+		obj.EventStreamCloudEventOrgConnectionRemoved = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationConnectionRemoved(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionRemoved(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationConnectionRemoved_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionRemoved_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationConnectionRemoved = nil
+		obj.EventStreamCloudEventOrgConnectionRemoved = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationConnectionRemoved(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgConnectionRemoved(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationConnectionRemoved_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionRemoved_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296472,31 +296449,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationConnectionRemoved() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgConnectionRemoved() // Should return zero value
 	})
 
-	t.Run("GetOrganizationConnectionUpdated", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdated", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgConnectionUpdated
-		obj.OrganizationConnectionUpdated = expected
+		obj.EventStreamCloudEventOrgConnectionUpdated = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationConnectionUpdated(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionUpdated(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationConnectionUpdated_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdated_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationConnectionUpdated = nil
+		obj.EventStreamCloudEventOrgConnectionUpdated = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationConnectionUpdated(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgConnectionUpdated(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationConnectionUpdated_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdated_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296505,31 +296482,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationConnectionUpdated() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgConnectionUpdated() // Should return zero value
 	})
 
-	t.Run("GetOrganizationCreated", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgCreated", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgCreated
-		obj.OrganizationCreated = expected
+		obj.EventStreamCloudEventOrgCreated = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationCreated(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgCreated(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationCreated_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgCreated_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationCreated = nil
+		obj.EventStreamCloudEventOrgCreated = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationCreated(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgCreated(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationCreated_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgCreated_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296538,31 +296515,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationCreated() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgCreated() // Should return zero value
 	})
 
-	t.Run("GetOrganizationDeleted", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgDeleted", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgDeleted
-		obj.OrganizationDeleted = expected
+		obj.EventStreamCloudEventOrgDeleted = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationDeleted(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgDeleted(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationDeleted_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgDeleted_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationDeleted = nil
+		obj.EventStreamCloudEventOrgDeleted = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationDeleted(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgDeleted(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationDeleted_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgDeleted_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296571,31 +296548,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationDeleted() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgDeleted() // Should return zero value
 	})
 
-	t.Run("GetOrganizationGroupRoleAssigned", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgGroupRoleAssigned", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgGroupRoleAssigned
-		obj.OrganizationGroupRoleAssigned = expected
+		obj.EventStreamCloudEventOrgGroupRoleAssigned = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationGroupRoleAssigned(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleAssigned(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationGroupRoleAssigned_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgGroupRoleAssigned_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationGroupRoleAssigned = nil
+		obj.EventStreamCloudEventOrgGroupRoleAssigned = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationGroupRoleAssigned(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleAssigned(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationGroupRoleAssigned_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgGroupRoleAssigned_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296604,31 +296581,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationGroupRoleAssigned() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgGroupRoleAssigned() // Should return zero value
 	})
 
-	t.Run("GetOrganizationGroupRoleDeleted", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgGroupRoleDeleted", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgGroupRoleDeleted
-		obj.OrganizationGroupRoleDeleted = expected
+		obj.EventStreamCloudEventOrgGroupRoleDeleted = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationGroupRoleDeleted(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleDeleted(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationGroupRoleDeleted_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgGroupRoleDeleted_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationGroupRoleDeleted = nil
+		obj.EventStreamCloudEventOrgGroupRoleDeleted = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationGroupRoleDeleted(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleDeleted(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationGroupRoleDeleted_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgGroupRoleDeleted_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296637,31 +296614,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationGroupRoleDeleted() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgGroupRoleDeleted() // Should return zero value
 	})
 
-	t.Run("GetOrganizationMemberAdded", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberAdded", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgMemberAdded
-		obj.OrganizationMemberAdded = expected
+		obj.EventStreamCloudEventOrgMemberAdded = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationMemberAdded(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgMemberAdded(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationMemberAdded_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberAdded_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationMemberAdded = nil
+		obj.EventStreamCloudEventOrgMemberAdded = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationMemberAdded(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgMemberAdded(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationMemberAdded_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberAdded_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296670,31 +296647,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationMemberAdded() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgMemberAdded() // Should return zero value
 	})
 
-	t.Run("GetOrganizationMemberDeleted", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberDeleted", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgMemberDeleted
-		obj.OrganizationMemberDeleted = expected
+		obj.EventStreamCloudEventOrgMemberDeleted = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationMemberDeleted(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgMemberDeleted(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationMemberDeleted_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberDeleted_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationMemberDeleted = nil
+		obj.EventStreamCloudEventOrgMemberDeleted = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationMemberDeleted(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgMemberDeleted(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationMemberDeleted_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberDeleted_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296703,31 +296680,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationMemberDeleted() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgMemberDeleted() // Should return zero value
 	})
 
-	t.Run("GetOrganizationMemberRoleAssigned", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberRoleAssigned", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgMemberRoleAssigned
-		obj.OrganizationMemberRoleAssigned = expected
+		obj.EventStreamCloudEventOrgMemberRoleAssigned = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationMemberRoleAssigned(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgMemberRoleAssigned(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationMemberRoleAssigned_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberRoleAssigned_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationMemberRoleAssigned = nil
+		obj.EventStreamCloudEventOrgMemberRoleAssigned = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationMemberRoleAssigned(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgMemberRoleAssigned(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationMemberRoleAssigned_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberRoleAssigned_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296736,31 +296713,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationMemberRoleAssigned() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgMemberRoleAssigned() // Should return zero value
 	})
 
-	t.Run("GetOrganizationMemberRoleDeleted", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberRoleDeleted", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgMemberRoleDeleted
-		obj.OrganizationMemberRoleDeleted = expected
+		obj.EventStreamCloudEventOrgMemberRoleDeleted = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationMemberRoleDeleted(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgMemberRoleDeleted(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationMemberRoleDeleted_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberRoleDeleted_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationMemberRoleDeleted = nil
+		obj.EventStreamCloudEventOrgMemberRoleDeleted = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationMemberRoleDeleted(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgMemberRoleDeleted(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationMemberRoleDeleted_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgMemberRoleDeleted_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296769,31 +296746,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationMemberRoleDeleted() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgMemberRoleDeleted() // Should return zero value
 	})
 
-	t.Run("GetOrganizationUpdated", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgUpdated", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOrgUpdated
-		obj.OrganizationUpdated = expected
+		obj.EventStreamCloudEventOrgUpdated = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOrganizationUpdated(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgUpdated(), "getter should return the property value")
 	})
 
-	t.Run("GetOrganizationUpdated_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgUpdated_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OrganizationUpdated = nil
+		obj.EventStreamCloudEventOrgUpdated = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOrganizationUpdated(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOrgUpdated(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOrganizationUpdated_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgUpdated_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296802,31 +296779,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOrganizationUpdated() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOrgUpdated() // Should return zero value
 	})
 
-	t.Run("GetUserCreated", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventUserCreated", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventUserCreated
-		obj.UserCreated = expected
+		obj.EventStreamCloudEventUserCreated = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUserCreated(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventUserCreated(), "getter should return the property value")
 	})
 
-	t.Run("GetUserCreated_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventUserCreated_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.UserCreated = nil
+		obj.EventStreamCloudEventUserCreated = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUserCreated(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventUserCreated(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUserCreated_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventUserCreated_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296835,31 +296812,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUserCreated() // Should return zero value
+		_ = obj.GetEventStreamCloudEventUserCreated() // Should return zero value
 	})
 
-	t.Run("GetUserDeleted", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventUserDeleted", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventUserDeleted
-		obj.UserDeleted = expected
+		obj.EventStreamCloudEventUserDeleted = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUserDeleted(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventUserDeleted(), "getter should return the property value")
 	})
 
-	t.Run("GetUserDeleted_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventUserDeleted_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.UserDeleted = nil
+		obj.EventStreamCloudEventUserDeleted = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUserDeleted(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventUserDeleted(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUserDeleted_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventUserDeleted_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296868,31 +296845,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUserDeleted() // Should return zero value
+		_ = obj.GetEventStreamCloudEventUserDeleted() // Should return zero value
 	})
 
-	t.Run("GetUserUpdated", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventUserUpdated", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventUserUpdated
-		obj.UserUpdated = expected
+		obj.EventStreamCloudEventUserUpdated = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUserUpdated(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventUserUpdated(), "getter should return the property value")
 	})
 
-	t.Run("GetUserUpdated_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventUserUpdated_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.UserUpdated = nil
+		obj.EventStreamCloudEventUserUpdated = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUserUpdated(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventUserUpdated(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUserUpdated_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventUserUpdated_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296901,31 +296878,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUserUpdated() // Should return zero value
+		_ = obj.GetEventStreamCloudEventUserUpdated() // Should return zero value
 	})
 
-	t.Run("GetError", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventErrorMessage", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventErrorMessage
-		obj.Error = expected
+		obj.EventStreamCloudEventErrorMessage = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetError(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventErrorMessage(), "getter should return the property value")
 	})
 
-	t.Run("GetError_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventErrorMessage_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.Error = nil
+		obj.EventStreamCloudEventErrorMessage = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetError(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventErrorMessage(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetError_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventErrorMessage_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296934,31 +296911,31 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetError() // Should return zero value
+		_ = obj.GetEventStreamCloudEventErrorMessage() // Should return zero value
 	})
 
-	t.Run("GetOffsetOnly", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOffsetOnlyMessage", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
 		var expected *EventStreamCloudEventOffsetOnlyMessage
-		obj.OffsetOnly = expected
+		obj.EventStreamCloudEventOffsetOnlyMessage = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetOffsetOnly(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOffsetOnlyMessage(), "getter should return the property value")
 	})
 
-	t.Run("GetOffsetOnly_NilValue", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOffsetOnlyMessage_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamSubscribeEventsResponseContent{}
-		obj.OffsetOnly = nil
+		obj.EventStreamCloudEventOffsetOnlyMessage = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetOffsetOnly(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEventStreamCloudEventOffsetOnlyMessage(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetOffsetOnly_NilReceiver", func(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOffsetOnlyMessage_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamSubscribeEventsResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -296967,7 +296944,7 @@ func TestGettersEventStreamSubscribeEventsResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetOffsetOnly() // Should return zero value
+		_ = obj.GetEventStreamCloudEventOffsetOnlyMessage() // Should return zero value
 	})
 
 }
@@ -296997,12 +296974,6 @@ func TestJSONMarshalingEventStreamCloudEventConnectionCreated(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventConnectionCreated
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventConnectionCreatedCloudEvent(t *testing.T) {
@@ -300858,12 +300829,6 @@ func TestJSONMarshalingEventStreamCloudEventConnectionDeleted(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventConnectionDeleted
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventConnectionDeletedCloudEvent(t *testing.T) {
@@ -304719,12 +304684,6 @@ func TestJSONMarshalingEventStreamCloudEventConnectionUpdated(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventConnectionUpdated
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventConnectionUpdatedCloudEvent(t *testing.T) {
@@ -308811,12 +308770,6 @@ func TestJSONMarshalingEventStreamCloudEventErrorMessage(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventErrorMessage
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventGroupCreated(t *testing.T) {
@@ -308844,12 +308797,6 @@ func TestJSONMarshalingEventStreamCloudEventGroupCreated(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventGroupCreated
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventGroupCreatedCloudEvent(t *testing.T) {
@@ -309141,12 +309088,6 @@ func TestJSONMarshalingEventStreamCloudEventGroupDeleted(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventGroupDeleted
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventGroupDeletedCloudEvent(t *testing.T) {
@@ -309438,12 +309379,6 @@ func TestJSONMarshalingEventStreamCloudEventGroupMemberAdded(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventGroupMemberAdded
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventGroupMemberAddedCloudEvent(t *testing.T) {
@@ -309933,12 +309868,6 @@ func TestJSONMarshalingEventStreamCloudEventGroupMemberDeleted(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventGroupMemberDeleted
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventGroupMemberDeletedCloudEvent(t *testing.T) {
@@ -310428,12 +310357,6 @@ func TestJSONMarshalingEventStreamCloudEventGroupRoleAssigned(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventGroupRoleAssigned
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventGroupRoleAssignedCloudEvent(t *testing.T) {
@@ -310857,12 +310780,6 @@ func TestJSONMarshalingEventStreamCloudEventGroupRoleDeleted(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventGroupRoleDeleted
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventGroupRoleDeletedCloudEvent(t *testing.T) {
@@ -311286,12 +311203,6 @@ func TestJSONMarshalingEventStreamCloudEventGroupUpdated(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventGroupUpdated
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventGroupUpdatedCloudEvent(t *testing.T) {
@@ -311583,12 +311494,6 @@ func TestJSONMarshalingEventStreamCloudEventOffsetOnlyMessage(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOffsetOnlyMessage
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgConnectionAdded(t *testing.T) {
@@ -311616,12 +311521,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgConnectionAdded(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgConnectionAdded
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgConnectionAddedCloudEvent(t *testing.T) {
@@ -311913,12 +311812,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgConnectionRemoved(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgConnectionRemoved
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgConnectionRemovedCloudEvent(t *testing.T) {
@@ -312210,12 +312103,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgConnectionUpdated(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgConnectionUpdated
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgConnectionUpdatedCloudEvent(t *testing.T) {
@@ -312507,12 +312394,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgCreated(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgCreated
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgCreatedCloudEvent(t *testing.T) {
@@ -312804,12 +312685,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgDeleted(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgDeleted
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgDeletedCloudEvent(t *testing.T) {
@@ -312969,12 +312844,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgGroupRoleAssigned(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgGroupRoleAssigned
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgGroupRoleAssignedCloudEvent(t *testing.T) {
@@ -313464,12 +313333,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgGroupRoleDeleted(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgGroupRoleDeleted
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgGroupRoleDeletedCloudEvent(t *testing.T) {
@@ -313959,12 +313822,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgMemberAdded(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgMemberAdded
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgMemberAddedCloudEvent(t *testing.T) {
@@ -314256,12 +314113,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgMemberDeleted(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgMemberDeleted
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgMemberDeletedCloudEvent(t *testing.T) {
@@ -314553,12 +314404,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgMemberRoleAssigned(t *testing.T) 
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgMemberRoleAssigned
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgMemberRoleAssignedCloudEvent(t *testing.T) {
@@ -314916,12 +314761,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgMemberRoleDeleted(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgMemberRoleDeleted
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgMemberRoleDeletedCloudEvent(t *testing.T) {
@@ -315279,12 +315118,6 @@ func TestJSONMarshalingEventStreamCloudEventOrgUpdated(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventOrgUpdated
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventOrgUpdatedCloudEvent(t *testing.T) {
@@ -315576,12 +315409,6 @@ func TestJSONMarshalingEventStreamCloudEventUserCreated(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventUserCreated
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventUserCreatedCloudEvent(t *testing.T) {
@@ -316401,12 +316228,6 @@ func TestJSONMarshalingEventStreamCloudEventUserDeleted(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventUserDeleted
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventUserDeletedCloudEvent(t *testing.T) {
@@ -317226,12 +317047,6 @@ func TestJSONMarshalingEventStreamCloudEventUserUpdated(t *testing.T) {
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj EventStreamCloudEventUserUpdated
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
 }
 
 func TestJSONMarshalingEventStreamCloudEventUserUpdatedCloudEvent(t *testing.T) {

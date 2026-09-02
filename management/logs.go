@@ -582,3 +582,65 @@ func (l *ListLogOffsetPaginatedResponseContent) String() string {
 	}
 	return fmt.Sprintf("%#v", l)
 }
+
+type ListLogResponseContent struct {
+	LogList                               []*Log
+	ListLogOffsetPaginatedResponseContent *ListLogOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListLogResponseContent) GetLogList() []*Log {
+	if l == nil {
+		return nil
+	}
+	return l.LogList
+}
+
+func (l *ListLogResponseContent) GetListLogOffsetPaginatedResponseContent() *ListLogOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListLogOffsetPaginatedResponseContent
+}
+
+func (l *ListLogResponseContent) UnmarshalJSON(data []byte) error {
+	var valueLogList []*Log
+	if err := json.Unmarshal(data, &valueLogList); err == nil {
+		l.typ = "LogList"
+		l.LogList = valueLogList
+		return nil
+	}
+	valueListLogOffsetPaginatedResponseContent := new(ListLogOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListLogOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListLogOffsetPaginatedResponseContent"
+		l.ListLogOffsetPaginatedResponseContent = valueListLogOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListLogResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "LogList" || l.LogList != nil {
+		return json.Marshal(l.LogList)
+	}
+	if l.typ == "ListLogOffsetPaginatedResponseContent" || l.ListLogOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListLogOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListLogResponseContentVisitor interface {
+	VisitLogList([]*Log) error
+	VisitListLogOffsetPaginatedResponseContent(*ListLogOffsetPaginatedResponseContent) error
+}
+
+func (l *ListLogResponseContent) Accept(visitor ListLogResponseContentVisitor) error {
+	if l.typ == "LogList" || l.LogList != nil {
+		return visitor.VisitLogList(l.LogList)
+	}
+	if l.typ == "ListLogOffsetPaginatedResponseContent" || l.ListLogOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListLogOffsetPaginatedResponseContent(l.ListLogOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}

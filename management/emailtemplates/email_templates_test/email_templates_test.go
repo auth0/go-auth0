@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestEmailTemplatesCreateWithWireMock(
+func TestEmailTemplatesPostEmailTemplatesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -91,19 +91,19 @@ func TestEmailTemplatesCreateWithWireMock(
 	request := &management.CreateEmailTemplateRequestContent{
 		Template: management.EmailTemplateNameEnumVerifyEmail,
 	}
-	_, invocationErr := client.EmailTemplates.Create(
+	_, invocationErr := client.EmailTemplates.PostEmailTemplates(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEmailTemplatesCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEmailTemplatesPostEmailTemplatesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEmailTemplatesCreateWithWireMock", "POST", "/email-templates", nil, 1)
+	VerifyRequestCount(t, "TestEmailTemplatesPostEmailTemplatesWithWireMock", "POST", "/email-templates", nil, 1)
 }
 
-func TestEmailTemplatesGetWithWireMock(
+func TestEmailTemplatesGetEmailTemplatesByTemplateNameWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -114,19 +114,19 @@ func TestEmailTemplatesGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.EmailTemplates.Get(
+	_, invocationErr := client.EmailTemplates.GetEmailTemplatesByTemplateName(
 		context.TODO(),
 		management.EmailTemplateNameEnumVerifyEmail.Ptr(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEmailTemplatesGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEmailTemplatesGetEmailTemplatesByTemplateNameWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEmailTemplatesGetWithWireMock", "GET", "/email-templates/verify_email", nil, 1)
+	VerifyRequestCount(t, "TestEmailTemplatesGetEmailTemplatesByTemplateNameWithWireMock", "GET", "/email-templates/verify_email", nil, 1)
 }
 
-func TestEmailTemplatesSetWithWireMock(
+func TestEmailTemplatesPutEmailTemplatesByTemplateNameWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -140,20 +140,20 @@ func TestEmailTemplatesSetWithWireMock(
 	request := &management.SetEmailTemplateRequestContent{
 		Template: management.EmailTemplateNameEnumVerifyEmail,
 	}
-	_, invocationErr := client.EmailTemplates.Set(
+	_, invocationErr := client.EmailTemplates.PutEmailTemplatesByTemplateName(
 		context.TODO(),
 		management.EmailTemplateNameEnumVerifyEmail.Ptr(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEmailTemplatesSetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEmailTemplatesPutEmailTemplatesByTemplateNameWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEmailTemplatesSetWithWireMock", "PUT", "/email-templates/verify_email", nil, 1)
+	VerifyRequestCount(t, "TestEmailTemplatesPutEmailTemplatesByTemplateNameWithWireMock", "PUT", "/email-templates/verify_email", nil, 1)
 }
 
-func TestEmailTemplatesUpdateWithWireMock(
+func TestEmailTemplatesPatchEmailTemplatesByTemplateNameWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -165,15 +165,15 @@ func TestEmailTemplatesUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateEmailTemplateRequestContent{}
-	_, invocationErr := client.EmailTemplates.Update(
+	_, invocationErr := client.EmailTemplates.PatchEmailTemplatesByTemplateName(
 		context.TODO(),
 		management.EmailTemplateNameEnumVerifyEmail.Ptr(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEmailTemplatesUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEmailTemplatesPatchEmailTemplatesByTemplateNameWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEmailTemplatesUpdateWithWireMock", "PATCH", "/email-templates/verify_email", nil, 1)
+	VerifyRequestCount(t, "TestEmailTemplatesPatchEmailTemplatesByTemplateNameWithWireMock", "PATCH", "/email-templates/verify_email", nil, 1)
 }

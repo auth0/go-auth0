@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Create an email template.
-func (c *Client) Create(
+func (c *Client) PostEmailTemplates(
 	ctx context.Context,
 	request *management.CreateEmailTemplateRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateEmailTemplateResponseContent, error) {
-	response, err := c.WithRawResponse.Create(
+	response, err := c.WithRawResponse.PostEmailTemplates(
 		ctx,
 		request,
 		opts...,
@@ -52,13 +52,13 @@ func (c *Client) Create(
 }
 
 // Retrieve an email template by pre-defined name. These names are `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, and `async_approval`. The names `change_password`, and `password_reset` are also supported for legacy scenarios.
-func (c *Client) Get(
+func (c *Client) GetEmailTemplatesByTemplateName(
 	ctx context.Context,
 	// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 	templateName *management.EmailTemplateNameEnum,
 	opts ...option.RequestOption,
 ) (*management.GetEmailTemplateResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetEmailTemplatesByTemplateName(
 		ctx,
 		templateName,
 		opts...,
@@ -70,14 +70,14 @@ func (c *Client) Get(
 }
 
 // Update an email template.
-func (c *Client) Set(
+func (c *Client) PutEmailTemplatesByTemplateName(
 	ctx context.Context,
 	// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 	templateName *management.EmailTemplateNameEnum,
 	request *management.SetEmailTemplateRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetEmailTemplateResponseContent, error) {
-	response, err := c.WithRawResponse.Set(
+	response, err := c.WithRawResponse.PutEmailTemplatesByTemplateName(
 		ctx,
 		templateName,
 		request,
@@ -90,14 +90,14 @@ func (c *Client) Set(
 }
 
 // Modify an email template.
-func (c *Client) Update(
+func (c *Client) PatchEmailTemplatesByTemplateName(
 	ctx context.Context,
 	// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 	templateName *management.EmailTemplateNameEnum,
 	request *management.UpdateEmailTemplateRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateEmailTemplateResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchEmailTemplatesByTemplateName(
 		ctx,
 		templateName,
 		request,

@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestEventsSubscribeWithWireMock(
+func TestEventsSubscribeEventsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestEventsSubscribeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.SubscribeEventsRequestParameters{
+	request := &management.SubscribeEventsRequest{
 		From: management.String(
 			"from",
 		),
@@ -99,14 +99,14 @@ func TestEventsSubscribeWithWireMock(
 			management.EventStreamSubscribeEventsEventTypeEnumConnectionCreated.Ptr(),
 		},
 	}
-	_, invocationErr := client.Events.Subscribe(
+	_, invocationErr := client.Events.SubscribeEvents(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEventsSubscribeWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEventsSubscribeEventsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEventsSubscribeWithWireMock", "GET", "/events", map[string]interface{}{"from": "from", "from_timestamp": "from_timestamp", "event_type": "connection.created"}, 1)
+	VerifyRequestCount(t, "TestEventsSubscribeEventsWithWireMock", "GET", "/events", map[string]interface{}{"from": "from", "from_timestamp": "from_timestamp", "event_type": "connection.created"}, 1)
 }

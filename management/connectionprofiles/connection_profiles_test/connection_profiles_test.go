@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestConnectionProfilesListWithWireMock(
+func TestConnectionProfilesGetConnectionProfilesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestConnectionProfilesListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListConnectionProfileRequestParameters{
+	request := &management.GetConnectionProfilesRequest{
 		From: management.String(
 			"from",
 		),
@@ -96,19 +96,19 @@ func TestConnectionProfilesListWithWireMock(
 			1,
 		),
 	}
-	_, invocationErr := client.ConnectionProfiles.List(
+	_, invocationErr := client.ConnectionProfiles.GetConnectionProfiles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionProfilesListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesGetConnectionProfilesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionProfilesListWithWireMock", "GET", "/connection-profiles", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesGetConnectionProfilesWithWireMock", "GET", "/connection-profiles", map[string]interface{}{"from": "from", "take": "1"}, 1)
 }
 
-func TestConnectionProfilesCreateWithWireMock(
+func TestConnectionProfilesPostConnectionProfilesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -122,19 +122,19 @@ func TestConnectionProfilesCreateWithWireMock(
 	request := &management.CreateConnectionProfileRequestContent{
 		Name: "name",
 	}
-	_, invocationErr := client.ConnectionProfiles.Create(
+	_, invocationErr := client.ConnectionProfiles.PostConnectionProfiles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionProfilesCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesPostConnectionProfilesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionProfilesCreateWithWireMock", "POST", "/connection-profiles", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesPostConnectionProfilesWithWireMock", "POST", "/connection-profiles", nil, 1)
 }
 
-func TestConnectionProfilesListTemplatesWithWireMock(
+func TestConnectionProfilesGetConnectionProfileTemplatesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -145,18 +145,18 @@ func TestConnectionProfilesListTemplatesWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.ConnectionProfiles.ListTemplates(
+	_, invocationErr := client.ConnectionProfiles.GetConnectionProfileTemplates(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionProfilesListTemplatesWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesGetConnectionProfileTemplatesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionProfilesListTemplatesWithWireMock", "GET", "/connection-profiles/templates", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesGetConnectionProfileTemplatesWithWireMock", "GET", "/connection-profiles/templates", nil, 1)
 }
 
-func TestConnectionProfilesGetTemplateWithWireMock(
+func TestConnectionProfilesGetConnectionProfileTemplateWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -167,42 +167,19 @@ func TestConnectionProfilesGetTemplateWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.ConnectionProfiles.GetTemplate(
-		context.TODO(),
-		"id",
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionProfilesGetTemplateWithWireMock"}},
-		),
-	)
-
-	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionProfilesGetTemplateWithWireMock", "GET", "/connection-profiles/templates/id", nil, 1)
-}
-
-func TestConnectionProfilesGetWithWireMock(
-	t *testing.T,
-) {
-	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-	if WireMockBaseURL == "" {
-		WireMockBaseURL = "http://localhost:8080"
-	}
-	client := client.NewWithOptions(
-		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
-	)
-	_, invocationErr := client.ConnectionProfiles.Get(
+	_, invocationErr := client.ConnectionProfiles.GetConnectionProfileTemplate(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionProfilesGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesGetConnectionProfileTemplateWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionProfilesGetWithWireMock", "GET", "/connection-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesGetConnectionProfileTemplateWithWireMock", "GET", "/connection-profiles/templates/id", nil, 1)
 }
 
-func TestConnectionProfilesDeleteWithWireMock(
+func TestConnectionProfilesGetConnectionProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -213,19 +190,42 @@ func TestConnectionProfilesDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.ConnectionProfiles.Delete(
+	_, invocationErr := client.ConnectionProfiles.GetConnectionProfilesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionProfilesDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesGetConnectionProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionProfilesDeleteWithWireMock", "DELETE", "/connection-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesGetConnectionProfilesByIDWithWireMock", "GET", "/connection-profiles/id", nil, 1)
 }
 
-func TestConnectionProfilesUpdateWithWireMock(
+func TestConnectionProfilesDeleteConnectionProfilesByIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.ConnectionProfiles.DeleteConnectionProfilesByID(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesDeleteConnectionProfilesByIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestConnectionProfilesDeleteConnectionProfilesByIDWithWireMock", "DELETE", "/connection-profiles/id", nil, 1)
+}
+
+func TestConnectionProfilesPatchConnectionProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -237,15 +237,15 @@ func TestConnectionProfilesUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateConnectionProfileRequestContent{}
-	_, invocationErr := client.ConnectionProfiles.Update(
+	_, invocationErr := client.ConnectionProfiles.PatchConnectionProfilesByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestConnectionProfilesUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestConnectionProfilesPatchConnectionProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestConnectionProfilesUpdateWithWireMock", "PATCH", "/connection-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestConnectionProfilesPatchConnectionProfilesByIDWithWireMock", "PATCH", "/connection-profiles/id", nil, 1)
 }

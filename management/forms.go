@@ -4088,15 +4088,17 @@ func (f *FormFieldCards) String() string {
 }
 
 var (
-	formFieldCardsConfigFieldHideLabels = big.NewInt(1 << 0)
-	formFieldCardsConfigFieldMultiple   = big.NewInt(1 << 1)
-	formFieldCardsConfigFieldOptions    = big.NewInt(1 << 2)
+	formFieldCardsConfigFieldHideLabels   = big.NewInt(1 << 0)
+	formFieldCardsConfigFieldMultiple     = big.NewInt(1 << 1)
+	formFieldCardsConfigFieldOptions      = big.NewInt(1 << 2)
+	formFieldCardsConfigFieldDefaultValue = big.NewInt(1 << 3)
 )
 
 type FormFieldCardsConfig struct {
-	HideLabels *bool                         `json:"hide_labels,omitempty" url:"hide_labels,omitempty"`
-	Multiple   *bool                         `json:"multiple,omitempty" url:"multiple,omitempty"`
-	Options    []*FormFieldCardsConfigOption `json:"options,omitempty" url:"options,omitempty"`
+	HideLabels   *bool                         `json:"hide_labels,omitempty" url:"hide_labels,omitempty"`
+	Multiple     *bool                         `json:"multiple,omitempty" url:"multiple,omitempty"`
+	Options      []*FormFieldCardsConfigOption `json:"options,omitempty" url:"options,omitempty"`
+	DefaultValue any                           `json:"default_value,omitempty" url:"default_value,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4124,6 +4126,13 @@ func (f *FormFieldCardsConfig) GetOptions() []*FormFieldCardsConfigOption {
 		return nil
 	}
 	return f.Options
+}
+
+func (f *FormFieldCardsConfig) GetDefaultValue() any {
+	if f == nil || f.DefaultValue == nil {
+		return nil
+	}
+	return f.DefaultValue
 }
 
 func (f *FormFieldCardsConfig) GetExtraProperties() map[string]interface{} {
@@ -4159,6 +4168,13 @@ func (f *FormFieldCardsConfig) SetMultiple(multiple *bool) {
 func (f *FormFieldCardsConfig) SetOptions(options []*FormFieldCardsConfigOption) {
 	f.Options = options
 	f.require(formFieldCardsConfigFieldOptions)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldCardsConfig) SetDefaultValue(defaultValue any) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldCardsConfigFieldDefaultValue)
 }
 
 func (f *FormFieldCardsConfig) UnmarshalJSON(data []byte) error {
@@ -4516,15 +4532,17 @@ func (f *FormFieldChoice) String() string {
 }
 
 var (
-	formFieldChoiceConfigFieldMultiple   = big.NewInt(1 << 0)
-	formFieldChoiceConfigFieldOptions    = big.NewInt(1 << 1)
-	formFieldChoiceConfigFieldAllowOther = big.NewInt(1 << 2)
+	formFieldChoiceConfigFieldMultiple     = big.NewInt(1 << 0)
+	formFieldChoiceConfigFieldOptions      = big.NewInt(1 << 1)
+	formFieldChoiceConfigFieldAllowOther   = big.NewInt(1 << 2)
+	formFieldChoiceConfigFieldDefaultValue = big.NewInt(1 << 3)
 )
 
 type FormFieldChoiceConfig struct {
-	Multiple   *bool                            `json:"multiple,omitempty" url:"multiple,omitempty"`
-	Options    []*FormFieldChoiceConfigOption   `json:"options,omitempty" url:"options,omitempty"`
-	AllowOther *FormFieldChoiceConfigAllowOther `json:"allow_other,omitempty" url:"allow_other,omitempty"`
+	Multiple     *bool                            `json:"multiple,omitempty" url:"multiple,omitempty"`
+	Options      []*FormFieldChoiceConfigOption   `json:"options,omitempty" url:"options,omitempty"`
+	AllowOther   *FormFieldChoiceConfigAllowOther `json:"allow_other,omitempty" url:"allow_other,omitempty"`
+	DefaultValue any                              `json:"default_value,omitempty" url:"default_value,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4552,6 +4570,13 @@ func (f *FormFieldChoiceConfig) GetAllowOther() FormFieldChoiceConfigAllowOther 
 		return FormFieldChoiceConfigAllowOther{}
 	}
 	return *f.AllowOther
+}
+
+func (f *FormFieldChoiceConfig) GetDefaultValue() any {
+	if f == nil || f.DefaultValue == nil {
+		return nil
+	}
+	return f.DefaultValue
 }
 
 func (f *FormFieldChoiceConfig) GetExtraProperties() map[string]interface{} {
@@ -4587,6 +4612,13 @@ func (f *FormFieldChoiceConfig) SetOptions(options []*FormFieldChoiceConfigOptio
 func (f *FormFieldChoiceConfig) SetAllowOther(allowOther *FormFieldChoiceConfigAllowOther) {
 	f.AllowOther = allowOther
 	f.require(formFieldChoiceConfigFieldAllowOther)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldChoiceConfig) SetDefaultValue(defaultValue any) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldChoiceConfigFieldDefaultValue)
 }
 
 func (f *FormFieldChoiceConfig) UnmarshalJSON(data []byte) error {
@@ -5696,15 +5728,17 @@ func (f *FormFieldDropdown) String() string {
 }
 
 var (
-	formFieldDropdownConfigFieldMultiple    = big.NewInt(1 << 0)
-	formFieldDropdownConfigFieldOptions     = big.NewInt(1 << 1)
-	formFieldDropdownConfigFieldPlaceholder = big.NewInt(1 << 2)
+	formFieldDropdownConfigFieldMultiple     = big.NewInt(1 << 0)
+	formFieldDropdownConfigFieldOptions      = big.NewInt(1 << 1)
+	formFieldDropdownConfigFieldDefaultValue = big.NewInt(1 << 2)
+	formFieldDropdownConfigFieldPlaceholder  = big.NewInt(1 << 3)
 )
 
 type FormFieldDropdownConfig struct {
-	Multiple    *bool                            `json:"multiple,omitempty" url:"multiple,omitempty"`
-	Options     []*FormFieldDropdownConfigOption `json:"options,omitempty" url:"options,omitempty"`
-	Placeholder *string                          `json:"placeholder,omitempty" url:"placeholder,omitempty"`
+	Multiple     *bool                            `json:"multiple,omitempty" url:"multiple,omitempty"`
+	Options      []*FormFieldDropdownConfigOption `json:"options,omitempty" url:"options,omitempty"`
+	DefaultValue any                              `json:"default_value,omitempty" url:"default_value,omitempty"`
+	Placeholder  *string                          `json:"placeholder,omitempty" url:"placeholder,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -5725,6 +5759,13 @@ func (f *FormFieldDropdownConfig) GetOptions() []*FormFieldDropdownConfigOption 
 		return nil
 	}
 	return f.Options
+}
+
+func (f *FormFieldDropdownConfig) GetDefaultValue() any {
+	if f == nil || f.DefaultValue == nil {
+		return nil
+	}
+	return f.DefaultValue
 }
 
 func (f *FormFieldDropdownConfig) GetPlaceholder() string {
@@ -5760,6 +5801,13 @@ func (f *FormFieldDropdownConfig) SetMultiple(multiple *bool) {
 func (f *FormFieldDropdownConfig) SetOptions(options []*FormFieldDropdownConfigOption) {
 	f.Options = options
 	f.require(formFieldDropdownConfigFieldOptions)
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormFieldDropdownConfig) SetDefaultValue(defaultValue any) {
+	f.DefaultValue = defaultValue
+	f.require(formFieldDropdownConfigFieldDefaultValue)
 }
 
 // SetPlaceholder sets the Placeholder field and marks it as non-optional;
@@ -11693,15 +11741,17 @@ func (f *FormRouterConfig) String() string {
 }
 
 var (
-	formRouterRuleFieldID       = big.NewInt(1 << 0)
-	formRouterRuleFieldAlias    = big.NewInt(1 << 1)
-	formRouterRuleFieldNextNode = big.NewInt(1 << 2)
+	formRouterRuleFieldID        = big.NewInt(1 << 0)
+	formRouterRuleFieldAlias     = big.NewInt(1 << 1)
+	formRouterRuleFieldCondition = big.NewInt(1 << 2)
+	formRouterRuleFieldNextNode  = big.NewInt(1 << 3)
 )
 
 type FormRouterRule struct {
-	ID       string           `json:"id" url:"id"`
-	Alias    *string          `json:"alias,omitempty" url:"alias,omitempty"`
-	NextNode *FormNodePointer `json:"next_node,omitempty" url:"next_node,omitempty"`
+	ID        string           `json:"id" url:"id"`
+	Alias     *string          `json:"alias,omitempty" url:"alias,omitempty"`
+	Condition any              `json:"condition" url:"condition"`
+	NextNode  *FormNodePointer `json:"next_node,omitempty" url:"next_node,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -11722,6 +11772,13 @@ func (f *FormRouterRule) GetAlias() string {
 		return ""
 	}
 	return *f.Alias
+}
+
+func (f *FormRouterRule) GetCondition() any {
+	if f == nil {
+		return nil
+	}
+	return f.Condition
 }
 
 func (f *FormRouterRule) GetNextNode() FormNodePointer {
@@ -11757,6 +11814,13 @@ func (f *FormRouterRule) SetID(id string) {
 func (f *FormRouterRule) SetAlias(alias *string) {
 	f.Alias = alias
 	f.require(formRouterRuleFieldAlias)
+}
+
+// SetCondition sets the Condition field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormRouterRule) SetCondition(condition any) {
+	f.Condition = condition
+	f.require(formRouterRuleFieldCondition)
 }
 
 // SetNextNode sets the NextNode field and marks it as non-optional;
@@ -13974,6 +14038,68 @@ func (l *ListFormsOffsetPaginatedResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+type ListFormsResponseContent struct {
+	FormSummaryList                         []*FormSummary
+	ListFormsOffsetPaginatedResponseContent *ListFormsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListFormsResponseContent) GetFormSummaryList() []*FormSummary {
+	if l == nil {
+		return nil
+	}
+	return l.FormSummaryList
+}
+
+func (l *ListFormsResponseContent) GetListFormsOffsetPaginatedResponseContent() *ListFormsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListFormsOffsetPaginatedResponseContent
+}
+
+func (l *ListFormsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueFormSummaryList []*FormSummary
+	if err := json.Unmarshal(data, &valueFormSummaryList); err == nil {
+		l.typ = "FormSummaryList"
+		l.FormSummaryList = valueFormSummaryList
+		return nil
+	}
+	valueListFormsOffsetPaginatedResponseContent := new(ListFormsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListFormsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListFormsOffsetPaginatedResponseContent"
+		l.ListFormsOffsetPaginatedResponseContent = valueListFormsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListFormsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "FormSummaryList" || l.FormSummaryList != nil {
+		return json.Marshal(l.FormSummaryList)
+	}
+	if l.typ == "ListFormsOffsetPaginatedResponseContent" || l.ListFormsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListFormsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListFormsResponseContentVisitor interface {
+	VisitFormSummaryList([]*FormSummary) error
+	VisitListFormsOffsetPaginatedResponseContent(*ListFormsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListFormsResponseContent) Accept(visitor ListFormsResponseContentVisitor) error {
+	if l.typ == "FormSummaryList" || l.FormSummaryList != nil {
+		return visitor.VisitFormSummaryList(l.FormSummaryList)
+	}
+	if l.typ == "ListFormsOffsetPaginatedResponseContent" || l.ListFormsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListFormsOffsetPaginatedResponseContent(l.ListFormsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
 }
 
 var (

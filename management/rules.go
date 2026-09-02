@@ -481,6 +481,68 @@ func (l *ListRulesOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type ListRulesResponseContent struct {
+	RuleList                                []*Rule
+	ListRulesOffsetPaginatedResponseContent *ListRulesOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListRulesResponseContent) GetRuleList() []*Rule {
+	if l == nil {
+		return nil
+	}
+	return l.RuleList
+}
+
+func (l *ListRulesResponseContent) GetListRulesOffsetPaginatedResponseContent() *ListRulesOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListRulesOffsetPaginatedResponseContent
+}
+
+func (l *ListRulesResponseContent) UnmarshalJSON(data []byte) error {
+	var valueRuleList []*Rule
+	if err := json.Unmarshal(data, &valueRuleList); err == nil {
+		l.typ = "RuleList"
+		l.RuleList = valueRuleList
+		return nil
+	}
+	valueListRulesOffsetPaginatedResponseContent := new(ListRulesOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListRulesOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListRulesOffsetPaginatedResponseContent"
+		l.ListRulesOffsetPaginatedResponseContent = valueListRulesOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListRulesResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "RuleList" || l.RuleList != nil {
+		return json.Marshal(l.RuleList)
+	}
+	if l.typ == "ListRulesOffsetPaginatedResponseContent" || l.ListRulesOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListRulesOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListRulesResponseContentVisitor interface {
+	VisitRuleList([]*Rule) error
+	VisitListRulesOffsetPaginatedResponseContent(*ListRulesOffsetPaginatedResponseContent) error
+}
+
+func (l *ListRulesResponseContent) Accept(visitor ListRulesResponseContentVisitor) error {
+	if l.typ == "RuleList" || l.RuleList != nil {
+		return visitor.VisitRuleList(l.RuleList)
+	}
+	if l.typ == "ListRulesOffsetPaginatedResponseContent" || l.ListRulesOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListRulesOffsetPaginatedResponseContent(l.ListRulesOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
 var (
 	ruleFieldName    = big.NewInt(1 << 0)
 	ruleFieldID      = big.NewInt(1 << 1)

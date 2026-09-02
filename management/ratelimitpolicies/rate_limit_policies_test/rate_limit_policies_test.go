@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestRateLimitPoliciesListWithWireMock(
+func TestRateLimitPoliciesGetRateLimitPoliciesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestRateLimitPoliciesListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListRateLimitPoliciesRequestParameters{
+	request := &management.GetRateLimitPoliciesRequest{
 		Resource: management.RateLimitPolicyResourceEnumOauthAuthenticationAPI.Ptr(),
 		Consumer: management.RateLimitPolicyConsumerEnumClient.Ptr(),
 		ConsumerSelector: management.String(
@@ -101,19 +101,19 @@ func TestRateLimitPoliciesListWithWireMock(
 			"from",
 		),
 	}
-	_, invocationErr := client.RateLimitPolicies.List(
+	_, invocationErr := client.RateLimitPolicies.GetRateLimitPolicies(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesGetRateLimitPoliciesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRateLimitPoliciesListWithWireMock", "GET", "/rate-limit-policies", map[string]interface{}{"resource": "oauth_authentication_api", "consumer": "client", "consumer_selector": "consumer_selector", "take": "1", "from": "from"}, 1)
+	VerifyRequestCount(t, "TestRateLimitPoliciesGetRateLimitPoliciesWithWireMock", "GET", "/rate-limit-policies", map[string]interface{}{"resource": "oauth_authentication_api", "consumer": "client", "consumer_selector": "consumer_selector", "take": "1", "from": "from"}, 1)
 }
 
-func TestRateLimitPoliciesCreateWithWireMock(
+func TestRateLimitPoliciesPostRateLimitPoliciesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -134,19 +134,19 @@ func TestRateLimitPoliciesCreateWithWireMock(
 			},
 		},
 	}
-	_, invocationErr := client.RateLimitPolicies.Create(
+	_, invocationErr := client.RateLimitPolicies.PostRateLimitPolicies(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesPostRateLimitPoliciesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRateLimitPoliciesCreateWithWireMock", "POST", "/rate-limit-policies", nil, 1)
+	VerifyRequestCount(t, "TestRateLimitPoliciesPostRateLimitPoliciesWithWireMock", "POST", "/rate-limit-policies", nil, 1)
 }
 
-func TestRateLimitPoliciesGetWithWireMock(
+func TestRateLimitPoliciesGetRateLimitPoliciesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -157,19 +157,19 @@ func TestRateLimitPoliciesGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.RateLimitPolicies.Get(
+	_, invocationErr := client.RateLimitPolicies.GetRateLimitPoliciesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesGetRateLimitPoliciesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRateLimitPoliciesGetWithWireMock", "GET", "/rate-limit-policies/id", nil, 1)
+	VerifyRequestCount(t, "TestRateLimitPoliciesGetRateLimitPoliciesByIDWithWireMock", "GET", "/rate-limit-policies/id", nil, 1)
 }
 
-func TestRateLimitPoliciesDeleteWithWireMock(
+func TestRateLimitPoliciesDeleteRateLimitPoliciesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -180,19 +180,19 @@ func TestRateLimitPoliciesDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.RateLimitPolicies.Delete(
+	invocationErr := client.RateLimitPolicies.DeleteRateLimitPoliciesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesDeleteRateLimitPoliciesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRateLimitPoliciesDeleteWithWireMock", "DELETE", "/rate-limit-policies/id", nil, 1)
+	VerifyRequestCount(t, "TestRateLimitPoliciesDeleteRateLimitPoliciesByIDWithWireMock", "DELETE", "/rate-limit-policies/id", nil, 1)
 }
 
-func TestRateLimitPoliciesUpdateWithWireMock(
+func TestRateLimitPoliciesPatchRateLimitPoliciesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -210,15 +210,15 @@ func TestRateLimitPoliciesUpdateWithWireMock(
 			},
 		},
 	}
-	_, invocationErr := client.RateLimitPolicies.Update(
+	_, invocationErr := client.RateLimitPolicies.PatchRateLimitPoliciesByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRateLimitPoliciesPatchRateLimitPoliciesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRateLimitPoliciesUpdateWithWireMock", "PATCH", "/rate-limit-policies/id", nil, 1)
+	VerifyRequestCount(t, "TestRateLimitPoliciesPatchRateLimitPoliciesByIDWithWireMock", "PATCH", "/rate-limit-policies/id", nil, 1)
 }

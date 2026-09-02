@@ -278,6 +278,154 @@ func (c *CreateEventStreamEventBridgeRequestContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	createEventStreamRedeliveryResponseContentFieldDateFrom   = big.NewInt(1 << 0)
+	createEventStreamRedeliveryResponseContentFieldDateTo     = big.NewInt(1 << 1)
+	createEventStreamRedeliveryResponseContentFieldStatuses   = big.NewInt(1 << 2)
+	createEventStreamRedeliveryResponseContentFieldEventTypes = big.NewInt(1 << 3)
+)
+
+type CreateEventStreamRedeliveryResponseContent struct {
+	// An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.
+	DateFrom *time.Time `json:"date_from,omitempty" url:"date_from,omitempty"`
+	// An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.
+	DateTo *time.Time `json:"date_to,omitempty" url:"date_to,omitempty"`
+	// Filter by status
+	Statuses []EventStreamDeliveryStatusEnum `json:"statuses,omitempty" url:"statuses,omitempty"`
+	// Filter by event type
+	EventTypes []EventStreamEventTypeEnum `json:"event_types,omitempty" url:"event_types,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateEventStreamRedeliveryResponseContent) GetDateFrom() time.Time {
+	if c == nil || c.DateFrom == nil {
+		return time.Time{}
+	}
+	return *c.DateFrom
+}
+
+func (c *CreateEventStreamRedeliveryResponseContent) GetDateTo() time.Time {
+	if c == nil || c.DateTo == nil {
+		return time.Time{}
+	}
+	return *c.DateTo
+}
+
+func (c *CreateEventStreamRedeliveryResponseContent) GetStatuses() []EventStreamDeliveryStatusEnum {
+	if c == nil || c.Statuses == nil {
+		return nil
+	}
+	return c.Statuses
+}
+
+func (c *CreateEventStreamRedeliveryResponseContent) GetEventTypes() []EventStreamEventTypeEnum {
+	if c == nil || c.EventTypes == nil {
+		return nil
+	}
+	return c.EventTypes
+}
+
+func (c *CreateEventStreamRedeliveryResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateEventStreamRedeliveryResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDateFrom sets the DateFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamRedeliveryResponseContent) SetDateFrom(dateFrom *time.Time) {
+	c.DateFrom = dateFrom
+	c.require(createEventStreamRedeliveryResponseContentFieldDateFrom)
+}
+
+// SetDateTo sets the DateTo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamRedeliveryResponseContent) SetDateTo(dateTo *time.Time) {
+	c.DateTo = dateTo
+	c.require(createEventStreamRedeliveryResponseContentFieldDateTo)
+}
+
+// SetStatuses sets the Statuses field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamRedeliveryResponseContent) SetStatuses(statuses []EventStreamDeliveryStatusEnum) {
+	c.Statuses = statuses
+	c.require(createEventStreamRedeliveryResponseContentFieldStatuses)
+}
+
+// SetEventTypes sets the EventTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamRedeliveryResponseContent) SetEventTypes(eventTypes []EventStreamEventTypeEnum) {
+	c.EventTypes = eventTypes
+	c.require(createEventStreamRedeliveryResponseContentFieldEventTypes)
+}
+
+func (c *CreateEventStreamRedeliveryResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateEventStreamRedeliveryResponseContent
+	var unmarshaler = struct {
+		embed
+		DateFrom *internal.DateTime `json:"date_from,omitempty"`
+		DateTo   *internal.DateTime `json:"date_to,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateEventStreamRedeliveryResponseContent(unmarshaler.embed)
+	c.DateFrom = unmarshaler.DateFrom.TimePtr()
+	c.DateTo = unmarshaler.DateTo.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateEventStreamRedeliveryResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEventStreamRedeliveryResponseContent
+	var marshaler = struct {
+		embed
+		DateFrom *internal.DateTime `json:"date_from,omitempty"`
+		DateTo   *internal.DateTime `json:"date_to,omitempty"`
+	}{
+		embed:    embed(*c),
+		DateFrom: internal.NewOptionalDateTime(c.DateFrom),
+		DateTo:   internal.NewOptionalDateTime(c.DateTo),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateEventStreamRedeliveryResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 type CreateEventStreamResponseContent struct {
 	EventStreamWebhookResponseContent     *EventStreamWebhookResponseContent
 	EventStreamEventBridgeResponseContent *EventStreamEventBridgeResponseContent
@@ -1065,6 +1213,610 @@ func (e *EventStreamActionResponseContent) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+// Event content. This will only be set if delivery failed.
+var (
+	eventStreamCloudEventFieldID          = big.NewInt(1 << 0)
+	eventStreamCloudEventFieldSource      = big.NewInt(1 << 1)
+	eventStreamCloudEventFieldSpecversion = big.NewInt(1 << 2)
+	eventStreamCloudEventFieldType        = big.NewInt(1 << 3)
+	eventStreamCloudEventFieldTime        = big.NewInt(1 << 4)
+	eventStreamCloudEventFieldData        = big.NewInt(1 << 5)
+)
+
+type EventStreamCloudEvent struct {
+	// Unique identifier for the event
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Where the event originated
+	Source *string `json:"source,omitempty" url:"source,omitempty"`
+	// Version of CloudEvents spec
+	Specversion *string `json:"specversion,omitempty" url:"specversion,omitempty"`
+	// Type of the event (e.g., user.created)
+	Type *string `json:"type,omitempty" url:"type,omitempty"`
+	// Timestamp at which the event was generated
+	Time *time.Time                 `json:"time,omitempty" url:"time,omitempty"`
+	Data *EventStreamCloudEventData `json:"data,omitempty" url:"data,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *EventStreamCloudEvent) GetID() string {
+	if e == nil || e.ID == nil {
+		return ""
+	}
+	return *e.ID
+}
+
+func (e *EventStreamCloudEvent) GetSource() string {
+	if e == nil || e.Source == nil {
+		return ""
+	}
+	return *e.Source
+}
+
+func (e *EventStreamCloudEvent) GetSpecversion() string {
+	if e == nil || e.Specversion == nil {
+		return ""
+	}
+	return *e.Specversion
+}
+
+func (e *EventStreamCloudEvent) GetType() string {
+	if e == nil || e.Type == nil {
+		return ""
+	}
+	return *e.Type
+}
+
+func (e *EventStreamCloudEvent) GetTime() time.Time {
+	if e == nil || e.Time == nil {
+		return time.Time{}
+	}
+	return *e.Time
+}
+
+func (e *EventStreamCloudEvent) GetData() EventStreamCloudEventData {
+	if e == nil || e.Data == nil {
+		return nil
+	}
+	return *e.Data
+}
+
+func (e *EventStreamCloudEvent) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *EventStreamCloudEvent) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEvent) SetID(id *string) {
+	e.ID = id
+	e.require(eventStreamCloudEventFieldID)
+}
+
+// SetSource sets the Source field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEvent) SetSource(source *string) {
+	e.Source = source
+	e.require(eventStreamCloudEventFieldSource)
+}
+
+// SetSpecversion sets the Specversion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEvent) SetSpecversion(specversion *string) {
+	e.Specversion = specversion
+	e.require(eventStreamCloudEventFieldSpecversion)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEvent) SetType(type_ *string) {
+	e.Type = type_
+	e.require(eventStreamCloudEventFieldType)
+}
+
+// SetTime sets the Time field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEvent) SetTime(time *time.Time) {
+	e.Time = time
+	e.require(eventStreamCloudEventFieldTime)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEvent) SetData(data *EventStreamCloudEventData) {
+	e.Data = data
+	e.require(eventStreamCloudEventFieldData)
+}
+
+func (e *EventStreamCloudEvent) UnmarshalJSON(data []byte) error {
+	type embed EventStreamCloudEvent
+	var unmarshaler = struct {
+		embed
+		Time *internal.DateTime `json:"time,omitempty"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*e = EventStreamCloudEvent(unmarshaler.embed)
+	e.Time = unmarshaler.Time.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *EventStreamCloudEvent) MarshalJSON() ([]byte, error) {
+	type embed EventStreamCloudEvent
+	var marshaler = struct {
+		embed
+		Time *internal.DateTime `json:"time,omitempty"`
+	}{
+		embed: embed(*e),
+		Time:  internal.NewOptionalDateTime(e.Time),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *EventStreamCloudEvent) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+// Event contents.
+type EventStreamCloudEventData = map[string]any
+
+// Metadata about a specific attempt to deliver an event
+var (
+	eventStreamDeliveryFieldID            = big.NewInt(1 << 0)
+	eventStreamDeliveryFieldEventStreamID = big.NewInt(1 << 1)
+	eventStreamDeliveryFieldStatus        = big.NewInt(1 << 2)
+	eventStreamDeliveryFieldEventType     = big.NewInt(1 << 3)
+	eventStreamDeliveryFieldAttempts      = big.NewInt(1 << 4)
+	eventStreamDeliveryFieldEvent         = big.NewInt(1 << 5)
+)
+
+type EventStreamDelivery struct {
+	// Unique identifier for the delivery
+	ID string `json:"id" url:"id"`
+	// Unique identifier for the event stream.
+	EventStreamID string                           `json:"event_stream_id" url:"event_stream_id"`
+	Status        EventStreamDeliveryStatusEnum    `json:"status" url:"status"`
+	EventType     EventStreamDeliveryEventTypeEnum `json:"event_type" url:"event_type"`
+	// Results of delivery attempts
+	Attempts []*EventStreamDeliveryAttempt `json:"attempts" url:"attempts"`
+	Event    *EventStreamCloudEvent        `json:"event,omitempty" url:"event,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *EventStreamDelivery) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *EventStreamDelivery) GetEventStreamID() string {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamID
+}
+
+func (e *EventStreamDelivery) GetStatus() EventStreamDeliveryStatusEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Status
+}
+
+func (e *EventStreamDelivery) GetEventType() EventStreamDeliveryEventTypeEnum {
+	if e == nil {
+		return ""
+	}
+	return e.EventType
+}
+
+func (e *EventStreamDelivery) GetAttempts() []*EventStreamDeliveryAttempt {
+	if e == nil {
+		return nil
+	}
+	return e.Attempts
+}
+
+func (e *EventStreamDelivery) GetEvent() EventStreamCloudEvent {
+	if e == nil || e.Event == nil {
+		return EventStreamCloudEvent{}
+	}
+	return *e.Event
+}
+
+func (e *EventStreamDelivery) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *EventStreamDelivery) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDelivery) SetID(id string) {
+	e.ID = id
+	e.require(eventStreamDeliveryFieldID)
+}
+
+// SetEventStreamID sets the EventStreamID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDelivery) SetEventStreamID(eventStreamID string) {
+	e.EventStreamID = eventStreamID
+	e.require(eventStreamDeliveryFieldEventStreamID)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDelivery) SetStatus(status EventStreamDeliveryStatusEnum) {
+	e.Status = status
+	e.require(eventStreamDeliveryFieldStatus)
+}
+
+// SetEventType sets the EventType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDelivery) SetEventType(eventType EventStreamDeliveryEventTypeEnum) {
+	e.EventType = eventType
+	e.require(eventStreamDeliveryFieldEventType)
+}
+
+// SetAttempts sets the Attempts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDelivery) SetAttempts(attempts []*EventStreamDeliveryAttempt) {
+	e.Attempts = attempts
+	e.require(eventStreamDeliveryFieldAttempts)
+}
+
+// SetEvent sets the Event field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDelivery) SetEvent(event *EventStreamCloudEvent) {
+	e.Event = event
+	e.require(eventStreamDeliveryFieldEvent)
+}
+
+func (e *EventStreamDelivery) UnmarshalJSON(data []byte) error {
+	type unmarshaler EventStreamDelivery
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = EventStreamDelivery(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *EventStreamDelivery) MarshalJSON() ([]byte, error) {
+	type embed EventStreamDelivery
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *EventStreamDelivery) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+var (
+	eventStreamDeliveryAttemptFieldStatus       = big.NewInt(1 << 0)
+	eventStreamDeliveryAttemptFieldTimestamp    = big.NewInt(1 << 1)
+	eventStreamDeliveryAttemptFieldErrorMessage = big.NewInt(1 << 2)
+	eventStreamDeliveryAttemptFieldDuration     = big.NewInt(1 << 3)
+)
+
+type EventStreamDeliveryAttempt struct {
+	Status EventStreamDeliveryStatusEnum `json:"status" url:"status"`
+	// Timestamp of delivery attempt
+	Timestamp time.Time `json:"timestamp" url:"timestamp"`
+	// Delivery error message, if applicable
+	ErrorMessage *string `json:"error_message,omitempty" url:"error_message,omitempty"`
+	// Duration of the delivery attempt in milliseconds
+	Duration *float64 `json:"duration,omitempty" url:"duration,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *EventStreamDeliveryAttempt) GetStatus() EventStreamDeliveryStatusEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Status
+}
+
+func (e *EventStreamDeliveryAttempt) GetTimestamp() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.Timestamp
+}
+
+func (e *EventStreamDeliveryAttempt) GetErrorMessage() string {
+	if e == nil || e.ErrorMessage == nil {
+		return ""
+	}
+	return *e.ErrorMessage
+}
+
+func (e *EventStreamDeliveryAttempt) GetDuration() float64 {
+	if e == nil || e.Duration == nil {
+		return 0
+	}
+	return *e.Duration
+}
+
+func (e *EventStreamDeliveryAttempt) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *EventStreamDeliveryAttempt) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDeliveryAttempt) SetStatus(status EventStreamDeliveryStatusEnum) {
+	e.Status = status
+	e.require(eventStreamDeliveryAttemptFieldStatus)
+}
+
+// SetTimestamp sets the Timestamp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDeliveryAttempt) SetTimestamp(timestamp time.Time) {
+	e.Timestamp = timestamp
+	e.require(eventStreamDeliveryAttemptFieldTimestamp)
+}
+
+// SetErrorMessage sets the ErrorMessage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDeliveryAttempt) SetErrorMessage(errorMessage *string) {
+	e.ErrorMessage = errorMessage
+	e.require(eventStreamDeliveryAttemptFieldErrorMessage)
+}
+
+// SetDuration sets the Duration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamDeliveryAttempt) SetDuration(duration *float64) {
+	e.Duration = duration
+	e.require(eventStreamDeliveryAttemptFieldDuration)
+}
+
+func (e *EventStreamDeliveryAttempt) UnmarshalJSON(data []byte) error {
+	type embed EventStreamDeliveryAttempt
+	var unmarshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*e = EventStreamDeliveryAttempt(unmarshaler.embed)
+	e.Timestamp = unmarshaler.Timestamp.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *EventStreamDeliveryAttempt) MarshalJSON() ([]byte, error) {
+	type embed EventStreamDeliveryAttempt
+	var marshaler = struct {
+		embed
+		Timestamp *internal.DateTime `json:"timestamp"`
+	}{
+		embed:     embed(*e),
+		Timestamp: internal.NewDateTime(e.Timestamp),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *EventStreamDeliveryAttempt) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+// Type of event
+type EventStreamDeliveryEventTypeEnum string
+
+const (
+	EventStreamDeliveryEventTypeEnumConnectionCreated              EventStreamDeliveryEventTypeEnum = "connection.created"
+	EventStreamDeliveryEventTypeEnumConnectionDeleted              EventStreamDeliveryEventTypeEnum = "connection.deleted"
+	EventStreamDeliveryEventTypeEnumConnectionUpdated              EventStreamDeliveryEventTypeEnum = "connection.updated"
+	EventStreamDeliveryEventTypeEnumGroupCreated                   EventStreamDeliveryEventTypeEnum = "group.created"
+	EventStreamDeliveryEventTypeEnumGroupDeleted                   EventStreamDeliveryEventTypeEnum = "group.deleted"
+	EventStreamDeliveryEventTypeEnumGroupMemberAdded               EventStreamDeliveryEventTypeEnum = "group.member.added"
+	EventStreamDeliveryEventTypeEnumGroupMemberDeleted             EventStreamDeliveryEventTypeEnum = "group.member.deleted"
+	EventStreamDeliveryEventTypeEnumGroupRoleAssigned              EventStreamDeliveryEventTypeEnum = "group.role.assigned"
+	EventStreamDeliveryEventTypeEnumGroupRoleDeleted               EventStreamDeliveryEventTypeEnum = "group.role.deleted"
+	EventStreamDeliveryEventTypeEnumGroupUpdated                   EventStreamDeliveryEventTypeEnum = "group.updated"
+	EventStreamDeliveryEventTypeEnumOrganizationConnectionAdded    EventStreamDeliveryEventTypeEnum = "organization.connection.added"
+	EventStreamDeliveryEventTypeEnumOrganizationConnectionRemoved  EventStreamDeliveryEventTypeEnum = "organization.connection.removed"
+	EventStreamDeliveryEventTypeEnumOrganizationConnectionUpdated  EventStreamDeliveryEventTypeEnum = "organization.connection.updated"
+	EventStreamDeliveryEventTypeEnumOrganizationCreated            EventStreamDeliveryEventTypeEnum = "organization.created"
+	EventStreamDeliveryEventTypeEnumOrganizationDeleted            EventStreamDeliveryEventTypeEnum = "organization.deleted"
+	EventStreamDeliveryEventTypeEnumOrganizationGroupRoleAssigned  EventStreamDeliveryEventTypeEnum = "organization.group.role.assigned"
+	EventStreamDeliveryEventTypeEnumOrganizationGroupRoleDeleted   EventStreamDeliveryEventTypeEnum = "organization.group.role.deleted"
+	EventStreamDeliveryEventTypeEnumOrganizationMemberAdded        EventStreamDeliveryEventTypeEnum = "organization.member.added"
+	EventStreamDeliveryEventTypeEnumOrganizationMemberDeleted      EventStreamDeliveryEventTypeEnum = "organization.member.deleted"
+	EventStreamDeliveryEventTypeEnumOrganizationMemberRoleAssigned EventStreamDeliveryEventTypeEnum = "organization.member.role.assigned"
+	EventStreamDeliveryEventTypeEnumOrganizationMemberRoleDeleted  EventStreamDeliveryEventTypeEnum = "organization.member.role.deleted"
+	EventStreamDeliveryEventTypeEnumOrganizationUpdated            EventStreamDeliveryEventTypeEnum = "organization.updated"
+	EventStreamDeliveryEventTypeEnumUserCreated                    EventStreamDeliveryEventTypeEnum = "user.created"
+	EventStreamDeliveryEventTypeEnumUserDeleted                    EventStreamDeliveryEventTypeEnum = "user.deleted"
+	EventStreamDeliveryEventTypeEnumUserUpdated                    EventStreamDeliveryEventTypeEnum = "user.updated"
+)
+
+func NewEventStreamDeliveryEventTypeEnumFromString(s string) (EventStreamDeliveryEventTypeEnum, error) {
+	switch s {
+	case "connection.created":
+		return EventStreamDeliveryEventTypeEnumConnectionCreated, nil
+	case "connection.deleted":
+		return EventStreamDeliveryEventTypeEnumConnectionDeleted, nil
+	case "connection.updated":
+		return EventStreamDeliveryEventTypeEnumConnectionUpdated, nil
+	case "group.created":
+		return EventStreamDeliveryEventTypeEnumGroupCreated, nil
+	case "group.deleted":
+		return EventStreamDeliveryEventTypeEnumGroupDeleted, nil
+	case "group.member.added":
+		return EventStreamDeliveryEventTypeEnumGroupMemberAdded, nil
+	case "group.member.deleted":
+		return EventStreamDeliveryEventTypeEnumGroupMemberDeleted, nil
+	case "group.role.assigned":
+		return EventStreamDeliveryEventTypeEnumGroupRoleAssigned, nil
+	case "group.role.deleted":
+		return EventStreamDeliveryEventTypeEnumGroupRoleDeleted, nil
+	case "group.updated":
+		return EventStreamDeliveryEventTypeEnumGroupUpdated, nil
+	case "organization.connection.added":
+		return EventStreamDeliveryEventTypeEnumOrganizationConnectionAdded, nil
+	case "organization.connection.removed":
+		return EventStreamDeliveryEventTypeEnumOrganizationConnectionRemoved, nil
+	case "organization.connection.updated":
+		return EventStreamDeliveryEventTypeEnumOrganizationConnectionUpdated, nil
+	case "organization.created":
+		return EventStreamDeliveryEventTypeEnumOrganizationCreated, nil
+	case "organization.deleted":
+		return EventStreamDeliveryEventTypeEnumOrganizationDeleted, nil
+	case "organization.group.role.assigned":
+		return EventStreamDeliveryEventTypeEnumOrganizationGroupRoleAssigned, nil
+	case "organization.group.role.deleted":
+		return EventStreamDeliveryEventTypeEnumOrganizationGroupRoleDeleted, nil
+	case "organization.member.added":
+		return EventStreamDeliveryEventTypeEnumOrganizationMemberAdded, nil
+	case "organization.member.deleted":
+		return EventStreamDeliveryEventTypeEnumOrganizationMemberDeleted, nil
+	case "organization.member.role.assigned":
+		return EventStreamDeliveryEventTypeEnumOrganizationMemberRoleAssigned, nil
+	case "organization.member.role.deleted":
+		return EventStreamDeliveryEventTypeEnumOrganizationMemberRoleDeleted, nil
+	case "organization.updated":
+		return EventStreamDeliveryEventTypeEnumOrganizationUpdated, nil
+	case "user.created":
+		return EventStreamDeliveryEventTypeEnumUserCreated, nil
+	case "user.deleted":
+		return EventStreamDeliveryEventTypeEnumUserDeleted, nil
+	case "user.updated":
+		return EventStreamDeliveryEventTypeEnumUserUpdated, nil
+	}
+	var t EventStreamDeliveryEventTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamDeliveryEventTypeEnum) Ptr() *EventStreamDeliveryEventTypeEnum {
+	return &e
+}
+
+// Delivery status
+type EventStreamDeliveryStatusEnum string
+
+const (
+	EventStreamDeliveryStatusEnumFailed EventStreamDeliveryStatusEnum = "failed"
+)
+
+func NewEventStreamDeliveryStatusEnumFromString(s string) (EventStreamDeliveryStatusEnum, error) {
+	switch s {
+	case "failed":
+		return EventStreamDeliveryStatusEnumFailed, nil
+	}
+	var t EventStreamDeliveryStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamDeliveryStatusEnum) Ptr() *EventStreamDeliveryStatusEnum {
+	return &e
+}
+
 type EventStreamDestinationPatch struct {
 	EventStreamWebhookDestination *EventStreamWebhookDestination
 	EventStreamActionDestination  *EventStreamActionDestination
@@ -1685,6 +2437,97 @@ func (e *EventStreamEventBridgeResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+type EventStreamEventTypeEnum string
+
+const (
+	EventStreamEventTypeEnumConnectionCreated              EventStreamEventTypeEnum = "connection.created"
+	EventStreamEventTypeEnumConnectionDeleted              EventStreamEventTypeEnum = "connection.deleted"
+	EventStreamEventTypeEnumConnectionUpdated              EventStreamEventTypeEnum = "connection.updated"
+	EventStreamEventTypeEnumGroupCreated                   EventStreamEventTypeEnum = "group.created"
+	EventStreamEventTypeEnumGroupDeleted                   EventStreamEventTypeEnum = "group.deleted"
+	EventStreamEventTypeEnumGroupMemberAdded               EventStreamEventTypeEnum = "group.member.added"
+	EventStreamEventTypeEnumGroupMemberDeleted             EventStreamEventTypeEnum = "group.member.deleted"
+	EventStreamEventTypeEnumGroupRoleAssigned              EventStreamEventTypeEnum = "group.role.assigned"
+	EventStreamEventTypeEnumGroupRoleDeleted               EventStreamEventTypeEnum = "group.role.deleted"
+	EventStreamEventTypeEnumGroupUpdated                   EventStreamEventTypeEnum = "group.updated"
+	EventStreamEventTypeEnumOrganizationConnectionAdded    EventStreamEventTypeEnum = "organization.connection.added"
+	EventStreamEventTypeEnumOrganizationConnectionRemoved  EventStreamEventTypeEnum = "organization.connection.removed"
+	EventStreamEventTypeEnumOrganizationConnectionUpdated  EventStreamEventTypeEnum = "organization.connection.updated"
+	EventStreamEventTypeEnumOrganizationCreated            EventStreamEventTypeEnum = "organization.created"
+	EventStreamEventTypeEnumOrganizationDeleted            EventStreamEventTypeEnum = "organization.deleted"
+	EventStreamEventTypeEnumOrganizationGroupRoleAssigned  EventStreamEventTypeEnum = "organization.group.role.assigned"
+	EventStreamEventTypeEnumOrganizationGroupRoleDeleted   EventStreamEventTypeEnum = "organization.group.role.deleted"
+	EventStreamEventTypeEnumOrganizationMemberAdded        EventStreamEventTypeEnum = "organization.member.added"
+	EventStreamEventTypeEnumOrganizationMemberDeleted      EventStreamEventTypeEnum = "organization.member.deleted"
+	EventStreamEventTypeEnumOrganizationMemberRoleAssigned EventStreamEventTypeEnum = "organization.member.role.assigned"
+	EventStreamEventTypeEnumOrganizationMemberRoleDeleted  EventStreamEventTypeEnum = "organization.member.role.deleted"
+	EventStreamEventTypeEnumOrganizationUpdated            EventStreamEventTypeEnum = "organization.updated"
+	EventStreamEventTypeEnumUserCreated                    EventStreamEventTypeEnum = "user.created"
+	EventStreamEventTypeEnumUserDeleted                    EventStreamEventTypeEnum = "user.deleted"
+	EventStreamEventTypeEnumUserUpdated                    EventStreamEventTypeEnum = "user.updated"
+)
+
+func NewEventStreamEventTypeEnumFromString(s string) (EventStreamEventTypeEnum, error) {
+	switch s {
+	case "connection.created":
+		return EventStreamEventTypeEnumConnectionCreated, nil
+	case "connection.deleted":
+		return EventStreamEventTypeEnumConnectionDeleted, nil
+	case "connection.updated":
+		return EventStreamEventTypeEnumConnectionUpdated, nil
+	case "group.created":
+		return EventStreamEventTypeEnumGroupCreated, nil
+	case "group.deleted":
+		return EventStreamEventTypeEnumGroupDeleted, nil
+	case "group.member.added":
+		return EventStreamEventTypeEnumGroupMemberAdded, nil
+	case "group.member.deleted":
+		return EventStreamEventTypeEnumGroupMemberDeleted, nil
+	case "group.role.assigned":
+		return EventStreamEventTypeEnumGroupRoleAssigned, nil
+	case "group.role.deleted":
+		return EventStreamEventTypeEnumGroupRoleDeleted, nil
+	case "group.updated":
+		return EventStreamEventTypeEnumGroupUpdated, nil
+	case "organization.connection.added":
+		return EventStreamEventTypeEnumOrganizationConnectionAdded, nil
+	case "organization.connection.removed":
+		return EventStreamEventTypeEnumOrganizationConnectionRemoved, nil
+	case "organization.connection.updated":
+		return EventStreamEventTypeEnumOrganizationConnectionUpdated, nil
+	case "organization.created":
+		return EventStreamEventTypeEnumOrganizationCreated, nil
+	case "organization.deleted":
+		return EventStreamEventTypeEnumOrganizationDeleted, nil
+	case "organization.group.role.assigned":
+		return EventStreamEventTypeEnumOrganizationGroupRoleAssigned, nil
+	case "organization.group.role.deleted":
+		return EventStreamEventTypeEnumOrganizationGroupRoleDeleted, nil
+	case "organization.member.added":
+		return EventStreamEventTypeEnumOrganizationMemberAdded, nil
+	case "organization.member.deleted":
+		return EventStreamEventTypeEnumOrganizationMemberDeleted, nil
+	case "organization.member.role.assigned":
+		return EventStreamEventTypeEnumOrganizationMemberRoleAssigned, nil
+	case "organization.member.role.deleted":
+		return EventStreamEventTypeEnumOrganizationMemberRoleDeleted, nil
+	case "organization.updated":
+		return EventStreamEventTypeEnumOrganizationUpdated, nil
+	case "user.created":
+		return EventStreamEventTypeEnumUserCreated, nil
+	case "user.deleted":
+		return EventStreamEventTypeEnumUserDeleted, nil
+	case "user.updated":
+		return EventStreamEventTypeEnumUserUpdated, nil
+	}
+	var t EventStreamEventTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamEventTypeEnum) Ptr() *EventStreamEventTypeEnum {
+	return &e
 }
 
 type EventStreamResponseContent struct {
@@ -2820,6 +3663,174 @@ func (e *EventStreamWebhookResponseContent) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+// Metadata about a specific attempt to deliver an event
+var (
+	getEventStreamDeliveryHistoryResponseContentFieldID            = big.NewInt(1 << 0)
+	getEventStreamDeliveryHistoryResponseContentFieldEventStreamID = big.NewInt(1 << 1)
+	getEventStreamDeliveryHistoryResponseContentFieldStatus        = big.NewInt(1 << 2)
+	getEventStreamDeliveryHistoryResponseContentFieldEventType     = big.NewInt(1 << 3)
+	getEventStreamDeliveryHistoryResponseContentFieldAttempts      = big.NewInt(1 << 4)
+	getEventStreamDeliveryHistoryResponseContentFieldEvent         = big.NewInt(1 << 5)
+)
+
+type GetEventStreamDeliveryHistoryResponseContent struct {
+	// Unique identifier for the delivery
+	ID string `json:"id" url:"id"`
+	// Unique identifier for the event stream.
+	EventStreamID string                           `json:"event_stream_id" url:"event_stream_id"`
+	Status        EventStreamDeliveryStatusEnum    `json:"status" url:"status"`
+	EventType     EventStreamDeliveryEventTypeEnum `json:"event_type" url:"event_type"`
+	// Results of delivery attempts
+	Attempts []*EventStreamDeliveryAttempt `json:"attempts" url:"attempts"`
+	Event    *EventStreamCloudEvent        `json:"event,omitempty" url:"event,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) GetEventStreamID() string {
+	if g == nil {
+		return ""
+	}
+	return g.EventStreamID
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) GetStatus() EventStreamDeliveryStatusEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Status
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) GetEventType() EventStreamDeliveryEventTypeEnum {
+	if g == nil {
+		return ""
+	}
+	return g.EventType
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) GetAttempts() []*EventStreamDeliveryAttempt {
+	if g == nil {
+		return nil
+	}
+	return g.Attempts
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) GetEvent() EventStreamCloudEvent {
+	if g == nil || g.Event == nil {
+		return EventStreamCloudEvent{}
+	}
+	return *g.Event
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEventStreamDeliveryHistoryResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getEventStreamDeliveryHistoryResponseContentFieldID)
+}
+
+// SetEventStreamID sets the EventStreamID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEventStreamDeliveryHistoryResponseContent) SetEventStreamID(eventStreamID string) {
+	g.EventStreamID = eventStreamID
+	g.require(getEventStreamDeliveryHistoryResponseContentFieldEventStreamID)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEventStreamDeliveryHistoryResponseContent) SetStatus(status EventStreamDeliveryStatusEnum) {
+	g.Status = status
+	g.require(getEventStreamDeliveryHistoryResponseContentFieldStatus)
+}
+
+// SetEventType sets the EventType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEventStreamDeliveryHistoryResponseContent) SetEventType(eventType EventStreamDeliveryEventTypeEnum) {
+	g.EventType = eventType
+	g.require(getEventStreamDeliveryHistoryResponseContentFieldEventType)
+}
+
+// SetAttempts sets the Attempts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEventStreamDeliveryHistoryResponseContent) SetAttempts(attempts []*EventStreamDeliveryAttempt) {
+	g.Attempts = attempts
+	g.require(getEventStreamDeliveryHistoryResponseContentFieldAttempts)
+}
+
+// SetEvent sets the Event field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEventStreamDeliveryHistoryResponseContent) SetEvent(event *EventStreamCloudEvent) {
+	g.Event = event
+	g.require(getEventStreamDeliveryHistoryResponseContentFieldEvent)
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetEventStreamDeliveryHistoryResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetEventStreamDeliveryHistoryResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetEventStreamDeliveryHistoryResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetEventStreamDeliveryHistoryResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
 type GetEventStreamResponseContent struct {
 	EventStreamWebhookResponseContent     *EventStreamWebhookResponseContent
 	EventStreamEventBridgeResponseContent *EventStreamEventBridgeResponseContent
@@ -2901,6 +3912,108 @@ func (g *GetEventStreamResponseContent) Accept(visitor GetEventStreamResponseCon
 		return visitor.VisitEventStreamActionResponseContent(g.EventStreamActionResponseContent)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", g)
+}
+
+var (
+	listEventStreamDeliveriesResponseContentFieldDeliveries = big.NewInt(1 << 0)
+	listEventStreamDeliveriesResponseContentFieldNext       = big.NewInt(1 << 1)
+)
+
+type ListEventStreamDeliveriesResponseContent struct {
+	// List of event stream deliveries
+	Deliveries []*EventStreamDelivery `json:"deliveries" url:"deliveries"`
+	// The cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) GetDeliveries() []*EventStreamDelivery {
+	if l == nil {
+		return nil
+	}
+	return l.Deliveries
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetDeliveries sets the Deliveries field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesResponseContent) SetDeliveries(deliveries []*EventStreamDelivery) {
+	l.Deliveries = deliveries
+	l.require(listEventStreamDeliveriesResponseContentFieldDeliveries)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listEventStreamDeliveriesResponseContentFieldNext)
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListEventStreamDeliveriesResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListEventStreamDeliveriesResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListEventStreamDeliveriesResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListEventStreamDeliveriesResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 var (
@@ -3095,7 +4208,7 @@ func (u *UpdateEventStreamResponseContent) Accept(visitor UpdateEventStreamRespo
 	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
-type EventStreamsCreateRequest struct {
+type PostEventStreamsRequest struct {
 	CreateEventStreamWebHookRequestContent     *CreateEventStreamWebHookRequestContent
 	CreateEventStreamEventBridgeRequestContent *CreateEventStreamEventBridgeRequestContent
 	CreateEventStreamActionRequestContent      *CreateEventStreamActionRequestContent
@@ -3103,77 +4216,77 @@ type EventStreamsCreateRequest struct {
 	typ string
 }
 
-func (e *EventStreamsCreateRequest) GetCreateEventStreamWebHookRequestContent() *CreateEventStreamWebHookRequestContent {
-	if e == nil {
+func (p *PostEventStreamsRequest) GetCreateEventStreamWebHookRequestContent() *CreateEventStreamWebHookRequestContent {
+	if p == nil {
 		return nil
 	}
-	return e.CreateEventStreamWebHookRequestContent
+	return p.CreateEventStreamWebHookRequestContent
 }
 
-func (e *EventStreamsCreateRequest) GetCreateEventStreamEventBridgeRequestContent() *CreateEventStreamEventBridgeRequestContent {
-	if e == nil {
+func (p *PostEventStreamsRequest) GetCreateEventStreamEventBridgeRequestContent() *CreateEventStreamEventBridgeRequestContent {
+	if p == nil {
 		return nil
 	}
-	return e.CreateEventStreamEventBridgeRequestContent
+	return p.CreateEventStreamEventBridgeRequestContent
 }
 
-func (e *EventStreamsCreateRequest) GetCreateEventStreamActionRequestContent() *CreateEventStreamActionRequestContent {
-	if e == nil {
+func (p *PostEventStreamsRequest) GetCreateEventStreamActionRequestContent() *CreateEventStreamActionRequestContent {
+	if p == nil {
 		return nil
 	}
-	return e.CreateEventStreamActionRequestContent
+	return p.CreateEventStreamActionRequestContent
 }
 
-func (e *EventStreamsCreateRequest) UnmarshalJSON(data []byte) error {
+func (p *PostEventStreamsRequest) UnmarshalJSON(data []byte) error {
 	valueCreateEventStreamWebHookRequestContent := new(CreateEventStreamWebHookRequestContent)
 	if err := json.Unmarshal(data, &valueCreateEventStreamWebHookRequestContent); err == nil {
-		e.typ = "CreateEventStreamWebHookRequestContent"
-		e.CreateEventStreamWebHookRequestContent = valueCreateEventStreamWebHookRequestContent
+		p.typ = "CreateEventStreamWebHookRequestContent"
+		p.CreateEventStreamWebHookRequestContent = valueCreateEventStreamWebHookRequestContent
 		return nil
 	}
 	valueCreateEventStreamEventBridgeRequestContent := new(CreateEventStreamEventBridgeRequestContent)
 	if err := json.Unmarshal(data, &valueCreateEventStreamEventBridgeRequestContent); err == nil {
-		e.typ = "CreateEventStreamEventBridgeRequestContent"
-		e.CreateEventStreamEventBridgeRequestContent = valueCreateEventStreamEventBridgeRequestContent
+		p.typ = "CreateEventStreamEventBridgeRequestContent"
+		p.CreateEventStreamEventBridgeRequestContent = valueCreateEventStreamEventBridgeRequestContent
 		return nil
 	}
 	valueCreateEventStreamActionRequestContent := new(CreateEventStreamActionRequestContent)
 	if err := json.Unmarshal(data, &valueCreateEventStreamActionRequestContent); err == nil {
-		e.typ = "CreateEventStreamActionRequestContent"
-		e.CreateEventStreamActionRequestContent = valueCreateEventStreamActionRequestContent
+		p.typ = "CreateEventStreamActionRequestContent"
+		p.CreateEventStreamActionRequestContent = valueCreateEventStreamActionRequestContent
 		return nil
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, p)
 }
 
-func (e EventStreamsCreateRequest) MarshalJSON() ([]byte, error) {
-	if e.typ == "CreateEventStreamWebHookRequestContent" || e.CreateEventStreamWebHookRequestContent != nil {
-		return json.Marshal(e.CreateEventStreamWebHookRequestContent)
+func (p PostEventStreamsRequest) MarshalJSON() ([]byte, error) {
+	if p.typ == "CreateEventStreamWebHookRequestContent" || p.CreateEventStreamWebHookRequestContent != nil {
+		return json.Marshal(p.CreateEventStreamWebHookRequestContent)
 	}
-	if e.typ == "CreateEventStreamEventBridgeRequestContent" || e.CreateEventStreamEventBridgeRequestContent != nil {
-		return json.Marshal(e.CreateEventStreamEventBridgeRequestContent)
+	if p.typ == "CreateEventStreamEventBridgeRequestContent" || p.CreateEventStreamEventBridgeRequestContent != nil {
+		return json.Marshal(p.CreateEventStreamEventBridgeRequestContent)
 	}
-	if e.typ == "CreateEventStreamActionRequestContent" || e.CreateEventStreamActionRequestContent != nil {
-		return json.Marshal(e.CreateEventStreamActionRequestContent)
+	if p.typ == "CreateEventStreamActionRequestContent" || p.CreateEventStreamActionRequestContent != nil {
+		return json.Marshal(p.CreateEventStreamActionRequestContent)
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", p)
 }
 
-type EventStreamsCreateRequestVisitor interface {
+type PostEventStreamsRequestVisitor interface {
 	VisitCreateEventStreamWebHookRequestContent(*CreateEventStreamWebHookRequestContent) error
 	VisitCreateEventStreamEventBridgeRequestContent(*CreateEventStreamEventBridgeRequestContent) error
 	VisitCreateEventStreamActionRequestContent(*CreateEventStreamActionRequestContent) error
 }
 
-func (e *EventStreamsCreateRequest) Accept(visitor EventStreamsCreateRequestVisitor) error {
-	if e.typ == "CreateEventStreamWebHookRequestContent" || e.CreateEventStreamWebHookRequestContent != nil {
-		return visitor.VisitCreateEventStreamWebHookRequestContent(e.CreateEventStreamWebHookRequestContent)
+func (p *PostEventStreamsRequest) Accept(visitor PostEventStreamsRequestVisitor) error {
+	if p.typ == "CreateEventStreamWebHookRequestContent" || p.CreateEventStreamWebHookRequestContent != nil {
+		return visitor.VisitCreateEventStreamWebHookRequestContent(p.CreateEventStreamWebHookRequestContent)
 	}
-	if e.typ == "CreateEventStreamEventBridgeRequestContent" || e.CreateEventStreamEventBridgeRequestContent != nil {
-		return visitor.VisitCreateEventStreamEventBridgeRequestContent(e.CreateEventStreamEventBridgeRequestContent)
+	if p.typ == "CreateEventStreamEventBridgeRequestContent" || p.CreateEventStreamEventBridgeRequestContent != nil {
+		return visitor.VisitCreateEventStreamEventBridgeRequestContent(p.CreateEventStreamEventBridgeRequestContent)
 	}
-	if e.typ == "CreateEventStreamActionRequestContent" || e.CreateEventStreamActionRequestContent != nil {
-		return visitor.VisitCreateEventStreamActionRequestContent(e.CreateEventStreamActionRequestContent)
+	if p.typ == "CreateEventStreamActionRequestContent" || p.CreateEventStreamActionRequestContent != nil {
+		return visitor.VisitCreateEventStreamActionRequestContent(p.CreateEventStreamActionRequestContent)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", e)
+	return fmt.Errorf("type %T does not include a non-empty union type", p)
 }

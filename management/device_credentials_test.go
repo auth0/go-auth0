@@ -827,6 +827,75 @@ func TestSettersMarkExplicitListDeviceCredentialsOffsetPaginatedResponseContent(
 
 }
 
+func TestGettersListDeviceCredentialsResponseContent(t *testing.T) {
+	t.Run("GetDeviceCredentialList", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListDeviceCredentialsResponseContent{}
+		var expected []*DeviceCredential
+		obj.DeviceCredentialList = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDeviceCredentialList(), "getter should return the property value")
+	})
+
+	t.Run("GetDeviceCredentialList_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListDeviceCredentialsResponseContent{}
+		obj.DeviceCredentialList = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDeviceCredentialList(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDeviceCredentialList_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListDeviceCredentialsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDeviceCredentialList() // Should return zero value
+	})
+
+	t.Run("GetListDeviceCredentialsOffsetPaginatedResponseContent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListDeviceCredentialsResponseContent{}
+		var expected *ListDeviceCredentialsOffsetPaginatedResponseContent
+		obj.ListDeviceCredentialsOffsetPaginatedResponseContent = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetListDeviceCredentialsOffsetPaginatedResponseContent(), "getter should return the property value")
+	})
+
+	t.Run("GetListDeviceCredentialsOffsetPaginatedResponseContent_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListDeviceCredentialsResponseContent{}
+		obj.ListDeviceCredentialsOffsetPaginatedResponseContent = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetListDeviceCredentialsOffsetPaginatedResponseContent(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetListDeviceCredentialsOffsetPaginatedResponseContent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListDeviceCredentialsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetListDeviceCredentialsOffsetPaginatedResponseContent() // Should return zero value
+	})
+
+}
+
 func TestJSONMarshalingCreatePublicKeyDeviceCredentialResponseContent(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()

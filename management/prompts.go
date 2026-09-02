@@ -9,6 +9,1684 @@ import (
 	big "math/big"
 )
 
+// Client array filter items
+type AculClientFilter struct {
+	AculClientFilterByID       *AculClientFilterByID
+	AculClientFilterByMetadata *AculClientFilterByMetadata
+
+	typ string
+}
+
+func (a *AculClientFilter) GetAculClientFilterByID() *AculClientFilterByID {
+	if a == nil {
+		return nil
+	}
+	return a.AculClientFilterByID
+}
+
+func (a *AculClientFilter) GetAculClientFilterByMetadata() *AculClientFilterByMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.AculClientFilterByMetadata
+}
+
+func (a *AculClientFilter) UnmarshalJSON(data []byte) error {
+	valueAculClientFilterByID := new(AculClientFilterByID)
+	if err := json.Unmarshal(data, &valueAculClientFilterByID); err == nil {
+		a.typ = "AculClientFilterByID"
+		a.AculClientFilterByID = valueAculClientFilterByID
+		return nil
+	}
+	valueAculClientFilterByMetadata := new(AculClientFilterByMetadata)
+	if err := json.Unmarshal(data, &valueAculClientFilterByMetadata); err == nil {
+		a.typ = "AculClientFilterByMetadata"
+		a.AculClientFilterByMetadata = valueAculClientFilterByMetadata
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, a)
+}
+
+func (a AculClientFilter) MarshalJSON() ([]byte, error) {
+	if a.typ == "AculClientFilterByID" || a.AculClientFilterByID != nil {
+		return json.Marshal(a.AculClientFilterByID)
+	}
+	if a.typ == "AculClientFilterByMetadata" || a.AculClientFilterByMetadata != nil {
+		return json.Marshal(a.AculClientFilterByMetadata)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculClientFilterVisitor interface {
+	VisitAculClientFilterByID(*AculClientFilterByID) error
+	VisitAculClientFilterByMetadata(*AculClientFilterByMetadata) error
+}
+
+func (a *AculClientFilter) Accept(visitor AculClientFilterVisitor) error {
+	if a.typ == "AculClientFilterByID" || a.AculClientFilterByID != nil {
+		return visitor.VisitAculClientFilterByID(a.AculClientFilterByID)
+	}
+	if a.typ == "AculClientFilterByMetadata" || a.AculClientFilterByMetadata != nil {
+		return visitor.VisitAculClientFilterByMetadata(a.AculClientFilterByMetadata)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+var (
+	aculClientFilterByIDFieldID = big.NewInt(1 << 0)
+)
+
+type AculClientFilterByID struct {
+	// Client ID
+	ID string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculClientFilterByID) GetID() string {
+	if a == nil {
+		return ""
+	}
+	return a.ID
+}
+
+func (a *AculClientFilterByID) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AculClientFilterByID) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculClientFilterByID) SetID(id string) {
+	a.ID = id
+	a.require(aculClientFilterByIDFieldID)
+}
+
+func (a *AculClientFilterByID) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculClientFilterByID
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculClientFilterByID(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculClientFilterByID) MarshalJSON() ([]byte, error) {
+	type embed AculClientFilterByID
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AculClientFilterByID) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	aculClientFilterByMetadataFieldMetadata = big.NewInt(1 << 0)
+)
+
+type AculClientFilterByMetadata struct {
+	Metadata AculClientMetadata `json:"metadata" url:"metadata"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculClientFilterByMetadata) GetMetadata() AculClientMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.Metadata
+}
+
+func (a *AculClientFilterByMetadata) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AculClientFilterByMetadata) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculClientFilterByMetadata) SetMetadata(metadata AculClientMetadata) {
+	a.Metadata = metadata
+	a.require(aculClientFilterByMetadataFieldMetadata)
+}
+
+func (a *AculClientFilterByMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculClientFilterByMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculClientFilterByMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculClientFilterByMetadata) MarshalJSON() ([]byte, error) {
+	type embed AculClientFilterByMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AculClientFilterByMetadata) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Client metadata key/value pairs
+type AculClientMetadata = map[string]any
+
+// Array of screen configurations to update
+type AculConfigs = []*AculConfigsItem
+
+var (
+	aculConfigsItemFieldPrompt                  = big.NewInt(1 << 0)
+	aculConfigsItemFieldScreen                  = big.NewInt(1 << 1)
+	aculConfigsItemFieldRenderingMode           = big.NewInt(1 << 2)
+	aculConfigsItemFieldContextConfiguration    = big.NewInt(1 << 3)
+	aculConfigsItemFieldDefaultHeadTagsDisabled = big.NewInt(1 << 4)
+	aculConfigsItemFieldUsePageTemplate         = big.NewInt(1 << 5)
+	aculConfigsItemFieldHeadTags                = big.NewInt(1 << 6)
+	aculConfigsItemFieldFilters                 = big.NewInt(1 << 7)
+)
+
+type AculConfigsItem struct {
+	Prompt PromptGroupNameEnum `json:"prompt" url:"prompt"`
+	Screen ScreenGroupNameEnum `json:"screen" url:"screen"`
+	// Rendering mode
+	RenderingMode        *AculRenderingModeEnum    `json:"rendering_mode,omitempty" url:"rendering_mode,omitempty"`
+	ContextConfiguration *AculContextConfiguration `json:"context_configuration,omitempty" url:"context_configuration,omitempty"`
+	// Override Universal Login default head tags
+	DefaultHeadTagsDisabled *bool `json:"default_head_tags_disabled,omitempty" url:"default_head_tags_disabled,omitempty"`
+	// Use page template with ACUL
+	UsePageTemplate *bool `json:"use_page_template,omitempty" url:"use_page_template,omitempty"`
+	// An array of head tags
+	HeadTags []*AculHeadTag `json:"head_tags,omitempty" url:"head_tags,omitempty"`
+	Filters  *AculFilters   `json:"filters,omitempty" url:"filters,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculConfigsItem) GetPrompt() PromptGroupNameEnum {
+	if a == nil {
+		return ""
+	}
+	return a.Prompt
+}
+
+func (a *AculConfigsItem) GetScreen() ScreenGroupNameEnum {
+	if a == nil {
+		return ""
+	}
+	return a.Screen
+}
+
+func (a *AculConfigsItem) GetRenderingMode() AculRenderingModeEnum {
+	if a == nil || a.RenderingMode == nil {
+		return ""
+	}
+	return *a.RenderingMode
+}
+
+func (a *AculConfigsItem) GetContextConfiguration() AculContextConfiguration {
+	if a == nil || a.ContextConfiguration == nil {
+		return nil
+	}
+	return *a.ContextConfiguration
+}
+
+func (a *AculConfigsItem) GetDefaultHeadTagsDisabled() bool {
+	if a == nil || a.DefaultHeadTagsDisabled == nil {
+		return false
+	}
+	return *a.DefaultHeadTagsDisabled
+}
+
+func (a *AculConfigsItem) GetUsePageTemplate() bool {
+	if a == nil || a.UsePageTemplate == nil {
+		return false
+	}
+	return *a.UsePageTemplate
+}
+
+func (a *AculConfigsItem) GetHeadTags() []*AculHeadTag {
+	if a == nil || a.HeadTags == nil {
+		return nil
+	}
+	return a.HeadTags
+}
+
+func (a *AculConfigsItem) GetFilters() AculFilters {
+	if a == nil || a.Filters == nil {
+		return AculFilters{}
+	}
+	return *a.Filters
+}
+
+func (a *AculConfigsItem) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AculConfigsItem) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetPrompt(prompt PromptGroupNameEnum) {
+	a.Prompt = prompt
+	a.require(aculConfigsItemFieldPrompt)
+}
+
+// SetScreen sets the Screen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetScreen(screen ScreenGroupNameEnum) {
+	a.Screen = screen
+	a.require(aculConfigsItemFieldScreen)
+}
+
+// SetRenderingMode sets the RenderingMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetRenderingMode(renderingMode *AculRenderingModeEnum) {
+	a.RenderingMode = renderingMode
+	a.require(aculConfigsItemFieldRenderingMode)
+}
+
+// SetContextConfiguration sets the ContextConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetContextConfiguration(contextConfiguration *AculContextConfiguration) {
+	a.ContextConfiguration = contextConfiguration
+	a.require(aculConfigsItemFieldContextConfiguration)
+}
+
+// SetDefaultHeadTagsDisabled sets the DefaultHeadTagsDisabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetDefaultHeadTagsDisabled(defaultHeadTagsDisabled *bool) {
+	a.DefaultHeadTagsDisabled = defaultHeadTagsDisabled
+	a.require(aculConfigsItemFieldDefaultHeadTagsDisabled)
+}
+
+// SetUsePageTemplate sets the UsePageTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetUsePageTemplate(usePageTemplate *bool) {
+	a.UsePageTemplate = usePageTemplate
+	a.require(aculConfigsItemFieldUsePageTemplate)
+}
+
+// SetHeadTags sets the HeadTags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetHeadTags(headTags []*AculHeadTag) {
+	a.HeadTags = headTags
+	a.require(aculConfigsItemFieldHeadTags)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculConfigsItem) SetFilters(filters *AculFilters) {
+	a.Filters = filters
+	a.require(aculConfigsItemFieldFilters)
+}
+
+func (a *AculConfigsItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculConfigsItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculConfigsItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculConfigsItem) MarshalJSON() ([]byte, error) {
+	type embed AculConfigsItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AculConfigsItem) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Context values to make available
+type AculContextConfiguration = []*AculContextConfigurationItem
+
+type AculContextConfigurationItem struct {
+	AculContextEnum AculContextEnum
+	// Dynamic authorization param ext key (e.g., `untrusted_data.authorization_params.ext-myKey`)
+	String string
+
+	typ string
+}
+
+func (a *AculContextConfigurationItem) GetAculContextEnum() AculContextEnum {
+	if a == nil {
+		return ""
+	}
+	return a.AculContextEnum
+}
+
+func (a *AculContextConfigurationItem) GetString() string {
+	if a == nil {
+		return ""
+	}
+	return a.String
+}
+
+func (a *AculContextConfigurationItem) UnmarshalJSON(data []byte) error {
+	var valueAculContextEnum AculContextEnum
+	if err := json.Unmarshal(data, &valueAculContextEnum); err == nil {
+		a.typ = "AculContextEnum"
+		a.AculContextEnum = valueAculContextEnum
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		a.typ = "String"
+		a.String = valueString
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, a)
+}
+
+func (a AculContextConfigurationItem) MarshalJSON() ([]byte, error) {
+	if a.typ == "AculContextEnum" || a.AculContextEnum != "" {
+		return json.Marshal(a.AculContextEnum)
+	}
+	if a.typ == "String" || a.String != "" {
+		return json.Marshal(a.String)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculContextConfigurationItemVisitor interface {
+	VisitAculContextEnum(AculContextEnum) error
+	VisitString(string) error
+}
+
+func (a *AculContextConfigurationItem) Accept(visitor AculContextConfigurationItemVisitor) error {
+	if a.typ == "AculContextEnum" || a.AculContextEnum != "" {
+		return visitor.VisitAculContextEnum(a.AculContextEnum)
+	}
+	if a.typ == "String" || a.String != "" {
+		return visitor.VisitString(a.String)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+// Static context values
+type AculContextEnum string
+
+const (
+	AculContextEnumBrandingSettings                           AculContextEnum = "branding.settings"
+	AculContextEnumBrandingThemesDefault                      AculContextEnum = "branding.themes.default"
+	AculContextEnumCountryCodes                               AculContextEnum = "country_codes"
+	AculContextEnumClientLogoURI                              AculContextEnum = "client.logo_uri"
+	AculContextEnumClientDescription                          AculContextEnum = "client.description"
+	AculContextEnumOrganizationDisplayName                    AculContextEnum = "organization.display_name"
+	AculContextEnumOrganizationBranding                       AculContextEnum = "organization.branding"
+	AculContextEnumScreenTexts                                AculContextEnum = "screen.texts"
+	AculContextEnumTenantName                                 AculContextEnum = "tenant.name"
+	AculContextEnumTenantFriendlyName                         AculContextEnum = "tenant.friendly_name"
+	AculContextEnumTenantLogoURL                              AculContextEnum = "tenant.logo_url"
+	AculContextEnumTenantEnabledLocales                       AculContextEnum = "tenant.enabled_locales"
+	AculContextEnumUntrustedDataSubmittedFormData             AculContextEnum = "untrusted_data.submitted_form_data"
+	AculContextEnumUntrustedDataAuthorizationParamsLoginHint  AculContextEnum = "untrusted_data.authorization_params.login_hint"
+	AculContextEnumUntrustedDataAuthorizationParamsScreenHint AculContextEnum = "untrusted_data.authorization_params.screen_hint"
+	AculContextEnumUntrustedDataAuthorizationParamsUILocales  AculContextEnum = "untrusted_data.authorization_params.ui_locales"
+	AculContextEnumUserOrganizations                          AculContextEnum = "user.organizations"
+	AculContextEnumTransactionCustomDomainDomain              AculContextEnum = "transaction.custom_domain.domain"
+	AculContextEnumExperiment                                 AculContextEnum = "experiment"
+)
+
+func NewAculContextEnumFromString(s string) (AculContextEnum, error) {
+	switch s {
+	case "branding.settings":
+		return AculContextEnumBrandingSettings, nil
+	case "branding.themes.default":
+		return AculContextEnumBrandingThemesDefault, nil
+	case "country_codes":
+		return AculContextEnumCountryCodes, nil
+	case "client.logo_uri":
+		return AculContextEnumClientLogoURI, nil
+	case "client.description":
+		return AculContextEnumClientDescription, nil
+	case "organization.display_name":
+		return AculContextEnumOrganizationDisplayName, nil
+	case "organization.branding":
+		return AculContextEnumOrganizationBranding, nil
+	case "screen.texts":
+		return AculContextEnumScreenTexts, nil
+	case "tenant.name":
+		return AculContextEnumTenantName, nil
+	case "tenant.friendly_name":
+		return AculContextEnumTenantFriendlyName, nil
+	case "tenant.logo_url":
+		return AculContextEnumTenantLogoURL, nil
+	case "tenant.enabled_locales":
+		return AculContextEnumTenantEnabledLocales, nil
+	case "untrusted_data.submitted_form_data":
+		return AculContextEnumUntrustedDataSubmittedFormData, nil
+	case "untrusted_data.authorization_params.login_hint":
+		return AculContextEnumUntrustedDataAuthorizationParamsLoginHint, nil
+	case "untrusted_data.authorization_params.screen_hint":
+		return AculContextEnumUntrustedDataAuthorizationParamsScreenHint, nil
+	case "untrusted_data.authorization_params.ui_locales":
+		return AculContextEnumUntrustedDataAuthorizationParamsUILocales, nil
+	case "user.organizations":
+		return AculContextEnumUserOrganizations, nil
+	case "transaction.custom_domain.domain":
+		return AculContextEnumTransactionCustomDomainDomain, nil
+	case "experiment":
+		return AculContextEnumExperiment, nil
+	}
+	var t AculContextEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AculContextEnum) Ptr() *AculContextEnum {
+	return &a
+}
+
+// Domains array filter items
+type AculDomainFilter struct {
+	AculDomainFilterByID       *AculDomainFilterByID
+	AculDomainFilterByMetadata *AculDomainFilterByMetadata
+
+	typ string
+}
+
+func (a *AculDomainFilter) GetAculDomainFilterByID() *AculDomainFilterByID {
+	if a == nil {
+		return nil
+	}
+	return a.AculDomainFilterByID
+}
+
+func (a *AculDomainFilter) GetAculDomainFilterByMetadata() *AculDomainFilterByMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.AculDomainFilterByMetadata
+}
+
+func (a *AculDomainFilter) UnmarshalJSON(data []byte) error {
+	valueAculDomainFilterByID := new(AculDomainFilterByID)
+	if err := json.Unmarshal(data, &valueAculDomainFilterByID); err == nil {
+		a.typ = "AculDomainFilterByID"
+		a.AculDomainFilterByID = valueAculDomainFilterByID
+		return nil
+	}
+	valueAculDomainFilterByMetadata := new(AculDomainFilterByMetadata)
+	if err := json.Unmarshal(data, &valueAculDomainFilterByMetadata); err == nil {
+		a.typ = "AculDomainFilterByMetadata"
+		a.AculDomainFilterByMetadata = valueAculDomainFilterByMetadata
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, a)
+}
+
+func (a AculDomainFilter) MarshalJSON() ([]byte, error) {
+	if a.typ == "AculDomainFilterByID" || a.AculDomainFilterByID != nil {
+		return json.Marshal(a.AculDomainFilterByID)
+	}
+	if a.typ == "AculDomainFilterByMetadata" || a.AculDomainFilterByMetadata != nil {
+		return json.Marshal(a.AculDomainFilterByMetadata)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculDomainFilterVisitor interface {
+	VisitAculDomainFilterByID(*AculDomainFilterByID) error
+	VisitAculDomainFilterByMetadata(*AculDomainFilterByMetadata) error
+}
+
+func (a *AculDomainFilter) Accept(visitor AculDomainFilterVisitor) error {
+	if a.typ == "AculDomainFilterByID" || a.AculDomainFilterByID != nil {
+		return visitor.VisitAculDomainFilterByID(a.AculDomainFilterByID)
+	}
+	if a.typ == "AculDomainFilterByMetadata" || a.AculDomainFilterByMetadata != nil {
+		return visitor.VisitAculDomainFilterByMetadata(a.AculDomainFilterByMetadata)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+var (
+	aculDomainFilterByIDFieldID = big.NewInt(1 << 0)
+)
+
+type AculDomainFilterByID struct {
+	// Domain ID
+	ID string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculDomainFilterByID) GetID() string {
+	if a == nil {
+		return ""
+	}
+	return a.ID
+}
+
+func (a *AculDomainFilterByID) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AculDomainFilterByID) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculDomainFilterByID) SetID(id string) {
+	a.ID = id
+	a.require(aculDomainFilterByIDFieldID)
+}
+
+func (a *AculDomainFilterByID) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculDomainFilterByID
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculDomainFilterByID(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculDomainFilterByID) MarshalJSON() ([]byte, error) {
+	type embed AculDomainFilterByID
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AculDomainFilterByID) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	aculDomainFilterByMetadataFieldMetadata = big.NewInt(1 << 0)
+)
+
+type AculDomainFilterByMetadata struct {
+	Metadata AculDomainMetadata `json:"metadata" url:"metadata"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculDomainFilterByMetadata) GetMetadata() AculDomainMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.Metadata
+}
+
+func (a *AculDomainFilterByMetadata) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AculDomainFilterByMetadata) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculDomainFilterByMetadata) SetMetadata(metadata AculDomainMetadata) {
+	a.Metadata = metadata
+	a.require(aculDomainFilterByMetadataFieldMetadata)
+}
+
+func (a *AculDomainFilterByMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculDomainFilterByMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculDomainFilterByMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculDomainFilterByMetadata) MarshalJSON() ([]byte, error) {
+	type embed AculDomainFilterByMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AculDomainFilterByMetadata) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Domain metadata key/value pairs
+type AculDomainMetadata = map[string]any
+
+// Optional filters to apply rendering rules to specific entities
+var (
+	aculFiltersFieldMatchType     = big.NewInt(1 << 0)
+	aculFiltersFieldClients       = big.NewInt(1 << 1)
+	aculFiltersFieldOrganizations = big.NewInt(1 << 2)
+	aculFiltersFieldDomains       = big.NewInt(1 << 3)
+)
+
+type AculFilters struct {
+	MatchType *AculMatchTypeEnum `json:"match_type,omitempty" url:"match_type,omitempty"`
+	// Clients filter
+	Clients []*AculClientFilter `json:"clients,omitempty" url:"clients,omitempty"`
+	// Organizations filter
+	Organizations []*AculOrganizationFilter `json:"organizations,omitempty" url:"organizations,omitempty"`
+	// Domains filter
+	Domains []*AculDomainFilter `json:"domains,omitempty" url:"domains,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculFilters) GetMatchType() AculMatchTypeEnum {
+	if a == nil || a.MatchType == nil {
+		return ""
+	}
+	return *a.MatchType
+}
+
+func (a *AculFilters) GetClients() []*AculClientFilter {
+	if a == nil || a.Clients == nil {
+		return nil
+	}
+	return a.Clients
+}
+
+func (a *AculFilters) GetOrganizations() []*AculOrganizationFilter {
+	if a == nil || a.Organizations == nil {
+		return nil
+	}
+	return a.Organizations
+}
+
+func (a *AculFilters) GetDomains() []*AculDomainFilter {
+	if a == nil || a.Domains == nil {
+		return nil
+	}
+	return a.Domains
+}
+
+func (a *AculFilters) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AculFilters) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetMatchType sets the MatchType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculFilters) SetMatchType(matchType *AculMatchTypeEnum) {
+	a.MatchType = matchType
+	a.require(aculFiltersFieldMatchType)
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculFilters) SetClients(clients []*AculClientFilter) {
+	a.Clients = clients
+	a.require(aculFiltersFieldClients)
+}
+
+// SetOrganizations sets the Organizations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculFilters) SetOrganizations(organizations []*AculOrganizationFilter) {
+	a.Organizations = organizations
+	a.require(aculFiltersFieldOrganizations)
+}
+
+// SetDomains sets the Domains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculFilters) SetDomains(domains []*AculDomainFilter) {
+	a.Domains = domains
+	a.require(aculFiltersFieldDomains)
+}
+
+func (a *AculFilters) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculFilters
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculFilters(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculFilters) MarshalJSON() ([]byte, error) {
+	type embed AculFilters
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AculFilters) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	aculHeadTagFieldTag        = big.NewInt(1 << 0)
+	aculHeadTagFieldAttributes = big.NewInt(1 << 1)
+	aculHeadTagFieldContent    = big.NewInt(1 << 2)
+)
+
+type AculHeadTag struct {
+	// Any HTML element valid for use in the head tag
+	Tag        *string                `json:"tag,omitempty" url:"tag,omitempty"`
+	Attributes *AculHeadTagAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
+	Content    *AculHeadTagContent    `json:"content,omitempty" url:"content,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (a *AculHeadTag) GetTag() string {
+	if a == nil || a.Tag == nil {
+		return ""
+	}
+	return *a.Tag
+}
+
+func (a *AculHeadTag) GetAttributes() AculHeadTagAttributes {
+	if a == nil || a.Attributes == nil {
+		return nil
+	}
+	return *a.Attributes
+}
+
+func (a *AculHeadTag) GetContent() AculHeadTagContent {
+	if a == nil || a.Content == nil {
+		return ""
+	}
+	return *a.Content
+}
+
+func (a *AculHeadTag) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.ExtraProperties
+}
+
+func (a *AculHeadTag) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetTag sets the Tag field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculHeadTag) SetTag(tag *string) {
+	a.Tag = tag
+	a.require(aculHeadTagFieldTag)
+}
+
+// SetAttributes sets the Attributes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculHeadTag) SetAttributes(attributes *AculHeadTagAttributes) {
+	a.Attributes = attributes
+	a.require(aculHeadTagFieldAttributes)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculHeadTag) SetContent(content *AculHeadTagContent) {
+	a.Content = content
+	a.require(aculHeadTagFieldContent)
+}
+
+func (a *AculHeadTag) UnmarshalJSON(data []byte) error {
+	type embed AculHeadTag
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = AculHeadTag(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.ExtraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculHeadTag) MarshalJSON() ([]byte, error) {
+	type embed AculHeadTag
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, a.ExtraProperties)
+}
+
+func (a *AculHeadTag) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Attributes of the HTML tag. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes"> MDN documentation</a> for valid attributes.
+type AculHeadTagAttributes = map[string]any
+
+// Text or markup between the element’s opening and closing tags.
+// You can use <a href="https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens">context variables</a> to display dynamic values.
+type AculHeadTagContent = string
+
+// Type of match to apply
+type AculMatchTypeEnum string
+
+const (
+	AculMatchTypeEnumIncludesAny AculMatchTypeEnum = "includes_any"
+	AculMatchTypeEnumExcludesAny AculMatchTypeEnum = "excludes_any"
+)
+
+func NewAculMatchTypeEnumFromString(s string) (AculMatchTypeEnum, error) {
+	switch s {
+	case "includes_any":
+		return AculMatchTypeEnumIncludesAny, nil
+	case "excludes_any":
+		return AculMatchTypeEnumExcludesAny, nil
+	}
+	var t AculMatchTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AculMatchTypeEnum) Ptr() *AculMatchTypeEnum {
+	return &a
+}
+
+// Organizations array filter items
+type AculOrganizationFilter struct {
+	AculOrganizationFilterByID       *AculOrganizationFilterByID
+	AculOrganizationFilterByMetadata *AculOrganizationFilterByMetadata
+
+	typ string
+}
+
+func (a *AculOrganizationFilter) GetAculOrganizationFilterByID() *AculOrganizationFilterByID {
+	if a == nil {
+		return nil
+	}
+	return a.AculOrganizationFilterByID
+}
+
+func (a *AculOrganizationFilter) GetAculOrganizationFilterByMetadata() *AculOrganizationFilterByMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.AculOrganizationFilterByMetadata
+}
+
+func (a *AculOrganizationFilter) UnmarshalJSON(data []byte) error {
+	valueAculOrganizationFilterByID := new(AculOrganizationFilterByID)
+	if err := json.Unmarshal(data, &valueAculOrganizationFilterByID); err == nil {
+		a.typ = "AculOrganizationFilterByID"
+		a.AculOrganizationFilterByID = valueAculOrganizationFilterByID
+		return nil
+	}
+	valueAculOrganizationFilterByMetadata := new(AculOrganizationFilterByMetadata)
+	if err := json.Unmarshal(data, &valueAculOrganizationFilterByMetadata); err == nil {
+		a.typ = "AculOrganizationFilterByMetadata"
+		a.AculOrganizationFilterByMetadata = valueAculOrganizationFilterByMetadata
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, a)
+}
+
+func (a AculOrganizationFilter) MarshalJSON() ([]byte, error) {
+	if a.typ == "AculOrganizationFilterByID" || a.AculOrganizationFilterByID != nil {
+		return json.Marshal(a.AculOrganizationFilterByID)
+	}
+	if a.typ == "AculOrganizationFilterByMetadata" || a.AculOrganizationFilterByMetadata != nil {
+		return json.Marshal(a.AculOrganizationFilterByMetadata)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+type AculOrganizationFilterVisitor interface {
+	VisitAculOrganizationFilterByID(*AculOrganizationFilterByID) error
+	VisitAculOrganizationFilterByMetadata(*AculOrganizationFilterByMetadata) error
+}
+
+func (a *AculOrganizationFilter) Accept(visitor AculOrganizationFilterVisitor) error {
+	if a.typ == "AculOrganizationFilterByID" || a.AculOrganizationFilterByID != nil {
+		return visitor.VisitAculOrganizationFilterByID(a.AculOrganizationFilterByID)
+	}
+	if a.typ == "AculOrganizationFilterByMetadata" || a.AculOrganizationFilterByMetadata != nil {
+		return visitor.VisitAculOrganizationFilterByMetadata(a.AculOrganizationFilterByMetadata)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", a)
+}
+
+var (
+	aculOrganizationFilterByIDFieldID = big.NewInt(1 << 0)
+)
+
+type AculOrganizationFilterByID struct {
+	// Organization ID
+	ID string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculOrganizationFilterByID) GetID() string {
+	if a == nil {
+		return ""
+	}
+	return a.ID
+}
+
+func (a *AculOrganizationFilterByID) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AculOrganizationFilterByID) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculOrganizationFilterByID) SetID(id string) {
+	a.ID = id
+	a.require(aculOrganizationFilterByIDFieldID)
+}
+
+func (a *AculOrganizationFilterByID) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculOrganizationFilterByID
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculOrganizationFilterByID(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculOrganizationFilterByID) MarshalJSON() ([]byte, error) {
+	type embed AculOrganizationFilterByID
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AculOrganizationFilterByID) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	aculOrganizationFilterByMetadataFieldMetadata = big.NewInt(1 << 0)
+)
+
+type AculOrganizationFilterByMetadata struct {
+	Metadata AculOrganizationMetadata `json:"metadata" url:"metadata"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AculOrganizationFilterByMetadata) GetMetadata() AculOrganizationMetadata {
+	if a == nil {
+		return nil
+	}
+	return a.Metadata
+}
+
+func (a *AculOrganizationFilterByMetadata) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AculOrganizationFilterByMetadata) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AculOrganizationFilterByMetadata) SetMetadata(metadata AculOrganizationMetadata) {
+	a.Metadata = metadata
+	a.require(aculOrganizationFilterByMetadataFieldMetadata)
+}
+
+func (a *AculOrganizationFilterByMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler AculOrganizationFilterByMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AculOrganizationFilterByMetadata(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AculOrganizationFilterByMetadata) MarshalJSON() ([]byte, error) {
+	type embed AculOrganizationFilterByMetadata
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AculOrganizationFilterByMetadata) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+// Organization metadata key/value pairs
+type AculOrganizationMetadata = map[string]any
+
+// Rendering mode to filter by
+type AculRenderingModeEnum string
+
+const (
+	AculRenderingModeEnumAdvanced AculRenderingModeEnum = "advanced"
+	AculRenderingModeEnumStandard AculRenderingModeEnum = "standard"
+)
+
+func NewAculRenderingModeEnumFromString(s string) (AculRenderingModeEnum, error) {
+	switch s {
+	case "advanced":
+		return AculRenderingModeEnumAdvanced, nil
+	case "standard":
+		return AculRenderingModeEnumStandard, nil
+	}
+	var t AculRenderingModeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AculRenderingModeEnum) Ptr() *AculRenderingModeEnum {
+	return &a
+}
+
+var (
+	bulkUpdateAculResponseContentFieldConfigs = big.NewInt(1 << 0)
+)
+
+type BulkUpdateAculResponseContent struct {
+	Configs AculConfigs `json:"configs" url:"configs"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (b *BulkUpdateAculResponseContent) GetConfigs() AculConfigs {
+	if b == nil {
+		return nil
+	}
+	return b.Configs
+}
+
+func (b *BulkUpdateAculResponseContent) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.ExtraProperties
+}
+
+func (b *BulkUpdateAculResponseContent) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetConfigs sets the Configs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BulkUpdateAculResponseContent) SetConfigs(configs AculConfigs) {
+	b.Configs = configs
+	b.require(bulkUpdateAculResponseContentFieldConfigs)
+}
+
+func (b *BulkUpdateAculResponseContent) UnmarshalJSON(data []byte) error {
+	type embed BulkUpdateAculResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*b = BulkUpdateAculResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.ExtraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BulkUpdateAculResponseContent) MarshalJSON() ([]byte, error) {
+	type embed BulkUpdateAculResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, b.ExtraProperties)
+}
+
+func (b *BulkUpdateAculResponseContent) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+var (
+	getAculResponseContentFieldTenant                  = big.NewInt(1 << 0)
+	getAculResponseContentFieldPrompt                  = big.NewInt(1 << 1)
+	getAculResponseContentFieldScreen                  = big.NewInt(1 << 2)
+	getAculResponseContentFieldRenderingMode           = big.NewInt(1 << 3)
+	getAculResponseContentFieldContextConfiguration    = big.NewInt(1 << 4)
+	getAculResponseContentFieldDefaultHeadTagsDisabled = big.NewInt(1 << 5)
+	getAculResponseContentFieldUsePageTemplate         = big.NewInt(1 << 6)
+	getAculResponseContentFieldHeadTags                = big.NewInt(1 << 7)
+	getAculResponseContentFieldFilters                 = big.NewInt(1 << 8)
+)
+
+type GetAculResponseContent struct {
+	// Tenant ID
+	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
+	// Name of the prompt
+	Prompt *string `json:"prompt,omitempty" url:"prompt,omitempty"`
+	// Name of the screen
+	Screen *string `json:"screen,omitempty" url:"screen,omitempty"`
+	// Rendering mode
+	RenderingMode        *AculRenderingModeEnum    `json:"rendering_mode,omitempty" url:"rendering_mode,omitempty"`
+	ContextConfiguration *AculContextConfiguration `json:"context_configuration,omitempty" url:"context_configuration,omitempty"`
+	// Override Universal Login default head tags
+	DefaultHeadTagsDisabled *bool `json:"default_head_tags_disabled,omitempty" url:"default_head_tags_disabled,omitempty"`
+	// Use page template with ACUL
+	UsePageTemplate *bool `json:"use_page_template,omitempty" url:"use_page_template,omitempty"`
+	// An array of head tags
+	HeadTags []*AculHeadTag `json:"head_tags,omitempty" url:"head_tags,omitempty"`
+	Filters  *AculFilters   `json:"filters,omitempty" url:"filters,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetAculResponseContent) GetTenant() string {
+	if g == nil || g.Tenant == nil {
+		return ""
+	}
+	return *g.Tenant
+}
+
+func (g *GetAculResponseContent) GetPrompt() string {
+	if g == nil || g.Prompt == nil {
+		return ""
+	}
+	return *g.Prompt
+}
+
+func (g *GetAculResponseContent) GetScreen() string {
+	if g == nil || g.Screen == nil {
+		return ""
+	}
+	return *g.Screen
+}
+
+func (g *GetAculResponseContent) GetRenderingMode() AculRenderingModeEnum {
+	if g == nil || g.RenderingMode == nil {
+		return ""
+	}
+	return *g.RenderingMode
+}
+
+func (g *GetAculResponseContent) GetContextConfiguration() AculContextConfiguration {
+	if g == nil || g.ContextConfiguration == nil {
+		return nil
+	}
+	return *g.ContextConfiguration
+}
+
+func (g *GetAculResponseContent) GetDefaultHeadTagsDisabled() bool {
+	if g == nil || g.DefaultHeadTagsDisabled == nil {
+		return false
+	}
+	return *g.DefaultHeadTagsDisabled
+}
+
+func (g *GetAculResponseContent) GetUsePageTemplate() bool {
+	if g == nil || g.UsePageTemplate == nil {
+		return false
+	}
+	return *g.UsePageTemplate
+}
+
+func (g *GetAculResponseContent) GetHeadTags() []*AculHeadTag {
+	if g == nil || g.HeadTags == nil {
+		return nil
+	}
+	return g.HeadTags
+}
+
+func (g *GetAculResponseContent) GetFilters() AculFilters {
+	if g == nil || g.Filters == nil {
+		return AculFilters{}
+	}
+	return *g.Filters
+}
+
+func (g *GetAculResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.ExtraProperties
+}
+
+func (g *GetAculResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAculResponseContent) SetTenant(tenant *string) {
+	g.Tenant = tenant
+	g.require(getAculResponseContentFieldTenant)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAculResponseContent) SetPrompt(prompt *string) {
+	g.Prompt = prompt
+	g.require(getAculResponseContentFieldPrompt)
+}
+
+// SetScreen sets the Screen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAculResponseContent) SetScreen(screen *string) {
+	g.Screen = screen
+	g.require(getAculResponseContentFieldScreen)
+}
+
+// SetRenderingMode sets the RenderingMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAculResponseContent) SetRenderingMode(renderingMode *AculRenderingModeEnum) {
+	g.RenderingMode = renderingMode
+	g.require(getAculResponseContentFieldRenderingMode)
+}
+
+// SetContextConfiguration sets the ContextConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAculResponseContent) SetContextConfiguration(contextConfiguration *AculContextConfiguration) {
+	g.ContextConfiguration = contextConfiguration
+	g.require(getAculResponseContentFieldContextConfiguration)
+}
+
+// SetDefaultHeadTagsDisabled sets the DefaultHeadTagsDisabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAculResponseContent) SetDefaultHeadTagsDisabled(defaultHeadTagsDisabled *bool) {
+	g.DefaultHeadTagsDisabled = defaultHeadTagsDisabled
+	g.require(getAculResponseContentFieldDefaultHeadTagsDisabled)
+}
+
+// SetUsePageTemplate sets the UsePageTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAculResponseContent) SetUsePageTemplate(usePageTemplate *bool) {
+	g.UsePageTemplate = usePageTemplate
+	g.require(getAculResponseContentFieldUsePageTemplate)
+}
+
+// SetHeadTags sets the HeadTags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAculResponseContent) SetHeadTags(headTags []*AculHeadTag) {
+	g.HeadTags = headTags
+	g.require(getAculResponseContentFieldHeadTags)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetAculResponseContent) SetFilters(filters *AculFilters) {
+	g.Filters = filters
+	g.require(getAculResponseContentFieldFilters)
+}
+
+func (g *GetAculResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetAculResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetAculResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetAculResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetAculResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetAculResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+// An object containing custom dictionaries for a group of screens.
+type GetCustomTextsByLanguageResponseContent = map[string]any
+
+// An object containing template partials for a group of screens.
+type GetPartialsResponseContent = map[string]any
+
 var (
 	getSettingsResponseContentFieldUniversalLoginExperience    = big.NewInt(1 << 0)
 	getSettingsResponseContentFieldIdentifierFirst             = big.NewInt(1 << 1)
@@ -132,6 +1810,1161 @@ func (g *GetSettingsResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	listAculsOffsetPaginatedResponseContentFieldConfigs = big.NewInt(1 << 0)
+	listAculsOffsetPaginatedResponseContentFieldStart   = big.NewInt(1 << 1)
+	listAculsOffsetPaginatedResponseContentFieldLimit   = big.NewInt(1 << 2)
+	listAculsOffsetPaginatedResponseContentFieldTotal   = big.NewInt(1 << 3)
+)
+
+type ListAculsOffsetPaginatedResponseContent struct {
+	Configs []*ListAculsResponseContentItem `json:"configs,omitempty" url:"configs,omitempty"`
+	// the index of the first configuration in the response (before filtering)
+	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
+	// the maximum number of configurations shown per page (before filtering)
+	Limit *float64 `json:"limit,omitempty" url:"limit,omitempty"`
+	// the total number of configurations on this tenant
+	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListAculsOffsetPaginatedResponseContent) GetConfigs() []*ListAculsResponseContentItem {
+	if l == nil || l.Configs == nil {
+		return nil
+	}
+	return l.Configs
+}
+
+func (l *ListAculsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListAculsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListAculsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListAculsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListAculsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetConfigs sets the Configs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsOffsetPaginatedResponseContent) SetConfigs(configs []*ListAculsResponseContentItem) {
+	l.Configs = configs
+	l.require(listAculsOffsetPaginatedResponseContentFieldConfigs)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listAculsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listAculsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listAculsOffsetPaginatedResponseContentFieldTotal)
+}
+
+func (l *ListAculsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListAculsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListAculsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListAculsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListAculsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListAculsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListAculsResponseContent struct {
+	ListAculsResponseContentItemList        []*ListAculsResponseContentItem
+	ListAculsOffsetPaginatedResponseContent *ListAculsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListAculsResponseContent) GetListAculsResponseContentItemList() []*ListAculsResponseContentItem {
+	if l == nil {
+		return nil
+	}
+	return l.ListAculsResponseContentItemList
+}
+
+func (l *ListAculsResponseContent) GetListAculsOffsetPaginatedResponseContent() *ListAculsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListAculsOffsetPaginatedResponseContent
+}
+
+func (l *ListAculsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueListAculsResponseContentItemList []*ListAculsResponseContentItem
+	if err := json.Unmarshal(data, &valueListAculsResponseContentItemList); err == nil {
+		l.typ = "ListAculsResponseContentItemList"
+		l.ListAculsResponseContentItemList = valueListAculsResponseContentItemList
+		return nil
+	}
+	valueListAculsOffsetPaginatedResponseContent := new(ListAculsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListAculsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListAculsOffsetPaginatedResponseContent"
+		l.ListAculsOffsetPaginatedResponseContent = valueListAculsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListAculsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "ListAculsResponseContentItemList" || l.ListAculsResponseContentItemList != nil {
+		return json.Marshal(l.ListAculsResponseContentItemList)
+	}
+	if l.typ == "ListAculsOffsetPaginatedResponseContent" || l.ListAculsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListAculsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListAculsResponseContentVisitor interface {
+	VisitListAculsResponseContentItemList([]*ListAculsResponseContentItem) error
+	VisitListAculsOffsetPaginatedResponseContent(*ListAculsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListAculsResponseContent) Accept(visitor ListAculsResponseContentVisitor) error {
+	if l.typ == "ListAculsResponseContentItemList" || l.ListAculsResponseContentItemList != nil {
+		return visitor.VisitListAculsResponseContentItemList(l.ListAculsResponseContentItemList)
+	}
+	if l.typ == "ListAculsOffsetPaginatedResponseContent" || l.ListAculsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListAculsOffsetPaginatedResponseContent(l.ListAculsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listAculsResponseContentItemFieldTenant                  = big.NewInt(1 << 0)
+	listAculsResponseContentItemFieldPrompt                  = big.NewInt(1 << 1)
+	listAculsResponseContentItemFieldScreen                  = big.NewInt(1 << 2)
+	listAculsResponseContentItemFieldRenderingMode           = big.NewInt(1 << 3)
+	listAculsResponseContentItemFieldContextConfiguration    = big.NewInt(1 << 4)
+	listAculsResponseContentItemFieldDefaultHeadTagsDisabled = big.NewInt(1 << 5)
+	listAculsResponseContentItemFieldUsePageTemplate         = big.NewInt(1 << 6)
+	listAculsResponseContentItemFieldHeadTags                = big.NewInt(1 << 7)
+	listAculsResponseContentItemFieldFilters                 = big.NewInt(1 << 8)
+)
+
+type ListAculsResponseContentItem struct {
+	// Tenant ID
+	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
+	// Name of the prompt
+	Prompt *string `json:"prompt,omitempty" url:"prompt,omitempty"`
+	// Name of the screen
+	Screen *string `json:"screen,omitempty" url:"screen,omitempty"`
+	// Rendering mode
+	RenderingMode        *AculRenderingModeEnum    `json:"rendering_mode,omitempty" url:"rendering_mode,omitempty"`
+	ContextConfiguration *AculContextConfiguration `json:"context_configuration,omitempty" url:"context_configuration,omitempty"`
+	// Override Universal Login default head tags
+	DefaultHeadTagsDisabled *bool `json:"default_head_tags_disabled,omitempty" url:"default_head_tags_disabled,omitempty"`
+	// Use page template with ACUL
+	UsePageTemplate *bool `json:"use_page_template,omitempty" url:"use_page_template,omitempty"`
+	// An array of head tags
+	HeadTags []*AculHeadTag `json:"head_tags,omitempty" url:"head_tags,omitempty"`
+	Filters  *AculFilters   `json:"filters,omitempty" url:"filters,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (l *ListAculsResponseContentItem) GetTenant() string {
+	if l == nil || l.Tenant == nil {
+		return ""
+	}
+	return *l.Tenant
+}
+
+func (l *ListAculsResponseContentItem) GetPrompt() string {
+	if l == nil || l.Prompt == nil {
+		return ""
+	}
+	return *l.Prompt
+}
+
+func (l *ListAculsResponseContentItem) GetScreen() string {
+	if l == nil || l.Screen == nil {
+		return ""
+	}
+	return *l.Screen
+}
+
+func (l *ListAculsResponseContentItem) GetRenderingMode() AculRenderingModeEnum {
+	if l == nil || l.RenderingMode == nil {
+		return ""
+	}
+	return *l.RenderingMode
+}
+
+func (l *ListAculsResponseContentItem) GetContextConfiguration() AculContextConfiguration {
+	if l == nil || l.ContextConfiguration == nil {
+		return nil
+	}
+	return *l.ContextConfiguration
+}
+
+func (l *ListAculsResponseContentItem) GetDefaultHeadTagsDisabled() bool {
+	if l == nil || l.DefaultHeadTagsDisabled == nil {
+		return false
+	}
+	return *l.DefaultHeadTagsDisabled
+}
+
+func (l *ListAculsResponseContentItem) GetUsePageTemplate() bool {
+	if l == nil || l.UsePageTemplate == nil {
+		return false
+	}
+	return *l.UsePageTemplate
+}
+
+func (l *ListAculsResponseContentItem) GetHeadTags() []*AculHeadTag {
+	if l == nil || l.HeadTags == nil {
+		return nil
+	}
+	return l.HeadTags
+}
+
+func (l *ListAculsResponseContentItem) GetFilters() AculFilters {
+	if l == nil || l.Filters == nil {
+		return AculFilters{}
+	}
+	return *l.Filters
+}
+
+func (l *ListAculsResponseContentItem) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.ExtraProperties
+}
+
+func (l *ListAculsResponseContentItem) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsResponseContentItem) SetTenant(tenant *string) {
+	l.Tenant = tenant
+	l.require(listAculsResponseContentItemFieldTenant)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsResponseContentItem) SetPrompt(prompt *string) {
+	l.Prompt = prompt
+	l.require(listAculsResponseContentItemFieldPrompt)
+}
+
+// SetScreen sets the Screen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsResponseContentItem) SetScreen(screen *string) {
+	l.Screen = screen
+	l.require(listAculsResponseContentItemFieldScreen)
+}
+
+// SetRenderingMode sets the RenderingMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsResponseContentItem) SetRenderingMode(renderingMode *AculRenderingModeEnum) {
+	l.RenderingMode = renderingMode
+	l.require(listAculsResponseContentItemFieldRenderingMode)
+}
+
+// SetContextConfiguration sets the ContextConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsResponseContentItem) SetContextConfiguration(contextConfiguration *AculContextConfiguration) {
+	l.ContextConfiguration = contextConfiguration
+	l.require(listAculsResponseContentItemFieldContextConfiguration)
+}
+
+// SetDefaultHeadTagsDisabled sets the DefaultHeadTagsDisabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsResponseContentItem) SetDefaultHeadTagsDisabled(defaultHeadTagsDisabled *bool) {
+	l.DefaultHeadTagsDisabled = defaultHeadTagsDisabled
+	l.require(listAculsResponseContentItemFieldDefaultHeadTagsDisabled)
+}
+
+// SetUsePageTemplate sets the UsePageTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsResponseContentItem) SetUsePageTemplate(usePageTemplate *bool) {
+	l.UsePageTemplate = usePageTemplate
+	l.require(listAculsResponseContentItemFieldUsePageTemplate)
+}
+
+// SetHeadTags sets the HeadTags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsResponseContentItem) SetHeadTags(headTags []*AculHeadTag) {
+	l.HeadTags = headTags
+	l.require(listAculsResponseContentItemFieldHeadTags)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAculsResponseContentItem) SetFilters(filters *AculFilters) {
+	l.Filters = filters
+	l.require(listAculsResponseContentItemFieldFilters)
+}
+
+func (l *ListAculsResponseContentItem) UnmarshalJSON(data []byte) error {
+	type embed ListAculsResponseContentItem
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*l = ListAculsResponseContentItem(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.ExtraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListAculsResponseContentItem) MarshalJSON() ([]byte, error) {
+	type embed ListAculsResponseContentItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
+}
+
+func (l *ListAculsResponseContentItem) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+// Name of the prompt.
+type PartialGroupsEnum string
+
+const (
+	PartialGroupsEnumLogin             PartialGroupsEnum = "login"
+	PartialGroupsEnumLoginID           PartialGroupsEnum = "login-id"
+	PartialGroupsEnumLoginPassword     PartialGroupsEnum = "login-password"
+	PartialGroupsEnumLoginPasswordless PartialGroupsEnum = "login-passwordless"
+	PartialGroupsEnumSignup            PartialGroupsEnum = "signup"
+	PartialGroupsEnumSignupID          PartialGroupsEnum = "signup-id"
+	PartialGroupsEnumSignupPassword    PartialGroupsEnum = "signup-password"
+	PartialGroupsEnumCustomizedConsent PartialGroupsEnum = "customized-consent"
+	PartialGroupsEnumPasskeys          PartialGroupsEnum = "passkeys"
+	PartialGroupsEnumConfirmation      PartialGroupsEnum = "confirmation"
+)
+
+func NewPartialGroupsEnumFromString(s string) (PartialGroupsEnum, error) {
+	switch s {
+	case "login":
+		return PartialGroupsEnumLogin, nil
+	case "login-id":
+		return PartialGroupsEnumLoginID, nil
+	case "login-password":
+		return PartialGroupsEnumLoginPassword, nil
+	case "login-passwordless":
+		return PartialGroupsEnumLoginPasswordless, nil
+	case "signup":
+		return PartialGroupsEnumSignup, nil
+	case "signup-id":
+		return PartialGroupsEnumSignupID, nil
+	case "signup-password":
+		return PartialGroupsEnumSignupPassword, nil
+	case "customized-consent":
+		return PartialGroupsEnumCustomizedConsent, nil
+	case "passkeys":
+		return PartialGroupsEnumPasskeys, nil
+	case "confirmation":
+		return PartialGroupsEnumConfirmation, nil
+	}
+	var t PartialGroupsEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PartialGroupsEnum) Ptr() *PartialGroupsEnum {
+	return &p
+}
+
+// Name of the prompt
+type PromptGroupNameEnum string
+
+const (
+	PromptGroupNameEnumLogin                     PromptGroupNameEnum = "login"
+	PromptGroupNameEnumLoginID                   PromptGroupNameEnum = "login-id"
+	PromptGroupNameEnumLoginPassword             PromptGroupNameEnum = "login-password"
+	PromptGroupNameEnumLoginPasswordless         PromptGroupNameEnum = "login-passwordless"
+	PromptGroupNameEnumLoginEmailVerification    PromptGroupNameEnum = "login-email-verification"
+	PromptGroupNameEnumSignup                    PromptGroupNameEnum = "signup"
+	PromptGroupNameEnumSignupID                  PromptGroupNameEnum = "signup-id"
+	PromptGroupNameEnumSignupPassword            PromptGroupNameEnum = "signup-password"
+	PromptGroupNameEnumPhoneIdentifierEnrollment PromptGroupNameEnum = "phone-identifier-enrollment"
+	PromptGroupNameEnumPhoneIdentifierChallenge  PromptGroupNameEnum = "phone-identifier-challenge"
+	PromptGroupNameEnumEmailIdentifierChallenge  PromptGroupNameEnum = "email-identifier-challenge"
+	PromptGroupNameEnumResetPassword             PromptGroupNameEnum = "reset-password"
+	PromptGroupNameEnumCustomForm                PromptGroupNameEnum = "custom-form"
+	PromptGroupNameEnumConsent                   PromptGroupNameEnum = "consent"
+	PromptGroupNameEnumCustomizedConsent         PromptGroupNameEnum = "customized-consent"
+	PromptGroupNameEnumLogout                    PromptGroupNameEnum = "logout"
+	PromptGroupNameEnumMfaPush                   PromptGroupNameEnum = "mfa-push"
+	PromptGroupNameEnumMfaOtp                    PromptGroupNameEnum = "mfa-otp"
+	PromptGroupNameEnumMfaVoice                  PromptGroupNameEnum = "mfa-voice"
+	PromptGroupNameEnumMfaPhone                  PromptGroupNameEnum = "mfa-phone"
+	PromptGroupNameEnumMfaWebauthn               PromptGroupNameEnum = "mfa-webauthn"
+	PromptGroupNameEnumMfaSms                    PromptGroupNameEnum = "mfa-sms"
+	PromptGroupNameEnumMfaEmail                  PromptGroupNameEnum = "mfa-email"
+	PromptGroupNameEnumMfaRecoveryCode           PromptGroupNameEnum = "mfa-recovery-code"
+	PromptGroupNameEnumMfa                       PromptGroupNameEnum = "mfa"
+	PromptGroupNameEnumStatus                    PromptGroupNameEnum = "status"
+	PromptGroupNameEnumDeviceFlow                PromptGroupNameEnum = "device-flow"
+	PromptGroupNameEnumEmailVerification         PromptGroupNameEnum = "email-verification"
+	PromptGroupNameEnumEmailOtpChallenge         PromptGroupNameEnum = "email-otp-challenge"
+	PromptGroupNameEnumOrganizations             PromptGroupNameEnum = "organizations"
+	PromptGroupNameEnumInvitation                PromptGroupNameEnum = "invitation"
+	PromptGroupNameEnumCommon                    PromptGroupNameEnum = "common"
+	PromptGroupNameEnumPasskeys                  PromptGroupNameEnum = "passkeys"
+	PromptGroupNameEnumCaptcha                   PromptGroupNameEnum = "captcha"
+	PromptGroupNameEnumBruteForceProtection      PromptGroupNameEnum = "brute-force-protection"
+	PromptGroupNameEnumAsyncApprovalFlow         PromptGroupNameEnum = "async-approval-flow"
+	PromptGroupNameEnumConfirmation              PromptGroupNameEnum = "confirmation"
+)
+
+func NewPromptGroupNameEnumFromString(s string) (PromptGroupNameEnum, error) {
+	switch s {
+	case "login":
+		return PromptGroupNameEnumLogin, nil
+	case "login-id":
+		return PromptGroupNameEnumLoginID, nil
+	case "login-password":
+		return PromptGroupNameEnumLoginPassword, nil
+	case "login-passwordless":
+		return PromptGroupNameEnumLoginPasswordless, nil
+	case "login-email-verification":
+		return PromptGroupNameEnumLoginEmailVerification, nil
+	case "signup":
+		return PromptGroupNameEnumSignup, nil
+	case "signup-id":
+		return PromptGroupNameEnumSignupID, nil
+	case "signup-password":
+		return PromptGroupNameEnumSignupPassword, nil
+	case "phone-identifier-enrollment":
+		return PromptGroupNameEnumPhoneIdentifierEnrollment, nil
+	case "phone-identifier-challenge":
+		return PromptGroupNameEnumPhoneIdentifierChallenge, nil
+	case "email-identifier-challenge":
+		return PromptGroupNameEnumEmailIdentifierChallenge, nil
+	case "reset-password":
+		return PromptGroupNameEnumResetPassword, nil
+	case "custom-form":
+		return PromptGroupNameEnumCustomForm, nil
+	case "consent":
+		return PromptGroupNameEnumConsent, nil
+	case "customized-consent":
+		return PromptGroupNameEnumCustomizedConsent, nil
+	case "logout":
+		return PromptGroupNameEnumLogout, nil
+	case "mfa-push":
+		return PromptGroupNameEnumMfaPush, nil
+	case "mfa-otp":
+		return PromptGroupNameEnumMfaOtp, nil
+	case "mfa-voice":
+		return PromptGroupNameEnumMfaVoice, nil
+	case "mfa-phone":
+		return PromptGroupNameEnumMfaPhone, nil
+	case "mfa-webauthn":
+		return PromptGroupNameEnumMfaWebauthn, nil
+	case "mfa-sms":
+		return PromptGroupNameEnumMfaSms, nil
+	case "mfa-email":
+		return PromptGroupNameEnumMfaEmail, nil
+	case "mfa-recovery-code":
+		return PromptGroupNameEnumMfaRecoveryCode, nil
+	case "mfa":
+		return PromptGroupNameEnumMfa, nil
+	case "status":
+		return PromptGroupNameEnumStatus, nil
+	case "device-flow":
+		return PromptGroupNameEnumDeviceFlow, nil
+	case "email-verification":
+		return PromptGroupNameEnumEmailVerification, nil
+	case "email-otp-challenge":
+		return PromptGroupNameEnumEmailOtpChallenge, nil
+	case "organizations":
+		return PromptGroupNameEnumOrganizations, nil
+	case "invitation":
+		return PromptGroupNameEnumInvitation, nil
+	case "common":
+		return PromptGroupNameEnumCommon, nil
+	case "passkeys":
+		return PromptGroupNameEnumPasskeys, nil
+	case "captcha":
+		return PromptGroupNameEnumCaptcha, nil
+	case "brute-force-protection":
+		return PromptGroupNameEnumBruteForceProtection, nil
+	case "async-approval-flow":
+		return PromptGroupNameEnumAsyncApprovalFlow, nil
+	case "confirmation":
+		return PromptGroupNameEnumConfirmation, nil
+	}
+	var t PromptGroupNameEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PromptGroupNameEnum) Ptr() *PromptGroupNameEnum {
+	return &p
+}
+
+// Language to update.
+type PromptLanguageEnum string
+
+const (
+	PromptLanguageEnumAm    PromptLanguageEnum = "am"
+	PromptLanguageEnumAr    PromptLanguageEnum = "ar"
+	PromptLanguageEnumArEg  PromptLanguageEnum = "ar-EG"
+	PromptLanguageEnumArSa  PromptLanguageEnum = "ar-SA"
+	PromptLanguageEnumAz    PromptLanguageEnum = "az"
+	PromptLanguageEnumBg    PromptLanguageEnum = "bg"
+	PromptLanguageEnumBn    PromptLanguageEnum = "bn"
+	PromptLanguageEnumBs    PromptLanguageEnum = "bs"
+	PromptLanguageEnumCaEs  PromptLanguageEnum = "ca-ES"
+	PromptLanguageEnumCnr   PromptLanguageEnum = "cnr"
+	PromptLanguageEnumCs    PromptLanguageEnum = "cs"
+	PromptLanguageEnumCy    PromptLanguageEnum = "cy"
+	PromptLanguageEnumDa    PromptLanguageEnum = "da"
+	PromptLanguageEnumDe    PromptLanguageEnum = "de"
+	PromptLanguageEnumEl    PromptLanguageEnum = "el"
+	PromptLanguageEnumEn    PromptLanguageEnum = "en"
+	PromptLanguageEnumEnCa  PromptLanguageEnum = "en-CA"
+	PromptLanguageEnumEs    PromptLanguageEnum = "es"
+	PromptLanguageEnumEs419 PromptLanguageEnum = "es-419"
+	PromptLanguageEnumEsAr  PromptLanguageEnum = "es-AR"
+	PromptLanguageEnumEsMx  PromptLanguageEnum = "es-MX"
+	PromptLanguageEnumEt    PromptLanguageEnum = "et"
+	PromptLanguageEnumEuEs  PromptLanguageEnum = "eu-ES"
+	PromptLanguageEnumFa    PromptLanguageEnum = "fa"
+	PromptLanguageEnumFi    PromptLanguageEnum = "fi"
+	PromptLanguageEnumFr    PromptLanguageEnum = "fr"
+	PromptLanguageEnumFrCa  PromptLanguageEnum = "fr-CA"
+	PromptLanguageEnumFrFr  PromptLanguageEnum = "fr-FR"
+	PromptLanguageEnumGlEs  PromptLanguageEnum = "gl-ES"
+	PromptLanguageEnumGu    PromptLanguageEnum = "gu"
+	PromptLanguageEnumHe    PromptLanguageEnum = "he"
+	PromptLanguageEnumHi    PromptLanguageEnum = "hi"
+	PromptLanguageEnumHr    PromptLanguageEnum = "hr"
+	PromptLanguageEnumHu    PromptLanguageEnum = "hu"
+	PromptLanguageEnumHy    PromptLanguageEnum = "hy"
+	PromptLanguageEnumID    PromptLanguageEnum = "id"
+	PromptLanguageEnumIs    PromptLanguageEnum = "is"
+	PromptLanguageEnumIt    PromptLanguageEnum = "it"
+	PromptLanguageEnumJa    PromptLanguageEnum = "ja"
+	PromptLanguageEnumKa    PromptLanguageEnum = "ka"
+	PromptLanguageEnumKk    PromptLanguageEnum = "kk"
+	PromptLanguageEnumKn    PromptLanguageEnum = "kn"
+	PromptLanguageEnumKo    PromptLanguageEnum = "ko"
+	PromptLanguageEnumLt    PromptLanguageEnum = "lt"
+	PromptLanguageEnumLv    PromptLanguageEnum = "lv"
+	PromptLanguageEnumMk    PromptLanguageEnum = "mk"
+	PromptLanguageEnumMl    PromptLanguageEnum = "ml"
+	PromptLanguageEnumMn    PromptLanguageEnum = "mn"
+	PromptLanguageEnumMr    PromptLanguageEnum = "mr"
+	PromptLanguageEnumMs    PromptLanguageEnum = "ms"
+	PromptLanguageEnumMy    PromptLanguageEnum = "my"
+	PromptLanguageEnumNb    PromptLanguageEnum = "nb"
+	PromptLanguageEnumNl    PromptLanguageEnum = "nl"
+	PromptLanguageEnumNn    PromptLanguageEnum = "nn"
+	PromptLanguageEnumNo    PromptLanguageEnum = "no"
+	PromptLanguageEnumPa    PromptLanguageEnum = "pa"
+	PromptLanguageEnumPl    PromptLanguageEnum = "pl"
+	PromptLanguageEnumPt    PromptLanguageEnum = "pt"
+	PromptLanguageEnumPtBr  PromptLanguageEnum = "pt-BR"
+	PromptLanguageEnumPtPt  PromptLanguageEnum = "pt-PT"
+	PromptLanguageEnumRo    PromptLanguageEnum = "ro"
+	PromptLanguageEnumRu    PromptLanguageEnum = "ru"
+	PromptLanguageEnumSk    PromptLanguageEnum = "sk"
+	PromptLanguageEnumSl    PromptLanguageEnum = "sl"
+	PromptLanguageEnumSo    PromptLanguageEnum = "so"
+	PromptLanguageEnumSq    PromptLanguageEnum = "sq"
+	PromptLanguageEnumSr    PromptLanguageEnum = "sr"
+	PromptLanguageEnumSv    PromptLanguageEnum = "sv"
+	PromptLanguageEnumSw    PromptLanguageEnum = "sw"
+	PromptLanguageEnumTa    PromptLanguageEnum = "ta"
+	PromptLanguageEnumTe    PromptLanguageEnum = "te"
+	PromptLanguageEnumTh    PromptLanguageEnum = "th"
+	PromptLanguageEnumTl    PromptLanguageEnum = "tl"
+	PromptLanguageEnumTr    PromptLanguageEnum = "tr"
+	PromptLanguageEnumUk    PromptLanguageEnum = "uk"
+	PromptLanguageEnumUr    PromptLanguageEnum = "ur"
+	PromptLanguageEnumVi    PromptLanguageEnum = "vi"
+	PromptLanguageEnumZgh   PromptLanguageEnum = "zgh"
+	PromptLanguageEnumZhCn  PromptLanguageEnum = "zh-CN"
+	PromptLanguageEnumZhHk  PromptLanguageEnum = "zh-HK"
+	PromptLanguageEnumZhMo  PromptLanguageEnum = "zh-MO"
+	PromptLanguageEnumZhTw  PromptLanguageEnum = "zh-TW"
+)
+
+func NewPromptLanguageEnumFromString(s string) (PromptLanguageEnum, error) {
+	switch s {
+	case "am":
+		return PromptLanguageEnumAm, nil
+	case "ar":
+		return PromptLanguageEnumAr, nil
+	case "ar-EG":
+		return PromptLanguageEnumArEg, nil
+	case "ar-SA":
+		return PromptLanguageEnumArSa, nil
+	case "az":
+		return PromptLanguageEnumAz, nil
+	case "bg":
+		return PromptLanguageEnumBg, nil
+	case "bn":
+		return PromptLanguageEnumBn, nil
+	case "bs":
+		return PromptLanguageEnumBs, nil
+	case "ca-ES":
+		return PromptLanguageEnumCaEs, nil
+	case "cnr":
+		return PromptLanguageEnumCnr, nil
+	case "cs":
+		return PromptLanguageEnumCs, nil
+	case "cy":
+		return PromptLanguageEnumCy, nil
+	case "da":
+		return PromptLanguageEnumDa, nil
+	case "de":
+		return PromptLanguageEnumDe, nil
+	case "el":
+		return PromptLanguageEnumEl, nil
+	case "en":
+		return PromptLanguageEnumEn, nil
+	case "en-CA":
+		return PromptLanguageEnumEnCa, nil
+	case "es":
+		return PromptLanguageEnumEs, nil
+	case "es-419":
+		return PromptLanguageEnumEs419, nil
+	case "es-AR":
+		return PromptLanguageEnumEsAr, nil
+	case "es-MX":
+		return PromptLanguageEnumEsMx, nil
+	case "et":
+		return PromptLanguageEnumEt, nil
+	case "eu-ES":
+		return PromptLanguageEnumEuEs, nil
+	case "fa":
+		return PromptLanguageEnumFa, nil
+	case "fi":
+		return PromptLanguageEnumFi, nil
+	case "fr":
+		return PromptLanguageEnumFr, nil
+	case "fr-CA":
+		return PromptLanguageEnumFrCa, nil
+	case "fr-FR":
+		return PromptLanguageEnumFrFr, nil
+	case "gl-ES":
+		return PromptLanguageEnumGlEs, nil
+	case "gu":
+		return PromptLanguageEnumGu, nil
+	case "he":
+		return PromptLanguageEnumHe, nil
+	case "hi":
+		return PromptLanguageEnumHi, nil
+	case "hr":
+		return PromptLanguageEnumHr, nil
+	case "hu":
+		return PromptLanguageEnumHu, nil
+	case "hy":
+		return PromptLanguageEnumHy, nil
+	case "id":
+		return PromptLanguageEnumID, nil
+	case "is":
+		return PromptLanguageEnumIs, nil
+	case "it":
+		return PromptLanguageEnumIt, nil
+	case "ja":
+		return PromptLanguageEnumJa, nil
+	case "ka":
+		return PromptLanguageEnumKa, nil
+	case "kk":
+		return PromptLanguageEnumKk, nil
+	case "kn":
+		return PromptLanguageEnumKn, nil
+	case "ko":
+		return PromptLanguageEnumKo, nil
+	case "lt":
+		return PromptLanguageEnumLt, nil
+	case "lv":
+		return PromptLanguageEnumLv, nil
+	case "mk":
+		return PromptLanguageEnumMk, nil
+	case "ml":
+		return PromptLanguageEnumMl, nil
+	case "mn":
+		return PromptLanguageEnumMn, nil
+	case "mr":
+		return PromptLanguageEnumMr, nil
+	case "ms":
+		return PromptLanguageEnumMs, nil
+	case "my":
+		return PromptLanguageEnumMy, nil
+	case "nb":
+		return PromptLanguageEnumNb, nil
+	case "nl":
+		return PromptLanguageEnumNl, nil
+	case "nn":
+		return PromptLanguageEnumNn, nil
+	case "no":
+		return PromptLanguageEnumNo, nil
+	case "pa":
+		return PromptLanguageEnumPa, nil
+	case "pl":
+		return PromptLanguageEnumPl, nil
+	case "pt":
+		return PromptLanguageEnumPt, nil
+	case "pt-BR":
+		return PromptLanguageEnumPtBr, nil
+	case "pt-PT":
+		return PromptLanguageEnumPtPt, nil
+	case "ro":
+		return PromptLanguageEnumRo, nil
+	case "ru":
+		return PromptLanguageEnumRu, nil
+	case "sk":
+		return PromptLanguageEnumSk, nil
+	case "sl":
+		return PromptLanguageEnumSl, nil
+	case "so":
+		return PromptLanguageEnumSo, nil
+	case "sq":
+		return PromptLanguageEnumSq, nil
+	case "sr":
+		return PromptLanguageEnumSr, nil
+	case "sv":
+		return PromptLanguageEnumSv, nil
+	case "sw":
+		return PromptLanguageEnumSw, nil
+	case "ta":
+		return PromptLanguageEnumTa, nil
+	case "te":
+		return PromptLanguageEnumTe, nil
+	case "th":
+		return PromptLanguageEnumTh, nil
+	case "tl":
+		return PromptLanguageEnumTl, nil
+	case "tr":
+		return PromptLanguageEnumTr, nil
+	case "uk":
+		return PromptLanguageEnumUk, nil
+	case "ur":
+		return PromptLanguageEnumUr, nil
+	case "vi":
+		return PromptLanguageEnumVi, nil
+	case "zgh":
+		return PromptLanguageEnumZgh, nil
+	case "zh-CN":
+		return PromptLanguageEnumZhCn, nil
+	case "zh-HK":
+		return PromptLanguageEnumZhHk, nil
+	case "zh-MO":
+		return PromptLanguageEnumZhMo, nil
+	case "zh-TW":
+		return PromptLanguageEnumZhTw, nil
+	}
+	var t PromptLanguageEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PromptLanguageEnum) Ptr() *PromptLanguageEnum {
+	return &p
+}
+
+// Name of the screen
+type ScreenGroupNameEnum string
+
+const (
+	ScreenGroupNameEnumLogin                                     ScreenGroupNameEnum = "login"
+	ScreenGroupNameEnumLoginID                                   ScreenGroupNameEnum = "login-id"
+	ScreenGroupNameEnumLoginPassword                             ScreenGroupNameEnum = "login-password"
+	ScreenGroupNameEnumLoginPasswordlessEmailCode                ScreenGroupNameEnum = "login-passwordless-email-code"
+	ScreenGroupNameEnumLoginPasswordlessEmailLink                ScreenGroupNameEnum = "login-passwordless-email-link"
+	ScreenGroupNameEnumLoginPasswordlessSmsOtp                   ScreenGroupNameEnum = "login-passwordless-sms-otp"
+	ScreenGroupNameEnumLoginEmailVerification                    ScreenGroupNameEnum = "login-email-verification"
+	ScreenGroupNameEnumSignup                                    ScreenGroupNameEnum = "signup"
+	ScreenGroupNameEnumSignupID                                  ScreenGroupNameEnum = "signup-id"
+	ScreenGroupNameEnumSignupPassword                            ScreenGroupNameEnum = "signup-password"
+	ScreenGroupNameEnumPhoneIdentifierEnrollment                 ScreenGroupNameEnum = "phone-identifier-enrollment"
+	ScreenGroupNameEnumPhoneIdentifierChallenge                  ScreenGroupNameEnum = "phone-identifier-challenge"
+	ScreenGroupNameEnumEmailIdentifierChallenge                  ScreenGroupNameEnum = "email-identifier-challenge"
+	ScreenGroupNameEnumResetPasswordRequest                      ScreenGroupNameEnum = "reset-password-request"
+	ScreenGroupNameEnumResetPasswordEmail                        ScreenGroupNameEnum = "reset-password-email"
+	ScreenGroupNameEnumResetPassword                             ScreenGroupNameEnum = "reset-password"
+	ScreenGroupNameEnumResetPasswordSuccess                      ScreenGroupNameEnum = "reset-password-success"
+	ScreenGroupNameEnumResetPasswordError                        ScreenGroupNameEnum = "reset-password-error"
+	ScreenGroupNameEnumResetPasswordMfaEmailChallenge            ScreenGroupNameEnum = "reset-password-mfa-email-challenge"
+	ScreenGroupNameEnumResetPasswordMfaOtpChallenge              ScreenGroupNameEnum = "reset-password-mfa-otp-challenge"
+	ScreenGroupNameEnumResetPasswordMfaPhoneChallenge            ScreenGroupNameEnum = "reset-password-mfa-phone-challenge"
+	ScreenGroupNameEnumResetPasswordMfaPushChallengePush         ScreenGroupNameEnum = "reset-password-mfa-push-challenge-push"
+	ScreenGroupNameEnumResetPasswordMfaRecoveryCodeChallenge     ScreenGroupNameEnum = "reset-password-mfa-recovery-code-challenge"
+	ScreenGroupNameEnumResetPasswordMfaSmsChallenge              ScreenGroupNameEnum = "reset-password-mfa-sms-challenge"
+	ScreenGroupNameEnumResetPasswordMfaVoiceChallenge            ScreenGroupNameEnum = "reset-password-mfa-voice-challenge"
+	ScreenGroupNameEnumResetPasswordMfaWebauthnPlatformChallenge ScreenGroupNameEnum = "reset-password-mfa-webauthn-platform-challenge"
+	ScreenGroupNameEnumResetPasswordMfaWebauthnRoamingChallenge  ScreenGroupNameEnum = "reset-password-mfa-webauthn-roaming-challenge"
+	ScreenGroupNameEnumCustomForm                                ScreenGroupNameEnum = "custom-form"
+	ScreenGroupNameEnumConsent                                   ScreenGroupNameEnum = "consent"
+	ScreenGroupNameEnumConsentTenantScopes                       ScreenGroupNameEnum = "consent-tenant-scopes"
+	ScreenGroupNameEnumCustomizedConsent                         ScreenGroupNameEnum = "customized-consent"
+	ScreenGroupNameEnumLogout                                    ScreenGroupNameEnum = "logout"
+	ScreenGroupNameEnumLogoutComplete                            ScreenGroupNameEnum = "logout-complete"
+	ScreenGroupNameEnumLogoutAborted                             ScreenGroupNameEnum = "logout-aborted"
+	ScreenGroupNameEnumMfaPushWelcome                            ScreenGroupNameEnum = "mfa-push-welcome"
+	ScreenGroupNameEnumMfaPushEnrollmentQr                       ScreenGroupNameEnum = "mfa-push-enrollment-qr"
+	ScreenGroupNameEnumMfaPushEnrollmentCode                     ScreenGroupNameEnum = "mfa-push-enrollment-code"
+	ScreenGroupNameEnumMfaPushSuccess                            ScreenGroupNameEnum = "mfa-push-success"
+	ScreenGroupNameEnumMfaPushChallengePush                      ScreenGroupNameEnum = "mfa-push-challenge-push"
+	ScreenGroupNameEnumMfaPushList                               ScreenGroupNameEnum = "mfa-push-list"
+	ScreenGroupNameEnumMfaOtpEnrollmentQr                        ScreenGroupNameEnum = "mfa-otp-enrollment-qr"
+	ScreenGroupNameEnumMfaOtpEnrollmentCode                      ScreenGroupNameEnum = "mfa-otp-enrollment-code"
+	ScreenGroupNameEnumMfaOtpChallenge                           ScreenGroupNameEnum = "mfa-otp-challenge"
+	ScreenGroupNameEnumMfaVoiceEnrollment                        ScreenGroupNameEnum = "mfa-voice-enrollment"
+	ScreenGroupNameEnumMfaVoiceChallenge                         ScreenGroupNameEnum = "mfa-voice-challenge"
+	ScreenGroupNameEnumMfaPhoneChallenge                         ScreenGroupNameEnum = "mfa-phone-challenge"
+	ScreenGroupNameEnumMfaPhoneEnrollment                        ScreenGroupNameEnum = "mfa-phone-enrollment"
+	ScreenGroupNameEnumMfaWebauthnPlatformEnrollment             ScreenGroupNameEnum = "mfa-webauthn-platform-enrollment"
+	ScreenGroupNameEnumMfaWebauthnRoamingEnrollment              ScreenGroupNameEnum = "mfa-webauthn-roaming-enrollment"
+	ScreenGroupNameEnumMfaWebauthnPlatformChallenge              ScreenGroupNameEnum = "mfa-webauthn-platform-challenge"
+	ScreenGroupNameEnumMfaWebauthnRoamingChallenge               ScreenGroupNameEnum = "mfa-webauthn-roaming-challenge"
+	ScreenGroupNameEnumMfaWebauthnChangeKeyNickname              ScreenGroupNameEnum = "mfa-webauthn-change-key-nickname"
+	ScreenGroupNameEnumMfaWebauthnEnrollmentSuccess              ScreenGroupNameEnum = "mfa-webauthn-enrollment-success"
+	ScreenGroupNameEnumMfaWebauthnError                          ScreenGroupNameEnum = "mfa-webauthn-error"
+	ScreenGroupNameEnumMfaWebauthnNotAvailableError              ScreenGroupNameEnum = "mfa-webauthn-not-available-error"
+	ScreenGroupNameEnumMfaCountryCodes                           ScreenGroupNameEnum = "mfa-country-codes"
+	ScreenGroupNameEnumMfaSmsEnrollment                          ScreenGroupNameEnum = "mfa-sms-enrollment"
+	ScreenGroupNameEnumMfaSmsChallenge                           ScreenGroupNameEnum = "mfa-sms-challenge"
+	ScreenGroupNameEnumMfaSmsList                                ScreenGroupNameEnum = "mfa-sms-list"
+	ScreenGroupNameEnumMfaEmailChallenge                         ScreenGroupNameEnum = "mfa-email-challenge"
+	ScreenGroupNameEnumMfaEmailList                              ScreenGroupNameEnum = "mfa-email-list"
+	ScreenGroupNameEnumMfaRecoveryCodeEnrollment                 ScreenGroupNameEnum = "mfa-recovery-code-enrollment"
+	ScreenGroupNameEnumMfaRecoveryCodeChallengeNewCode           ScreenGroupNameEnum = "mfa-recovery-code-challenge-new-code"
+	ScreenGroupNameEnumMfaRecoveryCodeChallenge                  ScreenGroupNameEnum = "mfa-recovery-code-challenge"
+	ScreenGroupNameEnumMfaDetectBrowserCapabilities              ScreenGroupNameEnum = "mfa-detect-browser-capabilities"
+	ScreenGroupNameEnumMfaEnrollResult                           ScreenGroupNameEnum = "mfa-enroll-result"
+	ScreenGroupNameEnumMfaLoginOptions                           ScreenGroupNameEnum = "mfa-login-options"
+	ScreenGroupNameEnumMfaBeginEnrollOptions                     ScreenGroupNameEnum = "mfa-begin-enroll-options"
+	ScreenGroupNameEnumStatus                                    ScreenGroupNameEnum = "status"
+	ScreenGroupNameEnumDeviceCodeActivation                      ScreenGroupNameEnum = "device-code-activation"
+	ScreenGroupNameEnumDeviceCodeActivationAllowed               ScreenGroupNameEnum = "device-code-activation-allowed"
+	ScreenGroupNameEnumDeviceCodeActivationDenied                ScreenGroupNameEnum = "device-code-activation-denied"
+	ScreenGroupNameEnumDeviceCodeConfirmation                    ScreenGroupNameEnum = "device-code-confirmation"
+	ScreenGroupNameEnumEmailVerificationResult                   ScreenGroupNameEnum = "email-verification-result"
+	ScreenGroupNameEnumEmailOtpChallenge                         ScreenGroupNameEnum = "email-otp-challenge"
+	ScreenGroupNameEnumOrganizationSelection                     ScreenGroupNameEnum = "organization-selection"
+	ScreenGroupNameEnumOrganizationPicker                        ScreenGroupNameEnum = "organization-picker"
+	ScreenGroupNameEnumPreLoginOrganizationPicker                ScreenGroupNameEnum = "pre-login-organization-picker"
+	ScreenGroupNameEnumAcceptInvitation                          ScreenGroupNameEnum = "accept-invitation"
+	ScreenGroupNameEnumRedeemTicket                              ScreenGroupNameEnum = "redeem-ticket"
+	ScreenGroupNameEnumPasskeyEnrollment                         ScreenGroupNameEnum = "passkey-enrollment"
+	ScreenGroupNameEnumPasskeyEnrollmentLocal                    ScreenGroupNameEnum = "passkey-enrollment-local"
+	ScreenGroupNameEnumInterstitialCaptcha                       ScreenGroupNameEnum = "interstitial-captcha"
+	ScreenGroupNameEnumBruteForceProtectionUnblock               ScreenGroupNameEnum = "brute-force-protection-unblock"
+	ScreenGroupNameEnumBruteForceProtectionUnblockSuccess        ScreenGroupNameEnum = "brute-force-protection-unblock-success"
+	ScreenGroupNameEnumBruteForceProtectionUnblockFailure        ScreenGroupNameEnum = "brute-force-protection-unblock-failure"
+	ScreenGroupNameEnumAsyncApprovalError                        ScreenGroupNameEnum = "async-approval-error"
+	ScreenGroupNameEnumAsyncApprovalAccepted                     ScreenGroupNameEnum = "async-approval-accepted"
+	ScreenGroupNameEnumAsyncApprovalDenied                       ScreenGroupNameEnum = "async-approval-denied"
+	ScreenGroupNameEnumConfirmation                              ScreenGroupNameEnum = "confirmation"
+	ScreenGroupNameEnumAsyncApprovalWrongUser                    ScreenGroupNameEnum = "async-approval-wrong-user"
+)
+
+func NewScreenGroupNameEnumFromString(s string) (ScreenGroupNameEnum, error) {
+	switch s {
+	case "login":
+		return ScreenGroupNameEnumLogin, nil
+	case "login-id":
+		return ScreenGroupNameEnumLoginID, nil
+	case "login-password":
+		return ScreenGroupNameEnumLoginPassword, nil
+	case "login-passwordless-email-code":
+		return ScreenGroupNameEnumLoginPasswordlessEmailCode, nil
+	case "login-passwordless-email-link":
+		return ScreenGroupNameEnumLoginPasswordlessEmailLink, nil
+	case "login-passwordless-sms-otp":
+		return ScreenGroupNameEnumLoginPasswordlessSmsOtp, nil
+	case "login-email-verification":
+		return ScreenGroupNameEnumLoginEmailVerification, nil
+	case "signup":
+		return ScreenGroupNameEnumSignup, nil
+	case "signup-id":
+		return ScreenGroupNameEnumSignupID, nil
+	case "signup-password":
+		return ScreenGroupNameEnumSignupPassword, nil
+	case "phone-identifier-enrollment":
+		return ScreenGroupNameEnumPhoneIdentifierEnrollment, nil
+	case "phone-identifier-challenge":
+		return ScreenGroupNameEnumPhoneIdentifierChallenge, nil
+	case "email-identifier-challenge":
+		return ScreenGroupNameEnumEmailIdentifierChallenge, nil
+	case "reset-password-request":
+		return ScreenGroupNameEnumResetPasswordRequest, nil
+	case "reset-password-email":
+		return ScreenGroupNameEnumResetPasswordEmail, nil
+	case "reset-password":
+		return ScreenGroupNameEnumResetPassword, nil
+	case "reset-password-success":
+		return ScreenGroupNameEnumResetPasswordSuccess, nil
+	case "reset-password-error":
+		return ScreenGroupNameEnumResetPasswordError, nil
+	case "reset-password-mfa-email-challenge":
+		return ScreenGroupNameEnumResetPasswordMfaEmailChallenge, nil
+	case "reset-password-mfa-otp-challenge":
+		return ScreenGroupNameEnumResetPasswordMfaOtpChallenge, nil
+	case "reset-password-mfa-phone-challenge":
+		return ScreenGroupNameEnumResetPasswordMfaPhoneChallenge, nil
+	case "reset-password-mfa-push-challenge-push":
+		return ScreenGroupNameEnumResetPasswordMfaPushChallengePush, nil
+	case "reset-password-mfa-recovery-code-challenge":
+		return ScreenGroupNameEnumResetPasswordMfaRecoveryCodeChallenge, nil
+	case "reset-password-mfa-sms-challenge":
+		return ScreenGroupNameEnumResetPasswordMfaSmsChallenge, nil
+	case "reset-password-mfa-voice-challenge":
+		return ScreenGroupNameEnumResetPasswordMfaVoiceChallenge, nil
+	case "reset-password-mfa-webauthn-platform-challenge":
+		return ScreenGroupNameEnumResetPasswordMfaWebauthnPlatformChallenge, nil
+	case "reset-password-mfa-webauthn-roaming-challenge":
+		return ScreenGroupNameEnumResetPasswordMfaWebauthnRoamingChallenge, nil
+	case "custom-form":
+		return ScreenGroupNameEnumCustomForm, nil
+	case "consent":
+		return ScreenGroupNameEnumConsent, nil
+	case "consent-tenant-scopes":
+		return ScreenGroupNameEnumConsentTenantScopes, nil
+	case "customized-consent":
+		return ScreenGroupNameEnumCustomizedConsent, nil
+	case "logout":
+		return ScreenGroupNameEnumLogout, nil
+	case "logout-complete":
+		return ScreenGroupNameEnumLogoutComplete, nil
+	case "logout-aborted":
+		return ScreenGroupNameEnumLogoutAborted, nil
+	case "mfa-push-welcome":
+		return ScreenGroupNameEnumMfaPushWelcome, nil
+	case "mfa-push-enrollment-qr":
+		return ScreenGroupNameEnumMfaPushEnrollmentQr, nil
+	case "mfa-push-enrollment-code":
+		return ScreenGroupNameEnumMfaPushEnrollmentCode, nil
+	case "mfa-push-success":
+		return ScreenGroupNameEnumMfaPushSuccess, nil
+	case "mfa-push-challenge-push":
+		return ScreenGroupNameEnumMfaPushChallengePush, nil
+	case "mfa-push-list":
+		return ScreenGroupNameEnumMfaPushList, nil
+	case "mfa-otp-enrollment-qr":
+		return ScreenGroupNameEnumMfaOtpEnrollmentQr, nil
+	case "mfa-otp-enrollment-code":
+		return ScreenGroupNameEnumMfaOtpEnrollmentCode, nil
+	case "mfa-otp-challenge":
+		return ScreenGroupNameEnumMfaOtpChallenge, nil
+	case "mfa-voice-enrollment":
+		return ScreenGroupNameEnumMfaVoiceEnrollment, nil
+	case "mfa-voice-challenge":
+		return ScreenGroupNameEnumMfaVoiceChallenge, nil
+	case "mfa-phone-challenge":
+		return ScreenGroupNameEnumMfaPhoneChallenge, nil
+	case "mfa-phone-enrollment":
+		return ScreenGroupNameEnumMfaPhoneEnrollment, nil
+	case "mfa-webauthn-platform-enrollment":
+		return ScreenGroupNameEnumMfaWebauthnPlatformEnrollment, nil
+	case "mfa-webauthn-roaming-enrollment":
+		return ScreenGroupNameEnumMfaWebauthnRoamingEnrollment, nil
+	case "mfa-webauthn-platform-challenge":
+		return ScreenGroupNameEnumMfaWebauthnPlatformChallenge, nil
+	case "mfa-webauthn-roaming-challenge":
+		return ScreenGroupNameEnumMfaWebauthnRoamingChallenge, nil
+	case "mfa-webauthn-change-key-nickname":
+		return ScreenGroupNameEnumMfaWebauthnChangeKeyNickname, nil
+	case "mfa-webauthn-enrollment-success":
+		return ScreenGroupNameEnumMfaWebauthnEnrollmentSuccess, nil
+	case "mfa-webauthn-error":
+		return ScreenGroupNameEnumMfaWebauthnError, nil
+	case "mfa-webauthn-not-available-error":
+		return ScreenGroupNameEnumMfaWebauthnNotAvailableError, nil
+	case "mfa-country-codes":
+		return ScreenGroupNameEnumMfaCountryCodes, nil
+	case "mfa-sms-enrollment":
+		return ScreenGroupNameEnumMfaSmsEnrollment, nil
+	case "mfa-sms-challenge":
+		return ScreenGroupNameEnumMfaSmsChallenge, nil
+	case "mfa-sms-list":
+		return ScreenGroupNameEnumMfaSmsList, nil
+	case "mfa-email-challenge":
+		return ScreenGroupNameEnumMfaEmailChallenge, nil
+	case "mfa-email-list":
+		return ScreenGroupNameEnumMfaEmailList, nil
+	case "mfa-recovery-code-enrollment":
+		return ScreenGroupNameEnumMfaRecoveryCodeEnrollment, nil
+	case "mfa-recovery-code-challenge-new-code":
+		return ScreenGroupNameEnumMfaRecoveryCodeChallengeNewCode, nil
+	case "mfa-recovery-code-challenge":
+		return ScreenGroupNameEnumMfaRecoveryCodeChallenge, nil
+	case "mfa-detect-browser-capabilities":
+		return ScreenGroupNameEnumMfaDetectBrowserCapabilities, nil
+	case "mfa-enroll-result":
+		return ScreenGroupNameEnumMfaEnrollResult, nil
+	case "mfa-login-options":
+		return ScreenGroupNameEnumMfaLoginOptions, nil
+	case "mfa-begin-enroll-options":
+		return ScreenGroupNameEnumMfaBeginEnrollOptions, nil
+	case "status":
+		return ScreenGroupNameEnumStatus, nil
+	case "device-code-activation":
+		return ScreenGroupNameEnumDeviceCodeActivation, nil
+	case "device-code-activation-allowed":
+		return ScreenGroupNameEnumDeviceCodeActivationAllowed, nil
+	case "device-code-activation-denied":
+		return ScreenGroupNameEnumDeviceCodeActivationDenied, nil
+	case "device-code-confirmation":
+		return ScreenGroupNameEnumDeviceCodeConfirmation, nil
+	case "email-verification-result":
+		return ScreenGroupNameEnumEmailVerificationResult, nil
+	case "email-otp-challenge":
+		return ScreenGroupNameEnumEmailOtpChallenge, nil
+	case "organization-selection":
+		return ScreenGroupNameEnumOrganizationSelection, nil
+	case "organization-picker":
+		return ScreenGroupNameEnumOrganizationPicker, nil
+	case "pre-login-organization-picker":
+		return ScreenGroupNameEnumPreLoginOrganizationPicker, nil
+	case "accept-invitation":
+		return ScreenGroupNameEnumAcceptInvitation, nil
+	case "redeem-ticket":
+		return ScreenGroupNameEnumRedeemTicket, nil
+	case "passkey-enrollment":
+		return ScreenGroupNameEnumPasskeyEnrollment, nil
+	case "passkey-enrollment-local":
+		return ScreenGroupNameEnumPasskeyEnrollmentLocal, nil
+	case "interstitial-captcha":
+		return ScreenGroupNameEnumInterstitialCaptcha, nil
+	case "brute-force-protection-unblock":
+		return ScreenGroupNameEnumBruteForceProtectionUnblock, nil
+	case "brute-force-protection-unblock-success":
+		return ScreenGroupNameEnumBruteForceProtectionUnblockSuccess, nil
+	case "brute-force-protection-unblock-failure":
+		return ScreenGroupNameEnumBruteForceProtectionUnblockFailure, nil
+	case "async-approval-error":
+		return ScreenGroupNameEnumAsyncApprovalError, nil
+	case "async-approval-accepted":
+		return ScreenGroupNameEnumAsyncApprovalAccepted, nil
+	case "async-approval-denied":
+		return ScreenGroupNameEnumAsyncApprovalDenied, nil
+	case "confirmation":
+		return ScreenGroupNameEnumConfirmation, nil
+	case "async-approval-wrong-user":
+		return ScreenGroupNameEnumAsyncApprovalWrongUser, nil
+	}
+	var t ScreenGroupNameEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s ScreenGroupNameEnum) Ptr() *ScreenGroupNameEnum {
+	return &s
+}
+
+// An object containing template partials for a group of screens.
+type SetPartialsRequestContent = map[string]any
+
+// An object containing custom dictionaries for a group of screens.
+type SetsCustomTextsByLanguageRequestContent = map[string]any
+
 // Which login experience to use. Can be `new` or `classic`.
 type UniversalLoginExperienceEnum string
 
@@ -153,6 +2986,179 @@ func NewUniversalLoginExperienceEnumFromString(s string) (UniversalLoginExperien
 
 func (u UniversalLoginExperienceEnum) Ptr() *UniversalLoginExperienceEnum {
 	return &u
+}
+
+var (
+	updateAculResponseContentFieldRenderingMode           = big.NewInt(1 << 0)
+	updateAculResponseContentFieldContextConfiguration    = big.NewInt(1 << 1)
+	updateAculResponseContentFieldDefaultHeadTagsDisabled = big.NewInt(1 << 2)
+	updateAculResponseContentFieldUsePageTemplate         = big.NewInt(1 << 3)
+	updateAculResponseContentFieldHeadTags                = big.NewInt(1 << 4)
+	updateAculResponseContentFieldFilters                 = big.NewInt(1 << 5)
+)
+
+type UpdateAculResponseContent struct {
+	// Rendering mode
+	RenderingMode        *AculRenderingModeEnum    `json:"rendering_mode,omitempty" url:"rendering_mode,omitempty"`
+	ContextConfiguration *AculContextConfiguration `json:"context_configuration,omitempty" url:"context_configuration,omitempty"`
+	// Override Universal Login default head tags
+	DefaultHeadTagsDisabled *bool `json:"default_head_tags_disabled,omitempty" url:"default_head_tags_disabled,omitempty"`
+	// Use page template with ACUL
+	UsePageTemplate *bool `json:"use_page_template,omitempty" url:"use_page_template,omitempty"`
+	// An array of head tags
+	HeadTags []*AculHeadTag `json:"head_tags,omitempty" url:"head_tags,omitempty"`
+	Filters  *AculFilters   `json:"filters,omitempty" url:"filters,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (u *UpdateAculResponseContent) GetRenderingMode() AculRenderingModeEnum {
+	if u == nil || u.RenderingMode == nil {
+		return ""
+	}
+	return *u.RenderingMode
+}
+
+func (u *UpdateAculResponseContent) GetContextConfiguration() AculContextConfiguration {
+	if u == nil || u.ContextConfiguration == nil {
+		return nil
+	}
+	return *u.ContextConfiguration
+}
+
+func (u *UpdateAculResponseContent) GetDefaultHeadTagsDisabled() bool {
+	if u == nil || u.DefaultHeadTagsDisabled == nil {
+		return false
+	}
+	return *u.DefaultHeadTagsDisabled
+}
+
+func (u *UpdateAculResponseContent) GetUsePageTemplate() bool {
+	if u == nil || u.UsePageTemplate == nil {
+		return false
+	}
+	return *u.UsePageTemplate
+}
+
+func (u *UpdateAculResponseContent) GetHeadTags() []*AculHeadTag {
+	if u == nil || u.HeadTags == nil {
+		return nil
+	}
+	return u.HeadTags
+}
+
+func (u *UpdateAculResponseContent) GetFilters() AculFilters {
+	if u == nil || u.Filters == nil {
+		return AculFilters{}
+	}
+	return *u.Filters
+}
+
+func (u *UpdateAculResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.ExtraProperties
+}
+
+func (u *UpdateAculResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetRenderingMode sets the RenderingMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAculResponseContent) SetRenderingMode(renderingMode *AculRenderingModeEnum) {
+	u.RenderingMode = renderingMode
+	u.require(updateAculResponseContentFieldRenderingMode)
+}
+
+// SetContextConfiguration sets the ContextConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAculResponseContent) SetContextConfiguration(contextConfiguration *AculContextConfiguration) {
+	u.ContextConfiguration = contextConfiguration
+	u.require(updateAculResponseContentFieldContextConfiguration)
+}
+
+// SetDefaultHeadTagsDisabled sets the DefaultHeadTagsDisabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAculResponseContent) SetDefaultHeadTagsDisabled(defaultHeadTagsDisabled *bool) {
+	u.DefaultHeadTagsDisabled = defaultHeadTagsDisabled
+	u.require(updateAculResponseContentFieldDefaultHeadTagsDisabled)
+}
+
+// SetUsePageTemplate sets the UsePageTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAculResponseContent) SetUsePageTemplate(usePageTemplate *bool) {
+	u.UsePageTemplate = usePageTemplate
+	u.require(updateAculResponseContentFieldUsePageTemplate)
+}
+
+// SetHeadTags sets the HeadTags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAculResponseContent) SetHeadTags(headTags []*AculHeadTag) {
+	u.HeadTags = headTags
+	u.require(updateAculResponseContentFieldHeadTags)
+}
+
+// SetFilters sets the Filters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAculResponseContent) SetFilters(filters *AculFilters) {
+	u.Filters = filters
+	u.require(updateAculResponseContentFieldFilters)
+}
+
+func (u *UpdateAculResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateAculResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateAculResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.ExtraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateAculResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateAculResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
+}
+
+func (u *UpdateAculResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 var (

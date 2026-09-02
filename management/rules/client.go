@@ -4,9 +4,6 @@ package rules
 
 import (
 	context "context"
-	fmt "fmt"
-	http "net/http"
-	strconv "strconv"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -38,88 +35,31 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a filtered list of [rules](https://auth0.com/docs/rules). Accepts a list of fields to include or exclude.
-func (c *Client) List(
+func (c *Client) GetRules(
 	ctx context.Context,
-	request *management.ListRulesRequestParameters,
+	request *management.GetRulesRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *management.Rule, *management.ListRulesOffsetPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/rules"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.ListRulesResponseContent, error) {
+	response, err := c.WithRawResponse.GetRules(
+		ctx,
 		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	next := 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *management.ListRulesOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.Rule, *management.ListRulesOffsetPaginatedResponseContent] {
-		next += 1
-		results := response.Rules
-		return &core.PageResponse[*int, *management.Rule, *management.ListRulesOffsetPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
+	return response.Body, nil
 }
 
 // Create a [new rule](https://auth0.com/docs/rules#create-a-new-rule-using-the-management-api).
 //
 // Note: Changing a rule's stage of execution from the default `login_success` can change the rule's function signature to have user omitted.
-func (c *Client) Create(
+func (c *Client) PostRules(
 	ctx context.Context,
 	request *management.CreateRuleRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateRuleResponseContent, error) {
-	response, err := c.WithRawResponse.Create(
+	response, err := c.WithRawResponse.PostRules(
 		ctx,
 		request,
 		opts...,
@@ -131,14 +71,14 @@ func (c *Client) Create(
 }
 
 // Retrieve [rule](https://auth0.com/docs/rules) details. Accepts a list of fields to include or exclude in the result.
-func (c *Client) Get(
+func (c *Client) GetRulesByID(
 	ctx context.Context,
 	// ID of the rule to retrieve.
 	id string,
-	request *management.GetRuleRequestParameters,
+	request *management.GetRulesByIDRequest,
 	opts ...option.RequestOption,
 ) (*management.GetRuleResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetRulesByID(
 		ctx,
 		id,
 		request,
@@ -151,13 +91,13 @@ func (c *Client) Get(
 }
 
 // Delete a rule.
-func (c *Client) Delete(
+func (c *Client) DeleteRulesByID(
 	ctx context.Context,
 	// ID of the rule to delete.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteRulesByID(
 		ctx,
 		id,
 		opts...,
@@ -169,14 +109,14 @@ func (c *Client) Delete(
 }
 
 // Update an existing rule.
-func (c *Client) Update(
+func (c *Client) PatchRulesByID(
 	ctx context.Context,
 	// ID of the rule to retrieve.
 	id string,
 	request *management.UpdateRuleRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateRuleResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchRulesByID(
 		ctx,
 		id,
 		request,

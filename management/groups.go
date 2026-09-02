@@ -10,6 +10,107 @@ import (
 	time "time"
 )
 
+var (
+	getGroupMembersResponseContentFieldMembers = big.NewInt(1 << 0)
+	getGroupMembersResponseContentFieldNext    = big.NewInt(1 << 1)
+)
+
+type GetGroupMembersResponseContent struct {
+	Members []*GroupMember `json:"members" url:"members"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetGroupMembersResponseContent) GetMembers() []*GroupMember {
+	if g == nil {
+		return nil
+	}
+	return g.Members
+}
+
+func (g *GetGroupMembersResponseContent) GetNext() string {
+	if g == nil || g.Next == nil {
+		return ""
+	}
+	return *g.Next
+}
+
+func (g *GetGroupMembersResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetGroupMembersResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetMembers sets the Members field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetGroupMembersResponseContent) SetMembers(members []*GroupMember) {
+	g.Members = members
+	g.require(getGroupMembersResponseContentFieldMembers)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetGroupMembersResponseContent) SetNext(next *string) {
+	g.Next = next
+	g.require(getGroupMembersResponseContentFieldNext)
+}
+
+func (g *GetGroupMembersResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetGroupMembersResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetGroupMembersResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetGroupMembersResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetGroupMembersResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetGroupMembersResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
 // Represents the metadata of a group. Member lists are retrieved via a separate endpoint.
 var (
 	getGroupResponseContentFieldID           = big.NewInt(1 << 0)
@@ -211,6 +312,317 @@ func (g *GetGroupResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// Represents the metadata of a group membership.
+var (
+	groupMemberFieldID           = big.NewInt(1 << 0)
+	groupMemberFieldMemberType   = big.NewInt(1 << 1)
+	groupMemberFieldType         = big.NewInt(1 << 2)
+	groupMemberFieldConnectionID = big.NewInt(1 << 3)
+	groupMemberFieldCreatedAt    = big.NewInt(1 << 4)
+)
+
+type GroupMember struct {
+	// Unique identifier for the member.
+	ID         *string              `json:"id,omitempty" url:"id,omitempty"`
+	MemberType *GroupMemberTypeEnum `json:"member_type,omitempty" url:"member_type,omitempty"`
+	Type       *GroupTypeEnum       `json:"type,omitempty" url:"type,omitempty"`
+	// Identifier for the connection this group belongs to (if a connection group).
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// Timestamp of when the membership was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GroupMember) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GroupMember) GetMemberType() GroupMemberTypeEnum {
+	if g == nil || g.MemberType == nil {
+		return ""
+	}
+	return *g.MemberType
+}
+
+func (g *GroupMember) GetType() GroupTypeEnum {
+	if g == nil || g.Type == nil {
+		return ""
+	}
+	return *g.Type
+}
+
+func (g *GroupMember) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
+		return ""
+	}
+	return *g.ConnectionID
+}
+
+func (g *GroupMember) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *g.CreatedAt
+}
+
+func (g *GroupMember) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.ExtraProperties
+}
+
+func (g *GroupMember) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GroupMember) SetID(id *string) {
+	g.ID = id
+	g.require(groupMemberFieldID)
+}
+
+// SetMemberType sets the MemberType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GroupMember) SetMemberType(memberType *GroupMemberTypeEnum) {
+	g.MemberType = memberType
+	g.require(groupMemberFieldMemberType)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GroupMember) SetType(type_ *GroupTypeEnum) {
+	g.Type = type_
+	g.require(groupMemberFieldType)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GroupMember) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(groupMemberFieldConnectionID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GroupMember) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(groupMemberFieldCreatedAt)
+}
+
+func (g *GroupMember) UnmarshalJSON(data []byte) error {
+	type embed GroupMember
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GroupMember(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GroupMember) MarshalJSON() ([]byte, error) {
+	type embed GroupMember
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GroupMember) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+// Type of the member.
+type GroupMemberTypeEnum string
+
+const (
+	GroupMemberTypeEnumUser  GroupMemberTypeEnum = "user"
+	GroupMemberTypeEnumGroup GroupMemberTypeEnum = "group"
+)
+
+func NewGroupMemberTypeEnumFromString(s string) (GroupMemberTypeEnum, error) {
+	switch s {
+	case "user":
+		return GroupMemberTypeEnumUser, nil
+	case "group":
+		return GroupMemberTypeEnumGroup, nil
+	}
+	var t GroupMemberTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (g GroupMemberTypeEnum) Ptr() *GroupMemberTypeEnum {
+	return &g
+}
+
+// Type of the group.
+type GroupTypeEnum string
+
+const (
+	GroupTypeEnumConnection   GroupTypeEnum = "connection"
+	GroupTypeEnumOrganization GroupTypeEnum = "organization"
+	GroupTypeEnumTenant       GroupTypeEnum = "tenant"
+)
+
+func NewGroupTypeEnumFromString(s string) (GroupTypeEnum, error) {
+	switch s {
+	case "connection":
+		return GroupTypeEnumConnection, nil
+	case "organization":
+		return GroupTypeEnumOrganization, nil
+	case "tenant":
+		return GroupTypeEnumTenant, nil
+	}
+	var t GroupTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (g GroupTypeEnum) Ptr() *GroupTypeEnum {
+	return &g
+}
+
+var (
+	listGroupRolesResponseContentFieldRoles = big.NewInt(1 << 0)
+	listGroupRolesResponseContentFieldNext  = big.NewInt(1 << 1)
+)
+
+type ListGroupRolesResponseContent struct {
+	Roles []*Role `json:"roles" url:"roles"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListGroupRolesResponseContent) GetRoles() []*Role {
+	if l == nil {
+		return nil
+	}
+	return l.Roles
+}
+
+func (l *ListGroupRolesResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListGroupRolesResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListGroupRolesResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListGroupRolesResponseContent) SetRoles(roles []*Role) {
+	l.Roles = roles
+	l.require(listGroupRolesResponseContentFieldRoles)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListGroupRolesResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listGroupRolesResponseContentFieldNext)
+}
+
+func (l *ListGroupRolesResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListGroupRolesResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListGroupRolesResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListGroupRolesResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListGroupRolesResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListGroupRolesResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
 var (
 	listGroupsPaginatedResponseContentFieldGroups = big.NewInt(1 << 0)
 	listGroupsPaginatedResponseContentFieldNext   = big.NewInt(1 << 1)
@@ -358,4 +770,66 @@ func (l *ListGroupsPaginatedResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+type ListGroupsResponseContent struct {
+	GroupList                          []*Group
+	ListGroupsPaginatedResponseContent *ListGroupsPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListGroupsResponseContent) GetGroupList() []*Group {
+	if l == nil {
+		return nil
+	}
+	return l.GroupList
+}
+
+func (l *ListGroupsResponseContent) GetListGroupsPaginatedResponseContent() *ListGroupsPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListGroupsPaginatedResponseContent
+}
+
+func (l *ListGroupsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueGroupList []*Group
+	if err := json.Unmarshal(data, &valueGroupList); err == nil {
+		l.typ = "GroupList"
+		l.GroupList = valueGroupList
+		return nil
+	}
+	valueListGroupsPaginatedResponseContent := new(ListGroupsPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListGroupsPaginatedResponseContent); err == nil {
+		l.typ = "ListGroupsPaginatedResponseContent"
+		l.ListGroupsPaginatedResponseContent = valueListGroupsPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListGroupsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "GroupList" || l.GroupList != nil {
+		return json.Marshal(l.GroupList)
+	}
+	if l.typ == "ListGroupsPaginatedResponseContent" || l.ListGroupsPaginatedResponseContent != nil {
+		return json.Marshal(l.ListGroupsPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListGroupsResponseContentVisitor interface {
+	VisitGroupList([]*Group) error
+	VisitListGroupsPaginatedResponseContent(*ListGroupsPaginatedResponseContent) error
+}
+
+func (l *ListGroupsResponseContent) Accept(visitor ListGroupsResponseContentVisitor) error {
+	if l.typ == "GroupList" || l.GroupList != nil {
+		return visitor.VisitGroupList(l.GroupList)
+	}
+	if l.typ == "ListGroupsPaginatedResponseContent" || l.ListGroupsPaginatedResponseContent != nil {
+		return visitor.VisitListGroupsPaginatedResponseContent(l.ListGroupsPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
 }

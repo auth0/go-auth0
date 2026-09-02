@@ -32,7 +32,56 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) GetAgents(
+	ctx context.Context,
+	request *management.GetAgentsRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ListAgentsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/agents"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ListAgentsResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ListAgentsResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) PostAgent(
 	ctx context.Context,
 	request *management.CreateAgentRequestContent,
 	opts ...option.RequestOption,
@@ -76,7 +125,7 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) Read(
+func (r *RawClient) GetAgent(
 	ctx context.Context,
 	// The agent ID
 	id string,
@@ -122,7 +171,7 @@ func (r *RawClient) Read(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteAgent(
 	ctx context.Context,
 	// The agent ID
 	id string,
@@ -166,11 +215,11 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchAgent(
 	ctx context.Context,
 	// The agent ID
 	id string,
-	request *management.PatchAgentRequestParameters,
+	request *management.UpdateAgentRequestContent,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.AgentResponseContent], error) {
 	options := core.NewRequestOptions(opts...)

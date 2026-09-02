@@ -44,6 +44,7 @@ type EventStreamCloudEventConnectionCreated struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -61,6 +62,10 @@ func (e *EventStreamCloudEventConnectionCreated) GetEvent() *EventStreamCloudEve
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventConnectionCreated) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventConnectionCreated) GetExtraProperties() map[string]interface{} {
@@ -92,13 +97,22 @@ func (e *EventStreamCloudEventConnectionCreated) SetEvent(event *EventStreamClou
 }
 
 func (e *EventStreamCloudEventConnectionCreated) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventConnectionCreated
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventConnectionCreated
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventConnectionCreated(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventConnectionCreated(unmarshaler.embed)
+	if unmarshaler.Type != "connection.created" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "connection.created", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -111,8 +125,10 @@ func (e *EventStreamCloudEventConnectionCreated) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventConnectionCreated
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "connection.created",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -26243,6 +26259,7 @@ type EventStreamCloudEventConnectionDeleted struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -26260,6 +26277,10 @@ func (e *EventStreamCloudEventConnectionDeleted) GetEvent() *EventStreamCloudEve
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventConnectionDeleted) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventConnectionDeleted) GetExtraProperties() map[string]interface{} {
@@ -26291,13 +26312,22 @@ func (e *EventStreamCloudEventConnectionDeleted) SetEvent(event *EventStreamClou
 }
 
 func (e *EventStreamCloudEventConnectionDeleted) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventConnectionDeleted
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventConnectionDeleted
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventConnectionDeleted(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventConnectionDeleted(unmarshaler.embed)
+	if unmarshaler.Type != "connection.deleted" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "connection.deleted", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -26310,8 +26340,10 @@ func (e *EventStreamCloudEventConnectionDeleted) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventConnectionDeleted
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "connection.deleted",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -52442,6 +52474,7 @@ type EventStreamCloudEventConnectionUpdated struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -52459,6 +52492,10 @@ func (e *EventStreamCloudEventConnectionUpdated) GetEvent() *EventStreamCloudEve
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventConnectionUpdated) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventConnectionUpdated) GetExtraProperties() map[string]interface{} {
@@ -52490,13 +52527,22 @@ func (e *EventStreamCloudEventConnectionUpdated) SetEvent(event *EventStreamClou
 }
 
 func (e *EventStreamCloudEventConnectionUpdated) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventConnectionUpdated
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventConnectionUpdated
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventConnectionUpdated(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventConnectionUpdated(unmarshaler.embed)
+	if unmarshaler.Type != "connection.updated" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "connection.updated", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -52509,8 +52555,10 @@ func (e *EventStreamCloudEventConnectionUpdated) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventConnectionUpdated
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "connection.updated",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -79649,6 +79697,7 @@ type EventStreamCloudEventErrorMessage struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -79659,6 +79708,10 @@ func (e *EventStreamCloudEventErrorMessage) GetError() *EventStreamCloudEventErr
 		return nil
 	}
 	return e.Error
+}
+
+func (e *EventStreamCloudEventErrorMessage) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventErrorMessage) GetExtraProperties() map[string]interface{} {
@@ -79683,13 +79736,22 @@ func (e *EventStreamCloudEventErrorMessage) SetError(error_ *EventStreamCloudEve
 }
 
 func (e *EventStreamCloudEventErrorMessage) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventErrorMessage
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventErrorMessage
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventErrorMessage(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventErrorMessage(unmarshaler.embed)
+	if unmarshaler.Type != "error" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "error", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -79702,8 +79764,10 @@ func (e *EventStreamCloudEventErrorMessage) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventErrorMessage
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "error",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -79737,6 +79801,7 @@ type EventStreamCloudEventGroupCreated struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -79754,6 +79819,10 @@ func (e *EventStreamCloudEventGroupCreated) GetEvent() *EventStreamCloudEventGro
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventGroupCreated) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventGroupCreated) GetExtraProperties() map[string]interface{} {
@@ -79785,13 +79854,22 @@ func (e *EventStreamCloudEventGroupCreated) SetEvent(event *EventStreamCloudEven
 }
 
 func (e *EventStreamCloudEventGroupCreated) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventGroupCreated
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventGroupCreated
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventGroupCreated(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventGroupCreated(unmarshaler.embed)
+	if unmarshaler.Type != "group.created" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "group.created", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -79804,8 +79882,10 @@ func (e *EventStreamCloudEventGroupCreated) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventGroupCreated
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "group.created",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -81524,6 +81604,7 @@ type EventStreamCloudEventGroupDeleted struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -81541,6 +81622,10 @@ func (e *EventStreamCloudEventGroupDeleted) GetEvent() *EventStreamCloudEventGro
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventGroupDeleted) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventGroupDeleted) GetExtraProperties() map[string]interface{} {
@@ -81572,13 +81657,22 @@ func (e *EventStreamCloudEventGroupDeleted) SetEvent(event *EventStreamCloudEven
 }
 
 func (e *EventStreamCloudEventGroupDeleted) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventGroupDeleted
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventGroupDeleted
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventGroupDeleted(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventGroupDeleted(unmarshaler.embed)
+	if unmarshaler.Type != "group.deleted" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "group.deleted", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -81591,8 +81685,10 @@ func (e *EventStreamCloudEventGroupDeleted) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventGroupDeleted
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "group.deleted",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -83437,6 +83533,7 @@ type EventStreamCloudEventGroupMemberAdded struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -83454,6 +83551,10 @@ func (e *EventStreamCloudEventGroupMemberAdded) GetEvent() *EventStreamCloudEven
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventGroupMemberAdded) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventGroupMemberAdded) GetExtraProperties() map[string]interface{} {
@@ -83485,13 +83586,22 @@ func (e *EventStreamCloudEventGroupMemberAdded) SetEvent(event *EventStreamCloud
 }
 
 func (e *EventStreamCloudEventGroupMemberAdded) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventGroupMemberAdded
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventGroupMemberAdded
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventGroupMemberAdded(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventGroupMemberAdded(unmarshaler.embed)
+	if unmarshaler.Type != "group.member.added" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "group.member.added", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -83504,8 +83614,10 @@ func (e *EventStreamCloudEventGroupMemberAdded) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventGroupMemberAdded
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "group.member.added",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -85856,6 +85968,7 @@ type EventStreamCloudEventGroupMemberDeleted struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -85873,6 +85986,10 @@ func (e *EventStreamCloudEventGroupMemberDeleted) GetEvent() *EventStreamCloudEv
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventGroupMemberDeleted) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventGroupMemberDeleted) GetExtraProperties() map[string]interface{} {
@@ -85904,13 +86021,22 @@ func (e *EventStreamCloudEventGroupMemberDeleted) SetEvent(event *EventStreamClo
 }
 
 func (e *EventStreamCloudEventGroupMemberDeleted) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventGroupMemberDeleted
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventGroupMemberDeleted
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventGroupMemberDeleted(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventGroupMemberDeleted(unmarshaler.embed)
+	if unmarshaler.Type != "group.member.deleted" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "group.member.deleted", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -85923,8 +86049,10 @@ func (e *EventStreamCloudEventGroupMemberDeleted) MarshalJSON() ([]byte, error) 
 	type embed EventStreamCloudEventGroupMemberDeleted
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "group.member.deleted",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -88275,6 +88403,7 @@ type EventStreamCloudEventGroupRoleAssigned struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -88292,6 +88421,10 @@ func (e *EventStreamCloudEventGroupRoleAssigned) GetEvent() *EventStreamCloudEve
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventGroupRoleAssigned) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventGroupRoleAssigned) GetExtraProperties() map[string]interface{} {
@@ -88323,13 +88456,22 @@ func (e *EventStreamCloudEventGroupRoleAssigned) SetEvent(event *EventStreamClou
 }
 
 func (e *EventStreamCloudEventGroupRoleAssigned) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventGroupRoleAssigned
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventGroupRoleAssigned
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventGroupRoleAssigned(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventGroupRoleAssigned(unmarshaler.embed)
+	if unmarshaler.Type != "group.role.assigned" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "group.role.assigned", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -88342,8 +88484,10 @@ func (e *EventStreamCloudEventGroupRoleAssigned) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventGroupRoleAssigned
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "group.role.assigned",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -90268,6 +90412,7 @@ type EventStreamCloudEventGroupRoleDeleted struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -90285,6 +90430,10 @@ func (e *EventStreamCloudEventGroupRoleDeleted) GetEvent() *EventStreamCloudEven
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventGroupRoleDeleted) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventGroupRoleDeleted) GetExtraProperties() map[string]interface{} {
@@ -90316,13 +90465,22 @@ func (e *EventStreamCloudEventGroupRoleDeleted) SetEvent(event *EventStreamCloud
 }
 
 func (e *EventStreamCloudEventGroupRoleDeleted) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventGroupRoleDeleted
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventGroupRoleDeleted
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventGroupRoleDeleted(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventGroupRoleDeleted(unmarshaler.embed)
+	if unmarshaler.Type != "group.role.deleted" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "group.role.deleted", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -90335,8 +90493,10 @@ func (e *EventStreamCloudEventGroupRoleDeleted) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventGroupRoleDeleted
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "group.role.deleted",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -92244,6 +92404,7 @@ type EventStreamCloudEventGroupUpdated struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -92261,6 +92422,10 @@ func (e *EventStreamCloudEventGroupUpdated) GetEvent() *EventStreamCloudEventGro
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventGroupUpdated) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventGroupUpdated) GetExtraProperties() map[string]interface{} {
@@ -92292,13 +92457,22 @@ func (e *EventStreamCloudEventGroupUpdated) SetEvent(event *EventStreamCloudEven
 }
 
 func (e *EventStreamCloudEventGroupUpdated) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventGroupUpdated
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventGroupUpdated
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventGroupUpdated(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventGroupUpdated(unmarshaler.embed)
+	if unmarshaler.Type != "group.updated" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "group.updated", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -92311,8 +92485,10 @@ func (e *EventStreamCloudEventGroupUpdated) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventGroupUpdated
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "group.updated",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -94155,6 +94331,7 @@ type EventStreamCloudEventOffsetOnlyMessage struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -94165,6 +94342,10 @@ func (e *EventStreamCloudEventOffsetOnlyMessage) GetOffset() string {
 		return ""
 	}
 	return e.Offset
+}
+
+func (e *EventStreamCloudEventOffsetOnlyMessage) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOffsetOnlyMessage) GetExtraProperties() map[string]interface{} {
@@ -94189,13 +94370,22 @@ func (e *EventStreamCloudEventOffsetOnlyMessage) SetOffset(offset string) {
 }
 
 func (e *EventStreamCloudEventOffsetOnlyMessage) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOffsetOnlyMessage
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOffsetOnlyMessage
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOffsetOnlyMessage(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOffsetOnlyMessage(unmarshaler.embed)
+	if unmarshaler.Type != "offset-only" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "offset-only", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -94208,8 +94398,10 @@ func (e *EventStreamCloudEventOffsetOnlyMessage) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventOffsetOnlyMessage
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "offset-only",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -94243,6 +94435,7 @@ type EventStreamCloudEventOrgConnectionAdded struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -94260,6 +94453,10 @@ func (e *EventStreamCloudEventOrgConnectionAdded) GetEvent() *EventStreamCloudEv
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgConnectionAdded) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgConnectionAdded) GetExtraProperties() map[string]interface{} {
@@ -94291,13 +94488,22 @@ func (e *EventStreamCloudEventOrgConnectionAdded) SetEvent(event *EventStreamClo
 }
 
 func (e *EventStreamCloudEventOrgConnectionAdded) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgConnectionAdded
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgConnectionAdded
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgConnectionAdded(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgConnectionAdded(unmarshaler.embed)
+	if unmarshaler.Type != "organization.connection.added" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.connection.added", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -94310,8 +94516,10 @@ func (e *EventStreamCloudEventOrgConnectionAdded) MarshalJSON() ([]byte, error) 
 	type embed EventStreamCloudEventOrgConnectionAdded
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.connection.added",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -95824,6 +96032,7 @@ type EventStreamCloudEventOrgConnectionRemoved struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -95841,6 +96050,10 @@ func (e *EventStreamCloudEventOrgConnectionRemoved) GetEvent() *EventStreamCloud
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgConnectionRemoved) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemoved) GetExtraProperties() map[string]interface{} {
@@ -95872,13 +96085,22 @@ func (e *EventStreamCloudEventOrgConnectionRemoved) SetEvent(event *EventStreamC
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemoved) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgConnectionRemoved
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgConnectionRemoved
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgConnectionRemoved(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgConnectionRemoved(unmarshaler.embed)
+	if unmarshaler.Type != "organization.connection.removed" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.connection.removed", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -95891,8 +96113,10 @@ func (e *EventStreamCloudEventOrgConnectionRemoved) MarshalJSON() ([]byte, error
 	type embed EventStreamCloudEventOrgConnectionRemoved
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.connection.removed",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -96867,6 +97091,7 @@ type EventStreamCloudEventOrgConnectionUpdated struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -96884,6 +97109,10 @@ func (e *EventStreamCloudEventOrgConnectionUpdated) GetEvent() *EventStreamCloud
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdated) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdated) GetExtraProperties() map[string]interface{} {
@@ -96915,13 +97144,22 @@ func (e *EventStreamCloudEventOrgConnectionUpdated) SetEvent(event *EventStreamC
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdated) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgConnectionUpdated
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgConnectionUpdated
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgConnectionUpdated(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgConnectionUpdated(unmarshaler.embed)
+	if unmarshaler.Type != "organization.connection.updated" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.connection.updated", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -96934,8 +97172,10 @@ func (e *EventStreamCloudEventOrgConnectionUpdated) MarshalJSON() ([]byte, error
 	type embed EventStreamCloudEventOrgConnectionUpdated
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.connection.updated",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -98448,6 +98688,7 @@ type EventStreamCloudEventOrgCreated struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -98465,6 +98706,10 @@ func (e *EventStreamCloudEventOrgCreated) GetEvent() *EventStreamCloudEventOrgCr
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgCreated) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgCreated) GetExtraProperties() map[string]interface{} {
@@ -98496,13 +98741,22 @@ func (e *EventStreamCloudEventOrgCreated) SetEvent(event *EventStreamCloudEventO
 }
 
 func (e *EventStreamCloudEventOrgCreated) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgCreated
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgCreated
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgCreated(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgCreated(unmarshaler.embed)
+	if unmarshaler.Type != "organization.created" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.created", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -98515,8 +98769,10 @@ func (e *EventStreamCloudEventOrgCreated) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventOrgCreated
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.created",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -99633,6 +99889,7 @@ type EventStreamCloudEventOrgDeleted struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -99650,6 +99907,10 @@ func (e *EventStreamCloudEventOrgDeleted) GetEvent() *EventStreamCloudEventOrgDe
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgDeleted) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgDeleted) GetExtraProperties() map[string]interface{} {
@@ -99681,13 +99942,22 @@ func (e *EventStreamCloudEventOrgDeleted) SetEvent(event *EventStreamCloudEventO
 }
 
 func (e *EventStreamCloudEventOrgDeleted) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgDeleted
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgDeleted
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgDeleted(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgDeleted(unmarshaler.embed)
+	if unmarshaler.Type != "organization.deleted" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.deleted", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -99700,8 +99970,10 @@ func (e *EventStreamCloudEventOrgDeleted) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventOrgDeleted
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.deleted",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -100376,6 +100648,7 @@ type EventStreamCloudEventOrgGroupRoleAssigned struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -100393,6 +100666,10 @@ func (e *EventStreamCloudEventOrgGroupRoleAssigned) GetEvent() *EventStreamCloud
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleAssigned) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssigned) GetExtraProperties() map[string]interface{} {
@@ -100424,13 +100701,22 @@ func (e *EventStreamCloudEventOrgGroupRoleAssigned) SetEvent(event *EventStreamC
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssigned) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgGroupRoleAssigned
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgGroupRoleAssigned
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgGroupRoleAssigned(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgGroupRoleAssigned(unmarshaler.embed)
+	if unmarshaler.Type != "organization.group.role.assigned" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.group.role.assigned", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -100443,8 +100729,10 @@ func (e *EventStreamCloudEventOrgGroupRoleAssigned) MarshalJSON() ([]byte, error
 	type embed EventStreamCloudEventOrgGroupRoleAssigned
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.group.role.assigned",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -102573,6 +102861,7 @@ type EventStreamCloudEventOrgGroupRoleDeleted struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -102590,6 +102879,10 @@ func (e *EventStreamCloudEventOrgGroupRoleDeleted) GetEvent() *EventStreamCloudE
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgGroupRoleDeleted) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeleted) GetExtraProperties() map[string]interface{} {
@@ -102621,13 +102914,22 @@ func (e *EventStreamCloudEventOrgGroupRoleDeleted) SetEvent(event *EventStreamCl
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeleted) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgGroupRoleDeleted
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgGroupRoleDeleted
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgGroupRoleDeleted(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgGroupRoleDeleted(unmarshaler.embed)
+	if unmarshaler.Type != "organization.group.role.deleted" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.group.role.deleted", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -102640,8 +102942,10 @@ func (e *EventStreamCloudEventOrgGroupRoleDeleted) MarshalJSON() ([]byte, error)
 	type embed EventStreamCloudEventOrgGroupRoleDeleted
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.group.role.deleted",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -104753,6 +105057,7 @@ type EventStreamCloudEventOrgMemberAdded struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -104770,6 +105075,10 @@ func (e *EventStreamCloudEventOrgMemberAdded) GetEvent() *EventStreamCloudEventO
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgMemberAdded) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgMemberAdded) GetExtraProperties() map[string]interface{} {
@@ -104801,13 +105110,22 @@ func (e *EventStreamCloudEventOrgMemberAdded) SetEvent(event *EventStreamCloudEv
 }
 
 func (e *EventStreamCloudEventOrgMemberAdded) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgMemberAdded
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgMemberAdded
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgMemberAdded(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgMemberAdded(unmarshaler.embed)
+	if unmarshaler.Type != "organization.member.added" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.member.added", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -104820,8 +105138,10 @@ func (e *EventStreamCloudEventOrgMemberAdded) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventOrgMemberAdded
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.member.added",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -105808,6 +106128,7 @@ type EventStreamCloudEventOrgMemberDeleted struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -105825,6 +106146,10 @@ func (e *EventStreamCloudEventOrgMemberDeleted) GetEvent() *EventStreamCloudEven
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgMemberDeleted) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgMemberDeleted) GetExtraProperties() map[string]interface{} {
@@ -105856,13 +106181,22 @@ func (e *EventStreamCloudEventOrgMemberDeleted) SetEvent(event *EventStreamCloud
 }
 
 func (e *EventStreamCloudEventOrgMemberDeleted) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgMemberDeleted
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgMemberDeleted
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgMemberDeleted(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgMemberDeleted(unmarshaler.embed)
+	if unmarshaler.Type != "organization.member.deleted" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.member.deleted", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -105875,8 +106209,10 @@ func (e *EventStreamCloudEventOrgMemberDeleted) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventOrgMemberDeleted
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.member.deleted",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -106863,6 +107199,7 @@ type EventStreamCloudEventOrgMemberRoleAssigned struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -106880,6 +107217,10 @@ func (e *EventStreamCloudEventOrgMemberRoleAssigned) GetEvent() *EventStreamClou
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgMemberRoleAssigned) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssigned) GetExtraProperties() map[string]interface{} {
@@ -106911,13 +107252,22 @@ func (e *EventStreamCloudEventOrgMemberRoleAssigned) SetEvent(event *EventStream
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssigned) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgMemberRoleAssigned
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgMemberRoleAssigned
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgMemberRoleAssigned(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgMemberRoleAssigned(unmarshaler.embed)
+	if unmarshaler.Type != "organization.member.role.assigned" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.member.role.assigned", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -106930,8 +107280,10 @@ func (e *EventStreamCloudEventOrgMemberRoleAssigned) MarshalJSON() ([]byte, erro
 	type embed EventStreamCloudEventOrgMemberRoleAssigned
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.member.role.assigned",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -108122,6 +108474,7 @@ type EventStreamCloudEventOrgMemberRoleDeleted struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -108139,6 +108492,10 @@ func (e *EventStreamCloudEventOrgMemberRoleDeleted) GetEvent() *EventStreamCloud
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgMemberRoleDeleted) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeleted) GetExtraProperties() map[string]interface{} {
@@ -108170,13 +108527,22 @@ func (e *EventStreamCloudEventOrgMemberRoleDeleted) SetEvent(event *EventStreamC
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeleted) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgMemberRoleDeleted
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgMemberRoleDeleted
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgMemberRoleDeleted(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgMemberRoleDeleted(unmarshaler.embed)
+	if unmarshaler.Type != "organization.member.role.deleted" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.member.role.deleted", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -108189,8 +108555,10 @@ func (e *EventStreamCloudEventOrgMemberRoleDeleted) MarshalJSON() ([]byte, error
 	type embed EventStreamCloudEventOrgMemberRoleDeleted
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.member.role.deleted",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -109381,6 +109749,7 @@ type EventStreamCloudEventOrgUpdated struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -109398,6 +109767,10 @@ func (e *EventStreamCloudEventOrgUpdated) GetEvent() *EventStreamCloudEventOrgUp
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventOrgUpdated) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventOrgUpdated) GetExtraProperties() map[string]interface{} {
@@ -109429,13 +109802,22 @@ func (e *EventStreamCloudEventOrgUpdated) SetEvent(event *EventStreamCloudEventO
 }
 
 func (e *EventStreamCloudEventOrgUpdated) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventOrgUpdated
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventOrgUpdated
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventOrgUpdated(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventOrgUpdated(unmarshaler.embed)
+	if unmarshaler.Type != "organization.updated" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "organization.updated", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -109448,8 +109830,10 @@ func (e *EventStreamCloudEventOrgUpdated) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventOrgUpdated
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "organization.updated",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -110586,6 +110970,7 @@ type EventStreamCloudEventUserCreated struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -110603,6 +110988,10 @@ func (e *EventStreamCloudEventUserCreated) GetEvent() *EventStreamCloudEventUser
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventUserCreated) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventUserCreated) GetExtraProperties() map[string]interface{} {
@@ -110634,13 +111023,22 @@ func (e *EventStreamCloudEventUserCreated) SetEvent(event *EventStreamCloudEvent
 }
 
 func (e *EventStreamCloudEventUserCreated) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventUserCreated
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventUserCreated
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventUserCreated(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventUserCreated(unmarshaler.embed)
+	if unmarshaler.Type != "user.created" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "user.created", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -110653,8 +111051,10 @@ func (e *EventStreamCloudEventUserCreated) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventUserCreated
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "user.created",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -116941,6 +117341,7 @@ type EventStreamCloudEventUserDeleted struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -116958,6 +117359,10 @@ func (e *EventStreamCloudEventUserDeleted) GetEvent() *EventStreamCloudEventUser
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventUserDeleted) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventUserDeleted) GetExtraProperties() map[string]interface{} {
@@ -116989,13 +117394,22 @@ func (e *EventStreamCloudEventUserDeleted) SetEvent(event *EventStreamCloudEvent
 }
 
 func (e *EventStreamCloudEventUserDeleted) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventUserDeleted
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventUserDeleted
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventUserDeleted(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventUserDeleted(unmarshaler.embed)
+	if unmarshaler.Type != "user.deleted" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "user.deleted", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -117008,8 +117422,10 @@ func (e *EventStreamCloudEventUserDeleted) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventUserDeleted
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "user.deleted",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -123317,6 +123733,7 @@ type EventStreamCloudEventUserUpdated struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
+	type_          string
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -123334,6 +123751,10 @@ func (e *EventStreamCloudEventUserUpdated) GetEvent() *EventStreamCloudEventUser
 		return nil
 	}
 	return e.Event
+}
+
+func (e *EventStreamCloudEventUserUpdated) Type() string {
+	return e.type_
 }
 
 func (e *EventStreamCloudEventUserUpdated) GetExtraProperties() map[string]interface{} {
@@ -123365,13 +123786,22 @@ func (e *EventStreamCloudEventUserUpdated) SetEvent(event *EventStreamCloudEvent
 }
 
 func (e *EventStreamCloudEventUserUpdated) UnmarshalJSON(data []byte) error {
-	type unmarshaler EventStreamCloudEventUserUpdated
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed EventStreamCloudEventUserUpdated
+	var unmarshaler = struct {
+		embed
+		Type string `json:"type"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*e = EventStreamCloudEventUserUpdated(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	*e = EventStreamCloudEventUserUpdated(unmarshaler.embed)
+	if unmarshaler.Type != "user.updated" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", e, "user.updated", unmarshaler.Type)
+	}
+	e.type_ = unmarshaler.Type
+	extraProperties, err := internal.ExtractExtraProperties(data, *e, "type")
 	if err != nil {
 		return err
 	}
@@ -123384,8 +123814,10 @@ func (e *EventStreamCloudEventUserUpdated) MarshalJSON() ([]byte, error) {
 	type embed EventStreamCloudEventUserUpdated
 	var marshaler = struct {
 		embed
+		Type string `json:"type"`
 	}{
 		embed: embed(*e),
+		Type:  "user.updated",
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -129752,727 +130184,588 @@ func (e EventStreamSubscribeEventsEventTypeEnum) Ptr() *EventStreamSubscribeEven
 
 // The JSON payload delivered in each SSE data line. The type field is injected from the SSE event field by the SDK. Discriminated by type: an event type name for events, "error" for errors, and "offset-only" for cursor-only heartbeats.
 type EventStreamSubscribeEventsResponseContent struct {
-	Type                           string
-	ConnectionCreated              *EventStreamCloudEventConnectionCreated
-	ConnectionDeleted              *EventStreamCloudEventConnectionDeleted
-	ConnectionUpdated              *EventStreamCloudEventConnectionUpdated
-	GroupCreated                   *EventStreamCloudEventGroupCreated
-	GroupDeleted                   *EventStreamCloudEventGroupDeleted
-	GroupMemberAdded               *EventStreamCloudEventGroupMemberAdded
-	GroupMemberDeleted             *EventStreamCloudEventGroupMemberDeleted
-	GroupRoleAssigned              *EventStreamCloudEventGroupRoleAssigned
-	GroupRoleDeleted               *EventStreamCloudEventGroupRoleDeleted
-	GroupUpdated                   *EventStreamCloudEventGroupUpdated
-	OrganizationConnectionAdded    *EventStreamCloudEventOrgConnectionAdded
-	OrganizationConnectionRemoved  *EventStreamCloudEventOrgConnectionRemoved
-	OrganizationConnectionUpdated  *EventStreamCloudEventOrgConnectionUpdated
-	OrganizationCreated            *EventStreamCloudEventOrgCreated
-	OrganizationDeleted            *EventStreamCloudEventOrgDeleted
-	OrganizationGroupRoleAssigned  *EventStreamCloudEventOrgGroupRoleAssigned
-	OrganizationGroupRoleDeleted   *EventStreamCloudEventOrgGroupRoleDeleted
-	OrganizationMemberAdded        *EventStreamCloudEventOrgMemberAdded
-	OrganizationMemberDeleted      *EventStreamCloudEventOrgMemberDeleted
-	OrganizationMemberRoleAssigned *EventStreamCloudEventOrgMemberRoleAssigned
-	OrganizationMemberRoleDeleted  *EventStreamCloudEventOrgMemberRoleDeleted
-	OrganizationUpdated            *EventStreamCloudEventOrgUpdated
-	UserCreated                    *EventStreamCloudEventUserCreated
-	UserDeleted                    *EventStreamCloudEventUserDeleted
-	UserUpdated                    *EventStreamCloudEventUserUpdated
-	Error                          *EventStreamCloudEventErrorMessage
-	OffsetOnly                     *EventStreamCloudEventOffsetOnlyMessage
+	EventStreamCloudEventConnectionCreated     *EventStreamCloudEventConnectionCreated
+	EventStreamCloudEventConnectionDeleted     *EventStreamCloudEventConnectionDeleted
+	EventStreamCloudEventConnectionUpdated     *EventStreamCloudEventConnectionUpdated
+	EventStreamCloudEventGroupCreated          *EventStreamCloudEventGroupCreated
+	EventStreamCloudEventGroupDeleted          *EventStreamCloudEventGroupDeleted
+	EventStreamCloudEventGroupMemberAdded      *EventStreamCloudEventGroupMemberAdded
+	EventStreamCloudEventGroupMemberDeleted    *EventStreamCloudEventGroupMemberDeleted
+	EventStreamCloudEventGroupRoleAssigned     *EventStreamCloudEventGroupRoleAssigned
+	EventStreamCloudEventGroupRoleDeleted      *EventStreamCloudEventGroupRoleDeleted
+	EventStreamCloudEventGroupUpdated          *EventStreamCloudEventGroupUpdated
+	EventStreamCloudEventOrgConnectionAdded    *EventStreamCloudEventOrgConnectionAdded
+	EventStreamCloudEventOrgConnectionRemoved  *EventStreamCloudEventOrgConnectionRemoved
+	EventStreamCloudEventOrgConnectionUpdated  *EventStreamCloudEventOrgConnectionUpdated
+	EventStreamCloudEventOrgCreated            *EventStreamCloudEventOrgCreated
+	EventStreamCloudEventOrgDeleted            *EventStreamCloudEventOrgDeleted
+	EventStreamCloudEventOrgGroupRoleAssigned  *EventStreamCloudEventOrgGroupRoleAssigned
+	EventStreamCloudEventOrgGroupRoleDeleted   *EventStreamCloudEventOrgGroupRoleDeleted
+	EventStreamCloudEventOrgMemberAdded        *EventStreamCloudEventOrgMemberAdded
+	EventStreamCloudEventOrgMemberDeleted      *EventStreamCloudEventOrgMemberDeleted
+	EventStreamCloudEventOrgMemberRoleAssigned *EventStreamCloudEventOrgMemberRoleAssigned
+	EventStreamCloudEventOrgMemberRoleDeleted  *EventStreamCloudEventOrgMemberRoleDeleted
+	EventStreamCloudEventOrgUpdated            *EventStreamCloudEventOrgUpdated
+	EventStreamCloudEventUserCreated           *EventStreamCloudEventUserCreated
+	EventStreamCloudEventUserDeleted           *EventStreamCloudEventUserDeleted
+	EventStreamCloudEventUserUpdated           *EventStreamCloudEventUserUpdated
+	EventStreamCloudEventErrorMessage          *EventStreamCloudEventErrorMessage
+	EventStreamCloudEventOffsetOnlyMessage     *EventStreamCloudEventOffsetOnlyMessage
 
-	rawJSON json.RawMessage
+	typ string
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *EventStreamSubscribeEventsResponseContent) GetConnectionCreated() *EventStreamCloudEventConnectionCreated {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventConnectionCreated() *EventStreamCloudEventConnectionCreated {
 	if e == nil {
 		return nil
 	}
-	return e.ConnectionCreated
+	return e.EventStreamCloudEventConnectionCreated
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetConnectionDeleted() *EventStreamCloudEventConnectionDeleted {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventConnectionDeleted() *EventStreamCloudEventConnectionDeleted {
 	if e == nil {
 		return nil
 	}
-	return e.ConnectionDeleted
+	return e.EventStreamCloudEventConnectionDeleted
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetConnectionUpdated() *EventStreamCloudEventConnectionUpdated {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventConnectionUpdated() *EventStreamCloudEventConnectionUpdated {
 	if e == nil {
 		return nil
 	}
-	return e.ConnectionUpdated
+	return e.EventStreamCloudEventConnectionUpdated
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetGroupCreated() *EventStreamCloudEventGroupCreated {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventGroupCreated() *EventStreamCloudEventGroupCreated {
 	if e == nil {
 		return nil
 	}
-	return e.GroupCreated
+	return e.EventStreamCloudEventGroupCreated
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetGroupDeleted() *EventStreamCloudEventGroupDeleted {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventGroupDeleted() *EventStreamCloudEventGroupDeleted {
 	if e == nil {
 		return nil
 	}
-	return e.GroupDeleted
+	return e.EventStreamCloudEventGroupDeleted
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetGroupMemberAdded() *EventStreamCloudEventGroupMemberAdded {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventGroupMemberAdded() *EventStreamCloudEventGroupMemberAdded {
 	if e == nil {
 		return nil
 	}
-	return e.GroupMemberAdded
+	return e.EventStreamCloudEventGroupMemberAdded
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetGroupMemberDeleted() *EventStreamCloudEventGroupMemberDeleted {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventGroupMemberDeleted() *EventStreamCloudEventGroupMemberDeleted {
 	if e == nil {
 		return nil
 	}
-	return e.GroupMemberDeleted
+	return e.EventStreamCloudEventGroupMemberDeleted
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetGroupRoleAssigned() *EventStreamCloudEventGroupRoleAssigned {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventGroupRoleAssigned() *EventStreamCloudEventGroupRoleAssigned {
 	if e == nil {
 		return nil
 	}
-	return e.GroupRoleAssigned
+	return e.EventStreamCloudEventGroupRoleAssigned
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetGroupRoleDeleted() *EventStreamCloudEventGroupRoleDeleted {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventGroupRoleDeleted() *EventStreamCloudEventGroupRoleDeleted {
 	if e == nil {
 		return nil
 	}
-	return e.GroupRoleDeleted
+	return e.EventStreamCloudEventGroupRoleDeleted
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetGroupUpdated() *EventStreamCloudEventGroupUpdated {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventGroupUpdated() *EventStreamCloudEventGroupUpdated {
 	if e == nil {
 		return nil
 	}
-	return e.GroupUpdated
+	return e.EventStreamCloudEventGroupUpdated
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationConnectionAdded() *EventStreamCloudEventOrgConnectionAdded {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgConnectionAdded() *EventStreamCloudEventOrgConnectionAdded {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationConnectionAdded
+	return e.EventStreamCloudEventOrgConnectionAdded
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationConnectionRemoved() *EventStreamCloudEventOrgConnectionRemoved {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgConnectionRemoved() *EventStreamCloudEventOrgConnectionRemoved {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationConnectionRemoved
+	return e.EventStreamCloudEventOrgConnectionRemoved
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationConnectionUpdated() *EventStreamCloudEventOrgConnectionUpdated {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgConnectionUpdated() *EventStreamCloudEventOrgConnectionUpdated {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationConnectionUpdated
+	return e.EventStreamCloudEventOrgConnectionUpdated
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationCreated() *EventStreamCloudEventOrgCreated {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgCreated() *EventStreamCloudEventOrgCreated {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationCreated
+	return e.EventStreamCloudEventOrgCreated
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationDeleted() *EventStreamCloudEventOrgDeleted {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgDeleted() *EventStreamCloudEventOrgDeleted {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationDeleted
+	return e.EventStreamCloudEventOrgDeleted
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationGroupRoleAssigned() *EventStreamCloudEventOrgGroupRoleAssigned {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgGroupRoleAssigned() *EventStreamCloudEventOrgGroupRoleAssigned {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationGroupRoleAssigned
+	return e.EventStreamCloudEventOrgGroupRoleAssigned
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationGroupRoleDeleted() *EventStreamCloudEventOrgGroupRoleDeleted {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgGroupRoleDeleted() *EventStreamCloudEventOrgGroupRoleDeleted {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationGroupRoleDeleted
+	return e.EventStreamCloudEventOrgGroupRoleDeleted
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationMemberAdded() *EventStreamCloudEventOrgMemberAdded {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgMemberAdded() *EventStreamCloudEventOrgMemberAdded {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationMemberAdded
+	return e.EventStreamCloudEventOrgMemberAdded
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationMemberDeleted() *EventStreamCloudEventOrgMemberDeleted {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgMemberDeleted() *EventStreamCloudEventOrgMemberDeleted {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationMemberDeleted
+	return e.EventStreamCloudEventOrgMemberDeleted
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationMemberRoleAssigned() *EventStreamCloudEventOrgMemberRoleAssigned {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgMemberRoleAssigned() *EventStreamCloudEventOrgMemberRoleAssigned {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationMemberRoleAssigned
+	return e.EventStreamCloudEventOrgMemberRoleAssigned
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationMemberRoleDeleted() *EventStreamCloudEventOrgMemberRoleDeleted {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgMemberRoleDeleted() *EventStreamCloudEventOrgMemberRoleDeleted {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationMemberRoleDeleted
+	return e.EventStreamCloudEventOrgMemberRoleDeleted
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOrganizationUpdated() *EventStreamCloudEventOrgUpdated {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOrgUpdated() *EventStreamCloudEventOrgUpdated {
 	if e == nil {
 		return nil
 	}
-	return e.OrganizationUpdated
+	return e.EventStreamCloudEventOrgUpdated
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetUserCreated() *EventStreamCloudEventUserCreated {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventUserCreated() *EventStreamCloudEventUserCreated {
 	if e == nil {
 		return nil
 	}
-	return e.UserCreated
+	return e.EventStreamCloudEventUserCreated
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetUserDeleted() *EventStreamCloudEventUserDeleted {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventUserDeleted() *EventStreamCloudEventUserDeleted {
 	if e == nil {
 		return nil
 	}
-	return e.UserDeleted
+	return e.EventStreamCloudEventUserDeleted
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetUserUpdated() *EventStreamCloudEventUserUpdated {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventUserUpdated() *EventStreamCloudEventUserUpdated {
 	if e == nil {
 		return nil
 	}
-	return e.UserUpdated
+	return e.EventStreamCloudEventUserUpdated
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetError() *EventStreamCloudEventErrorMessage {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventErrorMessage() *EventStreamCloudEventErrorMessage {
 	if e == nil {
 		return nil
 	}
-	return e.Error
+	return e.EventStreamCloudEventErrorMessage
 }
 
-func (e *EventStreamSubscribeEventsResponseContent) GetOffsetOnly() *EventStreamCloudEventOffsetOnlyMessage {
+func (e *EventStreamSubscribeEventsResponseContent) GetEventStreamCloudEventOffsetOnlyMessage() *EventStreamCloudEventOffsetOnlyMessage {
 	if e == nil {
 		return nil
 	}
-	return e.OffsetOnly
+	return e.EventStreamCloudEventOffsetOnlyMessage
 }
 
 func (e *EventStreamSubscribeEventsResponseContent) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
+	valueEventStreamCloudEventConnectionCreated := new(EventStreamCloudEventConnectionCreated)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreated); err == nil {
+		e.typ = "EventStreamCloudEventConnectionCreated"
+		e.EventStreamCloudEventConnectionCreated = valueEventStreamCloudEventConnectionCreated
+		return nil
 	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
+	valueEventStreamCloudEventConnectionDeleted := new(EventStreamCloudEventConnectionDeleted)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeleted); err == nil {
+		e.typ = "EventStreamCloudEventConnectionDeleted"
+		e.EventStreamCloudEventConnectionDeleted = valueEventStreamCloudEventConnectionDeleted
+		return nil
 	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
+	valueEventStreamCloudEventConnectionUpdated := new(EventStreamCloudEventConnectionUpdated)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdated); err == nil {
+		e.typ = "EventStreamCloudEventConnectionUpdated"
+		e.EventStreamCloudEventConnectionUpdated = valueEventStreamCloudEventConnectionUpdated
+		return nil
 	}
-	switch unmarshaler.Type {
-	case "connection.created":
-		value := new(EventStreamCloudEventConnectionCreated)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.ConnectionCreated = value
-	case "connection.deleted":
-		value := new(EventStreamCloudEventConnectionDeleted)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.ConnectionDeleted = value
-	case "connection.updated":
-		value := new(EventStreamCloudEventConnectionUpdated)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.ConnectionUpdated = value
-	case "group.created":
-		value := new(EventStreamCloudEventGroupCreated)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.GroupCreated = value
-	case "group.deleted":
-		value := new(EventStreamCloudEventGroupDeleted)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.GroupDeleted = value
-	case "group.member.added":
-		value := new(EventStreamCloudEventGroupMemberAdded)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.GroupMemberAdded = value
-	case "group.member.deleted":
-		value := new(EventStreamCloudEventGroupMemberDeleted)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.GroupMemberDeleted = value
-	case "group.role.assigned":
-		value := new(EventStreamCloudEventGroupRoleAssigned)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.GroupRoleAssigned = value
-	case "group.role.deleted":
-		value := new(EventStreamCloudEventGroupRoleDeleted)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.GroupRoleDeleted = value
-	case "group.updated":
-		value := new(EventStreamCloudEventGroupUpdated)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.GroupUpdated = value
-	case "organization.connection.added":
-		value := new(EventStreamCloudEventOrgConnectionAdded)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationConnectionAdded = value
-	case "organization.connection.removed":
-		value := new(EventStreamCloudEventOrgConnectionRemoved)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationConnectionRemoved = value
-	case "organization.connection.updated":
-		value := new(EventStreamCloudEventOrgConnectionUpdated)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationConnectionUpdated = value
-	case "organization.created":
-		value := new(EventStreamCloudEventOrgCreated)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationCreated = value
-	case "organization.deleted":
-		value := new(EventStreamCloudEventOrgDeleted)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationDeleted = value
-	case "organization.group.role.assigned":
-		value := new(EventStreamCloudEventOrgGroupRoleAssigned)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationGroupRoleAssigned = value
-	case "organization.group.role.deleted":
-		value := new(EventStreamCloudEventOrgGroupRoleDeleted)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationGroupRoleDeleted = value
-	case "organization.member.added":
-		value := new(EventStreamCloudEventOrgMemberAdded)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationMemberAdded = value
-	case "organization.member.deleted":
-		value := new(EventStreamCloudEventOrgMemberDeleted)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationMemberDeleted = value
-	case "organization.member.role.assigned":
-		value := new(EventStreamCloudEventOrgMemberRoleAssigned)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationMemberRoleAssigned = value
-	case "organization.member.role.deleted":
-		value := new(EventStreamCloudEventOrgMemberRoleDeleted)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationMemberRoleDeleted = value
-	case "organization.updated":
-		value := new(EventStreamCloudEventOrgUpdated)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OrganizationUpdated = value
-	case "user.created":
-		value := new(EventStreamCloudEventUserCreated)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.UserCreated = value
-	case "user.deleted":
-		value := new(EventStreamCloudEventUserDeleted)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.UserDeleted = value
-	case "user.updated":
-		value := new(EventStreamCloudEventUserUpdated)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.UserUpdated = value
-	case "error":
-		value := new(EventStreamCloudEventErrorMessage)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Error = value
-	case "offset-only":
-		value := new(EventStreamCloudEventOffsetOnlyMessage)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.OffsetOnly = value
+	valueEventStreamCloudEventGroupCreated := new(EventStreamCloudEventGroupCreated)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreated); err == nil {
+		e.typ = "EventStreamCloudEventGroupCreated"
+		e.EventStreamCloudEventGroupCreated = valueEventStreamCloudEventGroupCreated
+		return nil
 	}
-	e.rawJSON = json.RawMessage(data)
-	return nil
+	valueEventStreamCloudEventGroupDeleted := new(EventStreamCloudEventGroupDeleted)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeleted); err == nil {
+		e.typ = "EventStreamCloudEventGroupDeleted"
+		e.EventStreamCloudEventGroupDeleted = valueEventStreamCloudEventGroupDeleted
+		return nil
+	}
+	valueEventStreamCloudEventGroupMemberAdded := new(EventStreamCloudEventGroupMemberAdded)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAdded); err == nil {
+		e.typ = "EventStreamCloudEventGroupMemberAdded"
+		e.EventStreamCloudEventGroupMemberAdded = valueEventStreamCloudEventGroupMemberAdded
+		return nil
+	}
+	valueEventStreamCloudEventGroupMemberDeleted := new(EventStreamCloudEventGroupMemberDeleted)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeleted); err == nil {
+		e.typ = "EventStreamCloudEventGroupMemberDeleted"
+		e.EventStreamCloudEventGroupMemberDeleted = valueEventStreamCloudEventGroupMemberDeleted
+		return nil
+	}
+	valueEventStreamCloudEventGroupRoleAssigned := new(EventStreamCloudEventGroupRoleAssigned)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssigned); err == nil {
+		e.typ = "EventStreamCloudEventGroupRoleAssigned"
+		e.EventStreamCloudEventGroupRoleAssigned = valueEventStreamCloudEventGroupRoleAssigned
+		return nil
+	}
+	valueEventStreamCloudEventGroupRoleDeleted := new(EventStreamCloudEventGroupRoleDeleted)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeleted); err == nil {
+		e.typ = "EventStreamCloudEventGroupRoleDeleted"
+		e.EventStreamCloudEventGroupRoleDeleted = valueEventStreamCloudEventGroupRoleDeleted
+		return nil
+	}
+	valueEventStreamCloudEventGroupUpdated := new(EventStreamCloudEventGroupUpdated)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdated); err == nil {
+		e.typ = "EventStreamCloudEventGroupUpdated"
+		e.EventStreamCloudEventGroupUpdated = valueEventStreamCloudEventGroupUpdated
+		return nil
+	}
+	valueEventStreamCloudEventOrgConnectionAdded := new(EventStreamCloudEventOrgConnectionAdded)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionAdded); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionAdded"
+		e.EventStreamCloudEventOrgConnectionAdded = valueEventStreamCloudEventOrgConnectionAdded
+		return nil
+	}
+	valueEventStreamCloudEventOrgConnectionRemoved := new(EventStreamCloudEventOrgConnectionRemoved)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionRemoved); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionRemoved"
+		e.EventStreamCloudEventOrgConnectionRemoved = valueEventStreamCloudEventOrgConnectionRemoved
+		return nil
+	}
+	valueEventStreamCloudEventOrgConnectionUpdated := new(EventStreamCloudEventOrgConnectionUpdated)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionUpdated); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionUpdated"
+		e.EventStreamCloudEventOrgConnectionUpdated = valueEventStreamCloudEventOrgConnectionUpdated
+		return nil
+	}
+	valueEventStreamCloudEventOrgCreated := new(EventStreamCloudEventOrgCreated)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgCreated); err == nil {
+		e.typ = "EventStreamCloudEventOrgCreated"
+		e.EventStreamCloudEventOrgCreated = valueEventStreamCloudEventOrgCreated
+		return nil
+	}
+	valueEventStreamCloudEventOrgDeleted := new(EventStreamCloudEventOrgDeleted)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgDeleted); err == nil {
+		e.typ = "EventStreamCloudEventOrgDeleted"
+		e.EventStreamCloudEventOrgDeleted = valueEventStreamCloudEventOrgDeleted
+		return nil
+	}
+	valueEventStreamCloudEventOrgGroupRoleAssigned := new(EventStreamCloudEventOrgGroupRoleAssigned)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssigned); err == nil {
+		e.typ = "EventStreamCloudEventOrgGroupRoleAssigned"
+		e.EventStreamCloudEventOrgGroupRoleAssigned = valueEventStreamCloudEventOrgGroupRoleAssigned
+		return nil
+	}
+	valueEventStreamCloudEventOrgGroupRoleDeleted := new(EventStreamCloudEventOrgGroupRoleDeleted)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeleted); err == nil {
+		e.typ = "EventStreamCloudEventOrgGroupRoleDeleted"
+		e.EventStreamCloudEventOrgGroupRoleDeleted = valueEventStreamCloudEventOrgGroupRoleDeleted
+		return nil
+	}
+	valueEventStreamCloudEventOrgMemberAdded := new(EventStreamCloudEventOrgMemberAdded)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgMemberAdded); err == nil {
+		e.typ = "EventStreamCloudEventOrgMemberAdded"
+		e.EventStreamCloudEventOrgMemberAdded = valueEventStreamCloudEventOrgMemberAdded
+		return nil
+	}
+	valueEventStreamCloudEventOrgMemberDeleted := new(EventStreamCloudEventOrgMemberDeleted)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgMemberDeleted); err == nil {
+		e.typ = "EventStreamCloudEventOrgMemberDeleted"
+		e.EventStreamCloudEventOrgMemberDeleted = valueEventStreamCloudEventOrgMemberDeleted
+		return nil
+	}
+	valueEventStreamCloudEventOrgMemberRoleAssigned := new(EventStreamCloudEventOrgMemberRoleAssigned)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgMemberRoleAssigned); err == nil {
+		e.typ = "EventStreamCloudEventOrgMemberRoleAssigned"
+		e.EventStreamCloudEventOrgMemberRoleAssigned = valueEventStreamCloudEventOrgMemberRoleAssigned
+		return nil
+	}
+	valueEventStreamCloudEventOrgMemberRoleDeleted := new(EventStreamCloudEventOrgMemberRoleDeleted)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgMemberRoleDeleted); err == nil {
+		e.typ = "EventStreamCloudEventOrgMemberRoleDeleted"
+		e.EventStreamCloudEventOrgMemberRoleDeleted = valueEventStreamCloudEventOrgMemberRoleDeleted
+		return nil
+	}
+	valueEventStreamCloudEventOrgUpdated := new(EventStreamCloudEventOrgUpdated)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgUpdated); err == nil {
+		e.typ = "EventStreamCloudEventOrgUpdated"
+		e.EventStreamCloudEventOrgUpdated = valueEventStreamCloudEventOrgUpdated
+		return nil
+	}
+	valueEventStreamCloudEventUserCreated := new(EventStreamCloudEventUserCreated)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreated); err == nil {
+		e.typ = "EventStreamCloudEventUserCreated"
+		e.EventStreamCloudEventUserCreated = valueEventStreamCloudEventUserCreated
+		return nil
+	}
+	valueEventStreamCloudEventUserDeleted := new(EventStreamCloudEventUserDeleted)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeleted); err == nil {
+		e.typ = "EventStreamCloudEventUserDeleted"
+		e.EventStreamCloudEventUserDeleted = valueEventStreamCloudEventUserDeleted
+		return nil
+	}
+	valueEventStreamCloudEventUserUpdated := new(EventStreamCloudEventUserUpdated)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdated); err == nil {
+		e.typ = "EventStreamCloudEventUserUpdated"
+		e.EventStreamCloudEventUserUpdated = valueEventStreamCloudEventUserUpdated
+		return nil
+	}
+	valueEventStreamCloudEventErrorMessage := new(EventStreamCloudEventErrorMessage)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventErrorMessage); err == nil {
+		e.typ = "EventStreamCloudEventErrorMessage"
+		e.EventStreamCloudEventErrorMessage = valueEventStreamCloudEventErrorMessage
+		return nil
+	}
+	valueEventStreamCloudEventOffsetOnlyMessage := new(EventStreamCloudEventOffsetOnlyMessage)
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOffsetOnlyMessage); err == nil {
+		e.typ = "EventStreamCloudEventOffsetOnlyMessage"
+		e.EventStreamCloudEventOffsetOnlyMessage = valueEventStreamCloudEventOffsetOnlyMessage
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
 }
 
 func (e EventStreamSubscribeEventsResponseContent) MarshalJSON() ([]byte, error) {
-	if err := e.validate(); err != nil {
-		return nil, err
+	if e.typ == "EventStreamCloudEventConnectionCreated" || e.EventStreamCloudEventConnectionCreated != nil {
+		return json.Marshal(e.EventStreamCloudEventConnectionCreated)
 	}
-	if e.ConnectionCreated != nil {
-		return internal.MarshalJSONWithExtraProperty(e.ConnectionCreated, "type", "connection.created")
+	if e.typ == "EventStreamCloudEventConnectionDeleted" || e.EventStreamCloudEventConnectionDeleted != nil {
+		return json.Marshal(e.EventStreamCloudEventConnectionDeleted)
 	}
-	if e.ConnectionDeleted != nil {
-		return internal.MarshalJSONWithExtraProperty(e.ConnectionDeleted, "type", "connection.deleted")
+	if e.typ == "EventStreamCloudEventConnectionUpdated" || e.EventStreamCloudEventConnectionUpdated != nil {
+		return json.Marshal(e.EventStreamCloudEventConnectionUpdated)
 	}
-	if e.ConnectionUpdated != nil {
-		return internal.MarshalJSONWithExtraProperty(e.ConnectionUpdated, "type", "connection.updated")
+	if e.typ == "EventStreamCloudEventGroupCreated" || e.EventStreamCloudEventGroupCreated != nil {
+		return json.Marshal(e.EventStreamCloudEventGroupCreated)
 	}
-	if e.GroupCreated != nil {
-		return internal.MarshalJSONWithExtraProperty(e.GroupCreated, "type", "group.created")
+	if e.typ == "EventStreamCloudEventGroupDeleted" || e.EventStreamCloudEventGroupDeleted != nil {
+		return json.Marshal(e.EventStreamCloudEventGroupDeleted)
 	}
-	if e.GroupDeleted != nil {
-		return internal.MarshalJSONWithExtraProperty(e.GroupDeleted, "type", "group.deleted")
+	if e.typ == "EventStreamCloudEventGroupMemberAdded" || e.EventStreamCloudEventGroupMemberAdded != nil {
+		return json.Marshal(e.EventStreamCloudEventGroupMemberAdded)
 	}
-	if e.GroupMemberAdded != nil {
-		return internal.MarshalJSONWithExtraProperty(e.GroupMemberAdded, "type", "group.member.added")
+	if e.typ == "EventStreamCloudEventGroupMemberDeleted" || e.EventStreamCloudEventGroupMemberDeleted != nil {
+		return json.Marshal(e.EventStreamCloudEventGroupMemberDeleted)
 	}
-	if e.GroupMemberDeleted != nil {
-		return internal.MarshalJSONWithExtraProperty(e.GroupMemberDeleted, "type", "group.member.deleted")
+	if e.typ == "EventStreamCloudEventGroupRoleAssigned" || e.EventStreamCloudEventGroupRoleAssigned != nil {
+		return json.Marshal(e.EventStreamCloudEventGroupRoleAssigned)
 	}
-	if e.GroupRoleAssigned != nil {
-		return internal.MarshalJSONWithExtraProperty(e.GroupRoleAssigned, "type", "group.role.assigned")
+	if e.typ == "EventStreamCloudEventGroupRoleDeleted" || e.EventStreamCloudEventGroupRoleDeleted != nil {
+		return json.Marshal(e.EventStreamCloudEventGroupRoleDeleted)
 	}
-	if e.GroupRoleDeleted != nil {
-		return internal.MarshalJSONWithExtraProperty(e.GroupRoleDeleted, "type", "group.role.deleted")
+	if e.typ == "EventStreamCloudEventGroupUpdated" || e.EventStreamCloudEventGroupUpdated != nil {
+		return json.Marshal(e.EventStreamCloudEventGroupUpdated)
 	}
-	if e.GroupUpdated != nil {
-		return internal.MarshalJSONWithExtraProperty(e.GroupUpdated, "type", "group.updated")
+	if e.typ == "EventStreamCloudEventOrgConnectionAdded" || e.EventStreamCloudEventOrgConnectionAdded != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionAdded)
 	}
-	if e.OrganizationConnectionAdded != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationConnectionAdded, "type", "organization.connection.added")
+	if e.typ == "EventStreamCloudEventOrgConnectionRemoved" || e.EventStreamCloudEventOrgConnectionRemoved != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionRemoved)
 	}
-	if e.OrganizationConnectionRemoved != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationConnectionRemoved, "type", "organization.connection.removed")
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdated" || e.EventStreamCloudEventOrgConnectionUpdated != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionUpdated)
 	}
-	if e.OrganizationConnectionUpdated != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationConnectionUpdated, "type", "organization.connection.updated")
+	if e.typ == "EventStreamCloudEventOrgCreated" || e.EventStreamCloudEventOrgCreated != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgCreated)
 	}
-	if e.OrganizationCreated != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationCreated, "type", "organization.created")
+	if e.typ == "EventStreamCloudEventOrgDeleted" || e.EventStreamCloudEventOrgDeleted != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgDeleted)
 	}
-	if e.OrganizationDeleted != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationDeleted, "type", "organization.deleted")
+	if e.typ == "EventStreamCloudEventOrgGroupRoleAssigned" || e.EventStreamCloudEventOrgGroupRoleAssigned != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleAssigned)
 	}
-	if e.OrganizationGroupRoleAssigned != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationGroupRoleAssigned, "type", "organization.group.role.assigned")
+	if e.typ == "EventStreamCloudEventOrgGroupRoleDeleted" || e.EventStreamCloudEventOrgGroupRoleDeleted != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgGroupRoleDeleted)
 	}
-	if e.OrganizationGroupRoleDeleted != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationGroupRoleDeleted, "type", "organization.group.role.deleted")
+	if e.typ == "EventStreamCloudEventOrgMemberAdded" || e.EventStreamCloudEventOrgMemberAdded != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgMemberAdded)
 	}
-	if e.OrganizationMemberAdded != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationMemberAdded, "type", "organization.member.added")
+	if e.typ == "EventStreamCloudEventOrgMemberDeleted" || e.EventStreamCloudEventOrgMemberDeleted != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgMemberDeleted)
 	}
-	if e.OrganizationMemberDeleted != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationMemberDeleted, "type", "organization.member.deleted")
+	if e.typ == "EventStreamCloudEventOrgMemberRoleAssigned" || e.EventStreamCloudEventOrgMemberRoleAssigned != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgMemberRoleAssigned)
 	}
-	if e.OrganizationMemberRoleAssigned != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationMemberRoleAssigned, "type", "organization.member.role.assigned")
+	if e.typ == "EventStreamCloudEventOrgMemberRoleDeleted" || e.EventStreamCloudEventOrgMemberRoleDeleted != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgMemberRoleDeleted)
 	}
-	if e.OrganizationMemberRoleDeleted != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationMemberRoleDeleted, "type", "organization.member.role.deleted")
+	if e.typ == "EventStreamCloudEventOrgUpdated" || e.EventStreamCloudEventOrgUpdated != nil {
+		return json.Marshal(e.EventStreamCloudEventOrgUpdated)
 	}
-	if e.OrganizationUpdated != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OrganizationUpdated, "type", "organization.updated")
+	if e.typ == "EventStreamCloudEventUserCreated" || e.EventStreamCloudEventUserCreated != nil {
+		return json.Marshal(e.EventStreamCloudEventUserCreated)
 	}
-	if e.UserCreated != nil {
-		return internal.MarshalJSONWithExtraProperty(e.UserCreated, "type", "user.created")
+	if e.typ == "EventStreamCloudEventUserDeleted" || e.EventStreamCloudEventUserDeleted != nil {
+		return json.Marshal(e.EventStreamCloudEventUserDeleted)
 	}
-	if e.UserDeleted != nil {
-		return internal.MarshalJSONWithExtraProperty(e.UserDeleted, "type", "user.deleted")
+	if e.typ == "EventStreamCloudEventUserUpdated" || e.EventStreamCloudEventUserUpdated != nil {
+		return json.Marshal(e.EventStreamCloudEventUserUpdated)
 	}
-	if e.UserUpdated != nil {
-		return internal.MarshalJSONWithExtraProperty(e.UserUpdated, "type", "user.updated")
+	if e.typ == "EventStreamCloudEventErrorMessage" || e.EventStreamCloudEventErrorMessage != nil {
+		return json.Marshal(e.EventStreamCloudEventErrorMessage)
 	}
-	if e.Error != nil {
-		return internal.MarshalJSONWithExtraProperty(e.Error, "type", "error")
+	if e.typ == "EventStreamCloudEventOffsetOnlyMessage" || e.EventStreamCloudEventOffsetOnlyMessage != nil {
+		return json.Marshal(e.EventStreamCloudEventOffsetOnlyMessage)
 	}
-	if e.OffsetOnly != nil {
-		return internal.MarshalJSONWithExtraProperty(e.OffsetOnly, "type", "offset-only")
-	}
-	if len(e.rawJSON) > 0 {
-		return e.rawJSON, nil
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
 type EventStreamSubscribeEventsResponseContentVisitor interface {
-	VisitConnectionCreated(*EventStreamCloudEventConnectionCreated) error
-	VisitConnectionDeleted(*EventStreamCloudEventConnectionDeleted) error
-	VisitConnectionUpdated(*EventStreamCloudEventConnectionUpdated) error
-	VisitGroupCreated(*EventStreamCloudEventGroupCreated) error
-	VisitGroupDeleted(*EventStreamCloudEventGroupDeleted) error
-	VisitGroupMemberAdded(*EventStreamCloudEventGroupMemberAdded) error
-	VisitGroupMemberDeleted(*EventStreamCloudEventGroupMemberDeleted) error
-	VisitGroupRoleAssigned(*EventStreamCloudEventGroupRoleAssigned) error
-	VisitGroupRoleDeleted(*EventStreamCloudEventGroupRoleDeleted) error
-	VisitGroupUpdated(*EventStreamCloudEventGroupUpdated) error
-	VisitOrganizationConnectionAdded(*EventStreamCloudEventOrgConnectionAdded) error
-	VisitOrganizationConnectionRemoved(*EventStreamCloudEventOrgConnectionRemoved) error
-	VisitOrganizationConnectionUpdated(*EventStreamCloudEventOrgConnectionUpdated) error
-	VisitOrganizationCreated(*EventStreamCloudEventOrgCreated) error
-	VisitOrganizationDeleted(*EventStreamCloudEventOrgDeleted) error
-	VisitOrganizationGroupRoleAssigned(*EventStreamCloudEventOrgGroupRoleAssigned) error
-	VisitOrganizationGroupRoleDeleted(*EventStreamCloudEventOrgGroupRoleDeleted) error
-	VisitOrganizationMemberAdded(*EventStreamCloudEventOrgMemberAdded) error
-	VisitOrganizationMemberDeleted(*EventStreamCloudEventOrgMemberDeleted) error
-	VisitOrganizationMemberRoleAssigned(*EventStreamCloudEventOrgMemberRoleAssigned) error
-	VisitOrganizationMemberRoleDeleted(*EventStreamCloudEventOrgMemberRoleDeleted) error
-	VisitOrganizationUpdated(*EventStreamCloudEventOrgUpdated) error
-	VisitUserCreated(*EventStreamCloudEventUserCreated) error
-	VisitUserDeleted(*EventStreamCloudEventUserDeleted) error
-	VisitUserUpdated(*EventStreamCloudEventUserUpdated) error
-	VisitError(*EventStreamCloudEventErrorMessage) error
-	VisitOffsetOnly(*EventStreamCloudEventOffsetOnlyMessage) error
+	VisitEventStreamCloudEventConnectionCreated(*EventStreamCloudEventConnectionCreated) error
+	VisitEventStreamCloudEventConnectionDeleted(*EventStreamCloudEventConnectionDeleted) error
+	VisitEventStreamCloudEventConnectionUpdated(*EventStreamCloudEventConnectionUpdated) error
+	VisitEventStreamCloudEventGroupCreated(*EventStreamCloudEventGroupCreated) error
+	VisitEventStreamCloudEventGroupDeleted(*EventStreamCloudEventGroupDeleted) error
+	VisitEventStreamCloudEventGroupMemberAdded(*EventStreamCloudEventGroupMemberAdded) error
+	VisitEventStreamCloudEventGroupMemberDeleted(*EventStreamCloudEventGroupMemberDeleted) error
+	VisitEventStreamCloudEventGroupRoleAssigned(*EventStreamCloudEventGroupRoleAssigned) error
+	VisitEventStreamCloudEventGroupRoleDeleted(*EventStreamCloudEventGroupRoleDeleted) error
+	VisitEventStreamCloudEventGroupUpdated(*EventStreamCloudEventGroupUpdated) error
+	VisitEventStreamCloudEventOrgConnectionAdded(*EventStreamCloudEventOrgConnectionAdded) error
+	VisitEventStreamCloudEventOrgConnectionRemoved(*EventStreamCloudEventOrgConnectionRemoved) error
+	VisitEventStreamCloudEventOrgConnectionUpdated(*EventStreamCloudEventOrgConnectionUpdated) error
+	VisitEventStreamCloudEventOrgCreated(*EventStreamCloudEventOrgCreated) error
+	VisitEventStreamCloudEventOrgDeleted(*EventStreamCloudEventOrgDeleted) error
+	VisitEventStreamCloudEventOrgGroupRoleAssigned(*EventStreamCloudEventOrgGroupRoleAssigned) error
+	VisitEventStreamCloudEventOrgGroupRoleDeleted(*EventStreamCloudEventOrgGroupRoleDeleted) error
+	VisitEventStreamCloudEventOrgMemberAdded(*EventStreamCloudEventOrgMemberAdded) error
+	VisitEventStreamCloudEventOrgMemberDeleted(*EventStreamCloudEventOrgMemberDeleted) error
+	VisitEventStreamCloudEventOrgMemberRoleAssigned(*EventStreamCloudEventOrgMemberRoleAssigned) error
+	VisitEventStreamCloudEventOrgMemberRoleDeleted(*EventStreamCloudEventOrgMemberRoleDeleted) error
+	VisitEventStreamCloudEventOrgUpdated(*EventStreamCloudEventOrgUpdated) error
+	VisitEventStreamCloudEventUserCreated(*EventStreamCloudEventUserCreated) error
+	VisitEventStreamCloudEventUserDeleted(*EventStreamCloudEventUserDeleted) error
+	VisitEventStreamCloudEventUserUpdated(*EventStreamCloudEventUserUpdated) error
+	VisitEventStreamCloudEventErrorMessage(*EventStreamCloudEventErrorMessage) error
+	VisitEventStreamCloudEventOffsetOnlyMessage(*EventStreamCloudEventOffsetOnlyMessage) error
 }
 
 func (e *EventStreamSubscribeEventsResponseContent) Accept(visitor EventStreamSubscribeEventsResponseContentVisitor) error {
-	if e.ConnectionCreated != nil {
-		return visitor.VisitConnectionCreated(e.ConnectionCreated)
+	if e.typ == "EventStreamCloudEventConnectionCreated" || e.EventStreamCloudEventConnectionCreated != nil {
+		return visitor.VisitEventStreamCloudEventConnectionCreated(e.EventStreamCloudEventConnectionCreated)
 	}
-	if e.ConnectionDeleted != nil {
-		return visitor.VisitConnectionDeleted(e.ConnectionDeleted)
+	if e.typ == "EventStreamCloudEventConnectionDeleted" || e.EventStreamCloudEventConnectionDeleted != nil {
+		return visitor.VisitEventStreamCloudEventConnectionDeleted(e.EventStreamCloudEventConnectionDeleted)
 	}
-	if e.ConnectionUpdated != nil {
-		return visitor.VisitConnectionUpdated(e.ConnectionUpdated)
+	if e.typ == "EventStreamCloudEventConnectionUpdated" || e.EventStreamCloudEventConnectionUpdated != nil {
+		return visitor.VisitEventStreamCloudEventConnectionUpdated(e.EventStreamCloudEventConnectionUpdated)
 	}
-	if e.GroupCreated != nil {
-		return visitor.VisitGroupCreated(e.GroupCreated)
+	if e.typ == "EventStreamCloudEventGroupCreated" || e.EventStreamCloudEventGroupCreated != nil {
+		return visitor.VisitEventStreamCloudEventGroupCreated(e.EventStreamCloudEventGroupCreated)
 	}
-	if e.GroupDeleted != nil {
-		return visitor.VisitGroupDeleted(e.GroupDeleted)
+	if e.typ == "EventStreamCloudEventGroupDeleted" || e.EventStreamCloudEventGroupDeleted != nil {
+		return visitor.VisitEventStreamCloudEventGroupDeleted(e.EventStreamCloudEventGroupDeleted)
 	}
-	if e.GroupMemberAdded != nil {
-		return visitor.VisitGroupMemberAdded(e.GroupMemberAdded)
+	if e.typ == "EventStreamCloudEventGroupMemberAdded" || e.EventStreamCloudEventGroupMemberAdded != nil {
+		return visitor.VisitEventStreamCloudEventGroupMemberAdded(e.EventStreamCloudEventGroupMemberAdded)
 	}
-	if e.GroupMemberDeleted != nil {
-		return visitor.VisitGroupMemberDeleted(e.GroupMemberDeleted)
+	if e.typ == "EventStreamCloudEventGroupMemberDeleted" || e.EventStreamCloudEventGroupMemberDeleted != nil {
+		return visitor.VisitEventStreamCloudEventGroupMemberDeleted(e.EventStreamCloudEventGroupMemberDeleted)
 	}
-	if e.GroupRoleAssigned != nil {
-		return visitor.VisitGroupRoleAssigned(e.GroupRoleAssigned)
+	if e.typ == "EventStreamCloudEventGroupRoleAssigned" || e.EventStreamCloudEventGroupRoleAssigned != nil {
+		return visitor.VisitEventStreamCloudEventGroupRoleAssigned(e.EventStreamCloudEventGroupRoleAssigned)
 	}
-	if e.GroupRoleDeleted != nil {
-		return visitor.VisitGroupRoleDeleted(e.GroupRoleDeleted)
+	if e.typ == "EventStreamCloudEventGroupRoleDeleted" || e.EventStreamCloudEventGroupRoleDeleted != nil {
+		return visitor.VisitEventStreamCloudEventGroupRoleDeleted(e.EventStreamCloudEventGroupRoleDeleted)
 	}
-	if e.GroupUpdated != nil {
-		return visitor.VisitGroupUpdated(e.GroupUpdated)
+	if e.typ == "EventStreamCloudEventGroupUpdated" || e.EventStreamCloudEventGroupUpdated != nil {
+		return visitor.VisitEventStreamCloudEventGroupUpdated(e.EventStreamCloudEventGroupUpdated)
 	}
-	if e.OrganizationConnectionAdded != nil {
-		return visitor.VisitOrganizationConnectionAdded(e.OrganizationConnectionAdded)
+	if e.typ == "EventStreamCloudEventOrgConnectionAdded" || e.EventStreamCloudEventOrgConnectionAdded != nil {
+		return visitor.VisitEventStreamCloudEventOrgConnectionAdded(e.EventStreamCloudEventOrgConnectionAdded)
 	}
-	if e.OrganizationConnectionRemoved != nil {
-		return visitor.VisitOrganizationConnectionRemoved(e.OrganizationConnectionRemoved)
+	if e.typ == "EventStreamCloudEventOrgConnectionRemoved" || e.EventStreamCloudEventOrgConnectionRemoved != nil {
+		return visitor.VisitEventStreamCloudEventOrgConnectionRemoved(e.EventStreamCloudEventOrgConnectionRemoved)
 	}
-	if e.OrganizationConnectionUpdated != nil {
-		return visitor.VisitOrganizationConnectionUpdated(e.OrganizationConnectionUpdated)
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdated" || e.EventStreamCloudEventOrgConnectionUpdated != nil {
+		return visitor.VisitEventStreamCloudEventOrgConnectionUpdated(e.EventStreamCloudEventOrgConnectionUpdated)
 	}
-	if e.OrganizationCreated != nil {
-		return visitor.VisitOrganizationCreated(e.OrganizationCreated)
+	if e.typ == "EventStreamCloudEventOrgCreated" || e.EventStreamCloudEventOrgCreated != nil {
+		return visitor.VisitEventStreamCloudEventOrgCreated(e.EventStreamCloudEventOrgCreated)
 	}
-	if e.OrganizationDeleted != nil {
-		return visitor.VisitOrganizationDeleted(e.OrganizationDeleted)
+	if e.typ == "EventStreamCloudEventOrgDeleted" || e.EventStreamCloudEventOrgDeleted != nil {
+		return visitor.VisitEventStreamCloudEventOrgDeleted(e.EventStreamCloudEventOrgDeleted)
 	}
-	if e.OrganizationGroupRoleAssigned != nil {
-		return visitor.VisitOrganizationGroupRoleAssigned(e.OrganizationGroupRoleAssigned)
+	if e.typ == "EventStreamCloudEventOrgGroupRoleAssigned" || e.EventStreamCloudEventOrgGroupRoleAssigned != nil {
+		return visitor.VisitEventStreamCloudEventOrgGroupRoleAssigned(e.EventStreamCloudEventOrgGroupRoleAssigned)
 	}
-	if e.OrganizationGroupRoleDeleted != nil {
-		return visitor.VisitOrganizationGroupRoleDeleted(e.OrganizationGroupRoleDeleted)
+	if e.typ == "EventStreamCloudEventOrgGroupRoleDeleted" || e.EventStreamCloudEventOrgGroupRoleDeleted != nil {
+		return visitor.VisitEventStreamCloudEventOrgGroupRoleDeleted(e.EventStreamCloudEventOrgGroupRoleDeleted)
 	}
-	if e.OrganizationMemberAdded != nil {
-		return visitor.VisitOrganizationMemberAdded(e.OrganizationMemberAdded)
+	if e.typ == "EventStreamCloudEventOrgMemberAdded" || e.EventStreamCloudEventOrgMemberAdded != nil {
+		return visitor.VisitEventStreamCloudEventOrgMemberAdded(e.EventStreamCloudEventOrgMemberAdded)
 	}
-	if e.OrganizationMemberDeleted != nil {
-		return visitor.VisitOrganizationMemberDeleted(e.OrganizationMemberDeleted)
+	if e.typ == "EventStreamCloudEventOrgMemberDeleted" || e.EventStreamCloudEventOrgMemberDeleted != nil {
+		return visitor.VisitEventStreamCloudEventOrgMemberDeleted(e.EventStreamCloudEventOrgMemberDeleted)
 	}
-	if e.OrganizationMemberRoleAssigned != nil {
-		return visitor.VisitOrganizationMemberRoleAssigned(e.OrganizationMemberRoleAssigned)
+	if e.typ == "EventStreamCloudEventOrgMemberRoleAssigned" || e.EventStreamCloudEventOrgMemberRoleAssigned != nil {
+		return visitor.VisitEventStreamCloudEventOrgMemberRoleAssigned(e.EventStreamCloudEventOrgMemberRoleAssigned)
 	}
-	if e.OrganizationMemberRoleDeleted != nil {
-		return visitor.VisitOrganizationMemberRoleDeleted(e.OrganizationMemberRoleDeleted)
+	if e.typ == "EventStreamCloudEventOrgMemberRoleDeleted" || e.EventStreamCloudEventOrgMemberRoleDeleted != nil {
+		return visitor.VisitEventStreamCloudEventOrgMemberRoleDeleted(e.EventStreamCloudEventOrgMemberRoleDeleted)
 	}
-	if e.OrganizationUpdated != nil {
-		return visitor.VisitOrganizationUpdated(e.OrganizationUpdated)
+	if e.typ == "EventStreamCloudEventOrgUpdated" || e.EventStreamCloudEventOrgUpdated != nil {
+		return visitor.VisitEventStreamCloudEventOrgUpdated(e.EventStreamCloudEventOrgUpdated)
 	}
-	if e.UserCreated != nil {
-		return visitor.VisitUserCreated(e.UserCreated)
+	if e.typ == "EventStreamCloudEventUserCreated" || e.EventStreamCloudEventUserCreated != nil {
+		return visitor.VisitEventStreamCloudEventUserCreated(e.EventStreamCloudEventUserCreated)
 	}
-	if e.UserDeleted != nil {
-		return visitor.VisitUserDeleted(e.UserDeleted)
+	if e.typ == "EventStreamCloudEventUserDeleted" || e.EventStreamCloudEventUserDeleted != nil {
+		return visitor.VisitEventStreamCloudEventUserDeleted(e.EventStreamCloudEventUserDeleted)
 	}
-	if e.UserUpdated != nil {
-		return visitor.VisitUserUpdated(e.UserUpdated)
+	if e.typ == "EventStreamCloudEventUserUpdated" || e.EventStreamCloudEventUserUpdated != nil {
+		return visitor.VisitEventStreamCloudEventUserUpdated(e.EventStreamCloudEventUserUpdated)
 	}
-	if e.Error != nil {
-		return visitor.VisitError(e.Error)
+	if e.typ == "EventStreamCloudEventErrorMessage" || e.EventStreamCloudEventErrorMessage != nil {
+		return visitor.VisitEventStreamCloudEventErrorMessage(e.EventStreamCloudEventErrorMessage)
 	}
-	if e.OffsetOnly != nil {
-		return visitor.VisitOffsetOnly(e.OffsetOnly)
+	if e.typ == "EventStreamCloudEventOffsetOnlyMessage" || e.EventStreamCloudEventOffsetOnlyMessage != nil {
+		return visitor.VisitEventStreamCloudEventOffsetOnlyMessage(e.EventStreamCloudEventOffsetOnlyMessage)
 	}
-	return fmt.Errorf("type %T does not define a non-empty union type", e)
-}
-
-func (e *EventStreamSubscribeEventsResponseContent) validate() error {
-	if e == nil {
-		return fmt.Errorf("type %T is nil", e)
-	}
-	var fields []string
-	if e.ConnectionCreated != nil {
-		fields = append(fields, "connection.created")
-	}
-	if e.ConnectionDeleted != nil {
-		fields = append(fields, "connection.deleted")
-	}
-	if e.ConnectionUpdated != nil {
-		fields = append(fields, "connection.updated")
-	}
-	if e.GroupCreated != nil {
-		fields = append(fields, "group.created")
-	}
-	if e.GroupDeleted != nil {
-		fields = append(fields, "group.deleted")
-	}
-	if e.GroupMemberAdded != nil {
-		fields = append(fields, "group.member.added")
-	}
-	if e.GroupMemberDeleted != nil {
-		fields = append(fields, "group.member.deleted")
-	}
-	if e.GroupRoleAssigned != nil {
-		fields = append(fields, "group.role.assigned")
-	}
-	if e.GroupRoleDeleted != nil {
-		fields = append(fields, "group.role.deleted")
-	}
-	if e.GroupUpdated != nil {
-		fields = append(fields, "group.updated")
-	}
-	if e.OrganizationConnectionAdded != nil {
-		fields = append(fields, "organization.connection.added")
-	}
-	if e.OrganizationConnectionRemoved != nil {
-		fields = append(fields, "organization.connection.removed")
-	}
-	if e.OrganizationConnectionUpdated != nil {
-		fields = append(fields, "organization.connection.updated")
-	}
-	if e.OrganizationCreated != nil {
-		fields = append(fields, "organization.created")
-	}
-	if e.OrganizationDeleted != nil {
-		fields = append(fields, "organization.deleted")
-	}
-	if e.OrganizationGroupRoleAssigned != nil {
-		fields = append(fields, "organization.group.role.assigned")
-	}
-	if e.OrganizationGroupRoleDeleted != nil {
-		fields = append(fields, "organization.group.role.deleted")
-	}
-	if e.OrganizationMemberAdded != nil {
-		fields = append(fields, "organization.member.added")
-	}
-	if e.OrganizationMemberDeleted != nil {
-		fields = append(fields, "organization.member.deleted")
-	}
-	if e.OrganizationMemberRoleAssigned != nil {
-		fields = append(fields, "organization.member.role.assigned")
-	}
-	if e.OrganizationMemberRoleDeleted != nil {
-		fields = append(fields, "organization.member.role.deleted")
-	}
-	if e.OrganizationUpdated != nil {
-		fields = append(fields, "organization.updated")
-	}
-	if e.UserCreated != nil {
-		fields = append(fields, "user.created")
-	}
-	if e.UserDeleted != nil {
-		fields = append(fields, "user.deleted")
-	}
-	if e.UserUpdated != nil {
-		fields = append(fields, "user.updated")
-	}
-	if e.Error != nil {
-		fields = append(fields, "error")
-	}
-	if e.OffsetOnly != nil {
-		fields = append(fields, "offset-only")
-	}
-	if len(fields) == 0 {
-		if e.Type != "" {
-			if len(e.rawJSON) > 0 {
-				return nil
-			}
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
-		}
-		return fmt.Errorf("type %T is empty", e)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
-	}
-	if e.Type != "" {
-		field := fields[0]
-		if e.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				e,
-				e.Type,
-				e,
-			)
-		}
-	}
-	return nil
+	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }

@@ -10,6 +10,749 @@ import (
 	time "time"
 )
 
+// Assessors to clear.
+type AssessorsTypeEnum string
+
+const (
+	AssessorsTypeEnumNewDevice AssessorsTypeEnum = "new-device"
+)
+
+func NewAssessorsTypeEnumFromString(s string) (AssessorsTypeEnum, error) {
+	switch s {
+	case "new-device":
+		return AssessorsTypeEnumNewDevice, nil
+	}
+	var t AssessorsTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AssessorsTypeEnum) Ptr() *AssessorsTypeEnum {
+	return &a
+}
+
+type AuthenticationMethodTypeEnum string
+
+const (
+	AuthenticationMethodTypeEnumRecoveryCode      AuthenticationMethodTypeEnum = "recovery-code"
+	AuthenticationMethodTypeEnumTotp              AuthenticationMethodTypeEnum = "totp"
+	AuthenticationMethodTypeEnumPush              AuthenticationMethodTypeEnum = "push"
+	AuthenticationMethodTypeEnumPhone             AuthenticationMethodTypeEnum = "phone"
+	AuthenticationMethodTypeEnumEmail             AuthenticationMethodTypeEnum = "email"
+	AuthenticationMethodTypeEnumEmailVerification AuthenticationMethodTypeEnum = "email-verification"
+	AuthenticationMethodTypeEnumWebauthnRoaming   AuthenticationMethodTypeEnum = "webauthn-roaming"
+	AuthenticationMethodTypeEnumWebauthnPlatform  AuthenticationMethodTypeEnum = "webauthn-platform"
+	AuthenticationMethodTypeEnumGuardian          AuthenticationMethodTypeEnum = "guardian"
+	AuthenticationMethodTypeEnumPasskey           AuthenticationMethodTypeEnum = "passkey"
+	AuthenticationMethodTypeEnumPassword          AuthenticationMethodTypeEnum = "password"
+)
+
+func NewAuthenticationMethodTypeEnumFromString(s string) (AuthenticationMethodTypeEnum, error) {
+	switch s {
+	case "recovery-code":
+		return AuthenticationMethodTypeEnumRecoveryCode, nil
+	case "totp":
+		return AuthenticationMethodTypeEnumTotp, nil
+	case "push":
+		return AuthenticationMethodTypeEnumPush, nil
+	case "phone":
+		return AuthenticationMethodTypeEnumPhone, nil
+	case "email":
+		return AuthenticationMethodTypeEnumEmail, nil
+	case "email-verification":
+		return AuthenticationMethodTypeEnumEmailVerification, nil
+	case "webauthn-roaming":
+		return AuthenticationMethodTypeEnumWebauthnRoaming, nil
+	case "webauthn-platform":
+		return AuthenticationMethodTypeEnumWebauthnPlatform, nil
+	case "guardian":
+		return AuthenticationMethodTypeEnumGuardian, nil
+	case "passkey":
+		return AuthenticationMethodTypeEnumPasskey, nil
+	case "password":
+		return AuthenticationMethodTypeEnumPassword, nil
+	}
+	var t AuthenticationMethodTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AuthenticationMethodTypeEnum) Ptr() *AuthenticationMethodTypeEnum {
+	return &a
+}
+
+type AuthenticationTypeEnum string
+
+const (
+	AuthenticationTypeEnumPhone AuthenticationTypeEnum = "phone"
+	AuthenticationTypeEnumEmail AuthenticationTypeEnum = "email"
+	AuthenticationTypeEnumTotp  AuthenticationTypeEnum = "totp"
+)
+
+func NewAuthenticationTypeEnumFromString(s string) (AuthenticationTypeEnum, error) {
+	switch s {
+	case "phone":
+		return AuthenticationTypeEnumPhone, nil
+	case "email":
+		return AuthenticationTypeEnumEmail, nil
+	case "totp":
+		return AuthenticationTypeEnumTotp, nil
+	}
+	var t AuthenticationTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AuthenticationTypeEnum) Ptr() *AuthenticationTypeEnum {
+	return &a
+}
+
+var (
+	connectedAccountFieldID             = big.NewInt(1 << 0)
+	connectedAccountFieldConnection     = big.NewInt(1 << 1)
+	connectedAccountFieldConnectionID   = big.NewInt(1 << 2)
+	connectedAccountFieldStrategy       = big.NewInt(1 << 3)
+	connectedAccountFieldAccessType     = big.NewInt(1 << 4)
+	connectedAccountFieldScopes         = big.NewInt(1 << 5)
+	connectedAccountFieldCreatedAt      = big.NewInt(1 << 6)
+	connectedAccountFieldExpiresAt      = big.NewInt(1 << 7)
+	connectedAccountFieldOrganizationID = big.NewInt(1 << 8)
+)
+
+type ConnectedAccount struct {
+	// The unique identifier for the connected account.
+	ID string `json:"id" url:"id"`
+	// The name of the connection associated with the account.
+	Connection string `json:"connection" url:"connection"`
+	// The unique identifier of the connection associated with the account.
+	ConnectionID string `json:"connection_id" url:"connection_id"`
+	// The authentication strategy used by the connection.
+	Strategy   string                         `json:"strategy" url:"strategy"`
+	AccessType ConnectedAccountAccessTypeEnum `json:"access_type" url:"access_type"`
+	// The scopes granted for this connected account.
+	Scopes []string `json:"scopes,omitempty" url:"scopes,omitempty"`
+	// ISO 8601 timestamp when the connected account was created.
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// ISO 8601 timestamp when the connected account expires.
+	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+	// The identifier of the organization associated with the connected account.
+	OrganizationID *string `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectedAccount) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *ConnectedAccount) GetConnection() string {
+	if c == nil {
+		return ""
+	}
+	return c.Connection
+}
+
+func (c *ConnectedAccount) GetConnectionID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionID
+}
+
+func (c *ConnectedAccount) GetStrategy() string {
+	if c == nil {
+		return ""
+	}
+	return c.Strategy
+}
+
+func (c *ConnectedAccount) GetAccessType() ConnectedAccountAccessTypeEnum {
+	if c == nil {
+		return ""
+	}
+	return c.AccessType
+}
+
+func (c *ConnectedAccount) GetScopes() []string {
+	if c == nil || c.Scopes == nil {
+		return nil
+	}
+	return c.Scopes
+}
+
+func (c *ConnectedAccount) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *ConnectedAccount) GetExpiresAt() time.Time {
+	if c == nil || c.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *c.ExpiresAt
+}
+
+func (c *ConnectedAccount) GetOrganizationID() string {
+	if c == nil || c.OrganizationID == nil {
+		return ""
+	}
+	return *c.OrganizationID
+}
+
+func (c *ConnectedAccount) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectedAccount) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectedAccount) SetID(id string) {
+	c.ID = id
+	c.require(connectedAccountFieldID)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectedAccount) SetConnection(connection string) {
+	c.Connection = connection
+	c.require(connectedAccountFieldConnection)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectedAccount) SetConnectionID(connectionID string) {
+	c.ConnectionID = connectionID
+	c.require(connectedAccountFieldConnectionID)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectedAccount) SetStrategy(strategy string) {
+	c.Strategy = strategy
+	c.require(connectedAccountFieldStrategy)
+}
+
+// SetAccessType sets the AccessType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectedAccount) SetAccessType(accessType ConnectedAccountAccessTypeEnum) {
+	c.AccessType = accessType
+	c.require(connectedAccountFieldAccessType)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectedAccount) SetScopes(scopes []string) {
+	c.Scopes = scopes
+	c.require(connectedAccountFieldScopes)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectedAccount) SetCreatedAt(createdAt time.Time) {
+	c.CreatedAt = createdAt
+	c.require(connectedAccountFieldCreatedAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectedAccount) SetExpiresAt(expiresAt *time.Time) {
+	c.ExpiresAt = expiresAt
+	c.require(connectedAccountFieldExpiresAt)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectedAccount) SetOrganizationID(organizationID *string) {
+	c.OrganizationID = organizationID
+	c.require(connectedAccountFieldOrganizationID)
+}
+
+func (c *ConnectedAccount) UnmarshalJSON(data []byte) error {
+	type embed ConnectedAccount
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ConnectedAccount(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.Time()
+	c.ExpiresAt = unmarshaler.ExpiresAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectedAccount) MarshalJSON() ([]byte, error) {
+	type embed ConnectedAccount
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewDateTime(c.CreatedAt),
+		ExpiresAt: internal.NewOptionalDateTime(c.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectedAccount) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// The access type for the connected account.
+type ConnectedAccountAccessTypeEnum string
+
+const (
+	ConnectedAccountAccessTypeEnumOffline ConnectedAccountAccessTypeEnum = "offline"
+)
+
+func NewConnectedAccountAccessTypeEnumFromString(s string) (ConnectedAccountAccessTypeEnum, error) {
+	switch s {
+	case "offline":
+		return ConnectedAccountAccessTypeEnumOffline, nil
+	}
+	var t ConnectedAccountAccessTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectedAccountAccessTypeEnum) Ptr() *ConnectedAccountAccessTypeEnum {
+	return &c
+}
+
+// The successfully created authentication method.
+var (
+	createUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
+	createUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
+	createUserAuthenticationMethodResponseContentFieldName                          = big.NewInt(1 << 2)
+	createUserAuthenticationMethodResponseContentFieldTotpSecret                    = big.NewInt(1 << 3)
+	createUserAuthenticationMethodResponseContentFieldPhoneNumber                   = big.NewInt(1 << 4)
+	createUserAuthenticationMethodResponseContentFieldEmail                         = big.NewInt(1 << 5)
+	createUserAuthenticationMethodResponseContentFieldAuthenticationMethods         = big.NewInt(1 << 6)
+	createUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 7)
+	createUserAuthenticationMethodResponseContentFieldKeyID                         = big.NewInt(1 << 8)
+	createUserAuthenticationMethodResponseContentFieldPublicKey                     = big.NewInt(1 << 9)
+	createUserAuthenticationMethodResponseContentFieldAaguid                        = big.NewInt(1 << 10)
+	createUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 11)
+	createUserAuthenticationMethodResponseContentFieldCredentialDeviceType          = big.NewInt(1 << 12)
+	createUserAuthenticationMethodResponseContentFieldCredentialBackedUp            = big.NewInt(1 << 13)
+	createUserAuthenticationMethodResponseContentFieldIdentityUserID                = big.NewInt(1 << 14)
+	createUserAuthenticationMethodResponseContentFieldUserAgent                     = big.NewInt(1 << 15)
+	createUserAuthenticationMethodResponseContentFieldUserHandle                    = big.NewInt(1 << 16)
+	createUserAuthenticationMethodResponseContentFieldTransports                    = big.NewInt(1 << 17)
+	createUserAuthenticationMethodResponseContentFieldCreatedAt                     = big.NewInt(1 << 18)
+)
+
+type CreateUserAuthenticationMethodResponseContent struct {
+	// The ID of the newly created authentication method (automatically generated by the application)
+	ID   *string                                 `json:"id,omitempty" url:"id,omitempty"`
+	Type CreatedUserAuthenticationMethodTypeEnum `json:"type" url:"type"`
+	// A human-readable label to identify the authentication method.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Base32 encoded secret for TOTP generation
+	TotpSecret *string `json:"totp_secret,omitempty" url:"totp_secret,omitempty"`
+	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
+	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	// Applies to email authentication methods only. The email address used to send verification messages.
+	Email                 *string                               `json:"email,omitempty" url:"email,omitempty"`
+	AuthenticationMethods []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	// Preferred phone authentication method
+	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
+	// Applies to webauthn authenticators only. The id of the credential.
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	// Applies to webauthn authenticators only. The public key.
+	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
+	// Applies to passkeys only. Authenticator Attestation Globally Unique Identifier.
+	Aaguid *string `json:"aaguid,omitempty" url:"aaguid,omitempty"`
+	// Applies to webauthn authenticators only. The relying party identifier.
+	RelyingPartyIdentifier *string                   `json:"relying_party_identifier,omitempty" url:"relying_party_identifier,omitempty"`
+	CredentialDeviceType   *CredentialDeviceTypeEnum `json:"credential_device_type,omitempty" url:"credential_device_type,omitempty"`
+	// Applies to passkeys only. Whether the credential was backed up.
+	CredentialBackedUp *bool `json:"credential_backed_up,omitempty" url:"credential_backed_up,omitempty"`
+	// Applies to passkeys only. The ID of the user identity linked with the authentication method.
+	IdentityUserID *string `json:"identity_user_id,omitempty" url:"identity_user_id,omitempty"`
+	// Applies to passkeys only. The user-agent of the browser used to create the passkey.
+	UserAgent *string `json:"user_agent,omitempty" url:"user_agent,omitempty"`
+	// Applies to passkeys only. The user handle of the user identity.
+	UserHandle *string `json:"user_handle,omitempty" url:"user_handle,omitempty"`
+	// Applies to passkeys only. The transports used by clients to communicate with the authenticator.
+	Transports []string `json:"transports,omitempty" url:"transports,omitempty"`
+	// Authentication method creation date
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetID() string {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetType() CreatedUserAuthenticationMethodTypeEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetTotpSecret() string {
+	if c == nil || c.TotpSecret == nil {
+		return ""
+	}
+	return *c.TotpSecret
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetPhoneNumber() string {
+	if c == nil || c.PhoneNumber == nil {
+		return ""
+	}
+	return *c.PhoneNumber
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetEmail() string {
+	if c == nil || c.Email == nil {
+		return ""
+	}
+	return *c.Email
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetAuthenticationMethods() []*UserAuthenticationMethodProperties {
+	if c == nil || c.AuthenticationMethods == nil {
+		return nil
+	}
+	return c.AuthenticationMethods
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetPreferredAuthenticationMethod() PreferredAuthenticationMethodEnum {
+	if c == nil || c.PreferredAuthenticationMethod == nil {
+		return ""
+	}
+	return *c.PreferredAuthenticationMethod
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetKeyID() string {
+	if c == nil || c.KeyID == nil {
+		return ""
+	}
+	return *c.KeyID
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetPublicKey() string {
+	if c == nil || c.PublicKey == nil {
+		return ""
+	}
+	return *c.PublicKey
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetAaguid() string {
+	if c == nil || c.Aaguid == nil {
+		return ""
+	}
+	return *c.Aaguid
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetRelyingPartyIdentifier() string {
+	if c == nil || c.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *c.RelyingPartyIdentifier
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetCredentialDeviceType() CredentialDeviceTypeEnum {
+	if c == nil || c.CredentialDeviceType == nil {
+		return ""
+	}
+	return *c.CredentialDeviceType
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetCredentialBackedUp() bool {
+	if c == nil || c.CredentialBackedUp == nil {
+		return false
+	}
+	return *c.CredentialBackedUp
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetIdentityUserID() string {
+	if c == nil || c.IdentityUserID == nil {
+		return ""
+	}
+	return *c.IdentityUserID
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetUserAgent() string {
+	if c == nil || c.UserAgent == nil {
+		return ""
+	}
+	return *c.UserAgent
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetUserHandle() string {
+	if c == nil || c.UserHandle == nil {
+		return ""
+	}
+	return *c.UserHandle
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetTransports() []string {
+	if c == nil || c.Transports == nil {
+		return nil
+	}
+	return c.Transports
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetID(id *string) {
+	c.ID = id
+	c.require(createUserAuthenticationMethodResponseContentFieldID)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetType(type_ CreatedUserAuthenticationMethodTypeEnum) {
+	c.Type = type_
+	c.require(createUserAuthenticationMethodResponseContentFieldType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetName(name *string) {
+	c.Name = name
+	c.require(createUserAuthenticationMethodResponseContentFieldName)
+}
+
+// SetTotpSecret sets the TotpSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetTotpSecret(totpSecret *string) {
+	c.TotpSecret = totpSecret
+	c.require(createUserAuthenticationMethodResponseContentFieldTotpSecret)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetPhoneNumber(phoneNumber *string) {
+	c.PhoneNumber = phoneNumber
+	c.require(createUserAuthenticationMethodResponseContentFieldPhoneNumber)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetEmail(email *string) {
+	c.Email = email
+	c.require(createUserAuthenticationMethodResponseContentFieldEmail)
+}
+
+// SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetAuthenticationMethods(authenticationMethods []*UserAuthenticationMethodProperties) {
+	c.AuthenticationMethods = authenticationMethods
+	c.require(createUserAuthenticationMethodResponseContentFieldAuthenticationMethods)
+}
+
+// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
+	c.PreferredAuthenticationMethod = preferredAuthenticationMethod
+	c.require(createUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod)
+}
+
+// SetKeyID sets the KeyID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetKeyID(keyID *string) {
+	c.KeyID = keyID
+	c.require(createUserAuthenticationMethodResponseContentFieldKeyID)
+}
+
+// SetPublicKey sets the PublicKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetPublicKey(publicKey *string) {
+	c.PublicKey = publicKey
+	c.require(createUserAuthenticationMethodResponseContentFieldPublicKey)
+}
+
+// SetAaguid sets the Aaguid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetAaguid(aaguid *string) {
+	c.Aaguid = aaguid
+	c.require(createUserAuthenticationMethodResponseContentFieldAaguid)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	c.RelyingPartyIdentifier = relyingPartyIdentifier
+	c.require(createUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier)
+}
+
+// SetCredentialDeviceType sets the CredentialDeviceType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetCredentialDeviceType(credentialDeviceType *CredentialDeviceTypeEnum) {
+	c.CredentialDeviceType = credentialDeviceType
+	c.require(createUserAuthenticationMethodResponseContentFieldCredentialDeviceType)
+}
+
+// SetCredentialBackedUp sets the CredentialBackedUp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetCredentialBackedUp(credentialBackedUp *bool) {
+	c.CredentialBackedUp = credentialBackedUp
+	c.require(createUserAuthenticationMethodResponseContentFieldCredentialBackedUp)
+}
+
+// SetIdentityUserID sets the IdentityUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetIdentityUserID(identityUserID *string) {
+	c.IdentityUserID = identityUserID
+	c.require(createUserAuthenticationMethodResponseContentFieldIdentityUserID)
+}
+
+// SetUserAgent sets the UserAgent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetUserAgent(userAgent *string) {
+	c.UserAgent = userAgent
+	c.require(createUserAuthenticationMethodResponseContentFieldUserAgent)
+}
+
+// SetUserHandle sets the UserHandle field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetUserHandle(userHandle *string) {
+	c.UserHandle = userHandle
+	c.require(createUserAuthenticationMethodResponseContentFieldUserHandle)
+}
+
+// SetTransports sets the Transports field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetTransports(transports []string) {
+	c.Transports = transports
+	c.require(createUserAuthenticationMethodResponseContentFieldTransports)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodResponseContent) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createUserAuthenticationMethodResponseContentFieldCreatedAt)
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateUserAuthenticationMethodResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateUserAuthenticationMethodResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateUserAuthenticationMethodResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateUserAuthenticationMethodResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	createUserResponseContentFieldUserID                  = big.NewInt(1 << 0)
 	createUserResponseContentFieldEmail                   = big.NewInt(1 << 1)
@@ -490,6 +1233,960 @@ func (c *CreateUserResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
+}
+
+type CreatedAuthenticationMethodTypeEnum string
+
+const (
+	CreatedAuthenticationMethodTypeEnumPhone           CreatedAuthenticationMethodTypeEnum = "phone"
+	CreatedAuthenticationMethodTypeEnumEmail           CreatedAuthenticationMethodTypeEnum = "email"
+	CreatedAuthenticationMethodTypeEnumTotp            CreatedAuthenticationMethodTypeEnum = "totp"
+	CreatedAuthenticationMethodTypeEnumWebauthnRoaming CreatedAuthenticationMethodTypeEnum = "webauthn-roaming"
+)
+
+func NewCreatedAuthenticationMethodTypeEnumFromString(s string) (CreatedAuthenticationMethodTypeEnum, error) {
+	switch s {
+	case "phone":
+		return CreatedAuthenticationMethodTypeEnumPhone, nil
+	case "email":
+		return CreatedAuthenticationMethodTypeEnumEmail, nil
+	case "totp":
+		return CreatedAuthenticationMethodTypeEnumTotp, nil
+	case "webauthn-roaming":
+		return CreatedAuthenticationMethodTypeEnumWebauthnRoaming, nil
+	}
+	var t CreatedAuthenticationMethodTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CreatedAuthenticationMethodTypeEnum) Ptr() *CreatedAuthenticationMethodTypeEnum {
+	return &c
+}
+
+type CreatedUserAuthenticationMethodTypeEnum string
+
+const (
+	CreatedUserAuthenticationMethodTypeEnumPhone           CreatedUserAuthenticationMethodTypeEnum = "phone"
+	CreatedUserAuthenticationMethodTypeEnumEmail           CreatedUserAuthenticationMethodTypeEnum = "email"
+	CreatedUserAuthenticationMethodTypeEnumTotp            CreatedUserAuthenticationMethodTypeEnum = "totp"
+	CreatedUserAuthenticationMethodTypeEnumWebauthnRoaming CreatedUserAuthenticationMethodTypeEnum = "webauthn-roaming"
+	CreatedUserAuthenticationMethodTypeEnumPasskey         CreatedUserAuthenticationMethodTypeEnum = "passkey"
+)
+
+func NewCreatedUserAuthenticationMethodTypeEnumFromString(s string) (CreatedUserAuthenticationMethodTypeEnum, error) {
+	switch s {
+	case "phone":
+		return CreatedUserAuthenticationMethodTypeEnumPhone, nil
+	case "email":
+		return CreatedUserAuthenticationMethodTypeEnumEmail, nil
+	case "totp":
+		return CreatedUserAuthenticationMethodTypeEnumTotp, nil
+	case "webauthn-roaming":
+		return CreatedUserAuthenticationMethodTypeEnumWebauthnRoaming, nil
+	case "passkey":
+		return CreatedUserAuthenticationMethodTypeEnumPasskey, nil
+	}
+	var t CreatedUserAuthenticationMethodTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CreatedUserAuthenticationMethodTypeEnum) Ptr() *CreatedUserAuthenticationMethodTypeEnum {
+	return &c
+}
+
+// Applies to passkeys only. The kind of device the credential is stored on as defined by backup eligibility. "single_device" credentials cannot be backed up and synced to another device, "multi_device" credentials can be backed up if enabled by the end-user.
+type CredentialDeviceTypeEnum string
+
+const (
+	CredentialDeviceTypeEnumSingleDevice CredentialDeviceTypeEnum = "single_device"
+	CredentialDeviceTypeEnumMultiDevice  CredentialDeviceTypeEnum = "multi_device"
+)
+
+func NewCredentialDeviceTypeEnumFromString(s string) (CredentialDeviceTypeEnum, error) {
+	switch s {
+	case "single_device":
+		return CredentialDeviceTypeEnumSingleDevice, nil
+	case "multi_device":
+		return CredentialDeviceTypeEnumMultiDevice, nil
+	}
+	var t CredentialDeviceTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CredentialDeviceTypeEnum) Ptr() *CredentialDeviceTypeEnum {
+	return &c
+}
+
+// An array of objects with information about the user's identities.
+type DeleteUserIdentityResponseContent = []*DeleteUserIdentityResponseContentItem
+
+var (
+	deleteUserIdentityResponseContentItemFieldConnection        = big.NewInt(1 << 0)
+	deleteUserIdentityResponseContentItemFieldUserID            = big.NewInt(1 << 1)
+	deleteUserIdentityResponseContentItemFieldProvider          = big.NewInt(1 << 2)
+	deleteUserIdentityResponseContentItemFieldIsSocial          = big.NewInt(1 << 3)
+	deleteUserIdentityResponseContentItemFieldAccessToken       = big.NewInt(1 << 4)
+	deleteUserIdentityResponseContentItemFieldAccessTokenSecret = big.NewInt(1 << 5)
+	deleteUserIdentityResponseContentItemFieldRefreshToken      = big.NewInt(1 << 6)
+	deleteUserIdentityResponseContentItemFieldProfileData       = big.NewInt(1 << 7)
+)
+
+type DeleteUserIdentityResponseContentItem struct {
+	// The name of the connection for the identity.
+	Connection string `json:"connection" url:"connection"`
+	// The unique identifier for the user for the identity.
+	UserID *UserID `json:"user_id" url:"user_id"`
+	// The type of identity provider.
+	Provider string `json:"provider" url:"provider"`
+	// <code>true</code> if the identity provider is a social provider, <code>false</code>s otherwise
+	IsSocial *bool `json:"isSocial,omitempty" url:"isSocial,omitempty"`
+	// IDP access token returned only if scope read:user_idp_tokens is defined
+	AccessToken *string `json:"access_token,omitempty" url:"access_token,omitempty"`
+	// IDP access token secret returned only if scope read:user_idp_tokens is defined.
+	AccessTokenSecret *string `json:"access_token_secret,omitempty" url:"access_token_secret,omitempty"`
+	// IDP refresh token returned only if scope read:user_idp_tokens is defined.
+	RefreshToken *string          `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
+	ProfileData  *UserProfileData `json:"profileData,omitempty" url:"profileData,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (d *DeleteUserIdentityResponseContentItem) GetConnection() string {
+	if d == nil {
+		return ""
+	}
+	return d.Connection
+}
+
+func (d *DeleteUserIdentityResponseContentItem) GetUserID() *UserID {
+	if d == nil {
+		return nil
+	}
+	return d.UserID
+}
+
+func (d *DeleteUserIdentityResponseContentItem) GetProvider() string {
+	if d == nil {
+		return ""
+	}
+	return d.Provider
+}
+
+func (d *DeleteUserIdentityResponseContentItem) GetIsSocial() bool {
+	if d == nil || d.IsSocial == nil {
+		return false
+	}
+	return *d.IsSocial
+}
+
+func (d *DeleteUserIdentityResponseContentItem) GetAccessToken() string {
+	if d == nil || d.AccessToken == nil {
+		return ""
+	}
+	return *d.AccessToken
+}
+
+func (d *DeleteUserIdentityResponseContentItem) GetAccessTokenSecret() string {
+	if d == nil || d.AccessTokenSecret == nil {
+		return ""
+	}
+	return *d.AccessTokenSecret
+}
+
+func (d *DeleteUserIdentityResponseContentItem) GetRefreshToken() string {
+	if d == nil || d.RefreshToken == nil {
+		return ""
+	}
+	return *d.RefreshToken
+}
+
+func (d *DeleteUserIdentityResponseContentItem) GetProfileData() UserProfileData {
+	if d == nil || d.ProfileData == nil {
+		return UserProfileData{}
+	}
+	return *d.ProfileData
+}
+
+func (d *DeleteUserIdentityResponseContentItem) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
+	return d.extraProperties
+}
+
+func (d *DeleteUserIdentityResponseContentItem) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteUserIdentityResponseContentItem) SetConnection(connection string) {
+	d.Connection = connection
+	d.require(deleteUserIdentityResponseContentItemFieldConnection)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteUserIdentityResponseContentItem) SetUserID(userID *UserID) {
+	d.UserID = userID
+	d.require(deleteUserIdentityResponseContentItemFieldUserID)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteUserIdentityResponseContentItem) SetProvider(provider string) {
+	d.Provider = provider
+	d.require(deleteUserIdentityResponseContentItemFieldProvider)
+}
+
+// SetIsSocial sets the IsSocial field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteUserIdentityResponseContentItem) SetIsSocial(isSocial *bool) {
+	d.IsSocial = isSocial
+	d.require(deleteUserIdentityResponseContentItemFieldIsSocial)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteUserIdentityResponseContentItem) SetAccessToken(accessToken *string) {
+	d.AccessToken = accessToken
+	d.require(deleteUserIdentityResponseContentItemFieldAccessToken)
+}
+
+// SetAccessTokenSecret sets the AccessTokenSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteUserIdentityResponseContentItem) SetAccessTokenSecret(accessTokenSecret *string) {
+	d.AccessTokenSecret = accessTokenSecret
+	d.require(deleteUserIdentityResponseContentItemFieldAccessTokenSecret)
+}
+
+// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteUserIdentityResponseContentItem) SetRefreshToken(refreshToken *string) {
+	d.RefreshToken = refreshToken
+	d.require(deleteUserIdentityResponseContentItemFieldRefreshToken)
+}
+
+// SetProfileData sets the ProfileData field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteUserIdentityResponseContentItem) SetProfileData(profileData *UserProfileData) {
+	d.ProfileData = profileData
+	d.require(deleteUserIdentityResponseContentItemFieldProfileData)
+}
+
+func (d *DeleteUserIdentityResponseContentItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeleteUserIdentityResponseContentItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DeleteUserIdentityResponseContentItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d *DeleteUserIdentityResponseContentItem) MarshalJSON() ([]byte, error) {
+	type embed DeleteUserIdentityResponseContentItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (d *DeleteUserIdentityResponseContentItem) String() string {
+	if d == nil {
+		return "<nil>"
+	}
+	if len(d.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
+var (
+	getUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
+	getUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
+	getUserAuthenticationMethodResponseContentFieldConfirmed                     = big.NewInt(1 << 2)
+	getUserAuthenticationMethodResponseContentFieldName                          = big.NewInt(1 << 3)
+	getUserAuthenticationMethodResponseContentFieldAuthenticationMethods         = big.NewInt(1 << 4)
+	getUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 5)
+	getUserAuthenticationMethodResponseContentFieldLinkID                        = big.NewInt(1 << 6)
+	getUserAuthenticationMethodResponseContentFieldPhoneNumber                   = big.NewInt(1 << 7)
+	getUserAuthenticationMethodResponseContentFieldEmail                         = big.NewInt(1 << 8)
+	getUserAuthenticationMethodResponseContentFieldKeyID                         = big.NewInt(1 << 9)
+	getUserAuthenticationMethodResponseContentFieldPublicKey                     = big.NewInt(1 << 10)
+	getUserAuthenticationMethodResponseContentFieldCreatedAt                     = big.NewInt(1 << 11)
+	getUserAuthenticationMethodResponseContentFieldEnrolledAt                    = big.NewInt(1 << 12)
+	getUserAuthenticationMethodResponseContentFieldLastAuthAt                    = big.NewInt(1 << 13)
+	getUserAuthenticationMethodResponseContentFieldCredentialDeviceType          = big.NewInt(1 << 14)
+	getUserAuthenticationMethodResponseContentFieldCredentialBackedUp            = big.NewInt(1 << 15)
+	getUserAuthenticationMethodResponseContentFieldIdentityUserID                = big.NewInt(1 << 16)
+	getUserAuthenticationMethodResponseContentFieldUserAgent                     = big.NewInt(1 << 17)
+	getUserAuthenticationMethodResponseContentFieldUserHandle                    = big.NewInt(1 << 18)
+	getUserAuthenticationMethodResponseContentFieldTransports                    = big.NewInt(1 << 19)
+	getUserAuthenticationMethodResponseContentFieldAaguid                        = big.NewInt(1 << 20)
+	getUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 21)
+)
+
+type GetUserAuthenticationMethodResponseContent struct {
+	// The ID of the authentication method (auto generated)
+	ID   string                       `json:"id" url:"id"`
+	Type AuthenticationMethodTypeEnum `json:"type" url:"type"`
+	// The authentication method status
+	Confirmed *bool `json:"confirmed,omitempty" url:"confirmed,omitempty"`
+	// A human-readable label to identify the authentication method
+	Name                          *string                               `json:"name,omitempty" url:"name,omitempty"`
+	AuthenticationMethods         []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum    `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
+	// The ID of a linked authentication method. Linked authentication methods will be deleted together.
+	LinkID *string `json:"link_id,omitempty" url:"link_id,omitempty"`
+	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
+	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	// Applies to email and email-verification authentication methods only. The email address used to send verification messages.
+	Email *string `json:"email,omitempty" url:"email,omitempty"`
+	// Applies to webauthn authentication methods only. The ID of the generated credential.
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	// Applies to webauthn authentication methods only. The public key.
+	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
+	// Authenticator creation date
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// Enrollment date
+	EnrolledAt *time.Time `json:"enrolled_at,omitempty" url:"enrolled_at,omitempty"`
+	// Last authentication
+	LastAuthAt *time.Time `json:"last_auth_at,omitempty" url:"last_auth_at,omitempty"`
+	// Applies to passkeys only. The kind of device the credential is stored on as defined by backup eligibility. "single_device" credentials cannot be backed up and synced to another device, "multi_device" credentials can be backed up if enabled by the end-user.
+	CredentialDeviceType *string `json:"credential_device_type,omitempty" url:"credential_device_type,omitempty"`
+	// Applies to passkeys only. Whether the credential was backed up.
+	CredentialBackedUp *bool `json:"credential_backed_up,omitempty" url:"credential_backed_up,omitempty"`
+	// Applies to passkeys only. The ID of the user identity linked with the authentication method.
+	IdentityUserID *string `json:"identity_user_id,omitempty" url:"identity_user_id,omitempty"`
+	// Applies to passkeys only. The user-agent of the browser used to create the passkey.
+	UserAgent *string `json:"user_agent,omitempty" url:"user_agent,omitempty"`
+	// Applies to passkeys only. The user handle of the user identity.
+	UserHandle *string `json:"user_handle,omitempty" url:"user_handle,omitempty"`
+	// Applies to passkeys only. The transports used by clients to communicate with the authenticator.
+	Transports []string `json:"transports,omitempty" url:"transports,omitempty"`
+	// Applies to passkey authentication methods only. Authenticator Attestation Globally Unique Identifier.
+	Aaguid *string `json:"aaguid,omitempty" url:"aaguid,omitempty"`
+	// Applies to webauthn/passkey authentication methods only. The credential's relying party identifier.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"relying_party_identifier,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetType() AuthenticationMethodTypeEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Type
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetConfirmed() bool {
+	if g == nil || g.Confirmed == nil {
+		return false
+	}
+	return *g.Confirmed
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
+	}
+	return *g.Name
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetAuthenticationMethods() []*UserAuthenticationMethodProperties {
+	if g == nil || g.AuthenticationMethods == nil {
+		return nil
+	}
+	return g.AuthenticationMethods
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetPreferredAuthenticationMethod() PreferredAuthenticationMethodEnum {
+	if g == nil || g.PreferredAuthenticationMethod == nil {
+		return ""
+	}
+	return *g.PreferredAuthenticationMethod
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetLinkID() string {
+	if g == nil || g.LinkID == nil {
+		return ""
+	}
+	return *g.LinkID
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetPhoneNumber() string {
+	if g == nil || g.PhoneNumber == nil {
+		return ""
+	}
+	return *g.PhoneNumber
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetEmail() string {
+	if g == nil || g.Email == nil {
+		return ""
+	}
+	return *g.Email
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetKeyID() string {
+	if g == nil || g.KeyID == nil {
+		return ""
+	}
+	return *g.KeyID
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetPublicKey() string {
+	if g == nil || g.PublicKey == nil {
+		return ""
+	}
+	return *g.PublicKey
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetCreatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.CreatedAt
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetEnrolledAt() time.Time {
+	if g == nil || g.EnrolledAt == nil {
+		return time.Time{}
+	}
+	return *g.EnrolledAt
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetLastAuthAt() time.Time {
+	if g == nil || g.LastAuthAt == nil {
+		return time.Time{}
+	}
+	return *g.LastAuthAt
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetCredentialDeviceType() string {
+	if g == nil || g.CredentialDeviceType == nil {
+		return ""
+	}
+	return *g.CredentialDeviceType
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetCredentialBackedUp() bool {
+	if g == nil || g.CredentialBackedUp == nil {
+		return false
+	}
+	return *g.CredentialBackedUp
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetIdentityUserID() string {
+	if g == nil || g.IdentityUserID == nil {
+		return ""
+	}
+	return *g.IdentityUserID
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetUserAgent() string {
+	if g == nil || g.UserAgent == nil {
+		return ""
+	}
+	return *g.UserAgent
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetUserHandle() string {
+	if g == nil || g.UserHandle == nil {
+		return ""
+	}
+	return *g.UserHandle
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetTransports() []string {
+	if g == nil || g.Transports == nil {
+		return nil
+	}
+	return g.Transports
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetAaguid() string {
+	if g == nil || g.Aaguid == nil {
+		return ""
+	}
+	return *g.Aaguid
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetRelyingPartyIdentifier() string {
+	if g == nil || g.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *g.RelyingPartyIdentifier
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getUserAuthenticationMethodResponseContentFieldID)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetType(type_ AuthenticationMethodTypeEnum) {
+	g.Type = type_
+	g.require(getUserAuthenticationMethodResponseContentFieldType)
+}
+
+// SetConfirmed sets the Confirmed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetConfirmed(confirmed *bool) {
+	g.Confirmed = confirmed
+	g.require(getUserAuthenticationMethodResponseContentFieldConfirmed)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getUserAuthenticationMethodResponseContentFieldName)
+}
+
+// SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetAuthenticationMethods(authenticationMethods []*UserAuthenticationMethodProperties) {
+	g.AuthenticationMethods = authenticationMethods
+	g.require(getUserAuthenticationMethodResponseContentFieldAuthenticationMethods)
+}
+
+// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
+	g.PreferredAuthenticationMethod = preferredAuthenticationMethod
+	g.require(getUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod)
+}
+
+// SetLinkID sets the LinkID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetLinkID(linkID *string) {
+	g.LinkID = linkID
+	g.require(getUserAuthenticationMethodResponseContentFieldLinkID)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetPhoneNumber(phoneNumber *string) {
+	g.PhoneNumber = phoneNumber
+	g.require(getUserAuthenticationMethodResponseContentFieldPhoneNumber)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetEmail(email *string) {
+	g.Email = email
+	g.require(getUserAuthenticationMethodResponseContentFieldEmail)
+}
+
+// SetKeyID sets the KeyID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetKeyID(keyID *string) {
+	g.KeyID = keyID
+	g.require(getUserAuthenticationMethodResponseContentFieldKeyID)
+}
+
+// SetPublicKey sets the PublicKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetPublicKey(publicKey *string) {
+	g.PublicKey = publicKey
+	g.require(getUserAuthenticationMethodResponseContentFieldPublicKey)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetCreatedAt(createdAt time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getUserAuthenticationMethodResponseContentFieldCreatedAt)
+}
+
+// SetEnrolledAt sets the EnrolledAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetEnrolledAt(enrolledAt *time.Time) {
+	g.EnrolledAt = enrolledAt
+	g.require(getUserAuthenticationMethodResponseContentFieldEnrolledAt)
+}
+
+// SetLastAuthAt sets the LastAuthAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetLastAuthAt(lastAuthAt *time.Time) {
+	g.LastAuthAt = lastAuthAt
+	g.require(getUserAuthenticationMethodResponseContentFieldLastAuthAt)
+}
+
+// SetCredentialDeviceType sets the CredentialDeviceType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetCredentialDeviceType(credentialDeviceType *string) {
+	g.CredentialDeviceType = credentialDeviceType
+	g.require(getUserAuthenticationMethodResponseContentFieldCredentialDeviceType)
+}
+
+// SetCredentialBackedUp sets the CredentialBackedUp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetCredentialBackedUp(credentialBackedUp *bool) {
+	g.CredentialBackedUp = credentialBackedUp
+	g.require(getUserAuthenticationMethodResponseContentFieldCredentialBackedUp)
+}
+
+// SetIdentityUserID sets the IdentityUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetIdentityUserID(identityUserID *string) {
+	g.IdentityUserID = identityUserID
+	g.require(getUserAuthenticationMethodResponseContentFieldIdentityUserID)
+}
+
+// SetUserAgent sets the UserAgent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetUserAgent(userAgent *string) {
+	g.UserAgent = userAgent
+	g.require(getUserAuthenticationMethodResponseContentFieldUserAgent)
+}
+
+// SetUserHandle sets the UserHandle field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetUserHandle(userHandle *string) {
+	g.UserHandle = userHandle
+	g.require(getUserAuthenticationMethodResponseContentFieldUserHandle)
+}
+
+// SetTransports sets the Transports field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetTransports(transports []string) {
+	g.Transports = transports
+	g.require(getUserAuthenticationMethodResponseContentFieldTransports)
+}
+
+// SetAaguid sets the Aaguid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetAaguid(aaguid *string) {
+	g.Aaguid = aaguid
+	g.require(getUserAuthenticationMethodResponseContentFieldAaguid)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserAuthenticationMethodResponseContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	g.RelyingPartyIdentifier = relyingPartyIdentifier
+	g.require(getUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier)
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetUserAuthenticationMethodResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt  *internal.DateTime `json:"created_at"`
+		EnrolledAt *internal.DateTime `json:"enrolled_at,omitempty"`
+		LastAuthAt *internal.DateTime `json:"last_auth_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetUserAuthenticationMethodResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.Time()
+	g.EnrolledAt = unmarshaler.EnrolledAt.TimePtr()
+	g.LastAuthAt = unmarshaler.LastAuthAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetUserAuthenticationMethodResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt  *internal.DateTime `json:"created_at"`
+		EnrolledAt *internal.DateTime `json:"enrolled_at,omitempty"`
+		LastAuthAt *internal.DateTime `json:"last_auth_at,omitempty"`
+	}{
+		embed:      embed(*g),
+		CreatedAt:  internal.NewDateTime(g.CreatedAt),
+		EnrolledAt: internal.NewOptionalDateTime(g.EnrolledAt),
+		LastAuthAt: internal.NewOptionalDateTime(g.LastAuthAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetUserAuthenticationMethodResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getUserGroupsPaginatedResponseContentFieldGroups = big.NewInt(1 << 0)
+	getUserGroupsPaginatedResponseContentFieldNext   = big.NewInt(1 << 1)
+	getUserGroupsPaginatedResponseContentFieldStart  = big.NewInt(1 << 2)
+	getUserGroupsPaginatedResponseContentFieldLimit  = big.NewInt(1 << 3)
+	getUserGroupsPaginatedResponseContentFieldTotal  = big.NewInt(1 << 4)
+)
+
+type GetUserGroupsPaginatedResponseContent struct {
+	Groups []*UserGroupsResponseSchema `json:"groups" url:"groups"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next  *string  `json:"next,omitempty" url:"next,omitempty"`
+	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
+	Limit *float64 `json:"limit,omitempty" url:"limit,omitempty"`
+	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) GetGroups() []*UserGroupsResponseSchema {
+	if g == nil {
+		return nil
+	}
+	return g.Groups
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) GetNext() string {
+	if g == nil || g.Next == nil {
+		return ""
+	}
+	return *g.Next
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) GetStart() float64 {
+	if g == nil || g.Start == nil {
+		return 0
+	}
+	return *g.Start
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) GetLimit() float64 {
+	if g == nil || g.Limit == nil {
+		return 0
+	}
+	return *g.Limit
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) GetTotal() float64 {
+	if g == nil || g.Total == nil {
+		return 0
+	}
+	return *g.Total
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetGroups sets the Groups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserGroupsPaginatedResponseContent) SetGroups(groups []*UserGroupsResponseSchema) {
+	g.Groups = groups
+	g.require(getUserGroupsPaginatedResponseContentFieldGroups)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserGroupsPaginatedResponseContent) SetNext(next *string) {
+	g.Next = next
+	g.require(getUserGroupsPaginatedResponseContentFieldNext)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserGroupsPaginatedResponseContent) SetStart(start *float64) {
+	g.Start = start
+	g.require(getUserGroupsPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserGroupsPaginatedResponseContent) SetLimit(limit *float64) {
+	g.Limit = limit
+	g.require(getUserGroupsPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserGroupsPaginatedResponseContent) SetTotal(total *float64) {
+	g.Total = total
+	g.require(getUserGroupsPaginatedResponseContentFieldTotal)
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetUserGroupsPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetUserGroupsPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetUserGroupsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetUserGroupsPaginatedResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+type GetUserGroupsResponseContent struct {
+	UserGroupsResponseSchemaList          []*UserGroupsResponseSchema
+	GetUserGroupsPaginatedResponseContent *GetUserGroupsPaginatedResponseContent
+
+	typ string
+}
+
+func (g *GetUserGroupsResponseContent) GetUserGroupsResponseSchemaList() []*UserGroupsResponseSchema {
+	if g == nil {
+		return nil
+	}
+	return g.UserGroupsResponseSchemaList
+}
+
+func (g *GetUserGroupsResponseContent) GetGetUserGroupsPaginatedResponseContent() *GetUserGroupsPaginatedResponseContent {
+	if g == nil {
+		return nil
+	}
+	return g.GetUserGroupsPaginatedResponseContent
+}
+
+func (g *GetUserGroupsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueUserGroupsResponseSchemaList []*UserGroupsResponseSchema
+	if err := json.Unmarshal(data, &valueUserGroupsResponseSchemaList); err == nil {
+		g.typ = "UserGroupsResponseSchemaList"
+		g.UserGroupsResponseSchemaList = valueUserGroupsResponseSchemaList
+		return nil
+	}
+	valueGetUserGroupsPaginatedResponseContent := new(GetUserGroupsPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueGetUserGroupsPaginatedResponseContent); err == nil {
+		g.typ = "GetUserGroupsPaginatedResponseContent"
+		g.GetUserGroupsPaginatedResponseContent = valueGetUserGroupsPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, g)
+}
+
+func (g GetUserGroupsResponseContent) MarshalJSON() ([]byte, error) {
+	if g.typ == "UserGroupsResponseSchemaList" || g.UserGroupsResponseSchemaList != nil {
+		return json.Marshal(g.UserGroupsResponseSchemaList)
+	}
+	if g.typ == "GetUserGroupsPaginatedResponseContent" || g.GetUserGroupsPaginatedResponseContent != nil {
+		return json.Marshal(g.GetUserGroupsPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", g)
+}
+
+type GetUserGroupsResponseContentVisitor interface {
+	VisitUserGroupsResponseSchemaList([]*UserGroupsResponseSchema) error
+	VisitGetUserGroupsPaginatedResponseContent(*GetUserGroupsPaginatedResponseContent) error
+}
+
+func (g *GetUserGroupsResponseContent) Accept(visitor GetUserGroupsResponseContentVisitor) error {
+	if g.typ == "UserGroupsResponseSchemaList" || g.UserGroupsResponseSchemaList != nil {
+		return visitor.VisitUserGroupsResponseSchemaList(g.UserGroupsResponseSchemaList)
+	}
+	if g.typ == "GetUserGroupsPaginatedResponseContent" || g.GetUserGroupsPaginatedResponseContent != nil {
+		return visitor.VisitGetUserGroupsPaginatedResponseContent(g.GetUserGroupsPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", g)
 }
 
 var (
@@ -975,6 +2672,1628 @@ func (g *GetUserResponseContent) String() string {
 }
 
 var (
+	listRefreshTokensPaginatedResponseContentFieldTokens = big.NewInt(1 << 0)
+	listRefreshTokensPaginatedResponseContentFieldNext   = big.NewInt(1 << 1)
+)
+
+type ListRefreshTokensPaginatedResponseContent struct {
+	Tokens []*RefreshTokenResponseContent `json:"tokens,omitempty" url:"tokens,omitempty"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (l *ListRefreshTokensPaginatedResponseContent) GetTokens() []*RefreshTokenResponseContent {
+	if l == nil || l.Tokens == nil {
+		return nil
+	}
+	return l.Tokens
+}
+
+func (l *ListRefreshTokensPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListRefreshTokensPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.ExtraProperties
+}
+
+func (l *ListRefreshTokensPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetTokens sets the Tokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRefreshTokensPaginatedResponseContent) SetTokens(tokens []*RefreshTokenResponseContent) {
+	l.Tokens = tokens
+	l.require(listRefreshTokensPaginatedResponseContentFieldTokens)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRefreshTokensPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listRefreshTokensPaginatedResponseContentFieldNext)
+}
+
+func (l *ListRefreshTokensPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type embed ListRefreshTokensPaginatedResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*l = ListRefreshTokensPaginatedResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.ExtraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListRefreshTokensPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListRefreshTokensPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
+}
+
+func (l *ListRefreshTokensPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUserAuthenticationMethodsOffsetPaginatedResponseContentFieldStart          = big.NewInt(1 << 0)
+	listUserAuthenticationMethodsOffsetPaginatedResponseContentFieldLimit          = big.NewInt(1 << 1)
+	listUserAuthenticationMethodsOffsetPaginatedResponseContentFieldTotal          = big.NewInt(1 << 2)
+	listUserAuthenticationMethodsOffsetPaginatedResponseContentFieldAuthenticators = big.NewInt(1 << 3)
+)
+
+type ListUserAuthenticationMethodsOffsetPaginatedResponseContent struct {
+	// Index of the starting record. Derived from the page and per_page parameters.
+	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
+	// Maximum amount of records to return.
+	Limit *float64 `json:"limit,omitempty" url:"limit,omitempty"`
+	// Total number of pageable records.
+	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
+	// The paginated authentication methods. Returned in this structure when include_totals is true.
+	Authenticators []*UserAuthenticationMethod `json:"authenticators,omitempty" url:"authenticators,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) GetAuthenticators() []*UserAuthenticationMethod {
+	if l == nil || l.Authenticators == nil {
+		return nil
+	}
+	return l.Authenticators
+}
+
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listUserAuthenticationMethodsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listUserAuthenticationMethodsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listUserAuthenticationMethodsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetAuthenticators sets the Authenticators field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) SetAuthenticators(authenticators []*UserAuthenticationMethod) {
+	l.Authenticators = authenticators
+	l.require(listUserAuthenticationMethodsOffsetPaginatedResponseContentFieldAuthenticators)
+}
+
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserAuthenticationMethodsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserAuthenticationMethodsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserAuthenticationMethodsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListUserAuthenticationMethodsResponseContent struct {
+	// The paginated authentication methods. Returned in this structure when include_totals is false.
+	UserAuthenticationMethodList                                []*UserAuthenticationMethod
+	ListUserAuthenticationMethodsOffsetPaginatedResponseContent *ListUserAuthenticationMethodsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListUserAuthenticationMethodsResponseContent) GetUserAuthenticationMethodList() []*UserAuthenticationMethod {
+	if l == nil {
+		return nil
+	}
+	return l.UserAuthenticationMethodList
+}
+
+func (l *ListUserAuthenticationMethodsResponseContent) GetListUserAuthenticationMethodsOffsetPaginatedResponseContent() *ListUserAuthenticationMethodsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListUserAuthenticationMethodsOffsetPaginatedResponseContent
+}
+
+func (l *ListUserAuthenticationMethodsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueUserAuthenticationMethodList []*UserAuthenticationMethod
+	if err := json.Unmarshal(data, &valueUserAuthenticationMethodList); err == nil {
+		l.typ = "UserAuthenticationMethodList"
+		l.UserAuthenticationMethodList = valueUserAuthenticationMethodList
+		return nil
+	}
+	valueListUserAuthenticationMethodsOffsetPaginatedResponseContent := new(ListUserAuthenticationMethodsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListUserAuthenticationMethodsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListUserAuthenticationMethodsOffsetPaginatedResponseContent"
+		l.ListUserAuthenticationMethodsOffsetPaginatedResponseContent = valueListUserAuthenticationMethodsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListUserAuthenticationMethodsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "UserAuthenticationMethodList" || l.UserAuthenticationMethodList != nil {
+		return json.Marshal(l.UserAuthenticationMethodList)
+	}
+	if l.typ == "ListUserAuthenticationMethodsOffsetPaginatedResponseContent" || l.ListUserAuthenticationMethodsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListUserAuthenticationMethodsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListUserAuthenticationMethodsResponseContentVisitor interface {
+	VisitUserAuthenticationMethodList([]*UserAuthenticationMethod) error
+	VisitListUserAuthenticationMethodsOffsetPaginatedResponseContent(*ListUserAuthenticationMethodsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListUserAuthenticationMethodsResponseContent) Accept(visitor ListUserAuthenticationMethodsResponseContentVisitor) error {
+	if l.typ == "UserAuthenticationMethodList" || l.UserAuthenticationMethodList != nil {
+		return visitor.VisitUserAuthenticationMethodList(l.UserAuthenticationMethodList)
+	}
+	if l.typ == "ListUserAuthenticationMethodsOffsetPaginatedResponseContent" || l.ListUserAuthenticationMethodsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListUserAuthenticationMethodsOffsetPaginatedResponseContent(l.ListUserAuthenticationMethodsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listUserConnectedAccountsResponseContentFieldConnectedAccounts = big.NewInt(1 << 0)
+	listUserConnectedAccountsResponseContentFieldNext              = big.NewInt(1 << 1)
+)
+
+type ListUserConnectedAccountsResponseContent struct {
+	ConnectedAccounts []*ConnectedAccount `json:"connected_accounts" url:"connected_accounts"`
+	// The token to retrieve the next page of connected accounts (if there is one)
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserConnectedAccountsResponseContent) GetConnectedAccounts() []*ConnectedAccount {
+	if l == nil {
+		return nil
+	}
+	return l.ConnectedAccounts
+}
+
+func (l *ListUserConnectedAccountsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListUserConnectedAccountsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserConnectedAccountsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserConnectedAccountsResponseContent) SetConnectedAccounts(connectedAccounts []*ConnectedAccount) {
+	l.ConnectedAccounts = connectedAccounts
+	l.require(listUserConnectedAccountsResponseContentFieldConnectedAccounts)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserConnectedAccountsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listUserConnectedAccountsResponseContentFieldNext)
+}
+
+func (l *ListUserConnectedAccountsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserConnectedAccountsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserConnectedAccountsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserConnectedAccountsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserConnectedAccountsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserConnectedAccountsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUserEffectivePermissionRoleSourcesResponseContentFieldRoles = big.NewInt(1 << 0)
+	listUserEffectivePermissionRoleSourcesResponseContentFieldNext  = big.NewInt(1 << 1)
+)
+
+type ListUserEffectivePermissionRoleSourcesResponseContent struct {
+	// Roles with the specified permission assigned to the user, both directly and via groups.
+	Roles []*UserEffectivePermissionRoleSourceResponseContent `json:"roles" url:"roles"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserEffectivePermissionRoleSourcesResponseContent) GetRoles() []*UserEffectivePermissionRoleSourceResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.Roles
+}
+
+func (l *ListUserEffectivePermissionRoleSourcesResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListUserEffectivePermissionRoleSourcesResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserEffectivePermissionRoleSourcesResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectivePermissionRoleSourcesResponseContent) SetRoles(roles []*UserEffectivePermissionRoleSourceResponseContent) {
+	l.Roles = roles
+	l.require(listUserEffectivePermissionRoleSourcesResponseContentFieldRoles)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectivePermissionRoleSourcesResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listUserEffectivePermissionRoleSourcesResponseContentFieldNext)
+}
+
+func (l *ListUserEffectivePermissionRoleSourcesResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserEffectivePermissionRoleSourcesResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserEffectivePermissionRoleSourcesResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserEffectivePermissionRoleSourcesResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserEffectivePermissionRoleSourcesResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserEffectivePermissionRoleSourcesResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUserEffectivePermissionsResponseContentFieldPermissions = big.NewInt(1 << 0)
+	listUserEffectivePermissionsResponseContentFieldNext        = big.NewInt(1 << 1)
+)
+
+type ListUserEffectivePermissionsResponseContent struct {
+	// List of permissions assigned to the user.
+	Permissions []*UserEffectivePermissionResponseContent `json:"permissions" url:"permissions"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserEffectivePermissionsResponseContent) GetPermissions() []*UserEffectivePermissionResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.Permissions
+}
+
+func (l *ListUserEffectivePermissionsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListUserEffectivePermissionsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserEffectivePermissionsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPermissions sets the Permissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectivePermissionsResponseContent) SetPermissions(permissions []*UserEffectivePermissionResponseContent) {
+	l.Permissions = permissions
+	l.require(listUserEffectivePermissionsResponseContentFieldPermissions)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectivePermissionsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listUserEffectivePermissionsResponseContentFieldNext)
+}
+
+func (l *ListUserEffectivePermissionsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserEffectivePermissionsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserEffectivePermissionsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserEffectivePermissionsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserEffectivePermissionsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserEffectivePermissionsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUserEffectiveRolesResponseContentFieldRoles = big.NewInt(1 << 0)
+	listUserEffectiveRolesResponseContentFieldNext  = big.NewInt(1 << 1)
+)
+
+type ListUserEffectiveRolesResponseContent struct {
+	Roles []*UserEffectiveRole `json:"roles" url:"roles"`
+	// Cursor for the next page of results
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserEffectiveRolesResponseContent) GetRoles() []*UserEffectiveRole {
+	if l == nil {
+		return nil
+	}
+	return l.Roles
+}
+
+func (l *ListUserEffectiveRolesResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListUserEffectiveRolesResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserEffectiveRolesResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectiveRolesResponseContent) SetRoles(roles []*UserEffectiveRole) {
+	l.Roles = roles
+	l.require(listUserEffectiveRolesResponseContentFieldRoles)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectiveRolesResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listUserEffectiveRolesResponseContentFieldNext)
+}
+
+func (l *ListUserEffectiveRolesResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserEffectiveRolesResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserEffectiveRolesResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserEffectiveRolesResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserEffectiveRolesResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserEffectiveRolesResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUserOrganizationsOffsetPaginatedResponseContentFieldStart         = big.NewInt(1 << 0)
+	listUserOrganizationsOffsetPaginatedResponseContentFieldLimit         = big.NewInt(1 << 1)
+	listUserOrganizationsOffsetPaginatedResponseContentFieldTotal         = big.NewInt(1 << 2)
+	listUserOrganizationsOffsetPaginatedResponseContentFieldOrganizations = big.NewInt(1 << 3)
+)
+
+type ListUserOrganizationsOffsetPaginatedResponseContent struct {
+	Start         *float64        `json:"start,omitempty" url:"start,omitempty"`
+	Limit         *float64        `json:"limit,omitempty" url:"limit,omitempty"`
+	Total         *float64        `json:"total,omitempty" url:"total,omitempty"`
+	Organizations []*Organization `json:"organizations,omitempty" url:"organizations,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) GetOrganizations() []*Organization {
+	if l == nil || l.Organizations == nil {
+		return nil
+	}
+	return l.Organizations
+}
+
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listUserOrganizationsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listUserOrganizationsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listUserOrganizationsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetOrganizations sets the Organizations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) SetOrganizations(organizations []*Organization) {
+	l.Organizations = organizations
+	l.require(listUserOrganizationsOffsetPaginatedResponseContentFieldOrganizations)
+}
+
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserOrganizationsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserOrganizationsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserOrganizationsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserOrganizationsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUserOrganizationsPaginatedResponseContentFieldNext          = big.NewInt(1 << 0)
+	listUserOrganizationsPaginatedResponseContentFieldOrganizations = big.NewInt(1 << 1)
+)
+
+type ListUserOrganizationsPaginatedResponseContent struct {
+	// Opaque identifier for use with the <i>from</i> query parameter for the next page of results.<br/>This identifier is valid for 24 hours.
+	Next          *string         `json:"next,omitempty" url:"next,omitempty"`
+	Organizations []*Organization `json:"organizations,omitempty" url:"organizations,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserOrganizationsPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListUserOrganizationsPaginatedResponseContent) GetOrganizations() []*Organization {
+	if l == nil || l.Organizations == nil {
+		return nil
+	}
+	return l.Organizations
+}
+
+func (l *ListUserOrganizationsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserOrganizationsPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserOrganizationsPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listUserOrganizationsPaginatedResponseContentFieldNext)
+}
+
+// SetOrganizations sets the Organizations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserOrganizationsPaginatedResponseContent) SetOrganizations(organizations []*Organization) {
+	l.Organizations = organizations
+	l.require(listUserOrganizationsPaginatedResponseContentFieldOrganizations)
+}
+
+func (l *ListUserOrganizationsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserOrganizationsPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserOrganizationsPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserOrganizationsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserOrganizationsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserOrganizationsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListUserOrganizationsResponseContent struct {
+	OrganizationList                                    []*Organization
+	ListUserOrganizationsOffsetPaginatedResponseContent *ListUserOrganizationsOffsetPaginatedResponseContent
+	ListUserOrganizationsPaginatedResponseContent       *ListUserOrganizationsPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListUserOrganizationsResponseContent) GetOrganizationList() []*Organization {
+	if l == nil {
+		return nil
+	}
+	return l.OrganizationList
+}
+
+func (l *ListUserOrganizationsResponseContent) GetListUserOrganizationsOffsetPaginatedResponseContent() *ListUserOrganizationsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListUserOrganizationsOffsetPaginatedResponseContent
+}
+
+func (l *ListUserOrganizationsResponseContent) GetListUserOrganizationsPaginatedResponseContent() *ListUserOrganizationsPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListUserOrganizationsPaginatedResponseContent
+}
+
+func (l *ListUserOrganizationsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueOrganizationList []*Organization
+	if err := json.Unmarshal(data, &valueOrganizationList); err == nil {
+		l.typ = "OrganizationList"
+		l.OrganizationList = valueOrganizationList
+		return nil
+	}
+	valueListUserOrganizationsOffsetPaginatedResponseContent := new(ListUserOrganizationsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListUserOrganizationsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListUserOrganizationsOffsetPaginatedResponseContent"
+		l.ListUserOrganizationsOffsetPaginatedResponseContent = valueListUserOrganizationsOffsetPaginatedResponseContent
+		return nil
+	}
+	valueListUserOrganizationsPaginatedResponseContent := new(ListUserOrganizationsPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListUserOrganizationsPaginatedResponseContent); err == nil {
+		l.typ = "ListUserOrganizationsPaginatedResponseContent"
+		l.ListUserOrganizationsPaginatedResponseContent = valueListUserOrganizationsPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListUserOrganizationsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "OrganizationList" || l.OrganizationList != nil {
+		return json.Marshal(l.OrganizationList)
+	}
+	if l.typ == "ListUserOrganizationsOffsetPaginatedResponseContent" || l.ListUserOrganizationsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListUserOrganizationsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListUserOrganizationsPaginatedResponseContent" || l.ListUserOrganizationsPaginatedResponseContent != nil {
+		return json.Marshal(l.ListUserOrganizationsPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListUserOrganizationsResponseContentVisitor interface {
+	VisitOrganizationList([]*Organization) error
+	VisitListUserOrganizationsOffsetPaginatedResponseContent(*ListUserOrganizationsOffsetPaginatedResponseContent) error
+	VisitListUserOrganizationsPaginatedResponseContent(*ListUserOrganizationsPaginatedResponseContent) error
+}
+
+func (l *ListUserOrganizationsResponseContent) Accept(visitor ListUserOrganizationsResponseContentVisitor) error {
+	if l.typ == "OrganizationList" || l.OrganizationList != nil {
+		return visitor.VisitOrganizationList(l.OrganizationList)
+	}
+	if l.typ == "ListUserOrganizationsOffsetPaginatedResponseContent" || l.ListUserOrganizationsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListUserOrganizationsOffsetPaginatedResponseContent(l.ListUserOrganizationsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListUserOrganizationsPaginatedResponseContent" || l.ListUserOrganizationsPaginatedResponseContent != nil {
+		return visitor.VisitListUserOrganizationsPaginatedResponseContent(l.ListUserOrganizationsPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listUserPermissionsOffsetPaginatedResponseContentFieldStart       = big.NewInt(1 << 0)
+	listUserPermissionsOffsetPaginatedResponseContentFieldLimit       = big.NewInt(1 << 1)
+	listUserPermissionsOffsetPaginatedResponseContentFieldTotal       = big.NewInt(1 << 2)
+	listUserPermissionsOffsetPaginatedResponseContentFieldPermissions = big.NewInt(1 << 3)
+)
+
+type ListUserPermissionsOffsetPaginatedResponseContent struct {
+	Start       *float64                `json:"start,omitempty" url:"start,omitempty"`
+	Limit       *float64                `json:"limit,omitempty" url:"limit,omitempty"`
+	Total       *float64                `json:"total,omitempty" url:"total,omitempty"`
+	Permissions []*UserPermissionSchema `json:"permissions,omitempty" url:"permissions,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) GetPermissions() []*UserPermissionSchema {
+	if l == nil || l.Permissions == nil {
+		return nil
+	}
+	return l.Permissions
+}
+
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listUserPermissionsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listUserPermissionsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listUserPermissionsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetPermissions sets the Permissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) SetPermissions(permissions []*UserPermissionSchema) {
+	l.Permissions = permissions
+	l.require(listUserPermissionsOffsetPaginatedResponseContentFieldPermissions)
+}
+
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserPermissionsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserPermissionsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserPermissionsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserPermissionsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListUserPermissionsResponseContent struct {
+	UserPermissionSchemaList                          []*UserPermissionSchema
+	ListUserPermissionsOffsetPaginatedResponseContent *ListUserPermissionsOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListUserPermissionsResponseContent) GetUserPermissionSchemaList() []*UserPermissionSchema {
+	if l == nil {
+		return nil
+	}
+	return l.UserPermissionSchemaList
+}
+
+func (l *ListUserPermissionsResponseContent) GetListUserPermissionsOffsetPaginatedResponseContent() *ListUserPermissionsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListUserPermissionsOffsetPaginatedResponseContent
+}
+
+func (l *ListUserPermissionsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueUserPermissionSchemaList []*UserPermissionSchema
+	if err := json.Unmarshal(data, &valueUserPermissionSchemaList); err == nil {
+		l.typ = "UserPermissionSchemaList"
+		l.UserPermissionSchemaList = valueUserPermissionSchemaList
+		return nil
+	}
+	valueListUserPermissionsOffsetPaginatedResponseContent := new(ListUserPermissionsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListUserPermissionsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListUserPermissionsOffsetPaginatedResponseContent"
+		l.ListUserPermissionsOffsetPaginatedResponseContent = valueListUserPermissionsOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListUserPermissionsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "UserPermissionSchemaList" || l.UserPermissionSchemaList != nil {
+		return json.Marshal(l.UserPermissionSchemaList)
+	}
+	if l.typ == "ListUserPermissionsOffsetPaginatedResponseContent" || l.ListUserPermissionsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListUserPermissionsOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListUserPermissionsResponseContentVisitor interface {
+	VisitUserPermissionSchemaList([]*UserPermissionSchema) error
+	VisitListUserPermissionsOffsetPaginatedResponseContent(*ListUserPermissionsOffsetPaginatedResponseContent) error
+}
+
+func (l *ListUserPermissionsResponseContent) Accept(visitor ListUserPermissionsResponseContentVisitor) error {
+	if l.typ == "UserPermissionSchemaList" || l.UserPermissionSchemaList != nil {
+		return visitor.VisitUserPermissionSchemaList(l.UserPermissionSchemaList)
+	}
+	if l.typ == "ListUserPermissionsOffsetPaginatedResponseContent" || l.ListUserPermissionsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListUserPermissionsOffsetPaginatedResponseContent(l.ListUserPermissionsOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listUserRoleSourceGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
+	listUserRoleSourceGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
+)
+
+type ListUserRoleSourceGroupsResponseContent struct {
+	Groups []*Group `json:"groups" url:"groups"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserRoleSourceGroupsResponseContent) GetGroups() []*Group {
+	if l == nil {
+		return nil
+	}
+	return l.Groups
+}
+
+func (l *ListUserRoleSourceGroupsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListUserRoleSourceGroupsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserRoleSourceGroupsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetGroups sets the Groups field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserRoleSourceGroupsResponseContent) SetGroups(groups []*Group) {
+	l.Groups = groups
+	l.require(listUserRoleSourceGroupsResponseContentFieldGroups)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserRoleSourceGroupsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listUserRoleSourceGroupsResponseContentFieldNext)
+}
+
+func (l *ListUserRoleSourceGroupsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserRoleSourceGroupsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserRoleSourceGroupsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserRoleSourceGroupsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserRoleSourceGroupsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserRoleSourceGroupsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUserRolesOffsetPaginatedResponseContentFieldStart = big.NewInt(1 << 0)
+	listUserRolesOffsetPaginatedResponseContentFieldLimit = big.NewInt(1 << 1)
+	listUserRolesOffsetPaginatedResponseContentFieldTotal = big.NewInt(1 << 2)
+	listUserRolesOffsetPaginatedResponseContentFieldRoles = big.NewInt(1 << 3)
+)
+
+type ListUserRolesOffsetPaginatedResponseContent struct {
+	Start *float64 `json:"start,omitempty" url:"start,omitempty"`
+	Limit *float64 `json:"limit,omitempty" url:"limit,omitempty"`
+	Total *float64 `json:"total,omitempty" url:"total,omitempty"`
+	Roles []*Role  `json:"roles,omitempty" url:"roles,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserRolesOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListUserRolesOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListUserRolesOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListUserRolesOffsetPaginatedResponseContent) GetRoles() []*Role {
+	if l == nil || l.Roles == nil {
+		return nil
+	}
+	return l.Roles
+}
+
+func (l *ListUserRolesOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserRolesOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserRolesOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listUserRolesOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserRolesOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listUserRolesOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserRolesOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listUserRolesOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserRolesOffsetPaginatedResponseContent) SetRoles(roles []*Role) {
+	l.Roles = roles
+	l.require(listUserRolesOffsetPaginatedResponseContentFieldRoles)
+}
+
+func (l *ListUserRolesOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserRolesOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserRolesOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserRolesOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserRolesOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserRolesOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListUserRolesResponseContent struct {
+	RoleList                                    []*Role
+	ListUserRolesOffsetPaginatedResponseContent *ListUserRolesOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListUserRolesResponseContent) GetRoleList() []*Role {
+	if l == nil {
+		return nil
+	}
+	return l.RoleList
+}
+
+func (l *ListUserRolesResponseContent) GetListUserRolesOffsetPaginatedResponseContent() *ListUserRolesOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListUserRolesOffsetPaginatedResponseContent
+}
+
+func (l *ListUserRolesResponseContent) UnmarshalJSON(data []byte) error {
+	var valueRoleList []*Role
+	if err := json.Unmarshal(data, &valueRoleList); err == nil {
+		l.typ = "RoleList"
+		l.RoleList = valueRoleList
+		return nil
+	}
+	valueListUserRolesOffsetPaginatedResponseContent := new(ListUserRolesOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListUserRolesOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListUserRolesOffsetPaginatedResponseContent"
+		l.ListUserRolesOffsetPaginatedResponseContent = valueListUserRolesOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListUserRolesResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "RoleList" || l.RoleList != nil {
+		return json.Marshal(l.RoleList)
+	}
+	if l.typ == "ListUserRolesOffsetPaginatedResponseContent" || l.ListUserRolesOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListUserRolesOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListUserRolesResponseContentVisitor interface {
+	VisitRoleList([]*Role) error
+	VisitListUserRolesOffsetPaginatedResponseContent(*ListUserRolesOffsetPaginatedResponseContent) error
+}
+
+func (l *ListUserRolesResponseContent) Accept(visitor ListUserRolesResponseContentVisitor) error {
+	if l.typ == "RoleList" || l.RoleList != nil {
+		return visitor.VisitRoleList(l.RoleList)
+	}
+	if l.typ == "ListUserRolesOffsetPaginatedResponseContent" || l.ListUserRolesOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListUserRolesOffsetPaginatedResponseContent(l.ListUserRolesOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
+	listUserSessionsPaginatedResponseContentFieldSessions = big.NewInt(1 << 0)
+	listUserSessionsPaginatedResponseContentFieldNext     = big.NewInt(1 << 1)
+)
+
+type ListUserSessionsPaginatedResponseContent struct {
+	Sessions []*SessionResponseContent `json:"sessions,omitempty" url:"sessions,omitempty"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (l *ListUserSessionsPaginatedResponseContent) GetSessions() []*SessionResponseContent {
+	if l == nil || l.Sessions == nil {
+		return nil
+	}
+	return l.Sessions
+}
+
+func (l *ListUserSessionsPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListUserSessionsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.ExtraProperties
+}
+
+func (l *ListUserSessionsPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetSessions sets the Sessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserSessionsPaginatedResponseContent) SetSessions(sessions []*SessionResponseContent) {
+	l.Sessions = sessions
+	l.require(listUserSessionsPaginatedResponseContentFieldSessions)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserSessionsPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listUserSessionsPaginatedResponseContentFieldNext)
+}
+
+func (l *ListUserSessionsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type embed ListUserSessionsPaginatedResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*l = ListUserSessionsPaginatedResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.ExtraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserSessionsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserSessionsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
+}
+
+func (l *ListUserSessionsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
 	listUsersOffsetPaginatedResponseContentFieldStart  = big.NewInt(1 << 0)
 	listUsersOffsetPaginatedResponseContentFieldLimit  = big.NewInt(1 << 1)
 	listUsersOffsetPaginatedResponseContentFieldLength = big.NewInt(1 << 2)
@@ -1122,6 +4441,91 @@ func (l *ListUsersOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type ListUsersResponseContent struct {
+	UserResponseSchemaList                  []*UserResponseSchema
+	ListUsersOffsetPaginatedResponseContent *ListUsersOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListUsersResponseContent) GetUserResponseSchemaList() []*UserResponseSchema {
+	if l == nil {
+		return nil
+	}
+	return l.UserResponseSchemaList
+}
+
+func (l *ListUsersResponseContent) GetListUsersOffsetPaginatedResponseContent() *ListUsersOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListUsersOffsetPaginatedResponseContent
+}
+
+func (l *ListUsersResponseContent) UnmarshalJSON(data []byte) error {
+	var valueUserResponseSchemaList []*UserResponseSchema
+	if err := json.Unmarshal(data, &valueUserResponseSchemaList); err == nil {
+		l.typ = "UserResponseSchemaList"
+		l.UserResponseSchemaList = valueUserResponseSchemaList
+		return nil
+	}
+	valueListUsersOffsetPaginatedResponseContent := new(ListUsersOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListUsersOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListUsersOffsetPaginatedResponseContent"
+		l.ListUsersOffsetPaginatedResponseContent = valueListUsersOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListUsersResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "UserResponseSchemaList" || l.UserResponseSchemaList != nil {
+		return json.Marshal(l.UserResponseSchemaList)
+	}
+	if l.typ == "ListUsersOffsetPaginatedResponseContent" || l.ListUsersOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListUsersOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListUsersResponseContentVisitor interface {
+	VisitUserResponseSchemaList([]*UserResponseSchema) error
+	VisitListUsersOffsetPaginatedResponseContent(*ListUsersOffsetPaginatedResponseContent) error
+}
+
+func (l *ListUsersResponseContent) Accept(visitor ListUsersResponseContentVisitor) error {
+	if l.typ == "UserResponseSchemaList" || l.UserResponseSchemaList != nil {
+		return visitor.VisitUserResponseSchemaList(l.UserResponseSchemaList)
+	}
+	if l.typ == "ListUsersOffsetPaginatedResponseContent" || l.ListUsersOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListUsersOffsetPaginatedResponseContent(l.ListUsersOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+// Applies to phone authentication methods only. The preferred communication method.
+type PreferredAuthenticationMethodEnum string
+
+const (
+	PreferredAuthenticationMethodEnumVoice PreferredAuthenticationMethodEnum = "voice"
+	PreferredAuthenticationMethodEnumSms   PreferredAuthenticationMethodEnum = "sms"
+)
+
+func NewPreferredAuthenticationMethodEnumFromString(s string) (PreferredAuthenticationMethodEnum, error) {
+	switch s {
+	case "voice":
+		return PreferredAuthenticationMethodEnumVoice, nil
+	case "sms":
+		return PreferredAuthenticationMethodEnumSms, nil
+	}
+	var t PreferredAuthenticationMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PreferredAuthenticationMethodEnum) Ptr() *PreferredAuthenticationMethodEnum {
+	return &p
+}
+
 var (
 	regenerateUsersRecoveryCodeResponseContentFieldRecoveryCode = big.NewInt(1 << 0)
 )
@@ -1236,6 +4640,1084 @@ func NewSearchEngineVersionsEnumFromString(s string) (SearchEngineVersionsEnum, 
 
 func (s SearchEngineVersionsEnum) Ptr() *SearchEngineVersionsEnum {
 	return &s
+}
+
+var (
+	sessionResponseContentFieldID               = big.NewInt(1 << 0)
+	sessionResponseContentFieldUserID           = big.NewInt(1 << 1)
+	sessionResponseContentFieldCreatedAt        = big.NewInt(1 << 2)
+	sessionResponseContentFieldUpdatedAt        = big.NewInt(1 << 3)
+	sessionResponseContentFieldAuthenticatedAt  = big.NewInt(1 << 4)
+	sessionResponseContentFieldIdleExpiresAt    = big.NewInt(1 << 5)
+	sessionResponseContentFieldExpiresAt        = big.NewInt(1 << 6)
+	sessionResponseContentFieldLastInteractedAt = big.NewInt(1 << 7)
+	sessionResponseContentFieldDevice           = big.NewInt(1 << 8)
+	sessionResponseContentFieldClients          = big.NewInt(1 << 9)
+	sessionResponseContentFieldAuthentication   = big.NewInt(1 << 10)
+	sessionResponseContentFieldCookie           = big.NewInt(1 << 11)
+	sessionResponseContentFieldSessionMetadata  = big.NewInt(1 << 12)
+	sessionResponseContentFieldActor            = big.NewInt(1 << 13)
+)
+
+type SessionResponseContent struct {
+	// The ID of the session
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// ID of the user which can be used when interacting with other APIs.
+	UserID           *string                `json:"user_id,omitempty" url:"user_id,omitempty"`
+	CreatedAt        *SessionDate           `json:"created_at,omitempty" url:"created_at,omitempty"`
+	UpdatedAt        *SessionDate           `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	AuthenticatedAt  *SessionDate           `json:"authenticated_at,omitempty" url:"authenticated_at,omitempty"`
+	IdleExpiresAt    *SessionDate           `json:"idle_expires_at,omitempty" url:"idle_expires_at,omitempty"`
+	ExpiresAt        *SessionDate           `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+	LastInteractedAt *SessionDate           `json:"last_interacted_at,omitempty" url:"last_interacted_at,omitempty"`
+	Device           *SessionDeviceMetadata `json:"device,omitempty" url:"device,omitempty"`
+	// List of client details for the session
+	Clients         []*SessionClientMetadata      `json:"clients,omitempty" url:"clients,omitempty"`
+	Authentication  *SessionAuthenticationSignals `json:"authentication,omitempty" url:"authentication,omitempty"`
+	Cookie          *SessionCookieMetadata        `json:"cookie,omitempty" url:"cookie,omitempty"`
+	SessionMetadata *SessionMetadata              `json:"session_metadata,omitempty" url:"session_metadata,omitempty"`
+	Actor           *SessionActorMetadata         `json:"actor,omitempty" url:"actor,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (s *SessionResponseContent) GetID() string {
+	if s == nil || s.ID == nil {
+		return ""
+	}
+	return *s.ID
+}
+
+func (s *SessionResponseContent) GetUserID() string {
+	if s == nil || s.UserID == nil {
+		return ""
+	}
+	return *s.UserID
+}
+
+func (s *SessionResponseContent) GetCreatedAt() SessionDate {
+	if s == nil || s.CreatedAt == nil {
+		return SessionDate{}
+	}
+	return *s.CreatedAt
+}
+
+func (s *SessionResponseContent) GetUpdatedAt() SessionDate {
+	if s == nil || s.UpdatedAt == nil {
+		return SessionDate{}
+	}
+	return *s.UpdatedAt
+}
+
+func (s *SessionResponseContent) GetAuthenticatedAt() SessionDate {
+	if s == nil || s.AuthenticatedAt == nil {
+		return SessionDate{}
+	}
+	return *s.AuthenticatedAt
+}
+
+func (s *SessionResponseContent) GetIdleExpiresAt() SessionDate {
+	if s == nil || s.IdleExpiresAt == nil {
+		return SessionDate{}
+	}
+	return *s.IdleExpiresAt
+}
+
+func (s *SessionResponseContent) GetExpiresAt() SessionDate {
+	if s == nil || s.ExpiresAt == nil {
+		return SessionDate{}
+	}
+	return *s.ExpiresAt
+}
+
+func (s *SessionResponseContent) GetLastInteractedAt() SessionDate {
+	if s == nil || s.LastInteractedAt == nil {
+		return SessionDate{}
+	}
+	return *s.LastInteractedAt
+}
+
+func (s *SessionResponseContent) GetDevice() SessionDeviceMetadata {
+	if s == nil || s.Device == nil {
+		return SessionDeviceMetadata{}
+	}
+	return *s.Device
+}
+
+func (s *SessionResponseContent) GetClients() []*SessionClientMetadata {
+	if s == nil || s.Clients == nil {
+		return nil
+	}
+	return s.Clients
+}
+
+func (s *SessionResponseContent) GetAuthentication() SessionAuthenticationSignals {
+	if s == nil || s.Authentication == nil {
+		return SessionAuthenticationSignals{}
+	}
+	return *s.Authentication
+}
+
+func (s *SessionResponseContent) GetCookie() SessionCookieMetadata {
+	if s == nil || s.Cookie == nil {
+		return SessionCookieMetadata{}
+	}
+	return *s.Cookie
+}
+
+func (s *SessionResponseContent) GetSessionMetadata() SessionMetadata {
+	if s == nil || s.SessionMetadata == nil {
+		return nil
+	}
+	return *s.SessionMetadata
+}
+
+func (s *SessionResponseContent) GetActor() SessionActorMetadata {
+	if s == nil || s.Actor == nil {
+		return SessionActorMetadata{}
+	}
+	return *s.Actor
+}
+
+func (s *SessionResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.ExtraProperties
+}
+
+func (s *SessionResponseContent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetID(id *string) {
+	s.ID = id
+	s.require(sessionResponseContentFieldID)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetUserID(userID *string) {
+	s.UserID = userID
+	s.require(sessionResponseContentFieldUserID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetCreatedAt(createdAt *SessionDate) {
+	s.CreatedAt = createdAt
+	s.require(sessionResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetUpdatedAt(updatedAt *SessionDate) {
+	s.UpdatedAt = updatedAt
+	s.require(sessionResponseContentFieldUpdatedAt)
+}
+
+// SetAuthenticatedAt sets the AuthenticatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetAuthenticatedAt(authenticatedAt *SessionDate) {
+	s.AuthenticatedAt = authenticatedAt
+	s.require(sessionResponseContentFieldAuthenticatedAt)
+}
+
+// SetIdleExpiresAt sets the IdleExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetIdleExpiresAt(idleExpiresAt *SessionDate) {
+	s.IdleExpiresAt = idleExpiresAt
+	s.require(sessionResponseContentFieldIdleExpiresAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetExpiresAt(expiresAt *SessionDate) {
+	s.ExpiresAt = expiresAt
+	s.require(sessionResponseContentFieldExpiresAt)
+}
+
+// SetLastInteractedAt sets the LastInteractedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetLastInteractedAt(lastInteractedAt *SessionDate) {
+	s.LastInteractedAt = lastInteractedAt
+	s.require(sessionResponseContentFieldLastInteractedAt)
+}
+
+// SetDevice sets the Device field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetDevice(device *SessionDeviceMetadata) {
+	s.Device = device
+	s.require(sessionResponseContentFieldDevice)
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetClients(clients []*SessionClientMetadata) {
+	s.Clients = clients
+	s.require(sessionResponseContentFieldClients)
+}
+
+// SetAuthentication sets the Authentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetAuthentication(authentication *SessionAuthenticationSignals) {
+	s.Authentication = authentication
+	s.require(sessionResponseContentFieldAuthentication)
+}
+
+// SetCookie sets the Cookie field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetCookie(cookie *SessionCookieMetadata) {
+	s.Cookie = cookie
+	s.require(sessionResponseContentFieldCookie)
+}
+
+// SetSessionMetadata sets the SessionMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetSessionMetadata(sessionMetadata *SessionMetadata) {
+	s.SessionMetadata = sessionMetadata
+	s.require(sessionResponseContentFieldSessionMetadata)
+}
+
+// SetActor sets the Actor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SessionResponseContent) SetActor(actor *SessionActorMetadata) {
+	s.Actor = actor
+	s.require(sessionResponseContentFieldActor)
+}
+
+func (s *SessionResponseContent) UnmarshalJSON(data []byte) error {
+	type embed SessionResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*s = SessionResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.ExtraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SessionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SessionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
+}
+
+func (s *SessionResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// The successfully created authentication method.
+var (
+	setUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
+	setUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
+	setUserAuthenticationMethodResponseContentFieldName                          = big.NewInt(1 << 2)
+	setUserAuthenticationMethodResponseContentFieldTotpSecret                    = big.NewInt(1 << 3)
+	setUserAuthenticationMethodResponseContentFieldPhoneNumber                   = big.NewInt(1 << 4)
+	setUserAuthenticationMethodResponseContentFieldEmail                         = big.NewInt(1 << 5)
+	setUserAuthenticationMethodResponseContentFieldAuthenticationMethods         = big.NewInt(1 << 6)
+	setUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 7)
+	setUserAuthenticationMethodResponseContentFieldKeyID                         = big.NewInt(1 << 8)
+	setUserAuthenticationMethodResponseContentFieldPublicKey                     = big.NewInt(1 << 9)
+	setUserAuthenticationMethodResponseContentFieldAaguid                        = big.NewInt(1 << 10)
+	setUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 11)
+	setUserAuthenticationMethodResponseContentFieldCreatedAt                     = big.NewInt(1 << 12)
+)
+
+type SetUserAuthenticationMethodResponseContent struct {
+	// The ID of the newly created authentication method (automatically generated by the application)
+	ID   *string                             `json:"id,omitempty" url:"id,omitempty"`
+	Type CreatedAuthenticationMethodTypeEnum `json:"type" url:"type"`
+	// A human-readable label to identify the authentication method.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Base32 encoded secret for TOTP generation
+	TotpSecret *string `json:"totp_secret,omitempty" url:"totp_secret,omitempty"`
+	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
+	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	// Applies to email authentication methods only. The email address used to send verification messages.
+	Email                 *string                               `json:"email,omitempty" url:"email,omitempty"`
+	AuthenticationMethods []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	// Preferred phone authentication method
+	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
+	// Applies to webauthn authenticators only. The id of the credential.
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	// Applies to webauthn authenticators only. The public key.
+	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
+	// Applies to passkeys only. Authenticator Attestation Globally Unique Identifier.
+	Aaguid *string `json:"aaguid,omitempty" url:"aaguid,omitempty"`
+	// Applies to webauthn authenticators only. The relying party identifier.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"relying_party_identifier,omitempty"`
+	// Authentication method creation date
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetID() string {
+	if s == nil || s.ID == nil {
+		return ""
+	}
+	return *s.ID
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetType() CreatedAuthenticationMethodTypeEnum {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetTotpSecret() string {
+	if s == nil || s.TotpSecret == nil {
+		return ""
+	}
+	return *s.TotpSecret
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetPhoneNumber() string {
+	if s == nil || s.PhoneNumber == nil {
+		return ""
+	}
+	return *s.PhoneNumber
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetEmail() string {
+	if s == nil || s.Email == nil {
+		return ""
+	}
+	return *s.Email
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetAuthenticationMethods() []*UserAuthenticationMethodProperties {
+	if s == nil || s.AuthenticationMethods == nil {
+		return nil
+	}
+	return s.AuthenticationMethods
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetPreferredAuthenticationMethod() PreferredAuthenticationMethodEnum {
+	if s == nil || s.PreferredAuthenticationMethod == nil {
+		return ""
+	}
+	return *s.PreferredAuthenticationMethod
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetKeyID() string {
+	if s == nil || s.KeyID == nil {
+		return ""
+	}
+	return *s.KeyID
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetPublicKey() string {
+	if s == nil || s.PublicKey == nil {
+		return ""
+	}
+	return *s.PublicKey
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetAaguid() string {
+	if s == nil || s.Aaguid == nil {
+		return ""
+	}
+	return *s.Aaguid
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetRelyingPartyIdentifier() string {
+	if s == nil || s.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *s.RelyingPartyIdentifier
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetCreatedAt() time.Time {
+	if s == nil || s.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *s.CreatedAt
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetID(id *string) {
+	s.ID = id
+	s.require(setUserAuthenticationMethodResponseContentFieldID)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetType(type_ CreatedAuthenticationMethodTypeEnum) {
+	s.Type = type_
+	s.require(setUserAuthenticationMethodResponseContentFieldType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetName(name *string) {
+	s.Name = name
+	s.require(setUserAuthenticationMethodResponseContentFieldName)
+}
+
+// SetTotpSecret sets the TotpSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetTotpSecret(totpSecret *string) {
+	s.TotpSecret = totpSecret
+	s.require(setUserAuthenticationMethodResponseContentFieldTotpSecret)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetPhoneNumber(phoneNumber *string) {
+	s.PhoneNumber = phoneNumber
+	s.require(setUserAuthenticationMethodResponseContentFieldPhoneNumber)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetEmail(email *string) {
+	s.Email = email
+	s.require(setUserAuthenticationMethodResponseContentFieldEmail)
+}
+
+// SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetAuthenticationMethods(authenticationMethods []*UserAuthenticationMethodProperties) {
+	s.AuthenticationMethods = authenticationMethods
+	s.require(setUserAuthenticationMethodResponseContentFieldAuthenticationMethods)
+}
+
+// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
+	s.PreferredAuthenticationMethod = preferredAuthenticationMethod
+	s.require(setUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod)
+}
+
+// SetKeyID sets the KeyID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetKeyID(keyID *string) {
+	s.KeyID = keyID
+	s.require(setUserAuthenticationMethodResponseContentFieldKeyID)
+}
+
+// SetPublicKey sets the PublicKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetPublicKey(publicKey *string) {
+	s.PublicKey = publicKey
+	s.require(setUserAuthenticationMethodResponseContentFieldPublicKey)
+}
+
+// SetAaguid sets the Aaguid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetAaguid(aaguid *string) {
+	s.Aaguid = aaguid
+	s.require(setUserAuthenticationMethodResponseContentFieldAaguid)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	s.RelyingPartyIdentifier = relyingPartyIdentifier
+	s.require(setUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethodResponseContent) SetCreatedAt(createdAt *time.Time) {
+	s.CreatedAt = createdAt
+	s.require(setUserAuthenticationMethodResponseContentFieldCreatedAt)
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) UnmarshalJSON(data []byte) error {
+	type embed SetUserAuthenticationMethodResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*s),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*s = SetUserAuthenticationMethodResponseContent(unmarshaler.embed)
+	s.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SetUserAuthenticationMethodResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*s),
+		CreatedAt: internal.NewOptionalDateTime(s.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SetUserAuthenticationMethodResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	setUserAuthenticationMethodsFieldType                          = big.NewInt(1 << 0)
+	setUserAuthenticationMethodsFieldPreferredAuthenticationMethod = big.NewInt(1 << 1)
+	setUserAuthenticationMethodsFieldName                          = big.NewInt(1 << 2)
+	setUserAuthenticationMethodsFieldPhoneNumber                   = big.NewInt(1 << 3)
+	setUserAuthenticationMethodsFieldEmail                         = big.NewInt(1 << 4)
+	setUserAuthenticationMethodsFieldTotpSecret                    = big.NewInt(1 << 5)
+)
+
+type SetUserAuthenticationMethods struct {
+	Type                          AuthenticationTypeEnum             `json:"type" url:"type"`
+	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
+	// AA human-readable label to identify the authentication method.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
+	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	// Applies to email authentication methods only. The email address used to send verification messages.
+	Email *string `json:"email,omitempty" url:"email,omitempty"`
+	// Applies to totp authentication methods only. The base32 encoded secret for TOTP generation.
+	TotpSecret *string `json:"totp_secret,omitempty" url:"totp_secret,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SetUserAuthenticationMethods) GetType() AuthenticationTypeEnum {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *SetUserAuthenticationMethods) GetPreferredAuthenticationMethod() PreferredAuthenticationMethodEnum {
+	if s == nil || s.PreferredAuthenticationMethod == nil {
+		return ""
+	}
+	return *s.PreferredAuthenticationMethod
+}
+
+func (s *SetUserAuthenticationMethods) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+func (s *SetUserAuthenticationMethods) GetPhoneNumber() string {
+	if s == nil || s.PhoneNumber == nil {
+		return ""
+	}
+	return *s.PhoneNumber
+}
+
+func (s *SetUserAuthenticationMethods) GetEmail() string {
+	if s == nil || s.Email == nil {
+		return ""
+	}
+	return *s.Email
+}
+
+func (s *SetUserAuthenticationMethods) GetTotpSecret() string {
+	if s == nil || s.TotpSecret == nil {
+		return ""
+	}
+	return *s.TotpSecret
+}
+
+func (s *SetUserAuthenticationMethods) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SetUserAuthenticationMethods) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethods) SetType(type_ AuthenticationTypeEnum) {
+	s.Type = type_
+	s.require(setUserAuthenticationMethodsFieldType)
+}
+
+// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethods) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
+	s.PreferredAuthenticationMethod = preferredAuthenticationMethod
+	s.require(setUserAuthenticationMethodsFieldPreferredAuthenticationMethod)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethods) SetName(name *string) {
+	s.Name = name
+	s.require(setUserAuthenticationMethodsFieldName)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethods) SetPhoneNumber(phoneNumber *string) {
+	s.PhoneNumber = phoneNumber
+	s.require(setUserAuthenticationMethodsFieldPhoneNumber)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethods) SetEmail(email *string) {
+	s.Email = email
+	s.require(setUserAuthenticationMethodsFieldEmail)
+}
+
+// SetTotpSecret sets the TotpSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetUserAuthenticationMethods) SetTotpSecret(totpSecret *string) {
+	s.TotpSecret = totpSecret
+	s.require(setUserAuthenticationMethodsFieldTotpSecret)
+}
+
+func (s *SetUserAuthenticationMethods) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetUserAuthenticationMethods
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SetUserAuthenticationMethods(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SetUserAuthenticationMethods) MarshalJSON() ([]byte, error) {
+	type embed SetUserAuthenticationMethods
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SetUserAuthenticationMethods) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type SetUserAuthenticationMethodsRequestContent = []*SetUserAuthenticationMethods
+
+// The successfully created authentication method.
+var (
+	updateUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
+	updateUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
+	updateUserAuthenticationMethodResponseContentFieldName                          = big.NewInt(1 << 2)
+	updateUserAuthenticationMethodResponseContentFieldTotpSecret                    = big.NewInt(1 << 3)
+	updateUserAuthenticationMethodResponseContentFieldPhoneNumber                   = big.NewInt(1 << 4)
+	updateUserAuthenticationMethodResponseContentFieldEmail                         = big.NewInt(1 << 5)
+	updateUserAuthenticationMethodResponseContentFieldAuthenticationMethods         = big.NewInt(1 << 6)
+	updateUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 7)
+	updateUserAuthenticationMethodResponseContentFieldKeyID                         = big.NewInt(1 << 8)
+	updateUserAuthenticationMethodResponseContentFieldPublicKey                     = big.NewInt(1 << 9)
+	updateUserAuthenticationMethodResponseContentFieldAaguid                        = big.NewInt(1 << 10)
+	updateUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 11)
+	updateUserAuthenticationMethodResponseContentFieldConfirmed                     = big.NewInt(1 << 12)
+	updateUserAuthenticationMethodResponseContentFieldCreatedAt                     = big.NewInt(1 << 13)
+)
+
+type UpdateUserAuthenticationMethodResponseContent struct {
+	// The ID of the newly created authentication method (automatically generated by the application)
+	ID   *string                             `json:"id,omitempty" url:"id,omitempty"`
+	Type CreatedAuthenticationMethodTypeEnum `json:"type" url:"type"`
+	// A human-readable label to identify the authentication method.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Base32 encoded secret for TOTP generation
+	TotpSecret *string `json:"totp_secret,omitempty" url:"totp_secret,omitempty"`
+	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
+	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	// Applies to email authentication methods only. The email address used to send verification messages.
+	Email                         *string                               `json:"email,omitempty" url:"email,omitempty"`
+	AuthenticationMethods         []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum    `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
+	// Applies to webauthn authentication methods only. The id of the credential.
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	// Applies to webauthn authentication methods only. The public key.
+	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
+	// Applies to passkey authentication methods only. Authenticator Attestation Globally Unique Identifier.
+	Aaguid *string `json:"aaguid,omitempty" url:"aaguid,omitempty"`
+	// Applies to webauthn authentication methods only. The relying party identifier.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"relying_party_identifier,omitempty"`
+	// Whether the authentication method has been confirmed.
+	Confirmed *bool `json:"confirmed,omitempty" url:"confirmed,omitempty"`
+	// Authentication method creation date
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetType() CreatedAuthenticationMethodTypeEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetTotpSecret() string {
+	if u == nil || u.TotpSecret == nil {
+		return ""
+	}
+	return *u.TotpSecret
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetPhoneNumber() string {
+	if u == nil || u.PhoneNumber == nil {
+		return ""
+	}
+	return *u.PhoneNumber
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetEmail() string {
+	if u == nil || u.Email == nil {
+		return ""
+	}
+	return *u.Email
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetAuthenticationMethods() []*UserAuthenticationMethodProperties {
+	if u == nil || u.AuthenticationMethods == nil {
+		return nil
+	}
+	return u.AuthenticationMethods
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetPreferredAuthenticationMethod() PreferredAuthenticationMethodEnum {
+	if u == nil || u.PreferredAuthenticationMethod == nil {
+		return ""
+	}
+	return *u.PreferredAuthenticationMethod
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetKeyID() string {
+	if u == nil || u.KeyID == nil {
+		return ""
+	}
+	return *u.KeyID
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetPublicKey() string {
+	if u == nil || u.PublicKey == nil {
+		return ""
+	}
+	return *u.PublicKey
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetAaguid() string {
+	if u == nil || u.Aaguid == nil {
+		return ""
+	}
+	return *u.Aaguid
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetRelyingPartyIdentifier() string {
+	if u == nil || u.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *u.RelyingPartyIdentifier
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetConfirmed() bool {
+	if u == nil || u.Confirmed == nil {
+		return false
+	}
+	return *u.Confirmed
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(updateUserAuthenticationMethodResponseContentFieldID)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetType(type_ CreatedAuthenticationMethodTypeEnum) {
+	u.Type = type_
+	u.require(updateUserAuthenticationMethodResponseContentFieldType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateUserAuthenticationMethodResponseContentFieldName)
+}
+
+// SetTotpSecret sets the TotpSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetTotpSecret(totpSecret *string) {
+	u.TotpSecret = totpSecret
+	u.require(updateUserAuthenticationMethodResponseContentFieldTotpSecret)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetPhoneNumber(phoneNumber *string) {
+	u.PhoneNumber = phoneNumber
+	u.require(updateUserAuthenticationMethodResponseContentFieldPhoneNumber)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetEmail(email *string) {
+	u.Email = email
+	u.require(updateUserAuthenticationMethodResponseContentFieldEmail)
+}
+
+// SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetAuthenticationMethods(authenticationMethods []*UserAuthenticationMethodProperties) {
+	u.AuthenticationMethods = authenticationMethods
+	u.require(updateUserAuthenticationMethodResponseContentFieldAuthenticationMethods)
+}
+
+// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
+	u.PreferredAuthenticationMethod = preferredAuthenticationMethod
+	u.require(updateUserAuthenticationMethodResponseContentFieldPreferredAuthenticationMethod)
+}
+
+// SetKeyID sets the KeyID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetKeyID(keyID *string) {
+	u.KeyID = keyID
+	u.require(updateUserAuthenticationMethodResponseContentFieldKeyID)
+}
+
+// SetPublicKey sets the PublicKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetPublicKey(publicKey *string) {
+	u.PublicKey = publicKey
+	u.require(updateUserAuthenticationMethodResponseContentFieldPublicKey)
+}
+
+// SetAaguid sets the Aaguid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetAaguid(aaguid *string) {
+	u.Aaguid = aaguid
+	u.require(updateUserAuthenticationMethodResponseContentFieldAaguid)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	u.RelyingPartyIdentifier = relyingPartyIdentifier
+	u.require(updateUserAuthenticationMethodResponseContentFieldRelyingPartyIdentifier)
+}
+
+// SetConfirmed sets the Confirmed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetConfirmed(confirmed *bool) {
+	u.Confirmed = confirmed
+	u.require(updateUserAuthenticationMethodResponseContentFieldConfirmed)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodResponseContent) SetCreatedAt(createdAt *time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateUserAuthenticationMethodResponseContentFieldCreatedAt)
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateUserAuthenticationMethodResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateUserAuthenticationMethodResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateUserAuthenticationMethodResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+	}{
+		embed:     embed(*u),
+		CreatedAt: internal.NewOptionalDateTime(u.CreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateUserAuthenticationMethodResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 var (
@@ -1720,34 +6202,73 @@ func (u *UpdateUserResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// User metadata to which this user has read-only access.
-type UserAppMetadataSchema = map[string]any
-
 var (
-	userIdentitySchemaFieldConnection        = big.NewInt(1 << 0)
-	userIdentitySchemaFieldUserID            = big.NewInt(1 << 1)
-	userIdentitySchemaFieldProvider          = big.NewInt(1 << 2)
-	userIdentitySchemaFieldIsSocial          = big.NewInt(1 << 3)
-	userIdentitySchemaFieldAccessToken       = big.NewInt(1 << 4)
-	userIdentitySchemaFieldAccessTokenSecret = big.NewInt(1 << 5)
-	userIdentitySchemaFieldRefreshToken      = big.NewInt(1 << 6)
-	userIdentitySchemaFieldProfileData       = big.NewInt(1 << 7)
+	userAuthenticationMethodFieldID                            = big.NewInt(1 << 0)
+	userAuthenticationMethodFieldType                          = big.NewInt(1 << 1)
+	userAuthenticationMethodFieldConfirmed                     = big.NewInt(1 << 2)
+	userAuthenticationMethodFieldName                          = big.NewInt(1 << 3)
+	userAuthenticationMethodFieldAuthenticationMethods         = big.NewInt(1 << 4)
+	userAuthenticationMethodFieldPreferredAuthenticationMethod = big.NewInt(1 << 5)
+	userAuthenticationMethodFieldLinkID                        = big.NewInt(1 << 6)
+	userAuthenticationMethodFieldPhoneNumber                   = big.NewInt(1 << 7)
+	userAuthenticationMethodFieldEmail                         = big.NewInt(1 << 8)
+	userAuthenticationMethodFieldKeyID                         = big.NewInt(1 << 9)
+	userAuthenticationMethodFieldPublicKey                     = big.NewInt(1 << 10)
+	userAuthenticationMethodFieldCreatedAt                     = big.NewInt(1 << 11)
+	userAuthenticationMethodFieldEnrolledAt                    = big.NewInt(1 << 12)
+	userAuthenticationMethodFieldLastAuthAt                    = big.NewInt(1 << 13)
+	userAuthenticationMethodFieldCredentialDeviceType          = big.NewInt(1 << 14)
+	userAuthenticationMethodFieldCredentialBackedUp            = big.NewInt(1 << 15)
+	userAuthenticationMethodFieldIdentityUserID                = big.NewInt(1 << 16)
+	userAuthenticationMethodFieldUserAgent                     = big.NewInt(1 << 17)
+	userAuthenticationMethodFieldUserHandle                    = big.NewInt(1 << 18)
+	userAuthenticationMethodFieldTransports                    = big.NewInt(1 << 19)
+	userAuthenticationMethodFieldAaguid                        = big.NewInt(1 << 20)
+	userAuthenticationMethodFieldRelyingPartyIdentifier        = big.NewInt(1 << 21)
 )
 
-type UserIdentitySchema struct {
-	// Name of the connection containing this identity.
-	Connection *string                   `json:"connection,omitempty" url:"connection,omitempty"`
-	UserID     *UserID                   `json:"user_id,omitempty" url:"user_id,omitempty"`
-	Provider   *UserIdentityProviderEnum `json:"provider,omitempty" url:"provider,omitempty"`
-	// Whether this identity is from a social provider (true) or not (false).
-	IsSocial *bool `json:"isSocial,omitempty" url:"isSocial,omitempty"`
-	// IDP access token returned only if scope read:user_idp_tokens is defined.
-	AccessToken *string `json:"access_token,omitempty" url:"access_token,omitempty"`
-	// IDP access token secret returned only if scope read:user_idp_tokens is defined.
-	AccessTokenSecret *string `json:"access_token_secret,omitempty" url:"access_token_secret,omitempty"`
-	// IDP refresh token returned only if scope read:user_idp_tokens is defined.
-	RefreshToken *string          `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
-	ProfileData  *UserProfileData `json:"profileData,omitempty" url:"profileData,omitempty"`
+type UserAuthenticationMethod struct {
+	// The ID of the authentication method (auto generated)
+	ID   string                       `json:"id" url:"id"`
+	Type AuthenticationMethodTypeEnum `json:"type" url:"type"`
+	// The authentication method status
+	Confirmed *bool `json:"confirmed,omitempty" url:"confirmed,omitempty"`
+	// A human-readable label to identify the authentication method
+	Name                          *string                               `json:"name,omitempty" url:"name,omitempty"`
+	AuthenticationMethods         []*UserAuthenticationMethodProperties `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum    `json:"preferred_authentication_method,omitempty" url:"preferred_authentication_method,omitempty"`
+	// The ID of a linked authentication method. Linked authentication methods will be deleted together.
+	LinkID *string `json:"link_id,omitempty" url:"link_id,omitempty"`
+	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
+	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	// Applies to email and email-verification authentication methods only. The email address used to send verification messages.
+	Email *string `json:"email,omitempty" url:"email,omitempty"`
+	// Applies to webauthn authentication methods only. The ID of the generated credential.
+	KeyID *string `json:"key_id,omitempty" url:"key_id,omitempty"`
+	// Applies to webauthn authentication methods only. The public key.
+	PublicKey *string `json:"public_key,omitempty" url:"public_key,omitempty"`
+	// Authenticator creation date
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// Enrollment date
+	EnrolledAt *time.Time `json:"enrolled_at,omitempty" url:"enrolled_at,omitempty"`
+	// Last authentication
+	LastAuthAt *time.Time `json:"last_auth_at,omitempty" url:"last_auth_at,omitempty"`
+	// Applies to passkeys only. The kind of device the credential is stored on as defined by backup eligibility. "single_device" credentials cannot be backed up and synced to another device, "multi_device" credentials can be backed up if enabled by the end-user.
+	CredentialDeviceType *string `json:"credential_device_type,omitempty" url:"credential_device_type,omitempty"`
+	// Applies to passkeys only. Whether the credential was backed up.
+	CredentialBackedUp *bool `json:"credential_backed_up,omitempty" url:"credential_backed_up,omitempty"`
+	// Applies to passkeys only. The ID of the user identity linked with the authentication method.
+	IdentityUserID *string `json:"identity_user_id,omitempty" url:"identity_user_id,omitempty"`
+	// Applies to passkeys only. The user-agent of the browser used to create the passkey.
+	UserAgent *string `json:"user_agent,omitempty" url:"user_agent,omitempty"`
+	// Applies to passkeys only. The user handle of the user identity.
+	UserHandle *string `json:"user_handle,omitempty" url:"user_handle,omitempty"`
+	// Applies to passkeys only. The transports used by clients to communicate with the authenticator.
+	Transports []string `json:"transports,omitempty" url:"transports,omitempty"`
+	// Applies to passkey authentication methods only. Authenticator Attestation Globally Unique Identifier.
+	Aaguid *string `json:"aaguid,omitempty" url:"aaguid,omitempty"`
+	// Applies to webauthn/passkey authentication methods only. The credential's relying party identifier.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"relying_party_identifier,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1756,139 +6277,345 @@ type UserIdentitySchema struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserIdentitySchema) GetConnection() string {
-	if u == nil || u.Connection == nil {
+func (u *UserAuthenticationMethod) GetID() string {
+	if u == nil {
 		return ""
 	}
-	return *u.Connection
+	return u.ID
 }
 
-func (u *UserIdentitySchema) GetUserID() UserID {
-	if u == nil || u.UserID == nil {
-		return UserID{}
-	}
-	return *u.UserID
-}
-
-func (u *UserIdentitySchema) GetProvider() UserIdentityProviderEnum {
-	if u == nil || u.Provider == nil {
+func (u *UserAuthenticationMethod) GetType() AuthenticationMethodTypeEnum {
+	if u == nil {
 		return ""
 	}
-	return *u.Provider
+	return u.Type
 }
 
-func (u *UserIdentitySchema) GetIsSocial() bool {
-	if u == nil || u.IsSocial == nil {
+func (u *UserAuthenticationMethod) GetConfirmed() bool {
+	if u == nil || u.Confirmed == nil {
 		return false
 	}
-	return *u.IsSocial
+	return *u.Confirmed
 }
 
-func (u *UserIdentitySchema) GetAccessToken() string {
-	if u == nil || u.AccessToken == nil {
+func (u *UserAuthenticationMethod) GetName() string {
+	if u == nil || u.Name == nil {
 		return ""
 	}
-	return *u.AccessToken
+	return *u.Name
 }
 
-func (u *UserIdentitySchema) GetAccessTokenSecret() string {
-	if u == nil || u.AccessTokenSecret == nil {
+func (u *UserAuthenticationMethod) GetAuthenticationMethods() []*UserAuthenticationMethodProperties {
+	if u == nil || u.AuthenticationMethods == nil {
+		return nil
+	}
+	return u.AuthenticationMethods
+}
+
+func (u *UserAuthenticationMethod) GetPreferredAuthenticationMethod() PreferredAuthenticationMethodEnum {
+	if u == nil || u.PreferredAuthenticationMethod == nil {
 		return ""
 	}
-	return *u.AccessTokenSecret
+	return *u.PreferredAuthenticationMethod
 }
 
-func (u *UserIdentitySchema) GetRefreshToken() string {
-	if u == nil || u.RefreshToken == nil {
+func (u *UserAuthenticationMethod) GetLinkID() string {
+	if u == nil || u.LinkID == nil {
 		return ""
 	}
-	return *u.RefreshToken
+	return *u.LinkID
 }
 
-func (u *UserIdentitySchema) GetProfileData() UserProfileData {
-	if u == nil || u.ProfileData == nil {
-		return UserProfileData{}
+func (u *UserAuthenticationMethod) GetPhoneNumber() string {
+	if u == nil || u.PhoneNumber == nil {
+		return ""
 	}
-	return *u.ProfileData
+	return *u.PhoneNumber
 }
 
-func (u *UserIdentitySchema) GetExtraProperties() map[string]interface{} {
+func (u *UserAuthenticationMethod) GetEmail() string {
+	if u == nil || u.Email == nil {
+		return ""
+	}
+	return *u.Email
+}
+
+func (u *UserAuthenticationMethod) GetKeyID() string {
+	if u == nil || u.KeyID == nil {
+		return ""
+	}
+	return *u.KeyID
+}
+
+func (u *UserAuthenticationMethod) GetPublicKey() string {
+	if u == nil || u.PublicKey == nil {
+		return ""
+	}
+	return *u.PublicKey
+}
+
+func (u *UserAuthenticationMethod) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UserAuthenticationMethod) GetEnrolledAt() time.Time {
+	if u == nil || u.EnrolledAt == nil {
+		return time.Time{}
+	}
+	return *u.EnrolledAt
+}
+
+func (u *UserAuthenticationMethod) GetLastAuthAt() time.Time {
+	if u == nil || u.LastAuthAt == nil {
+		return time.Time{}
+	}
+	return *u.LastAuthAt
+}
+
+func (u *UserAuthenticationMethod) GetCredentialDeviceType() string {
+	if u == nil || u.CredentialDeviceType == nil {
+		return ""
+	}
+	return *u.CredentialDeviceType
+}
+
+func (u *UserAuthenticationMethod) GetCredentialBackedUp() bool {
+	if u == nil || u.CredentialBackedUp == nil {
+		return false
+	}
+	return *u.CredentialBackedUp
+}
+
+func (u *UserAuthenticationMethod) GetIdentityUserID() string {
+	if u == nil || u.IdentityUserID == nil {
+		return ""
+	}
+	return *u.IdentityUserID
+}
+
+func (u *UserAuthenticationMethod) GetUserAgent() string {
+	if u == nil || u.UserAgent == nil {
+		return ""
+	}
+	return *u.UserAgent
+}
+
+func (u *UserAuthenticationMethod) GetUserHandle() string {
+	if u == nil || u.UserHandle == nil {
+		return ""
+	}
+	return *u.UserHandle
+}
+
+func (u *UserAuthenticationMethod) GetTransports() []string {
+	if u == nil || u.Transports == nil {
+		return nil
+	}
+	return u.Transports
+}
+
+func (u *UserAuthenticationMethod) GetAaguid() string {
+	if u == nil || u.Aaguid == nil {
+		return ""
+	}
+	return *u.Aaguid
+}
+
+func (u *UserAuthenticationMethod) GetRelyingPartyIdentifier() string {
+	if u == nil || u.RelyingPartyIdentifier == nil {
+		return ""
+	}
+	return *u.RelyingPartyIdentifier
+}
+
+func (u *UserAuthenticationMethod) GetExtraProperties() map[string]interface{} {
 	if u == nil {
 		return nil
 	}
 	return u.extraProperties
 }
 
-func (u *UserIdentitySchema) require(field *big.Int) {
+func (u *UserAuthenticationMethod) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetConnection sets the Connection field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetConnection(connection *string) {
-	u.Connection = connection
-	u.require(userIdentitySchemaFieldConnection)
+func (u *UserAuthenticationMethod) SetID(id string) {
+	u.ID = id
+	u.require(userAuthenticationMethodFieldID)
 }
 
-// SetUserID sets the UserID field and marks it as non-optional;
+// SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetUserID(userID *UserID) {
-	u.UserID = userID
-	u.require(userIdentitySchemaFieldUserID)
+func (u *UserAuthenticationMethod) SetType(type_ AuthenticationMethodTypeEnum) {
+	u.Type = type_
+	u.require(userAuthenticationMethodFieldType)
 }
 
-// SetProvider sets the Provider field and marks it as non-optional;
+// SetConfirmed sets the Confirmed field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetProvider(provider *UserIdentityProviderEnum) {
-	u.Provider = provider
-	u.require(userIdentitySchemaFieldProvider)
+func (u *UserAuthenticationMethod) SetConfirmed(confirmed *bool) {
+	u.Confirmed = confirmed
+	u.require(userAuthenticationMethodFieldConfirmed)
 }
 
-// SetIsSocial sets the IsSocial field and marks it as non-optional;
+// SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetIsSocial(isSocial *bool) {
-	u.IsSocial = isSocial
-	u.require(userIdentitySchemaFieldIsSocial)
+func (u *UserAuthenticationMethod) SetName(name *string) {
+	u.Name = name
+	u.require(userAuthenticationMethodFieldName)
 }
 
-// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetAccessToken(accessToken *string) {
-	u.AccessToken = accessToken
-	u.require(userIdentitySchemaFieldAccessToken)
+func (u *UserAuthenticationMethod) SetAuthenticationMethods(authenticationMethods []*UserAuthenticationMethodProperties) {
+	u.AuthenticationMethods = authenticationMethods
+	u.require(userAuthenticationMethodFieldAuthenticationMethods)
 }
 
-// SetAccessTokenSecret sets the AccessTokenSecret field and marks it as non-optional;
+// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetAccessTokenSecret(accessTokenSecret *string) {
-	u.AccessTokenSecret = accessTokenSecret
-	u.require(userIdentitySchemaFieldAccessTokenSecret)
+func (u *UserAuthenticationMethod) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
+	u.PreferredAuthenticationMethod = preferredAuthenticationMethod
+	u.require(userAuthenticationMethodFieldPreferredAuthenticationMethod)
 }
 
-// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// SetLinkID sets the LinkID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetRefreshToken(refreshToken *string) {
-	u.RefreshToken = refreshToken
-	u.require(userIdentitySchemaFieldRefreshToken)
+func (u *UserAuthenticationMethod) SetLinkID(linkID *string) {
+	u.LinkID = linkID
+	u.require(userAuthenticationMethodFieldLinkID)
 }
 
-// SetProfileData sets the ProfileData field and marks it as non-optional;
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserIdentitySchema) SetProfileData(profileData *UserProfileData) {
-	u.ProfileData = profileData
-	u.require(userIdentitySchemaFieldProfileData)
+func (u *UserAuthenticationMethod) SetPhoneNumber(phoneNumber *string) {
+	u.PhoneNumber = phoneNumber
+	u.require(userAuthenticationMethodFieldPhoneNumber)
 }
 
-func (u *UserIdentitySchema) UnmarshalJSON(data []byte) error {
-	type unmarshaler UserIdentitySchema
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetEmail(email *string) {
+	u.Email = email
+	u.require(userAuthenticationMethodFieldEmail)
+}
+
+// SetKeyID sets the KeyID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetKeyID(keyID *string) {
+	u.KeyID = keyID
+	u.require(userAuthenticationMethodFieldKeyID)
+}
+
+// SetPublicKey sets the PublicKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetPublicKey(publicKey *string) {
+	u.PublicKey = publicKey
+	u.require(userAuthenticationMethodFieldPublicKey)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(userAuthenticationMethodFieldCreatedAt)
+}
+
+// SetEnrolledAt sets the EnrolledAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetEnrolledAt(enrolledAt *time.Time) {
+	u.EnrolledAt = enrolledAt
+	u.require(userAuthenticationMethodFieldEnrolledAt)
+}
+
+// SetLastAuthAt sets the LastAuthAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetLastAuthAt(lastAuthAt *time.Time) {
+	u.LastAuthAt = lastAuthAt
+	u.require(userAuthenticationMethodFieldLastAuthAt)
+}
+
+// SetCredentialDeviceType sets the CredentialDeviceType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetCredentialDeviceType(credentialDeviceType *string) {
+	u.CredentialDeviceType = credentialDeviceType
+	u.require(userAuthenticationMethodFieldCredentialDeviceType)
+}
+
+// SetCredentialBackedUp sets the CredentialBackedUp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetCredentialBackedUp(credentialBackedUp *bool) {
+	u.CredentialBackedUp = credentialBackedUp
+	u.require(userAuthenticationMethodFieldCredentialBackedUp)
+}
+
+// SetIdentityUserID sets the IdentityUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetIdentityUserID(identityUserID *string) {
+	u.IdentityUserID = identityUserID
+	u.require(userAuthenticationMethodFieldIdentityUserID)
+}
+
+// SetUserAgent sets the UserAgent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetUserAgent(userAgent *string) {
+	u.UserAgent = userAgent
+	u.require(userAuthenticationMethodFieldUserAgent)
+}
+
+// SetUserHandle sets the UserHandle field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetUserHandle(userHandle *string) {
+	u.UserHandle = userHandle
+	u.require(userAuthenticationMethodFieldUserHandle)
+}
+
+// SetTransports sets the Transports field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetTransports(transports []string) {
+	u.Transports = transports
+	u.require(userAuthenticationMethodFieldTransports)
+}
+
+// SetAaguid sets the Aaguid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetAaguid(aaguid *string) {
+	u.Aaguid = aaguid
+	u.require(userAuthenticationMethodFieldAaguid)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserAuthenticationMethod) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	u.RelyingPartyIdentifier = relyingPartyIdentifier
+	u.require(userAuthenticationMethodFieldRelyingPartyIdentifier)
+}
+
+func (u *UserAuthenticationMethod) UnmarshalJSON(data []byte) error {
+	type embed UserAuthenticationMethod
+	var unmarshaler = struct {
+		embed
+		CreatedAt  *internal.DateTime `json:"created_at"`
+		EnrolledAt *internal.DateTime `json:"enrolled_at,omitempty"`
+		LastAuthAt *internal.DateTime `json:"last_auth_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*u = UserIdentitySchema(value)
+	*u = UserAuthenticationMethod(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.EnrolledAt = unmarshaler.EnrolledAt.TimePtr()
+	u.LastAuthAt = unmarshaler.LastAuthAt.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -1898,18 +6625,24 @@ func (u *UserIdentitySchema) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (u *UserIdentitySchema) MarshalJSON() ([]byte, error) {
-	type embed UserIdentitySchema
+func (u *UserAuthenticationMethod) MarshalJSON() ([]byte, error) {
+	type embed UserAuthenticationMethod
 	var marshaler = struct {
 		embed
+		CreatedAt  *internal.DateTime `json:"created_at"`
+		EnrolledAt *internal.DateTime `json:"enrolled_at,omitempty"`
+		LastAuthAt *internal.DateTime `json:"last_auth_at,omitempty"`
 	}{
-		embed: embed(*u),
+		embed:      embed(*u),
+		CreatedAt:  internal.NewDateTime(u.CreatedAt),
+		EnrolledAt: internal.NewOptionalDateTime(u.EnrolledAt),
+		LastAuthAt: internal.NewOptionalDateTime(u.LastAuthAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
-func (u *UserIdentitySchema) String() string {
+func (u *UserAuthenticationMethod) String() string {
 	if u == nil {
 		return "<nil>"
 	}
@@ -1924,80 +6657,14 @@ func (u *UserIdentitySchema) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// User metadata to which this user has read/write access.
-type UserMetadataSchema = map[string]any
-
 var (
-	userResponseSchemaFieldUserID                  = big.NewInt(1 << 0)
-	userResponseSchemaFieldEmail                   = big.NewInt(1 << 1)
-	userResponseSchemaFieldEmailVerified           = big.NewInt(1 << 2)
-	userResponseSchemaFieldUsername                = big.NewInt(1 << 3)
-	userResponseSchemaFieldPhoneNumber             = big.NewInt(1 << 4)
-	userResponseSchemaFieldPhoneVerified           = big.NewInt(1 << 5)
-	userResponseSchemaFieldCreatedAt               = big.NewInt(1 << 6)
-	userResponseSchemaFieldUpdatedAt               = big.NewInt(1 << 7)
-	userResponseSchemaFieldIdentities              = big.NewInt(1 << 8)
-	userResponseSchemaFieldAppMetadata             = big.NewInt(1 << 9)
-	userResponseSchemaFieldUserMetadata            = big.NewInt(1 << 10)
-	userResponseSchemaFieldPicture                 = big.NewInt(1 << 11)
-	userResponseSchemaFieldName                    = big.NewInt(1 << 12)
-	userResponseSchemaFieldNickname                = big.NewInt(1 << 13)
-	userResponseSchemaFieldMultifactor             = big.NewInt(1 << 14)
-	userResponseSchemaFieldMultifactorLastModified = big.NewInt(1 << 15)
-	userResponseSchemaFieldLastIP                  = big.NewInt(1 << 16)
-	userResponseSchemaFieldLastLogin               = big.NewInt(1 << 17)
-	userResponseSchemaFieldLastPasswordReset       = big.NewInt(1 << 18)
-	userResponseSchemaFieldLoginsCount             = big.NewInt(1 << 19)
-	userResponseSchemaFieldBlocked                 = big.NewInt(1 << 20)
-	userResponseSchemaFieldGivenName               = big.NewInt(1 << 21)
-	userResponseSchemaFieldFamilyName              = big.NewInt(1 << 22)
+	userAuthenticationMethodPropertiesFieldType = big.NewInt(1 << 0)
+	userAuthenticationMethodPropertiesFieldID   = big.NewInt(1 << 1)
 )
 
-type UserResponseSchema struct {
-	// ID of the user which can be used when interacting with other APIs.
-	UserID *string `json:"user_id,omitempty" url:"user_id,omitempty"`
-	// Email address of this user.
-	Email *string `json:"email,omitempty" url:"email,omitempty"`
-	// Whether this email address is verified (true) or unverified (false).
-	EmailVerified *bool `json:"email_verified,omitempty" url:"email_verified,omitempty"`
-	// Username of this user.
-	Username *string `json:"username,omitempty" url:"username,omitempty"`
-	// Phone number for this user. Follows the <a href="https://en.wikipedia.org/wiki/E.164">E.164 recommendation</a>.
-	PhoneNumber *string `json:"phone_number,omitempty" url:"phone_number,omitempty"`
-	// Whether this phone number has been verified (true) or not (false).
-	PhoneVerified *bool `json:"phone_verified,omitempty" url:"phone_verified,omitempty"`
-	// Date and time when this user was created.
-	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
-	// Date and time when this user was last updated/modified.
-	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
-	// Array of user identity objects when accounts are linked.
-	Identities   []*UserIdentitySchema  `json:"identities,omitempty" url:"identities,omitempty"`
-	AppMetadata  *UserAppMetadataSchema `json:"app_metadata,omitempty" url:"app_metadata,omitempty"`
-	UserMetadata *UserMetadataSchema    `json:"user_metadata,omitempty" url:"user_metadata,omitempty"`
-	// URL to picture, photo, or avatar of this user.
-	Picture *string `json:"picture,omitempty" url:"picture,omitempty"`
-	// Name of this user.
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
-	// Preferred nickname or alias of this user.
-	Nickname *string `json:"nickname,omitempty" url:"nickname,omitempty"`
-	// List of multi-factor authentication providers with which this user has enrolled.
-	Multifactor []string `json:"multifactor,omitempty" url:"multifactor,omitempty"`
-	// Last date and time this user's multi-factor authentication providers were updated.
-	MultifactorLastModified *time.Time `json:"multifactor_last_modified,omitempty" url:"multifactor_last_modified,omitempty"`
-	// Last IP address from which this user logged in.
-	LastIP *string `json:"last_ip,omitempty" url:"last_ip,omitempty"`
-	// Last date and time this user logged in.
-	LastLogin *time.Time `json:"last_login,omitempty" url:"last_login,omitempty"`
-	// Last date and time this user had their password reset.
-	LastPasswordReset *time.Time `json:"last_password_reset,omitempty" url:"last_password_reset,omitempty"`
-	// Total number of logins this user has performed.
-	LoginsCount *int `json:"logins_count,omitempty" url:"logins_count,omitempty"`
-	// Whether this user was blocked by an administrator (true) or is not (false).
-	Blocked *bool `json:"blocked,omitempty" url:"blocked,omitempty"`
-	// Given name/first name/forename of this user.
-	GivenName *string `json:"given_name,omitempty" url:"given_name,omitempty"`
-	// Family name/last name/surname of this user.
-	FamilyName *string `json:"family_name,omitempty" url:"family_name,omitempty"`
+type UserAuthenticationMethodProperties struct {
+	Type *UserAuthenticationMethodPropertiesEnum `json:"type,omitempty" url:"type,omitempty"`
+	ID   *string                                 `json:"id,omitempty" url:"id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2007,363 +6674,59 @@ type UserResponseSchema struct {
 	rawJSON json.RawMessage
 }
 
-func (u *UserResponseSchema) GetUserID() string {
-	if u == nil || u.UserID == nil {
+func (u *UserAuthenticationMethodProperties) GetType() UserAuthenticationMethodPropertiesEnum {
+	if u == nil || u.Type == nil {
 		return ""
 	}
-	return *u.UserID
+	return *u.Type
 }
 
-func (u *UserResponseSchema) GetEmail() string {
-	if u == nil || u.Email == nil {
+func (u *UserAuthenticationMethodProperties) GetID() string {
+	if u == nil || u.ID == nil {
 		return ""
 	}
-	return *u.Email
+	return *u.ID
 }
 
-func (u *UserResponseSchema) GetEmailVerified() bool {
-	if u == nil || u.EmailVerified == nil {
-		return false
-	}
-	return *u.EmailVerified
-}
-
-func (u *UserResponseSchema) GetUsername() string {
-	if u == nil || u.Username == nil {
-		return ""
-	}
-	return *u.Username
-}
-
-func (u *UserResponseSchema) GetPhoneNumber() string {
-	if u == nil || u.PhoneNumber == nil {
-		return ""
-	}
-	return *u.PhoneNumber
-}
-
-func (u *UserResponseSchema) GetPhoneVerified() bool {
-	if u == nil || u.PhoneVerified == nil {
-		return false
-	}
-	return *u.PhoneVerified
-}
-
-func (u *UserResponseSchema) GetCreatedAt() time.Time {
-	if u == nil || u.CreatedAt == nil {
-		return time.Time{}
-	}
-	return *u.CreatedAt
-}
-
-func (u *UserResponseSchema) GetUpdatedAt() time.Time {
-	if u == nil || u.UpdatedAt == nil {
-		return time.Time{}
-	}
-	return *u.UpdatedAt
-}
-
-func (u *UserResponseSchema) GetIdentities() []*UserIdentitySchema {
-	if u == nil || u.Identities == nil {
-		return nil
-	}
-	return u.Identities
-}
-
-func (u *UserResponseSchema) GetAppMetadata() UserAppMetadataSchema {
-	if u == nil || u.AppMetadata == nil {
-		return nil
-	}
-	return *u.AppMetadata
-}
-
-func (u *UserResponseSchema) GetUserMetadata() UserMetadataSchema {
-	if u == nil || u.UserMetadata == nil {
-		return nil
-	}
-	return *u.UserMetadata
-}
-
-func (u *UserResponseSchema) GetPicture() string {
-	if u == nil || u.Picture == nil {
-		return ""
-	}
-	return *u.Picture
-}
-
-func (u *UserResponseSchema) GetName() string {
-	if u == nil || u.Name == nil {
-		return ""
-	}
-	return *u.Name
-}
-
-func (u *UserResponseSchema) GetNickname() string {
-	if u == nil || u.Nickname == nil {
-		return ""
-	}
-	return *u.Nickname
-}
-
-func (u *UserResponseSchema) GetMultifactor() []string {
-	if u == nil || u.Multifactor == nil {
-		return nil
-	}
-	return u.Multifactor
-}
-
-func (u *UserResponseSchema) GetMultifactorLastModified() time.Time {
-	if u == nil || u.MultifactorLastModified == nil {
-		return time.Time{}
-	}
-	return *u.MultifactorLastModified
-}
-
-func (u *UserResponseSchema) GetLastIP() string {
-	if u == nil || u.LastIP == nil {
-		return ""
-	}
-	return *u.LastIP
-}
-
-func (u *UserResponseSchema) GetLastLogin() time.Time {
-	if u == nil || u.LastLogin == nil {
-		return time.Time{}
-	}
-	return *u.LastLogin
-}
-
-func (u *UserResponseSchema) GetLastPasswordReset() time.Time {
-	if u == nil || u.LastPasswordReset == nil {
-		return time.Time{}
-	}
-	return *u.LastPasswordReset
-}
-
-func (u *UserResponseSchema) GetLoginsCount() int {
-	if u == nil || u.LoginsCount == nil {
-		return 0
-	}
-	return *u.LoginsCount
-}
-
-func (u *UserResponseSchema) GetBlocked() bool {
-	if u == nil || u.Blocked == nil {
-		return false
-	}
-	return *u.Blocked
-}
-
-func (u *UserResponseSchema) GetGivenName() string {
-	if u == nil || u.GivenName == nil {
-		return ""
-	}
-	return *u.GivenName
-}
-
-func (u *UserResponseSchema) GetFamilyName() string {
-	if u == nil || u.FamilyName == nil {
-		return ""
-	}
-	return *u.FamilyName
-}
-
-func (u *UserResponseSchema) GetExtraProperties() map[string]interface{} {
+func (u *UserAuthenticationMethodProperties) GetExtraProperties() map[string]interface{} {
 	if u == nil {
 		return nil
 	}
 	return u.ExtraProperties
 }
 
-func (u *UserResponseSchema) require(field *big.Int) {
+func (u *UserAuthenticationMethodProperties) require(field *big.Int) {
 	if u.explicitFields == nil {
 		u.explicitFields = big.NewInt(0)
 	}
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetUserID sets the UserID field and marks it as non-optional;
+// SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetUserID(userID *string) {
-	u.UserID = userID
-	u.require(userResponseSchemaFieldUserID)
+func (u *UserAuthenticationMethodProperties) SetType(type_ *UserAuthenticationMethodPropertiesEnum) {
+	u.Type = type_
+	u.require(userAuthenticationMethodPropertiesFieldType)
 }
 
-// SetEmail sets the Email field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetEmail(email *string) {
-	u.Email = email
-	u.require(userResponseSchemaFieldEmail)
+func (u *UserAuthenticationMethodProperties) SetID(id *string) {
+	u.ID = id
+	u.require(userAuthenticationMethodPropertiesFieldID)
 }
 
-// SetEmailVerified sets the EmailVerified field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetEmailVerified(emailVerified *bool) {
-	u.EmailVerified = emailVerified
-	u.require(userResponseSchemaFieldEmailVerified)
-}
-
-// SetUsername sets the Username field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetUsername(username *string) {
-	u.Username = username
-	u.require(userResponseSchemaFieldUsername)
-}
-
-// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetPhoneNumber(phoneNumber *string) {
-	u.PhoneNumber = phoneNumber
-	u.require(userResponseSchemaFieldPhoneNumber)
-}
-
-// SetPhoneVerified sets the PhoneVerified field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetPhoneVerified(phoneVerified *bool) {
-	u.PhoneVerified = phoneVerified
-	u.require(userResponseSchemaFieldPhoneVerified)
-}
-
-// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetCreatedAt(createdAt *time.Time) {
-	u.CreatedAt = createdAt
-	u.require(userResponseSchemaFieldCreatedAt)
-}
-
-// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetUpdatedAt(updatedAt *time.Time) {
-	u.UpdatedAt = updatedAt
-	u.require(userResponseSchemaFieldUpdatedAt)
-}
-
-// SetIdentities sets the Identities field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetIdentities(identities []*UserIdentitySchema) {
-	u.Identities = identities
-	u.require(userResponseSchemaFieldIdentities)
-}
-
-// SetAppMetadata sets the AppMetadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetAppMetadata(appMetadata *UserAppMetadataSchema) {
-	u.AppMetadata = appMetadata
-	u.require(userResponseSchemaFieldAppMetadata)
-}
-
-// SetUserMetadata sets the UserMetadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetUserMetadata(userMetadata *UserMetadataSchema) {
-	u.UserMetadata = userMetadata
-	u.require(userResponseSchemaFieldUserMetadata)
-}
-
-// SetPicture sets the Picture field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetPicture(picture *string) {
-	u.Picture = picture
-	u.require(userResponseSchemaFieldPicture)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetName(name *string) {
-	u.Name = name
-	u.require(userResponseSchemaFieldName)
-}
-
-// SetNickname sets the Nickname field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetNickname(nickname *string) {
-	u.Nickname = nickname
-	u.require(userResponseSchemaFieldNickname)
-}
-
-// SetMultifactor sets the Multifactor field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetMultifactor(multifactor []string) {
-	u.Multifactor = multifactor
-	u.require(userResponseSchemaFieldMultifactor)
-}
-
-// SetMultifactorLastModified sets the MultifactorLastModified field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetMultifactorLastModified(multifactorLastModified *time.Time) {
-	u.MultifactorLastModified = multifactorLastModified
-	u.require(userResponseSchemaFieldMultifactorLastModified)
-}
-
-// SetLastIP sets the LastIP field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetLastIP(lastIP *string) {
-	u.LastIP = lastIP
-	u.require(userResponseSchemaFieldLastIP)
-}
-
-// SetLastLogin sets the LastLogin field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetLastLogin(lastLogin *time.Time) {
-	u.LastLogin = lastLogin
-	u.require(userResponseSchemaFieldLastLogin)
-}
-
-// SetLastPasswordReset sets the LastPasswordReset field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetLastPasswordReset(lastPasswordReset *time.Time) {
-	u.LastPasswordReset = lastPasswordReset
-	u.require(userResponseSchemaFieldLastPasswordReset)
-}
-
-// SetLoginsCount sets the LoginsCount field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetLoginsCount(loginsCount *int) {
-	u.LoginsCount = loginsCount
-	u.require(userResponseSchemaFieldLoginsCount)
-}
-
-// SetBlocked sets the Blocked field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetBlocked(blocked *bool) {
-	u.Blocked = blocked
-	u.require(userResponseSchemaFieldBlocked)
-}
-
-// SetGivenName sets the GivenName field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetGivenName(givenName *string) {
-	u.GivenName = givenName
-	u.require(userResponseSchemaFieldGivenName)
-}
-
-// SetFamilyName sets the FamilyName field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserResponseSchema) SetFamilyName(familyName *string) {
-	u.FamilyName = familyName
-	u.require(userResponseSchemaFieldFamilyName)
-}
-
-func (u *UserResponseSchema) UnmarshalJSON(data []byte) error {
-	type embed UserResponseSchema
+func (u *UserAuthenticationMethodProperties) UnmarshalJSON(data []byte) error {
+	type embed UserAuthenticationMethodProperties
 	var unmarshaler = struct {
 		embed
-		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
-		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
-		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
-		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
-		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
 		embed: embed(*u),
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*u = UserResponseSchema(unmarshaler.embed)
-	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
-	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
-	u.MultifactorLastModified = unmarshaler.MultifactorLastModified.TimePtr()
-	u.LastLogin = unmarshaler.LastLogin.TimePtr()
-	u.LastPasswordReset = unmarshaler.LastPasswordReset.TimePtr()
+	*u = UserAuthenticationMethodProperties(unmarshaler.embed)
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
@@ -2373,28 +6736,1667 @@ func (u *UserResponseSchema) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (u *UserResponseSchema) MarshalJSON() ([]byte, error) {
-	type embed UserResponseSchema
+func (u *UserAuthenticationMethodProperties) MarshalJSON() ([]byte, error) {
+	type embed UserAuthenticationMethodProperties
 	var marshaler = struct {
 		embed
-		CreatedAt               *internal.DateTime `json:"created_at,omitempty"`
-		UpdatedAt               *internal.DateTime `json:"updated_at,omitempty"`
-		MultifactorLastModified *internal.DateTime `json:"multifactor_last_modified,omitempty"`
-		LastLogin               *internal.DateTime `json:"last_login,omitempty"`
-		LastPasswordReset       *internal.DateTime `json:"last_password_reset,omitempty"`
 	}{
-		embed:                   embed(*u),
-		CreatedAt:               internal.NewOptionalDateTime(u.CreatedAt),
-		UpdatedAt:               internal.NewOptionalDateTime(u.UpdatedAt),
-		MultifactorLastModified: internal.NewOptionalDateTime(u.MultifactorLastModified),
-		LastLogin:               internal.NewOptionalDateTime(u.LastLogin),
-		LastPasswordReset:       internal.NewOptionalDateTime(u.LastPasswordReset),
+		embed: embed(*u),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
 }
 
-func (u *UserResponseSchema) String() string {
+func (u *UserAuthenticationMethodProperties) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UserAuthenticationMethodPropertiesEnum string
+
+const (
+	UserAuthenticationMethodPropertiesEnumTotp  UserAuthenticationMethodPropertiesEnum = "totp"
+	UserAuthenticationMethodPropertiesEnumPush  UserAuthenticationMethodPropertiesEnum = "push"
+	UserAuthenticationMethodPropertiesEnumSms   UserAuthenticationMethodPropertiesEnum = "sms"
+	UserAuthenticationMethodPropertiesEnumVoice UserAuthenticationMethodPropertiesEnum = "voice"
+)
+
+func NewUserAuthenticationMethodPropertiesEnumFromString(s string) (UserAuthenticationMethodPropertiesEnum, error) {
+	switch s {
+	case "totp":
+		return UserAuthenticationMethodPropertiesEnumTotp, nil
+	case "push":
+		return UserAuthenticationMethodPropertiesEnumPush, nil
+	case "sms":
+		return UserAuthenticationMethodPropertiesEnumSms, nil
+	case "voice":
+		return UserAuthenticationMethodPropertiesEnumVoice, nil
+	}
+	var t UserAuthenticationMethodPropertiesEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserAuthenticationMethodPropertiesEnum) Ptr() *UserAuthenticationMethodPropertiesEnum {
+	return &u
+}
+
+var (
+	userEffectivePermissionResponseContentFieldResourceServerIdentifier = big.NewInt(1 << 0)
+	userEffectivePermissionResponseContentFieldPermissionName           = big.NewInt(1 << 1)
+	userEffectivePermissionResponseContentFieldResourceServerName       = big.NewInt(1 << 2)
+	userEffectivePermissionResponseContentFieldDescription              = big.NewInt(1 << 3)
+	userEffectivePermissionResponseContentFieldSources                  = big.NewInt(1 << 4)
+)
+
+type UserEffectivePermissionResponseContent struct {
+	// Resource server (API) identifier that this permission is for.
+	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	// Name of this permission.
+	PermissionName *string `json:"permission_name,omitempty" url:"permission_name,omitempty"`
+	// Resource server (API) name this permission is for.
+	ResourceServerName *string `json:"resource_server_name,omitempty" url:"resource_server_name,omitempty"`
+	// Description of this permission.
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// List of sources where this permission is coming from.
+	Sources []UserEffectivePermissionSourceEnum `json:"sources,omitempty" url:"sources,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserEffectivePermissionResponseContent) GetResourceServerIdentifier() string {
+	if u == nil || u.ResourceServerIdentifier == nil {
+		return ""
+	}
+	return *u.ResourceServerIdentifier
+}
+
+func (u *UserEffectivePermissionResponseContent) GetPermissionName() string {
+	if u == nil || u.PermissionName == nil {
+		return ""
+	}
+	return *u.PermissionName
+}
+
+func (u *UserEffectivePermissionResponseContent) GetResourceServerName() string {
+	if u == nil || u.ResourceServerName == nil {
+		return ""
+	}
+	return *u.ResourceServerName
+}
+
+func (u *UserEffectivePermissionResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UserEffectivePermissionResponseContent) GetSources() []UserEffectivePermissionSourceEnum {
+	if u == nil || u.Sources == nil {
+		return nil
+	}
+	return u.Sources
+}
+
+func (u *UserEffectivePermissionResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserEffectivePermissionResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionResponseContent) SetResourceServerIdentifier(resourceServerIdentifier *string) {
+	u.ResourceServerIdentifier = resourceServerIdentifier
+	u.require(userEffectivePermissionResponseContentFieldResourceServerIdentifier)
+}
+
+// SetPermissionName sets the PermissionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionResponseContent) SetPermissionName(permissionName *string) {
+	u.PermissionName = permissionName
+	u.require(userEffectivePermissionResponseContentFieldPermissionName)
+}
+
+// SetResourceServerName sets the ResourceServerName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionResponseContent) SetResourceServerName(resourceServerName *string) {
+	u.ResourceServerName = resourceServerName
+	u.require(userEffectivePermissionResponseContentFieldResourceServerName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(userEffectivePermissionResponseContentFieldDescription)
+}
+
+// SetSources sets the Sources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionResponseContent) SetSources(sources []UserEffectivePermissionSourceEnum) {
+	u.Sources = sources
+	u.require(userEffectivePermissionResponseContentFieldSources)
+}
+
+func (u *UserEffectivePermissionResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserEffectivePermissionResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserEffectivePermissionResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserEffectivePermissionResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UserEffectivePermissionResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserEffectivePermissionResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// The source type of a user effective permission roles.
+type UserEffectivePermissionRoleSourceEnum string
+
+const (
+	UserEffectivePermissionRoleSourceEnumDirect UserEffectivePermissionRoleSourceEnum = "direct"
+	UserEffectivePermissionRoleSourceEnumGroups UserEffectivePermissionRoleSourceEnum = "groups"
+)
+
+func NewUserEffectivePermissionRoleSourceEnumFromString(s string) (UserEffectivePermissionRoleSourceEnum, error) {
+	switch s {
+	case "direct":
+		return UserEffectivePermissionRoleSourceEnumDirect, nil
+	case "groups":
+		return UserEffectivePermissionRoleSourceEnumGroups, nil
+	}
+	var t UserEffectivePermissionRoleSourceEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserEffectivePermissionRoleSourceEnum) Ptr() *UserEffectivePermissionRoleSourceEnum {
+	return &u
+}
+
+var (
+	userEffectivePermissionRoleSourceResponseContentFieldID          = big.NewInt(1 << 0)
+	userEffectivePermissionRoleSourceResponseContentFieldName        = big.NewInt(1 << 1)
+	userEffectivePermissionRoleSourceResponseContentFieldDescription = big.NewInt(1 << 2)
+	userEffectivePermissionRoleSourceResponseContentFieldType        = big.NewInt(1 << 3)
+	userEffectivePermissionRoleSourceResponseContentFieldOwnerID     = big.NewInt(1 << 4)
+	userEffectivePermissionRoleSourceResponseContentFieldSources     = big.NewInt(1 << 5)
+)
+
+type UserEffectivePermissionRoleSourceResponseContent struct {
+	// ID for this role.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Name of this role.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Description of this role.
+	Description *string       `json:"description,omitempty" url:"description,omitempty"`
+	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	// The id of the entity that owns this role, such as an organization id.
+	OwnerID *string `json:"owner_id,omitempty" url:"owner_id,omitempty"`
+	// List of sources where this role is coming from.
+	Sources []UserEffectivePermissionRoleSourceEnum `json:"sources,omitempty" url:"sources,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetType() RoleTypeEnum {
+	if u == nil || u.Type == nil {
+		return ""
+	}
+	return *u.Type
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetOwnerID() string {
+	if u == nil || u.OwnerID == nil {
+		return ""
+	}
+	return *u.OwnerID
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetSources() []UserEffectivePermissionRoleSourceEnum {
+	if u == nil || u.Sources == nil {
+		return nil
+	}
+	return u.Sources
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionRoleSourceResponseContent) SetID(id *string) {
+	u.ID = id
+	u.require(userEffectivePermissionRoleSourceResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionRoleSourceResponseContent) SetName(name *string) {
+	u.Name = name
+	u.require(userEffectivePermissionRoleSourceResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionRoleSourceResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(userEffectivePermissionRoleSourceResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionRoleSourceResponseContent) SetType(type_ *RoleTypeEnum) {
+	u.Type = type_
+	u.require(userEffectivePermissionRoleSourceResponseContentFieldType)
+}
+
+// SetOwnerID sets the OwnerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionRoleSourceResponseContent) SetOwnerID(ownerID *string) {
+	u.OwnerID = ownerID
+	u.require(userEffectivePermissionRoleSourceResponseContentFieldOwnerID)
+}
+
+// SetSources sets the Sources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectivePermissionRoleSourceResponseContent) SetSources(sources []UserEffectivePermissionRoleSourceEnum) {
+	u.Sources = sources
+	u.require(userEffectivePermissionRoleSourceResponseContentFieldSources)
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserEffectivePermissionRoleSourceResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserEffectivePermissionRoleSourceResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UserEffectivePermissionRoleSourceResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserEffectivePermissionRoleSourceResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// The source type of a user effective permission.
+type UserEffectivePermissionSourceEnum string
+
+const (
+	UserEffectivePermissionSourceEnumDirect UserEffectivePermissionSourceEnum = "direct"
+	UserEffectivePermissionSourceEnumRoles  UserEffectivePermissionSourceEnum = "roles"
+)
+
+func NewUserEffectivePermissionSourceEnumFromString(s string) (UserEffectivePermissionSourceEnum, error) {
+	switch s {
+	case "direct":
+		return UserEffectivePermissionSourceEnumDirect, nil
+	case "roles":
+		return UserEffectivePermissionSourceEnumRoles, nil
+	}
+	var t UserEffectivePermissionSourceEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserEffectivePermissionSourceEnum) Ptr() *UserEffectivePermissionSourceEnum {
+	return &u
+}
+
+var (
+	userEffectiveRoleFieldID          = big.NewInt(1 << 0)
+	userEffectiveRoleFieldName        = big.NewInt(1 << 1)
+	userEffectiveRoleFieldDescription = big.NewInt(1 << 2)
+	userEffectiveRoleFieldSources     = big.NewInt(1 << 3)
+)
+
+type UserEffectiveRole struct {
+	// Role ID
+	ID string `json:"id" url:"id"`
+	// Role name
+	Name string `json:"name" url:"name"`
+	// Role description
+	Description string `json:"description" url:"description"`
+	// Sources of the role assignment (direct or through group membership)
+	Sources []UserEffectiveRoleSource `json:"sources" url:"sources"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserEffectiveRole) GetID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ID
+}
+
+func (u *UserEffectiveRole) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UserEffectiveRole) GetDescription() string {
+	if u == nil {
+		return ""
+	}
+	return u.Description
+}
+
+func (u *UserEffectiveRole) GetSources() []UserEffectiveRoleSource {
+	if u == nil {
+		return nil
+	}
+	return u.Sources
+}
+
+func (u *UserEffectiveRole) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserEffectiveRole) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectiveRole) SetID(id string) {
+	u.ID = id
+	u.require(userEffectiveRoleFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectiveRole) SetName(name string) {
+	u.Name = name
+	u.require(userEffectiveRoleFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectiveRole) SetDescription(description string) {
+	u.Description = description
+	u.require(userEffectiveRoleFieldDescription)
+}
+
+// SetSources sets the Sources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserEffectiveRole) SetSources(sources []UserEffectiveRoleSource) {
+	u.Sources = sources
+	u.require(userEffectiveRoleFieldSources)
+}
+
+func (u *UserEffectiveRole) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserEffectiveRole
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserEffectiveRole(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserEffectiveRole) MarshalJSON() ([]byte, error) {
+	type embed UserEffectiveRole
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserEffectiveRole) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UserEffectiveRoleSource string
+
+const (
+	UserEffectiveRoleSourceDirect UserEffectiveRoleSource = "direct"
+	UserEffectiveRoleSourceGroups UserEffectiveRoleSource = "groups"
+)
+
+func NewUserEffectiveRoleSourceFromString(s string) (UserEffectiveRoleSource, error) {
+	switch s {
+	case "direct":
+		return UserEffectiveRoleSourceDirect, nil
+	case "groups":
+		return UserEffectiveRoleSourceGroups, nil
+	}
+	var t UserEffectiveRoleSource
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserEffectiveRoleSource) Ptr() *UserEffectiveRoleSource {
+	return &u
+}
+
+// Authentication method for this enrollment. Can be `authenticator`, `guardian`, `sms`, `webauthn-roaming`, or `webauthn-platform`.
+type UserEnrollmentAuthMethodEnum string
+
+const (
+	UserEnrollmentAuthMethodEnumAuthenticator    UserEnrollmentAuthMethodEnum = "authenticator"
+	UserEnrollmentAuthMethodEnumGuardian         UserEnrollmentAuthMethodEnum = "guardian"
+	UserEnrollmentAuthMethodEnumSms              UserEnrollmentAuthMethodEnum = "sms"
+	UserEnrollmentAuthMethodEnumWebauthnPlatform UserEnrollmentAuthMethodEnum = "webauthn-platform"
+	UserEnrollmentAuthMethodEnumWebauthnRoaming  UserEnrollmentAuthMethodEnum = "webauthn-roaming"
+)
+
+func NewUserEnrollmentAuthMethodEnumFromString(s string) (UserEnrollmentAuthMethodEnum, error) {
+	switch s {
+	case "authenticator":
+		return UserEnrollmentAuthMethodEnumAuthenticator, nil
+	case "guardian":
+		return UserEnrollmentAuthMethodEnumGuardian, nil
+	case "sms":
+		return UserEnrollmentAuthMethodEnumSms, nil
+	case "webauthn-platform":
+		return UserEnrollmentAuthMethodEnumWebauthnPlatform, nil
+	case "webauthn-roaming":
+		return UserEnrollmentAuthMethodEnumWebauthnRoaming, nil
+	}
+	var t UserEnrollmentAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserEnrollmentAuthMethodEnum) Ptr() *UserEnrollmentAuthMethodEnum {
+	return &u
+}
+
+// Status of this enrollment. Can be `pending` or `confirmed`.
+type UserEnrollmentStatusEnum string
+
+const (
+	UserEnrollmentStatusEnumPending   UserEnrollmentStatusEnum = "pending"
+	UserEnrollmentStatusEnumConfirmed UserEnrollmentStatusEnum = "confirmed"
+)
+
+func NewUserEnrollmentStatusEnumFromString(s string) (UserEnrollmentStatusEnum, error) {
+	switch s {
+	case "pending":
+		return UserEnrollmentStatusEnumPending, nil
+	case "confirmed":
+		return UserEnrollmentStatusEnumConfirmed, nil
+	}
+	var t UserEnrollmentStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserEnrollmentStatusEnum) Ptr() *UserEnrollmentStatusEnum {
+	return &u
+}
+
+var (
+	userGroupsResponseSchemaFieldID                  = big.NewInt(1 << 0)
+	userGroupsResponseSchemaFieldName                = big.NewInt(1 << 1)
+	userGroupsResponseSchemaFieldExternalID          = big.NewInt(1 << 2)
+	userGroupsResponseSchemaFieldConnectionID        = big.NewInt(1 << 3)
+	userGroupsResponseSchemaFieldTenantName          = big.NewInt(1 << 4)
+	userGroupsResponseSchemaFieldCreatedAt           = big.NewInt(1 << 5)
+	userGroupsResponseSchemaFieldUpdatedAt           = big.NewInt(1 << 6)
+	userGroupsResponseSchemaFieldMembershipCreatedAt = big.NewInt(1 << 7)
+)
+
+type UserGroupsResponseSchema struct {
+	// Unique identifier for the group (service-generated).
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Name of the group. Must be unique within its connection. Must contain between 1 and 128 printable ASCII characters.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// External identifier for the group, often used for SCIM synchronization. Max length of 256 characters.
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
+	// Identifier for the connection this group belongs to (if a connection group).
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// Identifier for the tenant this group belongs to.
+	TenantName *string `json:"tenant_name,omitempty" url:"tenant_name,omitempty"`
+	// Timestamp of when the group was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// Timestamp of when the group was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// Timestamp of when the group membership was added.
+	MembershipCreatedAt *time.Time `json:"membership_created_at,omitempty" url:"membership_created_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserGroupsResponseSchema) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UserGroupsResponseSchema) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+func (u *UserGroupsResponseSchema) GetExternalID() string {
+	if u == nil || u.ExternalID == nil {
+		return ""
+	}
+	return *u.ExternalID
+}
+
+func (u *UserGroupsResponseSchema) GetConnectionID() string {
+	if u == nil || u.ConnectionID == nil {
+		return ""
+	}
+	return *u.ConnectionID
+}
+
+func (u *UserGroupsResponseSchema) GetTenantName() string {
+	if u == nil || u.TenantName == nil {
+		return ""
+	}
+	return *u.TenantName
+}
+
+func (u *UserGroupsResponseSchema) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetUpdatedAt() time.Time {
+	if u == nil || u.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *u.UpdatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetMembershipCreatedAt() time.Time {
+	if u == nil || u.MembershipCreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.MembershipCreatedAt
+}
+
+func (u *UserGroupsResponseSchema) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserGroupsResponseSchema) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetID(id *string) {
+	u.ID = id
+	u.require(userGroupsResponseSchemaFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetName(name *string) {
+	u.Name = name
+	u.require(userGroupsResponseSchemaFieldName)
+}
+
+// SetExternalID sets the ExternalID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetExternalID(externalID *string) {
+	u.ExternalID = externalID
+	u.require(userGroupsResponseSchemaFieldExternalID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetConnectionID(connectionID *string) {
+	u.ConnectionID = connectionID
+	u.require(userGroupsResponseSchemaFieldConnectionID)
+}
+
+// SetTenantName sets the TenantName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetTenantName(tenantName *string) {
+	u.TenantName = tenantName
+	u.require(userGroupsResponseSchemaFieldTenantName)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetCreatedAt(createdAt *time.Time) {
+	u.CreatedAt = createdAt
+	u.require(userGroupsResponseSchemaFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(userGroupsResponseSchemaFieldUpdatedAt)
+}
+
+// SetMembershipCreatedAt sets the MembershipCreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserGroupsResponseSchema) SetMembershipCreatedAt(membershipCreatedAt *time.Time) {
+	u.MembershipCreatedAt = membershipCreatedAt
+	u.require(userGroupsResponseSchemaFieldMembershipCreatedAt)
+}
+
+func (u *UserGroupsResponseSchema) UnmarshalJSON(data []byte) error {
+	type embed UserGroupsResponseSchema
+	var unmarshaler = struct {
+		embed
+		CreatedAt           *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt           *internal.DateTime `json:"updated_at,omitempty"`
+		MembershipCreatedAt *internal.DateTime `json:"membership_created_at,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UserGroupsResponseSchema(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	u.MembershipCreatedAt = unmarshaler.MembershipCreatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserGroupsResponseSchema) MarshalJSON() ([]byte, error) {
+	type embed UserGroupsResponseSchema
+	var marshaler = struct {
+		embed
+		CreatedAt           *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt           *internal.DateTime `json:"updated_at,omitempty"`
+		MembershipCreatedAt *internal.DateTime `json:"membership_created_at,omitempty"`
+	}{
+		embed:               embed(*u),
+		CreatedAt:           internal.NewOptionalDateTime(u.CreatedAt),
+		UpdatedAt:           internal.NewOptionalDateTime(u.UpdatedAt),
+		MembershipCreatedAt: internal.NewOptionalDateTime(u.MembershipCreatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserGroupsResponseSchema) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	userIdentityFieldConnection        = big.NewInt(1 << 0)
+	userIdentityFieldUserID            = big.NewInt(1 << 1)
+	userIdentityFieldProvider          = big.NewInt(1 << 2)
+	userIdentityFieldProfileData       = big.NewInt(1 << 3)
+	userIdentityFieldIsSocial          = big.NewInt(1 << 4)
+	userIdentityFieldAccessToken       = big.NewInt(1 << 5)
+	userIdentityFieldAccessTokenSecret = big.NewInt(1 << 6)
+	userIdentityFieldRefreshToken      = big.NewInt(1 << 7)
+)
+
+type UserIdentity struct {
+	// Connection name of this identity.
+	Connection string `json:"connection" url:"connection"`
+	// user_id of this identity.
+	UserID *UserID `json:"user_id" url:"user_id"`
+	// Type of identity provider.
+	Provider    string           `json:"provider" url:"provider"`
+	ProfileData *UserProfileData `json:"profileData,omitempty" url:"profileData,omitempty"`
+	// Whether the identity provider is a social provider (true) or not (false).
+	IsSocial *bool `json:"isSocial,omitempty" url:"isSocial,omitempty"`
+	// IDP access token returned if scope `read:user_idp_tokens` is defined.
+	AccessToken *string `json:"access_token,omitempty" url:"access_token,omitempty"`
+	// IDP access token secret returned only if `scope read:user_idp_tokens` is defined.
+	AccessTokenSecret *string `json:"access_token_secret,omitempty" url:"access_token_secret,omitempty"`
+	// IDP refresh token returned only if scope `read:user_idp_tokens` is defined.
+	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserIdentity) GetConnection() string {
+	if u == nil {
+		return ""
+	}
+	return u.Connection
+}
+
+func (u *UserIdentity) GetUserID() *UserID {
+	if u == nil {
+		return nil
+	}
+	return u.UserID
+}
+
+func (u *UserIdentity) GetProvider() string {
+	if u == nil {
+		return ""
+	}
+	return u.Provider
+}
+
+func (u *UserIdentity) GetProfileData() UserProfileData {
+	if u == nil || u.ProfileData == nil {
+		return UserProfileData{}
+	}
+	return *u.ProfileData
+}
+
+func (u *UserIdentity) GetIsSocial() bool {
+	if u == nil || u.IsSocial == nil {
+		return false
+	}
+	return *u.IsSocial
+}
+
+func (u *UserIdentity) GetAccessToken() string {
+	if u == nil || u.AccessToken == nil {
+		return ""
+	}
+	return *u.AccessToken
+}
+
+func (u *UserIdentity) GetAccessTokenSecret() string {
+	if u == nil || u.AccessTokenSecret == nil {
+		return ""
+	}
+	return *u.AccessTokenSecret
+}
+
+func (u *UserIdentity) GetRefreshToken() string {
+	if u == nil || u.RefreshToken == nil {
+		return ""
+	}
+	return *u.RefreshToken
+}
+
+func (u *UserIdentity) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserIdentity) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentity) SetConnection(connection string) {
+	u.Connection = connection
+	u.require(userIdentityFieldConnection)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentity) SetUserID(userID *UserID) {
+	u.UserID = userID
+	u.require(userIdentityFieldUserID)
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentity) SetProvider(provider string) {
+	u.Provider = provider
+	u.require(userIdentityFieldProvider)
+}
+
+// SetProfileData sets the ProfileData field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentity) SetProfileData(profileData *UserProfileData) {
+	u.ProfileData = profileData
+	u.require(userIdentityFieldProfileData)
+}
+
+// SetIsSocial sets the IsSocial field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentity) SetIsSocial(isSocial *bool) {
+	u.IsSocial = isSocial
+	u.require(userIdentityFieldIsSocial)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentity) SetAccessToken(accessToken *string) {
+	u.AccessToken = accessToken
+	u.require(userIdentityFieldAccessToken)
+}
+
+// SetAccessTokenSecret sets the AccessTokenSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentity) SetAccessTokenSecret(accessTokenSecret *string) {
+	u.AccessTokenSecret = accessTokenSecret
+	u.require(userIdentityFieldAccessTokenSecret)
+}
+
+// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserIdentity) SetRefreshToken(refreshToken *string) {
+	u.RefreshToken = refreshToken
+	u.require(userIdentityFieldRefreshToken)
+}
+
+func (u *UserIdentity) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserIdentity
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserIdentity(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserIdentity) MarshalJSON() ([]byte, error) {
+	type embed UserIdentity
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserIdentity) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	userListLogOffsetPaginatedResponseContentFieldStart  = big.NewInt(1 << 0)
+	userListLogOffsetPaginatedResponseContentFieldLimit  = big.NewInt(1 << 1)
+	userListLogOffsetPaginatedResponseContentFieldLength = big.NewInt(1 << 2)
+	userListLogOffsetPaginatedResponseContentFieldTotal  = big.NewInt(1 << 3)
+	userListLogOffsetPaginatedResponseContentFieldLogs   = big.NewInt(1 << 4)
+)
+
+type UserListLogOffsetPaginatedResponseContent struct {
+	Start  *float64 `json:"start,omitempty" url:"start,omitempty"`
+	Limit  *float64 `json:"limit,omitempty" url:"limit,omitempty"`
+	Length *float64 `json:"length,omitempty" url:"length,omitempty"`
+	Total  *float64 `json:"total,omitempty" url:"total,omitempty"`
+	Logs   []*Log   `json:"logs,omitempty" url:"logs,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) GetStart() float64 {
+	if u == nil || u.Start == nil {
+		return 0
+	}
+	return *u.Start
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) GetLimit() float64 {
+	if u == nil || u.Limit == nil {
+		return 0
+	}
+	return *u.Limit
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) GetLength() float64 {
+	if u == nil || u.Length == nil {
+		return 0
+	}
+	return *u.Length
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) GetTotal() float64 {
+	if u == nil || u.Total == nil {
+		return 0
+	}
+	return *u.Total
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) GetLogs() []*Log {
+	if u == nil || u.Logs == nil {
+		return nil
+	}
+	return u.Logs
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserListLogOffsetPaginatedResponseContent) SetStart(start *float64) {
+	u.Start = start
+	u.require(userListLogOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserListLogOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	u.Limit = limit
+	u.require(userListLogOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetLength sets the Length field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserListLogOffsetPaginatedResponseContent) SetLength(length *float64) {
+	u.Length = length
+	u.require(userListLogOffsetPaginatedResponseContentFieldLength)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserListLogOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	u.Total = total
+	u.require(userListLogOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetLogs sets the Logs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserListLogOffsetPaginatedResponseContent) SetLogs(logs []*Log) {
+	u.Logs = logs
+	u.require(userListLogOffsetPaginatedResponseContentFieldLogs)
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserListLogOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserListLogOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UserListLogOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserListLogOffsetPaginatedResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type UserListLogResponseContent struct {
+	LogList                                   []*Log
+	UserListLogOffsetPaginatedResponseContent *UserListLogOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (u *UserListLogResponseContent) GetLogList() []*Log {
+	if u == nil {
+		return nil
+	}
+	return u.LogList
+}
+
+func (u *UserListLogResponseContent) GetUserListLogOffsetPaginatedResponseContent() *UserListLogOffsetPaginatedResponseContent {
+	if u == nil {
+		return nil
+	}
+	return u.UserListLogOffsetPaginatedResponseContent
+}
+
+func (u *UserListLogResponseContent) UnmarshalJSON(data []byte) error {
+	var valueLogList []*Log
+	if err := json.Unmarshal(data, &valueLogList); err == nil {
+		u.typ = "LogList"
+		u.LogList = valueLogList
+		return nil
+	}
+	valueUserListLogOffsetPaginatedResponseContent := new(UserListLogOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueUserListLogOffsetPaginatedResponseContent); err == nil {
+		u.typ = "UserListLogOffsetPaginatedResponseContent"
+		u.UserListLogOffsetPaginatedResponseContent = valueUserListLogOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UserListLogResponseContent) MarshalJSON() ([]byte, error) {
+	if u.typ == "LogList" || u.LogList != nil {
+		return json.Marshal(u.LogList)
+	}
+	if u.typ == "UserListLogOffsetPaginatedResponseContent" || u.UserListLogOffsetPaginatedResponseContent != nil {
+		return json.Marshal(u.UserListLogOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+type UserListLogResponseContentVisitor interface {
+	VisitLogList([]*Log) error
+	VisitUserListLogOffsetPaginatedResponseContent(*UserListLogOffsetPaginatedResponseContent) error
+}
+
+func (u *UserListLogResponseContent) Accept(visitor UserListLogResponseContentVisitor) error {
+	if u.typ == "LogList" || u.LogList != nil {
+		return visitor.VisitLogList(u.LogList)
+	}
+	if u.typ == "UserListLogOffsetPaginatedResponseContent" || u.UserListLogOffsetPaginatedResponseContent != nil {
+		return visitor.VisitUserListLogOffsetPaginatedResponseContent(u.UserListLogOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
+}
+
+// The multi-factor provider. Supported values 'duo' or 'google-authenticator'
+type UserMultifactorProviderEnum string
+
+const (
+	UserMultifactorProviderEnumDuo                 UserMultifactorProviderEnum = "duo"
+	UserMultifactorProviderEnumGoogleAuthenticator UserMultifactorProviderEnum = "google-authenticator"
+)
+
+func NewUserMultifactorProviderEnumFromString(s string) (UserMultifactorProviderEnum, error) {
+	switch s {
+	case "duo":
+		return UserMultifactorProviderEnumDuo, nil
+	case "google-authenticator":
+		return UserMultifactorProviderEnumGoogleAuthenticator, nil
+	}
+	var t UserMultifactorProviderEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (u UserMultifactorProviderEnum) Ptr() *UserMultifactorProviderEnum {
+	return &u
+}
+
+var (
+	userPermissionSchemaFieldSources                  = big.NewInt(1 << 0)
+	userPermissionSchemaFieldResourceServerIdentifier = big.NewInt(1 << 1)
+	userPermissionSchemaFieldPermissionName           = big.NewInt(1 << 2)
+	userPermissionSchemaFieldResourceServerName       = big.NewInt(1 << 3)
+	userPermissionSchemaFieldDescription              = big.NewInt(1 << 4)
+)
+
+type UserPermissionSchema struct {
+	Sources any `json:"sources,omitempty" url:"sources,omitempty"`
+	// Resource server (API) identifier that this permission is for.
+	ResourceServerIdentifier *string `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	// Name of this permission.
+	PermissionName *string `json:"permission_name,omitempty" url:"permission_name,omitempty"`
+	// Resource server (API) name this permission is for.
+	ResourceServerName *string `json:"resource_server_name,omitempty" url:"resource_server_name,omitempty"`
+	// Description of this permission.
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UserPermissionSchema) GetSources() any {
+	if u == nil || u.Sources == nil {
+		return nil
+	}
+	return u.Sources
+}
+
+func (u *UserPermissionSchema) GetResourceServerIdentifier() string {
+	if u == nil || u.ResourceServerIdentifier == nil {
+		return ""
+	}
+	return *u.ResourceServerIdentifier
+}
+
+func (u *UserPermissionSchema) GetPermissionName() string {
+	if u == nil || u.PermissionName == nil {
+		return ""
+	}
+	return *u.PermissionName
+}
+
+func (u *UserPermissionSchema) GetResourceServerName() string {
+	if u == nil || u.ResourceServerName == nil {
+		return ""
+	}
+	return *u.ResourceServerName
+}
+
+func (u *UserPermissionSchema) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UserPermissionSchema) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UserPermissionSchema) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetSources sets the Sources field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserPermissionSchema) SetSources(sources any) {
+	u.Sources = sources
+	u.require(userPermissionSchemaFieldSources)
+}
+
+// SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserPermissionSchema) SetResourceServerIdentifier(resourceServerIdentifier *string) {
+	u.ResourceServerIdentifier = resourceServerIdentifier
+	u.require(userPermissionSchemaFieldResourceServerIdentifier)
+}
+
+// SetPermissionName sets the PermissionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserPermissionSchema) SetPermissionName(permissionName *string) {
+	u.PermissionName = permissionName
+	u.require(userPermissionSchemaFieldPermissionName)
+}
+
+// SetResourceServerName sets the ResourceServerName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserPermissionSchema) SetResourceServerName(resourceServerName *string) {
+	u.ResourceServerName = resourceServerName
+	u.require(userPermissionSchemaFieldResourceServerName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UserPermissionSchema) SetDescription(description *string) {
+	u.Description = description
+	u.require(userPermissionSchemaFieldDescription)
+}
+
+func (u *UserPermissionSchema) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserPermissionSchema
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserPermissionSchema(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserPermissionSchema) MarshalJSON() ([]byte, error) {
+	type embed UserPermissionSchema
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UserPermissionSchema) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	usersEnrollmentFieldID          = big.NewInt(1 << 0)
+	usersEnrollmentFieldStatus      = big.NewInt(1 << 1)
+	usersEnrollmentFieldType        = big.NewInt(1 << 2)
+	usersEnrollmentFieldName        = big.NewInt(1 << 3)
+	usersEnrollmentFieldIdentifier  = big.NewInt(1 << 4)
+	usersEnrollmentFieldPhoneNumber = big.NewInt(1 << 5)
+	usersEnrollmentFieldAuthMethod  = big.NewInt(1 << 6)
+	usersEnrollmentFieldEnrolledAt  = big.NewInt(1 << 7)
+	usersEnrollmentFieldLastAuth    = big.NewInt(1 << 8)
+)
+
+type UsersEnrollment struct {
+	// ID of this enrollment.
+	ID     *string                   `json:"id,omitempty" url:"id,omitempty"`
+	Status *UserEnrollmentStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	// Type of enrollment.
+	Type *string `json:"type,omitempty" url:"type,omitempty"`
+	// Name of enrollment (usually phone number).
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Device identifier (usually phone identifier) of this enrollment.
+	Identifier *string `json:"identifier,omitempty" url:"identifier,omitempty"`
+	// Phone number for this enrollment.
+	PhoneNumber *string                       `json:"phone_number,omitempty" url:"phone_number,omitempty"`
+	AuthMethod  *UserEnrollmentAuthMethodEnum `json:"auth_method,omitempty" url:"auth_method,omitempty"`
+	// Start date and time of this enrollment.
+	EnrolledAt *time.Time `json:"enrolled_at,omitempty" url:"enrolled_at,omitempty"`
+	// Last authentication date and time of this enrollment.
+	LastAuth *time.Time `json:"last_auth,omitempty" url:"last_auth,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (u *UsersEnrollment) GetID() string {
+	if u == nil || u.ID == nil {
+		return ""
+	}
+	return *u.ID
+}
+
+func (u *UsersEnrollment) GetStatus() UserEnrollmentStatusEnum {
+	if u == nil || u.Status == nil {
+		return ""
+	}
+	return *u.Status
+}
+
+func (u *UsersEnrollment) GetType() string {
+	if u == nil || u.Type == nil {
+		return ""
+	}
+	return *u.Type
+}
+
+func (u *UsersEnrollment) GetName() string {
+	if u == nil || u.Name == nil {
+		return ""
+	}
+	return *u.Name
+}
+
+func (u *UsersEnrollment) GetIdentifier() string {
+	if u == nil || u.Identifier == nil {
+		return ""
+	}
+	return *u.Identifier
+}
+
+func (u *UsersEnrollment) GetPhoneNumber() string {
+	if u == nil || u.PhoneNumber == nil {
+		return ""
+	}
+	return *u.PhoneNumber
+}
+
+func (u *UsersEnrollment) GetAuthMethod() UserEnrollmentAuthMethodEnum {
+	if u == nil || u.AuthMethod == nil {
+		return ""
+	}
+	return *u.AuthMethod
+}
+
+func (u *UsersEnrollment) GetEnrolledAt() time.Time {
+	if u == nil || u.EnrolledAt == nil {
+		return time.Time{}
+	}
+	return *u.EnrolledAt
+}
+
+func (u *UsersEnrollment) GetLastAuth() time.Time {
+	if u == nil || u.LastAuth == nil {
+		return time.Time{}
+	}
+	return *u.LastAuth
+}
+
+func (u *UsersEnrollment) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.ExtraProperties
+}
+
+func (u *UsersEnrollment) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersEnrollment) SetID(id *string) {
+	u.ID = id
+	u.require(usersEnrollmentFieldID)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersEnrollment) SetStatus(status *UserEnrollmentStatusEnum) {
+	u.Status = status
+	u.require(usersEnrollmentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersEnrollment) SetType(type_ *string) {
+	u.Type = type_
+	u.require(usersEnrollmentFieldType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersEnrollment) SetName(name *string) {
+	u.Name = name
+	u.require(usersEnrollmentFieldName)
+}
+
+// SetIdentifier sets the Identifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersEnrollment) SetIdentifier(identifier *string) {
+	u.Identifier = identifier
+	u.require(usersEnrollmentFieldIdentifier)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersEnrollment) SetPhoneNumber(phoneNumber *string) {
+	u.PhoneNumber = phoneNumber
+	u.require(usersEnrollmentFieldPhoneNumber)
+}
+
+// SetAuthMethod sets the AuthMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersEnrollment) SetAuthMethod(authMethod *UserEnrollmentAuthMethodEnum) {
+	u.AuthMethod = authMethod
+	u.require(usersEnrollmentFieldAuthMethod)
+}
+
+// SetEnrolledAt sets the EnrolledAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersEnrollment) SetEnrolledAt(enrolledAt *time.Time) {
+	u.EnrolledAt = enrolledAt
+	u.require(usersEnrollmentFieldEnrolledAt)
+}
+
+// SetLastAuth sets the LastAuth field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UsersEnrollment) SetLastAuth(lastAuth *time.Time) {
+	u.LastAuth = lastAuth
+	u.require(usersEnrollmentFieldLastAuth)
+}
+
+func (u *UsersEnrollment) UnmarshalJSON(data []byte) error {
+	type embed UsersEnrollment
+	var unmarshaler = struct {
+		embed
+		EnrolledAt *internal.DateTime `json:"enrolled_at,omitempty"`
+		LastAuth   *internal.DateTime `json:"last_auth,omitempty"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UsersEnrollment(unmarshaler.embed)
+	u.EnrolledAt = unmarshaler.EnrolledAt.TimePtr()
+	u.LastAuth = unmarshaler.LastAuth.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.ExtraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UsersEnrollment) MarshalJSON() ([]byte, error) {
+	type embed UsersEnrollment
+	var marshaler = struct {
+		embed
+		EnrolledAt *internal.DateTime `json:"enrolled_at,omitempty"`
+		LastAuth   *internal.DateTime `json:"last_auth,omitempty"`
+	}{
+		embed:      embed(*u),
+		EnrolledAt: internal.NewOptionalDateTime(u.EnrolledAt),
+		LastAuth:   internal.NewOptionalDateTime(u.LastAuth),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
+}
+
+func (u *UsersEnrollment) String() string {
 	if u == nil {
 		return "<nil>"
 	}

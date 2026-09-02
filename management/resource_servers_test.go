@@ -3535,6 +3535,75 @@ func TestSettersMarkExplicitListResourceServerOffsetPaginatedResponseContent(t *
 
 }
 
+func TestGettersListResourceServerResponseContent(t *testing.T) {
+	t.Run("GetResourceServerList", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListResourceServerResponseContent{}
+		var expected []*ResourceServer
+		obj.ResourceServerList = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetResourceServerList(), "getter should return the property value")
+	})
+
+	t.Run("GetResourceServerList_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListResourceServerResponseContent{}
+		obj.ResourceServerList = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetResourceServerList(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetResourceServerList_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetResourceServerList() // Should return zero value
+	})
+
+	t.Run("GetListResourceServerOffsetPaginatedResponseContent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListResourceServerResponseContent{}
+		var expected *ListResourceServerOffsetPaginatedResponseContent
+		obj.ListResourceServerOffsetPaginatedResponseContent = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetListResourceServerOffsetPaginatedResponseContent(), "getter should return the property value")
+	})
+
+	t.Run("GetListResourceServerOffsetPaginatedResponseContent_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListResourceServerResponseContent{}
+		obj.ListResourceServerOffsetPaginatedResponseContent = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetListResourceServerOffsetPaginatedResponseContent(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetListResourceServerOffsetPaginatedResponseContent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetListResourceServerOffsetPaginatedResponseContent() // Should return zero value
+	})
+
+}
+
 func TestSettersResourceServer(t *testing.T) {
 	t.Run("SetID", func(t *testing.T) {
 		obj := &ResourceServer{}

@@ -1203,6 +1203,75 @@ func TestSettersMarkExplicitListRulesOffsetPaginatedResponseContent(t *testing.T
 
 }
 
+func TestGettersListRulesResponseContent(t *testing.T) {
+	t.Run("GetRuleList", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListRulesResponseContent{}
+		var expected []*Rule
+		obj.RuleList = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetRuleList(), "getter should return the property value")
+	})
+
+	t.Run("GetRuleList_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListRulesResponseContent{}
+		obj.RuleList = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetRuleList(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetRuleList_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListRulesResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRuleList() // Should return zero value
+	})
+
+	t.Run("GetListRulesOffsetPaginatedResponseContent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListRulesResponseContent{}
+		var expected *ListRulesOffsetPaginatedResponseContent
+		obj.ListRulesOffsetPaginatedResponseContent = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetListRulesOffsetPaginatedResponseContent(), "getter should return the property value")
+	})
+
+	t.Run("GetListRulesOffsetPaginatedResponseContent_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListRulesResponseContent{}
+		obj.ListRulesOffsetPaginatedResponseContent = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetListRulesOffsetPaginatedResponseContent(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetListRulesOffsetPaginatedResponseContent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListRulesResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetListRulesOffsetPaginatedResponseContent() // Should return zero value
+	})
+
+}
+
 func TestSettersRule(t *testing.T) {
 	t.Run("SetName", func(t *testing.T) {
 		obj := &Rule{}

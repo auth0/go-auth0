@@ -32,7 +32,56 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) GetRateLimitPolicies(
+	ctx context.Context,
+	request *management.GetRateLimitPoliciesRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ListRateLimitPoliciesPaginatedResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/rate-limit-policies"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ListRateLimitPoliciesPaginatedResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ListRateLimitPoliciesPaginatedResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) PostRateLimitPolicies(
 	ctx context.Context,
 	request *management.CreateRateLimitPolicyRequestContent,
 	opts ...option.RequestOption,
@@ -76,7 +125,7 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetRateLimitPoliciesByID(
 	ctx context.Context,
 	// Unique identifier for the Rate Limit Policy.
 	id string,
@@ -122,7 +171,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteRateLimitPoliciesByID(
 	ctx context.Context,
 	// Unique identifier for the Rate Limit Policy.
 	id string,
@@ -166,7 +215,7 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchRateLimitPoliciesByID(
 	ctx context.Context,
 	// Unique identifier for the Rate Limit Policy.
 	id string,

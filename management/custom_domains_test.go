@@ -4494,6 +4494,229 @@ func TestGettersGetDefaultDomainResponseContent(t *testing.T) {
 
 }
 
+func TestSettersListCustomDomainsPaginatedResponseContent(t *testing.T) {
+	t.Run("SetCustomDomains", func(t *testing.T) {
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		var fernTestValueCustomDomains []*CustomDomain
+		obj.SetCustomDomains(fernTestValueCustomDomains)
+		assert.Equal(t, fernTestValueCustomDomains, obj.CustomDomains)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetNext", func(t *testing.T) {
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		var fernTestValueNext *string
+		obj.SetNext(fernTestValueNext)
+		assert.Equal(t, fernTestValueNext, obj.Next)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersListCustomDomainsPaginatedResponseContent(t *testing.T) {
+	t.Run("GetCustomDomains", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		var expected []*CustomDomain
+		obj.CustomDomains = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetCustomDomains(), "getter should return the property value")
+	})
+
+	t.Run("GetCustomDomains_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		obj.CustomDomains = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetCustomDomains(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetCustomDomains_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListCustomDomainsPaginatedResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCustomDomains() // Should return zero value
+	})
+
+	t.Run("GetNext", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		var value string
+		obj.Next = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetNext(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetNext_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		obj.Next = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetNext(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetNext_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListCustomDomainsPaginatedResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetNext() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitListCustomDomainsPaginatedResponseContent(t *testing.T) {
+	t.Run("SetCustomDomains_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		var fernTestValueCustomDomains []*CustomDomain
+
+		// Act
+		obj.SetCustomDomains(fernTestValueCustomDomains)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetNext_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		var fernTestValueNext *string
+
+		// Act
+		obj.SetNext(fernTestValueNext)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestGettersListCustomDomainsResponseContent(t *testing.T) {
+	t.Run("GetCustomDomainList", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsResponseContent{}
+		var expected []*CustomDomain
+		obj.CustomDomainList = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetCustomDomainList(), "getter should return the property value")
+	})
+
+	t.Run("GetCustomDomainList_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsResponseContent{}
+		obj.CustomDomainList = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetCustomDomainList(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetCustomDomainList_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListCustomDomainsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCustomDomainList() // Should return zero value
+	})
+
+	t.Run("GetListCustomDomainsPaginatedResponseContent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsResponseContent{}
+		var expected *ListCustomDomainsPaginatedResponseContent
+		obj.ListCustomDomainsPaginatedResponseContent = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetListCustomDomainsPaginatedResponseContent(), "getter should return the property value")
+	})
+
+	t.Run("GetListCustomDomainsPaginatedResponseContent_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsResponseContent{}
+		obj.ListCustomDomainsPaginatedResponseContent = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetListCustomDomainsPaginatedResponseContent(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetListCustomDomainsPaginatedResponseContent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListCustomDomainsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetListCustomDomainsPaginatedResponseContent() // Should return zero value
+	})
+
+}
+
 func TestSettersTestCustomDomainResponseContent(t *testing.T) {
 	t.Run("SetSuccess", func(t *testing.T) {
 		obj := &TestCustomDomainResponseContent{}
@@ -7604,6 +7827,39 @@ func TestJSONMarshalingGetDefaultCustomDomainResponseContent(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingListCustomDomainsPaginatedResponseContent(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ListCustomDomainsPaginatedResponseContent
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ListCustomDomainsPaginatedResponseContent
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ListCustomDomainsPaginatedResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingTestCustomDomainResponseContent(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -7892,6 +8148,22 @@ func TestStringGetDefaultCustomDomainResponseContent(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetDefaultCustomDomainResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringListCustomDomainsPaginatedResponseContent(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListCustomDomainsPaginatedResponseContent
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -8481,6 +8753,29 @@ func TestExtraPropertiesGetDefaultCustomDomainResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetDefaultCustomDomainResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesListCustomDomainsPaginatedResponseContent(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ListCustomDomainsPaginatedResponseContent{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ListCustomDomainsPaginatedResponseContent
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestCustomDomainsListWithWireMock(
+func TestCustomDomainsGetCustomDomainsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,13 @@ func TestCustomDomainsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListCustomDomainsRequestParameters{
+	request := &management.GetCustomDomainsRequest{
+		Take: management.Int(
+			1,
+		),
+		From: management.String(
+			"from",
+		),
 		Q: management.String(
 			"q",
 		),
@@ -102,19 +108,19 @@ func TestCustomDomainsListWithWireMock(
 			"sort",
 		),
 	}
-	_, invocationErr := client.CustomDomains.List(
+	_, invocationErr := client.CustomDomains.GetCustomDomains(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCustomDomainsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCustomDomainsGetCustomDomainsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCustomDomainsListWithWireMock", "GET", "/custom-domains", map[string]interface{}{"q": "q", "fields": "fields", "include_fields": "true", "sort": "sort"}, 1)
+	VerifyRequestCount(t, "TestCustomDomainsGetCustomDomainsWithWireMock", "GET", "/custom-domains", map[string]interface{}{"take": "1", "from": "from", "q": "q", "fields": "fields", "include_fields": "true", "sort": "sort"}, 1)
 }
 
-func TestCustomDomainsCreateWithWireMock(
+func TestCustomDomainsPostCustomDomainsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -129,16 +135,16 @@ func TestCustomDomainsCreateWithWireMock(
 		Domain: "domain",
 		Type:   management.CustomDomainProvisioningTypeEnumAuth0ManagedCerts,
 	}
-	_, invocationErr := client.CustomDomains.Create(
+	_, invocationErr := client.CustomDomains.PostCustomDomains(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCustomDomainsCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCustomDomainsPostCustomDomainsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCustomDomainsCreateWithWireMock", "POST", "/custom-domains", nil, 1)
+	VerifyRequestCount(t, "TestCustomDomainsPostCustomDomainsWithWireMock", "POST", "/custom-domains", nil, 1)
 }
 
 func TestCustomDomainsGetDefaultWithWireMock(
@@ -163,7 +169,7 @@ func TestCustomDomainsGetDefaultWithWireMock(
 	VerifyRequestCount(t, "TestCustomDomainsGetDefaultWithWireMock", "GET", "/custom-domains/default", nil, 1)
 }
 
-func TestCustomDomainsSetDefaultWithWireMock(
+func TestCustomDomainsPatchDefaultWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -177,19 +183,19 @@ func TestCustomDomainsSetDefaultWithWireMock(
 	request := &management.SetDefaultCustomDomainRequestContent{
 		Domain: "domain",
 	}
-	_, invocationErr := client.CustomDomains.SetDefault(
+	_, invocationErr := client.CustomDomains.PatchDefault(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCustomDomainsSetDefaultWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCustomDomainsPatchDefaultWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCustomDomainsSetDefaultWithWireMock", "PATCH", "/custom-domains/default", nil, 1)
+	VerifyRequestCount(t, "TestCustomDomainsPatchDefaultWithWireMock", "PATCH", "/custom-domains/default", nil, 1)
 }
 
-func TestCustomDomainsGetWithWireMock(
+func TestCustomDomainsGetCustomDomainsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -200,19 +206,19 @@ func TestCustomDomainsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.CustomDomains.Get(
+	_, invocationErr := client.CustomDomains.GetCustomDomainsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCustomDomainsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCustomDomainsGetCustomDomainsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCustomDomainsGetWithWireMock", "GET", "/custom-domains/id", nil, 1)
+	VerifyRequestCount(t, "TestCustomDomainsGetCustomDomainsByIDWithWireMock", "GET", "/custom-domains/id", nil, 1)
 }
 
-func TestCustomDomainsDeleteWithWireMock(
+func TestCustomDomainsDeleteCustomDomainsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -223,19 +229,19 @@ func TestCustomDomainsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.CustomDomains.Delete(
+	invocationErr := client.CustomDomains.DeleteCustomDomainsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCustomDomainsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCustomDomainsDeleteCustomDomainsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCustomDomainsDeleteWithWireMock", "DELETE", "/custom-domains/id", nil, 1)
+	VerifyRequestCount(t, "TestCustomDomainsDeleteCustomDomainsByIDWithWireMock", "DELETE", "/custom-domains/id", nil, 1)
 }
 
-func TestCustomDomainsUpdateWithWireMock(
+func TestCustomDomainsPatchCustomDomainsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -247,20 +253,20 @@ func TestCustomDomainsUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateCustomDomainRequestContent{}
-	_, invocationErr := client.CustomDomains.Update(
+	_, invocationErr := client.CustomDomains.PatchCustomDomainsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCustomDomainsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCustomDomainsPatchCustomDomainsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCustomDomainsUpdateWithWireMock", "PATCH", "/custom-domains/id", nil, 1)
+	VerifyRequestCount(t, "TestCustomDomainsPatchCustomDomainsByIDWithWireMock", "PATCH", "/custom-domains/id", nil, 1)
 }
 
-func TestCustomDomainsTestWithWireMock(
+func TestCustomDomainsPostTestDomainWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -271,19 +277,19 @@ func TestCustomDomainsTestWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.CustomDomains.Test(
+	_, invocationErr := client.CustomDomains.PostTestDomain(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCustomDomainsTestWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCustomDomainsPostTestDomainWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCustomDomainsTestWithWireMock", "POST", "/custom-domains/id/test", nil, 1)
+	VerifyRequestCount(t, "TestCustomDomainsPostTestDomainWithWireMock", "POST", "/custom-domains/id/test", nil, 1)
 }
 
-func TestCustomDomainsVerifyWithWireMock(
+func TestCustomDomainsPostVerifyWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -294,14 +300,14 @@ func TestCustomDomainsVerifyWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.CustomDomains.Verify(
+	_, invocationErr := client.CustomDomains.PostVerify(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCustomDomainsVerifyWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCustomDomainsPostVerifyWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCustomDomainsVerifyWithWireMock", "POST", "/custom-domains/id/verify", nil, 1)
+	VerifyRequestCount(t, "TestCustomDomainsPostVerifyWithWireMock", "POST", "/custom-domains/id/verify", nil, 1)
 }

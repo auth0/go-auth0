@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestLogStreamsListWithWireMock(
+func TestLogStreamsGetLogStreamsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,18 +88,18 @@ func TestLogStreamsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.LogStreams.List(
+	_, invocationErr := client.LogStreams.GetLogStreams(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestLogStreamsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestLogStreamsGetLogStreamsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestLogStreamsListWithWireMock", "GET", "/log-streams", nil, 1)
+	VerifyRequestCount(t, "TestLogStreamsGetLogStreamsWithWireMock", "GET", "/log-streams", nil, 1)
 }
 
-func TestLogStreamsCreateWithWireMock(
+func TestLogStreamsPostLogStreamsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -118,19 +118,19 @@ func TestLogStreamsCreateWithWireMock(
 			},
 		},
 	}
-	_, invocationErr := client.LogStreams.Create(
+	_, invocationErr := client.LogStreams.PostLogStreams(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestLogStreamsCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestLogStreamsPostLogStreamsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestLogStreamsCreateWithWireMock", "POST", "/log-streams", nil, 1)
+	VerifyRequestCount(t, "TestLogStreamsPostLogStreamsWithWireMock", "POST", "/log-streams", nil, 1)
 }
 
-func TestLogStreamsGetWithWireMock(
+func TestLogStreamsGetLogStreamsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -141,19 +141,19 @@ func TestLogStreamsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.LogStreams.Get(
+	_, invocationErr := client.LogStreams.GetLogStreamsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestLogStreamsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestLogStreamsGetLogStreamsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestLogStreamsGetWithWireMock", "GET", "/log-streams/id", nil, 1)
+	VerifyRequestCount(t, "TestLogStreamsGetLogStreamsByIDWithWireMock", "GET", "/log-streams/id", nil, 1)
 }
 
-func TestLogStreamsDeleteWithWireMock(
+func TestLogStreamsDeleteLogStreamsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -164,19 +164,19 @@ func TestLogStreamsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.LogStreams.Delete(
+	invocationErr := client.LogStreams.DeleteLogStreamsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestLogStreamsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestLogStreamsDeleteLogStreamsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestLogStreamsDeleteWithWireMock", "DELETE", "/log-streams/id", nil, 1)
+	VerifyRequestCount(t, "TestLogStreamsDeleteLogStreamsByIDWithWireMock", "DELETE", "/log-streams/id", nil, 1)
 }
 
-func TestLogStreamsUpdateWithWireMock(
+func TestLogStreamsPatchLogStreamsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -188,15 +188,15 @@ func TestLogStreamsUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateLogStreamRequestContent{}
-	_, invocationErr := client.LogStreams.Update(
+	_, invocationErr := client.LogStreams.PatchLogStreamsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestLogStreamsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestLogStreamsPatchLogStreamsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestLogStreamsUpdateWithWireMock", "PATCH", "/log-streams/id", nil, 1)
+	VerifyRequestCount(t, "TestLogStreamsPatchLogStreamsByIDWithWireMock", "PATCH", "/log-streams/id", nil, 1)
 }

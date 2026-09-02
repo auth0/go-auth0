@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestOrganizationTemplatesListWithWireMock(
+func TestOrganizationTemplatesGetOrganizationTemplatesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestOrganizationTemplatesListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListOrganizationTemplatesRequestParameters{
+	request := &management.GetOrganizationTemplatesRequest{
 		From: management.String(
 			"from",
 		),
@@ -96,19 +96,19 @@ func TestOrganizationTemplatesListWithWireMock(
 			1,
 		),
 	}
-	_, invocationErr := client.OrganizationTemplates.List(
+	_, invocationErr := client.OrganizationTemplates.GetOrganizationTemplates(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesGetOrganizationTemplatesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationTemplatesListWithWireMock", "GET", "/organization-templates", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestOrganizationTemplatesGetOrganizationTemplatesWithWireMock", "GET", "/organization-templates", map[string]interface{}{"from": "from", "take": "1"}, 1)
 }
 
-func TestOrganizationTemplatesCreateWithWireMock(
+func TestOrganizationTemplatesPostOrganizationTemplatesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -125,19 +125,19 @@ func TestOrganizationTemplatesCreateWithWireMock(
 		EnforcePermissionCeiling:         true,
 		EnforceSelfAssignmentRestriction: true,
 	}
-	_, invocationErr := client.OrganizationTemplates.Create(
+	_, invocationErr := client.OrganizationTemplates.PostOrganizationTemplates(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesPostOrganizationTemplatesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationTemplatesCreateWithWireMock", "POST", "/organization-templates", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationTemplatesPostOrganizationTemplatesWithWireMock", "POST", "/organization-templates", nil, 1)
 }
 
-func TestOrganizationTemplatesGetWithWireMock(
+func TestOrganizationTemplatesGetOrganizationTemplatesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -148,19 +148,19 @@ func TestOrganizationTemplatesGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.OrganizationTemplates.Get(
+	_, invocationErr := client.OrganizationTemplates.GetOrganizationTemplatesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesGetOrganizationTemplatesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationTemplatesGetWithWireMock", "GET", "/organization-templates/id", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationTemplatesGetOrganizationTemplatesByIDWithWireMock", "GET", "/organization-templates/id", nil, 1)
 }
 
-func TestOrganizationTemplatesUpdateWithWireMock(
+func TestOrganizationTemplatesPatchOrganizationTemplatesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -172,20 +172,20 @@ func TestOrganizationTemplatesUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateOrganizationTemplateRequestContent{}
-	_, invocationErr := client.OrganizationTemplates.Update(
+	_, invocationErr := client.OrganizationTemplates.PatchOrganizationTemplatesByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesPatchOrganizationTemplatesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationTemplatesUpdateWithWireMock", "PATCH", "/organization-templates/id", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationTemplatesPatchOrganizationTemplatesByIDWithWireMock", "PATCH", "/organization-templates/id", nil, 1)
 }
 
-func TestOrganizationTemplatesListOrganizationsWithWireMock(
+func TestOrganizationTemplatesGetOrganizationTemplatesByIDOrganizationsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -196,7 +196,7 @@ func TestOrganizationTemplatesListOrganizationsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListTemplateOrganizationsRequestParameters{
+	request := &management.GetOrganizationTemplatesByIDOrganizationsRequest{
 		From: management.String(
 			"from",
 		),
@@ -204,15 +204,15 @@ func TestOrganizationTemplatesListOrganizationsWithWireMock(
 			1,
 		),
 	}
-	_, invocationErr := client.OrganizationTemplates.ListOrganizations(
+	_, invocationErr := client.OrganizationTemplates.GetOrganizationTemplatesByIDOrganizations(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesListOrganizationsWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationTemplatesGetOrganizationTemplatesByIDOrganizationsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationTemplatesListOrganizationsWithWireMock", "GET", "/organization-templates/id/organizations", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestOrganizationTemplatesGetOrganizationTemplatesByIDOrganizationsWithWireMock", "GET", "/organization-templates/id/organizations", map[string]interface{}{"from": "from", "take": "1"}, 1)
 }

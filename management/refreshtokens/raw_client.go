@@ -32,7 +32,56 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Revoke(
+func (r *RawClient) GetRefreshTokens(
+	ctx context.Context,
+	request *management.GetRefreshTokensRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.GetRefreshTokensPaginatedResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/refresh-tokens"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.GetRefreshTokensPaginatedResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.GetRefreshTokensPaginatedResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) RevokeRefreshTokens(
 	ctx context.Context,
 	request *management.RevokeRefreshTokensRequestContent,
 	opts ...option.RequestOption,
@@ -74,7 +123,7 @@ func (r *RawClient) Revoke(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetRefreshToken(
 	ctx context.Context,
 	// ID refresh token to retrieve
 	id string,
@@ -120,7 +169,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteRefreshToken(
 	ctx context.Context,
 	// ID of the refresh token to delete.
 	id string,
@@ -164,7 +213,7 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchRefreshTokensByID(
 	ctx context.Context,
 	// ID of the refresh token to update.
 	id string,

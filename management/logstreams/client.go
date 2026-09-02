@@ -112,11 +112,11 @@ func NewClient(options *core.RequestOptions) *Client {
 //	}]
 //
 // ```
-func (c *Client) List(
+func (c *Client) GetLogStreams(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*management.LogStreamResponseSchema, error) {
-	response, err := c.WithRawResponse.List(
+	response, err := c.WithRawResponse.GetLogStreams(
 		ctx,
 		opts...,
 	)
@@ -347,12 +347,12 @@ func (c *Client) List(
 //	}
 //
 // ```
-func (c *Client) Create(
+func (c *Client) PostLogStreams(
 	ctx context.Context,
 	request *management.CreateLogStreamRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreateLogStreamResponseContent, error) {
-	response, err := c.WithRawResponse.Create(
+	response, err := c.WithRawResponse.PostLogStreams(
 		ctx,
 		request,
 		opts...,
@@ -533,13 +533,13 @@ func (c *Client) Create(
 // 1. `active` - Stream is currently enabled.
 // 2. `paused` - Stream is currently user disabled and will not attempt log delivery.
 // 3. `suspended` - Stream is currently disabled because of errors and will not attempt log delivery.
-func (c *Client) Get(
+func (c *Client) GetLogStreamsByID(
 	ctx context.Context,
 	// The id of the log stream to get
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetLogStreamResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetLogStreamsByID(
 		ctx,
 		id,
 		opts...,
@@ -551,13 +551,13 @@ func (c *Client) Get(
 }
 
 // Delete a log stream.
-func (c *Client) Delete(
+func (c *Client) DeleteLogStreamsByID(
 	ctx context.Context,
 	// The id of the log stream to delete
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteLogStreamsByID(
 		ctx,
 		id,
 		opts...,
@@ -654,14 +654,14 @@ func (c *Client) Delete(
 //	}
 //
 // ```
-func (c *Client) Update(
+func (c *Client) PatchLogStreamsByID(
 	ctx context.Context,
 	// The id of the log stream to get
 	id string,
 	request *management.UpdateLogStreamRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateLogStreamResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchLogStreamsByID(
 		ctx,
 		id,
 		request,

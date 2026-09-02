@@ -4,9 +4,6 @@ package devicecredentials
 
 import (
 	context "context"
-	fmt "fmt"
-	http "net/http"
-	strconv "strconv"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -38,88 +35,31 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve device credential information (`public_key`, `refresh_token`, or `rotating_refresh_token`) associated with a specific user.
-func (c *Client) List(
+func (c *Client) GetDeviceCredentials(
 	ctx context.Context,
-	request *management.ListDeviceCredentialsRequestParameters,
+	request *management.GetDeviceCredentialsRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *management.DeviceCredential, *management.ListDeviceCredentialsOffsetPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/device-credentials"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.ListDeviceCredentialsResponseContent, error) {
+	response, err := c.WithRawResponse.GetDeviceCredentials(
+		ctx,
 		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	next := 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *management.ListDeviceCredentialsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.DeviceCredential, *management.ListDeviceCredentialsOffsetPaginatedResponseContent] {
-		next += 1
-		results := response.DeviceCredentials
-		return &core.PageResponse[*int, *management.DeviceCredential, *management.ListDeviceCredentialsOffsetPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
+	return response.Body, nil
 }
 
 // Create a device credential public key to manage refresh token rotation for a given `user_id`. Device Credentials APIs are designed for ad-hoc administrative use only and paging is by default enabled for GET requests.
 //
 // When refresh token rotation is enabled, the endpoint becomes consistent. For more information, read [Signing Keys](https://auth0.com/docs/get-started/tenant-settings/signing-keys).
-func (c *Client) CreatePublicKey(
+func (c *Client) PostDeviceCredentials(
 	ctx context.Context,
 	request *management.CreatePublicKeyDeviceCredentialRequestContent,
 	opts ...option.RequestOption,
 ) (*management.CreatePublicKeyDeviceCredentialResponseContent, error) {
-	response, err := c.WithRawResponse.CreatePublicKey(
+	response, err := c.WithRawResponse.PostDeviceCredentials(
 		ctx,
 		request,
 		opts...,
@@ -131,13 +71,13 @@ func (c *Client) CreatePublicKey(
 }
 
 // Permanently delete a device credential (such as a refresh token or public key) with the given ID.
-func (c *Client) Delete(
+func (c *Client) DeleteDeviceCredentialsByID(
 	ctx context.Context,
 	// ID of the credential to delete.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteDeviceCredentialsByID(
 		ctx,
 		id,
 		opts...,

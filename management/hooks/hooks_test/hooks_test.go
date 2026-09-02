@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestHooksListWithWireMock(
+func TestHooksGetHooksWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestHooksListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListHooksRequestParameters{
+	request := &management.GetHooksRequest{
 		Page: management.Int(
 			1,
 		),
@@ -106,19 +106,19 @@ func TestHooksListWithWireMock(
 		),
 		TriggerID: management.HookTriggerIDEnumCredentialsExchange.Ptr(),
 	}
-	_, invocationErr := client.Hooks.List(
+	_, invocationErr := client.Hooks.GetHooks(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestHooksListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestHooksGetHooksWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestHooksListWithWireMock", "GET", "/hooks", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "enabled": "true", "fields": "fields", "triggerId": "credentials-exchange"}, 1)
+	VerifyRequestCount(t, "TestHooksGetHooksWithWireMock", "GET", "/hooks", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "enabled": "true", "fields": "fields", "triggerId": "credentials-exchange"}, 1)
 }
 
-func TestHooksCreateWithWireMock(
+func TestHooksPostHooksWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -134,19 +134,19 @@ func TestHooksCreateWithWireMock(
 		Script:    "script",
 		TriggerID: management.HookTriggerIDEnumCredentialsExchange,
 	}
-	_, invocationErr := client.Hooks.Create(
+	_, invocationErr := client.Hooks.PostHooks(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestHooksCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestHooksPostHooksWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestHooksCreateWithWireMock", "POST", "/hooks", nil, 1)
+	VerifyRequestCount(t, "TestHooksPostHooksWithWireMock", "POST", "/hooks", nil, 1)
 }
 
-func TestHooksGetWithWireMock(
+func TestHooksGetHooksByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -157,25 +157,25 @@ func TestHooksGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetHookRequestParameters{
+	request := &management.GetHooksByIDRequest{
 		Fields: management.String(
 			"fields",
 		),
 	}
-	_, invocationErr := client.Hooks.Get(
+	_, invocationErr := client.Hooks.GetHooksByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestHooksGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestHooksGetHooksByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestHooksGetWithWireMock", "GET", "/hooks/id", map[string]interface{}{"fields": "fields"}, 1)
+	VerifyRequestCount(t, "TestHooksGetHooksByIDWithWireMock", "GET", "/hooks/id", map[string]interface{}{"fields": "fields"}, 1)
 }
 
-func TestHooksDeleteWithWireMock(
+func TestHooksDeleteHooksByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -186,19 +186,19 @@ func TestHooksDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Hooks.Delete(
+	invocationErr := client.Hooks.DeleteHooksByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestHooksDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestHooksDeleteHooksByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestHooksDeleteWithWireMock", "DELETE", "/hooks/id", nil, 1)
+	VerifyRequestCount(t, "TestHooksDeleteHooksByIDWithWireMock", "DELETE", "/hooks/id", nil, 1)
 }
 
-func TestHooksUpdateWithWireMock(
+func TestHooksPatchHooksByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -210,15 +210,119 @@ func TestHooksUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateHookRequestContent{}
-	_, invocationErr := client.Hooks.Update(
+	_, invocationErr := client.Hooks.PatchHooksByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestHooksUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestHooksPatchHooksByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestHooksUpdateWithWireMock", "PATCH", "/hooks/id", nil, 1)
+	VerifyRequestCount(t, "TestHooksPatchHooksByIDWithWireMock", "PATCH", "/hooks/id", nil, 1)
+}
+
+func TestHooksGetSecretsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Hooks.GetSecrets(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestHooksGetSecretsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestHooksGetSecretsWithWireMock", "GET", "/hooks/id/secrets", nil, 1)
+}
+
+func TestHooksPostSecretsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := map[string]string{
+		"key": "value",
+	}
+	invocationErr := client.Hooks.PostSecrets(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestHooksPostSecretsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestHooksPostSecretsWithWireMock", "POST", "/hooks/id/secrets", nil, 1)
+}
+
+func TestHooksDeleteSecretsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := []string{
+		"string",
+	}
+	invocationErr := client.Hooks.DeleteSecrets(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestHooksDeleteSecretsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestHooksDeleteSecretsWithWireMock", "DELETE", "/hooks/id/secrets", nil, 1)
+}
+
+func TestHooksPatchSecretsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := map[string]string{
+		"key": "value",
+	}
+	invocationErr := client.Hooks.PatchSecrets(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestHooksPatchSecretsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestHooksPatchSecretsWithWireMock", "PATCH", "/hooks/id/secrets", nil, 1)
 }

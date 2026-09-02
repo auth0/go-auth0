@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestSupplementalSignalsGetWithWireMock(
+func TestSupplementalSignalsGetSupplementalSignalsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,18 +88,18 @@ func TestSupplementalSignalsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.SupplementalSignals.Get(
+	_, invocationErr := client.SupplementalSignals.GetSupplementalSignals(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSupplementalSignalsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSupplementalSignalsGetSupplementalSignalsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSupplementalSignalsGetWithWireMock", "GET", "/supplemental-signals", nil, 1)
+	VerifyRequestCount(t, "TestSupplementalSignalsGetSupplementalSignalsWithWireMock", "GET", "/supplemental-signals", nil, 1)
 }
 
-func TestSupplementalSignalsPatchWithWireMock(
+func TestSupplementalSignalsPatchSupplementalSignalsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -113,14 +113,14 @@ func TestSupplementalSignalsPatchWithWireMock(
 	request := &management.UpdateSupplementalSignalsRequestContent{
 		AkamaiEnabled: true,
 	}
-	_, invocationErr := client.SupplementalSignals.Patch(
+	_, invocationErr := client.SupplementalSignals.PatchSupplementalSignals(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSupplementalSignalsPatchWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSupplementalSignalsPatchSupplementalSignalsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSupplementalSignalsPatchWithWireMock", "PATCH", "/supplemental-signals", nil, 1)
+	VerifyRequestCount(t, "TestSupplementalSignalsPatchSupplementalSignalsWithWireMock", "PATCH", "/supplemental-signals", nil, 1)
 }

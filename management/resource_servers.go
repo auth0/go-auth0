@@ -1009,6 +1009,68 @@ func (l *ListResourceServerOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type ListResourceServerResponseContent struct {
+	ResourceServerList                               []*ResourceServer
+	ListResourceServerOffsetPaginatedResponseContent *ListResourceServerOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListResourceServerResponseContent) GetResourceServerList() []*ResourceServer {
+	if l == nil {
+		return nil
+	}
+	return l.ResourceServerList
+}
+
+func (l *ListResourceServerResponseContent) GetListResourceServerOffsetPaginatedResponseContent() *ListResourceServerOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListResourceServerOffsetPaginatedResponseContent
+}
+
+func (l *ListResourceServerResponseContent) UnmarshalJSON(data []byte) error {
+	var valueResourceServerList []*ResourceServer
+	if err := json.Unmarshal(data, &valueResourceServerList); err == nil {
+		l.typ = "ResourceServerList"
+		l.ResourceServerList = valueResourceServerList
+		return nil
+	}
+	valueListResourceServerOffsetPaginatedResponseContent := new(ListResourceServerOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListResourceServerOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListResourceServerOffsetPaginatedResponseContent"
+		l.ListResourceServerOffsetPaginatedResponseContent = valueListResourceServerOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListResourceServerResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "ResourceServerList" || l.ResourceServerList != nil {
+		return json.Marshal(l.ResourceServerList)
+	}
+	if l.typ == "ListResourceServerOffsetPaginatedResponseContent" || l.ListResourceServerOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListResourceServerOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListResourceServerResponseContentVisitor interface {
+	VisitResourceServerList([]*ResourceServer) error
+	VisitListResourceServerOffsetPaginatedResponseContent(*ListResourceServerOffsetPaginatedResponseContent) error
+}
+
+func (l *ListResourceServerResponseContent) Accept(visitor ListResourceServerResponseContentVisitor) error {
+	if l.typ == "ResourceServerList" || l.ResourceServerList != nil {
+		return visitor.VisitResourceServerList(l.ResourceServerList)
+	}
+	if l.typ == "ListResourceServerOffsetPaginatedResponseContent" || l.ListResourceServerOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListResourceServerOffsetPaginatedResponseContent(l.ListResourceServerOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
 var (
 	resourceServerFieldID                                        = big.NewInt(1 << 0)
 	resourceServerFieldName                                      = big.NewInt(1 << 1)

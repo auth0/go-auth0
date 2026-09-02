@@ -4,9 +4,6 @@ package networkacls
 
 import (
 	context "context"
-	fmt "fmt"
-	http "net/http"
-	strconv "strconv"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -38,86 +35,29 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get all access control list entries for your client.
-func (c *Client) List(
+func (c *Client) GetNetworkACLs(
 	ctx context.Context,
-	request *management.ListNetworkACLsRequestParameters,
+	request *management.GetNetworkACLsRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *management.NetworkACLsResponseContent, *management.ListNetworkACLsOffsetPaginatedResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := baseURL + "/network-acls"
-	queryParams, err := internal.QueryValuesWithDefaults(
+) (*management.ListNetworkACLsResponseContent, error) {
+	response, err := c.WithRawResponse.GetNetworkACLs(
+		ctx,
 		request,
-		map[string]any{
-			"page":           0,
-			"per_page":       50,
-			"include_totals": true,
-		},
+		opts...,
 	)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
-		}
-	}
-	next := 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *management.ListNetworkACLsOffsetPaginatedResponseContent) *core.PageResponse[*int, *management.NetworkACLsResponseContent, *management.ListNetworkACLsOffsetPaginatedResponseContent] {
-		next += 1
-		results := response.NetworkACLs
-		return &core.PageResponse[*int, *management.NetworkACLsResponseContent, *management.ListNetworkACLsOffsetPaginatedResponseContent]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
+	return response.Body, nil
 }
 
 // Create a new access control list for your client.
-func (c *Client) Create(
+func (c *Client) PostNetworkACLs(
 	ctx context.Context,
 	request *management.CreateNetworkACLRequestContent,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Create(
+	_, err := c.WithRawResponse.PostNetworkACLs(
 		ctx,
 		request,
 		opts...,
@@ -129,13 +69,13 @@ func (c *Client) Create(
 }
 
 // Get a specific access control list entry for your client.
-func (c *Client) Get(
+func (c *Client) GetNetworkACLsByID(
 	ctx context.Context,
 	// The id of the access control list to retrieve.
 	id string,
 	opts ...option.RequestOption,
 ) (*management.GetNetworkACLsResponseContent, error) {
-	response, err := c.WithRawResponse.Get(
+	response, err := c.WithRawResponse.GetNetworkACLsByID(
 		ctx,
 		id,
 		opts...,
@@ -147,14 +87,14 @@ func (c *Client) Get(
 }
 
 // Update existing access control list for your client.
-func (c *Client) Set(
+func (c *Client) PutNetworkACLsByID(
 	ctx context.Context,
 	// The id of the ACL to update.
 	id string,
 	request *management.SetNetworkACLRequestContent,
 	opts ...option.RequestOption,
 ) (*management.SetNetworkACLsResponseContent, error) {
-	response, err := c.WithRawResponse.Set(
+	response, err := c.WithRawResponse.PutNetworkACLsByID(
 		ctx,
 		id,
 		request,
@@ -167,13 +107,13 @@ func (c *Client) Set(
 }
 
 // Delete existing access control list for your client.
-func (c *Client) Delete(
+func (c *Client) DeleteNetworkACLsByID(
 	ctx context.Context,
 	// The id of the ACL to delete
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteNetworkACLsByID(
 		ctx,
 		id,
 		opts...,
@@ -185,14 +125,14 @@ func (c *Client) Delete(
 }
 
 // Update existing access control list for your client.
-func (c *Client) Update(
+func (c *Client) PatchNetworkACLsByID(
 	ctx context.Context,
 	// The id of the ACL to update.
 	id string,
 	request *management.UpdateNetworkACLRequestContent,
 	opts ...option.RequestOption,
 ) (*management.UpdateNetworkACLResponseContent, error) {
-	response, err := c.WithRawResponse.Update(
+	response, err := c.WithRawResponse.PatchNetworkACLsByID(
 		ctx,
 		id,
 		request,

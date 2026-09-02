@@ -178,6 +178,12 @@ func (c *CreateHookResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Hashmap of key-value pairs where the value must be a string.
+type CreateHookSecretRequestContent = map[string]string
+
+// Array of secret names to delete.
+type DeleteHookSecretRequestContent = []string
+
 var (
 	getHookResponseContentFieldTriggerID    = big.NewInt(1 << 0)
 	getHookResponseContentFieldID           = big.NewInt(1 << 1)
@@ -346,6 +352,9 @@ func (g *GetHookResponseContent) String() string {
 	}
 	return fmt.Sprintf("%#v", g)
 }
+
+// Hashmap of key-value pairs where the value must be a string.
+type GetHookSecretResponseContent = map[string]string
 
 var (
 	hookFieldTriggerID    = big.NewInt(1 << 0)
@@ -683,6 +692,68 @@ func (l *ListHooksOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type ListHooksResponseContent struct {
+	HookList                                []*Hook
+	ListHooksOffsetPaginatedResponseContent *ListHooksOffsetPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListHooksResponseContent) GetHookList() []*Hook {
+	if l == nil {
+		return nil
+	}
+	return l.HookList
+}
+
+func (l *ListHooksResponseContent) GetListHooksOffsetPaginatedResponseContent() *ListHooksOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListHooksOffsetPaginatedResponseContent
+}
+
+func (l *ListHooksResponseContent) UnmarshalJSON(data []byte) error {
+	var valueHookList []*Hook
+	if err := json.Unmarshal(data, &valueHookList); err == nil {
+		l.typ = "HookList"
+		l.HookList = valueHookList
+		return nil
+	}
+	valueListHooksOffsetPaginatedResponseContent := new(ListHooksOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListHooksOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListHooksOffsetPaginatedResponseContent"
+		l.ListHooksOffsetPaginatedResponseContent = valueListHooksOffsetPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListHooksResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "HookList" || l.HookList != nil {
+		return json.Marshal(l.HookList)
+	}
+	if l.typ == "ListHooksOffsetPaginatedResponseContent" || l.ListHooksOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListHooksOffsetPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListHooksResponseContentVisitor interface {
+	VisitHookList([]*Hook) error
+	VisitListHooksOffsetPaginatedResponseContent(*ListHooksOffsetPaginatedResponseContent) error
+}
+
+func (l *ListHooksResponseContent) Accept(visitor ListHooksResponseContentVisitor) error {
+	if l.typ == "HookList" || l.HookList != nil {
+		return visitor.VisitHookList(l.HookList)
+	}
+	if l.typ == "ListHooksOffsetPaginatedResponseContent" || l.ListHooksOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListHooksOffsetPaginatedResponseContent(l.ListHooksOffsetPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
 var (
 	updateHookResponseContentFieldTriggerID    = big.NewInt(1 << 0)
 	updateHookResponseContentFieldID           = big.NewInt(1 << 1)
@@ -851,3 +922,6 @@ func (u *UpdateHookResponseContent) String() string {
 	}
 	return fmt.Sprintf("%#v", u)
 }
+
+// Hashmap of key-value pairs where the value must be a string.
+type UpdateHookSecretRequestContent = map[string]string

@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestFlowsListWithWireMock(
+func TestFlowsGetFlowsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestFlowsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListFlowsRequestParameters{
+	request := &management.GetFlowsRequest{
 		Page: management.Int(
 			1,
 		),
@@ -105,19 +105,19 @@ func TestFlowsListWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.Flows.List(
+	_, invocationErr := client.Flows.GetFlows(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFlowsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFlowsGetFlowsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsListWithWireMock", "GET", "/flows", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "hydrate": "form_count", "synchronous": "true"}, 1)
+	VerifyRequestCount(t, "TestFlowsGetFlowsWithWireMock", "GET", "/flows", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "hydrate": "form_count", "synchronous": "true"}, 1)
 }
 
-func TestFlowsCreateWithWireMock(
+func TestFlowsPostFlowsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -131,19 +131,19 @@ func TestFlowsCreateWithWireMock(
 	request := &management.CreateFlowRequestContent{
 		Name: "name",
 	}
-	_, invocationErr := client.Flows.Create(
+	_, invocationErr := client.Flows.PostFlows(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFlowsCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFlowsPostFlowsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsCreateWithWireMock", "POST", "/flows", nil, 1)
+	VerifyRequestCount(t, "TestFlowsPostFlowsWithWireMock", "POST", "/flows", nil, 1)
 }
 
-func TestFlowsGetWithWireMock(
+func TestFlowsGetFlowsVaultConnectionsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -154,25 +154,261 @@ func TestFlowsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetFlowRequestParameters{
+	request := &management.GetFlowsVaultConnectionsRequest{
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Flows.GetFlowsVaultConnections(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestFlowsGetFlowsVaultConnectionsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestFlowsGetFlowsVaultConnectionsWithWireMock", "GET", "/flows/vault/connections", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true"}, 1)
+}
+
+func TestFlowsPostFlowsVaultConnectionsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateFlowsVaultConnectionRequestContent{
+		CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
+			CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
+				Name:  "name",
+				AppID: management.FlowsVaultConnectionAppIDActivecampaignEnumActivecampaign,
+				Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
+					Type:    management.FlowsVaultConnectioSetupTypeAPIKeyEnumAPIKey,
+					APIKey:  "api_key",
+					BaseURL: "base_url",
+				},
+			},
+		},
+	}
+	_, invocationErr := client.Flows.PostFlowsVaultConnections(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestFlowsPostFlowsVaultConnectionsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestFlowsPostFlowsVaultConnectionsWithWireMock", "POST", "/flows/vault/connections", nil, 1)
+}
+
+func TestFlowsGetFlowsVaultConnectionsByIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Flows.GetFlowsVaultConnectionsByID(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestFlowsGetFlowsVaultConnectionsByIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestFlowsGetFlowsVaultConnectionsByIDWithWireMock", "GET", "/flows/vault/connections/id", nil, 1)
+}
+
+func TestFlowsDeleteFlowsVaultConnectionsByIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Flows.DeleteFlowsVaultConnectionsByID(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestFlowsDeleteFlowsVaultConnectionsByIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestFlowsDeleteFlowsVaultConnectionsByIDWithWireMock", "DELETE", "/flows/vault/connections/id", nil, 1)
+}
+
+func TestFlowsPatchFlowsVaultConnectionsByIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateFlowsVaultConnectionRequestContent{}
+	_, invocationErr := client.Flows.PatchFlowsVaultConnectionsByID(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestFlowsPatchFlowsVaultConnectionsByIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestFlowsPatchFlowsVaultConnectionsByIDWithWireMock", "PATCH", "/flows/vault/connections/id", nil, 1)
+}
+
+func TestFlowsGetFlowsExecutionsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetFlowsExecutionsRequest{
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Flows.GetFlowsExecutions(
+		context.TODO(),
+		"flow_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestFlowsGetFlowsExecutionsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestFlowsGetFlowsExecutionsWithWireMock", "GET", "/flows/flow_id/executions", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "from": "from", "take": "1"}, 1)
+}
+
+func TestFlowsGetFlowsExecutionsByExecutionIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetFlowsExecutionsByExecutionIDRequest{
+		Hydrate: []*management.GetFlowExecutionRequestParametersHydrateEnum{
+			management.GetFlowExecutionRequestParametersHydrateEnumDebug.Ptr(),
+		},
+	}
+	_, invocationErr := client.Flows.GetFlowsExecutionsByExecutionID(
+		context.TODO(),
+		"flow_id",
+		"execution_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestFlowsGetFlowsExecutionsByExecutionIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestFlowsGetFlowsExecutionsByExecutionIDWithWireMock", "GET", "/flows/flow_id/executions/execution_id", map[string]interface{}{"hydrate": "debug"}, 1)
+}
+
+func TestFlowsDeleteFlowsExecutionsByExecutionIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Flows.DeleteFlowsExecutionsByExecutionID(
+		context.TODO(),
+		"flow_id",
+		"execution_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestFlowsDeleteFlowsExecutionsByExecutionIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestFlowsDeleteFlowsExecutionsByExecutionIDWithWireMock", "DELETE", "/flows/flow_id/executions/execution_id", nil, 1)
+}
+
+func TestFlowsGetFlowsByIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetFlowsByIDRequest{
 		Hydrate: []*management.GetFlowRequestParametersHydrateEnum{
 			management.GetFlowRequestParametersHydrateEnumFormCount.Ptr(),
 		},
 	}
-	_, invocationErr := client.Flows.Get(
+	_, invocationErr := client.Flows.GetFlowsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFlowsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFlowsGetFlowsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsGetWithWireMock", "GET", "/flows/id", map[string]interface{}{"hydrate": "form_count"}, 1)
+	VerifyRequestCount(t, "TestFlowsGetFlowsByIDWithWireMock", "GET", "/flows/id", map[string]interface{}{"hydrate": "form_count"}, 1)
 }
 
-func TestFlowsDeleteWithWireMock(
+func TestFlowsDeleteFlowsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -183,19 +419,19 @@ func TestFlowsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Flows.Delete(
+	invocationErr := client.Flows.DeleteFlowsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFlowsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFlowsDeleteFlowsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsDeleteWithWireMock", "DELETE", "/flows/id", nil, 1)
+	VerifyRequestCount(t, "TestFlowsDeleteFlowsByIDWithWireMock", "DELETE", "/flows/id", nil, 1)
 }
 
-func TestFlowsUpdateWithWireMock(
+func TestFlowsPatchFlowsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -207,15 +443,15 @@ func TestFlowsUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateFlowRequestContent{}
-	_, invocationErr := client.Flows.Update(
+	_, invocationErr := client.Flows.PatchFlowsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestFlowsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestFlowsPatchFlowsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestFlowsUpdateWithWireMock", "PATCH", "/flows/id", nil, 1)
+	VerifyRequestCount(t, "TestFlowsPatchFlowsByIDWithWireMock", "PATCH", "/flows/id", nil, 1)
 }

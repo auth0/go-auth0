@@ -32,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) PostEmailTemplates(
 	ctx context.Context,
 	request *management.CreateEmailTemplateRequestContent,
 	opts ...option.RequestOption,
@@ -76,7 +76,7 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetEmailTemplatesByTemplateName(
 	ctx context.Context,
 	// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 	templateName *management.EmailTemplateNameEnum,
@@ -122,7 +122,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Set(
+func (r *RawClient) PutEmailTemplatesByTemplateName(
 	ctx context.Context,
 	// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 	templateName *management.EmailTemplateNameEnum,
@@ -171,7 +171,7 @@ func (r *RawClient) Set(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchEmailTemplatesByTemplateName(
 	ctx context.Context,
 	// Template name. Can be `verify_email`, `verify_email_by_code`, `auth_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `async_approval`, `change_password` (legacy), or `password_reset` (legacy).
 	templateName *management.EmailTemplateNameEnum,

@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestDeviceCredentialsListWithWireMock(
+func TestDeviceCredentialsGetDeviceCredentialsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestDeviceCredentialsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListDeviceCredentialsRequestParameters{
+	request := &management.GetDeviceCredentialsRequest{
 		Page: management.Int(
 			1,
 		),
@@ -112,19 +112,19 @@ func TestDeviceCredentialsListWithWireMock(
 		),
 		Type: management.DeviceCredentialTypeEnumPublicKey.Ptr(),
 	}
-	_, invocationErr := client.DeviceCredentials.List(
+	_, invocationErr := client.DeviceCredentials.GetDeviceCredentials(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestDeviceCredentialsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestDeviceCredentialsGetDeviceCredentialsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestDeviceCredentialsListWithWireMock", "GET", "/device-credentials", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "fields": "fields", "include_fields": "true", "user_id": "user_id", "client_id": "client_id", "type": "public_key"}, 1)
+	VerifyRequestCount(t, "TestDeviceCredentialsGetDeviceCredentialsWithWireMock", "GET", "/device-credentials", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "fields": "fields", "include_fields": "true", "user_id": "user_id", "client_id": "client_id", "type": "public_key"}, 1)
 }
 
-func TestDeviceCredentialsCreatePublicKeyWithWireMock(
+func TestDeviceCredentialsPostDeviceCredentialsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -141,19 +141,19 @@ func TestDeviceCredentialsCreatePublicKeyWithWireMock(
 		Value:      "value",
 		DeviceID:   "device_id",
 	}
-	_, invocationErr := client.DeviceCredentials.CreatePublicKey(
+	_, invocationErr := client.DeviceCredentials.PostDeviceCredentials(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestDeviceCredentialsCreatePublicKeyWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestDeviceCredentialsPostDeviceCredentialsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestDeviceCredentialsCreatePublicKeyWithWireMock", "POST", "/device-credentials", nil, 1)
+	VerifyRequestCount(t, "TestDeviceCredentialsPostDeviceCredentialsWithWireMock", "POST", "/device-credentials", nil, 1)
 }
 
-func TestDeviceCredentialsDeleteWithWireMock(
+func TestDeviceCredentialsDeleteDeviceCredentialsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -164,14 +164,14 @@ func TestDeviceCredentialsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.DeviceCredentials.Delete(
+	invocationErr := client.DeviceCredentials.DeleteDeviceCredentialsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestDeviceCredentialsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestDeviceCredentialsDeleteDeviceCredentialsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestDeviceCredentialsDeleteWithWireMock", "DELETE", "/device-credentials/id", nil, 1)
+	VerifyRequestCount(t, "TestDeviceCredentialsDeleteDeviceCredentialsByIDWithWireMock", "DELETE", "/device-credentials/id", nil, 1)
 }

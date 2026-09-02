@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for a user with the given identifier (username, phone number, or email).
-func (c *Client) ListByIdentifier(
+func (c *Client) GetUserBlocks(
 	ctx context.Context,
-	request *management.ListUserBlocksByIdentifierRequestParameters,
+	request *management.GetUserBlocksRequest,
 	opts ...option.RequestOption,
 ) (*management.ListUserBlocksByIdentifierResponseContent, error) {
-	response, err := c.WithRawResponse.ListByIdentifier(
+	response, err := c.WithRawResponse.GetUserBlocks(
 		ctx,
 		request,
 		opts...,
@@ -54,12 +54,12 @@ func (c *Client) ListByIdentifier(
 // Remove all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given identifier (username, phone number, or email).
 //
 // Note: This endpoint does not unblock users that were [blocked by a tenant administrator](https://auth0.com/docs/user-profile#block-and-unblock-a-user).
-func (c *Client) DeleteByIdentifier(
+func (c *Client) DeleteUserBlocks(
 	ctx context.Context,
-	request *management.DeleteUserBlocksByIdentifierRequestParameters,
+	request *management.DeleteUserBlocksRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.DeleteByIdentifier(
+	_, err := c.WithRawResponse.DeleteUserBlocks(
 		ctx,
 		request,
 		opts...,
@@ -71,14 +71,14 @@ func (c *Client) DeleteByIdentifier(
 }
 
 // Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given ID.
-func (c *Client) List(
+func (c *Client) GetUserBlocksByID(
 	ctx context.Context,
 	// user_id of the user blocks to retrieve.
 	id string,
-	request *management.ListUserBlocksRequestParameters,
+	request *management.GetUserBlocksByIDRequest,
 	opts ...option.RequestOption,
 ) (*management.ListUserBlocksResponseContent, error) {
-	response, err := c.WithRawResponse.List(
+	response, err := c.WithRawResponse.GetUserBlocksByID(
 		ctx,
 		id,
 		request,
@@ -93,13 +93,13 @@ func (c *Client) List(
 // Remove all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given ID.
 //
 // Note: This endpoint does not unblock users that were [blocked by a tenant administrator](https://auth0.com/docs/user-profile#block-and-unblock-a-user).
-func (c *Client) Delete(
+func (c *Client) DeleteUserBlocksByID(
 	ctx context.Context,
 	// The user_id of the user to update.
 	id string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Delete(
+	_, err := c.WithRawResponse.DeleteUserBlocksByID(
 		ctx,
 		id,
 		opts...,

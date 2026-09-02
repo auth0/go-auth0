@@ -867,6 +867,454 @@ func (g *GetClientGrantResponseContent) String() string {
 }
 
 var (
+	listClientGrantOffsetPaginatedResponseContentFieldStart        = big.NewInt(1 << 0)
+	listClientGrantOffsetPaginatedResponseContentFieldLimit        = big.NewInt(1 << 1)
+	listClientGrantOffsetPaginatedResponseContentFieldTotal        = big.NewInt(1 << 2)
+	listClientGrantOffsetPaginatedResponseContentFieldClientGrants = big.NewInt(1 << 3)
+)
+
+type ListClientGrantOffsetPaginatedResponseContent struct {
+	Start        *float64                      `json:"start,omitempty" url:"start,omitempty"`
+	Limit        *float64                      `json:"limit,omitempty" url:"limit,omitempty"`
+	Total        *float64                      `json:"total,omitempty" url:"total,omitempty"`
+	ClientGrants []*ClientGrantResponseContent `json:"client_grants,omitempty" url:"client_grants,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListClientGrantOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListClientGrantOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListClientGrantOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListClientGrantOffsetPaginatedResponseContent) GetClientGrants() []*ClientGrantResponseContent {
+	if l == nil || l.ClientGrants == nil {
+		return nil
+	}
+	return l.ClientGrants
+}
+
+func (l *ListClientGrantOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListClientGrantOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listClientGrantOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listClientGrantOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listClientGrantOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetClientGrants sets the ClientGrants field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOffsetPaginatedResponseContent) SetClientGrants(clientGrants []*ClientGrantResponseContent) {
+	l.ClientGrants = clientGrants
+	l.require(listClientGrantOffsetPaginatedResponseContentFieldClientGrants)
+}
+
+func (l *ListClientGrantOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListClientGrantOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListClientGrantOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListClientGrantOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListClientGrantOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListClientGrantOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listClientGrantOrganizationsOffsetPaginatedResponseContentFieldStart         = big.NewInt(1 << 0)
+	listClientGrantOrganizationsOffsetPaginatedResponseContentFieldLimit         = big.NewInt(1 << 1)
+	listClientGrantOrganizationsOffsetPaginatedResponseContentFieldTotal         = big.NewInt(1 << 2)
+	listClientGrantOrganizationsOffsetPaginatedResponseContentFieldOrganizations = big.NewInt(1 << 3)
+)
+
+type ListClientGrantOrganizationsOffsetPaginatedResponseContent struct {
+	Start         *float64        `json:"start,omitempty" url:"start,omitempty"`
+	Limit         *float64        `json:"limit,omitempty" url:"limit,omitempty"`
+	Total         *float64        `json:"total,omitempty" url:"total,omitempty"`
+	Organizations []*Organization `json:"organizations,omitempty" url:"organizations,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) GetStart() float64 {
+	if l == nil || l.Start == nil {
+		return 0
+	}
+	return *l.Start
+}
+
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) GetLimit() float64 {
+	if l == nil || l.Limit == nil {
+		return 0
+	}
+	return *l.Limit
+}
+
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) GetTotal() float64 {
+	if l == nil || l.Total == nil {
+		return 0
+	}
+	return *l.Total
+}
+
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) GetOrganizations() []*Organization {
+	if l == nil || l.Organizations == nil {
+		return nil
+	}
+	return l.Organizations
+}
+
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) SetStart(start *float64) {
+	l.Start = start
+	l.require(listClientGrantOrganizationsOffsetPaginatedResponseContentFieldStart)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) SetLimit(limit *float64) {
+	l.Limit = limit
+	l.require(listClientGrantOrganizationsOffsetPaginatedResponseContentFieldLimit)
+}
+
+// SetTotal sets the Total field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) SetTotal(total *float64) {
+	l.Total = total
+	l.require(listClientGrantOrganizationsOffsetPaginatedResponseContentFieldTotal)
+}
+
+// SetOrganizations sets the Organizations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) SetOrganizations(organizations []*Organization) {
+	l.Organizations = organizations
+	l.require(listClientGrantOrganizationsOffsetPaginatedResponseContentFieldOrganizations)
+}
+
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListClientGrantOrganizationsOffsetPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListClientGrantOrganizationsOffsetPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListClientGrantOrganizationsOffsetPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListClientGrantOrganizationsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listClientGrantOrganizationsPaginatedResponseContentFieldNext          = big.NewInt(1 << 0)
+	listClientGrantOrganizationsPaginatedResponseContentFieldOrganizations = big.NewInt(1 << 1)
+)
+
+type ListClientGrantOrganizationsPaginatedResponseContent struct {
+	// Opaque identifier for use with the <i>from</i> query parameter for the next page of results.<br/>This identifier is valid for 24 hours.
+	Next          *string         `json:"next,omitempty" url:"next,omitempty"`
+	Organizations []*Organization `json:"organizations,omitempty" url:"organizations,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListClientGrantOrganizationsPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListClientGrantOrganizationsPaginatedResponseContent) GetOrganizations() []*Organization {
+	if l == nil || l.Organizations == nil {
+		return nil
+	}
+	return l.Organizations
+}
+
+func (l *ListClientGrantOrganizationsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListClientGrantOrganizationsPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOrganizationsPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listClientGrantOrganizationsPaginatedResponseContentFieldNext)
+}
+
+// SetOrganizations sets the Organizations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientGrantOrganizationsPaginatedResponseContent) SetOrganizations(organizations []*Organization) {
+	l.Organizations = organizations
+	l.require(listClientGrantOrganizationsPaginatedResponseContentFieldOrganizations)
+}
+
+func (l *ListClientGrantOrganizationsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListClientGrantOrganizationsPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListClientGrantOrganizationsPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListClientGrantOrganizationsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListClientGrantOrganizationsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListClientGrantOrganizationsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListClientGrantOrganizationsResponseContent struct {
+	OrganizationList                                           []*Organization
+	ListClientGrantOrganizationsOffsetPaginatedResponseContent *ListClientGrantOrganizationsOffsetPaginatedResponseContent
+	ListClientGrantOrganizationsPaginatedResponseContent       *ListClientGrantOrganizationsPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListClientGrantOrganizationsResponseContent) GetOrganizationList() []*Organization {
+	if l == nil {
+		return nil
+	}
+	return l.OrganizationList
+}
+
+func (l *ListClientGrantOrganizationsResponseContent) GetListClientGrantOrganizationsOffsetPaginatedResponseContent() *ListClientGrantOrganizationsOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListClientGrantOrganizationsOffsetPaginatedResponseContent
+}
+
+func (l *ListClientGrantOrganizationsResponseContent) GetListClientGrantOrganizationsPaginatedResponseContent() *ListClientGrantOrganizationsPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListClientGrantOrganizationsPaginatedResponseContent
+}
+
+func (l *ListClientGrantOrganizationsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueOrganizationList []*Organization
+	if err := json.Unmarshal(data, &valueOrganizationList); err == nil {
+		l.typ = "OrganizationList"
+		l.OrganizationList = valueOrganizationList
+		return nil
+	}
+	valueListClientGrantOrganizationsOffsetPaginatedResponseContent := new(ListClientGrantOrganizationsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListClientGrantOrganizationsOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListClientGrantOrganizationsOffsetPaginatedResponseContent"
+		l.ListClientGrantOrganizationsOffsetPaginatedResponseContent = valueListClientGrantOrganizationsOffsetPaginatedResponseContent
+		return nil
+	}
+	valueListClientGrantOrganizationsPaginatedResponseContent := new(ListClientGrantOrganizationsPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListClientGrantOrganizationsPaginatedResponseContent); err == nil {
+		l.typ = "ListClientGrantOrganizationsPaginatedResponseContent"
+		l.ListClientGrantOrganizationsPaginatedResponseContent = valueListClientGrantOrganizationsPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListClientGrantOrganizationsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "OrganizationList" || l.OrganizationList != nil {
+		return json.Marshal(l.OrganizationList)
+	}
+	if l.typ == "ListClientGrantOrganizationsOffsetPaginatedResponseContent" || l.ListClientGrantOrganizationsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListClientGrantOrganizationsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListClientGrantOrganizationsPaginatedResponseContent" || l.ListClientGrantOrganizationsPaginatedResponseContent != nil {
+		return json.Marshal(l.ListClientGrantOrganizationsPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListClientGrantOrganizationsResponseContentVisitor interface {
+	VisitOrganizationList([]*Organization) error
+	VisitListClientGrantOrganizationsOffsetPaginatedResponseContent(*ListClientGrantOrganizationsOffsetPaginatedResponseContent) error
+	VisitListClientGrantOrganizationsPaginatedResponseContent(*ListClientGrantOrganizationsPaginatedResponseContent) error
+}
+
+func (l *ListClientGrantOrganizationsResponseContent) Accept(visitor ListClientGrantOrganizationsResponseContentVisitor) error {
+	if l.typ == "OrganizationList" || l.OrganizationList != nil {
+		return visitor.VisitOrganizationList(l.OrganizationList)
+	}
+	if l.typ == "ListClientGrantOrganizationsOffsetPaginatedResponseContent" || l.ListClientGrantOrganizationsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListClientGrantOrganizationsOffsetPaginatedResponseContent(l.ListClientGrantOrganizationsOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListClientGrantOrganizationsPaginatedResponseContent" || l.ListClientGrantOrganizationsPaginatedResponseContent != nil {
+		return visitor.VisitListClientGrantOrganizationsPaginatedResponseContent(l.ListClientGrantOrganizationsPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+var (
 	listClientGrantPaginatedResponseContentFieldNext         = big.NewInt(1 << 0)
 	listClientGrantPaginatedResponseContentFieldClientGrants = big.NewInt(1 << 1)
 )
@@ -965,6 +1413,89 @@ func (l *ListClientGrantPaginatedResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+type ListClientGrantResponseContent struct {
+	ClientGrantResponseContentList                []*ClientGrantResponseContent
+	ListClientGrantOffsetPaginatedResponseContent *ListClientGrantOffsetPaginatedResponseContent
+	ListClientGrantPaginatedResponseContent       *ListClientGrantPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListClientGrantResponseContent) GetClientGrantResponseContentList() []*ClientGrantResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ClientGrantResponseContentList
+}
+
+func (l *ListClientGrantResponseContent) GetListClientGrantOffsetPaginatedResponseContent() *ListClientGrantOffsetPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListClientGrantOffsetPaginatedResponseContent
+}
+
+func (l *ListClientGrantResponseContent) GetListClientGrantPaginatedResponseContent() *ListClientGrantPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListClientGrantPaginatedResponseContent
+}
+
+func (l *ListClientGrantResponseContent) UnmarshalJSON(data []byte) error {
+	var valueClientGrantResponseContentList []*ClientGrantResponseContent
+	if err := json.Unmarshal(data, &valueClientGrantResponseContentList); err == nil {
+		l.typ = "ClientGrantResponseContentList"
+		l.ClientGrantResponseContentList = valueClientGrantResponseContentList
+		return nil
+	}
+	valueListClientGrantOffsetPaginatedResponseContent := new(ListClientGrantOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListClientGrantOffsetPaginatedResponseContent); err == nil {
+		l.typ = "ListClientGrantOffsetPaginatedResponseContent"
+		l.ListClientGrantOffsetPaginatedResponseContent = valueListClientGrantOffsetPaginatedResponseContent
+		return nil
+	}
+	valueListClientGrantPaginatedResponseContent := new(ListClientGrantPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListClientGrantPaginatedResponseContent); err == nil {
+		l.typ = "ListClientGrantPaginatedResponseContent"
+		l.ListClientGrantPaginatedResponseContent = valueListClientGrantPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListClientGrantResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "ClientGrantResponseContentList" || l.ClientGrantResponseContentList != nil {
+		return json.Marshal(l.ClientGrantResponseContentList)
+	}
+	if l.typ == "ListClientGrantOffsetPaginatedResponseContent" || l.ListClientGrantOffsetPaginatedResponseContent != nil {
+		return json.Marshal(l.ListClientGrantOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListClientGrantPaginatedResponseContent" || l.ListClientGrantPaginatedResponseContent != nil {
+		return json.Marshal(l.ListClientGrantPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListClientGrantResponseContentVisitor interface {
+	VisitClientGrantResponseContentList([]*ClientGrantResponseContent) error
+	VisitListClientGrantOffsetPaginatedResponseContent(*ListClientGrantOffsetPaginatedResponseContent) error
+	VisitListClientGrantPaginatedResponseContent(*ListClientGrantPaginatedResponseContent) error
+}
+
+func (l *ListClientGrantResponseContent) Accept(visitor ListClientGrantResponseContentVisitor) error {
+	if l.typ == "ClientGrantResponseContentList" || l.ClientGrantResponseContentList != nil {
+		return visitor.VisitClientGrantResponseContentList(l.ClientGrantResponseContentList)
+	}
+	if l.typ == "ListClientGrantOffsetPaginatedResponseContent" || l.ListClientGrantOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListClientGrantOffsetPaginatedResponseContent(l.ListClientGrantOffsetPaginatedResponseContent)
+	}
+	if l.typ == "ListClientGrantPaginatedResponseContent" || l.ListClientGrantPaginatedResponseContent != nil {
+		return visitor.VisitListClientGrantPaginatedResponseContent(l.ListClientGrantPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
 }
 
 var (

@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestPromptsGetSettingsWithWireMock(
+func TestPromptsGetPromptsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,18 +88,18 @@ func TestPromptsGetSettingsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Prompts.GetSettings(
+	_, invocationErr := client.Prompts.GetPrompts(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestPromptsGetSettingsWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestPromptsGetPromptsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestPromptsGetSettingsWithWireMock", "GET", "/prompts", nil, 1)
+	VerifyRequestCount(t, "TestPromptsGetPromptsWithWireMock", "GET", "/prompts", nil, 1)
 }
 
-func TestPromptsUpdateSettingsWithWireMock(
+func TestPromptsPatchPromptsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -111,14 +111,244 @@ func TestPromptsUpdateSettingsWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateSettingsRequestContent{}
-	_, invocationErr := client.Prompts.UpdateSettings(
+	_, invocationErr := client.Prompts.PatchPrompts(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestPromptsUpdateSettingsWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestPromptsPatchPromptsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestPromptsUpdateSettingsWithWireMock", "PATCH", "/prompts", nil, 1)
+	VerifyRequestCount(t, "TestPromptsPatchPromptsWithWireMock", "PATCH", "/prompts", nil, 1)
+}
+
+func TestPromptsGetAllRenderingWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetAllRenderingRequest{
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+		Prompt: management.String(
+			"prompt",
+		),
+		Screen: management.String(
+			"screen",
+		),
+		RenderingMode: management.AculRenderingModeEnumAdvanced.Ptr(),
+	}
+	_, invocationErr := client.Prompts.GetAllRendering(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsGetAllRenderingWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestPromptsGetAllRenderingWithWireMock", "GET", "/prompts/rendering", map[string]interface{}{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "prompt": "prompt", "screen": "screen", "rendering_mode": "advanced"}, 1)
+}
+
+func TestPromptsPatchBulkRenderingWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.BulkUpdateAculRequestContent{
+		Configs: []*management.AculConfigsItem{
+			&management.AculConfigsItem{
+				Prompt: management.PromptGroupNameEnumLogin,
+				Screen: management.ScreenGroupNameEnumLogin,
+			},
+		},
+	}
+	_, invocationErr := client.Prompts.PatchBulkRendering(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsPatchBulkRenderingWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestPromptsPatchBulkRenderingWithWireMock", "PATCH", "/prompts/rendering", nil, 1)
+}
+
+func TestPromptsGetCustomTextByLanguageWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Prompts.GetCustomTextByLanguage(
+		context.TODO(),
+		management.PromptGroupNameEnumLogin.Ptr(),
+		management.PromptLanguageEnumAm.Ptr(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsGetCustomTextByLanguageWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestPromptsGetCustomTextByLanguageWithWireMock", "GET", "/prompts/login/custom-text/am", nil, 1)
+}
+
+func TestPromptsPutCustomTextByLanguageWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := map[string]any{
+		"key": "value",
+	}
+	invocationErr := client.Prompts.PutCustomTextByLanguage(
+		context.TODO(),
+		management.PromptGroupNameEnumLogin.Ptr(),
+		management.PromptLanguageEnumAm.Ptr(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsPutCustomTextByLanguageWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestPromptsPutCustomTextByLanguageWithWireMock", "PUT", "/prompts/login/custom-text/am", nil, 1)
+}
+
+func TestPromptsGetPartialsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Prompts.GetPartials(
+		context.TODO(),
+		management.PartialGroupsEnumLogin.Ptr(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsGetPartialsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestPromptsGetPartialsWithWireMock", "GET", "/prompts/login/partials", nil, 1)
+}
+
+func TestPromptsPutPartialsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := map[string]any{
+		"key": "value",
+	}
+	invocationErr := client.Prompts.PutPartials(
+		context.TODO(),
+		management.PartialGroupsEnumLogin.Ptr(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsPutPartialsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestPromptsPutPartialsWithWireMock", "PUT", "/prompts/login/partials", nil, 1)
+}
+
+func TestPromptsGetRenderingWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Prompts.GetRendering(
+		context.TODO(),
+		management.PromptGroupNameEnumLogin.Ptr(),
+		management.ScreenGroupNameEnumLogin.Ptr(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsGetRenderingWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestPromptsGetRenderingWithWireMock", "GET", "/prompts/login/screen/login/rendering", nil, 1)
+}
+
+func TestPromptsPatchRenderingWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateAculRequestContent{}
+	_, invocationErr := client.Prompts.PatchRendering(
+		context.TODO(),
+		management.PromptGroupNameEnumLogin.Ptr(),
+		management.ScreenGroupNameEnumLogin.Ptr(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestPromptsPatchRenderingWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestPromptsPatchRenderingWithWireMock", "PATCH", "/prompts/login/screen/login/rendering", nil, 1)
 }

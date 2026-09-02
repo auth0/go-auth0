@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestSelfServiceProfilesListWithWireMock(
+func TestSelfServiceProfilesGetSelfServiceProfilesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestSelfServiceProfilesListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListSelfServiceProfilesRequestParameters{
+	request := &management.GetSelfServiceProfilesRequest{
 		Page: management.Int(
 			1,
 		),
@@ -99,19 +99,19 @@ func TestSelfServiceProfilesListWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.SelfServiceProfiles.List(
+	_, invocationErr := client.SelfServiceProfiles.GetSelfServiceProfiles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesGetSelfServiceProfilesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSelfServiceProfilesListWithWireMock", "GET", "/self-service-profiles", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true"}, 1)
+	VerifyRequestCount(t, "TestSelfServiceProfilesGetSelfServiceProfilesWithWireMock", "GET", "/self-service-profiles", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true"}, 1)
 }
 
-func TestSelfServiceProfilesCreateWithWireMock(
+func TestSelfServiceProfilesPostSelfServiceProfilesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -125,19 +125,19 @@ func TestSelfServiceProfilesCreateWithWireMock(
 	request := &management.CreateSelfServiceProfileRequestContent{
 		Name: "name",
 	}
-	_, invocationErr := client.SelfServiceProfiles.Create(
+	_, invocationErr := client.SelfServiceProfiles.PostSelfServiceProfiles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesPostSelfServiceProfilesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSelfServiceProfilesCreateWithWireMock", "POST", "/self-service-profiles", nil, 1)
+	VerifyRequestCount(t, "TestSelfServiceProfilesPostSelfServiceProfilesWithWireMock", "POST", "/self-service-profiles", nil, 1)
 }
 
-func TestSelfServiceProfilesGetWithWireMock(
+func TestSelfServiceProfilesGetSelfServiceProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -148,19 +148,19 @@ func TestSelfServiceProfilesGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.SelfServiceProfiles.Get(
+	_, invocationErr := client.SelfServiceProfiles.GetSelfServiceProfilesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesGetSelfServiceProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSelfServiceProfilesGetWithWireMock", "GET", "/self-service-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestSelfServiceProfilesGetSelfServiceProfilesByIDWithWireMock", "GET", "/self-service-profiles/id", nil, 1)
 }
 
-func TestSelfServiceProfilesDeleteWithWireMock(
+func TestSelfServiceProfilesDeleteSelfServiceProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -171,19 +171,19 @@ func TestSelfServiceProfilesDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.SelfServiceProfiles.Delete(
+	invocationErr := client.SelfServiceProfiles.DeleteSelfServiceProfilesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesDeleteSelfServiceProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSelfServiceProfilesDeleteWithWireMock", "DELETE", "/self-service-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestSelfServiceProfilesDeleteSelfServiceProfilesByIDWithWireMock", "DELETE", "/self-service-profiles/id", nil, 1)
 }
 
-func TestSelfServiceProfilesUpdateWithWireMock(
+func TestSelfServiceProfilesPatchSelfServiceProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -195,15 +195,118 @@ func TestSelfServiceProfilesUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateSelfServiceProfileRequestContent{}
-	_, invocationErr := client.SelfServiceProfiles.Update(
+	_, invocationErr := client.SelfServiceProfiles.PatchSelfServiceProfilesByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesPatchSelfServiceProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSelfServiceProfilesUpdateWithWireMock", "PATCH", "/self-service-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestSelfServiceProfilesPatchSelfServiceProfilesByIDWithWireMock", "PATCH", "/self-service-profiles/id", nil, 1)
+}
+
+func TestSelfServiceProfilesGetSelfServiceProfileCustomTextWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.SelfServiceProfiles.GetSelfServiceProfileCustomText(
+		context.TODO(),
+		"id",
+		management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+		management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesGetSelfServiceProfileCustomTextWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestSelfServiceProfilesGetSelfServiceProfileCustomTextWithWireMock", "GET", "/self-service-profiles/id/custom-text/en/get-started", nil, 1)
+}
+
+func TestSelfServiceProfilesPutSelfServiceProfileCustomTextWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := map[string]string{
+		"key": "value",
+	}
+	_, invocationErr := client.SelfServiceProfiles.PutSelfServiceProfileCustomText(
+		context.TODO(),
+		"id",
+		management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+		management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesPutSelfServiceProfileCustomTextWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestSelfServiceProfilesPutSelfServiceProfileCustomTextWithWireMock", "PUT", "/self-service-profiles/id/custom-text/en/get-started", nil, 1)
+}
+
+func TestSelfServiceProfilesPostSSOTicketWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateSelfServiceProfileSSOTicketRequestContent{}
+	_, invocationErr := client.SelfServiceProfiles.PostSSOTicket(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesPostSSOTicketWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestSelfServiceProfilesPostSSOTicketWithWireMock", "POST", "/self-service-profiles/id/sso-ticket", nil, 1)
+}
+
+func TestSelfServiceProfilesPostRevokeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.SelfServiceProfiles.PostRevoke(
+		context.TODO(),
+		"profileId",
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestSelfServiceProfilesPostRevokeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestSelfServiceProfilesPostRevokeWithWireMock", "POST", "/self-service-profiles/profileId/sso-ticket/id/revoke", nil, 1)
 }

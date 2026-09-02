@@ -10,6 +10,1032 @@ import (
 )
 
 var (
+	createExportUsersFieldsFieldName     = big.NewInt(1 << 0)
+	createExportUsersFieldsFieldExportAs = big.NewInt(1 << 1)
+)
+
+type CreateExportUsersFields struct {
+	// Name of the field in the profile.
+	Name string `json:"name" url:"name"`
+	// Title of the column in the exported CSV.
+	ExportAs *string `json:"export_as,omitempty" url:"export_as,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateExportUsersFields) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateExportUsersFields) GetExportAs() string {
+	if c == nil || c.ExportAs == nil {
+		return ""
+	}
+	return *c.ExportAs
+}
+
+func (c *CreateExportUsersFields) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateExportUsersFields) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersFields) SetName(name string) {
+	c.Name = name
+	c.require(createExportUsersFieldsFieldName)
+}
+
+// SetExportAs sets the ExportAs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersFields) SetExportAs(exportAs *string) {
+	c.ExportAs = exportAs
+	c.require(createExportUsersFieldsFieldExportAs)
+}
+
+func (c *CreateExportUsersFields) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateExportUsersFields
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateExportUsersFields(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateExportUsersFields) MarshalJSON() ([]byte, error) {
+	type embed CreateExportUsersFields
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateExportUsersFields) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createExportUsersResponseContentFieldStatus       = big.NewInt(1 << 0)
+	createExportUsersResponseContentFieldType         = big.NewInt(1 << 1)
+	createExportUsersResponseContentFieldCreatedAt    = big.NewInt(1 << 2)
+	createExportUsersResponseContentFieldID           = big.NewInt(1 << 3)
+	createExportUsersResponseContentFieldConnectionID = big.NewInt(1 << 4)
+	createExportUsersResponseContentFieldFormat       = big.NewInt(1 << 5)
+	createExportUsersResponseContentFieldLimit        = big.NewInt(1 << 6)
+	createExportUsersResponseContentFieldFields       = big.NewInt(1 << 7)
+)
+
+type CreateExportUsersResponseContent struct {
+	// Status of this job.
+	Status string `json:"status" url:"status"`
+	// Type of job this is.
+	Type string `json:"type" url:"type"`
+	// When this job was created.
+	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// ID of this job.
+	ID string `json:"id" url:"id"`
+	// connection_id of the connection from which users will be exported.
+	ConnectionID *string            `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	Format       *JobFileFormatEnum `json:"format,omitempty" url:"format,omitempty"`
+	// Limit the number of records.
+	Limit *int `json:"limit,omitempty" url:"limit,omitempty"`
+	// List of fields to be included in the CSV. Defaults to a predefined set of fields.
+	Fields []*CreateExportUsersFields `json:"fields,omitempty" url:"fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *CreateExportUsersResponseContent) GetStatus() string {
+	if c == nil {
+		return ""
+	}
+	return c.Status
+}
+
+func (c *CreateExportUsersResponseContent) GetType() string {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *CreateExportUsersResponseContent) GetCreatedAt() string {
+	if c == nil || c.CreatedAt == nil {
+		return ""
+	}
+	return *c.CreatedAt
+}
+
+func (c *CreateExportUsersResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateExportUsersResponseContent) GetConnectionID() string {
+	if c == nil || c.ConnectionID == nil {
+		return ""
+	}
+	return *c.ConnectionID
+}
+
+func (c *CreateExportUsersResponseContent) GetFormat() JobFileFormatEnum {
+	if c == nil || c.Format == nil {
+		return ""
+	}
+	return *c.Format
+}
+
+func (c *CreateExportUsersResponseContent) GetLimit() int {
+	if c == nil || c.Limit == nil {
+		return 0
+	}
+	return *c.Limit
+}
+
+func (c *CreateExportUsersResponseContent) GetFields() []*CreateExportUsersFields {
+	if c == nil || c.Fields == nil {
+		return nil
+	}
+	return c.Fields
+}
+
+func (c *CreateExportUsersResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *CreateExportUsersResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersResponseContent) SetStatus(status string) {
+	c.Status = status
+	c.require(createExportUsersResponseContentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersResponseContent) SetType(type_ string) {
+	c.Type = type_
+	c.require(createExportUsersResponseContentFieldType)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersResponseContent) SetCreatedAt(createdAt *string) {
+	c.CreatedAt = createdAt
+	c.require(createExportUsersResponseContentFieldCreatedAt)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createExportUsersResponseContentFieldID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersResponseContent) SetConnectionID(connectionID *string) {
+	c.ConnectionID = connectionID
+	c.require(createExportUsersResponseContentFieldConnectionID)
+}
+
+// SetFormat sets the Format field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersResponseContent) SetFormat(format *JobFileFormatEnum) {
+	c.Format = format
+	c.require(createExportUsersResponseContentFieldFormat)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersResponseContent) SetLimit(limit *int) {
+	c.Limit = limit
+	c.require(createExportUsersResponseContentFieldLimit)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersResponseContent) SetFields(fields []*CreateExportUsersFields) {
+	c.Fields = fields
+	c.require(createExportUsersResponseContentFieldFields)
+}
+
+func (c *CreateExportUsersResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateExportUsersResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateExportUsersResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateExportUsersResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateExportUsersResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *CreateExportUsersResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createImportUsersResponseContentFieldStatus       = big.NewInt(1 << 0)
+	createImportUsersResponseContentFieldType         = big.NewInt(1 << 1)
+	createImportUsersResponseContentFieldCreatedAt    = big.NewInt(1 << 2)
+	createImportUsersResponseContentFieldID           = big.NewInt(1 << 3)
+	createImportUsersResponseContentFieldConnectionID = big.NewInt(1 << 4)
+	createImportUsersResponseContentFieldExternalID   = big.NewInt(1 << 5)
+)
+
+type CreateImportUsersResponseContent struct {
+	// Status of this job.
+	Status string `json:"status" url:"status"`
+	// Type of job this is.
+	Type string `json:"type" url:"type"`
+	// When this job was created.
+	CreatedAt string `json:"created_at" url:"created_at"`
+	// ID of this job.
+	ID string `json:"id" url:"id"`
+	// connection_id of the connection to which users will be imported.
+	ConnectionID string `json:"connection_id" url:"connection_id"`
+	// Customer-defined ID.
+	ExternalID *string `json:"external_id,omitempty" url:"external_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *CreateImportUsersResponseContent) GetStatus() string {
+	if c == nil {
+		return ""
+	}
+	return c.Status
+}
+
+func (c *CreateImportUsersResponseContent) GetType() string {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *CreateImportUsersResponseContent) GetCreatedAt() string {
+	if c == nil {
+		return ""
+	}
+	return c.CreatedAt
+}
+
+func (c *CreateImportUsersResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateImportUsersResponseContent) GetConnectionID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ConnectionID
+}
+
+func (c *CreateImportUsersResponseContent) GetExternalID() string {
+	if c == nil || c.ExternalID == nil {
+		return ""
+	}
+	return *c.ExternalID
+}
+
+func (c *CreateImportUsersResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *CreateImportUsersResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateImportUsersResponseContent) SetStatus(status string) {
+	c.Status = status
+	c.require(createImportUsersResponseContentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateImportUsersResponseContent) SetType(type_ string) {
+	c.Type = type_
+	c.require(createImportUsersResponseContentFieldType)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateImportUsersResponseContent) SetCreatedAt(createdAt string) {
+	c.CreatedAt = createdAt
+	c.require(createImportUsersResponseContentFieldCreatedAt)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateImportUsersResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createImportUsersResponseContentFieldID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateImportUsersResponseContent) SetConnectionID(connectionID string) {
+	c.ConnectionID = connectionID
+	c.require(createImportUsersResponseContentFieldConnectionID)
+}
+
+// SetExternalID sets the ExternalID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateImportUsersResponseContent) SetExternalID(externalID *string) {
+	c.ExternalID = externalID
+	c.require(createImportUsersResponseContentFieldExternalID)
+}
+
+func (c *CreateImportUsersResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateImportUsersResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateImportUsersResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateImportUsersResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateImportUsersResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *CreateImportUsersResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createVerificationEmailResponseContentFieldStatus    = big.NewInt(1 << 0)
+	createVerificationEmailResponseContentFieldType      = big.NewInt(1 << 1)
+	createVerificationEmailResponseContentFieldCreatedAt = big.NewInt(1 << 2)
+	createVerificationEmailResponseContentFieldID        = big.NewInt(1 << 3)
+)
+
+type CreateVerificationEmailResponseContent struct {
+	// Status of this job.
+	Status string `json:"status" url:"status"`
+	// Type of job this is.
+	Type string `json:"type" url:"type"`
+	// When this job was created.
+	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// ID of this job.
+	ID string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *CreateVerificationEmailResponseContent) GetStatus() string {
+	if c == nil {
+		return ""
+	}
+	return c.Status
+}
+
+func (c *CreateVerificationEmailResponseContent) GetType() string {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *CreateVerificationEmailResponseContent) GetCreatedAt() string {
+	if c == nil || c.CreatedAt == nil {
+		return ""
+	}
+	return *c.CreatedAt
+}
+
+func (c *CreateVerificationEmailResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateVerificationEmailResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *CreateVerificationEmailResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVerificationEmailResponseContent) SetStatus(status string) {
+	c.Status = status
+	c.require(createVerificationEmailResponseContentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVerificationEmailResponseContent) SetType(type_ string) {
+	c.Type = type_
+	c.require(createVerificationEmailResponseContentFieldType)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVerificationEmailResponseContent) SetCreatedAt(createdAt *string) {
+	c.CreatedAt = createdAt
+	c.require(createVerificationEmailResponseContentFieldCreatedAt)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVerificationEmailResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createVerificationEmailResponseContentFieldID)
+}
+
+func (c *CreateVerificationEmailResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateVerificationEmailResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateVerificationEmailResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateVerificationEmailResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateVerificationEmailResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *CreateVerificationEmailResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	getJobErrorResponseContentFieldUser   = big.NewInt(1 << 0)
+	getJobErrorResponseContentFieldErrors = big.NewInt(1 << 1)
+)
+
+type GetJobErrorResponseContent struct {
+	User *GetJobUserError `json:"user,omitempty" url:"user,omitempty"`
+	// Errors importing the user.
+	Errors []*GetJobImportUserError `json:"errors,omitempty" url:"errors,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetJobErrorResponseContent) GetUser() GetJobUserError {
+	if g == nil || g.User == nil {
+		return nil
+	}
+	return *g.User
+}
+
+func (g *GetJobErrorResponseContent) GetErrors() []*GetJobImportUserError {
+	if g == nil || g.Errors == nil {
+		return nil
+	}
+	return g.Errors
+}
+
+func (g *GetJobErrorResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetJobErrorResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetUser sets the User field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobErrorResponseContent) SetUser(user *GetJobUserError) {
+	g.User = user
+	g.require(getJobErrorResponseContentFieldUser)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobErrorResponseContent) SetErrors(errors []*GetJobImportUserError) {
+	g.Errors = errors
+	g.require(getJobErrorResponseContentFieldErrors)
+}
+
+func (g *GetJobErrorResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetJobErrorResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetJobErrorResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetJobErrorResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetJobErrorResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetJobErrorResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getJobGenericErrorResponseContentFieldStatus        = big.NewInt(1 << 0)
+	getJobGenericErrorResponseContentFieldType          = big.NewInt(1 << 1)
+	getJobGenericErrorResponseContentFieldCreatedAt     = big.NewInt(1 << 2)
+	getJobGenericErrorResponseContentFieldID            = big.NewInt(1 << 3)
+	getJobGenericErrorResponseContentFieldConnectionID  = big.NewInt(1 << 4)
+	getJobGenericErrorResponseContentFieldStatusDetails = big.NewInt(1 << 5)
+)
+
+type GetJobGenericErrorResponseContent struct {
+	// Status of this job.
+	Status string `json:"status" url:"status"`
+	// Type of job this is.
+	Type string `json:"type" url:"type"`
+	// When this job was created.
+	CreatedAt *string `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// ID of this job.
+	ID string `json:"id" url:"id"`
+	// connection_id of the connection this job uses.
+	ConnectionID *string `json:"connection_id,omitempty" url:"connection_id,omitempty"`
+	// Status details.
+	StatusDetails *string `json:"status_details,omitempty" url:"status_details,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetJobGenericErrorResponseContent) GetStatus() string {
+	if g == nil {
+		return ""
+	}
+	return g.Status
+}
+
+func (g *GetJobGenericErrorResponseContent) GetType() string {
+	if g == nil {
+		return ""
+	}
+	return g.Type
+}
+
+func (g *GetJobGenericErrorResponseContent) GetCreatedAt() string {
+	if g == nil || g.CreatedAt == nil {
+		return ""
+	}
+	return *g.CreatedAt
+}
+
+func (g *GetJobGenericErrorResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetJobGenericErrorResponseContent) GetConnectionID() string {
+	if g == nil || g.ConnectionID == nil {
+		return ""
+	}
+	return *g.ConnectionID
+}
+
+func (g *GetJobGenericErrorResponseContent) GetStatusDetails() string {
+	if g == nil || g.StatusDetails == nil {
+		return ""
+	}
+	return *g.StatusDetails
+}
+
+func (g *GetJobGenericErrorResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.ExtraProperties
+}
+
+func (g *GetJobGenericErrorResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobGenericErrorResponseContent) SetStatus(status string) {
+	g.Status = status
+	g.require(getJobGenericErrorResponseContentFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobGenericErrorResponseContent) SetType(type_ string) {
+	g.Type = type_
+	g.require(getJobGenericErrorResponseContentFieldType)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobGenericErrorResponseContent) SetCreatedAt(createdAt *string) {
+	g.CreatedAt = createdAt
+	g.require(getJobGenericErrorResponseContentFieldCreatedAt)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobGenericErrorResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getJobGenericErrorResponseContentFieldID)
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobGenericErrorResponseContent) SetConnectionID(connectionID *string) {
+	g.ConnectionID = connectionID
+	g.require(getJobGenericErrorResponseContentFieldConnectionID)
+}
+
+// SetStatusDetails sets the StatusDetails field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobGenericErrorResponseContent) SetStatusDetails(statusDetails *string) {
+	g.StatusDetails = statusDetails
+	g.require(getJobGenericErrorResponseContentFieldStatusDetails)
+}
+
+func (g *GetJobGenericErrorResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetJobGenericErrorResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetJobGenericErrorResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetJobGenericErrorResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetJobGenericErrorResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetJobGenericErrorResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getJobImportUserErrorFieldCode    = big.NewInt(1 << 0)
+	getJobImportUserErrorFieldMessage = big.NewInt(1 << 1)
+	getJobImportUserErrorFieldPath    = big.NewInt(1 << 2)
+)
+
+type GetJobImportUserError struct {
+	// Error code.
+	Code *string `json:"code,omitempty" url:"code,omitempty"`
+	// Error message.
+	Message *string `json:"message,omitempty" url:"message,omitempty"`
+	// Error field.
+	Path *string `json:"path,omitempty" url:"path,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetJobImportUserError) GetCode() string {
+	if g == nil || g.Code == nil {
+		return ""
+	}
+	return *g.Code
+}
+
+func (g *GetJobImportUserError) GetMessage() string {
+	if g == nil || g.Message == nil {
+		return ""
+	}
+	return *g.Message
+}
+
+func (g *GetJobImportUserError) GetPath() string {
+	if g == nil || g.Path == nil {
+		return ""
+	}
+	return *g.Path
+}
+
+func (g *GetJobImportUserError) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.ExtraProperties
+}
+
+func (g *GetJobImportUserError) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobImportUserError) SetCode(code *string) {
+	g.Code = code
+	g.require(getJobImportUserErrorFieldCode)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobImportUserError) SetMessage(message *string) {
+	g.Message = message
+	g.require(getJobImportUserErrorFieldMessage)
+}
+
+// SetPath sets the Path field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetJobImportUserError) SetPath(path *string) {
+	g.Path = path
+	g.require(getJobImportUserErrorFieldPath)
+}
+
+func (g *GetJobImportUserError) UnmarshalJSON(data []byte) error {
+	type embed GetJobImportUserError
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetJobImportUserError(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetJobImportUserError) MarshalJSON() ([]byte, error) {
+	type embed GetJobImportUserError
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetJobImportUserError) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	getJobResponseContentFieldStatus          = big.NewInt(1 << 0)
 	getJobResponseContentFieldType            = big.NewInt(1 << 1)
 	getJobResponseContentFieldCreatedAt       = big.NewInt(1 << 2)
@@ -407,4 +1433,92 @@ func (g *GetJobSummary) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", g)
+}
+
+// User, as provided in the import file
+type GetJobUserError = map[string]any
+
+// Format of the file. Must be `json` or `csv`.
+type JobFileFormatEnum string
+
+const (
+	JobFileFormatEnumJSON JobFileFormatEnum = "json"
+	JobFileFormatEnumCsv  JobFileFormatEnum = "csv"
+)
+
+func NewJobFileFormatEnumFromString(s string) (JobFileFormatEnum, error) {
+	switch s {
+	case "json":
+		return JobFileFormatEnumJSON, nil
+	case "csv":
+		return JobFileFormatEnumCsv, nil
+	}
+	var t JobFileFormatEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (j JobFileFormatEnum) Ptr() *JobFileFormatEnum {
+	return &j
+}
+
+type GetErrorsResponse struct {
+	GetJobErrorResponseContentList    []*GetJobErrorResponseContent
+	GetJobGenericErrorResponseContent *GetJobGenericErrorResponseContent
+
+	typ string
+}
+
+func (g *GetErrorsResponse) GetGetJobErrorResponseContentList() []*GetJobErrorResponseContent {
+	if g == nil {
+		return nil
+	}
+	return g.GetJobErrorResponseContentList
+}
+
+func (g *GetErrorsResponse) GetGetJobGenericErrorResponseContent() *GetJobGenericErrorResponseContent {
+	if g == nil {
+		return nil
+	}
+	return g.GetJobGenericErrorResponseContent
+}
+
+func (g *GetErrorsResponse) UnmarshalJSON(data []byte) error {
+	var valueGetJobErrorResponseContentList []*GetJobErrorResponseContent
+	if err := json.Unmarshal(data, &valueGetJobErrorResponseContentList); err == nil {
+		g.typ = "GetJobErrorResponseContentList"
+		g.GetJobErrorResponseContentList = valueGetJobErrorResponseContentList
+		return nil
+	}
+	valueGetJobGenericErrorResponseContent := new(GetJobGenericErrorResponseContent)
+	if err := json.Unmarshal(data, &valueGetJobGenericErrorResponseContent); err == nil {
+		g.typ = "GetJobGenericErrorResponseContent"
+		g.GetJobGenericErrorResponseContent = valueGetJobGenericErrorResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, g)
+}
+
+func (g GetErrorsResponse) MarshalJSON() ([]byte, error) {
+	if g.typ == "GetJobErrorResponseContentList" || g.GetJobErrorResponseContentList != nil {
+		return json.Marshal(g.GetJobErrorResponseContentList)
+	}
+	if g.typ == "GetJobGenericErrorResponseContent" || g.GetJobGenericErrorResponseContent != nil {
+		return json.Marshal(g.GetJobGenericErrorResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", g)
+}
+
+type GetErrorsResponseVisitor interface {
+	VisitGetJobErrorResponseContentList([]*GetJobErrorResponseContent) error
+	VisitGetJobGenericErrorResponseContent(*GetJobGenericErrorResponseContent) error
+}
+
+func (g *GetErrorsResponse) Accept(visitor GetErrorsResponseVisitor) error {
+	if g.typ == "GetJobErrorResponseContentList" || g.GetJobErrorResponseContentList != nil {
+		return visitor.VisitGetJobErrorResponseContentList(g.GetJobErrorResponseContentList)
+	}
+	if g.typ == "GetJobGenericErrorResponseContent" || g.GetJobGenericErrorResponseContent != nil {
+		return visitor.VisitGetJobGenericErrorResponseContent(g.GetJobGenericErrorResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", g)
 }

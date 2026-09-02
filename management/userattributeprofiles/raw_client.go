@@ -32,7 +32,56 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) GetUserAttributeProfiles(
+	ctx context.Context,
+	request *management.GetUserAttributeProfilesRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ListUserAttributeProfilesPaginatedResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/user-attribute-profiles"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ListUserAttributeProfilesPaginatedResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ListUserAttributeProfilesPaginatedResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) PostUserAttributeProfiles(
 	ctx context.Context,
 	request *management.CreateUserAttributeProfileRequestContent,
 	opts ...option.RequestOption,
@@ -76,7 +125,7 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) ListTemplates(
+func (r *RawClient) GetUserAttributeProfileTemplates(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[*management.ListUserAttributeProfileTemplateResponseContent], error) {
@@ -117,7 +166,7 @@ func (r *RawClient) ListTemplates(
 	}, nil
 }
 
-func (r *RawClient) GetTemplate(
+func (r *RawClient) GetUserAttributeProfileTemplate(
 	ctx context.Context,
 	// ID of the user-attribute-profile-template to retrieve.
 	id string,
@@ -163,7 +212,7 @@ func (r *RawClient) GetTemplate(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetUserAttributeProfilesByID(
 	ctx context.Context,
 	// ID of the user-attribute-profile to retrieve.
 	id string,
@@ -209,7 +258,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteUserAttributeProfilesByID(
 	ctx context.Context,
 	// ID of the user-attribute-profile to delete.
 	id string,
@@ -253,7 +302,7 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchUserAttributeProfilesByID(
 	ctx context.Context,
 	// ID of the user attribute profile to update.
 	id string,

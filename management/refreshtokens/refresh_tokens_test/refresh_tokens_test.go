@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestRefreshTokensListWithWireMock(
+func TestRefreshTokensGetRefreshTokensWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestRefreshTokensListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.GetRefreshTokensRequestParameters{
+	request := &management.GetRefreshTokensRequest{
 		UserID: "user_id",
 		ClientID: management.String(
 			"client_id",
@@ -106,19 +106,19 @@ func TestRefreshTokensListWithWireMock(
 			true,
 		),
 	}
-	_, invocationErr := client.RefreshTokens.List(
+	_, invocationErr := client.RefreshTokens.GetRefreshTokens(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRefreshTokensListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRefreshTokensGetRefreshTokensWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRefreshTokensListWithWireMock", "GET", "/refresh-tokens", map[string]interface{}{"user_id": "user_id", "client_id": "client_id", "from": "from", "take": "1", "fields": "fields", "include_fields": "true"}, 1)
+	VerifyRequestCount(t, "TestRefreshTokensGetRefreshTokensWithWireMock", "GET", "/refresh-tokens", map[string]interface{}{"user_id": "user_id", "client_id": "client_id", "from": "from", "take": "1", "fields": "fields", "include_fields": "true"}, 1)
 }
 
-func TestRefreshTokensRevokeWithWireMock(
+func TestRefreshTokensRevokeRefreshTokensWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -130,19 +130,19 @@ func TestRefreshTokensRevokeWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.RevokeRefreshTokensRequestContent{}
-	invocationErr := client.RefreshTokens.Revoke(
+	invocationErr := client.RefreshTokens.RevokeRefreshTokens(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRefreshTokensRevokeWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRefreshTokensRevokeRefreshTokensWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRefreshTokensRevokeWithWireMock", "POST", "/refresh-tokens/revoke", nil, 1)
+	VerifyRequestCount(t, "TestRefreshTokensRevokeRefreshTokensWithWireMock", "POST", "/refresh-tokens/revoke", nil, 1)
 }
 
-func TestRefreshTokensGetWithWireMock(
+func TestRefreshTokensGetRefreshTokenWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -153,19 +153,19 @@ func TestRefreshTokensGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.RefreshTokens.Get(
+	_, invocationErr := client.RefreshTokens.GetRefreshToken(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRefreshTokensGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRefreshTokensGetRefreshTokenWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRefreshTokensGetWithWireMock", "GET", "/refresh-tokens/id", nil, 1)
+	VerifyRequestCount(t, "TestRefreshTokensGetRefreshTokenWithWireMock", "GET", "/refresh-tokens/id", nil, 1)
 }
 
-func TestRefreshTokensDeleteWithWireMock(
+func TestRefreshTokensDeleteRefreshTokenWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -176,19 +176,19 @@ func TestRefreshTokensDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.RefreshTokens.Delete(
+	invocationErr := client.RefreshTokens.DeleteRefreshToken(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRefreshTokensDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRefreshTokensDeleteRefreshTokenWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRefreshTokensDeleteWithWireMock", "DELETE", "/refresh-tokens/id", nil, 1)
+	VerifyRequestCount(t, "TestRefreshTokensDeleteRefreshTokenWithWireMock", "DELETE", "/refresh-tokens/id", nil, 1)
 }
 
-func TestRefreshTokensUpdateWithWireMock(
+func TestRefreshTokensPatchRefreshTokensByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -200,15 +200,15 @@ func TestRefreshTokensUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateRefreshTokenRequestContent{}
-	_, invocationErr := client.RefreshTokens.Update(
+	_, invocationErr := client.RefreshTokens.PatchRefreshTokensByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestRefreshTokensUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestRefreshTokensPatchRefreshTokensByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRefreshTokensUpdateWithWireMock", "PATCH", "/refresh-tokens/id", nil, 1)
+	VerifyRequestCount(t, "TestRefreshTokensPatchRefreshTokensByIDWithWireMock", "PATCH", "/refresh-tokens/id", nil, 1)
 }

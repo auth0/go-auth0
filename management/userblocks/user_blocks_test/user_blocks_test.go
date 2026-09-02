@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestUserBlocksListByIdentifierWithWireMock(
+func TestUserBlocksGetUserBlocksWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,25 +88,25 @@ func TestUserBlocksListByIdentifierWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListUserBlocksByIdentifierRequestParameters{
+	request := &management.GetUserBlocksRequest{
 		Identifier: "identifier",
 		ConsiderBruteForceEnablement: management.Bool(
 			true,
 		),
 	}
-	_, invocationErr := client.UserBlocks.ListByIdentifier(
+	_, invocationErr := client.UserBlocks.GetUserBlocks(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserBlocksListByIdentifierWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserBlocksGetUserBlocksWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserBlocksListByIdentifierWithWireMock", "GET", "/user-blocks", map[string]interface{}{"identifier": "identifier", "consider_brute_force_enablement": "true"}, 1)
+	VerifyRequestCount(t, "TestUserBlocksGetUserBlocksWithWireMock", "GET", "/user-blocks", map[string]interface{}{"identifier": "identifier", "consider_brute_force_enablement": "true"}, 1)
 }
 
-func TestUserBlocksDeleteByIdentifierWithWireMock(
+func TestUserBlocksDeleteUserBlocksWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -117,22 +117,22 @@ func TestUserBlocksDeleteByIdentifierWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.DeleteUserBlocksByIdentifierRequestParameters{
+	request := &management.DeleteUserBlocksRequest{
 		Identifier: "identifier",
 	}
-	invocationErr := client.UserBlocks.DeleteByIdentifier(
+	invocationErr := client.UserBlocks.DeleteUserBlocks(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserBlocksDeleteByIdentifierWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserBlocksDeleteUserBlocksWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserBlocksDeleteByIdentifierWithWireMock", "DELETE", "/user-blocks", map[string]interface{}{"identifier": "identifier"}, 1)
+	VerifyRequestCount(t, "TestUserBlocksDeleteUserBlocksWithWireMock", "DELETE", "/user-blocks", map[string]interface{}{"identifier": "identifier"}, 1)
 }
 
-func TestUserBlocksListWithWireMock(
+func TestUserBlocksGetUserBlocksByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -143,25 +143,25 @@ func TestUserBlocksListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListUserBlocksRequestParameters{
+	request := &management.GetUserBlocksByIDRequest{
 		ConsiderBruteForceEnablement: management.Bool(
 			true,
 		),
 	}
-	_, invocationErr := client.UserBlocks.List(
+	_, invocationErr := client.UserBlocks.GetUserBlocksByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserBlocksListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserBlocksGetUserBlocksByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserBlocksListWithWireMock", "GET", "/user-blocks/id", map[string]interface{}{"consider_brute_force_enablement": "true"}, 1)
+	VerifyRequestCount(t, "TestUserBlocksGetUserBlocksByIDWithWireMock", "GET", "/user-blocks/id", map[string]interface{}{"consider_brute_force_enablement": "true"}, 1)
 }
 
-func TestUserBlocksDeleteWithWireMock(
+func TestUserBlocksDeleteUserBlocksByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -172,14 +172,14 @@ func TestUserBlocksDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.UserBlocks.Delete(
+	invocationErr := client.UserBlocks.DeleteUserBlocksByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserBlocksDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserBlocksDeleteUserBlocksByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserBlocksDeleteWithWireMock", "DELETE", "/user-blocks/id", nil, 1)
+	VerifyRequestCount(t, "TestUserBlocksDeleteUserBlocksByIDWithWireMock", "DELETE", "/user-blocks/id", nil, 1)
 }

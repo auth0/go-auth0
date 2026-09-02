@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestUserAttributeProfilesListWithWireMock(
+func TestUserAttributeProfilesGetUserAttributeProfilesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestUserAttributeProfilesListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListUserAttributeProfileRequestParameters{
+	request := &management.GetUserAttributeProfilesRequest{
 		From: management.String(
 			"from",
 		),
@@ -96,19 +96,19 @@ func TestUserAttributeProfilesListWithWireMock(
 			1,
 		),
 	}
-	_, invocationErr := client.UserAttributeProfiles.List(
+	_, invocationErr := client.UserAttributeProfiles.GetUserAttributeProfiles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesGetUserAttributeProfilesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserAttributeProfilesListWithWireMock", "GET", "/user-attribute-profiles", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestUserAttributeProfilesGetUserAttributeProfilesWithWireMock", "GET", "/user-attribute-profiles", map[string]interface{}{"from": "from", "take": "1"}, 1)
 }
 
-func TestUserAttributeProfilesCreateWithWireMock(
+func TestUserAttributeProfilesPostUserAttributeProfilesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -130,19 +130,19 @@ func TestUserAttributeProfilesCreateWithWireMock(
 			},
 		},
 	}
-	_, invocationErr := client.UserAttributeProfiles.Create(
+	_, invocationErr := client.UserAttributeProfiles.PostUserAttributeProfiles(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesPostUserAttributeProfilesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserAttributeProfilesCreateWithWireMock", "POST", "/user-attribute-profiles", nil, 1)
+	VerifyRequestCount(t, "TestUserAttributeProfilesPostUserAttributeProfilesWithWireMock", "POST", "/user-attribute-profiles", nil, 1)
 }
 
-func TestUserAttributeProfilesListTemplatesWithWireMock(
+func TestUserAttributeProfilesGetUserAttributeProfileTemplatesWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -153,18 +153,18 @@ func TestUserAttributeProfilesListTemplatesWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.UserAttributeProfiles.ListTemplates(
+	_, invocationErr := client.UserAttributeProfiles.GetUserAttributeProfileTemplates(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesListTemplatesWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesGetUserAttributeProfileTemplatesWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserAttributeProfilesListTemplatesWithWireMock", "GET", "/user-attribute-profiles/templates", nil, 1)
+	VerifyRequestCount(t, "TestUserAttributeProfilesGetUserAttributeProfileTemplatesWithWireMock", "GET", "/user-attribute-profiles/templates", nil, 1)
 }
 
-func TestUserAttributeProfilesGetTemplateWithWireMock(
+func TestUserAttributeProfilesGetUserAttributeProfileTemplateWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -175,42 +175,19 @@ func TestUserAttributeProfilesGetTemplateWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.UserAttributeProfiles.GetTemplate(
-		context.TODO(),
-		"id",
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesGetTemplateWithWireMock"}},
-		),
-	)
-
-	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserAttributeProfilesGetTemplateWithWireMock", "GET", "/user-attribute-profiles/templates/id", nil, 1)
-}
-
-func TestUserAttributeProfilesGetWithWireMock(
-	t *testing.T,
-) {
-	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-	if WireMockBaseURL == "" {
-		WireMockBaseURL = "http://localhost:8080"
-	}
-	client := client.NewWithOptions(
-		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
-	)
-	_, invocationErr := client.UserAttributeProfiles.Get(
+	_, invocationErr := client.UserAttributeProfiles.GetUserAttributeProfileTemplate(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesGetUserAttributeProfileTemplateWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserAttributeProfilesGetWithWireMock", "GET", "/user-attribute-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestUserAttributeProfilesGetUserAttributeProfileTemplateWithWireMock", "GET", "/user-attribute-profiles/templates/id", nil, 1)
 }
 
-func TestUserAttributeProfilesDeleteWithWireMock(
+func TestUserAttributeProfilesGetUserAttributeProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -221,19 +198,42 @@ func TestUserAttributeProfilesDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.UserAttributeProfiles.Delete(
+	_, invocationErr := client.UserAttributeProfiles.GetUserAttributeProfilesByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesGetUserAttributeProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserAttributeProfilesDeleteWithWireMock", "DELETE", "/user-attribute-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestUserAttributeProfilesGetUserAttributeProfilesByIDWithWireMock", "GET", "/user-attribute-profiles/id", nil, 1)
 }
 
-func TestUserAttributeProfilesUpdateWithWireMock(
+func TestUserAttributeProfilesDeleteUserAttributeProfilesByIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.UserAttributeProfiles.DeleteUserAttributeProfilesByID(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesDeleteUserAttributeProfilesByIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestUserAttributeProfilesDeleteUserAttributeProfilesByIDWithWireMock", "DELETE", "/user-attribute-profiles/id", nil, 1)
+}
+
+func TestUserAttributeProfilesPatchUserAttributeProfilesByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -245,15 +245,15 @@ func TestUserAttributeProfilesUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateUserAttributeProfileRequestContent{}
-	_, invocationErr := client.UserAttributeProfiles.Update(
+	_, invocationErr := client.UserAttributeProfiles.PatchUserAttributeProfilesByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestUserAttributeProfilesPatchUserAttributeProfilesByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUserAttributeProfilesUpdateWithWireMock", "PATCH", "/user-attribute-profiles/id", nil, 1)
+	VerifyRequestCount(t, "TestUserAttributeProfilesPatchUserAttributeProfilesByIDWithWireMock", "PATCH", "/user-attribute-profiles/id", nil, 1)
 }

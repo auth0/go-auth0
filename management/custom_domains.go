@@ -1914,7 +1914,168 @@ func (g *GetDefaultDomainResponseContent) Accept(visitor GetDefaultDomainRespons
 	return fmt.Errorf("type %T does not include a non-empty union type", g)
 }
 
-type ListCustomDomainsResponseContent = []*CustomDomain
+var (
+	listCustomDomainsPaginatedResponseContentFieldCustomDomains = big.NewInt(1 << 0)
+	listCustomDomainsPaginatedResponseContentFieldNext          = big.NewInt(1 << 1)
+)
+
+type ListCustomDomainsPaginatedResponseContent struct {
+	CustomDomains []*CustomDomain `json:"custom_domains" url:"custom_domains"`
+	// A cursor to be used as the "from" query parameter for the next page of results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListCustomDomainsPaginatedResponseContent) GetCustomDomains() []*CustomDomain {
+	if l == nil {
+		return nil
+	}
+	return l.CustomDomains
+}
+
+func (l *ListCustomDomainsPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListCustomDomainsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListCustomDomainsPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetCustomDomains sets the CustomDomains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListCustomDomainsPaginatedResponseContent) SetCustomDomains(customDomains []*CustomDomain) {
+	l.CustomDomains = customDomains
+	l.require(listCustomDomainsPaginatedResponseContentFieldCustomDomains)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListCustomDomainsPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listCustomDomainsPaginatedResponseContentFieldNext)
+}
+
+func (l *ListCustomDomainsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListCustomDomainsPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListCustomDomainsPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListCustomDomainsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListCustomDomainsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListCustomDomainsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type ListCustomDomainsResponseContent struct {
+	CustomDomainList                          []*CustomDomain
+	ListCustomDomainsPaginatedResponseContent *ListCustomDomainsPaginatedResponseContent
+
+	typ string
+}
+
+func (l *ListCustomDomainsResponseContent) GetCustomDomainList() []*CustomDomain {
+	if l == nil {
+		return nil
+	}
+	return l.CustomDomainList
+}
+
+func (l *ListCustomDomainsResponseContent) GetListCustomDomainsPaginatedResponseContent() *ListCustomDomainsPaginatedResponseContent {
+	if l == nil {
+		return nil
+	}
+	return l.ListCustomDomainsPaginatedResponseContent
+}
+
+func (l *ListCustomDomainsResponseContent) UnmarshalJSON(data []byte) error {
+	var valueCustomDomainList []*CustomDomain
+	if err := json.Unmarshal(data, &valueCustomDomainList); err == nil {
+		l.typ = "CustomDomainList"
+		l.CustomDomainList = valueCustomDomainList
+		return nil
+	}
+	valueListCustomDomainsPaginatedResponseContent := new(ListCustomDomainsPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListCustomDomainsPaginatedResponseContent); err == nil {
+		l.typ = "ListCustomDomainsPaginatedResponseContent"
+		l.ListCustomDomainsPaginatedResponseContent = valueListCustomDomainsPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
+}
+
+func (l ListCustomDomainsResponseContent) MarshalJSON() ([]byte, error) {
+	if l.typ == "CustomDomainList" || l.CustomDomainList != nil {
+		return json.Marshal(l.CustomDomainList)
+	}
+	if l.typ == "ListCustomDomainsPaginatedResponseContent" || l.ListCustomDomainsPaginatedResponseContent != nil {
+		return json.Marshal(l.ListCustomDomainsPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
+}
+
+type ListCustomDomainsResponseContentVisitor interface {
+	VisitCustomDomainList([]*CustomDomain) error
+	VisitListCustomDomainsPaginatedResponseContent(*ListCustomDomainsPaginatedResponseContent) error
+}
+
+func (l *ListCustomDomainsResponseContent) Accept(visitor ListCustomDomainsResponseContentVisitor) error {
+	if l.typ == "CustomDomainList" || l.CustomDomainList != nil {
+		return visitor.VisitCustomDomainList(l.CustomDomainList)
+	}
+	if l.typ == "ListCustomDomainsPaginatedResponseContent" || l.ListCustomDomainsPaginatedResponseContent != nil {
+		return visitor.VisitListCustomDomainsPaginatedResponseContent(l.ListCustomDomainsPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
+}
 
 var (
 	testCustomDomainResponseContentFieldSuccess = big.NewInt(1 << 0)

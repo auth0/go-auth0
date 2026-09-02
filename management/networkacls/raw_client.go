@@ -32,7 +32,56 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Create(
+func (r *RawClient) GetNetworkACLs(
+	ctx context.Context,
+	request *management.GetNetworkACLsRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ListNetworkACLsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/network-acls"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ListNetworkACLsResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ListNetworkACLsResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) PostNetworkACLs(
 	ctx context.Context,
 	request *management.CreateNetworkACLRequestContent,
 	opts ...option.RequestOption,
@@ -74,7 +123,7 @@ func (r *RawClient) Create(
 	}, nil
 }
 
-func (r *RawClient) Get(
+func (r *RawClient) GetNetworkACLsByID(
 	ctx context.Context,
 	// The id of the access control list to retrieve.
 	id string,
@@ -120,7 +169,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Set(
+func (r *RawClient) PutNetworkACLsByID(
 	ctx context.Context,
 	// The id of the ACL to update.
 	id string,
@@ -169,7 +218,7 @@ func (r *RawClient) Set(
 	}, nil
 }
 
-func (r *RawClient) Delete(
+func (r *RawClient) DeleteNetworkACLsByID(
 	ctx context.Context,
 	// The id of the ACL to delete
 	id string,
@@ -213,7 +262,7 @@ func (r *RawClient) Delete(
 	}, nil
 }
 
-func (r *RawClient) Update(
+func (r *RawClient) PatchNetworkACLsByID(
 	ctx context.Context,
 	// The id of the ACL to update.
 	id string,

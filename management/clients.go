@@ -6753,6 +6753,311 @@ func (c *ClientCreateAuthenticationMethodTLSClientAuth) String() string {
 // Fully defined credentials that will be enabled on the client for CA-based mTLS authentication.
 type ClientCreateAuthenticationMethodTLSClientAuthCredentials = []*CertificateSubjectDnCredential
 
+var (
+	clientCredentialFieldID               = big.NewInt(1 << 0)
+	clientCredentialFieldName             = big.NewInt(1 << 1)
+	clientCredentialFieldKid              = big.NewInt(1 << 2)
+	clientCredentialFieldAlg              = big.NewInt(1 << 3)
+	clientCredentialFieldCredentialType   = big.NewInt(1 << 4)
+	clientCredentialFieldSubjectDn        = big.NewInt(1 << 5)
+	clientCredentialFieldThumbprintSha256 = big.NewInt(1 << 6)
+	clientCredentialFieldCreatedAt        = big.NewInt(1 << 7)
+	clientCredentialFieldUpdatedAt        = big.NewInt(1 << 8)
+	clientCredentialFieldExpiresAt        = big.NewInt(1 << 9)
+)
+
+type ClientCredential struct {
+	// ID of the credential. Generated on creation.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name given to the credential by the user.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The key identifier of the credential, generated on creation.
+	Kid            *string                        `json:"kid,omitempty" url:"kid,omitempty"`
+	Alg            *ClientCredentialAlgorithmEnum `json:"alg,omitempty" url:"alg,omitempty"`
+	CredentialType *ClientCredentialTypeEnum      `json:"credential_type,omitempty" url:"credential_type,omitempty"`
+	// The X509 certificate's Subject Distinguished Name
+	SubjectDn *string `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
+	// The X509 certificate's SHA256 thumbprint
+	ThumbprintSha256 *string `json:"thumbprint_sha256,omitempty" url:"thumbprint_sha256,omitempty"`
+	// The ISO 8601 formatted date the credential was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 formatted date the credential was updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// The ISO 8601 formatted date representing the expiration of the credential.
+	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ClientCredential) GetID() string {
+	if c == nil || c.ID == nil {
+		return ""
+	}
+	return *c.ID
+}
+
+func (c *ClientCredential) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+func (c *ClientCredential) GetKid() string {
+	if c == nil || c.Kid == nil {
+		return ""
+	}
+	return *c.Kid
+}
+
+func (c *ClientCredential) GetAlg() ClientCredentialAlgorithmEnum {
+	if c == nil || c.Alg == nil {
+		return ""
+	}
+	return *c.Alg
+}
+
+func (c *ClientCredential) GetCredentialType() ClientCredentialTypeEnum {
+	if c == nil || c.CredentialType == nil {
+		return ""
+	}
+	return *c.CredentialType
+}
+
+func (c *ClientCredential) GetSubjectDn() string {
+	if c == nil || c.SubjectDn == nil {
+		return ""
+	}
+	return *c.SubjectDn
+}
+
+func (c *ClientCredential) GetThumbprintSha256() string {
+	if c == nil || c.ThumbprintSha256 == nil {
+		return ""
+	}
+	return *c.ThumbprintSha256
+}
+
+func (c *ClientCredential) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *ClientCredential) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *c.UpdatedAt
+}
+
+func (c *ClientCredential) GetExpiresAt() time.Time {
+	if c == nil || c.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *c.ExpiresAt
+}
+
+func (c *ClientCredential) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *ClientCredential) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetID(id *string) {
+	c.ID = id
+	c.require(clientCredentialFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetName(name *string) {
+	c.Name = name
+	c.require(clientCredentialFieldName)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetKid(kid *string) {
+	c.Kid = kid
+	c.require(clientCredentialFieldKid)
+}
+
+// SetAlg sets the Alg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetAlg(alg *ClientCredentialAlgorithmEnum) {
+	c.Alg = alg
+	c.require(clientCredentialFieldAlg)
+}
+
+// SetCredentialType sets the CredentialType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetCredentialType(credentialType *ClientCredentialTypeEnum) {
+	c.CredentialType = credentialType
+	c.require(clientCredentialFieldCredentialType)
+}
+
+// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetSubjectDn(subjectDn *string) {
+	c.SubjectDn = subjectDn
+	c.require(clientCredentialFieldSubjectDn)
+}
+
+// SetThumbprintSha256 sets the ThumbprintSha256 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetThumbprintSha256(thumbprintSha256 *string) {
+	c.ThumbprintSha256 = thumbprintSha256
+	c.require(clientCredentialFieldThumbprintSha256)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(clientCredentialFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetUpdatedAt(updatedAt *time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(clientCredentialFieldUpdatedAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientCredential) SetExpiresAt(expiresAt *time.Time) {
+	c.ExpiresAt = expiresAt
+	c.require(clientCredentialFieldExpiresAt)
+}
+
+func (c *ClientCredential) UnmarshalJSON(data []byte) error {
+	type embed ClientCredential
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ClientCredential(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	c.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	c.ExpiresAt = unmarshaler.ExpiresAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientCredential) MarshalJSON() ([]byte, error) {
+	type embed ClientCredential
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(c.UpdatedAt),
+		ExpiresAt: internal.NewOptionalDateTime(c.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *ClientCredential) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Algorithm which will be used with the credential. Supported algorithms: RS256,RS384,PS256
+type ClientCredentialAlgorithmEnum string
+
+const (
+	ClientCredentialAlgorithmEnumRs256 ClientCredentialAlgorithmEnum = "RS256"
+	ClientCredentialAlgorithmEnumRs384 ClientCredentialAlgorithmEnum = "RS384"
+	ClientCredentialAlgorithmEnumPs256 ClientCredentialAlgorithmEnum = "PS256"
+)
+
+func NewClientCredentialAlgorithmEnumFromString(s string) (ClientCredentialAlgorithmEnum, error) {
+	switch s {
+	case "RS256":
+		return ClientCredentialAlgorithmEnumRs256, nil
+	case "RS384":
+		return ClientCredentialAlgorithmEnumRs384, nil
+	case "PS256":
+		return ClientCredentialAlgorithmEnumPs256, nil
+	}
+	var t ClientCredentialAlgorithmEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientCredentialAlgorithmEnum) Ptr() *ClientCredentialAlgorithmEnum {
+	return &c
+}
+
+// The type of credential.
+type ClientCredentialTypeEnum string
+
+const (
+	ClientCredentialTypeEnumPublicKey     ClientCredentialTypeEnum = "public_key"
+	ClientCredentialTypeEnumCertSubjectDn ClientCredentialTypeEnum = "cert_subject_dn"
+	ClientCredentialTypeEnumX509Cert      ClientCredentialTypeEnum = "x509_cert"
+)
+
+func NewClientCredentialTypeEnumFromString(s string) (ClientCredentialTypeEnum, error) {
+	switch s {
+	case "public_key":
+		return ClientCredentialTypeEnumPublicKey, nil
+	case "cert_subject_dn":
+		return ClientCredentialTypeEnumCertSubjectDn, nil
+	case "x509_cert":
+		return ClientCredentialTypeEnumX509Cert, nil
+	}
+	var t ClientCredentialTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientCredentialTypeEnum) Ptr() *ClientCredentialTypeEnum {
+	return &c
+}
+
 // Defines the default Organization ID and flows
 var (
 	clientDefaultOrganizationFieldOrganizationID = big.NewInt(1 << 0)
@@ -12455,6 +12760,259 @@ func (f *FedCmLoginPatch) String() string {
 }
 
 var (
+	getClientCredentialResponseContentFieldID               = big.NewInt(1 << 0)
+	getClientCredentialResponseContentFieldName             = big.NewInt(1 << 1)
+	getClientCredentialResponseContentFieldKid              = big.NewInt(1 << 2)
+	getClientCredentialResponseContentFieldAlg              = big.NewInt(1 << 3)
+	getClientCredentialResponseContentFieldCredentialType   = big.NewInt(1 << 4)
+	getClientCredentialResponseContentFieldSubjectDn        = big.NewInt(1 << 5)
+	getClientCredentialResponseContentFieldThumbprintSha256 = big.NewInt(1 << 6)
+	getClientCredentialResponseContentFieldCreatedAt        = big.NewInt(1 << 7)
+	getClientCredentialResponseContentFieldUpdatedAt        = big.NewInt(1 << 8)
+	getClientCredentialResponseContentFieldExpiresAt        = big.NewInt(1 << 9)
+)
+
+type GetClientCredentialResponseContent struct {
+	// ID of the credential. Generated on creation.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name given to the credential by the user.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The key identifier of the credential, generated on creation.
+	Kid            *string                        `json:"kid,omitempty" url:"kid,omitempty"`
+	Alg            *ClientCredentialAlgorithmEnum `json:"alg,omitempty" url:"alg,omitempty"`
+	CredentialType *ClientCredentialTypeEnum      `json:"credential_type,omitempty" url:"credential_type,omitempty"`
+	// The X509 certificate's Subject Distinguished Name
+	SubjectDn *string `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
+	// The X509 certificate's SHA256 thumbprint
+	ThumbprintSha256 *string `json:"thumbprint_sha256,omitempty" url:"thumbprint_sha256,omitempty"`
+	// The ISO 8601 formatted date the credential was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 formatted date the credential was updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// The ISO 8601 formatted date representing the expiration of the credential.
+	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (g *GetClientCredentialResponseContent) GetID() string {
+	if g == nil || g.ID == nil {
+		return ""
+	}
+	return *g.ID
+}
+
+func (g *GetClientCredentialResponseContent) GetName() string {
+	if g == nil || g.Name == nil {
+		return ""
+	}
+	return *g.Name
+}
+
+func (g *GetClientCredentialResponseContent) GetKid() string {
+	if g == nil || g.Kid == nil {
+		return ""
+	}
+	return *g.Kid
+}
+
+func (g *GetClientCredentialResponseContent) GetAlg() ClientCredentialAlgorithmEnum {
+	if g == nil || g.Alg == nil {
+		return ""
+	}
+	return *g.Alg
+}
+
+func (g *GetClientCredentialResponseContent) GetCredentialType() ClientCredentialTypeEnum {
+	if g == nil || g.CredentialType == nil {
+		return ""
+	}
+	return *g.CredentialType
+}
+
+func (g *GetClientCredentialResponseContent) GetSubjectDn() string {
+	if g == nil || g.SubjectDn == nil {
+		return ""
+	}
+	return *g.SubjectDn
+}
+
+func (g *GetClientCredentialResponseContent) GetThumbprintSha256() string {
+	if g == nil || g.ThumbprintSha256 == nil {
+		return ""
+	}
+	return *g.ThumbprintSha256
+}
+
+func (g *GetClientCredentialResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *g.CreatedAt
+}
+
+func (g *GetClientCredentialResponseContent) GetUpdatedAt() time.Time {
+	if g == nil || g.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *g.UpdatedAt
+}
+
+func (g *GetClientCredentialResponseContent) GetExpiresAt() time.Time {
+	if g == nil || g.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *g.ExpiresAt
+}
+
+func (g *GetClientCredentialResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.ExtraProperties
+}
+
+func (g *GetClientCredentialResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetID(id *string) {
+	g.ID = id
+	g.require(getClientCredentialResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetName(name *string) {
+	g.Name = name
+	g.require(getClientCredentialResponseContentFieldName)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetKid(kid *string) {
+	g.Kid = kid
+	g.require(getClientCredentialResponseContentFieldKid)
+}
+
+// SetAlg sets the Alg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetAlg(alg *ClientCredentialAlgorithmEnum) {
+	g.Alg = alg
+	g.require(getClientCredentialResponseContentFieldAlg)
+}
+
+// SetCredentialType sets the CredentialType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetCredentialType(credentialType *ClientCredentialTypeEnum) {
+	g.CredentialType = credentialType
+	g.require(getClientCredentialResponseContentFieldCredentialType)
+}
+
+// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetSubjectDn(subjectDn *string) {
+	g.SubjectDn = subjectDn
+	g.require(getClientCredentialResponseContentFieldSubjectDn)
+}
+
+// SetThumbprintSha256 sets the ThumbprintSha256 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetThumbprintSha256(thumbprintSha256 *string) {
+	g.ThumbprintSha256 = thumbprintSha256
+	g.require(getClientCredentialResponseContentFieldThumbprintSha256)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getClientCredentialResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getClientCredentialResponseContentFieldUpdatedAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientCredentialResponseContent) SetExpiresAt(expiresAt *time.Time) {
+	g.ExpiresAt = expiresAt
+	g.require(getClientCredentialResponseContentFieldExpiresAt)
+}
+
+func (g *GetClientCredentialResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetClientCredentialResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetClientCredentialResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	g.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	g.ExpiresAt = unmarshaler.ExpiresAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.ExtraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetClientCredentialResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetClientCredentialResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
+		ExpiresAt: internal.NewOptionalDateTime(g.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
+}
+
+func (g *GetClientCredentialResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	getClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
 	getClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
 	getClientResponseContentFieldName                                           = big.NewInt(1 << 2)
@@ -13776,6 +14334,112 @@ func (l *LinkedClientConfiguration) String() string {
 }
 
 var (
+	listClientConnectionsResponseContentFieldConnections = big.NewInt(1 << 0)
+	listClientConnectionsResponseContentFieldNext        = big.NewInt(1 << 1)
+)
+
+type ListClientConnectionsResponseContent struct {
+	Connections []*ConnectionForList `json:"connections" url:"connections"`
+	// Encoded next token
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (l *ListClientConnectionsResponseContent) GetConnections() []*ConnectionForList {
+	if l == nil {
+		return nil
+	}
+	return l.Connections
+}
+
+func (l *ListClientConnectionsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListClientConnectionsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.ExtraProperties
+}
+
+func (l *ListClientConnectionsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetConnections sets the Connections field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientConnectionsResponseContent) SetConnections(connections []*ConnectionForList) {
+	l.Connections = connections
+	l.require(listClientConnectionsResponseContentFieldConnections)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientConnectionsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listClientConnectionsResponseContentFieldNext)
+}
+
+func (l *ListClientConnectionsResponseContent) UnmarshalJSON(data []byte) error {
+	type embed ListClientConnectionsResponseContent
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*l = ListClientConnectionsResponseContent(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.ExtraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListClientConnectionsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListClientConnectionsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, l.ExtraProperties)
+}
+
+func (l *ListClientConnectionsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
 	listClientsOffsetPaginatedResponseContentFieldStart   = big.NewInt(1 << 0)
 	listClientsOffsetPaginatedResponseContentFieldLimit   = big.NewInt(1 << 1)
 	listClientsOffsetPaginatedResponseContentFieldTotal   = big.NewInt(1 << 2)
@@ -13893,6 +14557,107 @@ func (l *ListClientsOffsetPaginatedResponseContent) MarshalJSON() ([]byte, error
 }
 
 func (l *ListClientsOffsetPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listClientsPaginatedResponseContentFieldNext    = big.NewInt(1 << 0)
+	listClientsPaginatedResponseContentFieldClients = big.NewInt(1 << 1)
+)
+
+type ListClientsPaginatedResponseContent struct {
+	// Opaque identifier for use with the <i>from</i> query parameter for the next page of results.<br/>This identifier is valid for 24 hours.
+	Next    *string   `json:"next,omitempty" url:"next,omitempty"`
+	Clients []*Client `json:"clients,omitempty" url:"clients,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListClientsPaginatedResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListClientsPaginatedResponseContent) GetClients() []*Client {
+	if l == nil || l.Clients == nil {
+		return nil
+	}
+	return l.Clients
+}
+
+func (l *ListClientsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListClientsPaginatedResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientsPaginatedResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listClientsPaginatedResponseContentFieldNext)
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListClientsPaginatedResponseContent) SetClients(clients []*Client) {
+	l.Clients = clients
+	l.require(listClientsPaginatedResponseContentFieldClients)
+}
+
+func (l *ListClientsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListClientsPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListClientsPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListClientsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListClientsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListClientsPaginatedResponseContent) String() string {
 	if l == nil {
 		return "<nil>"
 	}
@@ -14658,6 +15423,512 @@ func (n *NativeSocialLoginPatch) String() string {
 }
 
 var (
+	patchClientCredentialResponseContentFieldID               = big.NewInt(1 << 0)
+	patchClientCredentialResponseContentFieldName             = big.NewInt(1 << 1)
+	patchClientCredentialResponseContentFieldKid              = big.NewInt(1 << 2)
+	patchClientCredentialResponseContentFieldAlg              = big.NewInt(1 << 3)
+	patchClientCredentialResponseContentFieldCredentialType   = big.NewInt(1 << 4)
+	patchClientCredentialResponseContentFieldSubjectDn        = big.NewInt(1 << 5)
+	patchClientCredentialResponseContentFieldThumbprintSha256 = big.NewInt(1 << 6)
+	patchClientCredentialResponseContentFieldCreatedAt        = big.NewInt(1 << 7)
+	patchClientCredentialResponseContentFieldUpdatedAt        = big.NewInt(1 << 8)
+	patchClientCredentialResponseContentFieldExpiresAt        = big.NewInt(1 << 9)
+)
+
+type PatchClientCredentialResponseContent struct {
+	// ID of the credential. Generated on creation.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name given to the credential by the user.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The key identifier of the credential, generated on creation.
+	Kid            *string                        `json:"kid,omitempty" url:"kid,omitempty"`
+	Alg            *ClientCredentialAlgorithmEnum `json:"alg,omitempty" url:"alg,omitempty"`
+	CredentialType *ClientCredentialTypeEnum      `json:"credential_type,omitempty" url:"credential_type,omitempty"`
+	// The X509 certificate's Subject Distinguished Name
+	SubjectDn *string `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
+	// The X509 certificate's SHA256 thumbprint
+	ThumbprintSha256 *string `json:"thumbprint_sha256,omitempty" url:"thumbprint_sha256,omitempty"`
+	// The ISO 8601 formatted date the credential was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 formatted date the credential was updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// The ISO 8601 formatted date representing the expiration of the credential.
+	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (p *PatchClientCredentialResponseContent) GetID() string {
+	if p == nil || p.ID == nil {
+		return ""
+	}
+	return *p.ID
+}
+
+func (p *PatchClientCredentialResponseContent) GetName() string {
+	if p == nil || p.Name == nil {
+		return ""
+	}
+	return *p.Name
+}
+
+func (p *PatchClientCredentialResponseContent) GetKid() string {
+	if p == nil || p.Kid == nil {
+		return ""
+	}
+	return *p.Kid
+}
+
+func (p *PatchClientCredentialResponseContent) GetAlg() ClientCredentialAlgorithmEnum {
+	if p == nil || p.Alg == nil {
+		return ""
+	}
+	return *p.Alg
+}
+
+func (p *PatchClientCredentialResponseContent) GetCredentialType() ClientCredentialTypeEnum {
+	if p == nil || p.CredentialType == nil {
+		return ""
+	}
+	return *p.CredentialType
+}
+
+func (p *PatchClientCredentialResponseContent) GetSubjectDn() string {
+	if p == nil || p.SubjectDn == nil {
+		return ""
+	}
+	return *p.SubjectDn
+}
+
+func (p *PatchClientCredentialResponseContent) GetThumbprintSha256() string {
+	if p == nil || p.ThumbprintSha256 == nil {
+		return ""
+	}
+	return *p.ThumbprintSha256
+}
+
+func (p *PatchClientCredentialResponseContent) GetCreatedAt() time.Time {
+	if p == nil || p.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *p.CreatedAt
+}
+
+func (p *PatchClientCredentialResponseContent) GetUpdatedAt() time.Time {
+	if p == nil || p.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *p.UpdatedAt
+}
+
+func (p *PatchClientCredentialResponseContent) GetExpiresAt() time.Time {
+	if p == nil || p.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *p.ExpiresAt
+}
+
+func (p *PatchClientCredentialResponseContent) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.ExtraProperties
+}
+
+func (p *PatchClientCredentialResponseContent) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetID(id *string) {
+	p.ID = id
+	p.require(patchClientCredentialResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetName(name *string) {
+	p.Name = name
+	p.require(patchClientCredentialResponseContentFieldName)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetKid(kid *string) {
+	p.Kid = kid
+	p.require(patchClientCredentialResponseContentFieldKid)
+}
+
+// SetAlg sets the Alg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetAlg(alg *ClientCredentialAlgorithmEnum) {
+	p.Alg = alg
+	p.require(patchClientCredentialResponseContentFieldAlg)
+}
+
+// SetCredentialType sets the CredentialType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetCredentialType(credentialType *ClientCredentialTypeEnum) {
+	p.CredentialType = credentialType
+	p.require(patchClientCredentialResponseContentFieldCredentialType)
+}
+
+// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetSubjectDn(subjectDn *string) {
+	p.SubjectDn = subjectDn
+	p.require(patchClientCredentialResponseContentFieldSubjectDn)
+}
+
+// SetThumbprintSha256 sets the ThumbprintSha256 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetThumbprintSha256(thumbprintSha256 *string) {
+	p.ThumbprintSha256 = thumbprintSha256
+	p.require(patchClientCredentialResponseContentFieldThumbprintSha256)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetCreatedAt(createdAt *time.Time) {
+	p.CreatedAt = createdAt
+	p.require(patchClientCredentialResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	p.UpdatedAt = updatedAt
+	p.require(patchClientCredentialResponseContentFieldUpdatedAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PatchClientCredentialResponseContent) SetExpiresAt(expiresAt *time.Time) {
+	p.ExpiresAt = expiresAt
+	p.require(patchClientCredentialResponseContentFieldExpiresAt)
+}
+
+func (p *PatchClientCredentialResponseContent) UnmarshalJSON(data []byte) error {
+	type embed PatchClientCredentialResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = PatchClientCredentialResponseContent(unmarshaler.embed)
+	p.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	p.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	p.ExpiresAt = unmarshaler.ExpiresAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.ExtraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PatchClientCredentialResponseContent) MarshalJSON() ([]byte, error) {
+	type embed PatchClientCredentialResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed:     embed(*p),
+		CreatedAt: internal.NewOptionalDateTime(p.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(p.UpdatedAt),
+		ExpiresAt: internal.NewOptionalDateTime(p.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, p.ExtraProperties)
+}
+
+func (p *PatchClientCredentialResponseContent) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
+	postClientCredentialResponseContentFieldID               = big.NewInt(1 << 0)
+	postClientCredentialResponseContentFieldName             = big.NewInt(1 << 1)
+	postClientCredentialResponseContentFieldKid              = big.NewInt(1 << 2)
+	postClientCredentialResponseContentFieldAlg              = big.NewInt(1 << 3)
+	postClientCredentialResponseContentFieldCredentialType   = big.NewInt(1 << 4)
+	postClientCredentialResponseContentFieldSubjectDn        = big.NewInt(1 << 5)
+	postClientCredentialResponseContentFieldThumbprintSha256 = big.NewInt(1 << 6)
+	postClientCredentialResponseContentFieldCreatedAt        = big.NewInt(1 << 7)
+	postClientCredentialResponseContentFieldUpdatedAt        = big.NewInt(1 << 8)
+	postClientCredentialResponseContentFieldExpiresAt        = big.NewInt(1 << 9)
+)
+
+type PostClientCredentialResponseContent struct {
+	// ID of the credential. Generated on creation.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name given to the credential by the user.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// The key identifier of the credential, generated on creation.
+	Kid            *string                        `json:"kid,omitempty" url:"kid,omitempty"`
+	Alg            *ClientCredentialAlgorithmEnum `json:"alg,omitempty" url:"alg,omitempty"`
+	CredentialType *ClientCredentialTypeEnum      `json:"credential_type,omitempty" url:"credential_type,omitempty"`
+	// The X509 certificate's Subject Distinguished Name
+	SubjectDn *string `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
+	// The X509 certificate's SHA256 thumbprint
+	ThumbprintSha256 *string `json:"thumbprint_sha256,omitempty" url:"thumbprint_sha256,omitempty"`
+	// The ISO 8601 formatted date the credential was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 formatted date the credential was updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// The ISO 8601 formatted date representing the expiration of the credential.
+	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"expires_at,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (p *PostClientCredentialResponseContent) GetID() string {
+	if p == nil || p.ID == nil {
+		return ""
+	}
+	return *p.ID
+}
+
+func (p *PostClientCredentialResponseContent) GetName() string {
+	if p == nil || p.Name == nil {
+		return ""
+	}
+	return *p.Name
+}
+
+func (p *PostClientCredentialResponseContent) GetKid() string {
+	if p == nil || p.Kid == nil {
+		return ""
+	}
+	return *p.Kid
+}
+
+func (p *PostClientCredentialResponseContent) GetAlg() ClientCredentialAlgorithmEnum {
+	if p == nil || p.Alg == nil {
+		return ""
+	}
+	return *p.Alg
+}
+
+func (p *PostClientCredentialResponseContent) GetCredentialType() ClientCredentialTypeEnum {
+	if p == nil || p.CredentialType == nil {
+		return ""
+	}
+	return *p.CredentialType
+}
+
+func (p *PostClientCredentialResponseContent) GetSubjectDn() string {
+	if p == nil || p.SubjectDn == nil {
+		return ""
+	}
+	return *p.SubjectDn
+}
+
+func (p *PostClientCredentialResponseContent) GetThumbprintSha256() string {
+	if p == nil || p.ThumbprintSha256 == nil {
+		return ""
+	}
+	return *p.ThumbprintSha256
+}
+
+func (p *PostClientCredentialResponseContent) GetCreatedAt() time.Time {
+	if p == nil || p.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *p.CreatedAt
+}
+
+func (p *PostClientCredentialResponseContent) GetUpdatedAt() time.Time {
+	if p == nil || p.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *p.UpdatedAt
+}
+
+func (p *PostClientCredentialResponseContent) GetExpiresAt() time.Time {
+	if p == nil || p.ExpiresAt == nil {
+		return time.Time{}
+	}
+	return *p.ExpiresAt
+}
+
+func (p *PostClientCredentialResponseContent) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.ExtraProperties
+}
+
+func (p *PostClientCredentialResponseContent) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetID(id *string) {
+	p.ID = id
+	p.require(postClientCredentialResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetName(name *string) {
+	p.Name = name
+	p.require(postClientCredentialResponseContentFieldName)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetKid(kid *string) {
+	p.Kid = kid
+	p.require(postClientCredentialResponseContentFieldKid)
+}
+
+// SetAlg sets the Alg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetAlg(alg *ClientCredentialAlgorithmEnum) {
+	p.Alg = alg
+	p.require(postClientCredentialResponseContentFieldAlg)
+}
+
+// SetCredentialType sets the CredentialType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetCredentialType(credentialType *ClientCredentialTypeEnum) {
+	p.CredentialType = credentialType
+	p.require(postClientCredentialResponseContentFieldCredentialType)
+}
+
+// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetSubjectDn(subjectDn *string) {
+	p.SubjectDn = subjectDn
+	p.require(postClientCredentialResponseContentFieldSubjectDn)
+}
+
+// SetThumbprintSha256 sets the ThumbprintSha256 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetThumbprintSha256(thumbprintSha256 *string) {
+	p.ThumbprintSha256 = thumbprintSha256
+	p.require(postClientCredentialResponseContentFieldThumbprintSha256)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetCreatedAt(createdAt *time.Time) {
+	p.CreatedAt = createdAt
+	p.require(postClientCredentialResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	p.UpdatedAt = updatedAt
+	p.require(postClientCredentialResponseContentFieldUpdatedAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialResponseContent) SetExpiresAt(expiresAt *time.Time) {
+	p.ExpiresAt = expiresAt
+	p.require(postClientCredentialResponseContentFieldExpiresAt)
+}
+
+func (p *PostClientCredentialResponseContent) UnmarshalJSON(data []byte) error {
+	type embed PostClientCredentialResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*p = PostClientCredentialResponseContent(unmarshaler.embed)
+	p.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	p.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	p.ExpiresAt = unmarshaler.ExpiresAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.ExtraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PostClientCredentialResponseContent) MarshalJSON() ([]byte, error) {
+	type embed PostClientCredentialResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed:     embed(*p),
+		CreatedAt: internal.NewOptionalDateTime(p.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(p.UpdatedAt),
+		ExpiresAt: internal.NewOptionalDateTime(p.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, p.ExtraProperties)
+}
+
+func (p *PostClientCredentialResponseContent) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+var (
 	previewCimdMetadataResponseContentFieldClientID     = big.NewInt(1 << 0)
 	previewCimdMetadataResponseContentFieldErrors       = big.NewInt(1 << 1)
 	previewCimdMetadataResponseContentFieldValidation   = big.NewInt(1 << 2)
@@ -14987,6 +16258,32 @@ func (p *PublicKeyCredential) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
+}
+
+// Algorithm which will be used with the credential. Can be one of RS256, RS384, PS256. If not specified, RS256 will be used. Applies to `public_key` credential type.
+type PublicKeyCredentialAlgorithmEnum string
+
+const (
+	PublicKeyCredentialAlgorithmEnumRs256 PublicKeyCredentialAlgorithmEnum = "RS256"
+	PublicKeyCredentialAlgorithmEnumRs384 PublicKeyCredentialAlgorithmEnum = "RS384"
+	PublicKeyCredentialAlgorithmEnumPs256 PublicKeyCredentialAlgorithmEnum = "PS256"
+)
+
+func NewPublicKeyCredentialAlgorithmEnumFromString(s string) (PublicKeyCredentialAlgorithmEnum, error) {
+	switch s {
+	case "RS256":
+		return PublicKeyCredentialAlgorithmEnumRs256, nil
+	case "RS384":
+		return PublicKeyCredentialAlgorithmEnumRs384, nil
+	case "PS256":
+		return PublicKeyCredentialAlgorithmEnumPs256, nil
+	}
+	var t PublicKeyCredentialAlgorithmEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PublicKeyCredentialAlgorithmEnum) Ptr() *PublicKeyCredentialAlgorithmEnum {
+	return &p
 }
 
 // Credential type. Supported types: public_key.
@@ -17799,4 +19096,87 @@ func NewX509CertificateCredentialTypeEnumFromString(s string) (X509CertificateCr
 
 func (x X509CertificateCredentialTypeEnum) Ptr() *X509CertificateCredentialTypeEnum {
 	return &x
+}
+
+type GetClientsResponse struct {
+	ClientList                                []*Client
+	ListClientsOffsetPaginatedResponseContent *ListClientsOffsetPaginatedResponseContent
+	ListClientsPaginatedResponseContent       *ListClientsPaginatedResponseContent
+
+	typ string
+}
+
+func (g *GetClientsResponse) GetClientList() []*Client {
+	if g == nil {
+		return nil
+	}
+	return g.ClientList
+}
+
+func (g *GetClientsResponse) GetListClientsOffsetPaginatedResponseContent() *ListClientsOffsetPaginatedResponseContent {
+	if g == nil {
+		return nil
+	}
+	return g.ListClientsOffsetPaginatedResponseContent
+}
+
+func (g *GetClientsResponse) GetListClientsPaginatedResponseContent() *ListClientsPaginatedResponseContent {
+	if g == nil {
+		return nil
+	}
+	return g.ListClientsPaginatedResponseContent
+}
+
+func (g *GetClientsResponse) UnmarshalJSON(data []byte) error {
+	var valueClientList []*Client
+	if err := json.Unmarshal(data, &valueClientList); err == nil {
+		g.typ = "ClientList"
+		g.ClientList = valueClientList
+		return nil
+	}
+	valueListClientsOffsetPaginatedResponseContent := new(ListClientsOffsetPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListClientsOffsetPaginatedResponseContent); err == nil {
+		g.typ = "ListClientsOffsetPaginatedResponseContent"
+		g.ListClientsOffsetPaginatedResponseContent = valueListClientsOffsetPaginatedResponseContent
+		return nil
+	}
+	valueListClientsPaginatedResponseContent := new(ListClientsPaginatedResponseContent)
+	if err := json.Unmarshal(data, &valueListClientsPaginatedResponseContent); err == nil {
+		g.typ = "ListClientsPaginatedResponseContent"
+		g.ListClientsPaginatedResponseContent = valueListClientsPaginatedResponseContent
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, g)
+}
+
+func (g GetClientsResponse) MarshalJSON() ([]byte, error) {
+	if g.typ == "ClientList" || g.ClientList != nil {
+		return json.Marshal(g.ClientList)
+	}
+	if g.typ == "ListClientsOffsetPaginatedResponseContent" || g.ListClientsOffsetPaginatedResponseContent != nil {
+		return json.Marshal(g.ListClientsOffsetPaginatedResponseContent)
+	}
+	if g.typ == "ListClientsPaginatedResponseContent" || g.ListClientsPaginatedResponseContent != nil {
+		return json.Marshal(g.ListClientsPaginatedResponseContent)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", g)
+}
+
+type GetClientsResponseVisitor interface {
+	VisitClientList([]*Client) error
+	VisitListClientsOffsetPaginatedResponseContent(*ListClientsOffsetPaginatedResponseContent) error
+	VisitListClientsPaginatedResponseContent(*ListClientsPaginatedResponseContent) error
+}
+
+func (g *GetClientsResponse) Accept(visitor GetClientsResponseVisitor) error {
+	if g.typ == "ClientList" || g.ClientList != nil {
+		return visitor.VisitClientList(g.ClientList)
+	}
+	if g.typ == "ListClientsOffsetPaginatedResponseContent" || g.ListClientsOffsetPaginatedResponseContent != nil {
+		return visitor.VisitListClientsOffsetPaginatedResponseContent(g.ListClientsOffsetPaginatedResponseContent)
+	}
+	if g.typ == "ListClientsPaginatedResponseContent" || g.ListClientsPaginatedResponseContent != nil {
+		return visitor.VisitListClientsPaginatedResponseContent(g.ListClientsPaginatedResponseContent)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", g)
 }

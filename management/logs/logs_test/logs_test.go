@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestLogsListWithWireMock(
+func TestLogsGetLogsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,7 @@ func TestLogsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListLogsRequestParameters{
+	request := &management.GetLogsRequest{
 		Page: management.Int(
 			1,
 		),
@@ -107,23 +107,29 @@ func TestLogsListWithWireMock(
 		IncludeTotals: management.Bool(
 			true,
 		),
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
 		Search: management.String(
 			"search",
 		),
 	}
-	_, invocationErr := client.Logs.List(
+	_, invocationErr := client.Logs.GetLogs(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestLogsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestLogsGetLogsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestLogsListWithWireMock", "GET", "/logs", map[string]interface{}{"page": "1", "per_page": "1", "sort": "sort", "fields": "fields", "include_fields": "true", "include_totals": "true", "search": "search"}, 1)
+	VerifyRequestCount(t, "TestLogsGetLogsWithWireMock", "GET", "/logs", map[string]interface{}{"page": "1", "per_page": "1", "sort": "sort", "fields": "fields", "include_fields": "true", "include_totals": "true", "from": "from", "take": "1", "search": "search"}, 1)
 }
 
-func TestLogsGetWithWireMock(
+func TestLogsGetLogsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -134,14 +140,14 @@ func TestLogsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Logs.Get(
+	_, invocationErr := client.Logs.GetLogsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestLogsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestLogsGetLogsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestLogsGetWithWireMock", "GET", "/logs/id", nil, 1)
+	VerifyRequestCount(t, "TestLogsGetLogsByIDWithWireMock", "GET", "/logs/id", nil, 1)
 }

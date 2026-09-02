@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestOrganizationsListWithWireMock(
+func TestOrganizationsGetOrganizationsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,7 +88,13 @@ func TestOrganizationsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.ListOrganizationsRequestParameters{
+	request := &management.GetOrganizationsRequest{
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
 		IncludeTotals: management.Bool(
 			true,
 		),
@@ -105,19 +111,19 @@ func TestOrganizationsListWithWireMock(
 			"include_client_association_for",
 		),
 	}
-	_, invocationErr := client.Organizations.List(
+	_, invocationErr := client.Organizations.GetOrganizations(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationsListWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsListWithWireMock", "GET", "/organizations", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1", "sort": "sort", "include_client_association_for": "include_client_association_for"}, 1)
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationsWithWireMock", "GET", "/organizations", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "from": "from", "take": "1", "sort": "sort", "include_client_association_for": "include_client_association_for"}, 1)
 }
 
-func TestOrganizationsCreateWithWireMock(
+func TestOrganizationsPostOrganizationsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -131,19 +137,19 @@ func TestOrganizationsCreateWithWireMock(
 	request := &management.CreateOrganizationRequestContent{
 		Name: "name",
 	}
-	_, invocationErr := client.Organizations.Create(
+	_, invocationErr := client.Organizations.PostOrganizations(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationsCreateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPostOrganizationsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsCreateWithWireMock", "POST", "/organizations", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationsPostOrganizationsWithWireMock", "POST", "/organizations", nil, 1)
 }
 
-func TestOrganizationsGetByNameWithWireMock(
+func TestOrganizationsGetNameByNameWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -154,19 +160,19 @@ func TestOrganizationsGetByNameWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Organizations.GetByName(
+	_, invocationErr := client.Organizations.GetNameByName(
 		context.TODO(),
 		"name",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationsGetByNameWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetNameByNameWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsGetByNameWithWireMock", "GET", "/organizations/name/name", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationsGetNameByNameWithWireMock", "GET", "/organizations/name/name", nil, 1)
 }
 
-func TestOrganizationsGetWithWireMock(
+func TestOrganizationsGetOrganizationsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -177,19 +183,19 @@ func TestOrganizationsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Organizations.Get(
+	_, invocationErr := client.Organizations.GetOrganizationsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsGetWithWireMock", "GET", "/organizations/id", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationsByIDWithWireMock", "GET", "/organizations/id", nil, 1)
 }
 
-func TestOrganizationsDeleteWithWireMock(
+func TestOrganizationsDeleteOrganizationsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -200,19 +206,19 @@ func TestOrganizationsDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	invocationErr := client.Organizations.Delete(
+	invocationErr := client.Organizations.DeleteOrganizationsByID(
 		context.TODO(),
 		"id",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteOrganizationsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsDeleteWithWireMock", "DELETE", "/organizations/id", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationsDeleteOrganizationsByIDWithWireMock", "DELETE", "/organizations/id", nil, 1)
 }
 
-func TestOrganizationsUpdateWithWireMock(
+func TestOrganizationsPatchOrganizationsByIDWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -224,15 +230,1357 @@ func TestOrganizationsUpdateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.UpdateOrganizationRequestContent{}
-	_, invocationErr := client.Organizations.Update(
+	_, invocationErr := client.Organizations.PatchOrganizationsByID(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestOrganizationsUpdateWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPatchOrganizationsByIDWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestOrganizationsUpdateWithWireMock", "PATCH", "/organizations/id", nil, 1)
+	VerifyRequestCount(t, "TestOrganizationsPatchOrganizationsByIDWithWireMock", "PATCH", "/organizations/id", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationClientGrantsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationClientGrantsRequest{
+		Audience: management.String(
+			"audience",
+		),
+		ClientID: management.String(
+			"client_id",
+		),
+		GrantIDs: []*string{
+			management.String(
+				"grant_ids",
+			),
+		},
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationClientGrants(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationClientGrantsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationClientGrantsWithWireMock", "GET", "/organizations/id/client-grants", map[string]interface{}{"audience": "audience", "client_id": "client_id", "grant_ids": "grant_ids", "page": "1", "per_page": "1", "include_totals": "true"}, 1)
+}
+
+func TestOrganizationsCreateOrganizationClientGrantsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.AssociateOrganizationClientGrantRequestContent{
+		GrantID: "grant_id",
+	}
+	_, invocationErr := client.Organizations.CreateOrganizationClientGrants(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsCreateOrganizationClientGrantsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsCreateOrganizationClientGrantsWithWireMock", "POST", "/organizations/id/client-grants", nil, 1)
+}
+
+func TestOrganizationsDeleteClientGrantsByGrantIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Organizations.DeleteClientGrantsByGrantID(
+		context.TODO(),
+		"id",
+		"grant_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteClientGrantsByGrantIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteClientGrantsByGrantIDWithWireMock", "DELETE", "/organizations/id/client-grants/grant_id", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationClientsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationClientsRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationClients(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationClientsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationClientsWithWireMock", "GET", "/organizations/id/clients", map[string]interface{}{"from": "from", "take": "1"}, 1)
+}
+
+func TestOrganizationsPostOrganizationClientsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateOrganizationClientsRequestContent{
+		Clients: []*management.CreateOrganizationClientRequestItem{
+			&management.CreateOrganizationClientRequestItem{
+				ClientID:           "client_id",
+				UseForMemberAccess: true,
+			},
+		},
+	}
+	_, invocationErr := client.Organizations.PostOrganizationClients(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPostOrganizationClientsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPostOrganizationClientsWithWireMock", "POST", "/organizations/id/clients", nil, 1)
+}
+
+func TestOrganizationsDeleteOrganizationClientsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteOrganizationClientsRequestContent{
+		Clients: []string{
+			"clients",
+		},
+	}
+	invocationErr := client.Organizations.DeleteOrganizationClients(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteOrganizationClientsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteOrganizationClientsWithWireMock", "DELETE", "/organizations/id/clients", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationClientWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Organizations.GetOrganizationClient(
+		context.TODO(),
+		"id",
+		"client_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationClientWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationClientWithWireMock", "GET", "/organizations/id/clients/client_id", nil, 1)
+}
+
+func TestOrganizationsPatchOrganizationClientWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateOrganizationClientRequestContent{}
+	_, invocationErr := client.Organizations.PatchOrganizationClient(
+		context.TODO(),
+		"id",
+		"client_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPatchOrganizationClientWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPatchOrganizationClientWithWireMock", "PATCH", "/organizations/id/clients/client_id", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationConnectionsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationConnectionsRequest{
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+		IsEnabled: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationConnections(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationConnectionsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationConnectionsWithWireMock", "GET", "/organizations/id/connections", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "is_enabled": "true"}, 1)
+}
+
+func TestOrganizationsPostOrganizationConnectionWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateOrganizationAllConnectionRequestContent{
+		ConnectionID: "connection_id",
+	}
+	_, invocationErr := client.Organizations.PostOrganizationConnection(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPostOrganizationConnectionWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPostOrganizationConnectionWithWireMock", "POST", "/organizations/id/connections", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationConnectionWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Organizations.GetOrganizationConnection(
+		context.TODO(),
+		"id",
+		"connection_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationConnectionWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationConnectionWithWireMock", "GET", "/organizations/id/connections/connection_id", nil, 1)
+}
+
+func TestOrganizationsDeleteOrganizationConnectionWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Organizations.DeleteOrganizationConnection(
+		context.TODO(),
+		"id",
+		"connection_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteOrganizationConnectionWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteOrganizationConnectionWithWireMock", "DELETE", "/organizations/id/connections/connection_id", nil, 1)
+}
+
+func TestOrganizationsPatchOrganizationConnectionWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateOrganizationAllConnectionRequestContent{}
+	_, invocationErr := client.Organizations.PatchOrganizationConnection(
+		context.TODO(),
+		"id",
+		"connection_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPatchOrganizationConnectionWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPatchOrganizationConnectionWithWireMock", "PATCH", "/organizations/id/connections/connection_id", nil, 1)
+}
+
+func TestOrganizationsGetDiscoveryDomainsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetDiscoveryDomainsRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Organizations.GetDiscoveryDomains(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetDiscoveryDomainsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetDiscoveryDomainsWithWireMock", "GET", "/organizations/id/discovery-domains", map[string]interface{}{"from": "from", "take": "1"}, 1)
+}
+
+func TestOrganizationsPostDiscoveryDomainsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateOrganizationDiscoveryDomainRequestContent{
+		Domain: "domain",
+	}
+	_, invocationErr := client.Organizations.PostDiscoveryDomains(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPostDiscoveryDomainsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPostDiscoveryDomainsWithWireMock", "POST", "/organizations/id/discovery-domains", nil, 1)
+}
+
+func TestOrganizationsGetNameByDiscoveryDomainWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Organizations.GetNameByDiscoveryDomain(
+		context.TODO(),
+		"id",
+		"discovery_domain",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetNameByDiscoveryDomainWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetNameByDiscoveryDomainWithWireMock", "GET", "/organizations/id/discovery-domains/name/discovery_domain", nil, 1)
+}
+
+func TestOrganizationsGetDiscoveryDomainsByDiscoveryDomainIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Organizations.GetDiscoveryDomainsByDiscoveryDomainID(
+		context.TODO(),
+		"id",
+		"discovery_domain_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetDiscoveryDomainsByDiscoveryDomainIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetDiscoveryDomainsByDiscoveryDomainIDWithWireMock", "GET", "/organizations/id/discovery-domains/discovery_domain_id", nil, 1)
+}
+
+func TestOrganizationsDeleteDiscoveryDomainsByDiscoveryDomainIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Organizations.DeleteDiscoveryDomainsByDiscoveryDomainID(
+		context.TODO(),
+		"id",
+		"discovery_domain_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteDiscoveryDomainsByDiscoveryDomainIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteDiscoveryDomainsByDiscoveryDomainIDWithWireMock", "DELETE", "/organizations/id/discovery-domains/discovery_domain_id", nil, 1)
+}
+
+func TestOrganizationsPatchDiscoveryDomainsByDiscoveryDomainIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateOrganizationDiscoveryDomainRequestContent{}
+	_, invocationErr := client.Organizations.PatchDiscoveryDomainsByDiscoveryDomainID(
+		context.TODO(),
+		"id",
+		"discovery_domain_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPatchDiscoveryDomainsByDiscoveryDomainIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPatchDiscoveryDomainsByDiscoveryDomainIDWithWireMock", "PATCH", "/organizations/id/discovery-domains/discovery_domain_id", nil, 1)
+}
+
+func TestOrganizationsGetEnabledConnectionsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetEnabledConnectionsRequest{
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Organizations.GetEnabledConnections(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetEnabledConnectionsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetEnabledConnectionsWithWireMock", "GET", "/organizations/id/enabled_connections", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true"}, 1)
+}
+
+func TestOrganizationsPostEnabledConnectionsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.AddOrganizationConnectionRequestContent{
+		ConnectionID: "connection_id",
+	}
+	_, invocationErr := client.Organizations.PostEnabledConnections(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPostEnabledConnectionsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPostEnabledConnectionsWithWireMock", "POST", "/organizations/id/enabled_connections", nil, 1)
+}
+
+func TestOrganizationsGetEnabledConnectionsByConnectionIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Organizations.GetEnabledConnectionsByConnectionID(
+		context.TODO(),
+		"id",
+		"connectionId",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetEnabledConnectionsByConnectionIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetEnabledConnectionsByConnectionIDWithWireMock", "GET", "/organizations/id/enabled_connections/connectionId", nil, 1)
+}
+
+func TestOrganizationsDeleteEnabledConnectionsByConnectionIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Organizations.DeleteEnabledConnectionsByConnectionID(
+		context.TODO(),
+		"id",
+		"connectionId",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteEnabledConnectionsByConnectionIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteEnabledConnectionsByConnectionIDWithWireMock", "DELETE", "/organizations/id/enabled_connections/connectionId", nil, 1)
+}
+
+func TestOrganizationsPatchEnabledConnectionsByConnectionIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateOrganizationConnectionRequestContent{}
+	_, invocationErr := client.Organizations.PatchEnabledConnectionsByConnectionID(
+		context.TODO(),
+		"id",
+		"connectionId",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPatchEnabledConnectionsByConnectionIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPatchEnabledConnectionsByConnectionIDWithWireMock", "PATCH", "/organizations/id/enabled_connections/connectionId", nil, 1)
+}
+
+func TestOrganizationsGetInvitationsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetInvitationsRequest{
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+		Sort: management.String(
+			"sort",
+		),
+	}
+	_, invocationErr := client.Organizations.GetInvitations(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetInvitationsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetInvitationsWithWireMock", "GET", "/organizations/id/invitations", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "fields": "fields", "include_fields": "true", "sort": "sort"}, 1)
+}
+
+func TestOrganizationsPostInvitationsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateOrganizationInvitationRequestContent{
+		Inviter: &management.OrganizationInvitationInviter{
+			Name: "name",
+		},
+		Invitee: &management.OrganizationInvitationInvitee{
+			Email: "email",
+		},
+		ClientID: "client_id",
+	}
+	_, invocationErr := client.Organizations.PostInvitations(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPostInvitationsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPostInvitationsWithWireMock", "POST", "/organizations/id/invitations", nil, 1)
+}
+
+func TestOrganizationsGetInvitationsByInvitationIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetInvitationsByInvitationIDRequest{
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Organizations.GetInvitationsByInvitationID(
+		context.TODO(),
+		"id",
+		"invitation_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetInvitationsByInvitationIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetInvitationsByInvitationIDWithWireMock", "GET", "/organizations/id/invitations/invitation_id", map[string]interface{}{"fields": "fields", "include_fields": "true"}, 1)
+}
+
+func TestOrganizationsDeleteInvitationsByInvitationIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Organizations.DeleteInvitationsByInvitationID(
+		context.TODO(),
+		"id",
+		"invitation_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteInvitationsByInvitationIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteInvitationsByInvitationIDWithWireMock", "DELETE", "/organizations/id/invitations/invitation_id", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationMembersWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationMembersRequest{
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationMembers(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationMembersWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationMembersWithWireMock", "GET", "/organizations/id/members", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true", "from": "from", "take": "1", "fields": "fields", "include_fields": "true"}, 1)
+}
+
+func TestOrganizationsPostMembersWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateOrganizationMemberRequestContent{
+		Members: []string{
+			"members",
+		},
+	}
+	invocationErr := client.Organizations.PostMembers(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPostMembersWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPostMembersWithWireMock", "POST", "/organizations/id/members", nil, 1)
+}
+
+func TestOrganizationsDeleteMembersWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteOrganizationMembersRequestContent{
+		Members: []string{
+			"members",
+		},
+	}
+	invocationErr := client.Organizations.DeleteMembers(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteMembersWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteMembersWithWireMock", "DELETE", "/organizations/id/members", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationMemberEffectiveRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationMemberEffectiveRolesRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationMemberEffectiveRoles(
+		context.TODO(),
+		"id",
+		"user_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationMemberEffectiveRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationMemberEffectiveRolesWithWireMock", "GET", "/organizations/id/members/user_id/effective-roles", map[string]interface{}{"from": "from", "take": "1"}, 1)
+}
+
+func TestOrganizationsGetOrganizationMemberRoleSourceGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationMemberRoleSourceGroupsRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+		RoleID: "role_id",
+	}
+	_, invocationErr := client.Organizations.GetOrganizationMemberRoleSourceGroups(
+		context.TODO(),
+		"id",
+		"user_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationMemberRoleSourceGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationMemberRoleSourceGroupsWithWireMock", "GET", "/organizations/id/members/user_id/effective-roles/sources/groups", map[string]interface{}{"from": "from", "take": "1", "role_id": "role_id"}, 1)
+}
+
+func TestOrganizationsGetOrganizationMemberRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationMemberRolesRequest{
+		Page: management.Int(
+			1,
+		),
+		PerPage: management.Int(
+			1,
+		),
+		IncludeTotals: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationMemberRoles(
+		context.TODO(),
+		"id",
+		"user_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationMemberRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationMemberRolesWithWireMock", "GET", "/organizations/id/members/user_id/roles", map[string]interface{}{"page": "1", "per_page": "1", "include_totals": "true"}, 1)
+}
+
+func TestOrganizationsPostOrganizationMemberRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.AssignOrganizationMemberRolesRequestContent{
+		Roles: []string{
+			"roles",
+		},
+	}
+	invocationErr := client.Organizations.PostOrganizationMemberRoles(
+		context.TODO(),
+		"id",
+		"user_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPostOrganizationMemberRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPostOrganizationMemberRolesWithWireMock", "POST", "/organizations/id/members/user_id/roles", nil, 1)
+}
+
+func TestOrganizationsDeleteOrganizationMemberRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteOrganizationMemberRolesRequestContent{
+		Roles: []string{
+			"roles",
+		},
+	}
+	invocationErr := client.Organizations.DeleteOrganizationMemberRoles(
+		context.TODO(),
+		"id",
+		"user_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteOrganizationMemberRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteOrganizationMemberRolesWithWireMock", "DELETE", "/organizations/id/members/user_id/roles", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationsByIDOrganizationTemplatesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Organizations.GetOrganizationsByIDOrganizationTemplates(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationsByIDOrganizationTemplatesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationsByIDOrganizationTemplatesWithWireMock", "GET", "/organizations/id/organization-templates", nil, 1)
+}
+
+func TestOrganizationsPutOrganizationsByIDOrganizationTemplatesByTemplateIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Organizations.PutOrganizationsByIDOrganizationTemplatesByTemplateID(
+		context.TODO(),
+		"id",
+		"template_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPutOrganizationsByIDOrganizationTemplatesByTemplateIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPutOrganizationsByIDOrganizationTemplatesByTemplateIDWithWireMock", "PUT", "/organizations/id/organization-templates/template_id", nil, 1)
+}
+
+func TestOrganizationsDeleteOrganizationsByIDOrganizationTemplatesByTemplateIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Organizations.DeleteOrganizationsByIDOrganizationTemplatesByTemplateID(
+		context.TODO(),
+		"id",
+		"template_id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteOrganizationsByIDOrganizationTemplatesByTemplateIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteOrganizationsByIDOrganizationTemplatesByTemplateIDWithWireMock", "DELETE", "/organizations/id/organization-templates/template_id", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationRoleMembersWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationRoleMembersRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationRoleMembers(
+		context.TODO(),
+		"id",
+		"role_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationRoleMembersWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationRoleMembersWithWireMock", "GET", "/organizations/id/roles/role_id/members", map[string]interface{}{"from": "from", "take": "1", "fields": "fields", "include_fields": "true"}, 1)
+}
+
+func TestOrganizationsGetOrganizationGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationGroupsRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationGroups(
+		context.TODO(),
+		"organization_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationGroupsWithWireMock", "GET", "/organizations/organization_id/groups", map[string]interface{}{"from": "from", "take": "1"}, 1)
+}
+
+func TestOrganizationsGetOrganizationGroupRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationGroupRolesRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationGroupRoles(
+		context.TODO(),
+		"organization_id",
+		"group_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationGroupRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationGroupRolesWithWireMock", "GET", "/organizations/organization_id/groups/group_id/roles", map[string]interface{}{"from": "from", "take": "1"}, 1)
+}
+
+func TestOrganizationsPostOrganizationGroupRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateOrganizationGroupRolesRequestContent{
+		Roles: []string{
+			"roles",
+		},
+	}
+	invocationErr := client.Organizations.PostOrganizationGroupRoles(
+		context.TODO(),
+		"organization_id",
+		"group_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsPostOrganizationGroupRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsPostOrganizationGroupRolesWithWireMock", "POST", "/organizations/organization_id/groups/group_id/roles", nil, 1)
+}
+
+func TestOrganizationsDeleteOrganizationGroupRolesWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.DeleteOrganizationGroupRolesRequestContent{
+		Roles: []string{
+			"roles",
+		},
+	}
+	invocationErr := client.Organizations.DeleteOrganizationGroupRoles(
+		context.TODO(),
+		"organization_id",
+		"group_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsDeleteOrganizationGroupRolesWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsDeleteOrganizationGroupRolesWithWireMock", "DELETE", "/organizations/organization_id/groups/group_id/roles", nil, 1)
+}
+
+func TestOrganizationsGetOrganizationRoleGroupsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.GetOrganizationRoleGroupsRequest{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+	}
+	_, invocationErr := client.Organizations.GetOrganizationRoleGroups(
+		context.TODO(),
+		"organization_id",
+		"role_id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsGetOrganizationRoleGroupsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsGetOrganizationRoleGroupsWithWireMock", "GET", "/organizations/organization_id/roles/role_id/groups", map[string]interface{}{"from": "from", "take": "1"}, 1)
 }

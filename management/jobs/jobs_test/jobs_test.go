@@ -8,8 +8,10 @@ import (
 	json "encoding/json"
 	http "net/http"
 	os "os"
+	strings "strings"
 	testing "testing"
 
+	management "github.com/auth0/go-auth0/v3/management"
 	client "github.com/auth0/go-auth0/v3/management/client"
 	option "github.com/auth0/go-auth0/v3/management/option"
 	require "github.com/stretchr/testify/require"
@@ -76,7 +78,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestJobsGetWithWireMock(
+func TestJobsPostUsersExportsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -87,14 +89,116 @@ func TestJobsGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	_, invocationErr := client.Jobs.Get(
+	request := &management.CreateExportUsersRequestContent{}
+	_, invocationErr := client.Jobs.PostUsersExports(
 		context.TODO(),
-		"id",
+		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestJobsGetWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestJobsPostUsersExportsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestJobsGetWithWireMock", "GET", "/jobs/id", nil, 1)
+	VerifyRequestCount(t, "TestJobsPostUsersExportsWithWireMock", "POST", "/jobs/users-exports", nil, 1)
+}
+
+func TestJobsPostUsersImportsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateImportUsersRequestContent{
+		Users: strings.NewReader(
+			"",
+		),
+		ConnectionID: "connection_id",
+	}
+	_, invocationErr := client.Jobs.PostUsersImports(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestJobsPostUsersImportsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestJobsPostUsersImportsWithWireMock", "POST", "/jobs/users-imports", nil, 1)
+}
+
+func TestJobsPostVerificationEmailWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateVerificationEmailRequestContent{
+		UserID: "user_id",
+	}
+	_, invocationErr := client.Jobs.PostVerificationEmail(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestJobsPostVerificationEmailWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestJobsPostVerificationEmailWithWireMock", "POST", "/jobs/verification-email", nil, 1)
+}
+
+func TestJobsGetJobsByIDWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Jobs.GetJobsByID(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestJobsGetJobsByIDWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestJobsGetJobsByIDWithWireMock", "GET", "/jobs/id", nil, 1)
+}
+
+func TestJobsGetErrorsWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Jobs.GetErrors(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestJobsGetErrorsWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestJobsGetErrorsWithWireMock", "GET", "/jobs/id/errors", nil, 1)
 }
