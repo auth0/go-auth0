@@ -424,6 +424,10 @@ type TenantFlags struct {
 
 	// Removes alg property from jwks .well-known endpoint
 	RemoveAlgFromJWKS *bool `json:"remove_alg_from_jwks,omitempty"`
+
+	// If enabled, allows passing a client_id in the POST body when creating a
+	// client. Intended for migration and tenant-copy scenarios.
+	AcceptClientIDOnCreation *bool `json:"accept_client_id_on_creation,omitempty"`
 }
 
 // TenantUniversalLogin holds universal login settings.

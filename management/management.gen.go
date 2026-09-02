@@ -14370,6 +14370,14 @@ func (t *TenantErrorPage) String() string {
 	return Stringify(t)
 }
 
+// GetAcceptClientIDOnCreation returns the AcceptClientIDOnCreation field if it's non-nil, zero value otherwise.
+func (t *TenantFlags) GetAcceptClientIDOnCreation() bool {
+	if t == nil || t.AcceptClientIDOnCreation == nil {
+		return false
+	}
+	return *t.AcceptClientIDOnCreation
+}
+
 // GetAllowChangingEnableSSO returns the AllowChangingEnableSSO field if it's non-nil, zero value otherwise.
 func (t *TenantFlags) GetAllowChangingEnableSSO() bool {
 	if t == nil || t.AllowChangingEnableSSO == nil {

@@ -18006,6 +18006,16 @@ func TestTenantErrorPage_String(t *testing.T) {
 	}
 }
 
+func TestTenantFlags_GetAcceptClientIDOnCreation(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantFlags{AcceptClientIDOnCreation: &zeroValue}
+	t.GetAcceptClientIDOnCreation()
+	t = &TenantFlags{}
+	t.GetAcceptClientIDOnCreation()
+	t = nil
+	t.GetAcceptClientIDOnCreation()
+}
+
 func TestTenantFlags_GetAllowChangingEnableSSO(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantFlags{AllowChangingEnableSSO: &zeroValue}
