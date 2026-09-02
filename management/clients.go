@@ -32,6 +32,134 @@ func (a AsyncApprovalNotificationsChannelsEnum) Ptr() *AsyncApprovalNotification
 	return &a
 }
 
+// Configuration for B2B Integration clients.
+var (
+	b2BIntegrationConfigurationFieldSSOProfiles     = big.NewInt(1 << 0)
+	b2BIntegrationConfigurationFieldIntegrationType = big.NewInt(1 << 1)
+)
+
+type B2BIntegrationConfiguration struct {
+	// List of SSO profile IDs linked to this B2B integration client. Maximum 1 entry.
+	SSOProfiles     []string                                        `json:"sso_profiles,omitempty" url:"sso_profiles,omitempty"`
+	IntegrationType *B2BIntegrationConfigurationIntegrationTypeEnum `json:"integration_type,omitempty" url:"integration_type,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *B2BIntegrationConfiguration) GetSSOProfiles() []string {
+	if b == nil || b.SSOProfiles == nil {
+		return nil
+	}
+	return b.SSOProfiles
+}
+
+func (b *B2BIntegrationConfiguration) GetIntegrationType() B2BIntegrationConfigurationIntegrationTypeEnum {
+	if b == nil || b.IntegrationType == nil {
+		return ""
+	}
+	return *b.IntegrationType
+}
+
+func (b *B2BIntegrationConfiguration) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *B2BIntegrationConfiguration) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetSSOProfiles sets the SSOProfiles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *B2BIntegrationConfiguration) SetSSOProfiles(ssoProfiles []string) {
+	b.SSOProfiles = ssoProfiles
+	b.require(b2BIntegrationConfigurationFieldSSOProfiles)
+}
+
+// SetIntegrationType sets the IntegrationType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *B2BIntegrationConfiguration) SetIntegrationType(integrationType *B2BIntegrationConfigurationIntegrationTypeEnum) {
+	b.IntegrationType = integrationType
+	b.require(b2BIntegrationConfigurationFieldIntegrationType)
+}
+
+func (b *B2BIntegrationConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler B2BIntegrationConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = B2BIntegrationConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *B2BIntegrationConfiguration) MarshalJSON() ([]byte, error) {
+	type embed B2BIntegrationConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *B2BIntegrationConfiguration) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+// The type of integration used to connect to this B2B integration client. Must be one of `custom_auth_server`, `third_party`, or `application`.
+type B2BIntegrationConfigurationIntegrationTypeEnum string
+
+const (
+	B2BIntegrationConfigurationIntegrationTypeEnumCustomAuthServer B2BIntegrationConfigurationIntegrationTypeEnum = "custom_auth_server"
+	B2BIntegrationConfigurationIntegrationTypeEnumThirdParty       B2BIntegrationConfigurationIntegrationTypeEnum = "third_party"
+	B2BIntegrationConfigurationIntegrationTypeEnumApplication      B2BIntegrationConfigurationIntegrationTypeEnum = "application"
+)
+
+func NewB2BIntegrationConfigurationIntegrationTypeEnumFromString(s string) (B2BIntegrationConfigurationIntegrationTypeEnum, error) {
+	switch s {
+	case "custom_auth_server":
+		return B2BIntegrationConfigurationIntegrationTypeEnumCustomAuthServer, nil
+	case "third_party":
+		return B2BIntegrationConfigurationIntegrationTypeEnumThirdParty, nil
+	case "application":
+		return B2BIntegrationConfigurationIntegrationTypeEnumApplication, nil
+	}
+	var t B2BIntegrationConfigurationIntegrationTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b B2BIntegrationConfigurationIntegrationTypeEnum) Ptr() *B2BIntegrationConfigurationIntegrationTypeEnum {
+	return &b
+}
+
 var (
 	certificateSubjectDnCredentialFieldCredentialType = big.NewInt(1 << 0)
 	certificateSubjectDnCredentialFieldName           = big.NewInt(1 << 1)
@@ -914,16 +1042,17 @@ var (
 	clientFieldParRequestExpiry                               = big.NewInt(1 << 51)
 	clientFieldTokenQuota                                     = big.NewInt(1 << 52)
 	clientFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
-	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
-	clientFieldRedirectionPolicy                              = big.NewInt(1 << 57)
-	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
-	clientFieldExternalMetadataType                           = big.NewInt(1 << 60)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
-	clientFieldExternalClientID                               = big.NewInt(1 << 62)
-	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
+	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
+	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
+	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
+	clientFieldRedirectionPolicy                              = big.NewInt(1 << 58)
+	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
+	clientFieldExternalMetadataType                           = big.NewInt(1 << 61)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
+	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
 )
 
 type Client struct {
@@ -1014,6 +1143,7 @@ type Client struct {
 	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
 	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
@@ -1412,6 +1542,13 @@ func (c *Client) GetExpressConfiguration() ExpressConfiguration {
 		return ExpressConfiguration{}
 	}
 	return *c.ExpressConfiguration
+}
+
+func (c *Client) GetB2BIntegrationConfiguration() B2BIntegrationConfiguration {
+	if c == nil || c.B2BIntegrationConfiguration == nil {
+		return B2BIntegrationConfiguration{}
+	}
+	return *c.B2BIntegrationConfiguration
 }
 
 func (c *Client) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
@@ -1874,6 +2011,13 @@ func (c *Client) SetTokenQuota(tokenQuota *TokenQuota) {
 func (c *Client) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
 	c.ExpressConfiguration = expressConfiguration
 	c.require(clientFieldExpressConfiguration)
+}
+
+// SetB2BIntegrationConfiguration sets the B2BIntegrationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetB2BIntegrationConfiguration(b2BIntegrationConfiguration *B2BIntegrationConfiguration) {
+	c.B2BIntegrationConfiguration = b2BIntegrationConfiguration
+	c.require(clientFieldB2BIntegrationConfiguration)
 }
 
 // SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
@@ -5815,7 +5959,6 @@ const (
 	ClientAppTypeEnumNonInteractive       ClientAppTypeEnum = "non_interactive"
 	ClientAppTypeEnumResourceServer       ClientAppTypeEnum = "resource_server"
 	ClientAppTypeEnumExpressConfiguration ClientAppTypeEnum = "express_configuration"
-	ClientAppTypeEnumB2BIntegration       ClientAppTypeEnum = "b2b_integration"
 	ClientAppTypeEnumRms                  ClientAppTypeEnum = "rms"
 	ClientAppTypeEnumBox                  ClientAppTypeEnum = "box"
 	ClientAppTypeEnumCloudbees            ClientAppTypeEnum = "cloudbees"
@@ -5851,8 +5994,6 @@ func NewClientAppTypeEnumFromString(s string) (ClientAppTypeEnum, error) {
 		return ClientAppTypeEnumResourceServer, nil
 	case "express_configuration":
 		return ClientAppTypeEnumExpressConfiguration, nil
-	case "b2b_integration":
-		return ClientAppTypeEnumB2BIntegration, nil
 	case "rms":
 		return ClientAppTypeEnumRms, nil
 	case "box":
@@ -10262,16 +10403,17 @@ var (
 	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
 	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
 	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
-	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
-	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 57)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 60)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 62)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	createClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
+	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
+	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
+	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 61)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
 )
 
 type CreateClientResponseContent struct {
@@ -10362,6 +10504,7 @@ type CreateClientResponseContent struct {
 	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
 	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
@@ -10760,6 +10903,13 @@ func (c *CreateClientResponseContent) GetExpressConfiguration() ExpressConfigura
 		return ExpressConfiguration{}
 	}
 	return *c.ExpressConfiguration
+}
+
+func (c *CreateClientResponseContent) GetB2BIntegrationConfiguration() B2BIntegrationConfiguration {
+	if c == nil || c.B2BIntegrationConfiguration == nil {
+		return B2BIntegrationConfiguration{}
+	}
+	return *c.B2BIntegrationConfiguration
 }
 
 func (c *CreateClientResponseContent) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
@@ -11222,6 +11372,13 @@ func (c *CreateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (c *CreateClientResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
 	c.ExpressConfiguration = expressConfiguration
 	c.require(createClientResponseContentFieldExpressConfiguration)
+}
+
+// SetB2BIntegrationConfiguration sets the B2BIntegrationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetB2BIntegrationConfiguration(b2BIntegrationConfiguration *B2BIntegrationConfiguration) {
+	c.B2BIntegrationConfiguration = b2BIntegrationConfiguration
+	c.require(createClientResponseContentFieldB2BIntegrationConfiguration)
 }
 
 // SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
@@ -12352,16 +12509,17 @@ var (
 	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
 	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
 	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
-	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
-	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 57)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 60)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 62)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	getClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
+	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
+	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
+	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 61)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
 )
 
 type GetClientResponseContent struct {
@@ -12452,6 +12610,7 @@ type GetClientResponseContent struct {
 	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
 	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
@@ -12850,6 +13009,13 @@ func (g *GetClientResponseContent) GetExpressConfiguration() ExpressConfiguratio
 		return ExpressConfiguration{}
 	}
 	return *g.ExpressConfiguration
+}
+
+func (g *GetClientResponseContent) GetB2BIntegrationConfiguration() B2BIntegrationConfiguration {
+	if g == nil || g.B2BIntegrationConfiguration == nil {
+		return B2BIntegrationConfiguration{}
+	}
+	return *g.B2BIntegrationConfiguration
 }
 
 func (g *GetClientResponseContent) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
@@ -13312,6 +13478,13 @@ func (g *GetClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (g *GetClientResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
 	g.ExpressConfiguration = expressConfiguration
 	g.require(getClientResponseContentFieldExpressConfiguration)
+}
+
+// SetB2BIntegrationConfiguration sets the B2BIntegrationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetB2BIntegrationConfiguration(b2BIntegrationConfiguration *B2BIntegrationConfiguration) {
+	g.B2BIntegrationConfiguration = b2BIntegrationConfiguration
+	g.require(getClientResponseContentFieldB2BIntegrationConfiguration)
 }
 
 // SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
@@ -15060,16 +15233,17 @@ var (
 	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
 	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
 	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
-	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
-	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 57)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 60)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(1 << 62)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	rotateClientSecretResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
+	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
+	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
+	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 61)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
 )
 
 type RotateClientSecretResponseContent struct {
@@ -15160,6 +15334,7 @@ type RotateClientSecretResponseContent struct {
 	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
 	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
@@ -15558,6 +15733,13 @@ func (r *RotateClientSecretResponseContent) GetExpressConfiguration() ExpressCon
 		return ExpressConfiguration{}
 	}
 	return *r.ExpressConfiguration
+}
+
+func (r *RotateClientSecretResponseContent) GetB2BIntegrationConfiguration() B2BIntegrationConfiguration {
+	if r == nil || r.B2BIntegrationConfiguration == nil {
+		return B2BIntegrationConfiguration{}
+	}
+	return *r.B2BIntegrationConfiguration
 }
 
 func (r *RotateClientSecretResponseContent) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
@@ -16022,6 +16204,13 @@ func (r *RotateClientSecretResponseContent) SetExpressConfiguration(expressConfi
 	r.require(rotateClientSecretResponseContentFieldExpressConfiguration)
 }
 
+// SetB2BIntegrationConfiguration sets the B2BIntegrationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetB2BIntegrationConfiguration(b2BIntegrationConfiguration *B2BIntegrationConfiguration) {
+	r.B2BIntegrationConfiguration = b2BIntegrationConfiguration
+	r.require(rotateClientSecretResponseContentFieldB2BIntegrationConfiguration)
+}
+
 // SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
@@ -16295,16 +16484,17 @@ var (
 	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
 	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
 	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
-	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
-	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
-	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 57)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 60)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(1 << 62)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	updateClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
+	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
+	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
+	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 61)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
 )
 
 type UpdateClientResponseContent struct {
@@ -16395,6 +16585,7 @@ type UpdateClientResponseContent struct {
 	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
 	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
 	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
 	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
 	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
@@ -16793,6 +16984,13 @@ func (u *UpdateClientResponseContent) GetExpressConfiguration() ExpressConfigura
 		return ExpressConfiguration{}
 	}
 	return *u.ExpressConfiguration
+}
+
+func (u *UpdateClientResponseContent) GetB2BIntegrationConfiguration() B2BIntegrationConfiguration {
+	if u == nil || u.B2BIntegrationConfiguration == nil {
+		return B2BIntegrationConfiguration{}
+	}
+	return *u.B2BIntegrationConfiguration
 }
 
 func (u *UpdateClientResponseContent) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
@@ -17255,6 +17453,13 @@ func (u *UpdateClientResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (u *UpdateClientResponseContent) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
 	u.ExpressConfiguration = expressConfiguration
 	u.require(updateClientResponseContentFieldExpressConfiguration)
+}
+
+// SetB2BIntegrationConfiguration sets the B2BIntegrationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetB2BIntegrationConfiguration(b2BIntegrationConfiguration *B2BIntegrationConfiguration) {
+	u.B2BIntegrationConfiguration = b2BIntegrationConfiguration
+	u.require(updateClientResponseContentFieldB2BIntegrationConfiguration)
 }
 
 // SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;

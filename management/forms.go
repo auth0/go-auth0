@@ -13082,11 +13082,13 @@ func (f *FormWidgetGMapsAddress) String() string {
 }
 
 var (
-	formWidgetGMapsAddressConfigFieldAPIKey = big.NewInt(1 << 0)
+	formWidgetGMapsAddressConfigFieldAPIKey    = big.NewInt(1 << 0)
+	formWidgetGMapsAddressConfigFieldServerKey = big.NewInt(1 << 1)
 )
 
 type FormWidgetGMapsAddressConfig struct {
-	APIKey string `json:"api_key" url:"api_key"`
+	APIKey    string  `json:"api_key" url:"api_key"`
+	ServerKey *string `json:"server_key,omitempty" url:"server_key,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -13100,6 +13102,13 @@ func (f *FormWidgetGMapsAddressConfig) GetAPIKey() string {
 		return ""
 	}
 	return f.APIKey
+}
+
+func (f *FormWidgetGMapsAddressConfig) GetServerKey() string {
+	if f == nil || f.ServerKey == nil {
+		return ""
+	}
+	return *f.ServerKey
 }
 
 func (f *FormWidgetGMapsAddressConfig) GetExtraProperties() map[string]interface{} {
@@ -13121,6 +13130,13 @@ func (f *FormWidgetGMapsAddressConfig) require(field *big.Int) {
 func (f *FormWidgetGMapsAddressConfig) SetAPIKey(apiKey string) {
 	f.APIKey = apiKey
 	f.require(formWidgetGMapsAddressConfigFieldAPIKey)
+}
+
+// SetServerKey sets the ServerKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FormWidgetGMapsAddressConfig) SetServerKey(serverKey *string) {
+	f.ServerKey = serverKey
+	f.require(formWidgetGMapsAddressConfigFieldServerKey)
 }
 
 func (f *FormWidgetGMapsAddressConfig) UnmarshalJSON(data []byte) error {

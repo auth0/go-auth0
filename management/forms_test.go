@@ -25876,6 +25876,14 @@ func TestSettersFormWidgetGMapsAddressConfig(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetServerKey", func(t *testing.T) {
+		obj := &FormWidgetGMapsAddressConfig{}
+		var fernTestValueServerKey *string
+		obj.SetServerKey(fernTestValueServerKey)
+		assert.Equal(t, fernTestValueServerKey, obj.ServerKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersFormWidgetGMapsAddressConfig(t *testing.T) {
@@ -25902,6 +25910,40 @@ func TestGettersFormWidgetGMapsAddressConfig(t *testing.T) {
 		_ = obj.GetAPIKey() // Should return zero value
 	})
 
+	t.Run("GetServerKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FormWidgetGMapsAddressConfig{}
+		var value string
+		obj.ServerKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetServerKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetServerKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FormWidgetGMapsAddressConfig{}
+		obj.ServerKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetServerKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetServerKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FormWidgetGMapsAddressConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetServerKey() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitFormWidgetGMapsAddressConfig(t *testing.T) {
@@ -25913,6 +25955,37 @@ func TestSettersMarkExplicitFormWidgetGMapsAddressConfig(t *testing.T) {
 
 		// Act
 		obj.SetAPIKey(fernTestValueAPIKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetServerKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FormWidgetGMapsAddressConfig{}
+		var fernTestValueServerKey *string
+
+		// Act
+		obj.SetServerKey(fernTestValueServerKey)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

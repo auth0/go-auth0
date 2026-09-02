@@ -18,20 +18,22 @@ import (
 	groupsclient "github.com/auth0/go-auth0/v3/management/organizations/groups/client"
 	invitations "github.com/auth0/go-auth0/v3/management/organizations/invitations"
 	client "github.com/auth0/go-auth0/v3/management/organizations/members/client"
+	organizationtemplate "github.com/auth0/go-auth0/v3/management/organizations/organizationtemplate"
 	rolesclient "github.com/auth0/go-auth0/v3/management/organizations/roles/client"
 )
 
 type Client struct {
-	WithRawResponse    *RawClient
-	ClientGrants       *clientgrants.Client
-	Clients            *clients.Client
-	Connections        *connections.Client
-	DiscoveryDomains   *discoverydomains.Client
-	EnabledConnections *enabledconnections.Client
-	Invitations        *invitations.Client
-	Members            *client.Client
-	Groups             *groupsclient.Client
-	Roles              *rolesclient.Client
+	WithRawResponse      *RawClient
+	ClientGrants         *clientgrants.Client
+	Clients              *clients.Client
+	Connections          *connections.Client
+	DiscoveryDomains     *discoverydomains.Client
+	EnabledConnections   *enabledconnections.Client
+	Invitations          *invitations.Client
+	Members              *client.Client
+	OrganizationTemplate *organizationtemplate.Client
+	Groups               *groupsclient.Client
+	Roles                *rolesclient.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -40,18 +42,19 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		ClientGrants:       clientgrants.NewClient(options),
-		Clients:            clients.NewClient(options),
-		Connections:        connections.NewClient(options),
-		DiscoveryDomains:   discoverydomains.NewClient(options),
-		EnabledConnections: enabledconnections.NewClient(options),
-		Invitations:        invitations.NewClient(options),
-		Members:            client.NewClient(options),
-		Groups:             groupsclient.NewClient(options),
-		Roles:              rolesclient.NewClient(options),
-		WithRawResponse:    NewRawClient(options),
-		options:            options,
-		baseURL:            options.BaseURL,
+		ClientGrants:         clientgrants.NewClient(options),
+		Clients:              clients.NewClient(options),
+		Connections:          connections.NewClient(options),
+		DiscoveryDomains:     discoverydomains.NewClient(options),
+		EnabledConnections:   enabledconnections.NewClient(options),
+		Invitations:          invitations.NewClient(options),
+		Members:              client.NewClient(options),
+		OrganizationTemplate: organizationtemplate.NewClient(options),
+		Groups:               groupsclient.NewClient(options),
+		Roles:                rolesclient.NewClient(options),
+		WithRawResponse:      NewRawClient(options),
+		options:              options,
+		baseURL:              options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:         options.HTTPClient,

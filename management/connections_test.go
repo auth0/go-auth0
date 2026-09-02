@@ -4378,6 +4378,22 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetEnablePushedAuthorizationRequests", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueEnablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests
+		obj.SetEnablePushedAuthorizationRequests(fernTestValueEnablePushedAuthorizationRequests)
+		assert.Equal(t, fernTestValueEnablePushedAuthorizationRequests, obj.EnablePushedAuthorizationRequests)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPushedAuthorizationRequestEndpoint", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValuePushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint
+		obj.SetPushedAuthorizationRequestEndpoint(fernTestValuePushedAuthorizationRequestEndpoint)
+		assert.Equal(t, fernTestValuePushedAuthorizationRequestEndpoint, obj.PushedAuthorizationRequestEndpoint)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenEndpointAuthMethod", func(t *testing.T) {
 		obj := &ConnectionPropertiesOptions{}
 		var fernTestValueTokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum
@@ -5554,6 +5570,74 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 			}
 		}()
 		_ = obj.GetDpopSigningAlg() // Should return zero value
+	})
+
+	t.Run("GetEnablePushedAuthorizationRequests", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionEnablePushedAuthorizationRequests
+		obj.EnablePushedAuthorizationRequests = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetEnablePushedAuthorizationRequests(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetEnablePushedAuthorizationRequests_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.EnablePushedAuthorizationRequests = nil
+		var expectedZero ConnectionEnablePushedAuthorizationRequests
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetEnablePushedAuthorizationRequests(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetEnablePushedAuthorizationRequests_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnablePushedAuthorizationRequests() // Should return zero value
+	})
+
+	t.Run("GetPushedAuthorizationRequestEndpoint", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionPushedAuthorizationRequestEndpoint
+		obj.PushedAuthorizationRequestEndpoint = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetPushedAuthorizationRequestEndpoint(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetPushedAuthorizationRequestEndpoint_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.PushedAuthorizationRequestEndpoint = nil
+		var expectedZero ConnectionPushedAuthorizationRequestEndpoint
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetPushedAuthorizationRequestEndpoint(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetPushedAuthorizationRequestEndpoint_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPushedAuthorizationRequestEndpoint() // Should return zero value
 	})
 
 	t.Run("GetTokenEndpointAuthMethod", func(t *testing.T) {
@@ -6820,6 +6904,68 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetEnablePushedAuthorizationRequests_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueEnablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests
+
+		// Act
+		obj.SetEnablePushedAuthorizationRequests(fernTestValueEnablePushedAuthorizationRequests)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPushedAuthorizationRequestEndpoint_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValuePushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint
+
+		// Act
+		obj.SetPushedAuthorizationRequestEndpoint(fernTestValuePushedAuthorizationRequestEndpoint)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetTokenEndpointAuthMethod_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -7773,6 +7919,22 @@ func TestSettersConnectionsOidcMetadata(t *testing.T) {
 		var fernTestValueEndSessionEndpoint *string
 		obj.SetEndSessionEndpoint(fernTestValueEndSessionEndpoint)
 		assert.Equal(t, fernTestValueEndSessionEndpoint, obj.EndSessionEndpoint)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPushedAuthorizationRequestEndpoint", func(t *testing.T) {
+		obj := &ConnectionsOidcMetadata{}
+		var fernTestValuePushedAuthorizationRequestEndpoint *string
+		obj.SetPushedAuthorizationRequestEndpoint(fernTestValuePushedAuthorizationRequestEndpoint)
+		assert.Equal(t, fernTestValuePushedAuthorizationRequestEndpoint, obj.PushedAuthorizationRequestEndpoint)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRequirePushedAuthorizationRequests", func(t *testing.T) {
+		obj := &ConnectionsOidcMetadata{}
+		var fernTestValueRequirePushedAuthorizationRequests *bool
+		obj.SetRequirePushedAuthorizationRequests(fernTestValueRequirePushedAuthorizationRequests)
+		assert.Equal(t, fernTestValueRequirePushedAuthorizationRequests, obj.RequirePushedAuthorizationRequests)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -8989,6 +9151,74 @@ func TestGettersConnectionsOidcMetadata(t *testing.T) {
 		_ = obj.GetEndSessionEndpoint() // Should return zero value
 	})
 
+	t.Run("GetPushedAuthorizationRequestEndpoint", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionsOidcMetadata{}
+		var value string
+		obj.PushedAuthorizationRequestEndpoint = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetPushedAuthorizationRequestEndpoint(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetPushedAuthorizationRequestEndpoint_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionsOidcMetadata{}
+		obj.PushedAuthorizationRequestEndpoint = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetPushedAuthorizationRequestEndpoint(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetPushedAuthorizationRequestEndpoint_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionsOidcMetadata
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPushedAuthorizationRequestEndpoint() // Should return zero value
+	})
+
+	t.Run("GetRequirePushedAuthorizationRequests", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionsOidcMetadata{}
+		var value bool
+		obj.RequirePushedAuthorizationRequests = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRequirePushedAuthorizationRequests(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRequirePushedAuthorizationRequests_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionsOidcMetadata{}
+		obj.RequirePushedAuthorizationRequests = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRequirePushedAuthorizationRequests(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRequirePushedAuthorizationRequests_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionsOidcMetadata
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequirePushedAuthorizationRequests() // Should return zero value
+	})
+
 	t.Run("GetDpopSigningAlgValuesSupported", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -10118,6 +10348,68 @@ func TestSettersMarkExplicitConnectionsOidcMetadata(t *testing.T) {
 
 		// Act
 		obj.SetEndSessionEndpoint(fernTestValueEndSessionEndpoint)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPushedAuthorizationRequestEndpoint_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionsOidcMetadata{}
+		var fernTestValuePushedAuthorizationRequestEndpoint *string
+
+		// Act
+		obj.SetPushedAuthorizationRequestEndpoint(fernTestValuePushedAuthorizationRequestEndpoint)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRequirePushedAuthorizationRequests_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionsOidcMetadata{}
+		var fernTestValueRequirePushedAuthorizationRequests *bool
+
+		// Act
+		obj.SetRequirePushedAuthorizationRequests(fernTestValueRequirePushedAuthorizationRequests)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -13953,6 +14245,22 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetEnablePushedAuthorizationRequests", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueEnablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests
+		obj.SetEnablePushedAuthorizationRequests(fernTestValueEnablePushedAuthorizationRequests)
+		assert.Equal(t, fernTestValueEnablePushedAuthorizationRequests, obj.EnablePushedAuthorizationRequests)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPushedAuthorizationRequestEndpoint", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValuePushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint
+		obj.SetPushedAuthorizationRequestEndpoint(fernTestValuePushedAuthorizationRequestEndpoint)
+		assert.Equal(t, fernTestValuePushedAuthorizationRequestEndpoint, obj.PushedAuthorizationRequestEndpoint)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenEndpointAuthMethod", func(t *testing.T) {
 		obj := &UpdateConnectionOptions{}
 		var fernTestValueTokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum
@@ -15129,6 +15437,74 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 			}
 		}()
 		_ = obj.GetDpopSigningAlg() // Should return zero value
+	})
+
+	t.Run("GetEnablePushedAuthorizationRequests", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionEnablePushedAuthorizationRequests
+		obj.EnablePushedAuthorizationRequests = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetEnablePushedAuthorizationRequests(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetEnablePushedAuthorizationRequests_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.EnablePushedAuthorizationRequests = nil
+		var expectedZero ConnectionEnablePushedAuthorizationRequests
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetEnablePushedAuthorizationRequests(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetEnablePushedAuthorizationRequests_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnablePushedAuthorizationRequests() // Should return zero value
+	})
+
+	t.Run("GetPushedAuthorizationRequestEndpoint", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionPushedAuthorizationRequestEndpoint
+		obj.PushedAuthorizationRequestEndpoint = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetPushedAuthorizationRequestEndpoint(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetPushedAuthorizationRequestEndpoint_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.PushedAuthorizationRequestEndpoint = nil
+		var expectedZero ConnectionPushedAuthorizationRequestEndpoint
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetPushedAuthorizationRequestEndpoint(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetPushedAuthorizationRequestEndpoint_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPushedAuthorizationRequestEndpoint() // Should return zero value
 	})
 
 	t.Run("GetTokenEndpointAuthMethod", func(t *testing.T) {
@@ -16372,6 +16748,68 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetDpopSigningAlg(fernTestValueDpopSigningAlg)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnablePushedAuthorizationRequests_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueEnablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests
+
+		// Act
+		obj.SetEnablePushedAuthorizationRequests(fernTestValueEnablePushedAuthorizationRequests)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPushedAuthorizationRequestEndpoint_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValuePushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint
+
+		// Act
+		obj.SetPushedAuthorizationRequestEndpoint(fernTestValuePushedAuthorizationRequestEndpoint)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -21165,6 +21603,132 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		val, err := NewConnectionIdentityProviderEnumFromString("yandex")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, ConnectionIdentityProviderEnum("yandex"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_notion_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("notion-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("notion-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_asana_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("asana-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("asana-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_atlassian_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("atlassian-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("atlassian-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_cloudflare_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("cloudflare-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("cloudflare-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_docusign_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("docusign-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("docusign-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_figma_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("figma-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("figma-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_gitlab_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("gitlab-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("gitlab-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_gusto_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("gusto-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("gusto-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_heroku_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("heroku-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("heroku-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_hubspot_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("hubspot-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("hubspot-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_intercom_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("intercom-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("intercom-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_linear_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("linear-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("linear-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_pagerduty_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("pagerduty-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("pagerduty-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_sentry_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("sentry-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("sentry-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_slack_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("slack-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("slack-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_supabase_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("supabase-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("supabase-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_vercel_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("vercel-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("vercel-mcp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_xero_mcp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionIdentityProviderEnumFromString("xero-mcp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionIdentityProviderEnum("xero-mcp"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {

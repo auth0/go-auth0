@@ -294,3 +294,27 @@ func (u *UnauthorizedError) MarshalJSON() ([]byte, error) {
 func (u *UnauthorizedError) Unwrap() error {
 	return u.APIError
 }
+
+// MCP connections must have connected_accounts.active set to true and authentication.active set to false
+type UnprocessableEntityError struct {
+	*core.APIError
+	Body any
+}
+
+func (u *UnprocessableEntityError) UnmarshalJSON(data []byte) error {
+	var body any
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	u.StatusCode = 422
+	u.Body = body
+	return nil
+}
+
+func (u *UnprocessableEntityError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(u.Body)
+}
+
+func (u *UnprocessableEntityError) Unwrap() error {
+	return u.APIError
+}
