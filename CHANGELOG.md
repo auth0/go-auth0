@@ -1,5 +1,25 @@
 # Change Log
 
+## [v3.4.0](https://github.com/auth0/go-auth0/tree/v3.4.0) (2026-09-02)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.3.0...v3.4.0)
+
+**Breaking Changes**
+- Renamed `EventStreamCloudEventContextTenant.TenantID` (`json:"tenant_id"`) to `ID` (`json:"id"`), replacing the `GetTenantID`/`SetTenantID` accessors with `GetID`/`SetID`, to match the API contract [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Removed the `ClientAppTypeEnumB2BIntegration` (`b2b_integration`) `app_type` value, which was released in beta by mistake; B2B integration is now configured through the new `b2b_integration_configuration` client field [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Added**
+- feat: add `OrganizationTemplates` client with `List` (checkpoint-paginated, sorted by `id`), `Create`, `Get`, `Update`, and `ListOrganizations`, plus the `Organizations.OrganizationTemplate` client with `Get`, `AssignOrganizationTemplate`, and `UnassignOrganizationTemplate`, along with the `OrganizationTemplate` and `OrganizationTemplateAssignedOrganization` types (role visibility policy and override, allowed strategies, use-for-organization-discovery, and `organization_deletion_behavior`/`connection_deletion_behavior` options) and the `create:organization_templates`, `read:organization_templates`, and `update:organization_templates` OAuth scopes [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `HTTPMessageSignature` field to `NetworkACLMatch` so a tenant network ACL rule can match on an HTTP Message Signature, along with the `NetworkAclHttpMessageSignature`, `NetworkAclHttpMessageSignatureKey`, and `NetworkAclHttpMessageSignatureKeys` types [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Keys.NetworkACLs.Delete` to delete a network ACL key, along with the `OauthScopeDeleteNetworkACLKeys` (`delete:network_acl_keys`) scope [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add the `B2BIntegrationConfiguration` type (carrying `sso_profiles` and an `integration_type` enum) via a `B2BIntegrationConfiguration` field on the client create, update, get, and rotate-secret payloads [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add SCIM provisioning to connection profiles via the `Provisioning` field, with the `ConnectionProfileProvisioning`, `ConnectionProfileProvisioningSCIM`, `ConnectionProfileProvisioningSCIMTokens`, `ConnectionProfileProvisioningSCIMTokenScopes`, `ConnectionProfileProvisioningSCIMTokenScopeEnum`, `ConnectionProfileProvisioningSCIMTokenDefaultExpiry`, and `ConnectionProfileProvisioningSCIMTokenMaxAllowedExpiry` types [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add Pushed Authorization Request support to OIDC and Okta connection options via the `EnablePushedAuthorizationRequests`, `PushedAuthorizationRequestEndpoint`, and `RequirePushedAuthorizationRequests` fields [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `DiscoveryURL` and `OidcMetadata` to SAML connection options, and `CrossAppAccessResourceApp` (the `CrossAppAccessResourceApp` type) to SAML connection create, update, and response content [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add the `ServerKey` field to `FormWidgetGMapsAddressConfig` [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add the `LocalResourceDiscovery` flag to `TenantSettingsFlags` [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add the `ActionTriggerTypeEnumPostCredentialValidation` (`post-credential-validation`) action trigger type [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add the `UnprocessableEntityError` type and map HTTP `422` responses to it [\#856](https://github.com/auth0/go-auth0/pull/856) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v3.3.0](https://github.com/auth0/go-auth0/tree/v3.3.0) (2026-08-19)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.2.0...v3.3.0)
 
