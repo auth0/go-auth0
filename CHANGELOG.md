@@ -1,5 +1,10 @@
 # Change Log
 
+## [Unreleased]
+
+**Added**
+- feat: add `MatchAll` field (`*bool`) to `NetworkACLRule`, enabling rules that match all requests without signal-based criteria, along with a generated `GetMatchAll()` accessor
+
 ## [v1.48.0](https://github.com/auth0/go-auth0/tree/v1.48.0) (2026-08-26)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.47.0...v1.48.0)
 

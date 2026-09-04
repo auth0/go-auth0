@@ -13240,6 +13240,16 @@ func TestNetworkACLRule_GetMatch(tt *testing.T) {
 	n.GetMatch()
 }
 
+func TestNetworkACLRule_GetMatchAll(tt *testing.T) {
+	var zeroValue bool
+	n := &NetworkACLRule{MatchAll: &zeroValue}
+	n.GetMatchAll()
+	n = &NetworkACLRule{}
+	n.GetMatchAll()
+	n = nil
+	n.GetMatchAll()
+}
+
 func TestNetworkACLRule_GetNotMatch(tt *testing.T) {
 	n := &NetworkACLRule{}
 	n.GetNotMatch()
