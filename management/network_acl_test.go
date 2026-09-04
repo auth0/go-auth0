@@ -2,6 +2,7 @@ package management
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"testing"
 
@@ -9,6 +10,54 @@ import (
 
 	"github.com/auth0/go-auth0"
 )
+
+func TestNetworkACLRule_MatchAll_Marshal(t *testing.T) {
+	t.Run("marshal match_all true omits match field", func(t *testing.T) {
+		rule := &NetworkACLRule{
+			Action:   &NetworkACLRuleAction{Block: auth0.Bool(true)},
+			Scope:    auth0.String("authentication"),
+			MatchAll: auth0.Bool(true),
+		}
+		b, err := json.Marshal(rule)
+		assert.NoError(t, err)
+		assert.Contains(t, string(b), `"match_all":true`)
+		assert.NotContains(t, string(b), `"match"`)
+	})
+
+	t.Run("marshal nil MatchAll omits match_all key", func(t *testing.T) {
+		rule := &NetworkACLRule{
+			Action: &NetworkACLRuleAction{Block: auth0.Bool(true)},
+			Match:  &NetworkACLRuleMatch{GeoCountryCodes: &[]string{"US"}},
+			Scope:  auth0.String("authentication"),
+		}
+		b, err := json.Marshal(rule)
+		assert.NoError(t, err)
+		assert.NotContains(t, string(b), `"match_all"`)
+	})
+}
+
+func TestNetworkACLRule_MatchAll_Unmarshal(t *testing.T) {
+	t.Run("unmarshal match_all true sets MatchAll pointer", func(t *testing.T) {
+		raw := `{"action":{"block":true},"scope":"authentication","match_all":true}`
+
+		var rule NetworkACLRule
+		err := json.Unmarshal([]byte(raw), &rule)
+		assert.NoError(t, err)
+		assert.NotNil(t, rule.MatchAll)
+		assert.True(t, *rule.MatchAll)
+		assert.Nil(t, rule.Match)
+	})
+
+	t.Run("unmarshal signal-based rule leaves MatchAll nil", func(t *testing.T) {
+		raw := `{"action":{"block":true},"match":{"geo_country_codes":["US"]},"scope":"authentication"}`
+
+		var rule NetworkACLRule
+		err := json.Unmarshal([]byte(raw), &rule)
+		assert.NoError(t, err)
+		assert.Nil(t, rule.MatchAll)
+		assert.NotNil(t, rule.Match)
+	})
+}
 
 func TestNetworkACLManager_Create(t *testing.T) {
 	configureHTTPTestRecordings(t)
@@ -38,6 +87,36 @@ func TestNetworkACLManager_Create(t *testing.T) {
 	actualNetworkACL, err := api.NetworkACL.Read(context.Background(), expectedNetworkACL.GetID())
 	assert.NoError(t, err)
 	assert.Equal(t, expectedNetworkACL, actualNetworkACL)
+}
+
+func TestNetworkACLManager_CreateWithMatchAll(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	expectedNetworkACL := &NetworkACL{
+		Description: auth0.String("some-description-match-all"),
+		Active:      auth0.Bool(true),
+		Priority:    auth0.Int(1),
+		Rule: &NetworkACLRule{
+			Action: &NetworkACLRuleAction{
+				Block: auth0.Bool(true),
+			},
+			MatchAll: auth0.Bool(true),
+			Scope:    auth0.String("authentication"),
+		},
+	}
+
+	err := api.NetworkACL.Create(context.Background(), expectedNetworkACL)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, expectedNetworkACL.GetID())
+	t.Cleanup(func() {
+		cleanupNetworkACL(t, expectedNetworkACL.GetID())
+	})
+
+	actualNetworkACL, err := api.NetworkACL.Read(context.Background(), expectedNetworkACL.GetID())
+	assert.NoError(t, err)
+	assert.NotNil(t, actualNetworkACL.Rule.MatchAll)
+	assert.True(t, actualNetworkACL.Rule.GetMatchAll())
+	assert.Nil(t, actualNetworkACL.Rule.Match)
 }
 
 func TestNetworkACLManager_CreateWithAuth0Managed(t *testing.T) {
