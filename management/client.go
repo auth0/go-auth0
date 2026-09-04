@@ -196,6 +196,11 @@ type Client struct {
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	OrganizationDiscoveryMethods *[]string `json:"organization_discovery_methods,omitempty"`
 
+	// B2BIntegrationConfiguration configures the client as a B2B Integration client
+	// (Enterprise Connect). It is set at create time: it cannot be added to, or removed
+	// from, an existing client via PATCH, only its contents updated.
+	B2BIntegrationConfiguration *B2BIntegrationConfiguration `json:"b2b_integration_configuration,omitempty"`
+
 	// AsyncApprovalNotificationChannels is an array of notification channels for contacting
 	// the user when their approval is required.
 	//
@@ -433,6 +438,17 @@ type MyOrganizationThirdPartyClientAccess struct {
 // ClientTokenExchange allows configuration for token exchange.
 type ClientTokenExchange struct {
 	AllowAnyProfileOfType *[]string `json:"allow_any_profile_of_type,omitempty"`
+}
+
+// B2BIntegrationConfiguration configures a client as a B2B Integration client
+// (Enterprise Connect).
+type B2BIntegrationConfiguration struct {
+	// IntegrationType is the type of B2B integration.
+	// Valid values: "custom_auth_server", "third_party", "application".
+	IntegrationType *string `json:"integration_type,omitempty"`
+
+	// SSOProfiles is the list of self-service SSO profile ids linked to this client.
+	SSOProfiles *[]string `json:"sso_profiles,omitempty"`
 }
 
 // ClientDefaultOrganization allows the support for client credentials feature.

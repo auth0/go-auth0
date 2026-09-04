@@ -938,6 +938,27 @@ func (a *AzureSBClientAddon) String() string {
 	return Stringify(a)
 }
 
+// GetIntegrationType returns the IntegrationType field if it's non-nil, zero value otherwise.
+func (b *B2BIntegrationConfiguration) GetIntegrationType() string {
+	if b == nil || b.IntegrationType == nil {
+		return ""
+	}
+	return *b.IntegrationType
+}
+
+// GetSSOProfiles returns the SSOProfiles field if it's non-nil, zero value otherwise.
+func (b *B2BIntegrationConfiguration) GetSSOProfiles() []string {
+	if b == nil || b.SSOProfiles == nil {
+		return nil
+	}
+	return *b.SSOProfiles
+}
+
+// String returns a string representation of B2BIntegrationConfiguration.
+func (b *B2BIntegrationConfiguration) String() string {
+	return Stringify(b)
+}
+
 // GetMode returns the Mode field if it's non-nil, zero value otherwise.
 func (b *BackChannelLogoutInitiators) GetMode() string {
 	if b == nil || b.Mode == nil {
@@ -1759,6 +1780,14 @@ func (c *Client) GetAsyncApprovalNotificationChannels() []string {
 		return nil
 	}
 	return *c.AsyncApprovalNotificationChannels
+}
+
+// GetB2BIntegrationConfiguration returns the B2BIntegrationConfiguration field.
+func (c *Client) GetB2BIntegrationConfiguration() *B2BIntegrationConfiguration {
+	if c == nil {
+		return nil
+	}
+	return c.B2BIntegrationConfiguration
 }
 
 // GetCallbacks returns the Callbacks field if it's non-nil, zero value otherwise.
