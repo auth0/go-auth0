@@ -33,6 +33,8 @@ type NetworkACLRule struct {
 	NotMatch *NetworkACLRuleMatch `json:"not_match,omitempty"`
 	// The scope of the Network ACL Rule
 	Scope *string `json:"scope,omitempty"`
+	// Whether the rule matches all requests
+	MatchAll *bool `json:"match_all,omitempty"`
 }
 
 // NetworkACLRuleAction : Network ACL Rule Action.
