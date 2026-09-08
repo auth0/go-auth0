@@ -1189,6 +1189,34 @@ func TestAzureSBClientAddon_String(t *testing.T) {
 	}
 }
 
+func TestB2BIntegrationConfiguration_GetIntegrationType(tt *testing.T) {
+	var zeroValue string
+	b := &B2BIntegrationConfiguration{IntegrationType: &zeroValue}
+	b.GetIntegrationType()
+	b = &B2BIntegrationConfiguration{}
+	b.GetIntegrationType()
+	b = nil
+	b.GetIntegrationType()
+}
+
+func TestB2BIntegrationConfiguration_GetSSOProfiles(tt *testing.T) {
+	var zeroValue []string
+	b := &B2BIntegrationConfiguration{SSOProfiles: &zeroValue}
+	b.GetSSOProfiles()
+	b = &B2BIntegrationConfiguration{}
+	b.GetSSOProfiles()
+	b = nil
+	b.GetSSOProfiles()
+}
+
+func TestB2BIntegrationConfiguration_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &B2BIntegrationConfiguration{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestBackChannelLogoutInitiators_GetMode(tt *testing.T) {
 	var zeroValue string
 	b := &BackChannelLogoutInitiators{Mode: &zeroValue}
@@ -2241,6 +2269,13 @@ func TestClient_GetAsyncApprovalNotificationChannels(tt *testing.T) {
 	c.GetAsyncApprovalNotificationChannels()
 	c = nil
 	c.GetAsyncApprovalNotificationChannels()
+}
+
+func TestClient_GetB2BIntegrationConfiguration(tt *testing.T) {
+	c := &Client{}
+	c.GetB2BIntegrationConfiguration()
+	c = nil
+	c.GetB2BIntegrationConfiguration()
 }
 
 func TestClient_GetCallbacks(tt *testing.T) {
