@@ -10610,6 +10610,14 @@ func (n *NetworkACLRule) GetMatch() *NetworkACLRuleMatch {
 	return n.Match
 }
 
+// GetMatchAll returns the MatchAll field if it's non-nil, zero value otherwise.
+func (n *NetworkACLRule) GetMatchAll() bool {
+	if n == nil || n.MatchAll == nil {
+		return false
+	}
+	return *n.MatchAll
+}
+
 // GetNotMatch returns the NotMatch field.
 func (n *NetworkACLRule) GetNotMatch() *NetworkACLRuleMatch {
 	if n == nil {

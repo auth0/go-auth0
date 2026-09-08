@@ -122,6 +122,9 @@ const (
 
 	// PromptBruteForceProtection represents the brute-force-protection prompt.
 	PromptBruteForceProtection PromptType = "brute-force-protection"
+
+	// PromptConfirmation represents the confirmation prompt.
+	PromptConfirmation PromptType = "confirmation"
 )
 
 var allowedPromptsWithPartials = []PromptType{
@@ -400,6 +403,9 @@ const (
 
 	// ScreenBruteForceProtectionUnblockSuccess represents the brute-force-protection-unblock-success.
 	ScreenBruteForceProtectionUnblockSuccess ScreenName = "brute-force-protection-unblock-success"
+
+	// ScreenConfirmation represents the confirmation screen.
+	ScreenConfirmation ScreenName = "confirmation"
 )
 
 const (
