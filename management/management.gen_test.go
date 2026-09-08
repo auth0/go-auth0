@@ -13283,6 +13283,32 @@ func TestNetworkACL_String(t *testing.T) {
 	}
 }
 
+func TestNetworkACLHTTPMessageSignature_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &NetworkACLHTTPMessageSignature{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestNetworkACLHTTPMessageSignatureKey_GetID(tt *testing.T) {
+	var zeroValue string
+	n := &NetworkACLHTTPMessageSignatureKey{ID: &zeroValue}
+	n.GetID()
+	n = &NetworkACLHTTPMessageSignatureKey{}
+	n.GetID()
+	n = nil
+	n.GetID()
+}
+
+func TestNetworkACLHTTPMessageSignatureKey_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &NetworkACLHTTPMessageSignatureKey{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestNetworkACLRule_GetAction(tt *testing.T) {
 	n := &NetworkACLRule{}
 	n.GetAction()
@@ -13295,6 +13321,16 @@ func TestNetworkACLRule_GetMatch(tt *testing.T) {
 	n.GetMatch()
 	n = nil
 	n.GetMatch()
+}
+
+func TestNetworkACLRule_GetMatchAll(tt *testing.T) {
+	var zeroValue bool
+	n := &NetworkACLRule{MatchAll: &zeroValue}
+	n.GetMatchAll()
+	n = &NetworkACLRule{}
+	n.GetMatchAll()
+	n = nil
+	n.GetMatchAll()
 }
 
 func TestNetworkACLRule_GetNotMatch(tt *testing.T) {
@@ -13448,6 +13484,13 @@ func TestNetworkACLRuleMatch_GetHostnames(tt *testing.T) {
 	n.GetHostnames()
 	n = nil
 	n.GetHostnames()
+}
+
+func TestNetworkACLRuleMatch_GetHTTPMessageSignature(tt *testing.T) {
+	n := &NetworkACLRuleMatch{}
+	n.GetHTTPMessageSignature()
+	n = nil
+	n.GetHTTPMessageSignature()
 }
 
 func TestNetworkACLRuleMatch_GetIPv4Cidrs(tt *testing.T) {
