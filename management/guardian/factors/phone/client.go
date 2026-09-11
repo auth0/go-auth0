@@ -129,6 +129,38 @@ func (c *Client) SetProvider(
 	return response.Body, nil
 }
 
+// TODO: Link this endpoint to relevant documentation when available.
+func (c *Client) Get(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (*management.GetPhoneFactorSettingsResponseContent, error) {
+	response, err := c.WithRawResponse.Get(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// TODO: Link this endpoint to relevant documentation when available.
+func (c *Client) Set(
+	ctx context.Context,
+	request *management.SetPhoneFactorSettingsRequestContent,
+	opts ...option.RequestOption,
+) (*management.SetPhoneFactorSettingsResponseContent, error) {
+	response, err := c.WithRawResponse.Set(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Retrieve details of the multi-factor authentication enrollment and verification templates for phone-type factors available in your tenant.
 func (c *Client) GetTemplates(
 	ctx context.Context,

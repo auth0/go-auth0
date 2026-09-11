@@ -103,6 +103,30 @@ func (f *ForbiddenError) Unwrap() error {
 	return f.APIError
 }
 
+// The search request timed out. Please simplify your query and try again.
+type GatewayTimeoutError struct {
+	*core.APIError
+	Body any
+}
+
+func (g *GatewayTimeoutError) UnmarshalJSON(data []byte) error {
+	var body any
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	g.StatusCode = 504
+	g.Body = body
+	return nil
+}
+
+func (g *GatewayTimeoutError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(g.Body)
+}
+
+func (g *GatewayTimeoutError) Unwrap() error {
+	return g.APIError
+}
+
 // Cursor points to data no longer available in the stream.
 type GoneError struct {
 	*core.APIError

@@ -1082,6 +1082,338 @@ func (o *OrganizationEnabledConnection) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// Field name to sort results by in ascending order only. Defaults to insertion order (oldest first) if not provided.
+type OrganizationSortFieldEnum string
+
+const (
+	OrganizationSortFieldEnumName        OrganizationSortFieldEnum = "name"
+	OrganizationSortFieldEnumDisplayName OrganizationSortFieldEnum = "display_name"
+	OrganizationSortFieldEnumCreatedAt   OrganizationSortFieldEnum = "created_at"
+)
+
+func NewOrganizationSortFieldEnumFromString(s string) (OrganizationSortFieldEnum, error) {
+	switch s {
+	case "name":
+		return OrganizationSortFieldEnumName, nil
+	case "display_name":
+		return OrganizationSortFieldEnumDisplayName, nil
+	case "created_at":
+		return OrganizationSortFieldEnumCreatedAt, nil
+	}
+	var t OrganizationSortFieldEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationSortFieldEnum) Ptr() *OrganizationSortFieldEnum {
+	return &o
+}
+
+var (
+	searchOrganizationFieldID                     = big.NewInt(1 << 0)
+	searchOrganizationFieldName                   = big.NewInt(1 << 1)
+	searchOrganizationFieldDisplayName            = big.NewInt(1 << 2)
+	searchOrganizationFieldBranding               = big.NewInt(1 << 3)
+	searchOrganizationFieldMetadata               = big.NewInt(1 << 4)
+	searchOrganizationFieldTokenQuota             = big.NewInt(1 << 5)
+	searchOrganizationFieldThirdPartyClientAccess = big.NewInt(1 << 6)
+	searchOrganizationFieldIsAppEntitlementActive = big.NewInt(1 << 7)
+)
+
+type SearchOrganization struct {
+	// Organization identifier.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of this organization.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Friendly name of this organization.
+	DisplayName            *string                                 `json:"display_name,omitempty" url:"display_name,omitempty"`
+	Branding               *OrganizationBranding                   `json:"branding,omitempty" url:"branding,omitempty"`
+	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
+	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
+	// Whether app entitlement is active for this organization.
+	IsAppEntitlementActive *bool `json:"is_app_entitlement_active,omitempty" url:"is_app_entitlement_active,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (s *SearchOrganization) GetID() string {
+	if s == nil || s.ID == nil {
+		return ""
+	}
+	return *s.ID
+}
+
+func (s *SearchOrganization) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+func (s *SearchOrganization) GetDisplayName() string {
+	if s == nil || s.DisplayName == nil {
+		return ""
+	}
+	return *s.DisplayName
+}
+
+func (s *SearchOrganization) GetBranding() OrganizationBranding {
+	if s == nil || s.Branding == nil {
+		return OrganizationBranding{}
+	}
+	return *s.Branding
+}
+
+func (s *SearchOrganization) GetMetadata() OrganizationMetadata {
+	if s == nil || s.Metadata == nil {
+		return nil
+	}
+	return *s.Metadata
+}
+
+func (s *SearchOrganization) GetTokenQuota() TokenQuota {
+	if s == nil || s.TokenQuota == nil {
+		return TokenQuota{}
+	}
+	return *s.TokenQuota
+}
+
+func (s *SearchOrganization) GetThirdPartyClientAccess() OrganizationThirdPartyClientAccessEnum {
+	if s == nil || s.ThirdPartyClientAccess == nil {
+		return ""
+	}
+	return *s.ThirdPartyClientAccess
+}
+
+func (s *SearchOrganization) GetIsAppEntitlementActive() bool {
+	if s == nil || s.IsAppEntitlementActive == nil {
+		return false
+	}
+	return *s.IsAppEntitlementActive
+}
+
+func (s *SearchOrganization) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.ExtraProperties
+}
+
+func (s *SearchOrganization) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetID(id *string) {
+	s.ID = id
+	s.require(searchOrganizationFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetName(name *string) {
+	s.Name = name
+	s.require(searchOrganizationFieldName)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetDisplayName(displayName *string) {
+	s.DisplayName = displayName
+	s.require(searchOrganizationFieldDisplayName)
+}
+
+// SetBranding sets the Branding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetBranding(branding *OrganizationBranding) {
+	s.Branding = branding
+	s.require(searchOrganizationFieldBranding)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetMetadata(metadata *OrganizationMetadata) {
+	s.Metadata = metadata
+	s.require(searchOrganizationFieldMetadata)
+}
+
+// SetTokenQuota sets the TokenQuota field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetTokenQuota(tokenQuota *TokenQuota) {
+	s.TokenQuota = tokenQuota
+	s.require(searchOrganizationFieldTokenQuota)
+}
+
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
+	s.ThirdPartyClientAccess = thirdPartyClientAccess
+	s.require(searchOrganizationFieldThirdPartyClientAccess)
+}
+
+// SetIsAppEntitlementActive sets the IsAppEntitlementActive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetIsAppEntitlementActive(isAppEntitlementActive *bool) {
+	s.IsAppEntitlementActive = isAppEntitlementActive
+	s.require(searchOrganizationFieldIsAppEntitlementActive)
+}
+
+func (s *SearchOrganization) UnmarshalJSON(data []byte) error {
+	type embed SearchOrganization
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*s = SearchOrganization(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.ExtraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SearchOrganization) MarshalJSON() ([]byte, error) {
+	type embed SearchOrganization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
+}
+
+func (s *SearchOrganization) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	searchOrganizationsPaginatedResponseContentFieldOrganizations = big.NewInt(1 << 0)
+	searchOrganizationsPaginatedResponseContentFieldNext          = big.NewInt(1 << 1)
+)
+
+type SearchOrganizationsPaginatedResponseContent struct {
+	Organizations []*SearchOrganization `json:"organizations" url:"organizations"`
+	// Cursor for retrieving the next page of results. Absent when no more results are available.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) GetOrganizations() []*SearchOrganization {
+	if s == nil {
+		return nil
+	}
+	return s.Organizations
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) GetNext() string {
+	if s == nil || s.Next == nil {
+		return ""
+	}
+	return *s.Next
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetOrganizations sets the Organizations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganizationsPaginatedResponseContent) SetOrganizations(organizations []*SearchOrganization) {
+	s.Organizations = organizations
+	s.require(searchOrganizationsPaginatedResponseContentFieldOrganizations)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganizationsPaginatedResponseContent) SetNext(next *string) {
+	s.Next = next
+	s.require(searchOrganizationsPaginatedResponseContentFieldNext)
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchOrganizationsPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SearchOrganizationsPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SearchOrganizationsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 var (
 	updateOrganizationResponseContentFieldID                     = big.NewInt(1 << 0)
 	updateOrganizationResponseContentFieldName                   = big.NewInt(1 << 1)

@@ -19,6 +19,7 @@ import (
 	emailtemplates "github.com/auth0/go-auth0/v3/management/emailtemplates"
 	events "github.com/auth0/go-auth0/v3/management/events"
 	eventstreamsclient "github.com/auth0/go-auth0/v3/management/eventstreams/client"
+	experimentationclient "github.com/auth0/go-auth0/v3/management/experimentation/client"
 	flowsclient "github.com/auth0/go-auth0/v3/management/flows/client"
 	forms "github.com/auth0/go-auth0/v3/management/forms"
 	groupsclient "github.com/auth0/go-auth0/v3/management/groups/client"
@@ -32,7 +33,6 @@ import (
 	networkacls "github.com/auth0/go-auth0/v3/management/networkacls"
 	option "github.com/auth0/go-auth0/v3/management/option"
 	organizationsclient "github.com/auth0/go-auth0/v3/management/organizations/client"
-	organizationtemplates "github.com/auth0/go-auth0/v3/management/organizationtemplates"
 	promptsclient "github.com/auth0/go-auth0/v3/management/prompts/client"
 	ratelimitpolicies "github.com/auth0/go-auth0/v3/management/ratelimitpolicies"
 	refreshtokens "github.com/auth0/go-auth0/v3/management/refreshtokens"
@@ -72,12 +72,12 @@ type Management struct {
 	Forms                 *forms.Client
 	UserGrants            *usergrants.Client
 	Groups                *groupsclient.Client
+	Guardian              *guardianclient.Client
 	Hooks                 *hooksclient.Client
 	Jobs                  *jobsclient.Client
 	LogStreams            *logstreams.Client
 	Logs                  *logs.Client
 	NetworkACLs           *networkacls.Client
-	OrganizationTemplates *organizationtemplates.Client
 	Organizations         *organizationsclient.Client
 	Prompts               *promptsclient.Client
 	RateLimitPolicies     *ratelimitpolicies.Client
@@ -98,7 +98,7 @@ type Management struct {
 	Anomaly               *anomalyclient.Client
 	AttackProtection      *attackprotectionclient.Client
 	Emails                *emailsclient.Client
-	Guardian              *guardianclient.Client
+	Experimentation       *experimentationclient.Client
 	Keys                  *keysclient.Client
 	RiskAssessments       *riskassessmentsclient.Client
 	Tenants               *tenantsclient.Client
@@ -128,12 +128,12 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Forms:                 forms.NewClient(options),
 		UserGrants:            usergrants.NewClient(options),
 		Groups:                groupsclient.NewClient(options),
+		Guardian:              guardianclient.NewClient(options),
 		Hooks:                 hooksclient.NewClient(options),
 		Jobs:                  jobsclient.NewClient(options),
 		LogStreams:            logstreams.NewClient(options),
 		Logs:                  logs.NewClient(options),
 		NetworkACLs:           networkacls.NewClient(options),
-		OrganizationTemplates: organizationtemplates.NewClient(options),
 		Organizations:         organizationsclient.NewClient(options),
 		Prompts:               promptsclient.NewClient(options),
 		RateLimitPolicies:     ratelimitpolicies.NewClient(options),
@@ -154,7 +154,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Anomaly:               anomalyclient.NewClient(options),
 		AttackProtection:      attackprotectionclient.NewClient(options),
 		Emails:                emailsclient.NewClient(options),
-		Guardian:              guardianclient.NewClient(options),
+		Experimentation:       experimentationclient.NewClient(options),
 		Keys:                  keysclient.NewClient(options),
 		RiskAssessments:       riskassessmentsclient.NewClient(options),
 		Tenants:               tenantsclient.NewClient(options),

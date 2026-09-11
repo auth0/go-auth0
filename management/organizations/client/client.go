@@ -183,6 +183,86 @@ func (c *Client) GetByName(
 	return response.Body, nil
 }
 
+// Retrieve details of organizations matching a search criteria. It is possible to:
+//
+// - Specify a search criteria for organizations
+// - Search via `name`
+// - Search via `display_name`
+// - Substring matching (`contains` and `ends-with`) requires at least 3 characters
+// - Use wildcards
+//
+// The `q` query parameter can be used to get organizations that match the specified criteria on `name` OR `display_name`.
+//
+// This endpoint supports SCIM or Lucene filter syntax with low-latency, cursor-based pagination. Use the `parser` parameter to specify "scim" or "lucene" syntax (default: "lucene").
+//
+// Results are eventually consistent and may not reflect recent updates immediately.
+//
+// **Sortable fields:** `name`, `display_name`, `created_at` (ascending only). Defaults to insertion order (oldest first).
+func (c *Client) Search(
+	ctx context.Context,
+	request *management.SearchOrganizationsRequestParameters,
+	opts ...option.RequestOption,
+) (*core.Page[*string, *management.SearchOrganization, *management.SearchOrganizationsPaginatedResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/organizations/search"
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("from", *pageRequest.Cursor)
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		}
+	}
+	readPageResponse := func(response *management.SearchOrganizationsPaginatedResponseContent) *core.PageResponse[*string, *management.SearchOrganization, *management.SearchOrganizationsPaginatedResponseContent] {
+		var zeroValue *string
+		next := response.Next
+		results := response.Organizations
+		return &core.PageResponse[*string, *management.SearchOrganization, *management.SearchOrganizationsPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.From)
+}
+
 // Retrieve details about a single Organization specified by ID.
 func (c *Client) Get(
 	ctx context.Context,

@@ -8,6 +8,7 @@ import (
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
 	client "github.com/auth0/go-auth0/v3/management/guardian/factors/duo/client"
+	email "github.com/auth0/go-auth0/v3/management/guardian/factors/email"
 	phone "github.com/auth0/go-auth0/v3/management/guardian/factors/phone"
 	pushnotification "github.com/auth0/go-auth0/v3/management/guardian/factors/pushnotification"
 	sms "github.com/auth0/go-auth0/v3/management/guardian/factors/sms"
@@ -17,6 +18,7 @@ import (
 
 type Client struct {
 	WithRawResponse  *RawClient
+	Email            *email.Client
 	Phone            *phone.Client
 	PushNotification *pushnotification.Client
 	Sms              *sms.Client
@@ -29,6 +31,7 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
+		Email:            email.NewClient(options),
 		Phone:            phone.NewClient(options),
 		PushNotification: pushnotification.NewClient(options),
 		Sms:              sms.NewClient(options),

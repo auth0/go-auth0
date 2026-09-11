@@ -21612,18 +21612,18 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		assert.Equal(t, ConnectionIdentityProviderEnum("notion-mcp"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_asana_mcp", func(t *testing.T) {
+	t.Run("NewFromString_asana", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("asana-mcp")
+		val, err := NewConnectionIdentityProviderEnumFromString("asana")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("asana-mcp"), val, "enum value should match expected wire value")
+		assert.Equal(t, ConnectionIdentityProviderEnum("asana"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_atlassian_mcp", func(t *testing.T) {
+	t.Run("NewFromString_atlassian", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("atlassian-mcp")
+		val, err := NewConnectionIdentityProviderEnumFromString("atlassian")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("atlassian-mcp"), val, "enum value should match expected wire value")
+		assert.Equal(t, ConnectionIdentityProviderEnum("atlassian"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_cloudflare_mcp", func(t *testing.T) {
@@ -21633,39 +21633,11 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		assert.Equal(t, ConnectionIdentityProviderEnum("cloudflare-mcp"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_docusign_mcp", func(t *testing.T) {
+	t.Run("NewFromString_gitlab", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("docusign-mcp")
+		val, err := NewConnectionIdentityProviderEnumFromString("gitlab")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("docusign-mcp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_figma_mcp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("figma-mcp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("figma-mcp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_gitlab_mcp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("gitlab-mcp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("gitlab-mcp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_gusto_mcp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("gusto-mcp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("gusto-mcp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_heroku_mcp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("heroku-mcp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("heroku-mcp"), val, "enum value should match expected wire value")
+		assert.Equal(t, ConnectionIdentityProviderEnum("gitlab"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_hubspot_mcp", func(t *testing.T) {
@@ -21675,25 +21647,11 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		assert.Equal(t, ConnectionIdentityProviderEnum("hubspot-mcp"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_intercom_mcp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("intercom-mcp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("intercom-mcp"), val, "enum value should match expected wire value")
-	})
-
 	t.Run("NewFromString_linear_mcp", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewConnectionIdentityProviderEnumFromString("linear-mcp")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, ConnectionIdentityProviderEnum("linear-mcp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_pagerduty_mcp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("pagerduty-mcp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("pagerduty-mcp"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_sentry_mcp", func(t *testing.T) {
@@ -21703,32 +21661,11 @@ func TestEnumConnectionIdentityProviderEnum(t *testing.T) {
 		assert.Equal(t, ConnectionIdentityProviderEnum("sentry-mcp"), val, "enum value should match expected wire value")
 	})
 
-	t.Run("NewFromString_slack_mcp", func(t *testing.T) {
+	t.Run("NewFromString_slack", func(t *testing.T) {
 		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("slack-mcp")
+		val, err := NewConnectionIdentityProviderEnumFromString("slack")
 		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("slack-mcp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_supabase_mcp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("supabase-mcp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("supabase-mcp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_vercel_mcp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("vercel-mcp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("vercel-mcp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_xero_mcp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewConnectionIdentityProviderEnumFromString("xero-mcp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, ConnectionIdentityProviderEnum("xero-mcp"), val, "enum value should match expected wire value")
+		assert.Equal(t, ConnectionIdentityProviderEnum("slack"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
