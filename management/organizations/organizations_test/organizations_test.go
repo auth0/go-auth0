@@ -166,6 +166,42 @@ func TestOrganizationsGetByNameWithWireMock(
 	VerifyRequestCount(t, "TestOrganizationsGetByNameWithWireMock", "GET", "/organizations/name/name", nil, 1)
 }
 
+func TestOrganizationsSearchWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.SearchOrganizationsRequestParameters{
+		Q: management.String(
+			"q",
+		),
+		Parser: management.SearchParserEnumSCIM.Ptr(),
+		Take: management.Int(
+			1,
+		),
+		From: management.String(
+			"from",
+		),
+		Sort: management.OrganizationSortFieldEnumName.Ptr(),
+	}
+	_, invocationErr := client.Organizations.Search(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestOrganizationsSearchWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestOrganizationsSearchWithWireMock", "GET", "/organizations/search", map[string]interface{}{"q": "q", "parser": "scim", "take": "1", "from": "from", "sort": "name"}, 1)
+}
+
 func TestOrganizationsGetWithWireMock(
 	t *testing.T,
 ) {

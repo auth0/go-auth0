@@ -145,6 +145,48 @@ func TestResourceServersCreateWithWireMock(
 	VerifyRequestCount(t, "TestResourceServersCreateWithWireMock", "POST", "/resource-servers", nil, 1)
 }
 
+func TestResourceServersSearchWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.SearchResourceServersRequestParameters{
+		Q: management.String(
+			"q",
+		),
+		Parser: management.SearchParserEnumSCIM.Ptr(),
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+		Take: management.Int(
+			1,
+		),
+		From: management.String(
+			"from",
+		),
+		Sort: management.ResourceServerSortFieldEnumIdentifier.Ptr(),
+	}
+	_, invocationErr := client.ResourceServers.Search(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestResourceServersSearchWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestResourceServersSearchWithWireMock", "GET", "/resource-servers/search", map[string]interface{}{"q": "q", "parser": "scim", "fields": "fields", "include_fields": "true", "take": "1", "from": "from", "sort": "identifier"}, 1)
+}
+
 func TestResourceServersGetWithWireMock(
 	t *testing.T,
 ) {

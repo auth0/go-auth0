@@ -5629,6 +5629,138 @@ func (a *AddOrganizationConnectionResponseContent) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+var (
+	advanceRampResponseContentFieldExperimentID = big.NewInt(1 << 0)
+	advanceRampResponseContentFieldFromLevel    = big.NewInt(1 << 1)
+	advanceRampResponseContentFieldToLevel      = big.NewInt(1 << 2)
+	advanceRampResponseContentFieldCurrentLevel = big.NewInt(1 << 3)
+)
+
+type AdvanceRampResponseContent struct {
+	ExperimentID string `json:"experiment_id" url:"experiment_id"`
+	FromLevel    int    `json:"from_level" url:"from_level"`
+	ToLevel      int    `json:"to_level" url:"to_level"`
+	CurrentLevel int    `json:"current_level" url:"current_level"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AdvanceRampResponseContent) GetExperimentID() string {
+	if a == nil {
+		return ""
+	}
+	return a.ExperimentID
+}
+
+func (a *AdvanceRampResponseContent) GetFromLevel() int {
+	if a == nil {
+		return 0
+	}
+	return a.FromLevel
+}
+
+func (a *AdvanceRampResponseContent) GetToLevel() int {
+	if a == nil {
+		return 0
+	}
+	return a.ToLevel
+}
+
+func (a *AdvanceRampResponseContent) GetCurrentLevel() int {
+	if a == nil {
+		return 0
+	}
+	return a.CurrentLevel
+}
+
+func (a *AdvanceRampResponseContent) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AdvanceRampResponseContent) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetExperimentID sets the ExperimentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AdvanceRampResponseContent) SetExperimentID(experimentID string) {
+	a.ExperimentID = experimentID
+	a.require(advanceRampResponseContentFieldExperimentID)
+}
+
+// SetFromLevel sets the FromLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AdvanceRampResponseContent) SetFromLevel(fromLevel int) {
+	a.FromLevel = fromLevel
+	a.require(advanceRampResponseContentFieldFromLevel)
+}
+
+// SetToLevel sets the ToLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AdvanceRampResponseContent) SetToLevel(toLevel int) {
+	a.ToLevel = toLevel
+	a.require(advanceRampResponseContentFieldToLevel)
+}
+
+// SetCurrentLevel sets the CurrentLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AdvanceRampResponseContent) SetCurrentLevel(currentLevel int) {
+	a.CurrentLevel = currentLevel
+	a.require(advanceRampResponseContentFieldCurrentLevel)
+}
+
+func (a *AdvanceRampResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler AdvanceRampResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AdvanceRampResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AdvanceRampResponseContent) MarshalJSON() ([]byte, error) {
+	type embed AdvanceRampResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AdvanceRampResponseContent) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
 // IP address to check.
 type AnomalyIPFormat = string
 
@@ -47611,23 +47743,14 @@ const (
 	ConnectionStrategyEnumYahoo               ConnectionStrategyEnum = "yahoo"
 	ConnectionStrategyEnumYandex              ConnectionStrategyEnum = "yandex"
 	ConnectionStrategyEnumNotionMcp           ConnectionStrategyEnum = "notion-mcp"
-	ConnectionStrategyEnumAsanaMcp            ConnectionStrategyEnum = "asana-mcp"
-	ConnectionStrategyEnumAtlassianMcp        ConnectionStrategyEnum = "atlassian-mcp"
+	ConnectionStrategyEnumAsana               ConnectionStrategyEnum = "asana"
+	ConnectionStrategyEnumAtlassian           ConnectionStrategyEnum = "atlassian"
 	ConnectionStrategyEnumCloudflareMcp       ConnectionStrategyEnum = "cloudflare-mcp"
-	ConnectionStrategyEnumDocusignMcp         ConnectionStrategyEnum = "docusign-mcp"
-	ConnectionStrategyEnumFigmaMcp            ConnectionStrategyEnum = "figma-mcp"
-	ConnectionStrategyEnumGitlabMcp           ConnectionStrategyEnum = "gitlab-mcp"
-	ConnectionStrategyEnumGustoMcp            ConnectionStrategyEnum = "gusto-mcp"
-	ConnectionStrategyEnumHerokuMcp           ConnectionStrategyEnum = "heroku-mcp"
+	ConnectionStrategyEnumGitlab              ConnectionStrategyEnum = "gitlab"
 	ConnectionStrategyEnumHubspotMcp          ConnectionStrategyEnum = "hubspot-mcp"
-	ConnectionStrategyEnumIntercomMcp         ConnectionStrategyEnum = "intercom-mcp"
 	ConnectionStrategyEnumLinearMcp           ConnectionStrategyEnum = "linear-mcp"
-	ConnectionStrategyEnumPagerdutyMcp        ConnectionStrategyEnum = "pagerduty-mcp"
 	ConnectionStrategyEnumSentryMcp           ConnectionStrategyEnum = "sentry-mcp"
-	ConnectionStrategyEnumSlackMcp            ConnectionStrategyEnum = "slack-mcp"
-	ConnectionStrategyEnumSupabaseMcp         ConnectionStrategyEnum = "supabase-mcp"
-	ConnectionStrategyEnumVercelMcp           ConnectionStrategyEnum = "vercel-mcp"
-	ConnectionStrategyEnumXeroMcp             ConnectionStrategyEnum = "xero-mcp"
+	ConnectionStrategyEnumSlack               ConnectionStrategyEnum = "slack"
 	ConnectionStrategyEnumAuth0Adldap         ConnectionStrategyEnum = "auth0-adldap"
 )
 
@@ -47745,40 +47868,22 @@ func NewConnectionStrategyEnumFromString(s string) (ConnectionStrategyEnum, erro
 		return ConnectionStrategyEnumYandex, nil
 	case "notion-mcp":
 		return ConnectionStrategyEnumNotionMcp, nil
-	case "asana-mcp":
-		return ConnectionStrategyEnumAsanaMcp, nil
-	case "atlassian-mcp":
-		return ConnectionStrategyEnumAtlassianMcp, nil
+	case "asana":
+		return ConnectionStrategyEnumAsana, nil
+	case "atlassian":
+		return ConnectionStrategyEnumAtlassian, nil
 	case "cloudflare-mcp":
 		return ConnectionStrategyEnumCloudflareMcp, nil
-	case "docusign-mcp":
-		return ConnectionStrategyEnumDocusignMcp, nil
-	case "figma-mcp":
-		return ConnectionStrategyEnumFigmaMcp, nil
-	case "gitlab-mcp":
-		return ConnectionStrategyEnumGitlabMcp, nil
-	case "gusto-mcp":
-		return ConnectionStrategyEnumGustoMcp, nil
-	case "heroku-mcp":
-		return ConnectionStrategyEnumHerokuMcp, nil
+	case "gitlab":
+		return ConnectionStrategyEnumGitlab, nil
 	case "hubspot-mcp":
 		return ConnectionStrategyEnumHubspotMcp, nil
-	case "intercom-mcp":
-		return ConnectionStrategyEnumIntercomMcp, nil
 	case "linear-mcp":
 		return ConnectionStrategyEnumLinearMcp, nil
-	case "pagerduty-mcp":
-		return ConnectionStrategyEnumPagerdutyMcp, nil
 	case "sentry-mcp":
 		return ConnectionStrategyEnumSentryMcp, nil
-	case "slack-mcp":
-		return ConnectionStrategyEnumSlackMcp, nil
-	case "supabase-mcp":
-		return ConnectionStrategyEnumSupabaseMcp, nil
-	case "vercel-mcp":
-		return ConnectionStrategyEnumVercelMcp, nil
-	case "xero-mcp":
-		return ConnectionStrategyEnumXeroMcp, nil
+	case "slack":
+		return ConnectionStrategyEnumSlack, nil
 	case "auth0-adldap":
 		return ConnectionStrategyEnumAuth0Adldap, nil
 	}
@@ -85373,6 +85478,108 @@ func (g *GetDirectoryProvisioningResponseContent) String() string {
 }
 
 var (
+	getEmailFactorSettingsResponseContentFieldOtpLength         = big.NewInt(1 << 0)
+	getEmailFactorSettingsResponseContentFieldOtpExpirationTime = big.NewInt(1 << 1)
+)
+
+type GetEmailFactorSettingsResponseContent struct {
+	// The length of the OTP code.
+	OtpLength int `json:"otp_length" url:"otp_length"`
+	// The OTP expiration time in seconds.
+	OtpExpirationTime int `json:"otp_expiration_time" url:"otp_expiration_time"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetEmailFactorSettingsResponseContent) GetOtpLength() int {
+	if g == nil {
+		return 0
+	}
+	return g.OtpLength
+}
+
+func (g *GetEmailFactorSettingsResponseContent) GetOtpExpirationTime() int {
+	if g == nil {
+		return 0
+	}
+	return g.OtpExpirationTime
+}
+
+func (g *GetEmailFactorSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetEmailFactorSettingsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetOtpLength sets the OtpLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailFactorSettingsResponseContent) SetOtpLength(otpLength int) {
+	g.OtpLength = otpLength
+	g.require(getEmailFactorSettingsResponseContentFieldOtpLength)
+}
+
+// SetOtpExpirationTime sets the OtpExpirationTime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailFactorSettingsResponseContent) SetOtpExpirationTime(otpExpirationTime int) {
+	g.OtpExpirationTime = otpExpirationTime
+	g.require(getEmailFactorSettingsResponseContentFieldOtpExpirationTime)
+}
+
+func (g *GetEmailFactorSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetEmailFactorSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetEmailFactorSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetEmailFactorSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetEmailFactorSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetEmailFactorSettingsResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	getEmailProviderResponseContentFieldName               = big.NewInt(1 << 0)
 	getEmailProviderResponseContentFieldEnabled            = big.NewInt(1 << 1)
 	getEmailProviderResponseContentFieldDefaultFromAddress = big.NewInt(1 << 2)
@@ -89394,6 +89601,108 @@ func (g *GetOrganizationInvitationResponseContent) String() string {
 
 // An object containing template partials for a group of screens.
 type GetPartialsResponseContent = map[string]any
+
+var (
+	getPhoneFactorSettingsResponseContentFieldOtpLength         = big.NewInt(1 << 0)
+	getPhoneFactorSettingsResponseContentFieldOtpExpirationTime = big.NewInt(1 << 1)
+)
+
+type GetPhoneFactorSettingsResponseContent struct {
+	// The length of the OTP code.
+	OtpLength int `json:"otp_length" url:"otp_length"`
+	// The OTP expiration time in seconds.
+	OtpExpirationTime int `json:"otp_expiration_time" url:"otp_expiration_time"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetPhoneFactorSettingsResponseContent) GetOtpLength() int {
+	if g == nil {
+		return 0
+	}
+	return g.OtpLength
+}
+
+func (g *GetPhoneFactorSettingsResponseContent) GetOtpExpirationTime() int {
+	if g == nil {
+		return 0
+	}
+	return g.OtpExpirationTime
+}
+
+func (g *GetPhoneFactorSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetPhoneFactorSettingsResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetOtpLength sets the OtpLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetPhoneFactorSettingsResponseContent) SetOtpLength(otpLength int) {
+	g.OtpLength = otpLength
+	g.require(getPhoneFactorSettingsResponseContentFieldOtpLength)
+}
+
+// SetOtpExpirationTime sets the OtpExpirationTime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetPhoneFactorSettingsResponseContent) SetOtpExpirationTime(otpExpirationTime int) {
+	g.OtpExpirationTime = otpExpirationTime
+	g.require(getPhoneFactorSettingsResponseContentFieldOtpExpirationTime)
+}
+
+func (g *GetPhoneFactorSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetPhoneFactorSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetPhoneFactorSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetPhoneFactorSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetPhoneFactorSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetPhoneFactorSettingsResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
 
 var (
 	getPhoneProviderProtectionResponseContentFieldType = big.NewInt(1 << 0)
@@ -101877,6 +102186,8 @@ const (
 	OauthScopeDeleteEventStreams OauthScope = "delete:event_streams"
 	// Read Events
 	OauthScopeReadEvents OauthScope = "read:events"
+	// Update Experimentation
+	OauthScopeUpdateExperimentation OauthScope = "update:experimentation"
 	// Create Flows
 	OauthScopeCreateFlows OauthScope = "create:flows"
 	// Read Flows
@@ -102197,12 +102508,8 @@ const (
 	OauthScopeUpdateOrganizationClients OauthScope = "update:organization_clients"
 	// Delete Organization Client Associations
 	OauthScopeDeleteOrganizationClients OauthScope = "delete:organization_clients"
-	// Create Organization Templates
-	OauthScopeCreateOrganizationTemplates OauthScope = "create:organization_templates"
 	// Read Organization Templates
 	OauthScopeReadOrganizationTemplates OauthScope = "read:organization_templates"
-	// Update Organization Templates
-	OauthScopeUpdateOrganizationTemplates OauthScope = "update:organization_templates"
 	// Create Network ACL Keys
 	OauthScopeCreateNetworkACLKeys OauthScope = "create:network_acl_keys"
 	// Read Network ACL Keys
@@ -102381,6 +102688,8 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeDeleteEventStreams, nil
 	case "read:events":
 		return OauthScopeReadEvents, nil
+	case "update:experimentation":
+		return OauthScopeUpdateExperimentation, nil
 	case "create:flows":
 		return OauthScopeCreateFlows, nil
 	case "read:flows":
@@ -102701,12 +103010,8 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeUpdateOrganizationClients, nil
 	case "delete:organization_clients":
 		return OauthScopeDeleteOrganizationClients, nil
-	case "create:organization_templates":
-		return OauthScopeCreateOrganizationTemplates, nil
 	case "read:organization_templates":
 		return OauthScopeReadOrganizationTemplates, nil
-	case "update:organization_templates":
-		return OauthScopeUpdateOrganizationTemplates, nil
 	case "create:network_acl_keys":
 		return OauthScopeCreateNetworkACLKeys, nil
 	case "read:network_acl_keys":
@@ -111851,6 +112156,29 @@ func (s ScreenGroupNameEnum) Ptr() *ScreenGroupNameEnum {
 	return &s
 }
 
+// Query parser to use for the filter expression. Use "scim" for SCIM filter syntax or "lucene" for Lucene query syntax (default).
+type SearchParserEnum string
+
+const (
+	SearchParserEnumSCIM   SearchParserEnum = "scim"
+	SearchParserEnumLucene SearchParserEnum = "lucene"
+)
+
+func NewSearchParserEnumFromString(s string) (SearchParserEnum, error) {
+	switch s {
+	case "scim":
+		return SearchParserEnumSCIM, nil
+	case "lucene":
+		return SearchParserEnumLucene, nil
+	}
+	var t SearchParserEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SearchParserEnum) Ptr() *SearchParserEnum {
+	return &s
+}
+
 // The language of the custom text.
 type SelfServiceProfileCustomTextLanguageEnum string
 
@@ -114304,6 +114632,108 @@ func (s *SetCustomSigningKeysResponseContent) String() string {
 }
 
 var (
+	setEmailFactorSettingsResponseContentFieldOtpLength         = big.NewInt(1 << 0)
+	setEmailFactorSettingsResponseContentFieldOtpExpirationTime = big.NewInt(1 << 1)
+)
+
+type SetEmailFactorSettingsResponseContent struct {
+	// The length of the OTP code.
+	OtpLength int `json:"otp_length" url:"otp_length"`
+	// The OTP expiration time in seconds.
+	OtpExpirationTime int `json:"otp_expiration_time" url:"otp_expiration_time"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SetEmailFactorSettingsResponseContent) GetOtpLength() int {
+	if s == nil {
+		return 0
+	}
+	return s.OtpLength
+}
+
+func (s *SetEmailFactorSettingsResponseContent) GetOtpExpirationTime() int {
+	if s == nil {
+		return 0
+	}
+	return s.OtpExpirationTime
+}
+
+func (s *SetEmailFactorSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SetEmailFactorSettingsResponseContent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetOtpLength sets the OtpLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailFactorSettingsResponseContent) SetOtpLength(otpLength int) {
+	s.OtpLength = otpLength
+	s.require(setEmailFactorSettingsResponseContentFieldOtpLength)
+}
+
+// SetOtpExpirationTime sets the OtpExpirationTime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetEmailFactorSettingsResponseContent) SetOtpExpirationTime(otpExpirationTime int) {
+	s.OtpExpirationTime = otpExpirationTime
+	s.require(setEmailFactorSettingsResponseContentFieldOtpExpirationTime)
+}
+
+func (s *SetEmailFactorSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetEmailFactorSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SetEmailFactorSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SetEmailFactorSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SetEmailFactorSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SetEmailFactorSettingsResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
 	setGuardianFactorDuoSettingsResponseContentFieldIkey = big.NewInt(1 << 0)
 	setGuardianFactorDuoSettingsResponseContentFieldSkey = big.NewInt(1 << 1)
 	setGuardianFactorDuoSettingsResponseContentFieldHost = big.NewInt(1 << 2)
@@ -115575,6 +116005,108 @@ type SetGuardianPoliciesResponseContent = []MfaPolicyEnum
 
 // An object containing template partials for a group of screens.
 type SetPartialsRequestContent = map[string]any
+
+var (
+	setPhoneFactorSettingsResponseContentFieldOtpLength         = big.NewInt(1 << 0)
+	setPhoneFactorSettingsResponseContentFieldOtpExpirationTime = big.NewInt(1 << 1)
+)
+
+type SetPhoneFactorSettingsResponseContent struct {
+	// The length of the OTP code.
+	OtpLength int `json:"otp_length" url:"otp_length"`
+	// The OTP expiration time in seconds.
+	OtpExpirationTime int `json:"otp_expiration_time" url:"otp_expiration_time"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SetPhoneFactorSettingsResponseContent) GetOtpLength() int {
+	if s == nil {
+		return 0
+	}
+	return s.OtpLength
+}
+
+func (s *SetPhoneFactorSettingsResponseContent) GetOtpExpirationTime() int {
+	if s == nil {
+		return 0
+	}
+	return s.OtpExpirationTime
+}
+
+func (s *SetPhoneFactorSettingsResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SetPhoneFactorSettingsResponseContent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetOtpLength sets the OtpLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetPhoneFactorSettingsResponseContent) SetOtpLength(otpLength int) {
+	s.OtpLength = otpLength
+	s.require(setPhoneFactorSettingsResponseContentFieldOtpLength)
+}
+
+// SetOtpExpirationTime sets the OtpExpirationTime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetPhoneFactorSettingsResponseContent) SetOtpExpirationTime(otpExpirationTime int) {
+	s.OtpExpirationTime = otpExpirationTime
+	s.require(setPhoneFactorSettingsResponseContentFieldOtpExpirationTime)
+}
+
+func (s *SetPhoneFactorSettingsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetPhoneFactorSettingsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SetPhoneFactorSettingsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SetPhoneFactorSettingsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SetPhoneFactorSettingsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SetPhoneFactorSettingsResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
 
 // The list of text keys and values to customize the Self-Service Enterprise Configuration flow page. Values can be plain text or rich HTML content limited to basic styling tags and hyperlinks.
 type SetSelfServiceProfileCustomTextRequestContent = map[string]string
@@ -118977,11 +119509,13 @@ func (t TenantSettingsResourceParameterProfile) Ptr() *TenantSettingsResourcePar
 // Sessions related settings for tenant
 var (
 	tenantSettingsSessionsFieldOidcLogoutPromptEnabled = big.NewInt(1 << 0)
+	tenantSettingsSessionsFieldAnonymous               = big.NewInt(1 << 1)
 )
 
 type TenantSettingsSessions struct {
 	// Whether to bypass prompting logic (false) when performing OIDC Logout
-	OidcLogoutPromptEnabled *bool `json:"oidc_logout_prompt_enabled,omitempty" url:"oidc_logout_prompt_enabled,omitempty"`
+	OidcLogoutPromptEnabled *bool                            `json:"oidc_logout_prompt_enabled,omitempty" url:"oidc_logout_prompt_enabled,omitempty"`
+	Anonymous               *TenantSettingsSessionsAnonymous `json:"anonymous,omitempty" url:"anonymous,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -118995,6 +119529,13 @@ func (t *TenantSettingsSessions) GetOidcLogoutPromptEnabled() bool {
 		return false
 	}
 	return *t.OidcLogoutPromptEnabled
+}
+
+func (t *TenantSettingsSessions) GetAnonymous() TenantSettingsSessionsAnonymous {
+	if t == nil || t.Anonymous == nil {
+		return TenantSettingsSessionsAnonymous{}
+	}
+	return *t.Anonymous
 }
 
 func (t *TenantSettingsSessions) GetExtraProperties() map[string]interface{} {
@@ -119016,6 +119557,13 @@ func (t *TenantSettingsSessions) require(field *big.Int) {
 func (t *TenantSettingsSessions) SetOidcLogoutPromptEnabled(oidcLogoutPromptEnabled *bool) {
 	t.OidcLogoutPromptEnabled = oidcLogoutPromptEnabled
 	t.require(tenantSettingsSessionsFieldOidcLogoutPromptEnabled)
+}
+
+// SetAnonymous sets the Anonymous field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TenantSettingsSessions) SetAnonymous(anonymous *TenantSettingsSessionsAnonymous) {
+	t.Anonymous = anonymous
+	t.require(tenantSettingsSessionsFieldAnonymous)
 }
 
 func (t *TenantSettingsSessions) UnmarshalJSON(data []byte) error {
@@ -119046,6 +119594,109 @@ func (t *TenantSettingsSessions) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TenantSettingsSessions) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+// Anonymous session settings for tenant.
+var (
+	tenantSettingsSessionsAnonymousFieldLifetimeInMinutes = big.NewInt(1 << 0)
+	tenantSettingsSessionsAnonymousFieldActivateCookie    = big.NewInt(1 << 1)
+)
+
+type TenantSettingsSessionsAnonymous struct {
+	// Anonymous session lifetime, in minutes. Defaults to 43200 (30 days); maximum 525600 (1 year).
+	LifetimeInMinutes *int `json:"lifetime_in_minutes,omitempty" url:"lifetime_in_minutes,omitempty"`
+	// Whether anonymous session requests return the `auth0_anon` cookie. Defaults to enabled; set to false to stop issuing the cookie.
+	ActivateCookie *bool `json:"activate_cookie,omitempty" url:"activate_cookie,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TenantSettingsSessionsAnonymous) GetLifetimeInMinutes() int {
+	if t == nil || t.LifetimeInMinutes == nil {
+		return 0
+	}
+	return *t.LifetimeInMinutes
+}
+
+func (t *TenantSettingsSessionsAnonymous) GetActivateCookie() bool {
+	if t == nil || t.ActivateCookie == nil {
+		return false
+	}
+	return *t.ActivateCookie
+}
+
+func (t *TenantSettingsSessionsAnonymous) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TenantSettingsSessionsAnonymous) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetLifetimeInMinutes sets the LifetimeInMinutes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TenantSettingsSessionsAnonymous) SetLifetimeInMinutes(lifetimeInMinutes *int) {
+	t.LifetimeInMinutes = lifetimeInMinutes
+	t.require(tenantSettingsSessionsAnonymousFieldLifetimeInMinutes)
+}
+
+// SetActivateCookie sets the ActivateCookie field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TenantSettingsSessionsAnonymous) SetActivateCookie(activateCookie *bool) {
+	t.ActivateCookie = activateCookie
+	t.require(tenantSettingsSessionsAnonymousFieldActivateCookie)
+}
+
+func (t *TenantSettingsSessionsAnonymous) UnmarshalJSON(data []byte) error {
+	type unmarshaler TenantSettingsSessionsAnonymous
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TenantSettingsSessionsAnonymous(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TenantSettingsSessionsAnonymous) MarshalJSON() ([]byte, error) {
+	type embed TenantSettingsSessionsAnonymous
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TenantSettingsSessionsAnonymous) String() string {
 	if t == nil {
 		return "<nil>"
 	}

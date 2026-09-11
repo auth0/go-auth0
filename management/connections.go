@@ -1029,23 +1029,14 @@ const (
 	ConnectionIdentityProviderEnumYahoo               ConnectionIdentityProviderEnum = "yahoo"
 	ConnectionIdentityProviderEnumYandex              ConnectionIdentityProviderEnum = "yandex"
 	ConnectionIdentityProviderEnumNotionMcp           ConnectionIdentityProviderEnum = "notion-mcp"
-	ConnectionIdentityProviderEnumAsanaMcp            ConnectionIdentityProviderEnum = "asana-mcp"
-	ConnectionIdentityProviderEnumAtlassianMcp        ConnectionIdentityProviderEnum = "atlassian-mcp"
+	ConnectionIdentityProviderEnumAsana               ConnectionIdentityProviderEnum = "asana"
+	ConnectionIdentityProviderEnumAtlassian           ConnectionIdentityProviderEnum = "atlassian"
 	ConnectionIdentityProviderEnumCloudflareMcp       ConnectionIdentityProviderEnum = "cloudflare-mcp"
-	ConnectionIdentityProviderEnumDocusignMcp         ConnectionIdentityProviderEnum = "docusign-mcp"
-	ConnectionIdentityProviderEnumFigmaMcp            ConnectionIdentityProviderEnum = "figma-mcp"
-	ConnectionIdentityProviderEnumGitlabMcp           ConnectionIdentityProviderEnum = "gitlab-mcp"
-	ConnectionIdentityProviderEnumGustoMcp            ConnectionIdentityProviderEnum = "gusto-mcp"
-	ConnectionIdentityProviderEnumHerokuMcp           ConnectionIdentityProviderEnum = "heroku-mcp"
+	ConnectionIdentityProviderEnumGitlab              ConnectionIdentityProviderEnum = "gitlab"
 	ConnectionIdentityProviderEnumHubspotMcp          ConnectionIdentityProviderEnum = "hubspot-mcp"
-	ConnectionIdentityProviderEnumIntercomMcp         ConnectionIdentityProviderEnum = "intercom-mcp"
 	ConnectionIdentityProviderEnumLinearMcp           ConnectionIdentityProviderEnum = "linear-mcp"
-	ConnectionIdentityProviderEnumPagerdutyMcp        ConnectionIdentityProviderEnum = "pagerduty-mcp"
 	ConnectionIdentityProviderEnumSentryMcp           ConnectionIdentityProviderEnum = "sentry-mcp"
-	ConnectionIdentityProviderEnumSlackMcp            ConnectionIdentityProviderEnum = "slack-mcp"
-	ConnectionIdentityProviderEnumSupabaseMcp         ConnectionIdentityProviderEnum = "supabase-mcp"
-	ConnectionIdentityProviderEnumVercelMcp           ConnectionIdentityProviderEnum = "vercel-mcp"
-	ConnectionIdentityProviderEnumXeroMcp             ConnectionIdentityProviderEnum = "xero-mcp"
+	ConnectionIdentityProviderEnumSlack               ConnectionIdentityProviderEnum = "slack"
 )
 
 func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityProviderEnum, error) {
@@ -1162,40 +1153,22 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 		return ConnectionIdentityProviderEnumYandex, nil
 	case "notion-mcp":
 		return ConnectionIdentityProviderEnumNotionMcp, nil
-	case "asana-mcp":
-		return ConnectionIdentityProviderEnumAsanaMcp, nil
-	case "atlassian-mcp":
-		return ConnectionIdentityProviderEnumAtlassianMcp, nil
+	case "asana":
+		return ConnectionIdentityProviderEnumAsana, nil
+	case "atlassian":
+		return ConnectionIdentityProviderEnumAtlassian, nil
 	case "cloudflare-mcp":
 		return ConnectionIdentityProviderEnumCloudflareMcp, nil
-	case "docusign-mcp":
-		return ConnectionIdentityProviderEnumDocusignMcp, nil
-	case "figma-mcp":
-		return ConnectionIdentityProviderEnumFigmaMcp, nil
-	case "gitlab-mcp":
-		return ConnectionIdentityProviderEnumGitlabMcp, nil
-	case "gusto-mcp":
-		return ConnectionIdentityProviderEnumGustoMcp, nil
-	case "heroku-mcp":
-		return ConnectionIdentityProviderEnumHerokuMcp, nil
+	case "gitlab":
+		return ConnectionIdentityProviderEnumGitlab, nil
 	case "hubspot-mcp":
 		return ConnectionIdentityProviderEnumHubspotMcp, nil
-	case "intercom-mcp":
-		return ConnectionIdentityProviderEnumIntercomMcp, nil
 	case "linear-mcp":
 		return ConnectionIdentityProviderEnumLinearMcp, nil
-	case "pagerduty-mcp":
-		return ConnectionIdentityProviderEnumPagerdutyMcp, nil
 	case "sentry-mcp":
 		return ConnectionIdentityProviderEnumSentryMcp, nil
-	case "slack-mcp":
-		return ConnectionIdentityProviderEnumSlackMcp, nil
-	case "supabase-mcp":
-		return ConnectionIdentityProviderEnumSupabaseMcp, nil
-	case "vercel-mcp":
-		return ConnectionIdentityProviderEnumVercelMcp, nil
-	case "xero-mcp":
-		return ConnectionIdentityProviderEnumXeroMcp, nil
+	case "slack":
+		return ConnectionIdentityProviderEnumSlack, nil
 	}
 	var t ConnectionIdentityProviderEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)

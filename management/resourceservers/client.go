@@ -128,6 +128,75 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Search resource servers using SCIM or Lucene filter syntax with low-latency, eventually consistent results. Use the parser parameter to specify "scim" or "lucene" syntax (default: "lucene"). This endpoint provides an alternative to the standard GET /resource-servers endpoint with better performance for complex queries.
+// Results may not reflect recent updates immediately.
+//
+// The `signing_secret` field is not supported by this endpoint.
+func (c *Client) Search(
+	ctx context.Context,
+	request *management.SearchResourceServersRequestParameters,
+	opts ...option.RequestOption,
+) (*core.Page[*string, *management.ResourceServerSearchResponse, *management.SearchResourceServersResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/resource-servers/search"
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("from", *pageRequest.Cursor)
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		}
+	}
+	readPageResponse := func(response *management.SearchResourceServersResponseContent) *core.PageResponse[*string, *management.ResourceServerSearchResponse, *management.SearchResourceServersResponseContent] {
+		var zeroValue *string
+		next := response.Next
+		results := response.ResourceServers
+		return &core.PageResponse[*string, *management.ResourceServerSearchResponse, *management.SearchResourceServersResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.From)
+}
+
 // Retrieve <a href="https://auth0.com/docs/apis">API</a> details with the given ID.
 func (c *Client) Get(
 	ctx context.Context,
