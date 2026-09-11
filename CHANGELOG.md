@@ -1,5 +1,22 @@
 # Change Log
 
+## [v3.5.0](https://github.com/auth0/go-auth0/tree/v3.5.0) (2026-09-11)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.4.0...v3.5.0)
+
+**Breaking Changes**
+- Removed the top-level `OrganizationTemplates` client (`List`, `Create`, `Get`, `Update`, and `ListOrganizations`), a Limited EA feature that was exposed before it was ready; it will return once it reaches general EA [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Removed and renamed beta `-mcp` values on `ConnectionStrategyEnum` and `ConnectionIdentityProviderEnum`: dropped the `-mcp` suffix on `asana`, `atlassian`, `gitlab`, and `slack`; removed `docusign`, `figma`, `gusto`, `heroku`, `intercom`, `pagerduty`, `supabase`, `vercel`, and `xero`; `notion`, `cloudflare`, `hubspot`, `linear`, and `sentry` still use the `-mcp` suffix [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Added**
+- feat: add `Organizations.Search` for the checkpoint-paginated `/organizations/search` endpoint, along with the `SearchOrganization`, `SearchOrganizationsPaginatedResponseContent`, and `OrganizationSortFieldEnum` types [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `ResourceServers.Search`, along with the `SearchResourceServersResponseContent`, `ResourceServerSearchResponse`, `ResourceServerSortFieldEnum`, and `ResourceServerSubjectTypeAuthorization` types (including the anonymous-user and client policy enums) [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add top-level `Guardian.Get` and `Guardian.Set` for Guardian settings, along with the `GetGuardianSettingsResponseContent` and `SetGuardianSettingsResponseContent` types [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Guardian.Factors.Email.Get` and `Guardian.Factors.Email.Set` for the email MFA factor, along with the `GetEmailFactorSettingsResponseContent` and `SetEmailFactorSettingsResponseContent` types [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Guardian.Factors.Phone.Get` and `Guardian.Factors.Phone.Set` for overall phone factor settings [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Experimentation.Experiments.AdvanceRamp`, along with the `AdvanceRampResponseContent` type [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add the `AnonymousSessions` type (with `CreateAnonymousSessions` and `UpdateAnonymousSessions`) to client configuration [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add the `GatewayTimeoutError` type and map HTTP `504` responses to it [\#866](https://github.com/auth0/go-auth0/pull/866) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v3.4.0](https://github.com/auth0/go-auth0/tree/v3.4.0) (2026-09-02)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.3.0...v3.4.0)
 
