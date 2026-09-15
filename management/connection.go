@@ -1486,17 +1486,20 @@ func (c *ConnectionOptionsOAuth2) UnmarshalJSON(data []byte) error {
 		switch v := alias.RawCustomHeaders.(type) {
 		case map[string]interface{}:
 			headers := make(map[string]string, len(v))
+
 			for key, val := range v {
 				if s, ok := val.(string); ok {
 					headers[key] = s
 				}
 			}
+
 			if len(headers) > 0 {
 				c.CustomHeaders = &headers
 			}
+		// Legacy string format is discarded: it cannot be reliably decoded without
+		// knowing the original structure, so custom_headers appears empty and the
+		// operator can restore the values in their Terraform config.
 		case string:
-			// Legacy format: discard. The provider will surface custom_headers as
-			// empty; the operator can restore the values in their Terraform config.
 		}
 	}
 
