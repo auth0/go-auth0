@@ -49,6 +49,9 @@ type Client struct {
 	// Whether this client will conform to strict OIDC specifications.
 	OIDCConformant *bool `json:"oidc_conformant,omitempty"`
 
+	// AnonymousSessions configures whether this client can create anonymous sessions.
+	AnonymousSessions *ClientAnonymousSessions `json:"anonymous_sessions,omitempty"`
+
 	// The URLs that Auth0 can use to as a callback for the client.
 	Callbacks      *[]string `json:"callbacks,omitempty"`
 	AllowedOrigins *[]string `json:"allowed_origins,omitempty"`
@@ -552,6 +555,12 @@ type ClientJWTConfiguration struct {
 
 	// Algorithm used to sign JWTs. Can be `HS256` or `RS256`. `PS256` available via addon"
 	Algorithm *string `json:"alg,omitempty"`
+}
+
+// ClientAnonymousSessions configures anonymous session support for a client.
+type ClientAnonymousSessions struct {
+	// Active indicates whether this client is allowed to create anonymous sessions.
+	Active *bool `json:"active,omitempty"`
 }
 
 // ClientNativeSocialLogin is used to configure Native Social Login for our Client.

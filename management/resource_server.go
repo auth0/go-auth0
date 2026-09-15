@@ -46,6 +46,10 @@ type ResourceServer struct {
 	// token_lifetime.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty"`
 
+	// The amount of time in seconds that anonymous-session access tokens issued
+	// for this resource server remain valid.
+	TokenLifetimeForAnonymousAccessTokens *int `json:"token_lifetime_for_anonymous_access_tokens,omitempty"`
+
 	// Flag this entity as capable of skipping consent.
 	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty"`
 
@@ -146,6 +150,9 @@ type ResourceServerSubjectTypeAuthorization struct {
 
 	// Client authorization policies for the resource server.
 	Client *ResourceServerSubjectTypeAuthorizationClient `json:"client,omitempty"`
+
+	// AnonymousUser authorization policies for the resource server.
+	AnonymousUser *ResourceServerSubjectTypeAuthorizationAnonymousUser `json:"anonymous_user,omitempty"`
 }
 
 // ResourceServerSubjectTypeAuthorizationUser defines the authorization policies for user-initiated flows.
@@ -166,6 +173,18 @@ type ResourceServerSubjectTypeAuthorizationClient struct {
 	// Available options:
 	//   - "deny_all": Denies all client-initiated flows.
 	//   - "require_client_grant": Requires a client grant for client-initiated flows.
+	Policy *string `json:"policy,omitempty"`
+}
+
+// ResourceServerSubjectTypeAuthorizationAnonymousUser defines the authorization policies for anonymous-user flows.
+type ResourceServerSubjectTypeAuthorizationAnonymousUser struct {
+	// Policy defines the anonymous-user flows policy for the resource server.
+	//
+	// Available options:
+	//   - "deny_all": Denies all anonymous-user flows.
+	//   - "require_client_grant": Requires a client grant for anonymous-user flows.
+	//
+	// Defaults to "deny_all" when not specified.
 	Policy *string `json:"policy,omitempty"`
 }
 

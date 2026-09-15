@@ -540,6 +540,18 @@ type TenantSessionCookie struct {
 type TenantSessions struct {
 	// Whether to bypass prompting logic (false) when performing OIDC Logout.
 	OIDCLogoutPromptEnabled *bool `json:"oidc_logout_prompt_enabled,omitempty"`
+
+	// Anonymous session settings for the tenant.
+	Anonymous *TenantSessionsAnonymous `json:"anonymous,omitempty"`
+}
+
+// TenantSessionsAnonymous manages anonymous session settings for the tenant.
+type TenantSessionsAnonymous struct {
+	// Number of minutes an anonymous session stays valid.
+	LifetimeInMinutes *int `json:"lifetime_in_minutes,omitempty"`
+
+	// Whether anonymous session requests return the auth0_anon cookie.
+	ActivateCookie *bool `json:"activate_cookie,omitempty"`
 }
 
 // TenantOIDCLogout manages OIDC logout related settings for the tenant.

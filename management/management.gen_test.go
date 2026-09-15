@@ -2251,6 +2251,13 @@ func TestClient_GetAllowedOrigins(tt *testing.T) {
 	c.GetAllowedOrigins()
 }
 
+func TestClient_GetAnonymousSessions(tt *testing.T) {
+	c := &Client{}
+	c.GetAnonymousSessions()
+	c = nil
+	c.GetAnonymousSessions()
+}
+
 func TestClient_GetAppType(tt *testing.T) {
 	var zeroValue string
 	c := &Client{AppType: &zeroValue}
@@ -2991,6 +2998,24 @@ func TestClientAddons_GetZoom(tt *testing.T) {
 func TestClientAddons_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientAddons{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientAnonymousSessions_GetActive(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientAnonymousSessions{Active: &zeroValue}
+	c.GetActive()
+	c = &ClientAnonymousSessions{}
+	c.GetActive()
+	c = nil
+	c.GetActive()
+}
+
+func TestClientAnonymousSessions_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientAnonymousSessions{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -15297,6 +15322,16 @@ func TestResourceServer_GetTokenLifetime(tt *testing.T) {
 	r.GetTokenLifetime()
 }
 
+func TestResourceServer_GetTokenLifetimeForAnonymousAccessTokens(tt *testing.T) {
+	var zeroValue int
+	r := &ResourceServer{TokenLifetimeForAnonymousAccessTokens: &zeroValue}
+	r.GetTokenLifetimeForAnonymousAccessTokens()
+	r = &ResourceServer{}
+	r.GetTokenLifetimeForAnonymousAccessTokens()
+	r = nil
+	r.GetTokenLifetimeForAnonymousAccessTokens()
+}
+
 func TestResourceServer_GetTokenLifetimeForWeb(tt *testing.T) {
 	var zeroValue int
 	r := &ResourceServer{TokenLifetimeForWeb: &zeroValue}
@@ -15435,6 +15470,13 @@ func TestResourceServerScope_String(t *testing.T) {
 	}
 }
 
+func TestResourceServerSubjectTypeAuthorization_GetAnonymousUser(tt *testing.T) {
+	r := &ResourceServerSubjectTypeAuthorization{}
+	r.GetAnonymousUser()
+	r = nil
+	r.GetAnonymousUser()
+}
+
 func TestResourceServerSubjectTypeAuthorization_GetClient(tt *testing.T) {
 	r := &ResourceServerSubjectTypeAuthorization{}
 	r.GetClient()
@@ -15452,6 +15494,24 @@ func TestResourceServerSubjectTypeAuthorization_GetUser(tt *testing.T) {
 func TestResourceServerSubjectTypeAuthorization_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ResourceServerSubjectTypeAuthorization{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerSubjectTypeAuthorizationAnonymousUser_GetPolicy(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerSubjectTypeAuthorizationAnonymousUser{Policy: &zeroValue}
+	r.GetPolicy()
+	r = &ResourceServerSubjectTypeAuthorizationAnonymousUser{}
+	r.GetPolicy()
+	r = nil
+	r.GetPolicy()
+}
+
+func TestResourceServerSubjectTypeAuthorizationAnonymousUser_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerSubjectTypeAuthorizationAnonymousUser{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -18454,6 +18514,13 @@ func TestTenantSessionCookie_String(t *testing.T) {
 	}
 }
 
+func TestTenantSessions_GetAnonymous(tt *testing.T) {
+	t := &TenantSessions{}
+	t.GetAnonymous()
+	t = nil
+	t.GetAnonymous()
+}
+
 func TestTenantSessions_GetOIDCLogoutPromptEnabled(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantSessions{OIDCLogoutPromptEnabled: &zeroValue}
@@ -18467,6 +18534,34 @@ func TestTenantSessions_GetOIDCLogoutPromptEnabled(tt *testing.T) {
 func TestTenantSessions_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantSessions{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTenantSessionsAnonymous_GetActivateCookie(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantSessionsAnonymous{ActivateCookie: &zeroValue}
+	t.GetActivateCookie()
+	t = &TenantSessionsAnonymous{}
+	t.GetActivateCookie()
+	t = nil
+	t.GetActivateCookie()
+}
+
+func TestTenantSessionsAnonymous_GetLifetimeInMinutes(tt *testing.T) {
+	var zeroValue int
+	t := &TenantSessionsAnonymous{LifetimeInMinutes: &zeroValue}
+	t.GetLifetimeInMinutes()
+	t = &TenantSessionsAnonymous{}
+	t.GetLifetimeInMinutes()
+	t = nil
+	t.GetLifetimeInMinutes()
+}
+
+func TestTenantSessionsAnonymous_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TenantSessionsAnonymous{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
