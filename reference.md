@@ -11340,6 +11340,14 @@ client.ResourceServers.Create(
 <dl>
 <dd>
 
+**accessToken:** `*management.ResourceServerAccessToken` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **tokenEncryption:** `*management.ResourceServerTokenEncryption` 
     
 </dd>
@@ -11795,6 +11803,14 @@ client.ResourceServers.Update(
 <dd>
 
 **enforcePolicies:** `*bool` — Whether authorization policies are enforced (true) or not enforced (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**accessToken:** `*management.ResourceServerAccessToken` 
     
 </dd>
 </dl>
@@ -28454,6 +28470,14 @@ client.Organizations.Connections.Create(
 <dl>
 <dd>
 
+**organizationMemberAccessLevel:** `*management.OrganizationMemberAccessLevelEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **isEnabled:** `*bool` — Whether the connection is enabled for the organization.
     
 </dd>
@@ -28664,6 +28688,14 @@ client.Organizations.Connections.Update(
 <dd>
 
 **organizationAccessLevel:** `*management.OrganizationAccessLevelEnumWithNull` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationMemberAccessLevel:** `*management.OrganizationMemberAccessLevelEnumWithNull` 
     
 </dd>
 </dl>
@@ -33661,6 +33693,14 @@ client.Tenants.Settings.Update(
 <dd>
 
 **enabledLocales:** `[]*management.TenantSettingsSupportedLocalesEnum` — Supported locales for the user interface
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**accessToken:** `*management.ResourceServerAccessToken` 
     
 </dd>
 </dl>

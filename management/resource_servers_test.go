@@ -138,6 +138,14 @@ func TestSettersCreateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAccessToken", func(t *testing.T) {
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+		obj.SetAccessToken(fernTestValueAccessToken)
+		assert.Equal(t, fernTestValueAccessToken, obj.AccessToken)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenEncryption", func(t *testing.T) {
 		obj := &CreateResourceServerResponseContent{}
 		var fernTestValueTokenEncryption *ResourceServerTokenEncryption
@@ -738,6 +746,40 @@ func TestGettersCreateResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetTokenDialect() // Should return zero value
+	})
+
+	t.Run("GetAccessToken", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var value ResourceServerAccessToken
+		obj.AccessToken = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAccessToken(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAccessToken_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		obj.AccessToken = nil
+		var expectedZero ResourceServerAccessToken
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAccessToken(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAccessToken_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAccessToken() // Should return zero value
 	})
 
 	t.Run("GetTokenEncryption", func(t *testing.T) {
@@ -1476,6 +1518,37 @@ func TestSettersMarkExplicitCreateResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetAccessToken_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+
+		// Act
+		obj.SetAccessToken(fernTestValueAccessToken)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetTokenEncryption_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1821,6 +1894,14 @@ func TestSettersGetResourceServerResponseContent(t *testing.T) {
 		var fernTestValueTokenDialect *ResourceServerTokenDialectResponseEnum
 		obj.SetTokenDialect(fernTestValueTokenDialect)
 		assert.Equal(t, fernTestValueTokenDialect, obj.TokenDialect)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAccessToken", func(t *testing.T) {
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+		obj.SetAccessToken(fernTestValueAccessToken)
+		assert.Equal(t, fernTestValueAccessToken, obj.AccessToken)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -2424,6 +2505,40 @@ func TestGettersGetResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetTokenDialect() // Should return zero value
+	})
+
+	t.Run("GetAccessToken", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var value ResourceServerAccessToken
+		obj.AccessToken = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAccessToken(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAccessToken_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		obj.AccessToken = nil
+		var expectedZero ResourceServerAccessToken
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAccessToken(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAccessToken_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAccessToken() // Should return zero value
 	})
 
 	t.Run("GetTokenEncryption", func(t *testing.T) {
@@ -3162,6 +3277,37 @@ func TestSettersMarkExplicitGetResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetAccessToken_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+
+		// Act
+		obj.SetAccessToken(fernTestValueAccessToken)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetTokenEncryption_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -3810,6 +3956,14 @@ func TestSettersResourceServer(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAccessToken", func(t *testing.T) {
+		obj := &ResourceServer{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+		obj.SetAccessToken(fernTestValueAccessToken)
+		assert.Equal(t, fernTestValueAccessToken, obj.AccessToken)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenEncryption", func(t *testing.T) {
 		obj := &ResourceServer{}
 		var fernTestValueTokenEncryption *ResourceServerTokenEncryption
@@ -4410,6 +4564,40 @@ func TestGettersResourceServer(t *testing.T) {
 			}
 		}()
 		_ = obj.GetTokenDialect() // Should return zero value
+	})
+
+	t.Run("GetAccessToken", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var value ResourceServerAccessToken
+		obj.AccessToken = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAccessToken(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAccessToken_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		obj.AccessToken = nil
+		var expectedZero ResourceServerAccessToken
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAccessToken(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAccessToken_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServer
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAccessToken() // Should return zero value
 	})
 
 	t.Run("GetTokenEncryption", func(t *testing.T) {
@@ -5125,6 +5313,37 @@ func TestSettersMarkExplicitResourceServer(t *testing.T) {
 
 		// Act
 		obj.SetTokenDialect(fernTestValueTokenDialect)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAccessToken_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+
+		// Act
+		obj.SetAccessToken(fernTestValueAccessToken)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5909,6 +6128,14 @@ func TestSettersResourceServerSearchResponse(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAccessToken", func(t *testing.T) {
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+		obj.SetAccessToken(fernTestValueAccessToken)
+		assert.Equal(t, fernTestValueAccessToken, obj.AccessToken)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenEncryption", func(t *testing.T) {
 		obj := &ResourceServerSearchResponse{}
 		var fernTestValueTokenEncryption *ResourceServerTokenEncryption
@@ -6475,6 +6702,40 @@ func TestGettersResourceServerSearchResponse(t *testing.T) {
 			}
 		}()
 		_ = obj.GetTokenDialect() // Should return zero value
+	})
+
+	t.Run("GetAccessToken", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var value ResourceServerAccessToken
+		obj.AccessToken = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAccessToken(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAccessToken_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		obj.AccessToken = nil
+		var expectedZero ResourceServerAccessToken
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAccessToken(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAccessToken_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServerSearchResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAccessToken() // Should return zero value
 	})
 
 	t.Run("GetTokenEncryption", func(t *testing.T) {
@@ -7159,6 +7420,37 @@ func TestSettersMarkExplicitResourceServerSearchResponse(t *testing.T) {
 
 		// Act
 		obj.SetTokenDialect(fernTestValueTokenDialect)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAccessToken_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+
+		// Act
+		obj.SetAccessToken(fernTestValueAccessToken)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -8580,6 +8872,14 @@ func TestSettersUpdateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAccessToken", func(t *testing.T) {
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+		obj.SetAccessToken(fernTestValueAccessToken)
+		assert.Equal(t, fernTestValueAccessToken, obj.AccessToken)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenEncryption", func(t *testing.T) {
 		obj := &UpdateResourceServerResponseContent{}
 		var fernTestValueTokenEncryption *ResourceServerTokenEncryption
@@ -9180,6 +9480,40 @@ func TestGettersUpdateResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetTokenDialect() // Should return zero value
+	})
+
+	t.Run("GetAccessToken", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var value ResourceServerAccessToken
+		obj.AccessToken = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAccessToken(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAccessToken_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		obj.AccessToken = nil
+		var expectedZero ResourceServerAccessToken
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAccessToken(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAccessToken_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAccessToken() // Should return zero value
 	})
 
 	t.Run("GetTokenEncryption", func(t *testing.T) {
@@ -9895,6 +10229,37 @@ func TestSettersMarkExplicitUpdateResourceServerResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetTokenDialect(fernTestValueTokenDialect)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAccessToken_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueAccessToken *ResourceServerAccessToken
+
+		// Act
+		obj.SetAccessToken(fernTestValueAccessToken)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -7764,12 +7764,14 @@ func (c ClientMyOrganizationDeletionBehaviorEnum) Ptr() *ClientMyOrganizationDel
 
 // Configuration related to the My Organization Configuration for the client.
 var (
-	clientMyOrganizationPatchConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
-	clientMyOrganizationPatchConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
-	clientMyOrganizationPatchConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
-	clientMyOrganizationPatchConfigurationFieldThirdPartyClientAccess     = big.NewInt(1 << 3)
-	clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 4)
-	clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 5)
+	clientMyOrganizationPatchConfigurationFieldConnectionProfileID              = big.NewInt(1 << 0)
+	clientMyOrganizationPatchConfigurationFieldUserAttributeProfileID           = big.NewInt(1 << 1)
+	clientMyOrganizationPatchConfigurationFieldAllowedStrategies                = big.NewInt(1 << 2)
+	clientMyOrganizationPatchConfigurationFieldThirdPartyClientAccess           = big.NewInt(1 << 3)
+	clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior       = big.NewInt(1 << 4)
+	clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID        = big.NewInt(1 << 5)
+	clientMyOrganizationPatchConfigurationFieldEnforcePermissionCeiling         = big.NewInt(1 << 6)
+	clientMyOrganizationPatchConfigurationFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 7)
 )
 
 type ClientMyOrganizationPatchConfiguration struct {
@@ -7783,6 +7785,10 @@ type ClientMyOrganizationPatchConfiguration struct {
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
 	// The client ID this client uses while creating invitations through My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
+	// When true, limits the permissions that organization admins can assign to members to only those held by the admin themselves.
+	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty" url:"enforce_permission_ceiling,omitempty"`
+	// When true, prevents organization admins from assigning permissions to themselves.
+	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty" url:"enforce_self_assignment_restriction,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7831,6 +7837,20 @@ func (c *ClientMyOrganizationPatchConfiguration) GetInvitationLandingClientID() 
 		return ""
 	}
 	return *c.InvitationLandingClientID
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetEnforcePermissionCeiling() bool {
+	if c == nil || c.EnforcePermissionCeiling == nil {
+		return false
+	}
+	return *c.EnforcePermissionCeiling
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetEnforceSelfAssignmentRestriction() bool {
+	if c == nil || c.EnforceSelfAssignmentRestriction == nil {
+		return false
+	}
+	return *c.EnforceSelfAssignmentRestriction
 }
 
 func (c *ClientMyOrganizationPatchConfiguration) GetExtraProperties() map[string]interface{} {
@@ -7889,6 +7909,20 @@ func (c *ClientMyOrganizationPatchConfiguration) SetInvitationLandingClientID(in
 	c.require(clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID)
 }
 
+// SetEnforcePermissionCeiling sets the EnforcePermissionCeiling field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetEnforcePermissionCeiling(enforcePermissionCeiling *bool) {
+	c.EnforcePermissionCeiling = enforcePermissionCeiling
+	c.require(clientMyOrganizationPatchConfigurationFieldEnforcePermissionCeiling)
+}
+
+// SetEnforceSelfAssignmentRestriction sets the EnforceSelfAssignmentRestriction field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetEnforceSelfAssignmentRestriction(enforceSelfAssignmentRestriction *bool) {
+	c.EnforceSelfAssignmentRestriction = enforceSelfAssignmentRestriction
+	c.require(clientMyOrganizationPatchConfigurationFieldEnforceSelfAssignmentRestriction)
+}
+
 func (c *ClientMyOrganizationPatchConfiguration) UnmarshalJSON(data []byte) error {
 	type unmarshaler ClientMyOrganizationPatchConfiguration
 	var value unmarshaler
@@ -7933,12 +7967,14 @@ func (c *ClientMyOrganizationPatchConfiguration) String() string {
 
 // Configuration related to the My Organization Configuration for the client.
 var (
-	clientMyOrganizationPostConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
-	clientMyOrganizationPostConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
-	clientMyOrganizationPostConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
-	clientMyOrganizationPostConfigurationFieldThirdPartyClientAccess     = big.NewInt(1 << 3)
-	clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 4)
-	clientMyOrganizationPostConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 5)
+	clientMyOrganizationPostConfigurationFieldConnectionProfileID              = big.NewInt(1 << 0)
+	clientMyOrganizationPostConfigurationFieldUserAttributeProfileID           = big.NewInt(1 << 1)
+	clientMyOrganizationPostConfigurationFieldAllowedStrategies                = big.NewInt(1 << 2)
+	clientMyOrganizationPostConfigurationFieldThirdPartyClientAccess           = big.NewInt(1 << 3)
+	clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior       = big.NewInt(1 << 4)
+	clientMyOrganizationPostConfigurationFieldInvitationLandingClientID        = big.NewInt(1 << 5)
+	clientMyOrganizationPostConfigurationFieldEnforcePermissionCeiling         = big.NewInt(1 << 6)
+	clientMyOrganizationPostConfigurationFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 7)
 )
 
 type ClientMyOrganizationPostConfiguration struct {
@@ -7952,6 +7988,10 @@ type ClientMyOrganizationPostConfiguration struct {
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
 	// The client ID this client uses while creating invitations through My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
+	// When true, limits the permissions that organization admins can assign to members to only those held by the admin themselves.
+	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty" url:"enforce_permission_ceiling,omitempty"`
+	// When true, prevents organization admins from assigning permissions to themselves.
+	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty" url:"enforce_self_assignment_restriction,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -8000,6 +8040,20 @@ func (c *ClientMyOrganizationPostConfiguration) GetInvitationLandingClientID() s
 		return ""
 	}
 	return *c.InvitationLandingClientID
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetEnforcePermissionCeiling() bool {
+	if c == nil || c.EnforcePermissionCeiling == nil {
+		return false
+	}
+	return *c.EnforcePermissionCeiling
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetEnforceSelfAssignmentRestriction() bool {
+	if c == nil || c.EnforceSelfAssignmentRestriction == nil {
+		return false
+	}
+	return *c.EnforceSelfAssignmentRestriction
 }
 
 func (c *ClientMyOrganizationPostConfiguration) GetExtraProperties() map[string]interface{} {
@@ -8058,6 +8112,20 @@ func (c *ClientMyOrganizationPostConfiguration) SetInvitationLandingClientID(inv
 	c.require(clientMyOrganizationPostConfigurationFieldInvitationLandingClientID)
 }
 
+// SetEnforcePermissionCeiling sets the EnforcePermissionCeiling field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetEnforcePermissionCeiling(enforcePermissionCeiling *bool) {
+	c.EnforcePermissionCeiling = enforcePermissionCeiling
+	c.require(clientMyOrganizationPostConfigurationFieldEnforcePermissionCeiling)
+}
+
+// SetEnforceSelfAssignmentRestriction sets the EnforceSelfAssignmentRestriction field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetEnforceSelfAssignmentRestriction(enforceSelfAssignmentRestriction *bool) {
+	c.EnforceSelfAssignmentRestriction = enforceSelfAssignmentRestriction
+	c.require(clientMyOrganizationPostConfigurationFieldEnforceSelfAssignmentRestriction)
+}
+
 func (c *ClientMyOrganizationPostConfiguration) UnmarshalJSON(data []byte) error {
 	type unmarshaler ClientMyOrganizationPostConfiguration
 	var value unmarshaler
@@ -8102,12 +8170,14 @@ func (c *ClientMyOrganizationPostConfiguration) String() string {
 
 // Configuration related to the My Organization Configuration for the client.
 var (
-	clientMyOrganizationResponseConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
-	clientMyOrganizationResponseConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
-	clientMyOrganizationResponseConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
-	clientMyOrganizationResponseConfigurationFieldThirdPartyClientAccess     = big.NewInt(1 << 3)
-	clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 4)
-	clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 5)
+	clientMyOrganizationResponseConfigurationFieldConnectionProfileID              = big.NewInt(1 << 0)
+	clientMyOrganizationResponseConfigurationFieldUserAttributeProfileID           = big.NewInt(1 << 1)
+	clientMyOrganizationResponseConfigurationFieldAllowedStrategies                = big.NewInt(1 << 2)
+	clientMyOrganizationResponseConfigurationFieldThirdPartyClientAccess           = big.NewInt(1 << 3)
+	clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior       = big.NewInt(1 << 4)
+	clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID        = big.NewInt(1 << 5)
+	clientMyOrganizationResponseConfigurationFieldEnforcePermissionCeiling         = big.NewInt(1 << 6)
+	clientMyOrganizationResponseConfigurationFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 7)
 )
 
 type ClientMyOrganizationResponseConfiguration struct {
@@ -8121,6 +8191,10 @@ type ClientMyOrganizationResponseConfiguration struct {
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
 	// The client ID this client uses while creating invitations through My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
+	// When true, limits the permissions that organization admins can assign to members to only those held by the admin themselves.
+	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty" url:"enforce_permission_ceiling,omitempty"`
+	// When true, prevents organization admins from assigning permissions to themselves.
+	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty" url:"enforce_self_assignment_restriction,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -8169,6 +8243,20 @@ func (c *ClientMyOrganizationResponseConfiguration) GetInvitationLandingClientID
 		return ""
 	}
 	return *c.InvitationLandingClientID
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetEnforcePermissionCeiling() bool {
+	if c == nil || c.EnforcePermissionCeiling == nil {
+		return false
+	}
+	return *c.EnforcePermissionCeiling
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetEnforceSelfAssignmentRestriction() bool {
+	if c == nil || c.EnforceSelfAssignmentRestriction == nil {
+		return false
+	}
+	return *c.EnforceSelfAssignmentRestriction
 }
 
 func (c *ClientMyOrganizationResponseConfiguration) GetExtraProperties() map[string]interface{} {
@@ -8225,6 +8313,20 @@ func (c *ClientMyOrganizationResponseConfiguration) SetConnectionDeletionBehavio
 func (c *ClientMyOrganizationResponseConfiguration) SetInvitationLandingClientID(invitationLandingClientID *string) {
 	c.InvitationLandingClientID = invitationLandingClientID
 	c.require(clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID)
+}
+
+// SetEnforcePermissionCeiling sets the EnforcePermissionCeiling field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetEnforcePermissionCeiling(enforcePermissionCeiling *bool) {
+	c.EnforcePermissionCeiling = enforcePermissionCeiling
+	c.require(clientMyOrganizationResponseConfigurationFieldEnforcePermissionCeiling)
+}
+
+// SetEnforceSelfAssignmentRestriction sets the EnforceSelfAssignmentRestriction field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetEnforceSelfAssignmentRestriction(enforceSelfAssignmentRestriction *bool) {
+	c.EnforceSelfAssignmentRestriction = enforceSelfAssignmentRestriction
+	c.require(clientMyOrganizationResponseConfigurationFieldEnforceSelfAssignmentRestriction)
 }
 
 func (c *ClientMyOrganizationResponseConfiguration) UnmarshalJSON(data []byte) error {

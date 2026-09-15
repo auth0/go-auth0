@@ -3773,12 +3773,13 @@ var (
 	createResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 10)
 	createResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 11)
 	createResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 12)
-	createResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 13)
-	createResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 14)
-	createResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 15)
-	createResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 16)
-	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
-	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 18)
+	createResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 13)
+	createResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 14)
+	createResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 15)
+	createResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
+	createResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 17)
+	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
+	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
 )
 
 type CreateResourceServerRequestContent struct {
@@ -3806,6 +3807,7 @@ type CreateResourceServerRequestContent struct {
 	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"-"`
 	// Whether to enforce authorization policies (true) or to ignore them (false).
 	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"-"`
+	AccessToken              *ResourceServerAccessToken              `json:"access_token,omitempty" url:"-"`
 	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"-"`
 	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"-"`
 	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"-"`
@@ -3913,6 +3915,13 @@ func (c *CreateResourceServerRequestContent) SetSkipConsentForVerifiableFirstPar
 func (c *CreateResourceServerRequestContent) SetEnforcePolicies(enforcePolicies *bool) {
 	c.EnforcePolicies = enforcePolicies
 	c.require(createResourceServerRequestContentFieldEnforcePolicies)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	c.AccessToken = accessToken
+	c.require(createResourceServerRequestContentFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
@@ -5056,13 +5065,14 @@ func (c *CreateCustomDomainRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createOrganizationAllConnectionRequestParametersFieldOrganizationConnectionName = big.NewInt(1 << 0)
-	createOrganizationAllConnectionRequestParametersFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
-	createOrganizationAllConnectionRequestParametersFieldShowAsButton               = big.NewInt(1 << 2)
-	createOrganizationAllConnectionRequestParametersFieldIsSignupEnabled            = big.NewInt(1 << 3)
-	createOrganizationAllConnectionRequestParametersFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
-	createOrganizationAllConnectionRequestParametersFieldIsEnabled                  = big.NewInt(1 << 5)
-	createOrganizationAllConnectionRequestParametersFieldConnectionID               = big.NewInt(1 << 6)
+	createOrganizationAllConnectionRequestParametersFieldOrganizationConnectionName    = big.NewInt(1 << 0)
+	createOrganizationAllConnectionRequestParametersFieldAssignMembershipOnLogin       = big.NewInt(1 << 1)
+	createOrganizationAllConnectionRequestParametersFieldShowAsButton                  = big.NewInt(1 << 2)
+	createOrganizationAllConnectionRequestParametersFieldIsSignupEnabled               = big.NewInt(1 << 3)
+	createOrganizationAllConnectionRequestParametersFieldOrganizationAccessLevel       = big.NewInt(1 << 4)
+	createOrganizationAllConnectionRequestParametersFieldOrganizationMemberAccessLevel = big.NewInt(1 << 5)
+	createOrganizationAllConnectionRequestParametersFieldIsEnabled                     = big.NewInt(1 << 6)
+	createOrganizationAllConnectionRequestParametersFieldConnectionID                  = big.NewInt(1 << 7)
 )
 
 type CreateOrganizationAllConnectionRequestParameters struct {
@@ -5073,8 +5083,9 @@ type CreateOrganizationAllConnectionRequestParameters struct {
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
 	ShowAsButton *bool `json:"show_as_button,omitempty" url:"-"`
 	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled         *bool                        `json:"is_signup_enabled,omitempty" url:"-"`
-	OrganizationAccessLevel *OrganizationAccessLevelEnum `json:"organization_access_level,omitempty" url:"-"`
+	IsSignupEnabled               *bool                              `json:"is_signup_enabled,omitempty" url:"-"`
+	OrganizationAccessLevel       *OrganizationAccessLevelEnum       `json:"organization_access_level,omitempty" url:"-"`
+	OrganizationMemberAccessLevel *OrganizationMemberAccessLevelEnum `json:"organization_member_access_level,omitempty" url:"-"`
 	// Whether the connection is enabled for the organization.
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"-"`
 	// Connection identifier.
@@ -5124,6 +5135,13 @@ func (c *CreateOrganizationAllConnectionRequestParameters) SetIsSignupEnabled(is
 func (c *CreateOrganizationAllConnectionRequestParameters) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnum) {
 	c.OrganizationAccessLevel = organizationAccessLevel
 	c.require(createOrganizationAllConnectionRequestParametersFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionRequestParameters) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *OrganizationMemberAccessLevelEnum) {
+	c.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	c.require(createOrganizationAllConnectionRequestParametersFieldOrganizationMemberAccessLevel)
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
@@ -14594,24 +14612,25 @@ var (
 	updateTenantSettingsRequestContentFieldLegacySandboxVersion                           = big.NewInt(1 << 22)
 	updateTenantSettingsRequestContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 23)
 	updateTenantSettingsRequestContentFieldEnabledLocales                                 = big.NewInt(1 << 24)
-	updateTenantSettingsRequestContentFieldSecurityHeaders                                = big.NewInt(1 << 25)
-	updateTenantSettingsRequestContentFieldSessionCookie                                  = big.NewInt(1 << 26)
-	updateTenantSettingsRequestContentFieldSessions                                       = big.NewInt(1 << 27)
-	updateTenantSettingsRequestContentFieldOidcLogout                                     = big.NewInt(1 << 28)
-	updateTenantSettingsRequestContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 29)
-	updateTenantSettingsRequestContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 30)
-	updateTenantSettingsRequestContentFieldAcrValuesSupported                             = big.NewInt(1 << 31)
-	updateTenantSettingsRequestContentFieldMtls                                           = big.NewInt(1 << 32)
-	updateTenantSettingsRequestContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 33)
-	updateTenantSettingsRequestContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 34)
-	updateTenantSettingsRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 35)
-	updateTenantSettingsRequestContentFieldResourceParameterProfile                       = big.NewInt(1 << 36)
-	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 37)
-	updateTenantSettingsRequestContentFieldEnableAiGuide                                  = big.NewInt(1 << 38)
-	updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 39)
-	updateTenantSettingsRequestContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 40)
-	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 41)
-	updateTenantSettingsRequestContentFieldCountryCodes                                   = big.NewInt(1 << 42)
+	updateTenantSettingsRequestContentFieldAccessToken                                    = big.NewInt(1 << 25)
+	updateTenantSettingsRequestContentFieldSecurityHeaders                                = big.NewInt(1 << 26)
+	updateTenantSettingsRequestContentFieldSessionCookie                                  = big.NewInt(1 << 27)
+	updateTenantSettingsRequestContentFieldSessions                                       = big.NewInt(1 << 28)
+	updateTenantSettingsRequestContentFieldOidcLogout                                     = big.NewInt(1 << 29)
+	updateTenantSettingsRequestContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 30)
+	updateTenantSettingsRequestContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 31)
+	updateTenantSettingsRequestContentFieldAcrValuesSupported                             = big.NewInt(1 << 32)
+	updateTenantSettingsRequestContentFieldMtls                                           = big.NewInt(1 << 33)
+	updateTenantSettingsRequestContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 34)
+	updateTenantSettingsRequestContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 35)
+	updateTenantSettingsRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 36)
+	updateTenantSettingsRequestContentFieldResourceParameterProfile                       = big.NewInt(1 << 37)
+	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 38)
+	updateTenantSettingsRequestContentFieldEnableAiGuide                                  = big.NewInt(1 << 39)
+	updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 40)
+	updateTenantSettingsRequestContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 41)
+	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 42)
+	updateTenantSettingsRequestContentFieldCountryCodes                                   = big.NewInt(1 << 43)
 )
 
 type UpdateTenantSettingsRequestContent struct {
@@ -14660,6 +14679,7 @@ type UpdateTenantSettingsRequestContent struct {
 	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"-"`
 	// Supported locales for the user interface
 	EnabledLocales  []TenantSettingsSupportedLocalesEnum   `json:"enabled_locales,omitempty" url:"-"`
+	AccessToken     *ResourceServerAccessToken             `json:"access_token,omitempty" url:"-"`
 	SecurityHeaders *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"-"`
 	SessionCookie   *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"-"`
 	Sessions        *TenantSettingsSessions                `json:"sessions,omitempty" url:"-"`
@@ -14875,6 +14895,13 @@ func (u *UpdateTenantSettingsRequestContent) SetDefaultRedirectionURI(defaultRed
 func (u *UpdateTenantSettingsRequestContent) SetEnabledLocales(enabledLocales []TenantSettingsSupportedLocalesEnum) {
 	u.EnabledLocales = enabledLocales
 	u.require(updateTenantSettingsRequestContentFieldEnabledLocales)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	u.AccessToken = accessToken
+	u.require(updateTenantSettingsRequestContentFieldAccessToken)
 }
 
 // SetSecurityHeaders sets the SecurityHeaders field and marks it as non-optional;
@@ -15237,12 +15264,13 @@ var (
 	updateResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 9)
 	updateResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 10)
 	updateResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 11)
-	updateResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 12)
-	updateResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 13)
-	updateResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 14)
-	updateResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 15)
-	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 16)
-	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 17)
+	updateResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 12)
+	updateResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 13)
+	updateResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 14)
+	updateResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 15)
+	updateResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 16)
+	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 17)
+	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 18)
 )
 
 type UpdateResourceServerRequestContent struct {
@@ -15268,6 +15296,7 @@ type UpdateResourceServerRequestContent struct {
 	TokenDialect                          *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
 	// Whether authorization policies are enforced (true) or not enforced (false).
 	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"-"`
+	AccessToken              *ResourceServerAccessToken              `json:"access_token,omitempty" url:"-"`
 	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"-"`
 	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"-"`
 	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"-"`
@@ -15368,6 +15397,13 @@ func (u *UpdateResourceServerRequestContent) SetTokenDialect(tokenDialect *Resou
 func (u *UpdateResourceServerRequestContent) SetEnforcePolicies(enforcePolicies *bool) {
 	u.EnforcePolicies = enforcePolicies
 	u.require(updateResourceServerRequestContentFieldEnforcePolicies)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	u.AccessToken = accessToken
+	u.require(updateResourceServerRequestContentFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
@@ -17040,12 +17076,13 @@ func (u *UpdateSCIMConfigurationRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateOrganizationConnectionRequestParametersFieldOrganizationConnectionName = big.NewInt(1 << 0)
-	updateOrganizationConnectionRequestParametersFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
-	updateOrganizationConnectionRequestParametersFieldShowAsButton               = big.NewInt(1 << 2)
-	updateOrganizationConnectionRequestParametersFieldIsSignupEnabled            = big.NewInt(1 << 3)
-	updateOrganizationConnectionRequestParametersFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
-	updateOrganizationConnectionRequestParametersFieldIsEnabled                  = big.NewInt(1 << 5)
+	updateOrganizationConnectionRequestParametersFieldOrganizationConnectionName    = big.NewInt(1 << 0)
+	updateOrganizationConnectionRequestParametersFieldAssignMembershipOnLogin       = big.NewInt(1 << 1)
+	updateOrganizationConnectionRequestParametersFieldShowAsButton                  = big.NewInt(1 << 2)
+	updateOrganizationConnectionRequestParametersFieldIsSignupEnabled               = big.NewInt(1 << 3)
+	updateOrganizationConnectionRequestParametersFieldOrganizationAccessLevel       = big.NewInt(1 << 4)
+	updateOrganizationConnectionRequestParametersFieldOrganizationMemberAccessLevel = big.NewInt(1 << 5)
+	updateOrganizationConnectionRequestParametersFieldIsEnabled                     = big.NewInt(1 << 6)
 )
 
 type UpdateOrganizationConnectionRequestParameters struct {
@@ -17056,8 +17093,9 @@ type UpdateOrganizationConnectionRequestParameters struct {
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
 	ShowAsButton *bool `json:"show_as_button,omitempty" url:"-"`
 	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled         *bool                                `json:"is_signup_enabled,omitempty" url:"-"`
-	OrganizationAccessLevel *OrganizationAccessLevelEnumWithNull `json:"organization_access_level,omitempty" url:"-"`
+	IsSignupEnabled               *bool                                      `json:"is_signup_enabled,omitempty" url:"-"`
+	OrganizationAccessLevel       *OrganizationAccessLevelEnumWithNull       `json:"organization_access_level,omitempty" url:"-"`
+	OrganizationMemberAccessLevel *OrganizationMemberAccessLevelEnumWithNull `json:"organization_member_access_level,omitempty" url:"-"`
 	// Whether the connection is enabled for the organization.
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"-"`
 
@@ -17105,6 +17143,13 @@ func (u *UpdateOrganizationConnectionRequestParameters) SetIsSignupEnabled(isSig
 func (u *UpdateOrganizationConnectionRequestParameters) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnumWithNull) {
 	u.OrganizationAccessLevel = organizationAccessLevel
 	u.require(updateOrganizationConnectionRequestParametersFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionRequestParameters) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *OrganizationMemberAccessLevelEnumWithNull) {
+	u.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	u.require(updateOrganizationConnectionRequestParametersFieldOrganizationMemberAccessLevel)
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
