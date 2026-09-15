@@ -26,13 +26,14 @@ var (
 	createResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
 	createResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
 	createResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 15)
-	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 16)
-	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 17)
-	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 18)
-	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 19)
-	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 20)
-	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 21)
-	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 22)
+	createResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
+	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
+	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
+	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 19)
+	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 20)
+	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
+	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
+	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 23)
 )
 
 type CreateResourceServerResponseContent struct {
@@ -66,6 +67,7 @@ type CreateResourceServerResponseContent struct {
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
 	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
@@ -192,6 +194,13 @@ func (c *CreateResourceServerResponseContent) GetTokenDialect() ResourceServerTo
 		return ""
 	}
 	return *c.TokenDialect
+}
+
+func (c *CreateResourceServerResponseContent) GetAccessToken() ResourceServerAccessToken {
+	if c == nil || c.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *c.AccessToken
 }
 
 func (c *CreateResourceServerResponseContent) GetTokenEncryption() ResourceServerTokenEncryption {
@@ -369,6 +378,13 @@ func (c *CreateResourceServerResponseContent) SetTokenDialect(tokenDialect *Reso
 	c.require(createResourceServerResponseContentFieldTokenDialect)
 }
 
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	c.AccessToken = accessToken
+	c.require(createResourceServerResponseContentFieldAccessToken)
+}
+
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateResourceServerResponseContent) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
@@ -477,13 +493,14 @@ var (
 	getResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
 	getResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
 	getResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 15)
-	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 16)
-	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 17)
-	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 18)
-	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 19)
-	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 20)
-	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 21)
-	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 22)
+	getResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
+	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
+	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
+	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 19)
+	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 20)
+	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
+	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
+	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 23)
 )
 
 type GetResourceServerResponseContent struct {
@@ -517,6 +534,7 @@ type GetResourceServerResponseContent struct {
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
 	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
@@ -643,6 +661,13 @@ func (g *GetResourceServerResponseContent) GetTokenDialect() ResourceServerToken
 		return ""
 	}
 	return *g.TokenDialect
+}
+
+func (g *GetResourceServerResponseContent) GetAccessToken() ResourceServerAccessToken {
+	if g == nil || g.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *g.AccessToken
 }
 
 func (g *GetResourceServerResponseContent) GetTokenEncryption() ResourceServerTokenEncryption {
@@ -818,6 +843,13 @@ func (g *GetResourceServerResponseContent) SetTokenLifetimeForAnonymousAccessTok
 func (g *GetResourceServerResponseContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
 	g.TokenDialect = tokenDialect
 	g.require(getResourceServerResponseContentFieldTokenDialect)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	g.AccessToken = accessToken
+	g.require(getResourceServerResponseContentFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
@@ -1060,13 +1092,14 @@ var (
 	resourceServerFieldEnforcePolicies                           = big.NewInt(1 << 13)
 	resourceServerFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
 	resourceServerFieldTokenDialect                              = big.NewInt(1 << 15)
-	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 16)
-	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 17)
-	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 18)
-	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 19)
-	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 20)
-	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 21)
-	resourceServerFieldClientID                                  = big.NewInt(1 << 22)
+	resourceServerFieldAccessToken                               = big.NewInt(1 << 16)
+	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 17)
+	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 18)
+	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 19)
+	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 20)
+	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
+	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
+	resourceServerFieldClientID                                  = big.NewInt(1 << 23)
 )
 
 type ResourceServer struct {
@@ -1100,6 +1133,7 @@ type ResourceServer struct {
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
 	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
@@ -1226,6 +1260,13 @@ func (r *ResourceServer) GetTokenDialect() ResourceServerTokenDialectResponseEnu
 		return ""
 	}
 	return *r.TokenDialect
+}
+
+func (r *ResourceServer) GetAccessToken() ResourceServerAccessToken {
+	if r == nil || r.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *r.AccessToken
 }
 
 func (r *ResourceServer) GetTokenEncryption() ResourceServerTokenEncryption {
@@ -1401,6 +1442,13 @@ func (r *ResourceServer) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeF
 func (r *ResourceServer) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
 	r.TokenDialect = tokenDialect
 	r.require(resourceServerFieldTokenDialect)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	r.AccessToken = accessToken
+	r.require(resourceServerFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
@@ -1881,13 +1929,14 @@ var (
 	resourceServerSearchResponseFieldEnforcePolicies                           = big.NewInt(1 << 12)
 	resourceServerSearchResponseFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 13)
 	resourceServerSearchResponseFieldTokenDialect                              = big.NewInt(1 << 14)
-	resourceServerSearchResponseFieldTokenEncryption                           = big.NewInt(1 << 15)
-	resourceServerSearchResponseFieldConsentPolicy                             = big.NewInt(1 << 16)
-	resourceServerSearchResponseFieldAuthorizationDetails                      = big.NewInt(1 << 17)
-	resourceServerSearchResponseFieldProofOfPossession                         = big.NewInt(1 << 18)
-	resourceServerSearchResponseFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
-	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
-	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 21)
+	resourceServerSearchResponseFieldAccessToken                               = big.NewInt(1 << 15)
+	resourceServerSearchResponseFieldTokenEncryption                           = big.NewInt(1 << 16)
+	resourceServerSearchResponseFieldConsentPolicy                             = big.NewInt(1 << 17)
+	resourceServerSearchResponseFieldAuthorizationDetails                      = big.NewInt(1 << 18)
+	resourceServerSearchResponseFieldProofOfPossession                         = big.NewInt(1 << 19)
+	resourceServerSearchResponseFieldSubjectTypeAuthorization                  = big.NewInt(1 << 20)
+	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 21)
+	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 22)
 )
 
 type ResourceServerSearchResponse struct {
@@ -1919,6 +1968,7 @@ type ResourceServerSearchResponse struct {
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
 	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
@@ -2038,6 +2088,13 @@ func (r *ResourceServerSearchResponse) GetTokenDialect() ResourceServerTokenDial
 		return ""
 	}
 	return *r.TokenDialect
+}
+
+func (r *ResourceServerSearchResponse) GetAccessToken() ResourceServerAccessToken {
+	if r == nil || r.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *r.AccessToken
 }
 
 func (r *ResourceServerSearchResponse) GetTokenEncryption() ResourceServerTokenEncryption {
@@ -2206,6 +2263,13 @@ func (r *ResourceServerSearchResponse) SetTokenLifetimeForAnonymousAccessTokens(
 func (r *ResourceServerSearchResponse) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
 	r.TokenDialect = tokenDialect
 	r.require(resourceServerSearchResponseFieldTokenDialect)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	r.AccessToken = accessToken
+	r.require(resourceServerSearchResponseFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
@@ -3242,13 +3306,14 @@ var (
 	updateResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
 	updateResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
 	updateResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 15)
-	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 16)
-	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 17)
-	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 18)
-	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 19)
-	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 20)
-	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 21)
-	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 22)
+	updateResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
+	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
+	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
+	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 19)
+	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 20)
+	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
+	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
+	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 23)
 )
 
 type UpdateResourceServerResponseContent struct {
@@ -3282,6 +3347,7 @@ type UpdateResourceServerResponseContent struct {
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
 	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
@@ -3408,6 +3474,13 @@ func (u *UpdateResourceServerResponseContent) GetTokenDialect() ResourceServerTo
 		return ""
 	}
 	return *u.TokenDialect
+}
+
+func (u *UpdateResourceServerResponseContent) GetAccessToken() ResourceServerAccessToken {
+	if u == nil || u.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *u.AccessToken
 }
 
 func (u *UpdateResourceServerResponseContent) GetTokenEncryption() ResourceServerTokenEncryption {
@@ -3583,6 +3656,13 @@ func (u *UpdateResourceServerResponseContent) SetTokenLifetimeForAnonymousAccess
 func (u *UpdateResourceServerResponseContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
 	u.TokenDialect = tokenDialect
 	u.require(updateResourceServerResponseContentFieldTokenDialect)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	u.AccessToken = accessToken
+	u.require(updateResourceServerResponseContentFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;

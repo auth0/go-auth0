@@ -70536,14 +70536,15 @@ func (c *CreateKeysNetworkACLsResponseContent) String() string {
 }
 
 var (
-	createOrganizationAllConnectionResponseContentFieldOrganizationConnectionName = big.NewInt(1 << 0)
-	createOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
-	createOrganizationAllConnectionResponseContentFieldShowAsButton               = big.NewInt(1 << 2)
-	createOrganizationAllConnectionResponseContentFieldIsSignupEnabled            = big.NewInt(1 << 3)
-	createOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
-	createOrganizationAllConnectionResponseContentFieldIsEnabled                  = big.NewInt(1 << 5)
-	createOrganizationAllConnectionResponseContentFieldConnectionID               = big.NewInt(1 << 6)
-	createOrganizationAllConnectionResponseContentFieldConnection                 = big.NewInt(1 << 7)
+	createOrganizationAllConnectionResponseContentFieldOrganizationConnectionName    = big.NewInt(1 << 0)
+	createOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin       = big.NewInt(1 << 1)
+	createOrganizationAllConnectionResponseContentFieldShowAsButton                  = big.NewInt(1 << 2)
+	createOrganizationAllConnectionResponseContentFieldIsSignupEnabled               = big.NewInt(1 << 3)
+	createOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel       = big.NewInt(1 << 4)
+	createOrganizationAllConnectionResponseContentFieldOrganizationMemberAccessLevel = big.NewInt(1 << 5)
+	createOrganizationAllConnectionResponseContentFieldIsEnabled                     = big.NewInt(1 << 6)
+	createOrganizationAllConnectionResponseContentFieldConnectionID                  = big.NewInt(1 << 7)
+	createOrganizationAllConnectionResponseContentFieldConnection                    = big.NewInt(1 << 8)
 )
 
 type CreateOrganizationAllConnectionResponseContent struct {
@@ -70554,8 +70555,9 @@ type CreateOrganizationAllConnectionResponseContent struct {
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
 	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled         *bool                        `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
-	OrganizationAccessLevel *OrganizationAccessLevelEnum `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	IsSignupEnabled               *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	OrganizationAccessLevel       *OrganizationAccessLevelEnum       `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	OrganizationMemberAccessLevel *OrganizationMemberAccessLevelEnum `json:"organization_member_access_level,omitempty" url:"organization_member_access_level,omitempty"`
 	// Whether the connection is enabled for the organization.
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
 	// Connection identifier.
@@ -70602,6 +70604,13 @@ func (c *CreateOrganizationAllConnectionResponseContent) GetOrganizationAccessLe
 		return ""
 	}
 	return *c.OrganizationAccessLevel
+}
+
+func (c *CreateOrganizationAllConnectionResponseContent) GetOrganizationMemberAccessLevel() OrganizationMemberAccessLevelEnum {
+	if c == nil || c.OrganizationMemberAccessLevel == nil {
+		return ""
+	}
+	return *c.OrganizationMemberAccessLevel
 }
 
 func (c *CreateOrganizationAllConnectionResponseContent) GetIsEnabled() bool {
@@ -70672,6 +70681,13 @@ func (c *CreateOrganizationAllConnectionResponseContent) SetIsSignupEnabled(isSi
 func (c *CreateOrganizationAllConnectionResponseContent) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnum) {
 	c.OrganizationAccessLevel = organizationAccessLevel
 	c.require(createOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationAllConnectionResponseContent) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *OrganizationMemberAccessLevelEnum) {
+	c.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	c.require(createOrganizationAllConnectionResponseContentFieldOrganizationMemberAccessLevel)
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
@@ -88493,14 +88509,15 @@ func (g *GetJobImportUserError) String() string {
 type GetJobUserError = map[string]any
 
 var (
-	getOrganizationAllConnectionResponseContentFieldOrganizationConnectionName = big.NewInt(1 << 0)
-	getOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
-	getOrganizationAllConnectionResponseContentFieldShowAsButton               = big.NewInt(1 << 2)
-	getOrganizationAllConnectionResponseContentFieldIsSignupEnabled            = big.NewInt(1 << 3)
-	getOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
-	getOrganizationAllConnectionResponseContentFieldIsEnabled                  = big.NewInt(1 << 5)
-	getOrganizationAllConnectionResponseContentFieldConnectionID               = big.NewInt(1 << 6)
-	getOrganizationAllConnectionResponseContentFieldConnection                 = big.NewInt(1 << 7)
+	getOrganizationAllConnectionResponseContentFieldOrganizationConnectionName    = big.NewInt(1 << 0)
+	getOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin       = big.NewInt(1 << 1)
+	getOrganizationAllConnectionResponseContentFieldShowAsButton                  = big.NewInt(1 << 2)
+	getOrganizationAllConnectionResponseContentFieldIsSignupEnabled               = big.NewInt(1 << 3)
+	getOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel       = big.NewInt(1 << 4)
+	getOrganizationAllConnectionResponseContentFieldOrganizationMemberAccessLevel = big.NewInt(1 << 5)
+	getOrganizationAllConnectionResponseContentFieldIsEnabled                     = big.NewInt(1 << 6)
+	getOrganizationAllConnectionResponseContentFieldConnectionID                  = big.NewInt(1 << 7)
+	getOrganizationAllConnectionResponseContentFieldConnection                    = big.NewInt(1 << 8)
 )
 
 type GetOrganizationAllConnectionResponseContent struct {
@@ -88511,8 +88528,9 @@ type GetOrganizationAllConnectionResponseContent struct {
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
 	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled         *bool                        `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
-	OrganizationAccessLevel *OrganizationAccessLevelEnum `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	IsSignupEnabled               *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	OrganizationAccessLevel       *OrganizationAccessLevelEnum       `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	OrganizationMemberAccessLevel *OrganizationMemberAccessLevelEnum `json:"organization_member_access_level,omitempty" url:"organization_member_access_level,omitempty"`
 	// Whether the connection is enabled for the organization.
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
 	// Connection identifier.
@@ -88559,6 +88577,13 @@ func (g *GetOrganizationAllConnectionResponseContent) GetOrganizationAccessLevel
 		return ""
 	}
 	return *g.OrganizationAccessLevel
+}
+
+func (g *GetOrganizationAllConnectionResponseContent) GetOrganizationMemberAccessLevel() OrganizationMemberAccessLevelEnum {
+	if g == nil || g.OrganizationMemberAccessLevel == nil {
+		return ""
+	}
+	return *g.OrganizationMemberAccessLevel
 }
 
 func (g *GetOrganizationAllConnectionResponseContent) GetIsEnabled() bool {
@@ -88629,6 +88654,13 @@ func (g *GetOrganizationAllConnectionResponseContent) SetIsSignupEnabled(isSignu
 func (g *GetOrganizationAllConnectionResponseContent) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnum) {
 	g.OrganizationAccessLevel = organizationAccessLevel
 	g.require(getOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationAllConnectionResponseContent) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *OrganizationMemberAccessLevelEnum) {
+	g.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	g.require(getOrganizationAllConnectionResponseContentFieldOrganizationMemberAccessLevel)
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
@@ -90876,24 +90908,25 @@ var (
 	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
 	getTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
 	getTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
-	getTenantSettingsResponseContentFieldSecurityHeaders                                = big.NewInt(1 << 22)
-	getTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 23)
-	getTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 24)
-	getTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 25)
-	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 26)
-	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 27)
-	getTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 28)
-	getTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 29)
-	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 30)
-	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 31)
-	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 32)
-	getTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 33)
-	getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 34)
-	getTenantSettingsResponseContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 35)
-	getTenantSettingsResponseContentFieldEnableAiGuide                                  = big.NewInt(1 << 36)
-	getTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 37)
-	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 38)
-	getTenantSettingsResponseContentFieldCountryCodes                                   = big.NewInt(1 << 39)
+	getTenantSettingsResponseContentFieldAccessToken                                    = big.NewInt(1 << 22)
+	getTenantSettingsResponseContentFieldSecurityHeaders                                = big.NewInt(1 << 23)
+	getTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 24)
+	getTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 25)
+	getTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 26)
+	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 27)
+	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 28)
+	getTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 29)
+	getTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 30)
+	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 31)
+	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 32)
+	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 33)
+	getTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 34)
+	getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 35)
+	getTenantSettingsResponseContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 36)
+	getTenantSettingsResponseContentFieldEnableAiGuide                                  = big.NewInt(1 << 37)
+	getTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 38)
+	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 39)
+	getTenantSettingsResponseContentFieldCountryCodes                                   = big.NewInt(1 << 40)
 )
 
 type GetTenantSettingsResponseContent struct {
@@ -90935,6 +90968,7 @@ type GetTenantSettingsResponseContent struct {
 	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"default_redirection_uri,omitempty"`
 	// Supported locales for the user interface.
 	EnabledLocales  []SupportedLocales                     `json:"enabled_locales,omitempty" url:"enabled_locales,omitempty"`
+	AccessToken     *ResourceServerAccessToken             `json:"access_token,omitempty" url:"access_token,omitempty"`
 	SecurityHeaders *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"security_headers,omitempty"`
 	SessionCookie   *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"session_cookie,omitempty"`
 	Sessions        *TenantSettingsSessions                `json:"sessions,omitempty" url:"sessions,omitempty"`
@@ -91125,6 +91159,13 @@ func (g *GetTenantSettingsResponseContent) GetEnabledLocales() []SupportedLocale
 		return nil
 	}
 	return g.EnabledLocales
+}
+
+func (g *GetTenantSettingsResponseContent) GetAccessToken() ResourceServerAccessToken {
+	if g == nil || g.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *g.AccessToken
 }
 
 func (g *GetTenantSettingsResponseContent) GetSecurityHeaders() TenantSettingsNullableSecurityHeaders {
@@ -91419,6 +91460,13 @@ func (g *GetTenantSettingsResponseContent) SetDefaultRedirectionURI(defaultRedir
 func (g *GetTenantSettingsResponseContent) SetEnabledLocales(enabledLocales []SupportedLocales) {
 	g.EnabledLocales = enabledLocales
 	g.require(getTenantSettingsResponseContentFieldEnabledLocales)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTenantSettingsResponseContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	g.AccessToken = accessToken
+	g.require(getTenantSettingsResponseContentFieldAccessToken)
 }
 
 // SetSecurityHeaders sets the SecurityHeaders field and marks it as non-optional;
@@ -103307,14 +103355,15 @@ func (o OrganizationAccessLevelEnumWithNull) Ptr() *OrganizationAccessLevelEnumW
 }
 
 var (
-	organizationAllConnectionPostFieldOrganizationConnectionName = big.NewInt(1 << 0)
-	organizationAllConnectionPostFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
-	organizationAllConnectionPostFieldShowAsButton               = big.NewInt(1 << 2)
-	organizationAllConnectionPostFieldIsSignupEnabled            = big.NewInt(1 << 3)
-	organizationAllConnectionPostFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
-	organizationAllConnectionPostFieldIsEnabled                  = big.NewInt(1 << 5)
-	organizationAllConnectionPostFieldConnectionID               = big.NewInt(1 << 6)
-	organizationAllConnectionPostFieldConnection                 = big.NewInt(1 << 7)
+	organizationAllConnectionPostFieldOrganizationConnectionName    = big.NewInt(1 << 0)
+	organizationAllConnectionPostFieldAssignMembershipOnLogin       = big.NewInt(1 << 1)
+	organizationAllConnectionPostFieldShowAsButton                  = big.NewInt(1 << 2)
+	organizationAllConnectionPostFieldIsSignupEnabled               = big.NewInt(1 << 3)
+	organizationAllConnectionPostFieldOrganizationAccessLevel       = big.NewInt(1 << 4)
+	organizationAllConnectionPostFieldOrganizationMemberAccessLevel = big.NewInt(1 << 5)
+	organizationAllConnectionPostFieldIsEnabled                     = big.NewInt(1 << 6)
+	organizationAllConnectionPostFieldConnectionID                  = big.NewInt(1 << 7)
+	organizationAllConnectionPostFieldConnection                    = big.NewInt(1 << 8)
 )
 
 type OrganizationAllConnectionPost struct {
@@ -103325,8 +103374,9 @@ type OrganizationAllConnectionPost struct {
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
 	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled         *bool                        `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
-	OrganizationAccessLevel *OrganizationAccessLevelEnum `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	IsSignupEnabled               *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	OrganizationAccessLevel       *OrganizationAccessLevelEnum       `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	OrganizationMemberAccessLevel *OrganizationMemberAccessLevelEnum `json:"organization_member_access_level,omitempty" url:"organization_member_access_level,omitempty"`
 	// Whether the connection is enabled for the organization.
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
 	// Connection identifier.
@@ -103373,6 +103423,13 @@ func (o *OrganizationAllConnectionPost) GetOrganizationAccessLevel() Organizatio
 		return ""
 	}
 	return *o.OrganizationAccessLevel
+}
+
+func (o *OrganizationAllConnectionPost) GetOrganizationMemberAccessLevel() OrganizationMemberAccessLevelEnum {
+	if o == nil || o.OrganizationMemberAccessLevel == nil {
+		return ""
+	}
+	return *o.OrganizationMemberAccessLevel
 }
 
 func (o *OrganizationAllConnectionPost) GetIsEnabled() bool {
@@ -103443,6 +103500,13 @@ func (o *OrganizationAllConnectionPost) SetIsSignupEnabled(isSignupEnabled *bool
 func (o *OrganizationAllConnectionPost) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnum) {
 	o.OrganizationAccessLevel = organizationAccessLevel
 	o.require(organizationAllConnectionPostFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *OrganizationAllConnectionPost) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *OrganizationMemberAccessLevelEnum) {
+	o.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	o.require(organizationAllConnectionPostFieldOrganizationMemberAccessLevel)
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
@@ -105373,6 +105437,64 @@ func (o *OrganizationMember) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
+}
+
+// Access level for the organization member (e.g., "none", "full").
+type OrganizationMemberAccessLevelEnum string
+
+const (
+	OrganizationMemberAccessLevelEnumNone     OrganizationMemberAccessLevelEnum = "none"
+	OrganizationMemberAccessLevelEnumReadonly OrganizationMemberAccessLevelEnum = "readonly"
+	OrganizationMemberAccessLevelEnumLimited  OrganizationMemberAccessLevelEnum = "limited"
+	OrganizationMemberAccessLevelEnumFull     OrganizationMemberAccessLevelEnum = "full"
+)
+
+func NewOrganizationMemberAccessLevelEnumFromString(s string) (OrganizationMemberAccessLevelEnum, error) {
+	switch s {
+	case "none":
+		return OrganizationMemberAccessLevelEnumNone, nil
+	case "readonly":
+		return OrganizationMemberAccessLevelEnumReadonly, nil
+	case "limited":
+		return OrganizationMemberAccessLevelEnumLimited, nil
+	case "full":
+		return OrganizationMemberAccessLevelEnumFull, nil
+	}
+	var t OrganizationMemberAccessLevelEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationMemberAccessLevelEnum) Ptr() *OrganizationMemberAccessLevelEnum {
+	return &o
+}
+
+// Access level for the organization member (e.g., "none", "full").
+type OrganizationMemberAccessLevelEnumWithNull string
+
+const (
+	OrganizationMemberAccessLevelEnumWithNullNone     OrganizationMemberAccessLevelEnumWithNull = "none"
+	OrganizationMemberAccessLevelEnumWithNullReadonly OrganizationMemberAccessLevelEnumWithNull = "readonly"
+	OrganizationMemberAccessLevelEnumWithNullLimited  OrganizationMemberAccessLevelEnumWithNull = "limited"
+	OrganizationMemberAccessLevelEnumWithNullFull     OrganizationMemberAccessLevelEnumWithNull = "full"
+)
+
+func NewOrganizationMemberAccessLevelEnumWithNullFromString(s string) (OrganizationMemberAccessLevelEnumWithNull, error) {
+	switch s {
+	case "none":
+		return OrganizationMemberAccessLevelEnumWithNullNone, nil
+	case "readonly":
+		return OrganizationMemberAccessLevelEnumWithNullReadonly, nil
+	case "limited":
+		return OrganizationMemberAccessLevelEnumWithNullLimited, nil
+	case "full":
+		return OrganizationMemberAccessLevelEnumWithNullFull, nil
+	}
+	var t OrganizationMemberAccessLevelEnumWithNull
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationMemberAccessLevelEnumWithNull) Ptr() *OrganizationMemberAccessLevelEnumWithNull {
+	return &o
 }
 
 var (
@@ -109861,6 +109983,281 @@ func (r *ResetPhoneTemplateResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ResetPhoneTemplateResponseContent) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Custom configuration for access tokens
+var (
+	resourceServerAccessTokenFieldClaimsMapping = big.NewInt(1 << 0)
+)
+
+type ResourceServerAccessToken struct {
+	ClaimsMapping *ResourceServerAccessTokenClaimsMapping `json:"claims_mapping,omitempty" url:"claims_mapping,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ResourceServerAccessToken) GetClaimsMapping() ResourceServerAccessTokenClaimsMapping {
+	if r == nil || r.ClaimsMapping == nil {
+		return ResourceServerAccessTokenClaimsMapping{}
+	}
+	return *r.ClaimsMapping
+}
+
+func (r *ResourceServerAccessToken) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ResourceServerAccessToken) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetClaimsMapping sets the ClaimsMapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerAccessToken) SetClaimsMapping(claimsMapping *ResourceServerAccessTokenClaimsMapping) {
+	r.ClaimsMapping = claimsMapping
+	r.require(resourceServerAccessTokenFieldClaimsMapping)
+}
+
+func (r *ResourceServerAccessToken) UnmarshalJSON(data []byte) error {
+	type unmarshaler ResourceServerAccessToken
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ResourceServerAccessToken(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResourceServerAccessToken) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerAccessToken
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *ResourceServerAccessToken) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Custom configuration for claims in access tokens
+var (
+	resourceServerAccessTokenClaimsMappingFieldCustomClaims = big.NewInt(1 << 0)
+)
+
+type ResourceServerAccessTokenClaimsMapping struct {
+	CustomClaims *ResourceServerAccessTokenCustomClaimsMapping `json:"custom_claims,omitempty" url:"custom_claims,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ResourceServerAccessTokenClaimsMapping) GetCustomClaims() ResourceServerAccessTokenCustomClaimsMapping {
+	if r == nil || r.CustomClaims == nil {
+		return nil
+	}
+	return *r.CustomClaims
+}
+
+func (r *ResourceServerAccessTokenClaimsMapping) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ResourceServerAccessTokenClaimsMapping) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetCustomClaims sets the CustomClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerAccessTokenClaimsMapping) SetCustomClaims(customClaims *ResourceServerAccessTokenCustomClaimsMapping) {
+	r.CustomClaims = customClaims
+	r.require(resourceServerAccessTokenClaimsMappingFieldCustomClaims)
+}
+
+func (r *ResourceServerAccessTokenClaimsMapping) UnmarshalJSON(data []byte) error {
+	type unmarshaler ResourceServerAccessTokenClaimsMapping
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ResourceServerAccessTokenClaimsMapping(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResourceServerAccessTokenClaimsMapping) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerAccessTokenClaimsMapping
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *ResourceServerAccessTokenClaimsMapping) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Custom claims to emit in anonymous-session access tokens. Each rule maps a value read from the anonymous-session context (via a restricted dot-path expression) onto a named access-token claim.
+type ResourceServerAccessTokenCustomClaimsMapping = []*ResourceServerAccessTokenCustomClaimsMappingRule
+
+var (
+	resourceServerAccessTokenCustomClaimsMappingRuleFieldName       = big.NewInt(1 << 0)
+	resourceServerAccessTokenCustomClaimsMappingRuleFieldExpression = big.NewInt(1 << 1)
+)
+
+type ResourceServerAccessTokenCustomClaimsMappingRule struct {
+	// The access-token claim name to emit, stored with the casing you provide. Reserved OIDC/JWT claim names are not allowed (compared case-insensitively).
+	Name string `json:"name" url:"name"`
+	// Restricted dot-path expression read from the anonymous-session context (e.g. `anonymous_session.metadata.country`).
+	Expression string `json:"expression" url:"expression"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) GetName() string {
+	if r == nil {
+		return ""
+	}
+	return r.Name
+}
+
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) GetExpression() string {
+	if r == nil {
+		return ""
+	}
+	return r.Expression
+}
+
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) require(field *big.Int) {
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
+	}
+	r.explicitFields.Or(r.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) SetName(name string) {
+	r.Name = name
+	r.require(resourceServerAccessTokenCustomClaimsMappingRuleFieldName)
+}
+
+// SetExpression sets the Expression field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) SetExpression(expression string) {
+	r.Expression = expression
+	r.require(resourceServerAccessTokenCustomClaimsMappingRuleFieldExpression)
+}
+
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) UnmarshalJSON(data []byte) error {
+	type unmarshaler ResourceServerAccessTokenCustomClaimsMappingRule
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ResourceServerAccessTokenCustomClaimsMappingRule(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerAccessTokenCustomClaimsMappingRule
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) String() string {
 	if r == nil {
 		return "<nil>"
 	}
@@ -132857,14 +133254,15 @@ func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) String
 type UpdateHookSecretRequestContent = map[string]string
 
 var (
-	updateOrganizationAllConnectionResponseContentFieldOrganizationConnectionName = big.NewInt(1 << 0)
-	updateOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin    = big.NewInt(1 << 1)
-	updateOrganizationAllConnectionResponseContentFieldShowAsButton               = big.NewInt(1 << 2)
-	updateOrganizationAllConnectionResponseContentFieldIsSignupEnabled            = big.NewInt(1 << 3)
-	updateOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel    = big.NewInt(1 << 4)
-	updateOrganizationAllConnectionResponseContentFieldIsEnabled                  = big.NewInt(1 << 5)
-	updateOrganizationAllConnectionResponseContentFieldConnectionID               = big.NewInt(1 << 6)
-	updateOrganizationAllConnectionResponseContentFieldConnection                 = big.NewInt(1 << 7)
+	updateOrganizationAllConnectionResponseContentFieldOrganizationConnectionName    = big.NewInt(1 << 0)
+	updateOrganizationAllConnectionResponseContentFieldAssignMembershipOnLogin       = big.NewInt(1 << 1)
+	updateOrganizationAllConnectionResponseContentFieldShowAsButton                  = big.NewInt(1 << 2)
+	updateOrganizationAllConnectionResponseContentFieldIsSignupEnabled               = big.NewInt(1 << 3)
+	updateOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel       = big.NewInt(1 << 4)
+	updateOrganizationAllConnectionResponseContentFieldOrganizationMemberAccessLevel = big.NewInt(1 << 5)
+	updateOrganizationAllConnectionResponseContentFieldIsEnabled                     = big.NewInt(1 << 6)
+	updateOrganizationAllConnectionResponseContentFieldConnectionID                  = big.NewInt(1 << 7)
+	updateOrganizationAllConnectionResponseContentFieldConnection                    = big.NewInt(1 << 8)
 )
 
 type UpdateOrganizationAllConnectionResponseContent struct {
@@ -132875,8 +133273,9 @@ type UpdateOrganizationAllConnectionResponseContent struct {
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
 	ShowAsButton *bool `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled         *bool                        `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
-	OrganizationAccessLevel *OrganizationAccessLevelEnum `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	IsSignupEnabled               *bool                              `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
+	OrganizationAccessLevel       *OrganizationAccessLevelEnum       `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	OrganizationMemberAccessLevel *OrganizationMemberAccessLevelEnum `json:"organization_member_access_level,omitempty" url:"organization_member_access_level,omitempty"`
 	// Whether the connection is enabled for the organization.
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
 	// Connection identifier.
@@ -132923,6 +133322,13 @@ func (u *UpdateOrganizationAllConnectionResponseContent) GetOrganizationAccessLe
 		return ""
 	}
 	return *u.OrganizationAccessLevel
+}
+
+func (u *UpdateOrganizationAllConnectionResponseContent) GetOrganizationMemberAccessLevel() OrganizationMemberAccessLevelEnum {
+	if u == nil || u.OrganizationMemberAccessLevel == nil {
+		return ""
+	}
+	return *u.OrganizationMemberAccessLevel
 }
 
 func (u *UpdateOrganizationAllConnectionResponseContent) GetIsEnabled() bool {
@@ -132993,6 +133399,13 @@ func (u *UpdateOrganizationAllConnectionResponseContent) SetIsSignupEnabled(isSi
 func (u *UpdateOrganizationAllConnectionResponseContent) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnum) {
 	u.OrganizationAccessLevel = organizationAccessLevel
 	u.require(updateOrganizationAllConnectionResponseContentFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationAllConnectionResponseContent) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *OrganizationMemberAccessLevelEnum) {
+	u.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	u.require(updateOrganizationAllConnectionResponseContentFieldOrganizationMemberAccessLevel)
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
@@ -134223,24 +134636,25 @@ var (
 	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
 	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
 	updateTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
-	updateTenantSettingsResponseContentFieldSecurityHeaders                                = big.NewInt(1 << 22)
-	updateTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 23)
-	updateTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 24)
-	updateTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 25)
-	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 26)
-	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 27)
-	updateTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 28)
-	updateTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 29)
-	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 30)
-	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 31)
-	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 32)
-	updateTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 33)
-	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 34)
-	updateTenantSettingsResponseContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 35)
-	updateTenantSettingsResponseContentFieldEnableAiGuide                                  = big.NewInt(1 << 36)
-	updateTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 37)
-	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 38)
-	updateTenantSettingsResponseContentFieldCountryCodes                                   = big.NewInt(1 << 39)
+	updateTenantSettingsResponseContentFieldAccessToken                                    = big.NewInt(1 << 22)
+	updateTenantSettingsResponseContentFieldSecurityHeaders                                = big.NewInt(1 << 23)
+	updateTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 24)
+	updateTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 25)
+	updateTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 26)
+	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 27)
+	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 28)
+	updateTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 29)
+	updateTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 30)
+	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 31)
+	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 32)
+	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 33)
+	updateTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 34)
+	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 35)
+	updateTenantSettingsResponseContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 36)
+	updateTenantSettingsResponseContentFieldEnableAiGuide                                  = big.NewInt(1 << 37)
+	updateTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 38)
+	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 39)
+	updateTenantSettingsResponseContentFieldCountryCodes                                   = big.NewInt(1 << 40)
 )
 
 type UpdateTenantSettingsResponseContent struct {
@@ -134282,6 +134696,7 @@ type UpdateTenantSettingsResponseContent struct {
 	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"default_redirection_uri,omitempty"`
 	// Supported locales for the user interface.
 	EnabledLocales  []SupportedLocales                     `json:"enabled_locales,omitempty" url:"enabled_locales,omitempty"`
+	AccessToken     *ResourceServerAccessToken             `json:"access_token,omitempty" url:"access_token,omitempty"`
 	SecurityHeaders *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"security_headers,omitempty"`
 	SessionCookie   *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"session_cookie,omitempty"`
 	Sessions        *TenantSettingsSessions                `json:"sessions,omitempty" url:"sessions,omitempty"`
@@ -134472,6 +134887,13 @@ func (u *UpdateTenantSettingsResponseContent) GetEnabledLocales() []SupportedLoc
 		return nil
 	}
 	return u.EnabledLocales
+}
+
+func (u *UpdateTenantSettingsResponseContent) GetAccessToken() ResourceServerAccessToken {
+	if u == nil || u.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *u.AccessToken
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetSecurityHeaders() TenantSettingsNullableSecurityHeaders {
@@ -134766,6 +135188,13 @@ func (u *UpdateTenantSettingsResponseContent) SetDefaultRedirectionURI(defaultRe
 func (u *UpdateTenantSettingsResponseContent) SetEnabledLocales(enabledLocales []SupportedLocales) {
 	u.EnabledLocales = enabledLocales
 	u.require(updateTenantSettingsResponseContentFieldEnabledLocales)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsResponseContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	u.AccessToken = accessToken
+	u.require(updateTenantSettingsResponseContentFieldAccessToken)
 }
 
 // SetSecurityHeaders sets the SecurityHeaders field and marks it as non-optional;

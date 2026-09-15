@@ -17043,6 +17043,22 @@ func TestSettersClientMyOrganizationPatchConfiguration(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetEnforcePermissionCeiling", func(t *testing.T) {
+		obj := &ClientMyOrganizationPatchConfiguration{}
+		var fernTestValueEnforcePermissionCeiling *bool
+		obj.SetEnforcePermissionCeiling(fernTestValueEnforcePermissionCeiling)
+		assert.Equal(t, fernTestValueEnforcePermissionCeiling, obj.EnforcePermissionCeiling)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEnforceSelfAssignmentRestriction", func(t *testing.T) {
+		obj := &ClientMyOrganizationPatchConfiguration{}
+		var fernTestValueEnforceSelfAssignmentRestriction *bool
+		obj.SetEnforceSelfAssignmentRestriction(fernTestValueEnforceSelfAssignmentRestriction)
+		assert.Equal(t, fernTestValueEnforceSelfAssignmentRestriction, obj.EnforceSelfAssignmentRestriction)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersClientMyOrganizationPatchConfiguration(t *testing.T) {
@@ -17238,6 +17254,74 @@ func TestGettersClientMyOrganizationPatchConfiguration(t *testing.T) {
 		_ = obj.GetInvitationLandingClientID() // Should return zero value
 	})
 
+	t.Run("GetEnforcePermissionCeiling", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPatchConfiguration{}
+		var value bool
+		obj.EnforcePermissionCeiling = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetEnforcePermissionCeiling(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetEnforcePermissionCeiling_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPatchConfiguration{}
+		obj.EnforcePermissionCeiling = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetEnforcePermissionCeiling(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetEnforcePermissionCeiling_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientMyOrganizationPatchConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnforcePermissionCeiling() // Should return zero value
+	})
+
+	t.Run("GetEnforceSelfAssignmentRestriction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPatchConfiguration{}
+		var value bool
+		obj.EnforceSelfAssignmentRestriction = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetEnforceSelfAssignmentRestriction(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetEnforceSelfAssignmentRestriction_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPatchConfiguration{}
+		obj.EnforceSelfAssignmentRestriction = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetEnforceSelfAssignmentRestriction(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetEnforceSelfAssignmentRestriction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientMyOrganizationPatchConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnforceSelfAssignmentRestriction() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitClientMyOrganizationPatchConfiguration(t *testing.T) {
@@ -17427,6 +17511,68 @@ func TestSettersMarkExplicitClientMyOrganizationPatchConfiguration(t *testing.T)
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetEnforcePermissionCeiling_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPatchConfiguration{}
+		var fernTestValueEnforcePermissionCeiling *bool
+
+		// Act
+		obj.SetEnforcePermissionCeiling(fernTestValueEnforcePermissionCeiling)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnforceSelfAssignmentRestriction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPatchConfiguration{}
+		var fernTestValueEnforceSelfAssignmentRestriction *bool
+
+		// Act
+		obj.SetEnforceSelfAssignmentRestriction(fernTestValueEnforceSelfAssignmentRestriction)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersClientMyOrganizationPostConfiguration(t *testing.T) {
@@ -17475,6 +17621,22 @@ func TestSettersClientMyOrganizationPostConfiguration(t *testing.T) {
 		var fernTestValueInvitationLandingClientID *string
 		obj.SetInvitationLandingClientID(fernTestValueInvitationLandingClientID)
 		assert.Equal(t, fernTestValueInvitationLandingClientID, obj.InvitationLandingClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEnforcePermissionCeiling", func(t *testing.T) {
+		obj := &ClientMyOrganizationPostConfiguration{}
+		var fernTestValueEnforcePermissionCeiling *bool
+		obj.SetEnforcePermissionCeiling(fernTestValueEnforcePermissionCeiling)
+		assert.Equal(t, fernTestValueEnforcePermissionCeiling, obj.EnforcePermissionCeiling)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEnforceSelfAssignmentRestriction", func(t *testing.T) {
+		obj := &ClientMyOrganizationPostConfiguration{}
+		var fernTestValueEnforceSelfAssignmentRestriction *bool
+		obj.SetEnforceSelfAssignmentRestriction(fernTestValueEnforceSelfAssignmentRestriction)
+		assert.Equal(t, fernTestValueEnforceSelfAssignmentRestriction, obj.EnforceSelfAssignmentRestriction)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -17673,6 +17835,74 @@ func TestGettersClientMyOrganizationPostConfiguration(t *testing.T) {
 		_ = obj.GetInvitationLandingClientID() // Should return zero value
 	})
 
+	t.Run("GetEnforcePermissionCeiling", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPostConfiguration{}
+		var value bool
+		obj.EnforcePermissionCeiling = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetEnforcePermissionCeiling(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetEnforcePermissionCeiling_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPostConfiguration{}
+		obj.EnforcePermissionCeiling = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetEnforcePermissionCeiling(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetEnforcePermissionCeiling_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientMyOrganizationPostConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnforcePermissionCeiling() // Should return zero value
+	})
+
+	t.Run("GetEnforceSelfAssignmentRestriction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPostConfiguration{}
+		var value bool
+		obj.EnforceSelfAssignmentRestriction = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetEnforceSelfAssignmentRestriction(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetEnforceSelfAssignmentRestriction_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPostConfiguration{}
+		obj.EnforceSelfAssignmentRestriction = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetEnforceSelfAssignmentRestriction(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetEnforceSelfAssignmentRestriction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientMyOrganizationPostConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnforceSelfAssignmentRestriction() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitClientMyOrganizationPostConfiguration(t *testing.T) {
@@ -17862,6 +18092,68 @@ func TestSettersMarkExplicitClientMyOrganizationPostConfiguration(t *testing.T) 
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetEnforcePermissionCeiling_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPostConfiguration{}
+		var fernTestValueEnforcePermissionCeiling *bool
+
+		// Act
+		obj.SetEnforcePermissionCeiling(fernTestValueEnforcePermissionCeiling)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnforceSelfAssignmentRestriction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationPostConfiguration{}
+		var fernTestValueEnforceSelfAssignmentRestriction *bool
+
+		// Act
+		obj.SetEnforceSelfAssignmentRestriction(fernTestValueEnforceSelfAssignmentRestriction)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersClientMyOrganizationResponseConfiguration(t *testing.T) {
@@ -17910,6 +18202,22 @@ func TestSettersClientMyOrganizationResponseConfiguration(t *testing.T) {
 		var fernTestValueInvitationLandingClientID *string
 		obj.SetInvitationLandingClientID(fernTestValueInvitationLandingClientID)
 		assert.Equal(t, fernTestValueInvitationLandingClientID, obj.InvitationLandingClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEnforcePermissionCeiling", func(t *testing.T) {
+		obj := &ClientMyOrganizationResponseConfiguration{}
+		var fernTestValueEnforcePermissionCeiling *bool
+		obj.SetEnforcePermissionCeiling(fernTestValueEnforcePermissionCeiling)
+		assert.Equal(t, fernTestValueEnforcePermissionCeiling, obj.EnforcePermissionCeiling)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetEnforceSelfAssignmentRestriction", func(t *testing.T) {
+		obj := &ClientMyOrganizationResponseConfiguration{}
+		var fernTestValueEnforceSelfAssignmentRestriction *bool
+		obj.SetEnforceSelfAssignmentRestriction(fernTestValueEnforceSelfAssignmentRestriction)
+		assert.Equal(t, fernTestValueEnforceSelfAssignmentRestriction, obj.EnforceSelfAssignmentRestriction)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -18108,6 +18416,74 @@ func TestGettersClientMyOrganizationResponseConfiguration(t *testing.T) {
 		_ = obj.GetInvitationLandingClientID() // Should return zero value
 	})
 
+	t.Run("GetEnforcePermissionCeiling", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationResponseConfiguration{}
+		var value bool
+		obj.EnforcePermissionCeiling = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetEnforcePermissionCeiling(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetEnforcePermissionCeiling_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationResponseConfiguration{}
+		obj.EnforcePermissionCeiling = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetEnforcePermissionCeiling(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetEnforcePermissionCeiling_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientMyOrganizationResponseConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnforcePermissionCeiling() // Should return zero value
+	})
+
+	t.Run("GetEnforceSelfAssignmentRestriction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationResponseConfiguration{}
+		var value bool
+		obj.EnforceSelfAssignmentRestriction = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetEnforceSelfAssignmentRestriction(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetEnforceSelfAssignmentRestriction_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationResponseConfiguration{}
+		obj.EnforceSelfAssignmentRestriction = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetEnforceSelfAssignmentRestriction(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetEnforceSelfAssignmentRestriction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientMyOrganizationResponseConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEnforceSelfAssignmentRestriction() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitClientMyOrganizationResponseConfiguration(t *testing.T) {
@@ -18274,6 +18650,68 @@ func TestSettersMarkExplicitClientMyOrganizationResponseConfiguration(t *testing
 
 		// Act
 		obj.SetInvitationLandingClientID(fernTestValueInvitationLandingClientID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnforcePermissionCeiling_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationResponseConfiguration{}
+		var fernTestValueEnforcePermissionCeiling *bool
+
+		// Act
+		obj.SetEnforcePermissionCeiling(fernTestValueEnforcePermissionCeiling)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnforceSelfAssignmentRestriction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientMyOrganizationResponseConfiguration{}
+		var fernTestValueEnforceSelfAssignmentRestriction *bool
+
+		// Act
+		obj.SetEnforceSelfAssignmentRestriction(fernTestValueEnforceSelfAssignmentRestriction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
