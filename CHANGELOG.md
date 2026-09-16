@@ -1,9 +1,13 @@
 # Change Log
 
-## [Unreleased]
+## [v1.49.0](https://github.com/auth0/go-auth0/tree/v1.49.0) (2026-09-09)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.48.0...v1.49.0)
 
 **Added**
-- feat: add `MatchAll` field (`*bool`) to `NetworkACLRule`, enabling rules that match all requests without signal-based criteria, along with a generated `GetMatchAll()` accessor
+- feat: add `B2BIntegrationConfiguration` support to `Client`, letting a client be configured as a B2B Integration (Enterprise Connect) client with `IntegrationType` and `SSOProfiles` fields [\#863](https://github.com/auth0/go-auth0/pull/863) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `HTTPMessageSignature` signal support to `NetworkACLRuleMatch`, backed by `NetworkACLHTTPMessageSignature` and `NetworkACLHTTPMessageSignatureKey` types (Early Access) [\#857](https://github.com/auth0/go-auth0/pull/857) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `MatchAll` field (`*bool`) to `NetworkACLRule`, enabling rules that match all requests without signal-based criteria [\#862](https://github.com/auth0/go-auth0/pull/862) ([KartikJha](https://github.com/KartikJha))
+- feat: add `PromptConfirmation` prompt type and `ScreenConfirmation` screen name constants for the Universal Login `confirmation` prompt/screen [\#859](https://github.com/auth0/go-auth0/pull/859) ([duedares-rvj](https://github.com/duedares-rvj))
 
 ## [v1.48.0](https://github.com/auth0/go-auth0/tree/v1.48.0) (2026-08-26)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.47.0...v1.48.0)
