@@ -1,5 +1,9 @@
 # Change Log
 
+## [Unreleased]
+### Added
+- `management.Error` interface now includes a `Code() string` method to expose the `errorCode` field from API error responses, enabling callers to distinguish error subtypes that share an HTTP status code (e.g. `insufficient_entitlement` vs `insufficient_scope` on HTTP 403).
+
 ## [v1.49.0](https://github.com/auth0/go-auth0/tree/v1.49.0) (2026-09-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.48.0...v1.49.0)
 
