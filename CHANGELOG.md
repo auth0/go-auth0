@@ -1,5 +1,13 @@
 # Change Log
 
+## [v3.6.0](https://github.com/auth0/go-auth0/tree/v3.6.0) (2026-09-16)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.5.0...v3.6.0)
+
+**Added**
+- feat: add resource server access token configuration via a new `AccessToken` field on `ResourceServers.Create`, `ResourceServers.Update`, and `Tenants.Settings.Update`, along with the `ResourceServerAccessToken`, `ResourceServerAccessTokenClaimsMapping`, `ResourceServerAccessTokenCustomClaimsMapping`, and `ResourceServerAccessTokenCustomClaimsMappingRule` types [\#868](https://github.com/auth0/go-auth0/pull/868) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `OrganizationMemberAccessLevel` on `Organizations.Connections.Create` and `Organizations.Connections.Update`, along with the `OrganizationMemberAccessLevelEnum` (`none`, `readonly`, `limited`, `full`) and `OrganizationMemberAccessLevelEnumWithNull` types [\#868](https://github.com/auth0/go-auth0/pull/868) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `EnforcePermissionCeiling` and `EnforceSelfAssignmentRestriction` fields to the client My Organization patch, post, and response configuration types [\#868](https://github.com/auth0/go-auth0/pull/868) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v3.5.0](https://github.com/auth0/go-auth0/tree/v3.5.0) (2026-09-11)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.4.0...v3.5.0)
 
