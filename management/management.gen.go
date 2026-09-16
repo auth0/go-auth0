@@ -10515,6 +10515,22 @@ func (m *MyOrganizationConfiguration) GetConnectionProfileID() string {
 	return *m.ConnectionProfileID
 }
 
+// GetEnforcePermissionCeiling returns the EnforcePermissionCeiling field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationConfiguration) GetEnforcePermissionCeiling() bool {
+	if m == nil || m.EnforcePermissionCeiling == nil {
+		return false
+	}
+	return *m.EnforcePermissionCeiling
+}
+
+// GetEnforceSelfAssignmentRestriction returns the EnforceSelfAssignmentRestriction field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationConfiguration) GetEnforceSelfAssignmentRestriction() bool {
+	if m == nil || m.EnforceSelfAssignmentRestriction == nil {
+		return false
+	}
+	return *m.EnforceSelfAssignmentRestriction
+}
+
 // GetInvitationLandingClientID returns the InvitationLandingClientID field if it's non-nil, zero value otherwise.
 func (m *MyOrganizationConfiguration) GetInvitationLandingClientID() string {
 	if m == nil || m.InvitationLandingClientID == nil {
