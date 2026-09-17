@@ -13148,6 +13148,26 @@ func TestMyOrganizationConfiguration_GetConnectionProfileID(tt *testing.T) {
 	m.GetConnectionProfileID()
 }
 
+func TestMyOrganizationConfiguration_GetEnforcePermissionCeiling(tt *testing.T) {
+	var zeroValue bool
+	m := &MyOrganizationConfiguration{EnforcePermissionCeiling: &zeroValue}
+	m.GetEnforcePermissionCeiling()
+	m = &MyOrganizationConfiguration{}
+	m.GetEnforcePermissionCeiling()
+	m = nil
+	m.GetEnforcePermissionCeiling()
+}
+
+func TestMyOrganizationConfiguration_GetEnforceSelfAssignmentRestriction(tt *testing.T) {
+	var zeroValue bool
+	m := &MyOrganizationConfiguration{EnforceSelfAssignmentRestriction: &zeroValue}
+	m.GetEnforceSelfAssignmentRestriction()
+	m = &MyOrganizationConfiguration{}
+	m.GetEnforceSelfAssignmentRestriction()
+	m = nil
+	m.GetEnforceSelfAssignmentRestriction()
+}
+
 func TestMyOrganizationConfiguration_GetInvitationLandingClientID(tt *testing.T) {
 	var zeroValue string
 	m := &MyOrganizationConfiguration{InvitationLandingClientID: &zeroValue}

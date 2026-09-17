@@ -2188,6 +2188,70 @@ func TestClient_MyOrganizationConfigurationThirdPartyClientAccess(t *testing.T) 
 	assert.Equal(t, http.StatusBadRequest, err.(Error).Status())
 }
 
+func TestClient_MyOrganizationConfigurationMemberManagement(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	// Case: Create a client with member management fields set to false.
+	clientWith := &Client{
+		Name:        auth0.Stringf("Test Client MemberManagement (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("Client with member management my_organization_configuration fields."),
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			AllowedStrategies:                &[]string{"okta"},
+			ConnectionDeletionBehavior:       auth0.String("allow"),
+			EnforcePermissionCeiling:         auth0.Bool(false),
+			EnforceSelfAssignmentRestriction: auth0.Bool(false),
+		},
+	}
+	err := api.Client.Create(ctx, clientWith)
+	require.NoError(t, err)
+	require.NotEmpty(t, clientWith.GetClientID())
+	t.Cleanup(func() {
+		cleanupClient(t, clientWith.GetClientID())
+	})
+
+	require.NotNil(t, clientWith.GetMyOrganizationConfiguration())
+	assert.False(t, clientWith.GetMyOrganizationConfiguration().GetEnforcePermissionCeiling())
+	assert.False(t, clientWith.GetMyOrganizationConfiguration().GetEnforceSelfAssignmentRestriction())
+
+	// Case: Update both fields to true.
+	updatedClient := &Client{
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			AllowedStrategies:                &[]string{"okta"},
+			ConnectionDeletionBehavior:       auth0.String("allow"),
+			EnforcePermissionCeiling:         auth0.Bool(true),
+			EnforceSelfAssignmentRestriction: auth0.Bool(true),
+		},
+	}
+	err = api.Client.Update(ctx, clientWith.GetClientID(), updatedClient)
+	require.NoError(t, err)
+
+	readClient, err := api.Client.Read(ctx, clientWith.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, readClient.GetMyOrganizationConfiguration())
+	assert.True(t, readClient.GetMyOrganizationConfiguration().GetEnforcePermissionCeiling())
+	assert.True(t, readClient.GetMyOrganizationConfiguration().GetEnforceSelfAssignmentRestriction())
+
+	// Case: Reset both fields to false.
+	resetClient := &Client{
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			AllowedStrategies:                &[]string{"okta"},
+			ConnectionDeletionBehavior:       auth0.String("allow"),
+			EnforcePermissionCeiling:         auth0.Bool(false),
+			EnforceSelfAssignmentRestriction: auth0.Bool(false),
+		},
+	}
+	err = api.Client.Update(ctx, clientWith.GetClientID(), resetClient)
+	require.NoError(t, err)
+
+	readClient, err = api.Client.Read(ctx, clientWith.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, readClient.GetMyOrganizationConfiguration())
+	assert.False(t, readClient.GetMyOrganizationConfiguration().GetEnforcePermissionCeiling())
+	assert.False(t, readClient.GetMyOrganizationConfiguration().GetEnforceSelfAssignmentRestriction())
+}
+
 func givenAnExpressConfigurationClient(t *testing.T) *Client {
 	t.Helper()
 
