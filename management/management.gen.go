@@ -12065,6 +12065,14 @@ func (r *RefreshTokenResourceServer) String() string {
 	return Stringify(r)
 }
 
+// GetAccessToken returns the AccessToken field.
+func (r *ResourceServer) GetAccessToken() *ResourceServerAccessToken {
+	if r == nil {
+		return nil
+	}
+	return r.AccessToken
+}
+
 // GetAllowOfflineAccess returns the AllowOfflineAccess field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetAllowOfflineAccess() bool {
 	if r == nil || r.AllowOfflineAccess == nil {
@@ -12267,6 +12275,53 @@ func (r *ResourceServer) GetVerificationLocation() string {
 
 // String returns a string representation of ResourceServer.
 func (r *ResourceServer) String() string {
+	return Stringify(r)
+}
+
+// GetClaimsMapping returns the ClaimsMapping field.
+func (r *ResourceServerAccessToken) GetClaimsMapping() *ResourceServerAccessTokenClaimsMapping {
+	if r == nil {
+		return nil
+	}
+	return r.ClaimsMapping
+}
+
+// String returns a string representation of ResourceServerAccessToken.
+func (r *ResourceServerAccessToken) String() string {
+	return Stringify(r)
+}
+
+// GetCustomClaims returns the CustomClaims field if it's non-nil, zero value otherwise.
+func (r *ResourceServerAccessTokenClaimsMapping) GetCustomClaims() []ResourceServerAccessTokenCustomClaimsMappingRule {
+	if r == nil || r.CustomClaims == nil {
+		return nil
+	}
+	return *r.CustomClaims
+}
+
+// String returns a string representation of ResourceServerAccessTokenClaimsMapping.
+func (r *ResourceServerAccessTokenClaimsMapping) String() string {
+	return Stringify(r)
+}
+
+// GetExpression returns the Expression field if it's non-nil, zero value otherwise.
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) GetExpression() string {
+	if r == nil || r.Expression == nil {
+		return ""
+	}
+	return *r.Expression
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
+	}
+	return *r.Name
+}
+
+// String returns a string representation of ResourceServerAccessTokenCustomClaimsMappingRule.
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) String() string {
 	return Stringify(r)
 }
 

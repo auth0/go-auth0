@@ -15114,6 +15114,13 @@ func TestRefreshTokenResourceServer_String(t *testing.T) {
 	}
 }
 
+func TestResourceServer_GetAccessToken(tt *testing.T) {
+	r := &ResourceServer{}
+	r.GetAccessToken()
+	r = nil
+	r.GetAccessToken()
+}
+
 func TestResourceServer_GetAllowOfflineAccess(tt *testing.T) {
 	var zeroValue bool
 	r := &ResourceServer{AllowOfflineAccess: &zeroValue}
@@ -15355,6 +15362,67 @@ func TestResourceServer_GetVerificationLocation(tt *testing.T) {
 func TestResourceServer_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ResourceServer{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerAccessToken_GetClaimsMapping(tt *testing.T) {
+	r := &ResourceServerAccessToken{}
+	r.GetClaimsMapping()
+	r = nil
+	r.GetClaimsMapping()
+}
+
+func TestResourceServerAccessToken_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerAccessToken{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerAccessTokenClaimsMapping_GetCustomClaims(tt *testing.T) {
+	var zeroValue []ResourceServerAccessTokenCustomClaimsMappingRule
+	r := &ResourceServerAccessTokenClaimsMapping{CustomClaims: &zeroValue}
+	r.GetCustomClaims()
+	r = &ResourceServerAccessTokenClaimsMapping{}
+	r.GetCustomClaims()
+	r = nil
+	r.GetCustomClaims()
+}
+
+func TestResourceServerAccessTokenClaimsMapping_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerAccessTokenClaimsMapping{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerAccessTokenCustomClaimsMappingRule_GetExpression(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerAccessTokenCustomClaimsMappingRule{Expression: &zeroValue}
+	r.GetExpression()
+	r = &ResourceServerAccessTokenCustomClaimsMappingRule{}
+	r.GetExpression()
+	r = nil
+	r.GetExpression()
+}
+
+func TestResourceServerAccessTokenCustomClaimsMappingRule_GetName(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerAccessTokenCustomClaimsMappingRule{Name: &zeroValue}
+	r.GetName()
+	r = &ResourceServerAccessTokenCustomClaimsMappingRule{}
+	r.GetName()
+	r = nil
+	r.GetName()
+}
+
+func TestResourceServerAccessTokenCustomClaimsMappingRule_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerAccessTokenCustomClaimsMappingRule{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
