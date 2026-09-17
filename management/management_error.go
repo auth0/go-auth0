@@ -12,6 +12,8 @@ type Error interface {
 	// Status returns the status code returned by
 	// the server together with the present error.
 	Status() int
+	// Code returns the error code returned by the server.
+	Code() string
 	error
 }
 
@@ -19,6 +21,7 @@ type managementError struct {
 	StatusCode int    `json:"statusCode"`
 	Err        string `json:"error"`
 	Message    string `json:"message"`
+	ErrorCode  string `json:"errorCode"`
 }
 
 func newError(response *http.Response) error {
@@ -50,4 +53,9 @@ func (m *managementError) Error() string {
 // Status returns the status code of the error.
 func (m *managementError) Status() int {
 	return m.StatusCode
+}
+
+// Code returns the error code returned by the server.
+func (m *managementError) Code() string {
+	return m.ErrorCode
 }

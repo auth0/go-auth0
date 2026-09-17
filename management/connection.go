@@ -1894,7 +1894,7 @@ func (m *ConnectionManager) Delete(ctx context.Context, id string, opts ...Reque
 // connection id is not readily available.
 func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ...RequestOption) (*Connection, error) {
 	if name == "" {
-		return nil, &managementError{400, "Bad Request", "Name cannot be empty"}
+		return nil, &managementError{400, "Bad Request", "Name cannot be empty", ""}
 	}
 
 	c, err := m.List(ctx, append(opts, Parameter("name", name))...)
@@ -1906,7 +1906,7 @@ func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ..
 		return c.Connections[0], nil
 	}
 
-	return nil, &managementError{404, "Not Found", "Connection not found"}
+	return nil, &managementError{404, "Not Found", "Connection not found", ""}
 }
 
 // ReadEnabledClients  retrieves the enabled clients for a connection by its connection ID.

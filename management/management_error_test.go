@@ -51,6 +51,45 @@ func TestNewError(t *testing.T) {
 				Message:    "",
 			},
 		},
+		{
+			name: "it correctly decodes errorCode insufficient_entitlement",
+			givenResponse: http.Response{
+				StatusCode: http.StatusForbidden,
+				Body:       io.NopCloser(strings.NewReader(`{"statusCode":403,"error":"Forbidden","message":"Please upgrade your plan.","errorCode":"insufficient_entitlement"}`)),
+			},
+			expectedError: managementError{
+				StatusCode: 403,
+				Err:        "Forbidden",
+				Message:    "Please upgrade your plan.",
+				ErrorCode:  "insufficient_entitlement",
+			},
+		},
+		{
+			name: "it correctly decodes errorCode insufficient_scope",
+			givenResponse: http.Response{
+				StatusCode: http.StatusForbidden,
+				Body:       io.NopCloser(strings.NewReader(`{"statusCode":403,"error":"Forbidden","message":"Insufficient scope.","errorCode":"insufficient_scope"}`)),
+			},
+			expectedError: managementError{
+				StatusCode: 403,
+				Err:        "Forbidden",
+				Message:    "Insufficient scope.",
+				ErrorCode:  "insufficient_scope",
+			},
+		},
+		{
+			name: "it returns empty errorCode when field is absent",
+			givenResponse: http.Response{
+				StatusCode: http.StatusForbidden,
+				Body:       io.NopCloser(strings.NewReader(`{"statusCode":403,"error":"Forbidden","message":"Access denied."}`)),
+			},
+			expectedError: managementError{
+				StatusCode: 403,
+				Err:        "Forbidden",
+				Message:    "Access denied.",
+				ErrorCode:  "",
+			},
+		},
 	}
 
 	for _, testCase := range testCases {
@@ -68,5 +107,36 @@ func TestNewError(t *testing.T) {
 		}
 
 		assert.Equal(t, "403 Forbidden: message", err.Error())
+	})
+
+	t.Run("Code() returns the errorCode field", func(t *testing.T) {
+		err := &managementError{
+			StatusCode: 403,
+			Err:        "Forbidden",
+			Message:    "Please upgrade your plan.",
+			ErrorCode:  "insufficient_entitlement",
+		}
+		assert.Equal(t, "insufficient_entitlement", err.Code())
+		assert.Equal(t, 403, err.Status())
+	})
+
+	t.Run("Code() returns empty string when errorCode is not set", func(t *testing.T) {
+		err := &managementError{
+			StatusCode: 403,
+			Err:        "Forbidden",
+			Message:    "Access denied.",
+		}
+		assert.Equal(t, "", err.Code())
+	})
+
+	t.Run("fallback error from failed decode has empty Code()", func(t *testing.T) {
+		resp := &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(strings.NewReader("not json")),
+		}
+		actualError := newError(resp)
+		mErr, ok := actualError.(*managementError)
+		assert.True(t, ok)
+		assert.Equal(t, "", mErr.Code())
 	})
 }
