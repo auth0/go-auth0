@@ -1,5 +1,10 @@
 # Change Log
 
+## [Unreleased]
+
+### Added
+- Add `EnforcePermissionCeiling` and `EnforceSelfAssignmentRestriction` fields to `MyOrganizationConfiguration`, exposing member management controls for the `my_org_member_management_ea` Early Access feature flag.
+
 ## [v1.49.0](https://github.com/auth0/go-auth0/tree/v1.49.0) (2026-09-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.48.0...v1.49.0)
 
