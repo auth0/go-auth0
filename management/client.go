@@ -425,12 +425,10 @@ type MyOrganizationConfiguration struct {
 
 	// EnforcePermissionCeiling limits the permissions that organization admins can assign
 	// to members to only those held by the admin themselves.
-	// Requires the my_org_member_management_ea feature flag.
 	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty"`
 
 	// EnforceSelfAssignmentRestriction prevents organization admins from assigning
 	// permissions to themselves.
-	// Requires the my_org_member_management_ea feature flag.
 	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty"`
 }
 
