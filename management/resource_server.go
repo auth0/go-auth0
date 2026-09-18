@@ -136,6 +136,30 @@ type ResourceServer struct {
 
 	// AuthorizationPolicy specifies the authorization policy for the resource server.
 	AuthorizationPolicy *ResourceServerAuthorizationPolicy `json:"authorization_policy,omitempty"`
+
+	// AccessToken specifies the configuration for the access tokens issued for this resource server.
+	AccessToken *ResourceServerAccessToken `json:"access_token,omitempty"`
+}
+
+// ResourceServerAccessToken specifies the configuration for the access tokens issued for the resource server.
+type ResourceServerAccessToken struct {
+	// ClaimsMapping specifies the configuration for mapping claims into the access tokens.
+	ClaimsMapping *ResourceServerAccessTokenClaimsMapping `json:"claims_mapping,omitempty"`
+}
+
+// ResourceServerAccessTokenClaimsMapping specifies the configuration for mapping claims into the access tokens.
+type ResourceServerAccessTokenClaimsMapping struct {
+	// CustomClaims is the list of custom claims to include in the access tokens.
+	CustomClaims *[]ResourceServerAccessTokenCustomClaimsMappingRule `json:"custom_claims,omitempty"`
+}
+
+// ResourceServerAccessTokenCustomClaimsMappingRule defines a single custom-claim mapping rule.
+type ResourceServerAccessTokenCustomClaimsMappingRule struct {
+	// Name of the claim to emit in the access token.
+	Name *string `json:"name,omitempty"`
+
+	// Expression used to resolve the claim value.
+	Expression *string `json:"expression,omitempty"`
 }
 
 // ResourceServerAuthorizationPolicy specifies the authorization policy for the resource server.
