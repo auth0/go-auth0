@@ -1,9 +1,15 @@
 # Change Log
 
 ## [Unreleased]
-### Added
-- `management.Error` interface now includes a `Code() string` method to expose the `errorCode` field from API error responses, enabling callers to distinguish error subtypes that share an HTTP status code (e.g. `insufficient_entitlement` vs `insufficient_scope` on HTTP 403).
-- Add `EnforcePermissionCeiling` and `EnforceSelfAssignmentRestriction` fields to `MyOrganizationConfiguration`, exposing member management controls for the `my_org_member_management_ea` Early Access feature flag.
+
+## [v1.50.0](https://github.com/auth0/go-auth0/tree/v1.50.0) (2026-09-18)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.49.0...v1.50.0)
+
+**Added**
+- feat: add `AccessToken` field to `ResourceServer`, backed by `ResourceServerAccessToken` and `ResourceServerAccessTokenClaimsMapping` types, enabling custom claim rules to be mapped into issued access tokens [\#874](https://github.com/auth0/go-auth0/pull/874) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `EnforcePermissionCeiling` and `EnforceSelfAssignmentRestriction` fields to `MyOrganizationConfiguration` (Early Access), letting organization admins restrict permission assignment and self-assignment [\#873](https://github.com/auth0/go-auth0/pull/873) ([KartikJha](https://github.com/KartikJha))
+- feat: add `Code() string` to `management.Error` interface, decoding the `errorCode` field from API error responses to let callers distinguish error subtypes that share an HTTP status code [\#872](https://github.com/auth0/go-auth0/pull/872) ([KartikJha](https://github.com/KartikJha))
+- feat: add anonymous sessions support to `Tenant`, `Client`, `ResourceServer`, and `ClientGrant` (Early Access), introducing `TenantSessionsAnonymous`, `ClientAnonymousSessions`, and `ResourceServerSubjectTypeAuthorization` types to configure session lifetime, cookie activation, anonymous access token TTL, and authorization policy [\#869](https://github.com/auth0/go-auth0/pull/869) ([bkiran6398](https://github.com/bkiran6398))
 
 ## [v1.49.0](https://github.com/auth0/go-auth0/tree/v1.49.0) (2026-09-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.48.0...v1.49.0)
