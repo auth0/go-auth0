@@ -29,11 +29,12 @@ var (
 	createResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
 	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
 	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
-	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 19)
-	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 20)
-	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
-	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
-	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 23)
+	createResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
+	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 20)
+	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 21)
+	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
+	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
+	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
 )
 
 type CreateResourceServerResponseContent struct {
@@ -70,10 +71,12 @@ type CreateResourceServerResponseContent struct {
 	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession                     *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
-	SubjectTypeAuthorization              *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
-	AuthorizationPolicy                   *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
@@ -215,6 +218,13 @@ func (c *CreateResourceServerResponseContent) GetConsentPolicy() ResourceServerC
 		return ""
 	}
 	return *c.ConsentPolicy
+}
+
+func (c *CreateResourceServerResponseContent) GetRequireConsentNonRepudiation() bool {
+	if c == nil || c.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *c.RequireConsentNonRepudiation
 }
 
 func (c *CreateResourceServerResponseContent) GetAuthorizationDetails() []any {
@@ -399,6 +409,13 @@ func (c *CreateResourceServerResponseContent) SetConsentPolicy(consentPolicy *Re
 	c.require(createResourceServerResponseContentFieldConsentPolicy)
 }
 
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	c.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	c.require(createResourceServerResponseContentFieldRequireConsentNonRepudiation)
+}
+
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateResourceServerResponseContent) SetAuthorizationDetails(authorizationDetails []any) {
@@ -496,11 +513,12 @@ var (
 	getResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
 	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
 	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
-	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 19)
-	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 20)
-	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
-	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
-	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 23)
+	getResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
+	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 20)
+	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 21)
+	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
+	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
+	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
 )
 
 type GetResourceServerResponseContent struct {
@@ -537,10 +555,12 @@ type GetResourceServerResponseContent struct {
 	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession                     *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
-	SubjectTypeAuthorization              *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
-	AuthorizationPolicy                   *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
@@ -682,6 +702,13 @@ func (g *GetResourceServerResponseContent) GetConsentPolicy() ResourceServerCons
 		return ""
 	}
 	return *g.ConsentPolicy
+}
+
+func (g *GetResourceServerResponseContent) GetRequireConsentNonRepudiation() bool {
+	if g == nil || g.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *g.RequireConsentNonRepudiation
 }
 
 func (g *GetResourceServerResponseContent) GetAuthorizationDetails() []any {
@@ -864,6 +891,13 @@ func (g *GetResourceServerResponseContent) SetTokenEncryption(tokenEncryption *R
 func (g *GetResourceServerResponseContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
 	g.ConsentPolicy = consentPolicy
 	g.require(getResourceServerResponseContentFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	g.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	g.require(getResourceServerResponseContentFieldRequireConsentNonRepudiation)
 }
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
@@ -1095,11 +1129,12 @@ var (
 	resourceServerFieldAccessToken                               = big.NewInt(1 << 16)
 	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 17)
 	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 18)
-	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 19)
-	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 20)
-	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
-	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
-	resourceServerFieldClientID                                  = big.NewInt(1 << 23)
+	resourceServerFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
+	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 20)
+	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 21)
+	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
+	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
+	resourceServerFieldClientID                                  = big.NewInt(1 << 24)
 )
 
 type ResourceServer struct {
@@ -1136,10 +1171,12 @@ type ResourceServer struct {
 	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession                     *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
-	SubjectTypeAuthorization              *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
-	AuthorizationPolicy                   *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
@@ -1281,6 +1318,13 @@ func (r *ResourceServer) GetConsentPolicy() ResourceServerConsentPolicyEnum {
 		return ""
 	}
 	return *r.ConsentPolicy
+}
+
+func (r *ResourceServer) GetRequireConsentNonRepudiation() bool {
+	if r == nil || r.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *r.RequireConsentNonRepudiation
 }
 
 func (r *ResourceServer) GetAuthorizationDetails() []any {
@@ -1463,6 +1507,13 @@ func (r *ResourceServer) SetTokenEncryption(tokenEncryption *ResourceServerToken
 func (r *ResourceServer) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
 	r.ConsentPolicy = consentPolicy
 	r.require(resourceServerFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	r.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	r.require(resourceServerFieldRequireConsentNonRepudiation)
 }
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
@@ -1932,11 +1983,12 @@ var (
 	resourceServerSearchResponseFieldAccessToken                               = big.NewInt(1 << 15)
 	resourceServerSearchResponseFieldTokenEncryption                           = big.NewInt(1 << 16)
 	resourceServerSearchResponseFieldConsentPolicy                             = big.NewInt(1 << 17)
-	resourceServerSearchResponseFieldAuthorizationDetails                      = big.NewInt(1 << 18)
-	resourceServerSearchResponseFieldProofOfPossession                         = big.NewInt(1 << 19)
-	resourceServerSearchResponseFieldSubjectTypeAuthorization                  = big.NewInt(1 << 20)
-	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 21)
-	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 22)
+	resourceServerSearchResponseFieldRequireConsentNonRepudiation              = big.NewInt(1 << 18)
+	resourceServerSearchResponseFieldAuthorizationDetails                      = big.NewInt(1 << 19)
+	resourceServerSearchResponseFieldProofOfPossession                         = big.NewInt(1 << 20)
+	resourceServerSearchResponseFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
+	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
+	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 23)
 )
 
 type ResourceServerSearchResponse struct {
@@ -1971,10 +2023,12 @@ type ResourceServerSearchResponse struct {
 	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession                     *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
-	SubjectTypeAuthorization              *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
-	AuthorizationPolicy                   *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
@@ -2109,6 +2163,13 @@ func (r *ResourceServerSearchResponse) GetConsentPolicy() ResourceServerConsentP
 		return ""
 	}
 	return *r.ConsentPolicy
+}
+
+func (r *ResourceServerSearchResponse) GetRequireConsentNonRepudiation() bool {
+	if r == nil || r.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *r.RequireConsentNonRepudiation
 }
 
 func (r *ResourceServerSearchResponse) GetAuthorizationDetails() []any {
@@ -2284,6 +2345,13 @@ func (r *ResourceServerSearchResponse) SetTokenEncryption(tokenEncryption *Resou
 func (r *ResourceServerSearchResponse) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
 	r.ConsentPolicy = consentPolicy
 	r.require(resourceServerSearchResponseFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	r.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	r.require(resourceServerSearchResponseFieldRequireConsentNonRepudiation)
 }
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
@@ -3309,11 +3377,12 @@ var (
 	updateResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
 	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
 	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
-	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 19)
-	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 20)
-	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
-	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
-	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 23)
+	updateResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
+	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 20)
+	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 21)
+	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
+	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
+	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
 )
 
 type UpdateResourceServerResponseContent struct {
@@ -3350,10 +3419,12 @@ type UpdateResourceServerResponseContent struct {
 	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
 	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
 	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails                  []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession                     *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
-	SubjectTypeAuthorization              *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
-	AuthorizationPolicy                   *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
 
@@ -3495,6 +3566,13 @@ func (u *UpdateResourceServerResponseContent) GetConsentPolicy() ResourceServerC
 		return ""
 	}
 	return *u.ConsentPolicy
+}
+
+func (u *UpdateResourceServerResponseContent) GetRequireConsentNonRepudiation() bool {
+	if u == nil || u.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *u.RequireConsentNonRepudiation
 }
 
 func (u *UpdateResourceServerResponseContent) GetAuthorizationDetails() []any {
@@ -3677,6 +3755,13 @@ func (u *UpdateResourceServerResponseContent) SetTokenEncryption(tokenEncryption
 func (u *UpdateResourceServerResponseContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
 	u.ConsentPolicy = consentPolicy
 	u.require(updateResourceServerResponseContentFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	u.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	u.require(updateResourceServerResponseContentFieldRequireConsentNonRepudiation)
 }
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;

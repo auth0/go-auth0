@@ -4450,6 +4450,22 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetThumbprints", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueThumbprints *ConnectionThumbprints
+		obj.SetThumbprints(fernTestValueThumbprints)
+		assert.Equal(t, fernTestValueThumbprints, obj.Thumbprints)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetThumbprintsSha384", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueThumbprintsSha384 *ConnectionThumbprintsSha384
+		obj.SetThumbprintsSha384(fernTestValueThumbprintsSha384)
+		assert.Equal(t, fernTestValueThumbprintsSha384, obj.ThumbprintsSha384)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersConnectionPropertiesOptions(t *testing.T) {
@@ -5878,6 +5894,74 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 		_ = obj.GetOidcMetadata() // Should return zero value
 	})
 
+	t.Run("GetThumbprints", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionThumbprints
+		obj.Thumbprints = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetThumbprints(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetThumbprints_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.Thumbprints = nil
+		var expectedZero ConnectionThumbprints
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetThumbprints(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetThumbprints_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetThumbprints() // Should return zero value
+	})
+
+	t.Run("GetThumbprintsSha384", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionThumbprintsSha384
+		obj.ThumbprintsSha384 = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetThumbprintsSha384(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetThumbprintsSha384_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.ThumbprintsSha384 = nil
+		var expectedZero ConnectionThumbprintsSha384
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetThumbprintsSha384(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetThumbprintsSha384_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetThumbprintsSha384() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
@@ -7160,6 +7244,68 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 
 		// Act
 		obj.SetOidcMetadata(fernTestValueOidcMetadata)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetThumbprints_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueThumbprints *ConnectionThumbprints
+
+		// Act
+		obj.SetThumbprints(fernTestValueThumbprints)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetThumbprintsSha384_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueThumbprintsSha384 *ConnectionThumbprintsSha384
+
+		// Act
+		obj.SetThumbprintsSha384(fernTestValueThumbprintsSha384)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -14317,6 +14463,22 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetThumbprints", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueThumbprints *ConnectionThumbprints
+		obj.SetThumbprints(fernTestValueThumbprints)
+		assert.Equal(t, fernTestValueThumbprints, obj.Thumbprints)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetThumbprintsSha384", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueThumbprintsSha384 *ConnectionThumbprintsSha384
+		obj.SetThumbprintsSha384(fernTestValueThumbprintsSha384)
+		assert.Equal(t, fernTestValueThumbprintsSha384, obj.ThumbprintsSha384)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersUpdateConnectionOptions(t *testing.T) {
@@ -15745,6 +15907,74 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 		_ = obj.GetOidcMetadata() // Should return zero value
 	})
 
+	t.Run("GetThumbprints", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionThumbprints
+		obj.Thumbprints = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetThumbprints(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetThumbprints_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.Thumbprints = nil
+		var expectedZero ConnectionThumbprints
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetThumbprints(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetThumbprints_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetThumbprints() // Should return zero value
+	})
+
+	t.Run("GetThumbprintsSha384", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionThumbprintsSha384
+		obj.ThumbprintsSha384 = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetThumbprintsSha384(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetThumbprintsSha384_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.ThumbprintsSha384 = nil
+		var expectedZero ConnectionThumbprintsSha384
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetThumbprintsSha384(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetThumbprintsSha384_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetThumbprintsSha384() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
@@ -17027,6 +17257,68 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetOidcMetadata(fernTestValueOidcMetadata)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetThumbprints_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueThumbprints *ConnectionThumbprints
+
+		// Act
+		obj.SetThumbprints(fernTestValueThumbprints)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetThumbprintsSha384_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueThumbprintsSha384 *ConnectionThumbprintsSha384
+
+		// Act
+		obj.SetThumbprintsSha384(fernTestValueThumbprintsSha384)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -101,6 +101,7 @@ type AsyncApprovalNotificationsChannelsEnum string
 const (
 	AsyncApprovalNotificationsChannelsEnumGuardianPush AsyncApprovalNotificationsChannelsEnum = "guardian-push"
 	AsyncApprovalNotificationsChannelsEnumEmail        AsyncApprovalNotificationsChannelsEnum = "email"
+	AsyncApprovalNotificationsChannelsEnumMyAccount    AsyncApprovalNotificationsChannelsEnum = "my-account"
 )
 
 func NewAsyncApprovalNotificationsChannelsEnumFromString(s string) (AsyncApprovalNotificationsChannelsEnum, error) {
@@ -109,6 +110,8 @@ func NewAsyncApprovalNotificationsChannelsEnumFromString(s string) (AsyncApprova
 		return AsyncApprovalNotificationsChannelsEnumGuardianPush, nil
 	case "email":
 		return AsyncApprovalNotificationsChannelsEnumEmail, nil
+	case "my-account":
+		return AsyncApprovalNotificationsChannelsEnumMyAccount, nil
 	}
 	var t AsyncApprovalNotificationsChannelsEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -6185,10 +6188,10 @@ func (c ClientAppTypeEnum) Ptr() *ClientAppTypeEnum {
 	return &c
 }
 
-// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`, `my-account`.
 type ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration = []AsyncApprovalNotificationsChannelsEnum
 
-// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`, `my-account`.
 type ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration = []AsyncApprovalNotificationsChannelsEnum
 
 // Defines client authentication methods.
@@ -8592,6 +8595,7 @@ const (
 	ClientOidcBackchannelLogoutInitiatorsEnumEmailIdentifierChanged ClientOidcBackchannelLogoutInitiatorsEnum = "email-identifier-changed"
 	ClientOidcBackchannelLogoutInitiatorsEnumMfaPhoneUnenrolled     ClientOidcBackchannelLogoutInitiatorsEnum = "mfa-phone-unenrolled"
 	ClientOidcBackchannelLogoutInitiatorsEnumAccountDeactivated     ClientOidcBackchannelLogoutInitiatorsEnum = "account-deactivated"
+	ClientOidcBackchannelLogoutInitiatorsEnumProfileChanged         ClientOidcBackchannelLogoutInitiatorsEnum = "profile-changed"
 )
 
 func NewClientOidcBackchannelLogoutInitiatorsEnumFromString(s string) (ClientOidcBackchannelLogoutInitiatorsEnum, error) {
@@ -8614,6 +8618,8 @@ func NewClientOidcBackchannelLogoutInitiatorsEnumFromString(s string) (ClientOid
 		return ClientOidcBackchannelLogoutInitiatorsEnumMfaPhoneUnenrolled, nil
 	case "account-deactivated":
 		return ClientOidcBackchannelLogoutInitiatorsEnumAccountDeactivated, nil
+	case "profile-changed":
+		return ClientOidcBackchannelLogoutInitiatorsEnumProfileChanged, nil
 	}
 	var t ClientOidcBackchannelLogoutInitiatorsEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -9315,6 +9321,1148 @@ func (c *ClientRefreshTokenPolicy) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	clientSearchResponseFieldClientID                                       = big.NewInt(1 << 0)
+	clientSearchResponseFieldCreatedAt                                      = big.NewInt(1 << 1)
+	clientSearchResponseFieldUpdatedAt                                      = big.NewInt(1 << 2)
+	clientSearchResponseFieldTenant                                         = big.NewInt(1 << 3)
+	clientSearchResponseFieldName                                           = big.NewInt(1 << 4)
+	clientSearchResponseFieldDescription                                    = big.NewInt(1 << 5)
+	clientSearchResponseFieldGlobal                                         = big.NewInt(1 << 6)
+	clientSearchResponseFieldAppType                                        = big.NewInt(1 << 7)
+	clientSearchResponseFieldLogoURI                                        = big.NewInt(1 << 8)
+	clientSearchResponseFieldIsFirstParty                                   = big.NewInt(1 << 9)
+	clientSearchResponseFieldOidcConformant                                 = big.NewInt(1 << 10)
+	clientSearchResponseFieldCallbacks                                      = big.NewInt(1 << 11)
+	clientSearchResponseFieldAllowedOrigins                                 = big.NewInt(1 << 12)
+	clientSearchResponseFieldWebOrigins                                     = big.NewInt(1 << 13)
+	clientSearchResponseFieldClientAliases                                  = big.NewInt(1 << 14)
+	clientSearchResponseFieldAllowedClients                                 = big.NewInt(1 << 15)
+	clientSearchResponseFieldAllowedLogoutURLs                              = big.NewInt(1 << 16)
+	clientSearchResponseFieldSessionTransfer                                = big.NewInt(1 << 17)
+	clientSearchResponseFieldOidcLogout                                     = big.NewInt(1 << 18)
+	clientSearchResponseFieldGrantTypes                                     = big.NewInt(1 << 19)
+	clientSearchResponseFieldJwtConfiguration                               = big.NewInt(1 << 20)
+	clientSearchResponseFieldSSO                                            = big.NewInt(1 << 21)
+	clientSearchResponseFieldSSODisabled                                    = big.NewInt(1 << 22)
+	clientSearchResponseFieldCrossOriginAuthentication                      = big.NewInt(1 << 23)
+	clientSearchResponseFieldCrossOriginLoc                                 = big.NewInt(1 << 24)
+	clientSearchResponseFieldCustomLoginPageOn                              = big.NewInt(1 << 25)
+	clientSearchResponseFieldCustomLoginPage                                = big.NewInt(1 << 26)
+	clientSearchResponseFieldCustomLoginPagePreview                         = big.NewInt(1 << 27)
+	clientSearchResponseFieldFormTemplate                                   = big.NewInt(1 << 28)
+	clientSearchResponseFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 29)
+	clientSearchResponseFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 30)
+	clientSearchResponseFieldClientMetadata                                 = big.NewInt(1 << 31)
+	clientSearchResponseFieldMobile                                         = big.NewInt(1 << 32)
+	clientSearchResponseFieldInitiateLoginURI                               = big.NewInt(1 << 33)
+	clientSearchResponseFieldNativeSocialLogin                              = big.NewInt(1 << 34)
+	clientSearchResponseFieldFedcmLogin                                     = big.NewInt(1 << 35)
+	clientSearchResponseFieldRefreshToken                                   = big.NewInt(1 << 36)
+	clientSearchResponseFieldDefaultOrganization                            = big.NewInt(1 << 37)
+	clientSearchResponseFieldOrganizationUsage                              = big.NewInt(1 << 38)
+	clientSearchResponseFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
+	clientSearchResponseFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
+	clientSearchResponseFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
+	clientSearchResponseFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
+	clientSearchResponseFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
+	clientSearchResponseFieldSignedRequestObject                            = big.NewInt(1 << 44)
+	clientSearchResponseFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 45)
+	clientSearchResponseFieldComplianceLevel                                = big.NewInt(1 << 46)
+	clientSearchResponseFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 47)
+	clientSearchResponseFieldTokenExchange                                  = big.NewInt(1 << 48)
+	clientSearchResponseFieldParRequestExpiry                               = big.NewInt(1 << 49)
+	clientSearchResponseFieldTokenQuota                                     = big.NewInt(1 << 50)
+	clientSearchResponseFieldExpressConfiguration                           = big.NewInt(1 << 51)
+	clientSearchResponseFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 52)
+	clientSearchResponseFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
+	clientSearchResponseFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 54)
+	clientSearchResponseFieldAnonymousSessions                              = big.NewInt(1 << 55)
+	clientSearchResponseFieldThirdPartySecurityMode                         = big.NewInt(1 << 56)
+	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 57)
+	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 58)
+	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
+	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(1 << 60)
+	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 61)
+	clientSearchResponseFieldExternalClientID                               = big.NewInt(1 << 62)
+	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 63)
+)
+
+type ClientSearchResponse struct {
+	// ID of this client.
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The ISO 8601 timestamp of when this client was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 timestamp of when this client was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// Name of the tenant this client belongs to.
+	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
+	// Name of this client (min length: 1 character, does not allow `<` or `>`).
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Free text description of this client (max length: 140 characters).
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// Whether this is your global 'All Applications' client representing legacy tenant settings (true) or a regular client (false).
+	Global  *bool              `json:"global,omitempty" url:"global,omitempty"`
+	AppType *ClientAppTypeEnum `json:"app_type,omitempty" url:"app_type,omitempty"`
+	// URL of the logo to display for this client. Recommended size is 150x150 pixels.
+	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
+	// Whether this client a first party client (true) or not (false).
+	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
+	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"oidc_conformant,omitempty"`
+	// Comma-separated list of URLs whitelisted for Auth0 to use as a callback to the client after authentication.
+	Callbacks []string `json:"callbacks,omitempty" url:"callbacks,omitempty"`
+	// Comma-separated list of URLs allowed to make requests from JavaScript to Auth0 API (typically used with CORS). By default, all your callback URLs will be allowed. This field allows you to enter other origins if necessary. You can also use wildcards at the subdomain level (e.g., https://*.contoso.com). Query strings and hash information are not taken into account when validating these URLs.
+	AllowedOrigins []string `json:"allowed_origins,omitempty" url:"allowed_origins,omitempty"`
+	// Comma-separated list of allowed origins for use with <a href='https://auth0.com/docs/cross-origin-authentication'>Cross-Origin Authentication</a>, <a href='https://auth0.com/docs/flows/concepts/device-auth'>Device Flow</a>, and <a href='https://auth0.com/docs/protocols/oauth2#how-response-mode-works'>web message response mode</a>.
+	WebOrigins []string `json:"web_origins,omitempty" url:"web_origins,omitempty"`
+	// List of audiences/realms for SAML protocol. Used by the wsfed addon.
+	ClientAliases []string `json:"client_aliases,omitempty" url:"client_aliases,omitempty"`
+	// List of allow clients and API ids that are allowed to make delegation requests. Empty means all all your clients are allowed.
+	AllowedClients []string `json:"allowed_clients,omitempty" url:"allowed_clients,omitempty"`
+	// Comma-separated list of URLs that are valid to redirect to after logout from Auth0. Wildcards are allowed for subdomains.
+	AllowedLogoutURLs []string                             `json:"allowed_logout_urls,omitempty" url:"allowed_logout_urls,omitempty"`
+	SessionTransfer   *ClientSessionTransferConfiguration  `json:"session_transfer,omitempty" url:"session_transfer,omitempty"`
+	OidcLogout        *ClientOidcBackchannelLogoutSettings `json:"oidc_logout,omitempty" url:"oidc_logout,omitempty"`
+	// List of grant types supported for this application. Can include `authorization_code`, `implicit`, `refresh_token`, `client_credentials`, `password`, `http://auth0.com/oauth/grant-type/password-realm`, `http://auth0.com/oauth/grant-type/mfa-oob`, `http://auth0.com/oauth/grant-type/mfa-otp`, `http://auth0.com/oauth/grant-type/mfa-recovery-code`, `urn:openid:params:grant-type:ciba`, `urn:ietf:params:oauth:grant-type:device_code`, and `urn:auth0:params:oauth:grant-type:token-exchange:federated-connection-access-token`.
+	GrantTypes       []string                `json:"grant_types,omitempty" url:"grant_types,omitempty"`
+	JwtConfiguration *ClientJwtConfiguration `json:"jwt_configuration,omitempty" url:"jwt_configuration,omitempty"`
+	// Applies only to SSO clients and determines whether Auth0 will handle Single Sign On (true) or whether the Identity Provider will (false).
+	SSO *bool `json:"sso,omitempty" url:"sso,omitempty"`
+	// Whether Single Sign On is disabled (true) or enabled (true). Defaults to true.
+	SSODisabled *bool `json:"sso_disabled,omitempty" url:"sso_disabled,omitempty"`
+	// Whether this client can be used to make cross-origin authentication requests (true) or it is not allowed to make such requests (false).
+	CrossOriginAuthentication *bool `json:"cross_origin_authentication,omitempty" url:"cross_origin_authentication,omitempty"`
+	// URL of the location in your site where the cross origin verification takes place for the cross-origin auth flow when performing Auth in your own domain instead of Auth0 hosted login page.
+	CrossOriginLoc *string `json:"cross_origin_loc,omitempty" url:"cross_origin_loc,omitempty"`
+	// Whether a custom login page is to be used (true) or the default provided login page (false).
+	CustomLoginPageOn *bool `json:"custom_login_page_on,omitempty" url:"custom_login_page_on,omitempty"`
+	// The content (HTML, CSS, JS) of the custom login page.
+	CustomLoginPage *string `json:"custom_login_page,omitempty" url:"custom_login_page,omitempty"`
+	// The content (HTML, CSS, JS) of the custom login page. (Used on Previews)
+	CustomLoginPagePreview *string `json:"custom_login_page_preview,omitempty" url:"custom_login_page_preview,omitempty"`
+	// HTML form template to be used for WS-Federation.
+	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
+	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// Initiate login uri, must be https
+	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
+	NativeSocialLogin           *NativeSocialLogin                     `json:"native_social_login,omitempty" url:"native_social_login,omitempty"`
+	FedcmLogin                  *FedCmLogin                            `json:"fedcm_login,omitempty" url:"fedcm_login,omitempty"`
+	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
+	DefaultOrganization         *ClientDefaultOrganization             `json:"default_organization,omitempty" url:"default_organization,omitempty"`
+	OrganizationUsage           *ClientOrganizationUsageEnum           `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
+	OrganizationRequireBehavior *ClientOrganizationRequireBehaviorEnum `json:"organization_require_behavior,omitempty" url:"organization_require_behavior,omitempty"`
+	// Defines the available methods for organization discovery during the `pre_login_prompt`. Users can discover their organization either by `email`, `organization_name` or both.
+	OrganizationDiscoveryMethods []ClientOrganizationDiscoveryEnum `json:"organization_discovery_methods,omitempty" url:"organization_discovery_methods,omitempty"`
+	ClientAuthenticationMethods  *ClientAuthenticationMethod       `json:"client_authentication_methods,omitempty" url:"client_authentication_methods,omitempty"`
+	// Makes the use of Pushed Authorization Requests mandatory for this client
+	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
+	// Makes the use of Proof-of-Possession mandatory for this client
+	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
+	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
+	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
+	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	AnonymousSessions                   *AnonymousSessions                         `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
+	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	// The identifier of the resource server that this client is linked to.
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
+	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
+	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
+	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
+	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
+	JwksURI *string `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ClientSearchResponse) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+func (c *ClientSearchResponse) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *ClientSearchResponse) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *c.UpdatedAt
+}
+
+func (c *ClientSearchResponse) GetTenant() string {
+	if c == nil || c.Tenant == nil {
+		return ""
+	}
+	return *c.Tenant
+}
+
+func (c *ClientSearchResponse) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+func (c *ClientSearchResponse) GetDescription() string {
+	if c == nil || c.Description == nil {
+		return ""
+	}
+	return *c.Description
+}
+
+func (c *ClientSearchResponse) GetGlobal() bool {
+	if c == nil || c.Global == nil {
+		return false
+	}
+	return *c.Global
+}
+
+func (c *ClientSearchResponse) GetAppType() ClientAppTypeEnum {
+	if c == nil || c.AppType == nil {
+		return ""
+	}
+	return *c.AppType
+}
+
+func (c *ClientSearchResponse) GetLogoURI() string {
+	if c == nil || c.LogoURI == nil {
+		return ""
+	}
+	return *c.LogoURI
+}
+
+func (c *ClientSearchResponse) GetIsFirstParty() bool {
+	if c == nil || c.IsFirstParty == nil {
+		return false
+	}
+	return *c.IsFirstParty
+}
+
+func (c *ClientSearchResponse) GetOidcConformant() bool {
+	if c == nil || c.OidcConformant == nil {
+		return false
+	}
+	return *c.OidcConformant
+}
+
+func (c *ClientSearchResponse) GetCallbacks() []string {
+	if c == nil || c.Callbacks == nil {
+		return nil
+	}
+	return c.Callbacks
+}
+
+func (c *ClientSearchResponse) GetAllowedOrigins() []string {
+	if c == nil || c.AllowedOrigins == nil {
+		return nil
+	}
+	return c.AllowedOrigins
+}
+
+func (c *ClientSearchResponse) GetWebOrigins() []string {
+	if c == nil || c.WebOrigins == nil {
+		return nil
+	}
+	return c.WebOrigins
+}
+
+func (c *ClientSearchResponse) GetClientAliases() []string {
+	if c == nil || c.ClientAliases == nil {
+		return nil
+	}
+	return c.ClientAliases
+}
+
+func (c *ClientSearchResponse) GetAllowedClients() []string {
+	if c == nil || c.AllowedClients == nil {
+		return nil
+	}
+	return c.AllowedClients
+}
+
+func (c *ClientSearchResponse) GetAllowedLogoutURLs() []string {
+	if c == nil || c.AllowedLogoutURLs == nil {
+		return nil
+	}
+	return c.AllowedLogoutURLs
+}
+
+func (c *ClientSearchResponse) GetSessionTransfer() ClientSessionTransferConfiguration {
+	if c == nil || c.SessionTransfer == nil {
+		return ClientSessionTransferConfiguration{}
+	}
+	return *c.SessionTransfer
+}
+
+func (c *ClientSearchResponse) GetOidcLogout() ClientOidcBackchannelLogoutSettings {
+	if c == nil || c.OidcLogout == nil {
+		return ClientOidcBackchannelLogoutSettings{}
+	}
+	return *c.OidcLogout
+}
+
+func (c *ClientSearchResponse) GetGrantTypes() []string {
+	if c == nil || c.GrantTypes == nil {
+		return nil
+	}
+	return c.GrantTypes
+}
+
+func (c *ClientSearchResponse) GetJwtConfiguration() ClientJwtConfiguration {
+	if c == nil || c.JwtConfiguration == nil {
+		return ClientJwtConfiguration{}
+	}
+	return *c.JwtConfiguration
+}
+
+func (c *ClientSearchResponse) GetSSO() bool {
+	if c == nil || c.SSO == nil {
+		return false
+	}
+	return *c.SSO
+}
+
+func (c *ClientSearchResponse) GetSSODisabled() bool {
+	if c == nil || c.SSODisabled == nil {
+		return false
+	}
+	return *c.SSODisabled
+}
+
+func (c *ClientSearchResponse) GetCrossOriginAuthentication() bool {
+	if c == nil || c.CrossOriginAuthentication == nil {
+		return false
+	}
+	return *c.CrossOriginAuthentication
+}
+
+func (c *ClientSearchResponse) GetCrossOriginLoc() string {
+	if c == nil || c.CrossOriginLoc == nil {
+		return ""
+	}
+	return *c.CrossOriginLoc
+}
+
+func (c *ClientSearchResponse) GetCustomLoginPageOn() bool {
+	if c == nil || c.CustomLoginPageOn == nil {
+		return false
+	}
+	return *c.CustomLoginPageOn
+}
+
+func (c *ClientSearchResponse) GetCustomLoginPage() string {
+	if c == nil || c.CustomLoginPage == nil {
+		return ""
+	}
+	return *c.CustomLoginPage
+}
+
+func (c *ClientSearchResponse) GetCustomLoginPagePreview() string {
+	if c == nil || c.CustomLoginPagePreview == nil {
+		return ""
+	}
+	return *c.CustomLoginPagePreview
+}
+
+func (c *ClientSearchResponse) GetFormTemplate() string {
+	if c == nil || c.FormTemplate == nil {
+		return ""
+	}
+	return *c.FormTemplate
+}
+
+func (c *ClientSearchResponse) GetTokenEndpointAuthMethod() ClientTokenEndpointAuthMethodEnum {
+	if c == nil || c.TokenEndpointAuthMethod == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthMethod
+}
+
+func (c *ClientSearchResponse) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if c == nil || c.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *c.IsTokenEndpointIPHeaderTrusted
+}
+
+func (c *ClientSearchResponse) GetClientMetadata() ClientMetadata {
+	if c == nil || c.ClientMetadata == nil {
+		return nil
+	}
+	return *c.ClientMetadata
+}
+
+func (c *ClientSearchResponse) GetMobile() ClientMobile {
+	if c == nil || c.Mobile == nil {
+		return ClientMobile{}
+	}
+	return *c.Mobile
+}
+
+func (c *ClientSearchResponse) GetInitiateLoginURI() string {
+	if c == nil || c.InitiateLoginURI == nil {
+		return ""
+	}
+	return *c.InitiateLoginURI
+}
+
+func (c *ClientSearchResponse) GetNativeSocialLogin() NativeSocialLogin {
+	if c == nil || c.NativeSocialLogin == nil {
+		return NativeSocialLogin{}
+	}
+	return *c.NativeSocialLogin
+}
+
+func (c *ClientSearchResponse) GetFedcmLogin() FedCmLogin {
+	if c == nil || c.FedcmLogin == nil {
+		return FedCmLogin{}
+	}
+	return *c.FedcmLogin
+}
+
+func (c *ClientSearchResponse) GetRefreshToken() ClientRefreshTokenConfiguration {
+	if c == nil || c.RefreshToken == nil {
+		return ClientRefreshTokenConfiguration{}
+	}
+	return *c.RefreshToken
+}
+
+func (c *ClientSearchResponse) GetDefaultOrganization() ClientDefaultOrganization {
+	if c == nil || c.DefaultOrganization == nil {
+		return ClientDefaultOrganization{}
+	}
+	return *c.DefaultOrganization
+}
+
+func (c *ClientSearchResponse) GetOrganizationUsage() ClientOrganizationUsageEnum {
+	if c == nil || c.OrganizationUsage == nil {
+		return ""
+	}
+	return *c.OrganizationUsage
+}
+
+func (c *ClientSearchResponse) GetOrganizationRequireBehavior() ClientOrganizationRequireBehaviorEnum {
+	if c == nil || c.OrganizationRequireBehavior == nil {
+		return ""
+	}
+	return *c.OrganizationRequireBehavior
+}
+
+func (c *ClientSearchResponse) GetOrganizationDiscoveryMethods() []ClientOrganizationDiscoveryEnum {
+	if c == nil || c.OrganizationDiscoveryMethods == nil {
+		return nil
+	}
+	return c.OrganizationDiscoveryMethods
+}
+
+func (c *ClientSearchResponse) GetClientAuthenticationMethods() ClientAuthenticationMethod {
+	if c == nil || c.ClientAuthenticationMethods == nil {
+		return ClientAuthenticationMethod{}
+	}
+	return *c.ClientAuthenticationMethods
+}
+
+func (c *ClientSearchResponse) GetRequirePushedAuthorizationRequests() bool {
+	if c == nil || c.RequirePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.RequirePushedAuthorizationRequests
+}
+
+func (c *ClientSearchResponse) GetRequireProofOfPossession() bool {
+	if c == nil || c.RequireProofOfPossession == nil {
+		return false
+	}
+	return *c.RequireProofOfPossession
+}
+
+func (c *ClientSearchResponse) GetSignedRequestObject() ClientSignedRequestObjectWithCredentialID {
+	if c == nil || c.SignedRequestObject == nil {
+		return ClientSignedRequestObjectWithCredentialID{}
+	}
+	return *c.SignedRequestObject
+}
+
+func (c *ClientSearchResponse) GetTokenVaultPrivilegedAccess() ClientTokenVaultPrivilegedAccessWithCredentialID {
+	if c == nil || c.TokenVaultPrivilegedAccess == nil {
+		return ClientTokenVaultPrivilegedAccessWithCredentialID{}
+	}
+	return *c.TokenVaultPrivilegedAccess
+}
+
+func (c *ClientSearchResponse) GetComplianceLevel() ClientComplianceLevelEnum {
+	if c == nil || c.ComplianceLevel == nil {
+		return ""
+	}
+	return *c.ComplianceLevel
+}
+
+func (c *ClientSearchResponse) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if c == nil || c.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *c.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
+func (c *ClientSearchResponse) GetTokenExchange() ClientTokenExchangeConfiguration {
+	if c == nil || c.TokenExchange == nil {
+		return ClientTokenExchangeConfiguration{}
+	}
+	return *c.TokenExchange
+}
+
+func (c *ClientSearchResponse) GetParRequestExpiry() int {
+	if c == nil || c.ParRequestExpiry == nil {
+		return 0
+	}
+	return *c.ParRequestExpiry
+}
+
+func (c *ClientSearchResponse) GetTokenQuota() TokenQuota {
+	if c == nil || c.TokenQuota == nil {
+		return TokenQuota{}
+	}
+	return *c.TokenQuota
+}
+
+func (c *ClientSearchResponse) GetExpressConfiguration() ExpressConfiguration {
+	if c == nil || c.ExpressConfiguration == nil {
+		return ExpressConfiguration{}
+	}
+	return *c.ExpressConfiguration
+}
+
+func (c *ClientSearchResponse) GetB2BIntegrationConfiguration() B2BIntegrationConfiguration {
+	if c == nil || c.B2BIntegrationConfiguration == nil {
+		return B2BIntegrationConfiguration{}
+	}
+	return *c.B2BIntegrationConfiguration
+}
+
+func (c *ClientSearchResponse) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
+	if c == nil || c.MyOrganizationConfiguration == nil {
+		return ClientMyOrganizationResponseConfiguration{}
+	}
+	return *c.MyOrganizationConfiguration
+}
+
+func (c *ClientSearchResponse) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
+	if c == nil || c.IdentityAssertionAuthorizationGrant == nil {
+		return IdentityAssertionAuthorizationGrant{}
+	}
+	return *c.IdentityAssertionAuthorizationGrant
+}
+
+func (c *ClientSearchResponse) GetAnonymousSessions() AnonymousSessions {
+	if c == nil || c.AnonymousSessions == nil {
+		return AnonymousSessions{}
+	}
+	return *c.AnonymousSessions
+}
+
+func (c *ClientSearchResponse) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
+	if c == nil || c.ThirdPartySecurityMode == nil {
+		return ""
+	}
+	return *c.ThirdPartySecurityMode
+}
+
+func (c *ClientSearchResponse) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
+	if c == nil || c.RedirectionPolicy == nil {
+		return ""
+	}
+	return *c.RedirectionPolicy
+}
+
+func (c *ClientSearchResponse) GetResourceServerIdentifier() string {
+	if c == nil || c.ResourceServerIdentifier == nil {
+		return ""
+	}
+	return *c.ResourceServerIdentifier
+}
+
+func (c *ClientSearchResponse) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if c == nil || c.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *c.AsyncApprovalNotificationChannels
+}
+
+func (c *ClientSearchResponse) GetExternalMetadataType() ClientExternalMetadataTypeEnum {
+	if c == nil || c.ExternalMetadataType == nil {
+		return ""
+	}
+	return *c.ExternalMetadataType
+}
+
+func (c *ClientSearchResponse) GetExternalMetadataCreatedBy() ClientExternalMetadataCreatedByEnum {
+	if c == nil || c.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *c.ExternalMetadataCreatedBy
+}
+
+func (c *ClientSearchResponse) GetExternalClientID() string {
+	if c == nil || c.ExternalClientID == nil {
+		return ""
+	}
+	return *c.ExternalClientID
+}
+
+func (c *ClientSearchResponse) GetJwksURI() string {
+	if c == nil || c.JwksURI == nil {
+		return ""
+	}
+	return *c.JwksURI
+}
+
+func (c *ClientSearchResponse) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *ClientSearchResponse) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(clientSearchResponseFieldClientID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(clientSearchResponseFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetUpdatedAt(updatedAt *time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(clientSearchResponseFieldUpdatedAt)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTenant(tenant *string) {
+	c.Tenant = tenant
+	c.require(clientSearchResponseFieldTenant)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetName(name *string) {
+	c.Name = name
+	c.require(clientSearchResponseFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetDescription(description *string) {
+	c.Description = description
+	c.require(clientSearchResponseFieldDescription)
+}
+
+// SetGlobal sets the Global field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetGlobal(global *bool) {
+	c.Global = global
+	c.require(clientSearchResponseFieldGlobal)
+}
+
+// SetAppType sets the AppType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAppType(appType *ClientAppTypeEnum) {
+	c.AppType = appType
+	c.require(clientSearchResponseFieldAppType)
+}
+
+// SetLogoURI sets the LogoURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetLogoURI(logoURI *string) {
+	c.LogoURI = logoURI
+	c.require(clientSearchResponseFieldLogoURI)
+}
+
+// SetIsFirstParty sets the IsFirstParty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetIsFirstParty(isFirstParty *bool) {
+	c.IsFirstParty = isFirstParty
+	c.require(clientSearchResponseFieldIsFirstParty)
+}
+
+// SetOidcConformant sets the OidcConformant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOidcConformant(oidcConformant *bool) {
+	c.OidcConformant = oidcConformant
+	c.require(clientSearchResponseFieldOidcConformant)
+}
+
+// SetCallbacks sets the Callbacks field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCallbacks(callbacks []string) {
+	c.Callbacks = callbacks
+	c.require(clientSearchResponseFieldCallbacks)
+}
+
+// SetAllowedOrigins sets the AllowedOrigins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAllowedOrigins(allowedOrigins []string) {
+	c.AllowedOrigins = allowedOrigins
+	c.require(clientSearchResponseFieldAllowedOrigins)
+}
+
+// SetWebOrigins sets the WebOrigins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetWebOrigins(webOrigins []string) {
+	c.WebOrigins = webOrigins
+	c.require(clientSearchResponseFieldWebOrigins)
+}
+
+// SetClientAliases sets the ClientAliases field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetClientAliases(clientAliases []string) {
+	c.ClientAliases = clientAliases
+	c.require(clientSearchResponseFieldClientAliases)
+}
+
+// SetAllowedClients sets the AllowedClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAllowedClients(allowedClients []string) {
+	c.AllowedClients = allowedClients
+	c.require(clientSearchResponseFieldAllowedClients)
+}
+
+// SetAllowedLogoutURLs sets the AllowedLogoutURLs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAllowedLogoutURLs(allowedLogoutURLs []string) {
+	c.AllowedLogoutURLs = allowedLogoutURLs
+	c.require(clientSearchResponseFieldAllowedLogoutURLs)
+}
+
+// SetSessionTransfer sets the SessionTransfer field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSessionTransfer(sessionTransfer *ClientSessionTransferConfiguration) {
+	c.SessionTransfer = sessionTransfer
+	c.require(clientSearchResponseFieldSessionTransfer)
+}
+
+// SetOidcLogout sets the OidcLogout field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOidcLogout(oidcLogout *ClientOidcBackchannelLogoutSettings) {
+	c.OidcLogout = oidcLogout
+	c.require(clientSearchResponseFieldOidcLogout)
+}
+
+// SetGrantTypes sets the GrantTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetGrantTypes(grantTypes []string) {
+	c.GrantTypes = grantTypes
+	c.require(clientSearchResponseFieldGrantTypes)
+}
+
+// SetJwtConfiguration sets the JwtConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetJwtConfiguration(jwtConfiguration *ClientJwtConfiguration) {
+	c.JwtConfiguration = jwtConfiguration
+	c.require(clientSearchResponseFieldJwtConfiguration)
+}
+
+// SetSSO sets the SSO field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSSO(sso *bool) {
+	c.SSO = sso
+	c.require(clientSearchResponseFieldSSO)
+}
+
+// SetSSODisabled sets the SSODisabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSSODisabled(ssoDisabled *bool) {
+	c.SSODisabled = ssoDisabled
+	c.require(clientSearchResponseFieldSSODisabled)
+}
+
+// SetCrossOriginAuthentication sets the CrossOriginAuthentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCrossOriginAuthentication(crossOriginAuthentication *bool) {
+	c.CrossOriginAuthentication = crossOriginAuthentication
+	c.require(clientSearchResponseFieldCrossOriginAuthentication)
+}
+
+// SetCrossOriginLoc sets the CrossOriginLoc field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCrossOriginLoc(crossOriginLoc *string) {
+	c.CrossOriginLoc = crossOriginLoc
+	c.require(clientSearchResponseFieldCrossOriginLoc)
+}
+
+// SetCustomLoginPageOn sets the CustomLoginPageOn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCustomLoginPageOn(customLoginPageOn *bool) {
+	c.CustomLoginPageOn = customLoginPageOn
+	c.require(clientSearchResponseFieldCustomLoginPageOn)
+}
+
+// SetCustomLoginPage sets the CustomLoginPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCustomLoginPage(customLoginPage *string) {
+	c.CustomLoginPage = customLoginPage
+	c.require(clientSearchResponseFieldCustomLoginPage)
+}
+
+// SetCustomLoginPagePreview sets the CustomLoginPagePreview field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCustomLoginPagePreview(customLoginPagePreview *string) {
+	c.CustomLoginPagePreview = customLoginPagePreview
+	c.require(clientSearchResponseFieldCustomLoginPagePreview)
+}
+
+// SetFormTemplate sets the FormTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetFormTemplate(formTemplate *string) {
+	c.FormTemplate = formTemplate
+	c.require(clientSearchResponseFieldFormTemplate)
+}
+
+// SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum) {
+	c.TokenEndpointAuthMethod = tokenEndpointAuthMethod
+	c.require(clientSearchResponseFieldTokenEndpointAuthMethod)
+}
+
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	c.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	c.require(clientSearchResponseFieldIsTokenEndpointIPHeaderTrusted)
+}
+
+// SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetClientMetadata(clientMetadata *ClientMetadata) {
+	c.ClientMetadata = clientMetadata
+	c.require(clientSearchResponseFieldClientMetadata)
+}
+
+// SetMobile sets the Mobile field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetMobile(mobile *ClientMobile) {
+	c.Mobile = mobile
+	c.require(clientSearchResponseFieldMobile)
+}
+
+// SetInitiateLoginURI sets the InitiateLoginURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetInitiateLoginURI(initiateLoginURI *string) {
+	c.InitiateLoginURI = initiateLoginURI
+	c.require(clientSearchResponseFieldInitiateLoginURI)
+}
+
+// SetNativeSocialLogin sets the NativeSocialLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetNativeSocialLogin(nativeSocialLogin *NativeSocialLogin) {
+	c.NativeSocialLogin = nativeSocialLogin
+	c.require(clientSearchResponseFieldNativeSocialLogin)
+}
+
+// SetFedcmLogin sets the FedcmLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetFedcmLogin(fedcmLogin *FedCmLogin) {
+	c.FedcmLogin = fedcmLogin
+	c.require(clientSearchResponseFieldFedcmLogin)
+}
+
+// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetRefreshToken(refreshToken *ClientRefreshTokenConfiguration) {
+	c.RefreshToken = refreshToken
+	c.require(clientSearchResponseFieldRefreshToken)
+}
+
+// SetDefaultOrganization sets the DefaultOrganization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetDefaultOrganization(defaultOrganization *ClientDefaultOrganization) {
+	c.DefaultOrganization = defaultOrganization
+	c.require(clientSearchResponseFieldDefaultOrganization)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOrganizationUsage(organizationUsage *ClientOrganizationUsageEnum) {
+	c.OrganizationUsage = organizationUsage
+	c.require(clientSearchResponseFieldOrganizationUsage)
+}
+
+// SetOrganizationRequireBehavior sets the OrganizationRequireBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOrganizationRequireBehavior(organizationRequireBehavior *ClientOrganizationRequireBehaviorEnum) {
+	c.OrganizationRequireBehavior = organizationRequireBehavior
+	c.require(clientSearchResponseFieldOrganizationRequireBehavior)
+}
+
+// SetOrganizationDiscoveryMethods sets the OrganizationDiscoveryMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOrganizationDiscoveryMethods(organizationDiscoveryMethods []ClientOrganizationDiscoveryEnum) {
+	c.OrganizationDiscoveryMethods = organizationDiscoveryMethods
+	c.require(clientSearchResponseFieldOrganizationDiscoveryMethods)
+}
+
+// SetClientAuthenticationMethods sets the ClientAuthenticationMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetClientAuthenticationMethods(clientAuthenticationMethods *ClientAuthenticationMethod) {
+	c.ClientAuthenticationMethods = clientAuthenticationMethods
+	c.require(clientSearchResponseFieldClientAuthenticationMethods)
+}
+
+// SetRequirePushedAuthorizationRequests sets the RequirePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetRequirePushedAuthorizationRequests(requirePushedAuthorizationRequests *bool) {
+	c.RequirePushedAuthorizationRequests = requirePushedAuthorizationRequests
+	c.require(clientSearchResponseFieldRequirePushedAuthorizationRequests)
+}
+
+// SetRequireProofOfPossession sets the RequireProofOfPossession field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetRequireProofOfPossession(requireProofOfPossession *bool) {
+	c.RequireProofOfPossession = requireProofOfPossession
+	c.require(clientSearchResponseFieldRequireProofOfPossession)
+}
+
+// SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSignedRequestObject(signedRequestObject *ClientSignedRequestObjectWithCredentialID) {
+	c.SignedRequestObject = signedRequestObject
+	c.require(clientSearchResponseFieldSignedRequestObject)
+}
+
+// SetTokenVaultPrivilegedAccess sets the TokenVaultPrivilegedAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTokenVaultPrivilegedAccess(tokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID) {
+	c.TokenVaultPrivilegedAccess = tokenVaultPrivilegedAccess
+	c.require(clientSearchResponseFieldTokenVaultPrivilegedAccess)
+}
+
+// SetComplianceLevel sets the ComplianceLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetComplianceLevel(complianceLevel *ClientComplianceLevelEnum) {
+	c.ComplianceLevel = complianceLevel
+	c.require(clientSearchResponseFieldComplianceLevel)
+}
+
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	c.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	c.require(clientSearchResponseFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
+// SetTokenExchange sets the TokenExchange field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTokenExchange(tokenExchange *ClientTokenExchangeConfiguration) {
+	c.TokenExchange = tokenExchange
+	c.require(clientSearchResponseFieldTokenExchange)
+}
+
+// SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetParRequestExpiry(parRequestExpiry *int) {
+	c.ParRequestExpiry = parRequestExpiry
+	c.require(clientSearchResponseFieldParRequestExpiry)
+}
+
+// SetTokenQuota sets the TokenQuota field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTokenQuota(tokenQuota *TokenQuota) {
+	c.TokenQuota = tokenQuota
+	c.require(clientSearchResponseFieldTokenQuota)
+}
+
+// SetExpressConfiguration sets the ExpressConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
+	c.ExpressConfiguration = expressConfiguration
+	c.require(clientSearchResponseFieldExpressConfiguration)
+}
+
+// SetB2BIntegrationConfiguration sets the B2BIntegrationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetB2BIntegrationConfiguration(b2BIntegrationConfiguration *B2BIntegrationConfiguration) {
+	c.B2BIntegrationConfiguration = b2BIntegrationConfiguration
+	c.require(clientSearchResponseFieldB2BIntegrationConfiguration)
+}
+
+// SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
+	c.MyOrganizationConfiguration = myOrganizationConfiguration
+	c.require(clientSearchResponseFieldMyOrganizationConfiguration)
+}
+
+// SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
+	c.IdentityAssertionAuthorizationGrant = identityAssertionAuthorizationGrant
+	c.require(clientSearchResponseFieldIdentityAssertionAuthorizationGrant)
+}
+
+// SetAnonymousSessions sets the AnonymousSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAnonymousSessions(anonymousSessions *AnonymousSessions) {
+	c.AnonymousSessions = anonymousSessions
+	c.require(clientSearchResponseFieldAnonymousSessions)
+}
+
+// SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
+	c.ThirdPartySecurityMode = thirdPartySecurityMode
+	c.require(clientSearchResponseFieldThirdPartySecurityMode)
+}
+
+// SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetRedirectionPolicy(redirectionPolicy *ClientRedirectionPolicyEnum) {
+	c.RedirectionPolicy = redirectionPolicy
+	c.require(clientSearchResponseFieldRedirectionPolicy)
+}
+
+// SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetResourceServerIdentifier(resourceServerIdentifier *string) {
+	c.ResourceServerIdentifier = resourceServerIdentifier
+	c.require(clientSearchResponseFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	c.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	c.require(clientSearchResponseFieldAsyncApprovalNotificationChannels)
+}
+
+// SetExternalMetadataType sets the ExternalMetadataType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExternalMetadataType(externalMetadataType *ClientExternalMetadataTypeEnum) {
+	c.ExternalMetadataType = externalMetadataType
+	c.require(clientSearchResponseFieldExternalMetadataType)
+}
+
+// SetExternalMetadataCreatedBy sets the ExternalMetadataCreatedBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
+	c.ExternalMetadataCreatedBy = externalMetadataCreatedBy
+	c.require(clientSearchResponseFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExternalClientID(externalClientID *string) {
+	c.ExternalClientID = externalClientID
+	c.require(clientSearchResponseFieldExternalClientID)
+}
+
+// SetJwksURI sets the JwksURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetJwksURI(jwksURI *string) {
+	c.JwksURI = jwksURI
+	c.require(clientSearchResponseFieldJwksURI)
+}
+
+func (c *ClientSearchResponse) UnmarshalJSON(data []byte) error {
+	type embed ClientSearchResponse
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ClientSearchResponse(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	c.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientSearchResponse) MarshalJSON() ([]byte, error) {
+	type embed ClientSearchResponse
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(c.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *ClientSearchResponse) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 type ClientSessionTransferAllowedAuthenticationMethodsEnum string
 
 const (
@@ -10001,6 +11149,29 @@ func (c *ClientSigningKey) String() string {
 
 // Signing certificates associated with this client.
 type ClientSigningKeys = []*ClientSigningKey
+
+// Field name to sort results by in ascending order. Defaults to insertion order (oldest first) if not provided.
+type ClientSortFieldEnum string
+
+const (
+	ClientSortFieldEnumName      ClientSortFieldEnum = "name"
+	ClientSortFieldEnumUpdatedAt ClientSortFieldEnum = "updated_at"
+)
+
+func NewClientSortFieldEnumFromString(s string) (ClientSortFieldEnum, error) {
+	switch s {
+	case "name":
+		return ClientSortFieldEnumName, nil
+	case "updated_at":
+		return ClientSortFieldEnumUpdatedAt, nil
+	}
+	var t ClientSortFieldEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientSortFieldEnum) Ptr() *ClientSortFieldEnum {
+	return &c
+}
 
 // Security mode for third-party clients. `strict` enforces <a href="https://auth0.com/docs/get-started/applications/third-party-applications/security-controls">enhanced security controls</a>: OAuth 2.1 alignment, explicit API authorization, and a curated set of supported features. `permissive` preserves <a href="https://auth0.com/docs/get-started/applications/third-party-applications/permissive-mode">pre-existing behavior</a> and is only available to tenants with prior third-party client usage. Set on creation and cannot be modified.
 type ClientThirdPartySecurityModeEnum string
@@ -16831,6 +18002,108 @@ func (r *RotateClientSecretResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	searchClientsResponseContentFieldClients = big.NewInt(1 << 0)
+	searchClientsResponseContentFieldNext    = big.NewInt(1 << 1)
+)
+
+type SearchClientsResponseContent struct {
+	// Array of client objects matching the search criteria.
+	Clients []*ClientSearchResponse `json:"clients" url:"clients"`
+	// Cursor for retrieving the next page of results. Absent when no more results are available.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SearchClientsResponseContent) GetClients() []*ClientSearchResponse {
+	if s == nil {
+		return nil
+	}
+	return s.Clients
+}
+
+func (s *SearchClientsResponseContent) GetNext() string {
+	if s == nil || s.Next == nil {
+		return ""
+	}
+	return *s.Next
+}
+
+func (s *SearchClientsResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SearchClientsResponseContent) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientsResponseContent) SetClients(clients []*ClientSearchResponse) {
+	s.Clients = clients
+	s.require(searchClientsResponseContentFieldClients)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientsResponseContent) SetNext(next *string) {
+	s.Next = next
+	s.require(searchClientsResponseContentFieldNext)
+}
+
+func (s *SearchClientsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchClientsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SearchClientsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SearchClientsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SearchClientsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SearchClientsResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 var (
