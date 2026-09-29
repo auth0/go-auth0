@@ -77,6 +77,143 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
+func TestExperimentationExperimentsListWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.ListExperimentsRequestParameters{
+		From: management.String(
+			"from",
+		),
+		Take: management.Int(
+			1,
+		),
+		Status: management.ExperimentStatusEnumDraft.Ptr(),
+		AuthenticationFlow: management.String(
+			"authentication_flow",
+		),
+		FeatureFlagID: management.String(
+			"feature_flag_id",
+		),
+	}
+	_, invocationErr := client.Experimentation.Experiments.List(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsListWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestExperimentationExperimentsListWithWireMock", "GET", "/experimentation/experiments", map[string]interface{}{"from": "from", "take": "1", "status": "draft", "authentication_flow": "authentication_flow", "feature_flag_id": "feature_flag_id"}, 1)
+}
+
+func TestExperimentationExperimentsCreateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.CreateExperimentRequestContent{
+		Name:               "name",
+		FeatureFlagID:      "feature_flag_id",
+		AuthenticationFlow: management.AuthenticationFlowEnumAuthentication,
+	}
+	_, invocationErr := client.Experimentation.Experiments.Create(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsCreateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestExperimentationExperimentsCreateWithWireMock", "POST", "/experimentation/experiments", nil, 1)
+}
+
+func TestExperimentationExperimentsGetWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Experimentation.Experiments.Get(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsGetWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestExperimentationExperimentsGetWithWireMock", "GET", "/experimentation/experiments/id", nil, 1)
+}
+
+func TestExperimentationExperimentsDeleteWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Experimentation.Experiments.Delete(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsDeleteWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestExperimentationExperimentsDeleteWithWireMock", "DELETE", "/experimentation/experiments/id", nil, 1)
+}
+
+func TestExperimentationExperimentsUpdateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateExperimentRequestParameters{}
+	_, invocationErr := client.Experimentation.Experiments.Update(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsUpdateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestExperimentationExperimentsUpdateWithWireMock", "PATCH", "/experimentation/experiments/id", nil, 1)
+}
+
 func TestExperimentationExperimentsAdvanceRampWithWireMock(
 	t *testing.T,
 ) {
@@ -102,4 +239,54 @@ func TestExperimentationExperimentsAdvanceRampWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestExperimentationExperimentsAdvanceRampWithWireMock", "POST", "/experimentation/experiments/id/advance-ramp", nil, 1)
+}
+
+func TestExperimentationExperimentsUpdateStatusWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.UpdateExperimentStatusRequestContent{
+		Status: management.ExperimentTransitionStatusEnumActive,
+	}
+	_, invocationErr := client.Experimentation.Experiments.UpdateStatus(
+		context.TODO(),
+		"id",
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsUpdateStatusWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestExperimentationExperimentsUpdateStatusWithWireMock", "POST", "/experimentation/experiments/id/status", nil, 1)
+}
+
+func TestExperimentationExperimentsValidateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Experimentation.Experiments.Validate(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsValidateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestExperimentationExperimentsValidateWithWireMock", "POST", "/experimentation/experiments/id/validate", nil, 1)
 }

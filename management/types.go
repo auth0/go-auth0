@@ -5761,6 +5761,426 @@ func (a *AdvanceRampResponseContent) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+var (
+	allocationItemFieldVariationID       = big.NewInt(1 << 0)
+	allocationItemFieldVariationName     = big.NewInt(1 << 1)
+	allocationItemFieldSegmentID         = big.NewInt(1 << 2)
+	allocationItemFieldSegmentName       = big.NewInt(1 << 3)
+	allocationItemFieldWeight            = big.NewInt(1 << 4)
+	allocationItemFieldPriority          = big.NewInt(1 << 5)
+	allocationItemFieldIsControl         = big.NewInt(1 << 6)
+	allocationItemFieldIsFallback        = big.NewInt(1 << 7)
+	allocationItemFieldVariationSnapshot = big.NewInt(1 << 8)
+	allocationItemFieldSegmentSnapshot   = big.NewInt(1 << 9)
+)
+
+type AllocationItem struct {
+	VariationID       *string        `json:"variation_id,omitempty" url:"variation_id,omitempty"`
+	VariationName     *string        `json:"variation_name,omitempty" url:"variation_name,omitempty"`
+	SegmentID         *string        `json:"segment_id,omitempty" url:"segment_id,omitempty"`
+	SegmentName       *string        `json:"segment_name,omitempty" url:"segment_name,omitempty"`
+	Weight            *int           `json:"weight,omitempty" url:"weight,omitempty"`
+	Priority          *int           `json:"priority,omitempty" url:"priority,omitempty"`
+	IsControl         *bool          `json:"is_control,omitempty" url:"is_control,omitempty"`
+	IsFallback        *bool          `json:"is_fallback,omitempty" url:"is_fallback,omitempty"`
+	VariationSnapshot map[string]any `json:"variation_snapshot,omitempty" url:"variation_snapshot,omitempty"`
+	SegmentSnapshot   map[string]any `json:"segment_snapshot,omitempty" url:"segment_snapshot,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AllocationItem) GetVariationID() string {
+	if a == nil || a.VariationID == nil {
+		return ""
+	}
+	return *a.VariationID
+}
+
+func (a *AllocationItem) GetVariationName() string {
+	if a == nil || a.VariationName == nil {
+		return ""
+	}
+	return *a.VariationName
+}
+
+func (a *AllocationItem) GetSegmentID() string {
+	if a == nil || a.SegmentID == nil {
+		return ""
+	}
+	return *a.SegmentID
+}
+
+func (a *AllocationItem) GetSegmentName() string {
+	if a == nil || a.SegmentName == nil {
+		return ""
+	}
+	return *a.SegmentName
+}
+
+func (a *AllocationItem) GetWeight() int {
+	if a == nil || a.Weight == nil {
+		return 0
+	}
+	return *a.Weight
+}
+
+func (a *AllocationItem) GetPriority() int {
+	if a == nil || a.Priority == nil {
+		return 0
+	}
+	return *a.Priority
+}
+
+func (a *AllocationItem) GetIsControl() bool {
+	if a == nil || a.IsControl == nil {
+		return false
+	}
+	return *a.IsControl
+}
+
+func (a *AllocationItem) GetIsFallback() bool {
+	if a == nil || a.IsFallback == nil {
+		return false
+	}
+	return *a.IsFallback
+}
+
+func (a *AllocationItem) GetVariationSnapshot() map[string]any {
+	if a == nil || a.VariationSnapshot == nil {
+		return nil
+	}
+	return a.VariationSnapshot
+}
+
+func (a *AllocationItem) GetSegmentSnapshot() map[string]any {
+	if a == nil || a.SegmentSnapshot == nil {
+		return nil
+	}
+	return a.SegmentSnapshot
+}
+
+func (a *AllocationItem) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AllocationItem) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetVariationID sets the VariationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetVariationID(variationID *string) {
+	a.VariationID = variationID
+	a.require(allocationItemFieldVariationID)
+}
+
+// SetVariationName sets the VariationName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetVariationName(variationName *string) {
+	a.VariationName = variationName
+	a.require(allocationItemFieldVariationName)
+}
+
+// SetSegmentID sets the SegmentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetSegmentID(segmentID *string) {
+	a.SegmentID = segmentID
+	a.require(allocationItemFieldSegmentID)
+}
+
+// SetSegmentName sets the SegmentName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetSegmentName(segmentName *string) {
+	a.SegmentName = segmentName
+	a.require(allocationItemFieldSegmentName)
+}
+
+// SetWeight sets the Weight field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetWeight(weight *int) {
+	a.Weight = weight
+	a.require(allocationItemFieldWeight)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetPriority(priority *int) {
+	a.Priority = priority
+	a.require(allocationItemFieldPriority)
+}
+
+// SetIsControl sets the IsControl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetIsControl(isControl *bool) {
+	a.IsControl = isControl
+	a.require(allocationItemFieldIsControl)
+}
+
+// SetIsFallback sets the IsFallback field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetIsFallback(isFallback *bool) {
+	a.IsFallback = isFallback
+	a.require(allocationItemFieldIsFallback)
+}
+
+// SetVariationSnapshot sets the VariationSnapshot field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetVariationSnapshot(variationSnapshot map[string]any) {
+	a.VariationSnapshot = variationSnapshot
+	a.require(allocationItemFieldVariationSnapshot)
+}
+
+// SetSegmentSnapshot sets the SegmentSnapshot field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationItem) SetSegmentSnapshot(segmentSnapshot map[string]any) {
+	a.SegmentSnapshot = segmentSnapshot
+	a.require(allocationItemFieldSegmentSnapshot)
+}
+
+func (a *AllocationItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler AllocationItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AllocationItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AllocationItem) MarshalJSON() ([]byte, error) {
+	type embed AllocationItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AllocationItem) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	allocationRequestItemFieldVariationID = big.NewInt(1 << 0)
+	allocationRequestItemFieldWeight      = big.NewInt(1 << 1)
+	allocationRequestItemFieldSegmentID   = big.NewInt(1 << 2)
+	allocationRequestItemFieldPriority    = big.NewInt(1 << 3)
+	allocationRequestItemFieldIsControl   = big.NewInt(1 << 4)
+	allocationRequestItemFieldIsFallback  = big.NewInt(1 << 5)
+)
+
+type AllocationRequestItem struct {
+	// The ID of the variation to allocate
+	VariationID string `json:"variation_id" url:"variation_id"`
+	// Percentage weight for this allocation (percentage strategy only)
+	Weight *int `json:"weight,omitempty" url:"weight,omitempty"`
+	// The segment this allocation targets (segment strategy only)
+	SegmentID *string `json:"segment_id,omitempty" url:"segment_id,omitempty"`
+	// Evaluation order; 1 = highest priority (segment strategy only)
+	Priority *int `json:"priority,omitempty" url:"priority,omitempty"`
+	// Whether this allocation is the control group
+	IsControl bool `json:"is_control" url:"is_control"`
+	// Whether this allocation is the default fallback (segment strategy only)
+	IsFallback *bool `json:"is_fallback,omitempty" url:"is_fallback,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AllocationRequestItem) GetVariationID() string {
+	if a == nil {
+		return ""
+	}
+	return a.VariationID
+}
+
+func (a *AllocationRequestItem) GetWeight() int {
+	if a == nil || a.Weight == nil {
+		return 0
+	}
+	return *a.Weight
+}
+
+func (a *AllocationRequestItem) GetSegmentID() string {
+	if a == nil || a.SegmentID == nil {
+		return ""
+	}
+	return *a.SegmentID
+}
+
+func (a *AllocationRequestItem) GetPriority() int {
+	if a == nil || a.Priority == nil {
+		return 0
+	}
+	return *a.Priority
+}
+
+func (a *AllocationRequestItem) GetIsControl() bool {
+	if a == nil {
+		return false
+	}
+	return a.IsControl
+}
+
+func (a *AllocationRequestItem) GetIsFallback() bool {
+	if a == nil || a.IsFallback == nil {
+		return false
+	}
+	return *a.IsFallback
+}
+
+func (a *AllocationRequestItem) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AllocationRequestItem) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetVariationID sets the VariationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationRequestItem) SetVariationID(variationID string) {
+	a.VariationID = variationID
+	a.require(allocationRequestItemFieldVariationID)
+}
+
+// SetWeight sets the Weight field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationRequestItem) SetWeight(weight *int) {
+	a.Weight = weight
+	a.require(allocationRequestItemFieldWeight)
+}
+
+// SetSegmentID sets the SegmentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationRequestItem) SetSegmentID(segmentID *string) {
+	a.SegmentID = segmentID
+	a.require(allocationRequestItemFieldSegmentID)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationRequestItem) SetPriority(priority *int) {
+	a.Priority = priority
+	a.require(allocationRequestItemFieldPriority)
+}
+
+// SetIsControl sets the IsControl field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationRequestItem) SetIsControl(isControl bool) {
+	a.IsControl = isControl
+	a.require(allocationRequestItemFieldIsControl)
+}
+
+// SetIsFallback sets the IsFallback field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AllocationRequestItem) SetIsFallback(isFallback *bool) {
+	a.IsFallback = isFallback
+	a.require(allocationRequestItemFieldIsFallback)
+}
+
+func (a *AllocationRequestItem) UnmarshalJSON(data []byte) error {
+	type unmarshaler AllocationRequestItem
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AllocationRequestItem(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AllocationRequestItem) MarshalJSON() ([]byte, error) {
+	type embed AllocationRequestItem
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AllocationRequestItem) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+type AllocationStrategyEnum string
+
+const (
+	AllocationStrategyEnumPercentage AllocationStrategyEnum = "percentage"
+	AllocationStrategyEnumSegment    AllocationStrategyEnum = "segment"
+)
+
+func NewAllocationStrategyEnumFromString(s string) (AllocationStrategyEnum, error) {
+	switch s {
+	case "percentage":
+		return AllocationStrategyEnumPercentage, nil
+	case "segment":
+		return AllocationStrategyEnumSegment, nil
+	}
+	var t AllocationStrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AllocationStrategyEnum) Ptr() *AllocationStrategyEnum {
+	return &a
+}
+
 // IP address to check.
 type AnomalyIPFormat = string
 
@@ -7265,6 +7685,41 @@ func (a *AttackProtectionUpdateCaptchaRecaptchaV2) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", a)
+}
+
+// Specifies the target authentication flow for this experiment. Must be one of: authentication, mfa_enrollment, mfa_challenge, password_reset, passkey_enrollment, or all. Note that the all value targets every flow at once, but requires that this is the only active experiment.
+type AuthenticationFlowEnum string
+
+const (
+	AuthenticationFlowEnumAuthentication    AuthenticationFlowEnum = "authentication"
+	AuthenticationFlowEnumMfaEnrollment     AuthenticationFlowEnum = "mfa_enrollment"
+	AuthenticationFlowEnumMfaChallenge      AuthenticationFlowEnum = "mfa_challenge"
+	AuthenticationFlowEnumPasswordReset     AuthenticationFlowEnum = "password_reset"
+	AuthenticationFlowEnumPasskeyEnrollment AuthenticationFlowEnum = "passkey_enrollment"
+	AuthenticationFlowEnumAll               AuthenticationFlowEnum = "all"
+)
+
+func NewAuthenticationFlowEnumFromString(s string) (AuthenticationFlowEnum, error) {
+	switch s {
+	case "authentication":
+		return AuthenticationFlowEnumAuthentication, nil
+	case "mfa_enrollment":
+		return AuthenticationFlowEnumMfaEnrollment, nil
+	case "mfa_challenge":
+		return AuthenticationFlowEnumMfaChallenge, nil
+	case "password_reset":
+		return AuthenticationFlowEnumPasswordReset, nil
+	case "passkey_enrollment":
+		return AuthenticationFlowEnumPasskeyEnrollment, nil
+	case "all":
+		return AuthenticationFlowEnumAll, nil
+	}
+	var t AuthenticationFlowEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AuthenticationFlowEnum) Ptr() *AuthenticationFlowEnum {
+	return &a
 }
 
 type AuthenticationMethodTypeEnum string
@@ -12319,29 +12774,6 @@ func (c *ConnectionDecryptionKeySAMLCert) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Controls whether connections created from this template can be deleted.
-type ConnectionDeletionBehaviorEnum string
-
-const (
-	ConnectionDeletionBehaviorEnumAllow        ConnectionDeletionBehaviorEnum = "allow"
-	ConnectionDeletionBehaviorEnumAllowIfEmpty ConnectionDeletionBehaviorEnum = "allow_if_empty"
-)
-
-func NewConnectionDeletionBehaviorEnumFromString(s string) (ConnectionDeletionBehaviorEnum, error) {
-	switch s {
-	case "allow":
-		return ConnectionDeletionBehaviorEnumAllow, nil
-	case "allow_if_empty":
-		return ConnectionDeletionBehaviorEnumAllowIfEmpty, nil
-	}
-	var t ConnectionDeletionBehaviorEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (c ConnectionDeletionBehaviorEnum) Ptr() *ConnectionDeletionBehaviorEnum {
-	return &c
-}
-
 // The URL where Auth0 will send SAML authentication requests (the Identity Provider's SSO URL). Must be a valid HTTPS URL.
 type ConnectionDestinationUrlSaml = ConnectionHttpsUrlWithHttpFallback255
 
@@ -13846,7 +14278,8 @@ var (
 	connectionOptionsAdFieldSignInEndpoint                   = big.NewInt(1 << 14)
 	connectionOptionsAdFieldTenantDomain                     = big.NewInt(1 << 15)
 	connectionOptionsAdFieldThumbprints                      = big.NewInt(1 << 16)
-	connectionOptionsAdFieldUpstreamParams                   = big.NewInt(1 << 17)
+	connectionOptionsAdFieldThumbprintsSha384                = big.NewInt(1 << 17)
+	connectionOptionsAdFieldUpstreamParams                   = big.NewInt(1 << 18)
 )
 
 type ConnectionOptionsAd struct {
@@ -13871,6 +14304,7 @@ type ConnectionOptionsAd struct {
 	SignInEndpoint        *ConnectionSignInEndpointAd          `json:"signInEndpoint,omitempty" url:"signInEndpoint,omitempty"`
 	TenantDomain          *ConnectionTenantDomainAd            `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
 	Thumbprints           *ConnectionThumbprintsAd             `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384     *ConnectionThumbprintsSha384Ad       `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 	UpstreamParams        *ConnectionUpstreamParams            `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -13998,6 +14432,13 @@ func (c *ConnectionOptionsAd) GetThumbprints() ConnectionThumbprintsAd {
 		return nil
 	}
 	return *c.Thumbprints
+}
+
+func (c *ConnectionOptionsAd) GetThumbprintsSha384() ConnectionThumbprintsSha384Ad {
+	if c == nil || c.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *c.ThumbprintsSha384
 }
 
 func (c *ConnectionOptionsAd) GetUpstreamParams() ConnectionUpstreamParams {
@@ -14140,6 +14581,13 @@ func (c *ConnectionOptionsAd) SetThumbprints(thumbprints *ConnectionThumbprintsA
 	c.require(connectionOptionsAdFieldThumbprints)
 }
 
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsAd) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384Ad) {
+	c.ThumbprintsSha384 = thumbprintsSha384
+	c.require(connectionOptionsAdFieldThumbprintsSha384)
+}
+
 // SetUpstreamParams sets the UpstreamParams field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionOptionsAd) SetUpstreamParams(upstreamParams *ConnectionUpstreamParams) {
@@ -14207,8 +14655,9 @@ var (
 	connectionOptionsAdfsFieldSignInEndpoint                     = big.NewInt(1 << 9)
 	connectionOptionsAdfsFieldTenantDomain                       = big.NewInt(1 << 10)
 	connectionOptionsAdfsFieldThumbprints                        = big.NewInt(1 << 11)
-	connectionOptionsAdfsFieldUpstreamParams                     = big.NewInt(1 << 12)
-	connectionOptionsAdfsFieldUserIDAttribute                    = big.NewInt(1 << 13)
+	connectionOptionsAdfsFieldThumbprintsSha384                  = big.NewInt(1 << 12)
+	connectionOptionsAdfsFieldUpstreamParams                     = big.NewInt(1 << 13)
+	connectionOptionsAdfsFieldUserIDAttribute                    = big.NewInt(1 << 14)
 )
 
 type ConnectionOptionsAdfs struct {
@@ -14226,6 +14675,7 @@ type ConnectionOptionsAdfs struct {
 	SignInEndpoint                     *ConnectionSignInEndpointAdfs                     `json:"signInEndpoint,omitempty" url:"signInEndpoint,omitempty"`
 	TenantDomain                       *ConnectionTenantDomain                           `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
 	Thumbprints                        *ConnectionThumbprints                            `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384                  *ConnectionThumbprintsSha384                      `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 	UpstreamParams                     *ConnectionUpstreamParams                         `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 	// Custom ADFS claim to use as the unique user identifier. When provided, this attribute is prepended to the default user_id mapping list with highest priority. Accepts a string (single ADFS claim name).
 	UserIDAttribute *string `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
@@ -14320,6 +14770,13 @@ func (c *ConnectionOptionsAdfs) GetThumbprints() ConnectionThumbprints {
 		return nil
 	}
 	return *c.Thumbprints
+}
+
+func (c *ConnectionOptionsAdfs) GetThumbprintsSha384() ConnectionThumbprintsSha384 {
+	if c == nil || c.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *c.ThumbprintsSha384
 }
 
 func (c *ConnectionOptionsAdfs) GetUpstreamParams() ConnectionUpstreamParams {
@@ -14432,6 +14889,13 @@ func (c *ConnectionOptionsAdfs) SetTenantDomain(tenantDomain *ConnectionTenantDo
 func (c *ConnectionOptionsAdfs) SetThumbprints(thumbprints *ConnectionThumbprints) {
 	c.Thumbprints = thumbprints
 	c.require(connectionOptionsAdfsFieldThumbprints)
+}
+
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsAdfs) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384) {
+	c.ThumbprintsSha384 = thumbprintsSha384
+	c.require(connectionOptionsAdfsFieldThumbprintsSha384)
 }
 
 // SetUpstreamParams sets the UpstreamParams field and marks it as non-optional;
@@ -15584,11 +16048,12 @@ var (
 	connectionOptionsAzureAdFieldTenantDomain                       = big.NewInt(1 << 59)
 	connectionOptionsAzureAdFieldTenantID                           = big.NewInt(1 << 60)
 	connectionOptionsAzureAdFieldThumbprints                        = big.NewInt(1 << 61)
-	connectionOptionsAzureAdFieldUpstreamParams                     = big.NewInt(1 << 62)
-	connectionOptionsAzureAdFieldUseWsfed                           = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	connectionOptionsAzureAdFieldUseCommonEndpoint                  = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	connectionOptionsAzureAdFieldUseridAttribute                    = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	connectionOptionsAzureAdFieldWaadProtocol                       = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	connectionOptionsAzureAdFieldThumbprintsSha384                  = big.NewInt(1 << 62)
+	connectionOptionsAzureAdFieldUpstreamParams                     = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	connectionOptionsAzureAdFieldUseWsfed                           = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	connectionOptionsAzureAdFieldUseCommonEndpoint                  = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	connectionOptionsAzureAdFieldUseridAttribute                    = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	connectionOptionsAzureAdFieldWaadProtocol                       = big.NewInt(0).Lsh(big.NewInt(1), 67)
 )
 
 type ConnectionOptionsAzureAd struct {
@@ -15696,6 +16161,7 @@ type ConnectionOptionsAzureAd struct {
 	TenantDomain                       *ConnectionTenantDomainAzureAdOne                 `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
 	TenantID                           *ConnectionTenantIDAzureAd                        `json:"tenantId,omitempty" url:"tenantId,omitempty"`
 	Thumbprints                        *ConnectionThumbprints                            `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384                  *ConnectionThumbprintsSha384                      `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 	UpstreamParams                     *ConnectionUpstreamParams                         `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 	// Indicates WS-Federation protocol usage. When true, uses WS-Federation; when false, uses OpenID Connect.
 	UseWsfed          *bool                               `json:"use_wsfed,omitempty" url:"use_wsfed,omitempty"`
@@ -16143,6 +16609,13 @@ func (c *ConnectionOptionsAzureAd) GetThumbprints() ConnectionThumbprints {
 		return nil
 	}
 	return *c.Thumbprints
+}
+
+func (c *ConnectionOptionsAzureAd) GetThumbprintsSha384() ConnectionThumbprintsSha384 {
+	if c == nil || c.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *c.ThumbprintsSha384
 }
 
 func (c *ConnectionOptionsAzureAd) GetUpstreamParams() ConnectionUpstreamParams {
@@ -16626,6 +17099,13 @@ func (c *ConnectionOptionsAzureAd) SetTenantID(tenantID *ConnectionTenantIDAzure
 func (c *ConnectionOptionsAzureAd) SetThumbprints(thumbprints *ConnectionThumbprints) {
 	c.Thumbprints = thumbprints
 	c.require(connectionOptionsAzureAdFieldThumbprints)
+}
+
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsAzureAd) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384) {
+	c.ThumbprintsSha384 = thumbprintsSha384
+	c.require(connectionOptionsAzureAdFieldThumbprintsSha384)
 }
 
 // SetUpstreamParams sets the UpstreamParams field and marks it as non-optional;
@@ -17993,7 +18473,8 @@ var (
 	connectionOptionsCommonSAMLFieldSignatureAlgorithm          = big.NewInt(1 << 12)
 	connectionOptionsCommonSAMLFieldTenantDomain                = big.NewInt(1 << 13)
 	connectionOptionsCommonSAMLFieldThumbprints                 = big.NewInt(1 << 14)
-	connectionOptionsCommonSAMLFieldUpstreamParams              = big.NewInt(1 << 15)
+	connectionOptionsCommonSAMLFieldThumbprintsSha384           = big.NewInt(1 << 15)
+	connectionOptionsCommonSAMLFieldUpstreamParams              = big.NewInt(1 << 16)
 )
 
 type ConnectionOptionsCommonSAML struct {
@@ -18012,6 +18493,7 @@ type ConnectionOptionsCommonSAML struct {
 	SignatureAlgorithm          *ConnectionSignatureAlgorithmSAML      `json:"signatureAlgorithm,omitempty" url:"signatureAlgorithm,omitempty"`
 	TenantDomain                *ConnectionTenantDomainSAML            `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
 	Thumbprints                 *ConnectionThumbprintsSAML             `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384           *ConnectionThumbprintsSha384SAML       `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 	UpstreamParams              *ConnectionUpstreamParams              `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -18124,6 +18606,13 @@ func (c *ConnectionOptionsCommonSAML) GetThumbprints() ConnectionThumbprintsSAML
 		return nil
 	}
 	return *c.Thumbprints
+}
+
+func (c *ConnectionOptionsCommonSAML) GetThumbprintsSha384() ConnectionThumbprintsSha384SAML {
+	if c == nil || c.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *c.ThumbprintsSha384
 }
 
 func (c *ConnectionOptionsCommonSAML) GetUpstreamParams() ConnectionUpstreamParams {
@@ -18250,6 +18739,13 @@ func (c *ConnectionOptionsCommonSAML) SetTenantDomain(tenantDomain *ConnectionTe
 func (c *ConnectionOptionsCommonSAML) SetThumbprints(thumbprints *ConnectionThumbprintsSAML) {
 	c.Thumbprints = thumbprints
 	c.require(connectionOptionsCommonSAMLFieldThumbprints)
+}
+
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsCommonSAML) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384SAML) {
+	c.ThumbprintsSha384 = thumbprintsSha384
+	c.require(connectionOptionsCommonSAMLFieldThumbprintsSha384)
 }
 
 // SetUpstreamParams sets the UpstreamParams field and marks it as non-optional;
@@ -26610,10 +27106,11 @@ var (
 	connectionOptionsPingFederateFieldSignatureAlgorithm          = big.NewInt(1 << 12)
 	connectionOptionsPingFederateFieldTenantDomain                = big.NewInt(1 << 13)
 	connectionOptionsPingFederateFieldThumbprints                 = big.NewInt(1 << 14)
-	connectionOptionsPingFederateFieldUpstreamParams              = big.NewInt(1 << 15)
-	connectionOptionsPingFederateFieldNonPersistentAttrs          = big.NewInt(1 << 16)
-	connectionOptionsPingFederateFieldPingFederateBaseURL         = big.NewInt(1 << 17)
-	connectionOptionsPingFederateFieldSigningCert                 = big.NewInt(1 << 18)
+	connectionOptionsPingFederateFieldThumbprintsSha384           = big.NewInt(1 << 15)
+	connectionOptionsPingFederateFieldUpstreamParams              = big.NewInt(1 << 16)
+	connectionOptionsPingFederateFieldNonPersistentAttrs          = big.NewInt(1 << 17)
+	connectionOptionsPingFederateFieldPingFederateBaseURL         = big.NewInt(1 << 18)
+	connectionOptionsPingFederateFieldSigningCert                 = big.NewInt(1 << 19)
 )
 
 type ConnectionOptionsPingFederate struct {
@@ -26632,6 +27129,7 @@ type ConnectionOptionsPingFederate struct {
 	SignatureAlgorithm          *ConnectionSignatureAlgorithmSAML            `json:"signatureAlgorithm,omitempty" url:"signatureAlgorithm,omitempty"`
 	TenantDomain                *ConnectionTenantDomainSAML                  `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
 	Thumbprints                 *ConnectionThumbprintsSAML                   `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384           *ConnectionThumbprintsSha384SAML             `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 	UpstreamParams              *ConnectionUpstreamParams                    `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 	NonPersistentAttrs          *ConnectionNonPersistentAttrs                `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	PingFederateBaseURL         ConnectionPingFederateBaseURL                `json:"pingFederateBaseUrl" url:"pingFederateBaseUrl"`
@@ -26748,6 +27246,13 @@ func (c *ConnectionOptionsPingFederate) GetThumbprints() ConnectionThumbprintsSA
 		return nil
 	}
 	return *c.Thumbprints
+}
+
+func (c *ConnectionOptionsPingFederate) GetThumbprintsSha384() ConnectionThumbprintsSha384SAML {
+	if c == nil || c.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *c.ThumbprintsSha384
 }
 
 func (c *ConnectionOptionsPingFederate) GetUpstreamParams() ConnectionUpstreamParams {
@@ -26895,6 +27400,13 @@ func (c *ConnectionOptionsPingFederate) SetTenantDomain(tenantDomain *Connection
 func (c *ConnectionOptionsPingFederate) SetThumbprints(thumbprints *ConnectionThumbprintsSAML) {
 	c.Thumbprints = thumbprints
 	c.require(connectionOptionsPingFederateFieldThumbprints)
+}
+
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsPingFederate) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384SAML) {
+	c.ThumbprintsSha384 = thumbprintsSha384
+	c.require(connectionOptionsPingFederateFieldThumbprintsSha384)
 }
 
 // SetUpstreamParams sets the UpstreamParams field and marks it as non-optional;
@@ -27603,25 +28115,26 @@ var (
 	connectionOptionsSAMLFieldSignatureAlgorithm          = big.NewInt(1 << 12)
 	connectionOptionsSAMLFieldTenantDomain                = big.NewInt(1 << 13)
 	connectionOptionsSAMLFieldThumbprints                 = big.NewInt(1 << 14)
-	connectionOptionsSAMLFieldUpstreamParams              = big.NewInt(1 << 15)
-	connectionOptionsSAMLFieldNonPersistentAttrs          = big.NewInt(1 << 16)
-	connectionOptionsSAMLFieldDebug                       = big.NewInt(1 << 17)
-	connectionOptionsSAMLFieldDeflate                     = big.NewInt(1 << 18)
-	connectionOptionsSAMLFieldDestinationURL              = big.NewInt(1 << 19)
-	connectionOptionsSAMLFieldDisableSignout              = big.NewInt(1 << 20)
-	connectionOptionsSAMLFieldDiscoveryURL                = big.NewInt(1 << 21)
-	connectionOptionsSAMLFieldFieldsMap                   = big.NewInt(1 << 22)
-	connectionOptionsSAMLFieldGlobalTokenRevocationJwtIss = big.NewInt(1 << 23)
-	connectionOptionsSAMLFieldGlobalTokenRevocationJwtSub = big.NewInt(1 << 24)
-	connectionOptionsSAMLFieldMetadataURL                 = big.NewInt(1 << 25)
-	connectionOptionsSAMLFieldMetadataXML                 = big.NewInt(1 << 26)
-	connectionOptionsSAMLFieldOidcMetadata                = big.NewInt(1 << 27)
-	connectionOptionsSAMLFieldRecipientURL                = big.NewInt(1 << 28)
-	connectionOptionsSAMLFieldRequestTemplate             = big.NewInt(1 << 29)
-	connectionOptionsSAMLFieldSigningCert                 = big.NewInt(1 << 30)
-	connectionOptionsSAMLFieldSigningKey                  = big.NewInt(1 << 31)
-	connectionOptionsSAMLFieldSignOutEndpoint             = big.NewInt(1 << 32)
-	connectionOptionsSAMLFieldUserIDAttribute             = big.NewInt(1 << 33)
+	connectionOptionsSAMLFieldThumbprintsSha384           = big.NewInt(1 << 15)
+	connectionOptionsSAMLFieldUpstreamParams              = big.NewInt(1 << 16)
+	connectionOptionsSAMLFieldNonPersistentAttrs          = big.NewInt(1 << 17)
+	connectionOptionsSAMLFieldDebug                       = big.NewInt(1 << 18)
+	connectionOptionsSAMLFieldDeflate                     = big.NewInt(1 << 19)
+	connectionOptionsSAMLFieldDestinationURL              = big.NewInt(1 << 20)
+	connectionOptionsSAMLFieldDisableSignout              = big.NewInt(1 << 21)
+	connectionOptionsSAMLFieldDiscoveryURL                = big.NewInt(1 << 22)
+	connectionOptionsSAMLFieldFieldsMap                   = big.NewInt(1 << 23)
+	connectionOptionsSAMLFieldGlobalTokenRevocationJwtIss = big.NewInt(1 << 24)
+	connectionOptionsSAMLFieldGlobalTokenRevocationJwtSub = big.NewInt(1 << 25)
+	connectionOptionsSAMLFieldMetadataURL                 = big.NewInt(1 << 26)
+	connectionOptionsSAMLFieldMetadataXML                 = big.NewInt(1 << 27)
+	connectionOptionsSAMLFieldOidcMetadata                = big.NewInt(1 << 28)
+	connectionOptionsSAMLFieldRecipientURL                = big.NewInt(1 << 29)
+	connectionOptionsSAMLFieldRequestTemplate             = big.NewInt(1 << 30)
+	connectionOptionsSAMLFieldSigningCert                 = big.NewInt(1 << 31)
+	connectionOptionsSAMLFieldSigningKey                  = big.NewInt(1 << 32)
+	connectionOptionsSAMLFieldSignOutEndpoint             = big.NewInt(1 << 33)
+	connectionOptionsSAMLFieldUserIDAttribute             = big.NewInt(1 << 34)
 )
 
 type ConnectionOptionsSAML struct {
@@ -27640,6 +28153,7 @@ type ConnectionOptionsSAML struct {
 	SignatureAlgorithm          *ConnectionSignatureAlgorithmSAML      `json:"signatureAlgorithm,omitempty" url:"signatureAlgorithm,omitempty"`
 	TenantDomain                *ConnectionTenantDomainSAML            `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
 	Thumbprints                 *ConnectionThumbprintsSAML             `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384           *ConnectionThumbprintsSha384SAML       `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 	UpstreamParams              *ConnectionUpstreamParams              `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
 	NonPersistentAttrs          *ConnectionNonPersistentAttrs          `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	Debug                       *ConnectionDebugSAML                   `json:"debug,omitempty" url:"debug,omitempty"`
@@ -27772,6 +28286,13 @@ func (c *ConnectionOptionsSAML) GetThumbprints() ConnectionThumbprintsSAML {
 		return nil
 	}
 	return *c.Thumbprints
+}
+
+func (c *ConnectionOptionsSAML) GetThumbprintsSha384() ConnectionThumbprintsSha384SAML {
+	if c == nil || c.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *c.ThumbprintsSha384
 }
 
 func (c *ConnectionOptionsSAML) GetUpstreamParams() ConnectionUpstreamParams {
@@ -28024,6 +28545,13 @@ func (c *ConnectionOptionsSAML) SetTenantDomain(tenantDomain *ConnectionTenantDo
 func (c *ConnectionOptionsSAML) SetThumbprints(thumbprints *ConnectionThumbprintsSAML) {
 	c.Thumbprints = thumbprints
 	c.require(connectionOptionsSAMLFieldThumbprints)
+}
+
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsSAML) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384SAML) {
+	c.ThumbprintsSha384 = thumbprintsSha384
+	c.require(connectionOptionsSAMLFieldThumbprintsSha384)
 }
 
 // SetUpstreamParams sets the UpstreamParams field and marks it as non-optional;
@@ -47946,14 +48474,17 @@ type ConnectionTenantDomainSAML = string
 // The Azure AD tenant ID as a UUID. The unique identifier for your Azure AD organization. Must be a valid 36-character UUID.
 type ConnectionTenantIDAzureAd = string
 
-// Array of certificate thumbprints (SHA-128/SHA-256/SHA-512 hex hashes) for validating SAML signatures. Used with WS-Federation protocol. Maximum 20 thumbprints. Each thumbprint must be a hexadecimal string.
-type ConnectionThumbprints = []string
-
 // Array of certificate SHA-1 thumbprints for validating signatures. Managed by Auth0 when using the AD Connector agent.
 type ConnectionThumbprintsAd = []ConnectionSha1Thumbprint
 
 // SHA-1 thumbprints (fingerprints) of the identity provider's signing certificates. Automatically computed from signingCert during connection creation. Each thumbprint must be a 40-character hexadecimal string.
 type ConnectionThumbprintsSAML = []ConnectionSha1Thumbprint
+
+// Array of certificate SHA-384 thumbprints for validating signatures. Managed by Auth0 when using the AD Connector agent.
+type ConnectionThumbprintsSha384Ad = []string
+
+// SHA-384 thumbprints (fingerprints) of the identity provider's signing certificates. Automatically computed from signingCert during connection creation. Each thumbprint must be a 96-character hexadecimal string.
+type ConnectionThumbprintsSha384SAML = []string
 
 // URL of the identity provider's OAuth 2.0 token endpoint where authorization codes are exchanged for access tokens. Must be a valid HTTPS URL. Required for authorization code flow but optional for implicit flow.
 type ConnectionTokenEndpoint = string
@@ -62074,6 +62605,401 @@ func (c *CreateEventStreamRedeliveryResponseContent) String() string {
 }
 
 var (
+	createExperimentResponseContentFieldID                  = big.NewInt(1 << 0)
+	createExperimentResponseContentFieldName                = big.NewInt(1 << 1)
+	createExperimentResponseContentFieldDescription         = big.NewInt(1 << 2)
+	createExperimentResponseContentFieldFeatureFlagID       = big.NewInt(1 << 3)
+	createExperimentResponseContentFieldFeatureFlagName     = big.NewInt(1 << 4)
+	createExperimentResponseContentFieldAuthenticationFlow  = big.NewInt(1 << 5)
+	createExperimentResponseContentFieldAllocationStrategy  = big.NewInt(1 << 6)
+	createExperimentResponseContentFieldStatus              = big.NewInt(1 << 7)
+	createExperimentResponseContentFieldIsValid             = big.NewInt(1 << 8)
+	createExperimentResponseContentFieldDefaultConfig       = big.NewInt(1 << 9)
+	createExperimentResponseContentFieldFeatureFlagSnapshot = big.NewInt(1 << 10)
+	createExperimentResponseContentFieldAllocations         = big.NewInt(1 << 11)
+	createExperimentResponseContentFieldEditableFields      = big.NewInt(1 << 12)
+	createExperimentResponseContentFieldLevels              = big.NewInt(1 << 13)
+	createExperimentResponseContentFieldCurrentLevel        = big.NewInt(1 << 14)
+	createExperimentResponseContentFieldStartedAt           = big.NewInt(1 << 15)
+	createExperimentResponseContentFieldEndedAt             = big.NewInt(1 << 16)
+	createExperimentResponseContentFieldCreatedAt           = big.NewInt(1 << 17)
+	createExperimentResponseContentFieldUpdatedAt           = big.NewInt(1 << 18)
+)
+
+type CreateExperimentResponseContent struct {
+	ID                  string                 `json:"id" url:"id"`
+	Name                string                 `json:"name" url:"name"`
+	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
+	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
+	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
+	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
+	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
+	Status              ExperimentStatusEnum   `json:"status" url:"status"`
+	IsValid             bool                   `json:"is_valid" url:"is_valid"`
+	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
+	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
+	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
+	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
+	EditableFields []string `json:"editable_fields" url:"editable_fields"`
+	// Ramp experiment levels configuration.
+	Levels []int `json:"levels,omitempty" url:"levels,omitempty"`
+	// Read-only. The active exposure percentage for the current ramp step. Null when no ramp schedule is active.
+	CurrentLevel *int       `json:"current_level,omitempty" url:"current_level,omitempty"`
+	StartedAt    *time.Time `json:"started_at,omitempty" url:"started_at,omitempty"`
+	EndedAt      *time.Time `json:"ended_at,omitempty" url:"ended_at,omitempty"`
+	CreatedAt    time.Time  `json:"created_at" url:"created_at"`
+	UpdatedAt    time.Time  `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateExperimentResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateExperimentResponseContent) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateExperimentResponseContent) GetDescription() string {
+	if c == nil || c.Description == nil {
+		return ""
+	}
+	return *c.Description
+}
+
+func (c *CreateExperimentResponseContent) GetFeatureFlagID() string {
+	if c == nil {
+		return ""
+	}
+	return c.FeatureFlagID
+}
+
+func (c *CreateExperimentResponseContent) GetFeatureFlagName() string {
+	if c == nil || c.FeatureFlagName == nil {
+		return ""
+	}
+	return *c.FeatureFlagName
+}
+
+func (c *CreateExperimentResponseContent) GetAuthenticationFlow() string {
+	if c == nil {
+		return ""
+	}
+	return c.AuthenticationFlow
+}
+
+func (c *CreateExperimentResponseContent) GetAllocationStrategy() AllocationStrategyEnum {
+	if c == nil {
+		return ""
+	}
+	return c.AllocationStrategy
+}
+
+func (c *CreateExperimentResponseContent) GetStatus() ExperimentStatusEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Status
+}
+
+func (c *CreateExperimentResponseContent) GetIsValid() bool {
+	if c == nil {
+		return false
+	}
+	return c.IsValid
+}
+
+func (c *CreateExperimentResponseContent) GetDefaultConfig() DefaultConfigEnum {
+	if c == nil || c.DefaultConfig == nil {
+		return ""
+	}
+	return *c.DefaultConfig
+}
+
+func (c *CreateExperimentResponseContent) GetFeatureFlagSnapshot() map[string]any {
+	if c == nil || c.FeatureFlagSnapshot == nil {
+		return nil
+	}
+	return c.FeatureFlagSnapshot
+}
+
+func (c *CreateExperimentResponseContent) GetAllocations() []*AllocationItem {
+	if c == nil {
+		return nil
+	}
+	return c.Allocations
+}
+
+func (c *CreateExperimentResponseContent) GetEditableFields() []string {
+	if c == nil {
+		return nil
+	}
+	return c.EditableFields
+}
+
+func (c *CreateExperimentResponseContent) GetLevels() []int {
+	if c == nil || c.Levels == nil {
+		return nil
+	}
+	return c.Levels
+}
+
+func (c *CreateExperimentResponseContent) GetCurrentLevel() int {
+	if c == nil || c.CurrentLevel == nil {
+		return 0
+	}
+	return *c.CurrentLevel
+}
+
+func (c *CreateExperimentResponseContent) GetStartedAt() time.Time {
+	if c == nil || c.StartedAt == nil {
+		return time.Time{}
+	}
+	return *c.StartedAt
+}
+
+func (c *CreateExperimentResponseContent) GetEndedAt() time.Time {
+	if c == nil || c.EndedAt == nil {
+		return time.Time{}
+	}
+	return *c.EndedAt
+}
+
+func (c *CreateExperimentResponseContent) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *CreateExperimentResponseContent) GetUpdatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.UpdatedAt
+}
+
+func (c *CreateExperimentResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateExperimentResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createExperimentResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetName(name string) {
+	c.Name = name
+	c.require(createExperimentResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createExperimentResponseContentFieldDescription)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetFeatureFlagID(featureFlagID string) {
+	c.FeatureFlagID = featureFlagID
+	c.require(createExperimentResponseContentFieldFeatureFlagID)
+}
+
+// SetFeatureFlagName sets the FeatureFlagName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetFeatureFlagName(featureFlagName *string) {
+	c.FeatureFlagName = featureFlagName
+	c.require(createExperimentResponseContentFieldFeatureFlagName)
+}
+
+// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetAuthenticationFlow(authenticationFlow string) {
+	c.AuthenticationFlow = authenticationFlow
+	c.require(createExperimentResponseContentFieldAuthenticationFlow)
+}
+
+// SetAllocationStrategy sets the AllocationStrategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetAllocationStrategy(allocationStrategy AllocationStrategyEnum) {
+	c.AllocationStrategy = allocationStrategy
+	c.require(createExperimentResponseContentFieldAllocationStrategy)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetStatus(status ExperimentStatusEnum) {
+	c.Status = status
+	c.require(createExperimentResponseContentFieldStatus)
+}
+
+// SetIsValid sets the IsValid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetIsValid(isValid bool) {
+	c.IsValid = isValid
+	c.require(createExperimentResponseContentFieldIsValid)
+}
+
+// SetDefaultConfig sets the DefaultConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetDefaultConfig(defaultConfig *DefaultConfigEnum) {
+	c.DefaultConfig = defaultConfig
+	c.require(createExperimentResponseContentFieldDefaultConfig)
+}
+
+// SetFeatureFlagSnapshot sets the FeatureFlagSnapshot field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetFeatureFlagSnapshot(featureFlagSnapshot map[string]any) {
+	c.FeatureFlagSnapshot = featureFlagSnapshot
+	c.require(createExperimentResponseContentFieldFeatureFlagSnapshot)
+}
+
+// SetAllocations sets the Allocations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetAllocations(allocations []*AllocationItem) {
+	c.Allocations = allocations
+	c.require(createExperimentResponseContentFieldAllocations)
+}
+
+// SetEditableFields sets the EditableFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetEditableFields(editableFields []string) {
+	c.EditableFields = editableFields
+	c.require(createExperimentResponseContentFieldEditableFields)
+}
+
+// SetLevels sets the Levels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetLevels(levels []int) {
+	c.Levels = levels
+	c.require(createExperimentResponseContentFieldLevels)
+}
+
+// SetCurrentLevel sets the CurrentLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetCurrentLevel(currentLevel *int) {
+	c.CurrentLevel = currentLevel
+	c.require(createExperimentResponseContentFieldCurrentLevel)
+}
+
+// SetStartedAt sets the StartedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetStartedAt(startedAt *time.Time) {
+	c.StartedAt = startedAt
+	c.require(createExperimentResponseContentFieldStartedAt)
+}
+
+// SetEndedAt sets the EndedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetEndedAt(endedAt *time.Time) {
+	c.EndedAt = endedAt
+	c.require(createExperimentResponseContentFieldEndedAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetCreatedAt(createdAt time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createExperimentResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createExperimentResponseContentFieldUpdatedAt)
+}
+
+func (c *CreateExperimentResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateExperimentResponseContent
+	var unmarshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateExperimentResponseContent(unmarshaler.embed)
+	c.StartedAt = unmarshaler.StartedAt.TimePtr()
+	c.EndedAt = unmarshaler.EndedAt.TimePtr()
+	c.CreatedAt = unmarshaler.CreatedAt.Time()
+	c.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateExperimentResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateExperimentResponseContent
+	var marshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*c),
+		StartedAt: internal.NewOptionalDateTime(c.StartedAt),
+		EndedAt:   internal.NewOptionalDateTime(c.EndedAt),
+		CreatedAt: internal.NewDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewDateTime(c.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateExperimentResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
 	createExportUsersFieldsFieldName     = big.NewInt(1 << 0)
 	createExportUsersFieldsFieldExportAs = big.NewInt(1 << 1)
 )
@@ -62369,6 +63295,217 @@ func (c *CreateExportUsersResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateExportUsersResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Configuration parameters for this feature flag
+type CreateFeatureFlagParameters = map[string]*FeatureFlagConfigParam
+
+var (
+	createFeatureFlagResponseContentFieldID          = big.NewInt(1 << 0)
+	createFeatureFlagResponseContentFieldName        = big.NewInt(1 << 1)
+	createFeatureFlagResponseContentFieldDescription = big.NewInt(1 << 2)
+	createFeatureFlagResponseContentFieldType        = big.NewInt(1 << 3)
+	createFeatureFlagResponseContentFieldStatus      = big.NewInt(1 << 4)
+	createFeatureFlagResponseContentFieldParameters  = big.NewInt(1 << 5)
+	createFeatureFlagResponseContentFieldCreatedAt   = big.NewInt(1 << 6)
+	createFeatureFlagResponseContentFieldUpdatedAt   = big.NewInt(1 << 7)
+)
+
+type CreateFeatureFlagResponseContent struct {
+	ID          string                   `json:"id" url:"id"`
+	Name        string                   `json:"name" url:"name"`
+	Description *string                  `json:"description,omitempty" url:"description,omitempty"`
+	Type        FeatureFlagTypeEnum      `json:"type" url:"type"`
+	Status      FeatureFlagStatusEnum    `json:"status" url:"status"`
+	Parameters  *FeatureFlagConfigParams `json:"parameters,omitempty" url:"parameters,omitempty"`
+	CreatedAt   time.Time                `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time                `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateFeatureFlagResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateFeatureFlagResponseContent) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateFeatureFlagResponseContent) GetDescription() string {
+	if c == nil || c.Description == nil {
+		return ""
+	}
+	return *c.Description
+}
+
+func (c *CreateFeatureFlagResponseContent) GetType() FeatureFlagTypeEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *CreateFeatureFlagResponseContent) GetStatus() FeatureFlagStatusEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Status
+}
+
+func (c *CreateFeatureFlagResponseContent) GetParameters() FeatureFlagConfigParams {
+	if c == nil || c.Parameters == nil {
+		return nil
+	}
+	return *c.Parameters
+}
+
+func (c *CreateFeatureFlagResponseContent) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *CreateFeatureFlagResponseContent) GetUpdatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.UpdatedAt
+}
+
+func (c *CreateFeatureFlagResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateFeatureFlagResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createFeatureFlagResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagResponseContent) SetName(name string) {
+	c.Name = name
+	c.require(createFeatureFlagResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagResponseContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createFeatureFlagResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagResponseContent) SetType(type_ FeatureFlagTypeEnum) {
+	c.Type = type_
+	c.require(createFeatureFlagResponseContentFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagResponseContent) SetStatus(status FeatureFlagStatusEnum) {
+	c.Status = status
+	c.require(createFeatureFlagResponseContentFieldStatus)
+}
+
+// SetParameters sets the Parameters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagResponseContent) SetParameters(parameters *FeatureFlagConfigParams) {
+	c.Parameters = parameters
+	c.require(createFeatureFlagResponseContentFieldParameters)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagResponseContent) SetCreatedAt(createdAt time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createFeatureFlagResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createFeatureFlagResponseContentFieldUpdatedAt)
+}
+
+func (c *CreateFeatureFlagResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateFeatureFlagResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateFeatureFlagResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.Time()
+	c.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateFeatureFlagResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateFeatureFlagResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewDateTime(c.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateFeatureFlagResponseContent) String() string {
 	if c == nil {
 		return "<nil>"
 	}
@@ -72167,6 +73304,198 @@ func (c *CreateSCIMTokenResponseContent) String() string {
 }
 
 var (
+	createSegmentResponseContentFieldID          = big.NewInt(1 << 0)
+	createSegmentResponseContentFieldName        = big.NewInt(1 << 1)
+	createSegmentResponseContentFieldDescription = big.NewInt(1 << 2)
+	createSegmentResponseContentFieldType        = big.NewInt(1 << 3)
+	createSegmentResponseContentFieldRules       = big.NewInt(1 << 4)
+	createSegmentResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
+	createSegmentResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+)
+
+type CreateSegmentResponseContent struct {
+	ID          string          `json:"id" url:"id"`
+	Name        string          `json:"name" url:"name"`
+	Description *string         `json:"description,omitempty" url:"description,omitempty"`
+	Type        SegmentTypeEnum `json:"type" url:"type"`
+	Rules       []*SegmentRule  `json:"rules" url:"rules"`
+	CreatedAt   time.Time       `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time       `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateSegmentResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateSegmentResponseContent) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateSegmentResponseContent) GetDescription() string {
+	if c == nil || c.Description == nil {
+		return ""
+	}
+	return *c.Description
+}
+
+func (c *CreateSegmentResponseContent) GetType() SegmentTypeEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
+}
+
+func (c *CreateSegmentResponseContent) GetRules() []*SegmentRule {
+	if c == nil {
+		return nil
+	}
+	return c.Rules
+}
+
+func (c *CreateSegmentResponseContent) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *CreateSegmentResponseContent) GetUpdatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.UpdatedAt
+}
+
+func (c *CreateSegmentResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateSegmentResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSegmentResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createSegmentResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSegmentResponseContent) SetName(name string) {
+	c.Name = name
+	c.require(createSegmentResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSegmentResponseContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createSegmentResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSegmentResponseContent) SetType(type_ SegmentTypeEnum) {
+	c.Type = type_
+	c.require(createSegmentResponseContentFieldType)
+}
+
+// SetRules sets the Rules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSegmentResponseContent) SetRules(rules []*SegmentRule) {
+	c.Rules = rules
+	c.require(createSegmentResponseContentFieldRules)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSegmentResponseContent) SetCreatedAt(createdAt time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createSegmentResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSegmentResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createSegmentResponseContentFieldUpdatedAt)
+}
+
+func (c *CreateSegmentResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateSegmentResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateSegmentResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.Time()
+	c.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateSegmentResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSegmentResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewDateTime(c.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateSegmentResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
 	createSelfServiceProfileSSOTicketResponseContentFieldTicket = big.NewInt(1 << 0)
 )
 
@@ -72718,6 +74047,198 @@ func (c *CreateUserAuthenticationMethodResponseContent) MarshalJSON() ([]byte, e
 }
 
 func (c *CreateUserAuthenticationMethodResponseContent) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	createVariationResponseContentFieldID            = big.NewInt(1 << 0)
+	createVariationResponseContentFieldFeatureFlagID = big.NewInt(1 << 1)
+	createVariationResponseContentFieldName          = big.NewInt(1 << 2)
+	createVariationResponseContentFieldDescription   = big.NewInt(1 << 3)
+	createVariationResponseContentFieldOverrides     = big.NewInt(1 << 4)
+	createVariationResponseContentFieldCreatedAt     = big.NewInt(1 << 5)
+	createVariationResponseContentFieldUpdatedAt     = big.NewInt(1 << 6)
+)
+
+type CreateVariationResponseContent struct {
+	ID            string                `json:"id" url:"id"`
+	FeatureFlagID string                `json:"feature_flag_id" url:"feature_flag_id"`
+	Name          string                `json:"name" url:"name"`
+	Description   *string               `json:"description,omitempty" url:"description,omitempty"`
+	Overrides     VariationOverridesMap `json:"overrides" url:"overrides"`
+	CreatedAt     time.Time             `json:"created_at" url:"created_at"`
+	UpdatedAt     time.Time             `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateVariationResponseContent) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CreateVariationResponseContent) GetFeatureFlagID() string {
+	if c == nil {
+		return ""
+	}
+	return c.FeatureFlagID
+}
+
+func (c *CreateVariationResponseContent) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CreateVariationResponseContent) GetDescription() string {
+	if c == nil || c.Description == nil {
+		return ""
+	}
+	return *c.Description
+}
+
+func (c *CreateVariationResponseContent) GetOverrides() VariationOverridesMap {
+	if c == nil {
+		return nil
+	}
+	return c.Overrides
+}
+
+func (c *CreateVariationResponseContent) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *CreateVariationResponseContent) GetUpdatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.UpdatedAt
+}
+
+func (c *CreateVariationResponseContent) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateVariationResponseContent) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationResponseContent) SetID(id string) {
+	c.ID = id
+	c.require(createVariationResponseContentFieldID)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationResponseContent) SetFeatureFlagID(featureFlagID string) {
+	c.FeatureFlagID = featureFlagID
+	c.require(createVariationResponseContentFieldFeatureFlagID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationResponseContent) SetName(name string) {
+	c.Name = name
+	c.require(createVariationResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationResponseContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createVariationResponseContentFieldDescription)
+}
+
+// SetOverrides sets the Overrides field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationResponseContent) SetOverrides(overrides VariationOverridesMap) {
+	c.Overrides = overrides
+	c.require(createVariationResponseContentFieldOverrides)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationResponseContent) SetCreatedAt(createdAt time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createVariationResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createVariationResponseContentFieldUpdatedAt)
+}
+
+func (c *CreateVariationResponseContent) UnmarshalJSON(data []byte) error {
+	type embed CreateVariationResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = CreateVariationResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.Time()
+	c.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateVariationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed CreateVariationResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewDateTime(c.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateVariationResponseContent) String() string {
 	if c == nil {
 		return "<nil>"
 	}
@@ -74588,6 +76109,29 @@ func NewCustomSigningKeyUseEnumFromString(s string) (CustomSigningKeyUseEnum, er
 
 func (c CustomSigningKeyUseEnum) Ptr() *CustomSigningKeyUseEnum {
 	return &c
+}
+
+// For Auth0-managed flags, where non-overridden config keys resolve from: 'tenant' inherits the tenant's live config, 'flag' uses the flag's frozen defaults. Omitted when unset (defaults to 'tenant' at resolution). Not applicable to customer-defined flags.
+type DefaultConfigEnum string
+
+const (
+	DefaultConfigEnumTenant DefaultConfigEnum = "tenant"
+	DefaultConfigEnumFlag   DefaultConfigEnum = "flag"
+)
+
+func NewDefaultConfigEnumFromString(s string) (DefaultConfigEnum, error) {
+	switch s {
+	case "tenant":
+		return DefaultConfigEnumTenant, nil
+	case "flag":
+		return DefaultConfigEnumFlag, nil
+	}
+	var t DefaultConfigEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (d DefaultConfigEnum) Ptr() *DefaultConfigEnum {
+	return &d
 }
 
 // Token Quota configuration, to configure quotas for token issuance for clients and organizations. Applied to all clients and organizations unless overridden in individual client or organization settings.
@@ -78426,6 +79970,564 @@ func (e EventStreamEventTypeEnum) Ptr() *EventStreamEventTypeEnum {
 // Event type(s) to listen for. Specify multiple times for multiple types (e.g., ?event_type=user.created&event_type=user.updated). If not provided, all event types will be streamed.
 type EventStreamSubscribeEventsEventTypeParam = []EventStreamSubscribeEventsEventTypeEnum
 
+var (
+	experimentListItemFieldID                  = big.NewInt(1 << 0)
+	experimentListItemFieldName                = big.NewInt(1 << 1)
+	experimentListItemFieldDescription         = big.NewInt(1 << 2)
+	experimentListItemFieldFeatureFlagID       = big.NewInt(1 << 3)
+	experimentListItemFieldFeatureFlagName     = big.NewInt(1 << 4)
+	experimentListItemFieldAuthenticationFlow  = big.NewInt(1 << 5)
+	experimentListItemFieldAllocationStrategy  = big.NewInt(1 << 6)
+	experimentListItemFieldStatus              = big.NewInt(1 << 7)
+	experimentListItemFieldIsValid             = big.NewInt(1 << 8)
+	experimentListItemFieldDefaultConfig       = big.NewInt(1 << 9)
+	experimentListItemFieldFeatureFlagSnapshot = big.NewInt(1 << 10)
+	experimentListItemFieldAllocations         = big.NewInt(1 << 11)
+	experimentListItemFieldEditableFields      = big.NewInt(1 << 12)
+	experimentListItemFieldLevels              = big.NewInt(1 << 13)
+	experimentListItemFieldCurrentLevel        = big.NewInt(1 << 14)
+	experimentListItemFieldStartedAt           = big.NewInt(1 << 15)
+	experimentListItemFieldEndedAt             = big.NewInt(1 << 16)
+	experimentListItemFieldCreatedAt           = big.NewInt(1 << 17)
+	experimentListItemFieldUpdatedAt           = big.NewInt(1 << 18)
+)
+
+type ExperimentListItem struct {
+	ID                  string                 `json:"id" url:"id"`
+	Name                string                 `json:"name" url:"name"`
+	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
+	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
+	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
+	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
+	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
+	Status              ExperimentStatusEnum   `json:"status" url:"status"`
+	IsValid             bool                   `json:"is_valid" url:"is_valid"`
+	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
+	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
+	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
+	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
+	EditableFields []string `json:"editable_fields" url:"editable_fields"`
+	// Ramp experiment levels configuration.
+	Levels []int `json:"levels,omitempty" url:"levels,omitempty"`
+	// Read-only. The active exposure percentage for the current ramp step. Null when no ramp schedule is active.
+	CurrentLevel *int       `json:"current_level,omitempty" url:"current_level,omitempty"`
+	StartedAt    *time.Time `json:"started_at,omitempty" url:"started_at,omitempty"`
+	EndedAt      *time.Time `json:"ended_at,omitempty" url:"ended_at,omitempty"`
+	CreatedAt    time.Time  `json:"created_at" url:"created_at"`
+	UpdatedAt    time.Time  `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *ExperimentListItem) GetID() string {
+	if e == nil {
+		return ""
+	}
+	return e.ID
+}
+
+func (e *ExperimentListItem) GetName() string {
+	if e == nil {
+		return ""
+	}
+	return e.Name
+}
+
+func (e *ExperimentListItem) GetDescription() string {
+	if e == nil || e.Description == nil {
+		return ""
+	}
+	return *e.Description
+}
+
+func (e *ExperimentListItem) GetFeatureFlagID() string {
+	if e == nil {
+		return ""
+	}
+	return e.FeatureFlagID
+}
+
+func (e *ExperimentListItem) GetFeatureFlagName() string {
+	if e == nil || e.FeatureFlagName == nil {
+		return ""
+	}
+	return *e.FeatureFlagName
+}
+
+func (e *ExperimentListItem) GetAuthenticationFlow() string {
+	if e == nil {
+		return ""
+	}
+	return e.AuthenticationFlow
+}
+
+func (e *ExperimentListItem) GetAllocationStrategy() AllocationStrategyEnum {
+	if e == nil {
+		return ""
+	}
+	return e.AllocationStrategy
+}
+
+func (e *ExperimentListItem) GetStatus() ExperimentStatusEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Status
+}
+
+func (e *ExperimentListItem) GetIsValid() bool {
+	if e == nil {
+		return false
+	}
+	return e.IsValid
+}
+
+func (e *ExperimentListItem) GetDefaultConfig() DefaultConfigEnum {
+	if e == nil || e.DefaultConfig == nil {
+		return ""
+	}
+	return *e.DefaultConfig
+}
+
+func (e *ExperimentListItem) GetFeatureFlagSnapshot() map[string]any {
+	if e == nil || e.FeatureFlagSnapshot == nil {
+		return nil
+	}
+	return e.FeatureFlagSnapshot
+}
+
+func (e *ExperimentListItem) GetAllocations() []*AllocationItem {
+	if e == nil {
+		return nil
+	}
+	return e.Allocations
+}
+
+func (e *ExperimentListItem) GetEditableFields() []string {
+	if e == nil {
+		return nil
+	}
+	return e.EditableFields
+}
+
+func (e *ExperimentListItem) GetLevels() []int {
+	if e == nil || e.Levels == nil {
+		return nil
+	}
+	return e.Levels
+}
+
+func (e *ExperimentListItem) GetCurrentLevel() int {
+	if e == nil || e.CurrentLevel == nil {
+		return 0
+	}
+	return *e.CurrentLevel
+}
+
+func (e *ExperimentListItem) GetStartedAt() time.Time {
+	if e == nil || e.StartedAt == nil {
+		return time.Time{}
+	}
+	return *e.StartedAt
+}
+
+func (e *ExperimentListItem) GetEndedAt() time.Time {
+	if e == nil || e.EndedAt == nil {
+		return time.Time{}
+	}
+	return *e.EndedAt
+}
+
+func (e *ExperimentListItem) GetCreatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.CreatedAt
+}
+
+func (e *ExperimentListItem) GetUpdatedAt() time.Time {
+	if e == nil {
+		return time.Time{}
+	}
+	return e.UpdatedAt
+}
+
+func (e *ExperimentListItem) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ExperimentListItem) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetID(id string) {
+	e.ID = id
+	e.require(experimentListItemFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetName(name string) {
+	e.Name = name
+	e.require(experimentListItemFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetDescription(description *string) {
+	e.Description = description
+	e.require(experimentListItemFieldDescription)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetFeatureFlagID(featureFlagID string) {
+	e.FeatureFlagID = featureFlagID
+	e.require(experimentListItemFieldFeatureFlagID)
+}
+
+// SetFeatureFlagName sets the FeatureFlagName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetFeatureFlagName(featureFlagName *string) {
+	e.FeatureFlagName = featureFlagName
+	e.require(experimentListItemFieldFeatureFlagName)
+}
+
+// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetAuthenticationFlow(authenticationFlow string) {
+	e.AuthenticationFlow = authenticationFlow
+	e.require(experimentListItemFieldAuthenticationFlow)
+}
+
+// SetAllocationStrategy sets the AllocationStrategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetAllocationStrategy(allocationStrategy AllocationStrategyEnum) {
+	e.AllocationStrategy = allocationStrategy
+	e.require(experimentListItemFieldAllocationStrategy)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetStatus(status ExperimentStatusEnum) {
+	e.Status = status
+	e.require(experimentListItemFieldStatus)
+}
+
+// SetIsValid sets the IsValid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetIsValid(isValid bool) {
+	e.IsValid = isValid
+	e.require(experimentListItemFieldIsValid)
+}
+
+// SetDefaultConfig sets the DefaultConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetDefaultConfig(defaultConfig *DefaultConfigEnum) {
+	e.DefaultConfig = defaultConfig
+	e.require(experimentListItemFieldDefaultConfig)
+}
+
+// SetFeatureFlagSnapshot sets the FeatureFlagSnapshot field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetFeatureFlagSnapshot(featureFlagSnapshot map[string]any) {
+	e.FeatureFlagSnapshot = featureFlagSnapshot
+	e.require(experimentListItemFieldFeatureFlagSnapshot)
+}
+
+// SetAllocations sets the Allocations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetAllocations(allocations []*AllocationItem) {
+	e.Allocations = allocations
+	e.require(experimentListItemFieldAllocations)
+}
+
+// SetEditableFields sets the EditableFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetEditableFields(editableFields []string) {
+	e.EditableFields = editableFields
+	e.require(experimentListItemFieldEditableFields)
+}
+
+// SetLevels sets the Levels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetLevels(levels []int) {
+	e.Levels = levels
+	e.require(experimentListItemFieldLevels)
+}
+
+// SetCurrentLevel sets the CurrentLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetCurrentLevel(currentLevel *int) {
+	e.CurrentLevel = currentLevel
+	e.require(experimentListItemFieldCurrentLevel)
+}
+
+// SetStartedAt sets the StartedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetStartedAt(startedAt *time.Time) {
+	e.StartedAt = startedAt
+	e.require(experimentListItemFieldStartedAt)
+}
+
+// SetEndedAt sets the EndedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetEndedAt(endedAt *time.Time) {
+	e.EndedAt = endedAt
+	e.require(experimentListItemFieldEndedAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetCreatedAt(createdAt time.Time) {
+	e.CreatedAt = createdAt
+	e.require(experimentListItemFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentListItem) SetUpdatedAt(updatedAt time.Time) {
+	e.UpdatedAt = updatedAt
+	e.require(experimentListItemFieldUpdatedAt)
+}
+
+func (e *ExperimentListItem) UnmarshalJSON(data []byte) error {
+	type embed ExperimentListItem
+	var unmarshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*e),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*e = ExperimentListItem(unmarshaler.embed)
+	e.StartedAt = unmarshaler.StartedAt.TimePtr()
+	e.EndedAt = unmarshaler.EndedAt.TimePtr()
+	e.CreatedAt = unmarshaler.CreatedAt.Time()
+	e.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *ExperimentListItem) MarshalJSON() ([]byte, error) {
+	type embed ExperimentListItem
+	var marshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*e),
+		StartedAt: internal.NewOptionalDateTime(e.StartedAt),
+		EndedAt:   internal.NewOptionalDateTime(e.EndedAt),
+		CreatedAt: internal.NewDateTime(e.CreatedAt),
+		UpdatedAt: internal.NewDateTime(e.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *ExperimentListItem) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+// Filter by status. Exact match.
+type ExperimentStatusEnum string
+
+const (
+	ExperimentStatusEnumDraft     ExperimentStatusEnum = "draft"
+	ExperimentStatusEnumActive    ExperimentStatusEnum = "active"
+	ExperimentStatusEnumPaused    ExperimentStatusEnum = "paused"
+	ExperimentStatusEnumCompleted ExperimentStatusEnum = "completed"
+	ExperimentStatusEnumArchived  ExperimentStatusEnum = "archived"
+)
+
+func NewExperimentStatusEnumFromString(s string) (ExperimentStatusEnum, error) {
+	switch s {
+	case "draft":
+		return ExperimentStatusEnumDraft, nil
+	case "active":
+		return ExperimentStatusEnumActive, nil
+	case "paused":
+		return ExperimentStatusEnumPaused, nil
+	case "completed":
+		return ExperimentStatusEnumCompleted, nil
+	case "archived":
+		return ExperimentStatusEnumArchived, nil
+	}
+	var t ExperimentStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e ExperimentStatusEnum) Ptr() *ExperimentStatusEnum {
+	return &e
+}
+
+// The target status to transition the experiment to.
+type ExperimentTransitionStatusEnum string
+
+const (
+	ExperimentTransitionStatusEnumActive    ExperimentTransitionStatusEnum = "active"
+	ExperimentTransitionStatusEnumPaused    ExperimentTransitionStatusEnum = "paused"
+	ExperimentTransitionStatusEnumCompleted ExperimentTransitionStatusEnum = "completed"
+	ExperimentTransitionStatusEnumArchived  ExperimentTransitionStatusEnum = "archived"
+)
+
+func NewExperimentTransitionStatusEnumFromString(s string) (ExperimentTransitionStatusEnum, error) {
+	switch s {
+	case "active":
+		return ExperimentTransitionStatusEnumActive, nil
+	case "paused":
+		return ExperimentTransitionStatusEnumPaused, nil
+	case "completed":
+		return ExperimentTransitionStatusEnumCompleted, nil
+	case "archived":
+		return ExperimentTransitionStatusEnumArchived, nil
+	}
+	var t ExperimentTransitionStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e ExperimentTransitionStatusEnum) Ptr() *ExperimentTransitionStatusEnum {
+	return &e
+}
+
+var (
+	experimentValidationErrorFieldCode    = big.NewInt(1 << 0)
+	experimentValidationErrorFieldMessage = big.NewInt(1 << 1)
+)
+
+type ExperimentValidationError struct {
+	// Machine-readable error code identifying the validation failure.
+	Code string `json:"code" url:"code"`
+	// Human-readable description of the validation failure.
+	Message string `json:"message" url:"message"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *ExperimentValidationError) GetCode() string {
+	if e == nil {
+		return ""
+	}
+	return e.Code
+}
+
+func (e *ExperimentValidationError) GetMessage() string {
+	if e == nil {
+		return ""
+	}
+	return e.Message
+}
+
+func (e *ExperimentValidationError) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ExperimentValidationError) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentValidationError) SetCode(code string) {
+	e.Code = code
+	e.require(experimentValidationErrorFieldCode)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExperimentValidationError) SetMessage(message string) {
+	e.Message = message
+	e.require(experimentValidationErrorFieldMessage)
+}
+
+func (e *ExperimentValidationError) UnmarshalJSON(data []byte) error {
+	type unmarshaler ExperimentValidationError
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ExperimentValidationError(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *ExperimentValidationError) MarshalJSON() ([]byte, error) {
+	type embed ExperimentValidationError
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *ExperimentValidationError) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExtensibilityEmailProviderCredentials struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -78489,6 +80591,415 @@ func (e *ExtensibilityEmailProviderCredentials) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+var (
+	featureFlagFieldID          = big.NewInt(1 << 0)
+	featureFlagFieldName        = big.NewInt(1 << 1)
+	featureFlagFieldDescription = big.NewInt(1 << 2)
+	featureFlagFieldType        = big.NewInt(1 << 3)
+	featureFlagFieldStatus      = big.NewInt(1 << 4)
+	featureFlagFieldParameters  = big.NewInt(1 << 5)
+	featureFlagFieldCreatedAt   = big.NewInt(1 << 6)
+	featureFlagFieldUpdatedAt   = big.NewInt(1 << 7)
+)
+
+type FeatureFlag struct {
+	ID          string                   `json:"id" url:"id"`
+	Name        string                   `json:"name" url:"name"`
+	Description *string                  `json:"description,omitempty" url:"description,omitempty"`
+	Type        FeatureFlagTypeEnum      `json:"type" url:"type"`
+	Status      FeatureFlagStatusEnum    `json:"status" url:"status"`
+	Parameters  *FeatureFlagConfigParams `json:"parameters,omitempty" url:"parameters,omitempty"`
+	CreatedAt   time.Time                `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time                `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FeatureFlag) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FeatureFlag) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *FeatureFlag) GetDescription() string {
+	if f == nil || f.Description == nil {
+		return ""
+	}
+	return *f.Description
+}
+
+func (f *FeatureFlag) GetType() FeatureFlagTypeEnum {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FeatureFlag) GetStatus() FeatureFlagStatusEnum {
+	if f == nil {
+		return ""
+	}
+	return f.Status
+}
+
+func (f *FeatureFlag) GetParameters() FeatureFlagConfigParams {
+	if f == nil || f.Parameters == nil {
+		return nil
+	}
+	return *f.Parameters
+}
+
+func (f *FeatureFlag) GetCreatedAt() time.Time {
+	if f == nil {
+		return time.Time{}
+	}
+	return f.CreatedAt
+}
+
+func (f *FeatureFlag) GetUpdatedAt() time.Time {
+	if f == nil {
+		return time.Time{}
+	}
+	return f.UpdatedAt
+}
+
+func (f *FeatureFlag) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FeatureFlag) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlag) SetID(id string) {
+	f.ID = id
+	f.require(featureFlagFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlag) SetName(name string) {
+	f.Name = name
+	f.require(featureFlagFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlag) SetDescription(description *string) {
+	f.Description = description
+	f.require(featureFlagFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlag) SetType(type_ FeatureFlagTypeEnum) {
+	f.Type = type_
+	f.require(featureFlagFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlag) SetStatus(status FeatureFlagStatusEnum) {
+	f.Status = status
+	f.require(featureFlagFieldStatus)
+}
+
+// SetParameters sets the Parameters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlag) SetParameters(parameters *FeatureFlagConfigParams) {
+	f.Parameters = parameters
+	f.require(featureFlagFieldParameters)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlag) SetCreatedAt(createdAt time.Time) {
+	f.CreatedAt = createdAt
+	f.require(featureFlagFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlag) SetUpdatedAt(updatedAt time.Time) {
+	f.UpdatedAt = updatedAt
+	f.require(featureFlagFieldUpdatedAt)
+}
+
+func (f *FeatureFlag) UnmarshalJSON(data []byte) error {
+	type embed FeatureFlag
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*f),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*f = FeatureFlag(unmarshaler.embed)
+	f.CreatedAt = unmarshaler.CreatedAt.Time()
+	f.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FeatureFlag) MarshalJSON() ([]byte, error) {
+	type embed FeatureFlag
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*f),
+		CreatedAt: internal.NewDateTime(f.CreatedAt),
+		UpdatedAt: internal.NewDateTime(f.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FeatureFlag) String() string {
+	if f == nil {
+		return "<nil>"
+	}
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+var (
+	featureFlagConfigParamFieldType        = big.NewInt(1 << 0)
+	featureFlagConfigParamFieldValue       = big.NewInt(1 << 1)
+	featureFlagConfigParamFieldDescription = big.NewInt(1 << 2)
+)
+
+type FeatureFlagConfigParam struct {
+	Type  FeatureFlagConfigParamTypeEnum `json:"type" url:"type"`
+	Value any                            `json:"value" url:"value"`
+	// A human-readable description of the parameter
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FeatureFlagConfigParam) GetType() FeatureFlagConfigParamTypeEnum {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FeatureFlagConfigParam) GetValue() any {
+	if f == nil {
+		return nil
+	}
+	return f.Value
+}
+
+func (f *FeatureFlagConfigParam) GetDescription() string {
+	if f == nil || f.Description == nil {
+		return ""
+	}
+	return *f.Description
+}
+
+func (f *FeatureFlagConfigParam) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FeatureFlagConfigParam) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlagConfigParam) SetType(type_ FeatureFlagConfigParamTypeEnum) {
+	f.Type = type_
+	f.require(featureFlagConfigParamFieldType)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlagConfigParam) SetValue(value any) {
+	f.Value = value
+	f.require(featureFlagConfigParamFieldValue)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FeatureFlagConfigParam) SetDescription(description *string) {
+	f.Description = description
+	f.require(featureFlagConfigParamFieldDescription)
+}
+
+func (f *FeatureFlagConfigParam) UnmarshalJSON(data []byte) error {
+	type unmarshaler FeatureFlagConfigParam
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FeatureFlagConfigParam(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FeatureFlagConfigParam) MarshalJSON() ([]byte, error) {
+	type embed FeatureFlagConfigParam
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FeatureFlagConfigParam) String() string {
+	if f == nil {
+		return "<nil>"
+	}
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+// The data type of the parameter value
+type FeatureFlagConfigParamTypeEnum string
+
+const (
+	FeatureFlagConfigParamTypeEnumString  FeatureFlagConfigParamTypeEnum = "string"
+	FeatureFlagConfigParamTypeEnumBoolean FeatureFlagConfigParamTypeEnum = "boolean"
+	FeatureFlagConfigParamTypeEnumNumber  FeatureFlagConfigParamTypeEnum = "number"
+	FeatureFlagConfigParamTypeEnumArray   FeatureFlagConfigParamTypeEnum = "array"
+	FeatureFlagConfigParamTypeEnumObject  FeatureFlagConfigParamTypeEnum = "object"
+)
+
+func NewFeatureFlagConfigParamTypeEnumFromString(s string) (FeatureFlagConfigParamTypeEnum, error) {
+	switch s {
+	case "string":
+		return FeatureFlagConfigParamTypeEnumString, nil
+	case "boolean":
+		return FeatureFlagConfigParamTypeEnumBoolean, nil
+	case "number":
+		return FeatureFlagConfigParamTypeEnumNumber, nil
+	case "array":
+		return FeatureFlagConfigParamTypeEnumArray, nil
+	case "object":
+		return FeatureFlagConfigParamTypeEnumObject, nil
+	}
+	var t FeatureFlagConfigParamTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FeatureFlagConfigParamTypeEnum) Ptr() *FeatureFlagConfigParamTypeEnum {
+	return &f
+}
+
+// Configuration parameters for this feature flag
+type FeatureFlagConfigParams = map[string]*FeatureFlagConfigParam
+
+// Filter by status. Exact match.
+type FeatureFlagStatusEnum string
+
+const (
+	FeatureFlagStatusEnumDraft    FeatureFlagStatusEnum = "draft"
+	FeatureFlagStatusEnumActive   FeatureFlagStatusEnum = "active"
+	FeatureFlagStatusEnumArchived FeatureFlagStatusEnum = "archived"
+)
+
+func NewFeatureFlagStatusEnumFromString(s string) (FeatureFlagStatusEnum, error) {
+	switch s {
+	case "draft":
+		return FeatureFlagStatusEnumDraft, nil
+	case "active":
+		return FeatureFlagStatusEnumActive, nil
+	case "archived":
+		return FeatureFlagStatusEnumArchived, nil
+	}
+	var t FeatureFlagStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FeatureFlagStatusEnum) Ptr() *FeatureFlagStatusEnum {
+	return &f
+}
+
+// Filter by type. Exact match.
+type FeatureFlagTypeEnum string
+
+const (
+	FeatureFlagTypeEnumAuth0 FeatureFlagTypeEnum = "auth0"
+	FeatureFlagTypeEnumSelf  FeatureFlagTypeEnum = "self"
+)
+
+func NewFeatureFlagTypeEnumFromString(s string) (FeatureFlagTypeEnum, error) {
+	switch s {
+	case "auth0":
+		return FeatureFlagTypeEnumAuth0, nil
+	case "self":
+		return FeatureFlagTypeEnumSelf, nil
+	}
+	var t FeatureFlagTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FeatureFlagTypeEnum) Ptr() *FeatureFlagTypeEnum {
+	return &f
 }
 
 // Flow execution debug.
@@ -86112,6 +88623,609 @@ func (g *GetEventStreamDeliveryHistoryResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+var (
+	getExperimentResponseContentFieldID                  = big.NewInt(1 << 0)
+	getExperimentResponseContentFieldName                = big.NewInt(1 << 1)
+	getExperimentResponseContentFieldDescription         = big.NewInt(1 << 2)
+	getExperimentResponseContentFieldFeatureFlagID       = big.NewInt(1 << 3)
+	getExperimentResponseContentFieldFeatureFlagName     = big.NewInt(1 << 4)
+	getExperimentResponseContentFieldAuthenticationFlow  = big.NewInt(1 << 5)
+	getExperimentResponseContentFieldAllocationStrategy  = big.NewInt(1 << 6)
+	getExperimentResponseContentFieldStatus              = big.NewInt(1 << 7)
+	getExperimentResponseContentFieldIsValid             = big.NewInt(1 << 8)
+	getExperimentResponseContentFieldDefaultConfig       = big.NewInt(1 << 9)
+	getExperimentResponseContentFieldFeatureFlagSnapshot = big.NewInt(1 << 10)
+	getExperimentResponseContentFieldAllocations         = big.NewInt(1 << 11)
+	getExperimentResponseContentFieldEditableFields      = big.NewInt(1 << 12)
+	getExperimentResponseContentFieldLevels              = big.NewInt(1 << 13)
+	getExperimentResponseContentFieldCurrentLevel        = big.NewInt(1 << 14)
+	getExperimentResponseContentFieldStartedAt           = big.NewInt(1 << 15)
+	getExperimentResponseContentFieldEndedAt             = big.NewInt(1 << 16)
+	getExperimentResponseContentFieldCreatedAt           = big.NewInt(1 << 17)
+	getExperimentResponseContentFieldUpdatedAt           = big.NewInt(1 << 18)
+)
+
+type GetExperimentResponseContent struct {
+	ID                  string                 `json:"id" url:"id"`
+	Name                string                 `json:"name" url:"name"`
+	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
+	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
+	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
+	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
+	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
+	Status              ExperimentStatusEnum   `json:"status" url:"status"`
+	IsValid             bool                   `json:"is_valid" url:"is_valid"`
+	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
+	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
+	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
+	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
+	EditableFields []string `json:"editable_fields" url:"editable_fields"`
+	// Ramp experiment levels configuration.
+	Levels []int `json:"levels,omitempty" url:"levels,omitempty"`
+	// Read-only. The active exposure percentage for the current ramp step. Null when no ramp schedule is active.
+	CurrentLevel *int       `json:"current_level,omitempty" url:"current_level,omitempty"`
+	StartedAt    *time.Time `json:"started_at,omitempty" url:"started_at,omitempty"`
+	EndedAt      *time.Time `json:"ended_at,omitempty" url:"ended_at,omitempty"`
+	CreatedAt    time.Time  `json:"created_at" url:"created_at"`
+	UpdatedAt    time.Time  `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetExperimentResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetExperimentResponseContent) GetName() string {
+	if g == nil {
+		return ""
+	}
+	return g.Name
+}
+
+func (g *GetExperimentResponseContent) GetDescription() string {
+	if g == nil || g.Description == nil {
+		return ""
+	}
+	return *g.Description
+}
+
+func (g *GetExperimentResponseContent) GetFeatureFlagID() string {
+	if g == nil {
+		return ""
+	}
+	return g.FeatureFlagID
+}
+
+func (g *GetExperimentResponseContent) GetFeatureFlagName() string {
+	if g == nil || g.FeatureFlagName == nil {
+		return ""
+	}
+	return *g.FeatureFlagName
+}
+
+func (g *GetExperimentResponseContent) GetAuthenticationFlow() string {
+	if g == nil {
+		return ""
+	}
+	return g.AuthenticationFlow
+}
+
+func (g *GetExperimentResponseContent) GetAllocationStrategy() AllocationStrategyEnum {
+	if g == nil {
+		return ""
+	}
+	return g.AllocationStrategy
+}
+
+func (g *GetExperimentResponseContent) GetStatus() ExperimentStatusEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Status
+}
+
+func (g *GetExperimentResponseContent) GetIsValid() bool {
+	if g == nil {
+		return false
+	}
+	return g.IsValid
+}
+
+func (g *GetExperimentResponseContent) GetDefaultConfig() DefaultConfigEnum {
+	if g == nil || g.DefaultConfig == nil {
+		return ""
+	}
+	return *g.DefaultConfig
+}
+
+func (g *GetExperimentResponseContent) GetFeatureFlagSnapshot() map[string]any {
+	if g == nil || g.FeatureFlagSnapshot == nil {
+		return nil
+	}
+	return g.FeatureFlagSnapshot
+}
+
+func (g *GetExperimentResponseContent) GetAllocations() []*AllocationItem {
+	if g == nil {
+		return nil
+	}
+	return g.Allocations
+}
+
+func (g *GetExperimentResponseContent) GetEditableFields() []string {
+	if g == nil {
+		return nil
+	}
+	return g.EditableFields
+}
+
+func (g *GetExperimentResponseContent) GetLevels() []int {
+	if g == nil || g.Levels == nil {
+		return nil
+	}
+	return g.Levels
+}
+
+func (g *GetExperimentResponseContent) GetCurrentLevel() int {
+	if g == nil || g.CurrentLevel == nil {
+		return 0
+	}
+	return *g.CurrentLevel
+}
+
+func (g *GetExperimentResponseContent) GetStartedAt() time.Time {
+	if g == nil || g.StartedAt == nil {
+		return time.Time{}
+	}
+	return *g.StartedAt
+}
+
+func (g *GetExperimentResponseContent) GetEndedAt() time.Time {
+	if g == nil || g.EndedAt == nil {
+		return time.Time{}
+	}
+	return *g.EndedAt
+}
+
+func (g *GetExperimentResponseContent) GetCreatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.CreatedAt
+}
+
+func (g *GetExperimentResponseContent) GetUpdatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.UpdatedAt
+}
+
+func (g *GetExperimentResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetExperimentResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getExperimentResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetName(name string) {
+	g.Name = name
+	g.require(getExperimentResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetDescription(description *string) {
+	g.Description = description
+	g.require(getExperimentResponseContentFieldDescription)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetFeatureFlagID(featureFlagID string) {
+	g.FeatureFlagID = featureFlagID
+	g.require(getExperimentResponseContentFieldFeatureFlagID)
+}
+
+// SetFeatureFlagName sets the FeatureFlagName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetFeatureFlagName(featureFlagName *string) {
+	g.FeatureFlagName = featureFlagName
+	g.require(getExperimentResponseContentFieldFeatureFlagName)
+}
+
+// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetAuthenticationFlow(authenticationFlow string) {
+	g.AuthenticationFlow = authenticationFlow
+	g.require(getExperimentResponseContentFieldAuthenticationFlow)
+}
+
+// SetAllocationStrategy sets the AllocationStrategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetAllocationStrategy(allocationStrategy AllocationStrategyEnum) {
+	g.AllocationStrategy = allocationStrategy
+	g.require(getExperimentResponseContentFieldAllocationStrategy)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetStatus(status ExperimentStatusEnum) {
+	g.Status = status
+	g.require(getExperimentResponseContentFieldStatus)
+}
+
+// SetIsValid sets the IsValid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetIsValid(isValid bool) {
+	g.IsValid = isValid
+	g.require(getExperimentResponseContentFieldIsValid)
+}
+
+// SetDefaultConfig sets the DefaultConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetDefaultConfig(defaultConfig *DefaultConfigEnum) {
+	g.DefaultConfig = defaultConfig
+	g.require(getExperimentResponseContentFieldDefaultConfig)
+}
+
+// SetFeatureFlagSnapshot sets the FeatureFlagSnapshot field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetFeatureFlagSnapshot(featureFlagSnapshot map[string]any) {
+	g.FeatureFlagSnapshot = featureFlagSnapshot
+	g.require(getExperimentResponseContentFieldFeatureFlagSnapshot)
+}
+
+// SetAllocations sets the Allocations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetAllocations(allocations []*AllocationItem) {
+	g.Allocations = allocations
+	g.require(getExperimentResponseContentFieldAllocations)
+}
+
+// SetEditableFields sets the EditableFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetEditableFields(editableFields []string) {
+	g.EditableFields = editableFields
+	g.require(getExperimentResponseContentFieldEditableFields)
+}
+
+// SetLevels sets the Levels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetLevels(levels []int) {
+	g.Levels = levels
+	g.require(getExperimentResponseContentFieldLevels)
+}
+
+// SetCurrentLevel sets the CurrentLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetCurrentLevel(currentLevel *int) {
+	g.CurrentLevel = currentLevel
+	g.require(getExperimentResponseContentFieldCurrentLevel)
+}
+
+// SetStartedAt sets the StartedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetStartedAt(startedAt *time.Time) {
+	g.StartedAt = startedAt
+	g.require(getExperimentResponseContentFieldStartedAt)
+}
+
+// SetEndedAt sets the EndedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetEndedAt(endedAt *time.Time) {
+	g.EndedAt = endedAt
+	g.require(getExperimentResponseContentFieldEndedAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetCreatedAt(createdAt time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getExperimentResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetExperimentResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getExperimentResponseContentFieldUpdatedAt)
+}
+
+func (g *GetExperimentResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetExperimentResponseContent
+	var unmarshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetExperimentResponseContent(unmarshaler.embed)
+	g.StartedAt = unmarshaler.StartedAt.TimePtr()
+	g.EndedAt = unmarshaler.EndedAt.TimePtr()
+	g.CreatedAt = unmarshaler.CreatedAt.Time()
+	g.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetExperimentResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetExperimentResponseContent
+	var marshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*g),
+		StartedAt: internal.NewOptionalDateTime(g.StartedAt),
+		EndedAt:   internal.NewOptionalDateTime(g.EndedAt),
+		CreatedAt: internal.NewDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewDateTime(g.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetExperimentResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getFeatureFlagResponseContentFieldID          = big.NewInt(1 << 0)
+	getFeatureFlagResponseContentFieldName        = big.NewInt(1 << 1)
+	getFeatureFlagResponseContentFieldDescription = big.NewInt(1 << 2)
+	getFeatureFlagResponseContentFieldType        = big.NewInt(1 << 3)
+	getFeatureFlagResponseContentFieldStatus      = big.NewInt(1 << 4)
+	getFeatureFlagResponseContentFieldParameters  = big.NewInt(1 << 5)
+	getFeatureFlagResponseContentFieldCreatedAt   = big.NewInt(1 << 6)
+	getFeatureFlagResponseContentFieldUpdatedAt   = big.NewInt(1 << 7)
+)
+
+type GetFeatureFlagResponseContent struct {
+	ID          string                   `json:"id" url:"id"`
+	Name        string                   `json:"name" url:"name"`
+	Description *string                  `json:"description,omitempty" url:"description,omitempty"`
+	Type        FeatureFlagTypeEnum      `json:"type" url:"type"`
+	Status      FeatureFlagStatusEnum    `json:"status" url:"status"`
+	Parameters  *FeatureFlagConfigParams `json:"parameters,omitempty" url:"parameters,omitempty"`
+	CreatedAt   time.Time                `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time                `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetFeatureFlagResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetFeatureFlagResponseContent) GetName() string {
+	if g == nil {
+		return ""
+	}
+	return g.Name
+}
+
+func (g *GetFeatureFlagResponseContent) GetDescription() string {
+	if g == nil || g.Description == nil {
+		return ""
+	}
+	return *g.Description
+}
+
+func (g *GetFeatureFlagResponseContent) GetType() FeatureFlagTypeEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Type
+}
+
+func (g *GetFeatureFlagResponseContent) GetStatus() FeatureFlagStatusEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Status
+}
+
+func (g *GetFeatureFlagResponseContent) GetParameters() FeatureFlagConfigParams {
+	if g == nil || g.Parameters == nil {
+		return nil
+	}
+	return *g.Parameters
+}
+
+func (g *GetFeatureFlagResponseContent) GetCreatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.CreatedAt
+}
+
+func (g *GetFeatureFlagResponseContent) GetUpdatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.UpdatedAt
+}
+
+func (g *GetFeatureFlagResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetFeatureFlagResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFeatureFlagResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getFeatureFlagResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFeatureFlagResponseContent) SetName(name string) {
+	g.Name = name
+	g.require(getFeatureFlagResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFeatureFlagResponseContent) SetDescription(description *string) {
+	g.Description = description
+	g.require(getFeatureFlagResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFeatureFlagResponseContent) SetType(type_ FeatureFlagTypeEnum) {
+	g.Type = type_
+	g.require(getFeatureFlagResponseContentFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFeatureFlagResponseContent) SetStatus(status FeatureFlagStatusEnum) {
+	g.Status = status
+	g.require(getFeatureFlagResponseContentFieldStatus)
+}
+
+// SetParameters sets the Parameters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFeatureFlagResponseContent) SetParameters(parameters *FeatureFlagConfigParams) {
+	g.Parameters = parameters
+	g.require(getFeatureFlagResponseContentFieldParameters)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFeatureFlagResponseContent) SetCreatedAt(createdAt time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getFeatureFlagResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFeatureFlagResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getFeatureFlagResponseContentFieldUpdatedAt)
+}
+
+func (g *GetFeatureFlagResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetFeatureFlagResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetFeatureFlagResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.Time()
+	g.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetFeatureFlagResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetFeatureFlagResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewDateTime(g.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetFeatureFlagResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
 type GetFlowExecutionRequestParametersHydrateEnum string
 
 const (
@@ -90481,6 +93595,198 @@ func (g *GetSCIMConfigurationResponseContent) String() string {
 type GetSCIMTokensResponseContent = []*SCIMTokenItem
 
 var (
+	getSegmentResponseContentFieldID          = big.NewInt(1 << 0)
+	getSegmentResponseContentFieldName        = big.NewInt(1 << 1)
+	getSegmentResponseContentFieldDescription = big.NewInt(1 << 2)
+	getSegmentResponseContentFieldType        = big.NewInt(1 << 3)
+	getSegmentResponseContentFieldRules       = big.NewInt(1 << 4)
+	getSegmentResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
+	getSegmentResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+)
+
+type GetSegmentResponseContent struct {
+	ID          string          `json:"id" url:"id"`
+	Name        string          `json:"name" url:"name"`
+	Description *string         `json:"description,omitempty" url:"description,omitempty"`
+	Type        SegmentTypeEnum `json:"type" url:"type"`
+	Rules       []*SegmentRule  `json:"rules" url:"rules"`
+	CreatedAt   time.Time       `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time       `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetSegmentResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetSegmentResponseContent) GetName() string {
+	if g == nil {
+		return ""
+	}
+	return g.Name
+}
+
+func (g *GetSegmentResponseContent) GetDescription() string {
+	if g == nil || g.Description == nil {
+		return ""
+	}
+	return *g.Description
+}
+
+func (g *GetSegmentResponseContent) GetType() SegmentTypeEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Type
+}
+
+func (g *GetSegmentResponseContent) GetRules() []*SegmentRule {
+	if g == nil {
+		return nil
+	}
+	return g.Rules
+}
+
+func (g *GetSegmentResponseContent) GetCreatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.CreatedAt
+}
+
+func (g *GetSegmentResponseContent) GetUpdatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.UpdatedAt
+}
+
+func (g *GetSegmentResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetSegmentResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSegmentResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getSegmentResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSegmentResponseContent) SetName(name string) {
+	g.Name = name
+	g.require(getSegmentResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSegmentResponseContent) SetDescription(description *string) {
+	g.Description = description
+	g.require(getSegmentResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSegmentResponseContent) SetType(type_ SegmentTypeEnum) {
+	g.Type = type_
+	g.require(getSegmentResponseContentFieldType)
+}
+
+// SetRules sets the Rules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSegmentResponseContent) SetRules(rules []*SegmentRule) {
+	g.Rules = rules
+	g.require(getSegmentResponseContentFieldRules)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSegmentResponseContent) SetCreatedAt(createdAt time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getSegmentResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSegmentResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getSegmentResponseContentFieldUpdatedAt)
+}
+
+func (g *GetSegmentResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetSegmentResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetSegmentResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.Time()
+	g.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetSegmentResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetSegmentResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewDateTime(g.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetSegmentResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
 	getSigningKeysResponseContentFieldKid          = big.NewInt(1 << 0)
 	getSigningKeysResponseContentFieldCert         = big.NewInt(1 << 1)
 	getSigningKeysResponseContentFieldPkcs7        = big.NewInt(1 << 2)
@@ -92375,6 +95681,198 @@ func (g *GetUserGroupsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetUserGroupsPaginatedResponseContent) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	if len(g.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(g); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", g)
+}
+
+var (
+	getVariationResponseContentFieldID            = big.NewInt(1 << 0)
+	getVariationResponseContentFieldFeatureFlagID = big.NewInt(1 << 1)
+	getVariationResponseContentFieldName          = big.NewInt(1 << 2)
+	getVariationResponseContentFieldDescription   = big.NewInt(1 << 3)
+	getVariationResponseContentFieldOverrides     = big.NewInt(1 << 4)
+	getVariationResponseContentFieldCreatedAt     = big.NewInt(1 << 5)
+	getVariationResponseContentFieldUpdatedAt     = big.NewInt(1 << 6)
+)
+
+type GetVariationResponseContent struct {
+	ID            string                `json:"id" url:"id"`
+	FeatureFlagID string                `json:"feature_flag_id" url:"feature_flag_id"`
+	Name          string                `json:"name" url:"name"`
+	Description   *string               `json:"description,omitempty" url:"description,omitempty"`
+	Overrides     VariationOverridesMap `json:"overrides" url:"overrides"`
+	CreatedAt     time.Time             `json:"created_at" url:"created_at"`
+	UpdatedAt     time.Time             `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (g *GetVariationResponseContent) GetID() string {
+	if g == nil {
+		return ""
+	}
+	return g.ID
+}
+
+func (g *GetVariationResponseContent) GetFeatureFlagID() string {
+	if g == nil {
+		return ""
+	}
+	return g.FeatureFlagID
+}
+
+func (g *GetVariationResponseContent) GetName() string {
+	if g == nil {
+		return ""
+	}
+	return g.Name
+}
+
+func (g *GetVariationResponseContent) GetDescription() string {
+	if g == nil || g.Description == nil {
+		return ""
+	}
+	return *g.Description
+}
+
+func (g *GetVariationResponseContent) GetOverrides() VariationOverridesMap {
+	if g == nil {
+		return nil
+	}
+	return g.Overrides
+}
+
+func (g *GetVariationResponseContent) GetCreatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.CreatedAt
+}
+
+func (g *GetVariationResponseContent) GetUpdatedAt() time.Time {
+	if g == nil {
+		return time.Time{}
+	}
+	return g.UpdatedAt
+}
+
+func (g *GetVariationResponseContent) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
+	return g.extraProperties
+}
+
+func (g *GetVariationResponseContent) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetVariationResponseContent) SetID(id string) {
+	g.ID = id
+	g.require(getVariationResponseContentFieldID)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetVariationResponseContent) SetFeatureFlagID(featureFlagID string) {
+	g.FeatureFlagID = featureFlagID
+	g.require(getVariationResponseContentFieldFeatureFlagID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetVariationResponseContent) SetName(name string) {
+	g.Name = name
+	g.require(getVariationResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetVariationResponseContent) SetDescription(description *string) {
+	g.Description = description
+	g.require(getVariationResponseContentFieldDescription)
+}
+
+// SetOverrides sets the Overrides field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetVariationResponseContent) SetOverrides(overrides VariationOverridesMap) {
+	g.Overrides = overrides
+	g.require(getVariationResponseContentFieldOverrides)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetVariationResponseContent) SetCreatedAt(createdAt time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getVariationResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetVariationResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getVariationResponseContentFieldUpdatedAt)
+}
+
+func (g *GetVariationResponseContent) UnmarshalJSON(data []byte) error {
+	type embed GetVariationResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*g),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*g = GetVariationResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.Time()
+	g.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+	g.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (g *GetVariationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed GetVariationResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*g),
+		CreatedAt: internal.NewDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewDateTime(g.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (g *GetVariationResponseContent) String() string {
 	if g == nil {
 		return "<nil>"
 	}
@@ -96298,6 +99796,208 @@ func (l *ListEventStreamDeliveriesResponseContent) String() string {
 }
 
 var (
+	listExperimentsResponseContentFieldExperiments = big.NewInt(1 << 0)
+	listExperimentsResponseContentFieldNext        = big.NewInt(1 << 1)
+)
+
+type ListExperimentsResponseContent struct {
+	Experiments []*ExperimentListItem `json:"experiments" url:"experiments"`
+	// Checkpoint token for the next page. Omitted when there are no further results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListExperimentsResponseContent) GetExperiments() []*ExperimentListItem {
+	if l == nil {
+		return nil
+	}
+	return l.Experiments
+}
+
+func (l *ListExperimentsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListExperimentsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListExperimentsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetExperiments sets the Experiments field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListExperimentsResponseContent) SetExperiments(experiments []*ExperimentListItem) {
+	l.Experiments = experiments
+	l.require(listExperimentsResponseContentFieldExperiments)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListExperimentsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listExperimentsResponseContentFieldNext)
+}
+
+func (l *ListExperimentsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListExperimentsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListExperimentsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListExperimentsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListExperimentsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListExperimentsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listFeatureFlagsResponseContentFieldFeatureFlags = big.NewInt(1 << 0)
+	listFeatureFlagsResponseContentFieldNext         = big.NewInt(1 << 1)
+)
+
+type ListFeatureFlagsResponseContent struct {
+	FeatureFlags []*FeatureFlag `json:"feature_flags" url:"feature_flags"`
+	// Checkpoint token for the next page. Omitted when there are no further results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListFeatureFlagsResponseContent) GetFeatureFlags() []*FeatureFlag {
+	if l == nil {
+		return nil
+	}
+	return l.FeatureFlags
+}
+
+func (l *ListFeatureFlagsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListFeatureFlagsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListFeatureFlagsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetFeatureFlags sets the FeatureFlags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFeatureFlagsResponseContent) SetFeatureFlags(featureFlags []*FeatureFlag) {
+	l.FeatureFlags = featureFlags
+	l.require(listFeatureFlagsResponseContentFieldFeatureFlags)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFeatureFlagsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listFeatureFlagsResponseContentFieldNext)
+}
+
+func (l *ListFeatureFlagsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListFeatureFlagsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListFeatureFlagsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListFeatureFlagsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListFeatureFlagsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListFeatureFlagsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
 	listFlowExecutionsPaginatedResponseContentFieldNext       = big.NewInt(1 << 0)
 	listFlowExecutionsPaginatedResponseContentFieldExecutions = big.NewInt(1 << 1)
 )
@@ -98817,6 +102517,107 @@ func (l *ListSCIMConfigurationsResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+var (
+	listSegmentsResponseContentFieldSegments = big.NewInt(1 << 0)
+	listSegmentsResponseContentFieldNext     = big.NewInt(1 << 1)
+)
+
+type ListSegmentsResponseContent struct {
+	Segments []*Segment `json:"segments" url:"segments"`
+	// Checkpoint token for the next page. Omitted when there are no further results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListSegmentsResponseContent) GetSegments() []*Segment {
+	if l == nil {
+		return nil
+	}
+	return l.Segments
+}
+
+func (l *ListSegmentsResponseContent) GetNext() string {
+	if l == nil || l.Next == nil {
+		return ""
+	}
+	return *l.Next
+}
+
+func (l *ListSegmentsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListSegmentsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetSegments sets the Segments field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSegmentsResponseContent) SetSegments(segments []*Segment) {
+	l.Segments = segments
+	l.require(listSegmentsResponseContentFieldSegments)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSegmentsResponseContent) SetNext(next *string) {
+	l.Next = next
+	l.require(listSegmentsResponseContentFieldNext)
+}
+
+func (l *ListSegmentsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListSegmentsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListSegmentsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListSegmentsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListSegmentsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListSegmentsResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
 // The list of custom text keys and values.
 type ListSelfServiceProfileCustomTextResponseContent = map[string]string
 
@@ -100053,6 +103854,90 @@ func (l *ListUserSessionsPaginatedResponseContent) MarshalJSON() ([]byte, error)
 }
 
 func (l *ListUserSessionsPaginatedResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listVariationsResponseContentFieldVariations = big.NewInt(1 << 0)
+)
+
+type ListVariationsResponseContent struct {
+	Variations []*Variation `json:"variations" url:"variations"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListVariationsResponseContent) GetVariations() []*Variation {
+	if l == nil {
+		return nil
+	}
+	return l.Variations
+}
+
+func (l *ListVariationsResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListVariationsResponseContent) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetVariations sets the Variations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListVariationsResponseContent) SetVariations(variations []*Variation) {
+	l.Variations = variations
+	l.require(listVariationsResponseContentFieldVariations)
+}
+
+func (l *ListVariationsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListVariationsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListVariationsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListVariationsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListVariationsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListVariationsResponseContent) String() string {
 	if l == nil {
 		return "<nil>"
 	}
@@ -102234,8 +106119,14 @@ const (
 	OauthScopeDeleteEventStreams OauthScope = "delete:event_streams"
 	// Read Events
 	OauthScopeReadEvents OauthScope = "read:events"
+	// Create Experimentation
+	OauthScopeCreateExperimentation OauthScope = "create:experimentation"
+	// Read Experimentation
+	OauthScopeReadExperimentation OauthScope = "read:experimentation"
 	// Update Experimentation
 	OauthScopeUpdateExperimentation OauthScope = "update:experimentation"
+	// Delete Experimentation
+	OauthScopeDeleteExperimentation OauthScope = "delete:experimentation"
 	// Create Flows
 	OauthScopeCreateFlows OauthScope = "create:flows"
 	// Read Flows
@@ -102556,8 +106447,6 @@ const (
 	OauthScopeUpdateOrganizationClients OauthScope = "update:organization_clients"
 	// Delete Organization Client Associations
 	OauthScopeDeleteOrganizationClients OauthScope = "delete:organization_clients"
-	// Read Organization Templates
-	OauthScopeReadOrganizationTemplates OauthScope = "read:organization_templates"
 	// Create Network ACL Keys
 	OauthScopeCreateNetworkACLKeys OauthScope = "create:network_acl_keys"
 	// Read Network ACL Keys
@@ -102736,8 +106625,14 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeDeleteEventStreams, nil
 	case "read:events":
 		return OauthScopeReadEvents, nil
+	case "create:experimentation":
+		return OauthScopeCreateExperimentation, nil
+	case "read:experimentation":
+		return OauthScopeReadExperimentation, nil
 	case "update:experimentation":
 		return OauthScopeUpdateExperimentation, nil
+	case "delete:experimentation":
+		return OauthScopeDeleteExperimentation, nil
 	case "create:flows":
 		return OauthScopeCreateFlows, nil
 	case "read:flows":
@@ -103058,8 +106953,6 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeUpdateOrganizationClients, nil
 	case "delete:organization_clients":
 		return OauthScopeDeleteOrganizationClients, nil
-	case "read:organization_templates":
-		return OauthScopeReadOrganizationTemplates, nil
 	case "create:network_acl_keys":
 		return OauthScopeCreateNetworkACLKeys, nil
 	case "read:network_acl_keys":
@@ -104605,29 +108498,6 @@ func (o *OrganizationConnectionInformation) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Controls whether organizations using this template can be deleted.
-type OrganizationDeletionBehaviorEnum string
-
-const (
-	OrganizationDeletionBehaviorEnumAllow        OrganizationDeletionBehaviorEnum = "allow"
-	OrganizationDeletionBehaviorEnumAllowIfEmpty OrganizationDeletionBehaviorEnum = "allow_if_empty"
-)
-
-func NewOrganizationDeletionBehaviorEnumFromString(s string) (OrganizationDeletionBehaviorEnum, error) {
-	switch s {
-	case "allow":
-		return OrganizationDeletionBehaviorEnumAllow, nil
-	case "allow_if_empty":
-		return OrganizationDeletionBehaviorEnumAllowIfEmpty, nil
-	}
-	var t OrganizationDeletionBehaviorEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (o OrganizationDeletionBehaviorEnum) Ptr() *OrganizationDeletionBehaviorEnum {
-	return &o
-}
-
 var (
 	organizationDiscoveryDomainFieldID                          = big.NewInt(1 << 0)
 	organizationDiscoveryDomainFieldDomain                      = big.NewInt(1 << 1)
@@ -105759,725 +109629,6 @@ func (o *OrganizationMemberRole) String() string {
 
 // Metadata associated with the organization, in the form of an object with string values (max 255 chars). Maximum of 25 metadata properties allowed.
 type OrganizationMetadata = map[string]*string
-
-var (
-	organizationTemplateFieldID                               = big.NewInt(1 << 0)
-	organizationTemplateFieldName                             = big.NewInt(1 << 1)
-	organizationTemplateFieldIsDefault                        = big.NewInt(1 << 2)
-	organizationTemplateFieldOrganizationDeletionBehavior     = big.NewInt(1 << 3)
-	organizationTemplateFieldConnectionDeletionBehavior       = big.NewInt(1 << 4)
-	organizationTemplateFieldEnforcePermissionCeiling         = big.NewInt(1 << 5)
-	organizationTemplateFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 6)
-	organizationTemplateFieldConnectionProfileID              = big.NewInt(1 << 7)
-	organizationTemplateFieldUserAttributeProfileID           = big.NewInt(1 << 8)
-	organizationTemplateFieldAllowedStrategies                = big.NewInt(1 << 9)
-	organizationTemplateFieldInvitationLandingClientID        = big.NewInt(1 << 10)
-	organizationTemplateFieldAdminRolesAssignment             = big.NewInt(1 << 11)
-	organizationTemplateFieldUseForOrganizationDiscovery      = big.NewInt(1 << 12)
-	organizationTemplateFieldRoleVisibilityPolicy             = big.NewInt(1 << 13)
-	organizationTemplateFieldCreatedAt                        = big.NewInt(1 << 14)
-	organizationTemplateFieldUpdatedAt                        = big.NewInt(1 << 15)
-)
-
-type OrganizationTemplate struct {
-	// Organization Template identifier.
-	ID *string `json:"id,omitempty" url:"id,omitempty"`
-	// The name of the organization template.
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
-	// Whether this is the default template applied to new organizations.
-	IsDefault                    *bool                             `json:"is_default,omitempty" url:"is_default,omitempty"`
-	OrganizationDeletionBehavior *OrganizationDeletionBehaviorEnum `json:"organization_deletion_behavior,omitempty" url:"organization_deletion_behavior,omitempty"`
-	ConnectionDeletionBehavior   *ConnectionDeletionBehaviorEnum   `json:"connection_deletion_behavior,omitempty" url:"connection_deletion_behavior,omitempty"`
-	// Whether to enforce permission ceiling for organizations using this template.
-	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty" url:"enforce_permission_ceiling,omitempty"`
-	// Whether to enforce self-assignment restrictions for organizations using this template.
-	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty" url:"enforce_self_assignment_restriction,omitempty"`
-	// The connection profile to apply to new connections.
-	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
-	// The user attribute profile to apply to organizations.
-	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
-	// List of allowed connection strategies for this template.
-	AllowedStrategies []OrganizationTemplateAllowedStrategyEnum `json:"allowed_strategies,omitempty" url:"allowed_strategies,omitempty"`
-	// The client ID for the invitation landing page.
-	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
-	// Default admin roles to assign to organization creators.
-	AdminRolesAssignment        []string                                         `json:"admin_roles_assignment,omitempty" url:"admin_roles_assignment,omitempty"`
-	UseForOrganizationDiscovery *OrganizationTemplateUseForOrganizationDiscovery `json:"use_for_organization_discovery,omitempty" url:"use_for_organization_discovery,omitempty"`
-	RoleVisibilityPolicy        *OrganizationTemplateRoleVisibilityPolicy        `json:"role_visibility_policy,omitempty" url:"role_visibility_policy,omitempty"`
-	// The ISO 8601 formatted timestamp representing when the template was created.
-	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
-	// The ISO 8601 formatted timestamp representing when the template was last updated.
-	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (o *OrganizationTemplate) GetID() string {
-	if o == nil || o.ID == nil {
-		return ""
-	}
-	return *o.ID
-}
-
-func (o *OrganizationTemplate) GetName() string {
-	if o == nil || o.Name == nil {
-		return ""
-	}
-	return *o.Name
-}
-
-func (o *OrganizationTemplate) GetIsDefault() bool {
-	if o == nil || o.IsDefault == nil {
-		return false
-	}
-	return *o.IsDefault
-}
-
-func (o *OrganizationTemplate) GetOrganizationDeletionBehavior() OrganizationDeletionBehaviorEnum {
-	if o == nil || o.OrganizationDeletionBehavior == nil {
-		return ""
-	}
-	return *o.OrganizationDeletionBehavior
-}
-
-func (o *OrganizationTemplate) GetConnectionDeletionBehavior() ConnectionDeletionBehaviorEnum {
-	if o == nil || o.ConnectionDeletionBehavior == nil {
-		return ""
-	}
-	return *o.ConnectionDeletionBehavior
-}
-
-func (o *OrganizationTemplate) GetEnforcePermissionCeiling() bool {
-	if o == nil || o.EnforcePermissionCeiling == nil {
-		return false
-	}
-	return *o.EnforcePermissionCeiling
-}
-
-func (o *OrganizationTemplate) GetEnforceSelfAssignmentRestriction() bool {
-	if o == nil || o.EnforceSelfAssignmentRestriction == nil {
-		return false
-	}
-	return *o.EnforceSelfAssignmentRestriction
-}
-
-func (o *OrganizationTemplate) GetConnectionProfileID() string {
-	if o == nil || o.ConnectionProfileID == nil {
-		return ""
-	}
-	return *o.ConnectionProfileID
-}
-
-func (o *OrganizationTemplate) GetUserAttributeProfileID() string {
-	if o == nil || o.UserAttributeProfileID == nil {
-		return ""
-	}
-	return *o.UserAttributeProfileID
-}
-
-func (o *OrganizationTemplate) GetAllowedStrategies() []OrganizationTemplateAllowedStrategyEnum {
-	if o == nil || o.AllowedStrategies == nil {
-		return nil
-	}
-	return o.AllowedStrategies
-}
-
-func (o *OrganizationTemplate) GetInvitationLandingClientID() string {
-	if o == nil || o.InvitationLandingClientID == nil {
-		return ""
-	}
-	return *o.InvitationLandingClientID
-}
-
-func (o *OrganizationTemplate) GetAdminRolesAssignment() []string {
-	if o == nil || o.AdminRolesAssignment == nil {
-		return nil
-	}
-	return o.AdminRolesAssignment
-}
-
-func (o *OrganizationTemplate) GetUseForOrganizationDiscovery() OrganizationTemplateUseForOrganizationDiscovery {
-	if o == nil || o.UseForOrganizationDiscovery == nil {
-		return OrganizationTemplateUseForOrganizationDiscovery{}
-	}
-	return *o.UseForOrganizationDiscovery
-}
-
-func (o *OrganizationTemplate) GetRoleVisibilityPolicy() OrganizationTemplateRoleVisibilityPolicy {
-	if o == nil || o.RoleVisibilityPolicy == nil {
-		return OrganizationTemplateRoleVisibilityPolicy{}
-	}
-	return *o.RoleVisibilityPolicy
-}
-
-func (o *OrganizationTemplate) GetCreatedAt() time.Time {
-	if o == nil || o.CreatedAt == nil {
-		return time.Time{}
-	}
-	return *o.CreatedAt
-}
-
-func (o *OrganizationTemplate) GetUpdatedAt() time.Time {
-	if o == nil || o.UpdatedAt == nil {
-		return time.Time{}
-	}
-	return *o.UpdatedAt
-}
-
-func (o *OrganizationTemplate) GetExtraProperties() map[string]interface{} {
-	if o == nil {
-		return nil
-	}
-	return o.extraProperties
-}
-
-func (o *OrganizationTemplate) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
-	}
-	o.explicitFields.Or(o.explicitFields, field)
-}
-
-// SetID sets the ID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetID(id *string) {
-	o.ID = id
-	o.require(organizationTemplateFieldID)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetName(name *string) {
-	o.Name = name
-	o.require(organizationTemplateFieldName)
-}
-
-// SetIsDefault sets the IsDefault field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetIsDefault(isDefault *bool) {
-	o.IsDefault = isDefault
-	o.require(organizationTemplateFieldIsDefault)
-}
-
-// SetOrganizationDeletionBehavior sets the OrganizationDeletionBehavior field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetOrganizationDeletionBehavior(organizationDeletionBehavior *OrganizationDeletionBehaviorEnum) {
-	o.OrganizationDeletionBehavior = organizationDeletionBehavior
-	o.require(organizationTemplateFieldOrganizationDeletionBehavior)
-}
-
-// SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetConnectionDeletionBehavior(connectionDeletionBehavior *ConnectionDeletionBehaviorEnum) {
-	o.ConnectionDeletionBehavior = connectionDeletionBehavior
-	o.require(organizationTemplateFieldConnectionDeletionBehavior)
-}
-
-// SetEnforcePermissionCeiling sets the EnforcePermissionCeiling field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetEnforcePermissionCeiling(enforcePermissionCeiling *bool) {
-	o.EnforcePermissionCeiling = enforcePermissionCeiling
-	o.require(organizationTemplateFieldEnforcePermissionCeiling)
-}
-
-// SetEnforceSelfAssignmentRestriction sets the EnforceSelfAssignmentRestriction field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetEnforceSelfAssignmentRestriction(enforceSelfAssignmentRestriction *bool) {
-	o.EnforceSelfAssignmentRestriction = enforceSelfAssignmentRestriction
-	o.require(organizationTemplateFieldEnforceSelfAssignmentRestriction)
-}
-
-// SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetConnectionProfileID(connectionProfileID *string) {
-	o.ConnectionProfileID = connectionProfileID
-	o.require(organizationTemplateFieldConnectionProfileID)
-}
-
-// SetUserAttributeProfileID sets the UserAttributeProfileID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetUserAttributeProfileID(userAttributeProfileID *string) {
-	o.UserAttributeProfileID = userAttributeProfileID
-	o.require(organizationTemplateFieldUserAttributeProfileID)
-}
-
-// SetAllowedStrategies sets the AllowedStrategies field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetAllowedStrategies(allowedStrategies []OrganizationTemplateAllowedStrategyEnum) {
-	o.AllowedStrategies = allowedStrategies
-	o.require(organizationTemplateFieldAllowedStrategies)
-}
-
-// SetInvitationLandingClientID sets the InvitationLandingClientID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetInvitationLandingClientID(invitationLandingClientID *string) {
-	o.InvitationLandingClientID = invitationLandingClientID
-	o.require(organizationTemplateFieldInvitationLandingClientID)
-}
-
-// SetAdminRolesAssignment sets the AdminRolesAssignment field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetAdminRolesAssignment(adminRolesAssignment []string) {
-	o.AdminRolesAssignment = adminRolesAssignment
-	o.require(organizationTemplateFieldAdminRolesAssignment)
-}
-
-// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *OrganizationTemplateUseForOrganizationDiscovery) {
-	o.UseForOrganizationDiscovery = useForOrganizationDiscovery
-	o.require(organizationTemplateFieldUseForOrganizationDiscovery)
-}
-
-// SetRoleVisibilityPolicy sets the RoleVisibilityPolicy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetRoleVisibilityPolicy(roleVisibilityPolicy *OrganizationTemplateRoleVisibilityPolicy) {
-	o.RoleVisibilityPolicy = roleVisibilityPolicy
-	o.require(organizationTemplateFieldRoleVisibilityPolicy)
-}
-
-// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetCreatedAt(createdAt *time.Time) {
-	o.CreatedAt = createdAt
-	o.require(organizationTemplateFieldCreatedAt)
-}
-
-// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplate) SetUpdatedAt(updatedAt *time.Time) {
-	o.UpdatedAt = updatedAt
-	o.require(organizationTemplateFieldUpdatedAt)
-}
-
-func (o *OrganizationTemplate) UnmarshalJSON(data []byte) error {
-	type embed OrganizationTemplate
-	var unmarshaler = struct {
-		embed
-		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
-		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
-	}{
-		embed: embed(*o),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*o = OrganizationTemplate(unmarshaler.embed)
-	o.CreatedAt = unmarshaler.CreatedAt.TimePtr()
-	o.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-	o.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (o *OrganizationTemplate) MarshalJSON() ([]byte, error) {
-	type embed OrganizationTemplate
-	var marshaler = struct {
-		embed
-		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
-		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
-	}{
-		embed:     embed(*o),
-		CreatedAt: internal.NewOptionalDateTime(o.CreatedAt),
-		UpdatedAt: internal.NewOptionalDateTime(o.UpdatedAt),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (o *OrganizationTemplate) String() string {
-	if o == nil {
-		return "<nil>"
-	}
-	if len(o.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-// An allowed enterprise connection strategy.
-type OrganizationTemplateAllowedStrategyEnum string
-
-const (
-	OrganizationTemplateAllowedStrategyEnumAdfs         OrganizationTemplateAllowedStrategyEnum = "adfs"
-	OrganizationTemplateAllowedStrategyEnumGoogleApps   OrganizationTemplateAllowedStrategyEnum = "google-apps"
-	OrganizationTemplateAllowedStrategyEnumOidc         OrganizationTemplateAllowedStrategyEnum = "oidc"
-	OrganizationTemplateAllowedStrategyEnumOkta         OrganizationTemplateAllowedStrategyEnum = "okta"
-	OrganizationTemplateAllowedStrategyEnumPingfederate OrganizationTemplateAllowedStrategyEnum = "pingfederate"
-	OrganizationTemplateAllowedStrategyEnumSamlp        OrganizationTemplateAllowedStrategyEnum = "samlp"
-	OrganizationTemplateAllowedStrategyEnumWaad         OrganizationTemplateAllowedStrategyEnum = "waad"
-)
-
-func NewOrganizationTemplateAllowedStrategyEnumFromString(s string) (OrganizationTemplateAllowedStrategyEnum, error) {
-	switch s {
-	case "adfs":
-		return OrganizationTemplateAllowedStrategyEnumAdfs, nil
-	case "google-apps":
-		return OrganizationTemplateAllowedStrategyEnumGoogleApps, nil
-	case "oidc":
-		return OrganizationTemplateAllowedStrategyEnumOidc, nil
-	case "okta":
-		return OrganizationTemplateAllowedStrategyEnumOkta, nil
-	case "pingfederate":
-		return OrganizationTemplateAllowedStrategyEnumPingfederate, nil
-	case "samlp":
-		return OrganizationTemplateAllowedStrategyEnumSamlp, nil
-	case "waad":
-		return OrganizationTemplateAllowedStrategyEnumWaad, nil
-	}
-	var t OrganizationTemplateAllowedStrategyEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (o OrganizationTemplateAllowedStrategyEnum) Ptr() *OrganizationTemplateAllowedStrategyEnum {
-	return &o
-}
-
-// The role visibility level.
-type OrganizationTemplateRoleVisibilityEnum string
-
-const (
-	OrganizationTemplateRoleVisibilityEnumWrite    OrganizationTemplateRoleVisibilityEnum = "write"
-	OrganizationTemplateRoleVisibilityEnumReadOnly OrganizationTemplateRoleVisibilityEnum = "read_only"
-	OrganizationTemplateRoleVisibilityEnumHidden   OrganizationTemplateRoleVisibilityEnum = "hidden"
-)
-
-func NewOrganizationTemplateRoleVisibilityEnumFromString(s string) (OrganizationTemplateRoleVisibilityEnum, error) {
-	switch s {
-	case "write":
-		return OrganizationTemplateRoleVisibilityEnumWrite, nil
-	case "read_only":
-		return OrganizationTemplateRoleVisibilityEnumReadOnly, nil
-	case "hidden":
-		return OrganizationTemplateRoleVisibilityEnumHidden, nil
-	}
-	var t OrganizationTemplateRoleVisibilityEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (o OrganizationTemplateRoleVisibilityEnum) Ptr() *OrganizationTemplateRoleVisibilityEnum {
-	return &o
-}
-
-// A role visibility override.
-var (
-	organizationTemplateRoleVisibilityOverrideFieldRoleID = big.NewInt(1 << 0)
-	organizationTemplateRoleVisibilityOverrideFieldAccess = big.NewInt(1 << 1)
-)
-
-type OrganizationTemplateRoleVisibilityOverride struct {
-	// The role identifier.
-	RoleID string                                 `json:"role_id" url:"role_id"`
-	Access OrganizationTemplateRoleVisibilityEnum `json:"access" url:"access"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (o *OrganizationTemplateRoleVisibilityOverride) GetRoleID() string {
-	if o == nil {
-		return ""
-	}
-	return o.RoleID
-}
-
-func (o *OrganizationTemplateRoleVisibilityOverride) GetAccess() OrganizationTemplateRoleVisibilityEnum {
-	if o == nil {
-		return ""
-	}
-	return o.Access
-}
-
-func (o *OrganizationTemplateRoleVisibilityOverride) GetExtraProperties() map[string]interface{} {
-	if o == nil {
-		return nil
-	}
-	return o.extraProperties
-}
-
-func (o *OrganizationTemplateRoleVisibilityOverride) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
-	}
-	o.explicitFields.Or(o.explicitFields, field)
-}
-
-// SetRoleID sets the RoleID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplateRoleVisibilityOverride) SetRoleID(roleID string) {
-	o.RoleID = roleID
-	o.require(organizationTemplateRoleVisibilityOverrideFieldRoleID)
-}
-
-// SetAccess sets the Access field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplateRoleVisibilityOverride) SetAccess(access OrganizationTemplateRoleVisibilityEnum) {
-	o.Access = access
-	o.require(organizationTemplateRoleVisibilityOverrideFieldAccess)
-}
-
-func (o *OrganizationTemplateRoleVisibilityOverride) UnmarshalJSON(data []byte) error {
-	type unmarshaler OrganizationTemplateRoleVisibilityOverride
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OrganizationTemplateRoleVisibilityOverride(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-	o.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (o *OrganizationTemplateRoleVisibilityOverride) MarshalJSON() ([]byte, error) {
-	type embed OrganizationTemplateRoleVisibilityOverride
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*o),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (o *OrganizationTemplateRoleVisibilityOverride) String() string {
-	if o == nil {
-		return "<nil>"
-	}
-	if len(o.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-// Controls role visibility for organization administrators.
-var (
-	organizationTemplateRoleVisibilityPolicyFieldDefaultValue = big.NewInt(1 << 0)
-	organizationTemplateRoleVisibilityPolicyFieldOverrides    = big.NewInt(1 << 1)
-)
-
-type OrganizationTemplateRoleVisibilityPolicy struct {
-	DefaultValue OrganizationTemplateRoleVisibilityEnum `json:"default_value" url:"default_value"`
-	// Role-specific visibility overrides.
-	Overrides []*OrganizationTemplateRoleVisibilityOverride `json:"overrides,omitempty" url:"overrides,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (o *OrganizationTemplateRoleVisibilityPolicy) GetDefaultValue() OrganizationTemplateRoleVisibilityEnum {
-	if o == nil {
-		return ""
-	}
-	return o.DefaultValue
-}
-
-func (o *OrganizationTemplateRoleVisibilityPolicy) GetOverrides() []*OrganizationTemplateRoleVisibilityOverride {
-	if o == nil || o.Overrides == nil {
-		return nil
-	}
-	return o.Overrides
-}
-
-func (o *OrganizationTemplateRoleVisibilityPolicy) GetExtraProperties() map[string]interface{} {
-	if o == nil {
-		return nil
-	}
-	return o.extraProperties
-}
-
-func (o *OrganizationTemplateRoleVisibilityPolicy) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
-	}
-	o.explicitFields.Or(o.explicitFields, field)
-}
-
-// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplateRoleVisibilityPolicy) SetDefaultValue(defaultValue OrganizationTemplateRoleVisibilityEnum) {
-	o.DefaultValue = defaultValue
-	o.require(organizationTemplateRoleVisibilityPolicyFieldDefaultValue)
-}
-
-// SetOverrides sets the Overrides field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplateRoleVisibilityPolicy) SetOverrides(overrides []*OrganizationTemplateRoleVisibilityOverride) {
-	o.Overrides = overrides
-	o.require(organizationTemplateRoleVisibilityPolicyFieldOverrides)
-}
-
-func (o *OrganizationTemplateRoleVisibilityPolicy) UnmarshalJSON(data []byte) error {
-	type unmarshaler OrganizationTemplateRoleVisibilityPolicy
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OrganizationTemplateRoleVisibilityPolicy(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-	o.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (o *OrganizationTemplateRoleVisibilityPolicy) MarshalJSON() ([]byte, error) {
-	type embed OrganizationTemplateRoleVisibilityPolicy
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*o),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (o *OrganizationTemplateRoleVisibilityPolicy) String() string {
-	if o == nil {
-		return "<nil>"
-	}
-	if len(o.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
-
-// Controls whether connections from this template are used for organization discovery.
-var (
-	organizationTemplateUseForOrganizationDiscoveryFieldDefaultValue  = big.NewInt(1 << 0)
-	organizationTemplateUseForOrganizationDiscoveryFieldAllowedValues = big.NewInt(1 << 1)
-)
-
-type OrganizationTemplateUseForOrganizationDiscovery struct {
-	// The default value for organization discovery.
-	DefaultValue bool `json:"default_value" url:"default_value"`
-	// The allowed values for organization discovery.
-	AllowedValues []bool `json:"allowed_values,omitempty" url:"allowed_values,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (o *OrganizationTemplateUseForOrganizationDiscovery) GetDefaultValue() bool {
-	if o == nil {
-		return false
-	}
-	return o.DefaultValue
-}
-
-func (o *OrganizationTemplateUseForOrganizationDiscovery) GetAllowedValues() []bool {
-	if o == nil || o.AllowedValues == nil {
-		return nil
-	}
-	return o.AllowedValues
-}
-
-func (o *OrganizationTemplateUseForOrganizationDiscovery) GetExtraProperties() map[string]interface{} {
-	if o == nil {
-		return nil
-	}
-	return o.extraProperties
-}
-
-func (o *OrganizationTemplateUseForOrganizationDiscovery) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
-	}
-	o.explicitFields.Or(o.explicitFields, field)
-}
-
-// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplateUseForOrganizationDiscovery) SetDefaultValue(defaultValue bool) {
-	o.DefaultValue = defaultValue
-	o.require(organizationTemplateUseForOrganizationDiscoveryFieldDefaultValue)
-}
-
-// SetAllowedValues sets the AllowedValues field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrganizationTemplateUseForOrganizationDiscovery) SetAllowedValues(allowedValues []bool) {
-	o.AllowedValues = allowedValues
-	o.require(organizationTemplateUseForOrganizationDiscoveryFieldAllowedValues)
-}
-
-func (o *OrganizationTemplateUseForOrganizationDiscovery) UnmarshalJSON(data []byte) error {
-	type unmarshaler OrganizationTemplateUseForOrganizationDiscovery
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*o = OrganizationTemplateUseForOrganizationDiscovery(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *o)
-	if err != nil {
-		return err
-	}
-	o.extraProperties = extraProperties
-	o.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (o *OrganizationTemplateUseForOrganizationDiscovery) MarshalJSON() ([]byte, error) {
-	type embed OrganizationTemplateUseForOrganizationDiscovery
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*o),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (o *OrganizationTemplateUseForOrganizationDiscovery) String() string {
-	if o == nil {
-		return "<nil>"
-	}
-	if len(o.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(o); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", o)
-}
 
 // Controls whether this organization can be used in user flows with third-party clients. Defaults to `block`.
 type OrganizationThirdPartyClientAccessEnum string
@@ -112573,6 +115724,1304 @@ func NewSearchParserEnumFromString(s string) (SearchParserEnum, error) {
 }
 
 func (s SearchParserEnum) Ptr() *SearchParserEnum {
+	return &s
+}
+
+var (
+	segmentFieldID          = big.NewInt(1 << 0)
+	segmentFieldName        = big.NewInt(1 << 1)
+	segmentFieldDescription = big.NewInt(1 << 2)
+	segmentFieldType        = big.NewInt(1 << 3)
+	segmentFieldRules       = big.NewInt(1 << 4)
+	segmentFieldCreatedAt   = big.NewInt(1 << 5)
+	segmentFieldUpdatedAt   = big.NewInt(1 << 6)
+)
+
+type Segment struct {
+	ID          string          `json:"id" url:"id"`
+	Name        string          `json:"name" url:"name"`
+	Description *string         `json:"description,omitempty" url:"description,omitempty"`
+	Type        SegmentTypeEnum `json:"type" url:"type"`
+	Rules       []*SegmentRule  `json:"rules" url:"rules"`
+	CreatedAt   time.Time       `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time       `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *Segment) GetID() string {
+	if s == nil {
+		return ""
+	}
+	return s.ID
+}
+
+func (s *Segment) GetName() string {
+	if s == nil {
+		return ""
+	}
+	return s.Name
+}
+
+func (s *Segment) GetDescription() string {
+	if s == nil || s.Description == nil {
+		return ""
+	}
+	return *s.Description
+}
+
+func (s *Segment) GetType() SegmentTypeEnum {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *Segment) GetRules() []*SegmentRule {
+	if s == nil {
+		return nil
+	}
+	return s.Rules
+}
+
+func (s *Segment) GetCreatedAt() time.Time {
+	if s == nil {
+		return time.Time{}
+	}
+	return s.CreatedAt
+}
+
+func (s *Segment) GetUpdatedAt() time.Time {
+	if s == nil {
+		return time.Time{}
+	}
+	return s.UpdatedAt
+}
+
+func (s *Segment) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *Segment) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Segment) SetID(id string) {
+	s.ID = id
+	s.require(segmentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Segment) SetName(name string) {
+	s.Name = name
+	s.require(segmentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Segment) SetDescription(description *string) {
+	s.Description = description
+	s.require(segmentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Segment) SetType(type_ SegmentTypeEnum) {
+	s.Type = type_
+	s.require(segmentFieldType)
+}
+
+// SetRules sets the Rules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Segment) SetRules(rules []*SegmentRule) {
+	s.Rules = rules
+	s.require(segmentFieldRules)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Segment) SetCreatedAt(createdAt time.Time) {
+	s.CreatedAt = createdAt
+	s.require(segmentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Segment) SetUpdatedAt(updatedAt time.Time) {
+	s.UpdatedAt = updatedAt
+	s.require(segmentFieldUpdatedAt)
+}
+
+func (s *Segment) UnmarshalJSON(data []byte) error {
+	type embed Segment
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*s),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*s = Segment(unmarshaler.embed)
+	s.CreatedAt = unmarshaler.CreatedAt.Time()
+	s.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *Segment) MarshalJSON() ([]byte, error) {
+	type embed Segment
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*s),
+		CreatedAt: internal.NewDateTime(s.CreatedAt),
+		UpdatedAt: internal.NewDateTime(s.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *Segment) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	segmentContainsExpressionFieldContains = big.NewInt(1 << 0)
+)
+
+type SegmentContainsExpression struct {
+	Contains []string `json:"contains" url:"contains"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SegmentContainsExpression) GetContains() []string {
+	if s == nil {
+		return nil
+	}
+	return s.Contains
+}
+
+func (s *SegmentContainsExpression) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SegmentContainsExpression) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetContains sets the Contains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentContainsExpression) SetContains(contains []string) {
+	s.Contains = contains
+	s.require(segmentContainsExpressionFieldContains)
+}
+
+func (s *SegmentContainsExpression) UnmarshalJSON(data []byte) error {
+	type unmarshaler SegmentContainsExpression
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SegmentContainsExpression(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SegmentContainsExpression) MarshalJSON() ([]byte, error) {
+	type embed SegmentContainsExpression
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SegmentContainsExpression) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	segmentEndsWithExpressionFieldEndsWith = big.NewInt(1 << 0)
+)
+
+type SegmentEndsWithExpression struct {
+	EndsWith []string `json:"ends_with" url:"ends_with"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SegmentEndsWithExpression) GetEndsWith() []string {
+	if s == nil {
+		return nil
+	}
+	return s.EndsWith
+}
+
+func (s *SegmentEndsWithExpression) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SegmentEndsWithExpression) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetEndsWith sets the EndsWith field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentEndsWithExpression) SetEndsWith(endsWith []string) {
+	s.EndsWith = endsWith
+	s.require(segmentEndsWithExpressionFieldEndsWith)
+}
+
+func (s *SegmentEndsWithExpression) UnmarshalJSON(data []byte) error {
+	type unmarshaler SegmentEndsWithExpression
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SegmentEndsWithExpression(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SegmentEndsWithExpression) MarshalJSON() ([]byte, error) {
+	type embed SegmentEndsWithExpression
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SegmentEndsWithExpression) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	segmentExistsExpressionFieldExists = big.NewInt(1 << 0)
+)
+
+type SegmentExistsExpression struct {
+	Exists bool `json:"exists" url:"exists"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SegmentExistsExpression) GetExists() bool {
+	if s == nil {
+		return false
+	}
+	return s.Exists
+}
+
+func (s *SegmentExistsExpression) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SegmentExistsExpression) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetExists sets the Exists field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentExistsExpression) SetExists(exists bool) {
+	s.Exists = exists
+	s.require(segmentExistsExpressionFieldExists)
+}
+
+func (s *SegmentExistsExpression) UnmarshalJSON(data []byte) error {
+	type unmarshaler SegmentExistsExpression
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SegmentExistsExpression(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SegmentExistsExpression) MarshalJSON() ([]byte, error) {
+	type embed SegmentExistsExpression
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SegmentExistsExpression) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+// Attribute conditions that must match.
+var (
+	segmentMatchConditionsFieldClientID       = big.NewInt(1 << 0)
+	segmentMatchConditionsFieldConnection     = big.NewInt(1 << 1)
+	segmentMatchConditionsFieldConnectionType = big.NewInt(1 << 2)
+	segmentMatchConditionsFieldOrganizationID = big.NewInt(1 << 3)
+	segmentMatchConditionsFieldDomain         = big.NewInt(1 << 4)
+	segmentMatchConditionsFieldDeviceType     = big.NewInt(1 << 5)
+	segmentMatchConditionsFieldBrowser        = big.NewInt(1 << 6)
+	segmentMatchConditionsFieldPlatform       = big.NewInt(1 << 7)
+	segmentMatchConditionsFieldUserAgent      = big.NewInt(1 << 8)
+	segmentMatchConditionsFieldCountry        = big.NewInt(1 << 9)
+	segmentMatchConditionsFieldRegion         = big.NewInt(1 << 10)
+)
+
+type SegmentMatchConditions struct {
+	ClientID       *SegmentMatchExpression `json:"client_id,omitempty" url:"client_id,omitempty"`
+	Connection     *SegmentMatchExpression `json:"connection,omitempty" url:"connection,omitempty"`
+	ConnectionType *SegmentMatchExpression `json:"connection_type,omitempty" url:"connection_type,omitempty"`
+	OrganizationID *SegmentMatchExpression `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	Domain         *SegmentMatchExpression `json:"domain,omitempty" url:"domain,omitempty"`
+	DeviceType     *SegmentMatchExpression `json:"device_type,omitempty" url:"device_type,omitempty"`
+	Browser        *SegmentMatchExpression `json:"browser,omitempty" url:"browser,omitempty"`
+	Platform       *SegmentMatchExpression `json:"platform,omitempty" url:"platform,omitempty"`
+	UserAgent      *SegmentMatchExpression `json:"user_agent,omitempty" url:"user_agent,omitempty"`
+	Country        *SegmentMatchExpression `json:"country,omitempty" url:"country,omitempty"`
+	Region         *SegmentMatchExpression `json:"region,omitempty" url:"region,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (s *SegmentMatchConditions) GetClientID() SegmentMatchExpression {
+	if s == nil || s.ClientID == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.ClientID
+}
+
+func (s *SegmentMatchConditions) GetConnection() SegmentMatchExpression {
+	if s == nil || s.Connection == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Connection
+}
+
+func (s *SegmentMatchConditions) GetConnectionType() SegmentMatchExpression {
+	if s == nil || s.ConnectionType == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.ConnectionType
+}
+
+func (s *SegmentMatchConditions) GetOrganizationID() SegmentMatchExpression {
+	if s == nil || s.OrganizationID == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.OrganizationID
+}
+
+func (s *SegmentMatchConditions) GetDomain() SegmentMatchExpression {
+	if s == nil || s.Domain == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Domain
+}
+
+func (s *SegmentMatchConditions) GetDeviceType() SegmentMatchExpression {
+	if s == nil || s.DeviceType == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.DeviceType
+}
+
+func (s *SegmentMatchConditions) GetBrowser() SegmentMatchExpression {
+	if s == nil || s.Browser == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Browser
+}
+
+func (s *SegmentMatchConditions) GetPlatform() SegmentMatchExpression {
+	if s == nil || s.Platform == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Platform
+}
+
+func (s *SegmentMatchConditions) GetUserAgent() SegmentMatchExpression {
+	if s == nil || s.UserAgent == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.UserAgent
+}
+
+func (s *SegmentMatchConditions) GetCountry() SegmentMatchExpression {
+	if s == nil || s.Country == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Country
+}
+
+func (s *SegmentMatchConditions) GetRegion() SegmentMatchExpression {
+	if s == nil || s.Region == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Region
+}
+
+func (s *SegmentMatchConditions) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.ExtraProperties
+}
+
+func (s *SegmentMatchConditions) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetClientID(clientID *SegmentMatchExpression) {
+	s.ClientID = clientID
+	s.require(segmentMatchConditionsFieldClientID)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetConnection(connection *SegmentMatchExpression) {
+	s.Connection = connection
+	s.require(segmentMatchConditionsFieldConnection)
+}
+
+// SetConnectionType sets the ConnectionType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetConnectionType(connectionType *SegmentMatchExpression) {
+	s.ConnectionType = connectionType
+	s.require(segmentMatchConditionsFieldConnectionType)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetOrganizationID(organizationID *SegmentMatchExpression) {
+	s.OrganizationID = organizationID
+	s.require(segmentMatchConditionsFieldOrganizationID)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetDomain(domain *SegmentMatchExpression) {
+	s.Domain = domain
+	s.require(segmentMatchConditionsFieldDomain)
+}
+
+// SetDeviceType sets the DeviceType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetDeviceType(deviceType *SegmentMatchExpression) {
+	s.DeviceType = deviceType
+	s.require(segmentMatchConditionsFieldDeviceType)
+}
+
+// SetBrowser sets the Browser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetBrowser(browser *SegmentMatchExpression) {
+	s.Browser = browser
+	s.require(segmentMatchConditionsFieldBrowser)
+}
+
+// SetPlatform sets the Platform field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetPlatform(platform *SegmentMatchExpression) {
+	s.Platform = platform
+	s.require(segmentMatchConditionsFieldPlatform)
+}
+
+// SetUserAgent sets the UserAgent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetUserAgent(userAgent *SegmentMatchExpression) {
+	s.UserAgent = userAgent
+	s.require(segmentMatchConditionsFieldUserAgent)
+}
+
+// SetCountry sets the Country field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetCountry(country *SegmentMatchExpression) {
+	s.Country = country
+	s.require(segmentMatchConditionsFieldCountry)
+}
+
+// SetRegion sets the Region field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentMatchConditions) SetRegion(region *SegmentMatchExpression) {
+	s.Region = region
+	s.require(segmentMatchConditionsFieldRegion)
+}
+
+func (s *SegmentMatchConditions) UnmarshalJSON(data []byte) error {
+	type embed SegmentMatchConditions
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*s = SegmentMatchConditions(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.ExtraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SegmentMatchConditions) MarshalJSON() ([]byte, error) {
+	type embed SegmentMatchConditions
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
+}
+
+func (s *SegmentMatchConditions) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type SegmentMatchExpression struct {
+	StringList                  []string
+	SegmentContainsExpression   *SegmentContainsExpression
+	SegmentStartsWithExpression *SegmentStartsWithExpression
+	SegmentEndsWithExpression   *SegmentEndsWithExpression
+	SegmentExistsExpression     *SegmentExistsExpression
+
+	typ string
+}
+
+func (s *SegmentMatchExpression) GetStringList() []string {
+	if s == nil {
+		return nil
+	}
+	return s.StringList
+}
+
+func (s *SegmentMatchExpression) GetSegmentContainsExpression() *SegmentContainsExpression {
+	if s == nil {
+		return nil
+	}
+	return s.SegmentContainsExpression
+}
+
+func (s *SegmentMatchExpression) GetSegmentStartsWithExpression() *SegmentStartsWithExpression {
+	if s == nil {
+		return nil
+	}
+	return s.SegmentStartsWithExpression
+}
+
+func (s *SegmentMatchExpression) GetSegmentEndsWithExpression() *SegmentEndsWithExpression {
+	if s == nil {
+		return nil
+	}
+	return s.SegmentEndsWithExpression
+}
+
+func (s *SegmentMatchExpression) GetSegmentExistsExpression() *SegmentExistsExpression {
+	if s == nil {
+		return nil
+	}
+	return s.SegmentExistsExpression
+}
+
+func (s *SegmentMatchExpression) UnmarshalJSON(data []byte) error {
+	var valueStringList []string
+	if err := json.Unmarshal(data, &valueStringList); err == nil {
+		s.typ = "StringList"
+		s.StringList = valueStringList
+		return nil
+	}
+	valueSegmentContainsExpression := new(SegmentContainsExpression)
+	if err := json.Unmarshal(data, &valueSegmentContainsExpression); err == nil {
+		s.typ = "SegmentContainsExpression"
+		s.SegmentContainsExpression = valueSegmentContainsExpression
+		return nil
+	}
+	valueSegmentStartsWithExpression := new(SegmentStartsWithExpression)
+	if err := json.Unmarshal(data, &valueSegmentStartsWithExpression); err == nil {
+		s.typ = "SegmentStartsWithExpression"
+		s.SegmentStartsWithExpression = valueSegmentStartsWithExpression
+		return nil
+	}
+	valueSegmentEndsWithExpression := new(SegmentEndsWithExpression)
+	if err := json.Unmarshal(data, &valueSegmentEndsWithExpression); err == nil {
+		s.typ = "SegmentEndsWithExpression"
+		s.SegmentEndsWithExpression = valueSegmentEndsWithExpression
+		return nil
+	}
+	valueSegmentExistsExpression := new(SegmentExistsExpression)
+	if err := json.Unmarshal(data, &valueSegmentExistsExpression); err == nil {
+		s.typ = "SegmentExistsExpression"
+		s.SegmentExistsExpression = valueSegmentExistsExpression
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, s)
+}
+
+func (s SegmentMatchExpression) MarshalJSON() ([]byte, error) {
+	if s.typ == "StringList" || s.StringList != nil {
+		return json.Marshal(s.StringList)
+	}
+	if s.typ == "SegmentContainsExpression" || s.SegmentContainsExpression != nil {
+		return json.Marshal(s.SegmentContainsExpression)
+	}
+	if s.typ == "SegmentStartsWithExpression" || s.SegmentStartsWithExpression != nil {
+		return json.Marshal(s.SegmentStartsWithExpression)
+	}
+	if s.typ == "SegmentEndsWithExpression" || s.SegmentEndsWithExpression != nil {
+		return json.Marshal(s.SegmentEndsWithExpression)
+	}
+	if s.typ == "SegmentExistsExpression" || s.SegmentExistsExpression != nil {
+		return json.Marshal(s.SegmentExistsExpression)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
+type SegmentMatchExpressionVisitor interface {
+	VisitStringList([]string) error
+	VisitSegmentContainsExpression(*SegmentContainsExpression) error
+	VisitSegmentStartsWithExpression(*SegmentStartsWithExpression) error
+	VisitSegmentEndsWithExpression(*SegmentEndsWithExpression) error
+	VisitSegmentExistsExpression(*SegmentExistsExpression) error
+}
+
+func (s *SegmentMatchExpression) Accept(visitor SegmentMatchExpressionVisitor) error {
+	if s.typ == "StringList" || s.StringList != nil {
+		return visitor.VisitStringList(s.StringList)
+	}
+	if s.typ == "SegmentContainsExpression" || s.SegmentContainsExpression != nil {
+		return visitor.VisitSegmentContainsExpression(s.SegmentContainsExpression)
+	}
+	if s.typ == "SegmentStartsWithExpression" || s.SegmentStartsWithExpression != nil {
+		return visitor.VisitSegmentStartsWithExpression(s.SegmentStartsWithExpression)
+	}
+	if s.typ == "SegmentEndsWithExpression" || s.SegmentEndsWithExpression != nil {
+		return visitor.VisitSegmentEndsWithExpression(s.SegmentEndsWithExpression)
+	}
+	if s.typ == "SegmentExistsExpression" || s.SegmentExistsExpression != nil {
+		return visitor.VisitSegmentExistsExpression(s.SegmentExistsExpression)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
+// Attribute conditions that must not match.
+var (
+	segmentNotMatchConditionsFieldClientID       = big.NewInt(1 << 0)
+	segmentNotMatchConditionsFieldConnection     = big.NewInt(1 << 1)
+	segmentNotMatchConditionsFieldConnectionType = big.NewInt(1 << 2)
+	segmentNotMatchConditionsFieldOrganizationID = big.NewInt(1 << 3)
+	segmentNotMatchConditionsFieldDomain         = big.NewInt(1 << 4)
+	segmentNotMatchConditionsFieldDeviceType     = big.NewInt(1 << 5)
+	segmentNotMatchConditionsFieldBrowser        = big.NewInt(1 << 6)
+	segmentNotMatchConditionsFieldPlatform       = big.NewInt(1 << 7)
+	segmentNotMatchConditionsFieldUserAgent      = big.NewInt(1 << 8)
+	segmentNotMatchConditionsFieldCountry        = big.NewInt(1 << 9)
+	segmentNotMatchConditionsFieldRegion         = big.NewInt(1 << 10)
+)
+
+type SegmentNotMatchConditions struct {
+	ClientID       *SegmentMatchExpression `json:"client_id,omitempty" url:"client_id,omitempty"`
+	Connection     *SegmentMatchExpression `json:"connection,omitempty" url:"connection,omitempty"`
+	ConnectionType *SegmentMatchExpression `json:"connection_type,omitempty" url:"connection_type,omitempty"`
+	OrganizationID *SegmentMatchExpression `json:"organization_id,omitempty" url:"organization_id,omitempty"`
+	Domain         *SegmentMatchExpression `json:"domain,omitempty" url:"domain,omitempty"`
+	DeviceType     *SegmentMatchExpression `json:"device_type,omitempty" url:"device_type,omitempty"`
+	Browser        *SegmentMatchExpression `json:"browser,omitempty" url:"browser,omitempty"`
+	Platform       *SegmentMatchExpression `json:"platform,omitempty" url:"platform,omitempty"`
+	UserAgent      *SegmentMatchExpression `json:"user_agent,omitempty" url:"user_agent,omitempty"`
+	Country        *SegmentMatchExpression `json:"country,omitempty" url:"country,omitempty"`
+	Region         *SegmentMatchExpression `json:"region,omitempty" url:"region,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (s *SegmentNotMatchConditions) GetClientID() SegmentMatchExpression {
+	if s == nil || s.ClientID == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.ClientID
+}
+
+func (s *SegmentNotMatchConditions) GetConnection() SegmentMatchExpression {
+	if s == nil || s.Connection == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Connection
+}
+
+func (s *SegmentNotMatchConditions) GetConnectionType() SegmentMatchExpression {
+	if s == nil || s.ConnectionType == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.ConnectionType
+}
+
+func (s *SegmentNotMatchConditions) GetOrganizationID() SegmentMatchExpression {
+	if s == nil || s.OrganizationID == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.OrganizationID
+}
+
+func (s *SegmentNotMatchConditions) GetDomain() SegmentMatchExpression {
+	if s == nil || s.Domain == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Domain
+}
+
+func (s *SegmentNotMatchConditions) GetDeviceType() SegmentMatchExpression {
+	if s == nil || s.DeviceType == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.DeviceType
+}
+
+func (s *SegmentNotMatchConditions) GetBrowser() SegmentMatchExpression {
+	if s == nil || s.Browser == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Browser
+}
+
+func (s *SegmentNotMatchConditions) GetPlatform() SegmentMatchExpression {
+	if s == nil || s.Platform == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Platform
+}
+
+func (s *SegmentNotMatchConditions) GetUserAgent() SegmentMatchExpression {
+	if s == nil || s.UserAgent == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.UserAgent
+}
+
+func (s *SegmentNotMatchConditions) GetCountry() SegmentMatchExpression {
+	if s == nil || s.Country == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Country
+}
+
+func (s *SegmentNotMatchConditions) GetRegion() SegmentMatchExpression {
+	if s == nil || s.Region == nil {
+		return SegmentMatchExpression{}
+	}
+	return *s.Region
+}
+
+func (s *SegmentNotMatchConditions) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.ExtraProperties
+}
+
+func (s *SegmentNotMatchConditions) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetClientID(clientID *SegmentMatchExpression) {
+	s.ClientID = clientID
+	s.require(segmentNotMatchConditionsFieldClientID)
+}
+
+// SetConnection sets the Connection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetConnection(connection *SegmentMatchExpression) {
+	s.Connection = connection
+	s.require(segmentNotMatchConditionsFieldConnection)
+}
+
+// SetConnectionType sets the ConnectionType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetConnectionType(connectionType *SegmentMatchExpression) {
+	s.ConnectionType = connectionType
+	s.require(segmentNotMatchConditionsFieldConnectionType)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetOrganizationID(organizationID *SegmentMatchExpression) {
+	s.OrganizationID = organizationID
+	s.require(segmentNotMatchConditionsFieldOrganizationID)
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetDomain(domain *SegmentMatchExpression) {
+	s.Domain = domain
+	s.require(segmentNotMatchConditionsFieldDomain)
+}
+
+// SetDeviceType sets the DeviceType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetDeviceType(deviceType *SegmentMatchExpression) {
+	s.DeviceType = deviceType
+	s.require(segmentNotMatchConditionsFieldDeviceType)
+}
+
+// SetBrowser sets the Browser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetBrowser(browser *SegmentMatchExpression) {
+	s.Browser = browser
+	s.require(segmentNotMatchConditionsFieldBrowser)
+}
+
+// SetPlatform sets the Platform field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetPlatform(platform *SegmentMatchExpression) {
+	s.Platform = platform
+	s.require(segmentNotMatchConditionsFieldPlatform)
+}
+
+// SetUserAgent sets the UserAgent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetUserAgent(userAgent *SegmentMatchExpression) {
+	s.UserAgent = userAgent
+	s.require(segmentNotMatchConditionsFieldUserAgent)
+}
+
+// SetCountry sets the Country field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetCountry(country *SegmentMatchExpression) {
+	s.Country = country
+	s.require(segmentNotMatchConditionsFieldCountry)
+}
+
+// SetRegion sets the Region field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentNotMatchConditions) SetRegion(region *SegmentMatchExpression) {
+	s.Region = region
+	s.require(segmentNotMatchConditionsFieldRegion)
+}
+
+func (s *SegmentNotMatchConditions) UnmarshalJSON(data []byte) error {
+	type embed SegmentNotMatchConditions
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*s = SegmentNotMatchConditions(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.ExtraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SegmentNotMatchConditions) MarshalJSON() ([]byte, error) {
+	type embed SegmentNotMatchConditions
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
+}
+
+func (s *SegmentNotMatchConditions) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	segmentRuleFieldMatch    = big.NewInt(1 << 0)
+	segmentRuleFieldNotMatch = big.NewInt(1 << 1)
+)
+
+type SegmentRule struct {
+	Match    *SegmentMatchConditions    `json:"match,omitempty" url:"match,omitempty"`
+	NotMatch *SegmentNotMatchConditions `json:"not_match,omitempty" url:"not_match,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SegmentRule) GetMatch() SegmentMatchConditions {
+	if s == nil || s.Match == nil {
+		return SegmentMatchConditions{}
+	}
+	return *s.Match
+}
+
+func (s *SegmentRule) GetNotMatch() SegmentNotMatchConditions {
+	if s == nil || s.NotMatch == nil {
+		return SegmentNotMatchConditions{}
+	}
+	return *s.NotMatch
+}
+
+func (s *SegmentRule) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SegmentRule) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetMatch sets the Match field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentRule) SetMatch(match *SegmentMatchConditions) {
+	s.Match = match
+	s.require(segmentRuleFieldMatch)
+}
+
+// SetNotMatch sets the NotMatch field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentRule) SetNotMatch(notMatch *SegmentNotMatchConditions) {
+	s.NotMatch = notMatch
+	s.require(segmentRuleFieldNotMatch)
+}
+
+func (s *SegmentRule) UnmarshalJSON(data []byte) error {
+	type unmarshaler SegmentRule
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SegmentRule(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SegmentRule) MarshalJSON() ([]byte, error) {
+	type embed SegmentRule
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SegmentRule) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	segmentStartsWithExpressionFieldStartsWith = big.NewInt(1 << 0)
+)
+
+type SegmentStartsWithExpression struct {
+	StartsWith []string `json:"starts_with" url:"starts_with"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SegmentStartsWithExpression) GetStartsWith() []string {
+	if s == nil {
+		return nil
+	}
+	return s.StartsWith
+}
+
+func (s *SegmentStartsWithExpression) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SegmentStartsWithExpression) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetStartsWith sets the StartsWith field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SegmentStartsWithExpression) SetStartsWith(startsWith []string) {
+	s.StartsWith = startsWith
+	s.require(segmentStartsWithExpressionFieldStartsWith)
+}
+
+func (s *SegmentStartsWithExpression) UnmarshalJSON(data []byte) error {
+	type unmarshaler SegmentStartsWithExpression
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SegmentStartsWithExpression(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SegmentStartsWithExpression) MarshalJSON() ([]byte, error) {
+	type embed SegmentStartsWithExpression
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SegmentStartsWithExpression) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type SegmentTypeEnum string
+
+const (
+	SegmentTypeEnumSelf  SegmentTypeEnum = "self"
+	SegmentTypeEnumAuth0 SegmentTypeEnum = "auth0"
+)
+
+func NewSegmentTypeEnumFromString(s string) (SegmentTypeEnum, error) {
+	switch s {
+	case "self":
+		return SegmentTypeEnumSelf, nil
+	case "auth0":
+		return SegmentTypeEnumAuth0, nil
+	}
+	var t SegmentTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SegmentTypeEnum) Ptr() *SegmentTypeEnum {
+	return &s
+}
+
+// Filter by type. Exact match.
+type SegmentTypeFilterEnum string
+
+const (
+	SegmentTypeFilterEnumAuth0 SegmentTypeFilterEnum = "auth0"
+	SegmentTypeFilterEnumSelf  SegmentTypeFilterEnum = "self"
+)
+
+func NewSegmentTypeFilterEnumFromString(s string) (SegmentTypeFilterEnum, error) {
+	switch s {
+	case "auth0":
+		return SegmentTypeFilterEnumAuth0, nil
+	case "self":
+		return SegmentTypeFilterEnumSelf, nil
+	}
+	var t SegmentTypeFilterEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SegmentTypeFilterEnum) Ptr() *SegmentTypeFilterEnum {
 	return &s
 }
 
@@ -132273,6 +136722,1215 @@ func (u *UpdateEnabledClientConnectionsRequestContentItem) String() string {
 }
 
 var (
+	updateExperimentResponseContentFieldID                  = big.NewInt(1 << 0)
+	updateExperimentResponseContentFieldName                = big.NewInt(1 << 1)
+	updateExperimentResponseContentFieldDescription         = big.NewInt(1 << 2)
+	updateExperimentResponseContentFieldFeatureFlagID       = big.NewInt(1 << 3)
+	updateExperimentResponseContentFieldFeatureFlagName     = big.NewInt(1 << 4)
+	updateExperimentResponseContentFieldAuthenticationFlow  = big.NewInt(1 << 5)
+	updateExperimentResponseContentFieldAllocationStrategy  = big.NewInt(1 << 6)
+	updateExperimentResponseContentFieldStatus              = big.NewInt(1 << 7)
+	updateExperimentResponseContentFieldIsValid             = big.NewInt(1 << 8)
+	updateExperimentResponseContentFieldDefaultConfig       = big.NewInt(1 << 9)
+	updateExperimentResponseContentFieldFeatureFlagSnapshot = big.NewInt(1 << 10)
+	updateExperimentResponseContentFieldAllocations         = big.NewInt(1 << 11)
+	updateExperimentResponseContentFieldEditableFields      = big.NewInt(1 << 12)
+	updateExperimentResponseContentFieldLevels              = big.NewInt(1 << 13)
+	updateExperimentResponseContentFieldCurrentLevel        = big.NewInt(1 << 14)
+	updateExperimentResponseContentFieldStartedAt           = big.NewInt(1 << 15)
+	updateExperimentResponseContentFieldEndedAt             = big.NewInt(1 << 16)
+	updateExperimentResponseContentFieldCreatedAt           = big.NewInt(1 << 17)
+	updateExperimentResponseContentFieldUpdatedAt           = big.NewInt(1 << 18)
+)
+
+type UpdateExperimentResponseContent struct {
+	ID                  string                 `json:"id" url:"id"`
+	Name                string                 `json:"name" url:"name"`
+	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
+	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
+	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
+	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
+	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
+	Status              ExperimentStatusEnum   `json:"status" url:"status"`
+	IsValid             bool                   `json:"is_valid" url:"is_valid"`
+	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
+	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
+	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
+	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
+	EditableFields []string `json:"editable_fields" url:"editable_fields"`
+	// Ramp experiment levels configuration.
+	Levels []int `json:"levels,omitempty" url:"levels,omitempty"`
+	// Read-only. The active exposure percentage for the current ramp step. Null when no ramp schedule is active.
+	CurrentLevel *int       `json:"current_level,omitempty" url:"current_level,omitempty"`
+	StartedAt    *time.Time `json:"started_at,omitempty" url:"started_at,omitempty"`
+	EndedAt      *time.Time `json:"ended_at,omitempty" url:"ended_at,omitempty"`
+	CreatedAt    time.Time  `json:"created_at" url:"created_at"`
+	UpdatedAt    time.Time  `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateExperimentResponseContent) GetID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ID
+}
+
+func (u *UpdateExperimentResponseContent) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UpdateExperimentResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UpdateExperimentResponseContent) GetFeatureFlagID() string {
+	if u == nil {
+		return ""
+	}
+	return u.FeatureFlagID
+}
+
+func (u *UpdateExperimentResponseContent) GetFeatureFlagName() string {
+	if u == nil || u.FeatureFlagName == nil {
+		return ""
+	}
+	return *u.FeatureFlagName
+}
+
+func (u *UpdateExperimentResponseContent) GetAuthenticationFlow() string {
+	if u == nil {
+		return ""
+	}
+	return u.AuthenticationFlow
+}
+
+func (u *UpdateExperimentResponseContent) GetAllocationStrategy() AllocationStrategyEnum {
+	if u == nil {
+		return ""
+	}
+	return u.AllocationStrategy
+}
+
+func (u *UpdateExperimentResponseContent) GetStatus() ExperimentStatusEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Status
+}
+
+func (u *UpdateExperimentResponseContent) GetIsValid() bool {
+	if u == nil {
+		return false
+	}
+	return u.IsValid
+}
+
+func (u *UpdateExperimentResponseContent) GetDefaultConfig() DefaultConfigEnum {
+	if u == nil || u.DefaultConfig == nil {
+		return ""
+	}
+	return *u.DefaultConfig
+}
+
+func (u *UpdateExperimentResponseContent) GetFeatureFlagSnapshot() map[string]any {
+	if u == nil || u.FeatureFlagSnapshot == nil {
+		return nil
+	}
+	return u.FeatureFlagSnapshot
+}
+
+func (u *UpdateExperimentResponseContent) GetAllocations() []*AllocationItem {
+	if u == nil {
+		return nil
+	}
+	return u.Allocations
+}
+
+func (u *UpdateExperimentResponseContent) GetEditableFields() []string {
+	if u == nil {
+		return nil
+	}
+	return u.EditableFields
+}
+
+func (u *UpdateExperimentResponseContent) GetLevels() []int {
+	if u == nil || u.Levels == nil {
+		return nil
+	}
+	return u.Levels
+}
+
+func (u *UpdateExperimentResponseContent) GetCurrentLevel() int {
+	if u == nil || u.CurrentLevel == nil {
+		return 0
+	}
+	return *u.CurrentLevel
+}
+
+func (u *UpdateExperimentResponseContent) GetStartedAt() time.Time {
+	if u == nil || u.StartedAt == nil {
+		return time.Time{}
+	}
+	return *u.StartedAt
+}
+
+func (u *UpdateExperimentResponseContent) GetEndedAt() time.Time {
+	if u == nil || u.EndedAt == nil {
+		return time.Time{}
+	}
+	return *u.EndedAt
+}
+
+func (u *UpdateExperimentResponseContent) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UpdateExperimentResponseContent) GetUpdatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedAt
+}
+
+func (u *UpdateExperimentResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateExperimentResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetID(id string) {
+	u.ID = id
+	u.require(updateExperimentResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetName(name string) {
+	u.Name = name
+	u.require(updateExperimentResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateExperimentResponseContentFieldDescription)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetFeatureFlagID(featureFlagID string) {
+	u.FeatureFlagID = featureFlagID
+	u.require(updateExperimentResponseContentFieldFeatureFlagID)
+}
+
+// SetFeatureFlagName sets the FeatureFlagName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetFeatureFlagName(featureFlagName *string) {
+	u.FeatureFlagName = featureFlagName
+	u.require(updateExperimentResponseContentFieldFeatureFlagName)
+}
+
+// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetAuthenticationFlow(authenticationFlow string) {
+	u.AuthenticationFlow = authenticationFlow
+	u.require(updateExperimentResponseContentFieldAuthenticationFlow)
+}
+
+// SetAllocationStrategy sets the AllocationStrategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetAllocationStrategy(allocationStrategy AllocationStrategyEnum) {
+	u.AllocationStrategy = allocationStrategy
+	u.require(updateExperimentResponseContentFieldAllocationStrategy)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetStatus(status ExperimentStatusEnum) {
+	u.Status = status
+	u.require(updateExperimentResponseContentFieldStatus)
+}
+
+// SetIsValid sets the IsValid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetIsValid(isValid bool) {
+	u.IsValid = isValid
+	u.require(updateExperimentResponseContentFieldIsValid)
+}
+
+// SetDefaultConfig sets the DefaultConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetDefaultConfig(defaultConfig *DefaultConfigEnum) {
+	u.DefaultConfig = defaultConfig
+	u.require(updateExperimentResponseContentFieldDefaultConfig)
+}
+
+// SetFeatureFlagSnapshot sets the FeatureFlagSnapshot field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetFeatureFlagSnapshot(featureFlagSnapshot map[string]any) {
+	u.FeatureFlagSnapshot = featureFlagSnapshot
+	u.require(updateExperimentResponseContentFieldFeatureFlagSnapshot)
+}
+
+// SetAllocations sets the Allocations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetAllocations(allocations []*AllocationItem) {
+	u.Allocations = allocations
+	u.require(updateExperimentResponseContentFieldAllocations)
+}
+
+// SetEditableFields sets the EditableFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetEditableFields(editableFields []string) {
+	u.EditableFields = editableFields
+	u.require(updateExperimentResponseContentFieldEditableFields)
+}
+
+// SetLevels sets the Levels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetLevels(levels []int) {
+	u.Levels = levels
+	u.require(updateExperimentResponseContentFieldLevels)
+}
+
+// SetCurrentLevel sets the CurrentLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetCurrentLevel(currentLevel *int) {
+	u.CurrentLevel = currentLevel
+	u.require(updateExperimentResponseContentFieldCurrentLevel)
+}
+
+// SetStartedAt sets the StartedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetStartedAt(startedAt *time.Time) {
+	u.StartedAt = startedAt
+	u.require(updateExperimentResponseContentFieldStartedAt)
+}
+
+// SetEndedAt sets the EndedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetEndedAt(endedAt *time.Time) {
+	u.EndedAt = endedAt
+	u.require(updateExperimentResponseContentFieldEndedAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateExperimentResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateExperimentResponseContentFieldUpdatedAt)
+}
+
+func (u *UpdateExperimentResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateExperimentResponseContent
+	var unmarshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateExperimentResponseContent(unmarshaler.embed)
+	u.StartedAt = unmarshaler.StartedAt.TimePtr()
+	u.EndedAt = unmarshaler.EndedAt.TimePtr()
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateExperimentResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateExperimentResponseContent
+	var marshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*u),
+		StartedAt: internal.NewOptionalDateTime(u.StartedAt),
+		EndedAt:   internal.NewOptionalDateTime(u.EndedAt),
+		CreatedAt: internal.NewDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateExperimentResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateExperimentStatusResponseContentFieldID                  = big.NewInt(1 << 0)
+	updateExperimentStatusResponseContentFieldName                = big.NewInt(1 << 1)
+	updateExperimentStatusResponseContentFieldDescription         = big.NewInt(1 << 2)
+	updateExperimentStatusResponseContentFieldFeatureFlagID       = big.NewInt(1 << 3)
+	updateExperimentStatusResponseContentFieldFeatureFlagName     = big.NewInt(1 << 4)
+	updateExperimentStatusResponseContentFieldAuthenticationFlow  = big.NewInt(1 << 5)
+	updateExperimentStatusResponseContentFieldAllocationStrategy  = big.NewInt(1 << 6)
+	updateExperimentStatusResponseContentFieldStatus              = big.NewInt(1 << 7)
+	updateExperimentStatusResponseContentFieldIsValid             = big.NewInt(1 << 8)
+	updateExperimentStatusResponseContentFieldDefaultConfig       = big.NewInt(1 << 9)
+	updateExperimentStatusResponseContentFieldFeatureFlagSnapshot = big.NewInt(1 << 10)
+	updateExperimentStatusResponseContentFieldAllocations         = big.NewInt(1 << 11)
+	updateExperimentStatusResponseContentFieldEditableFields      = big.NewInt(1 << 12)
+	updateExperimentStatusResponseContentFieldLevels              = big.NewInt(1 << 13)
+	updateExperimentStatusResponseContentFieldCurrentLevel        = big.NewInt(1 << 14)
+	updateExperimentStatusResponseContentFieldStartedAt           = big.NewInt(1 << 15)
+	updateExperimentStatusResponseContentFieldEndedAt             = big.NewInt(1 << 16)
+	updateExperimentStatusResponseContentFieldCreatedAt           = big.NewInt(1 << 17)
+	updateExperimentStatusResponseContentFieldUpdatedAt           = big.NewInt(1 << 18)
+)
+
+type UpdateExperimentStatusResponseContent struct {
+	ID                  string                 `json:"id" url:"id"`
+	Name                string                 `json:"name" url:"name"`
+	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
+	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
+	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
+	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
+	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
+	Status              ExperimentStatusEnum   `json:"status" url:"status"`
+	IsValid             bool                   `json:"is_valid" url:"is_valid"`
+	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
+	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
+	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
+	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
+	EditableFields []string `json:"editable_fields" url:"editable_fields"`
+	// Ramp experiment levels configuration.
+	Levels []int `json:"levels,omitempty" url:"levels,omitempty"`
+	// Read-only. The active exposure percentage for the current ramp step. Null when no ramp schedule is active.
+	CurrentLevel *int       `json:"current_level,omitempty" url:"current_level,omitempty"`
+	StartedAt    *time.Time `json:"started_at,omitempty" url:"started_at,omitempty"`
+	EndedAt      *time.Time `json:"ended_at,omitempty" url:"ended_at,omitempty"`
+	CreatedAt    time.Time  `json:"created_at" url:"created_at"`
+	UpdatedAt    time.Time  `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ID
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetFeatureFlagID() string {
+	if u == nil {
+		return ""
+	}
+	return u.FeatureFlagID
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetFeatureFlagName() string {
+	if u == nil || u.FeatureFlagName == nil {
+		return ""
+	}
+	return *u.FeatureFlagName
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetAuthenticationFlow() string {
+	if u == nil {
+		return ""
+	}
+	return u.AuthenticationFlow
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetAllocationStrategy() AllocationStrategyEnum {
+	if u == nil {
+		return ""
+	}
+	return u.AllocationStrategy
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetStatus() ExperimentStatusEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Status
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetIsValid() bool {
+	if u == nil {
+		return false
+	}
+	return u.IsValid
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetDefaultConfig() DefaultConfigEnum {
+	if u == nil || u.DefaultConfig == nil {
+		return ""
+	}
+	return *u.DefaultConfig
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetFeatureFlagSnapshot() map[string]any {
+	if u == nil || u.FeatureFlagSnapshot == nil {
+		return nil
+	}
+	return u.FeatureFlagSnapshot
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetAllocations() []*AllocationItem {
+	if u == nil {
+		return nil
+	}
+	return u.Allocations
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetEditableFields() []string {
+	if u == nil {
+		return nil
+	}
+	return u.EditableFields
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetLevels() []int {
+	if u == nil || u.Levels == nil {
+		return nil
+	}
+	return u.Levels
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetCurrentLevel() int {
+	if u == nil || u.CurrentLevel == nil {
+		return 0
+	}
+	return *u.CurrentLevel
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetStartedAt() time.Time {
+	if u == nil || u.StartedAt == nil {
+		return time.Time{}
+	}
+	return *u.StartedAt
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetEndedAt() time.Time {
+	if u == nil || u.EndedAt == nil {
+		return time.Time{}
+	}
+	return *u.EndedAt
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetUpdatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedAt
+}
+
+func (u *UpdateExperimentStatusResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateExperimentStatusResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetID(id string) {
+	u.ID = id
+	u.require(updateExperimentStatusResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetName(name string) {
+	u.Name = name
+	u.require(updateExperimentStatusResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateExperimentStatusResponseContentFieldDescription)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetFeatureFlagID(featureFlagID string) {
+	u.FeatureFlagID = featureFlagID
+	u.require(updateExperimentStatusResponseContentFieldFeatureFlagID)
+}
+
+// SetFeatureFlagName sets the FeatureFlagName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetFeatureFlagName(featureFlagName *string) {
+	u.FeatureFlagName = featureFlagName
+	u.require(updateExperimentStatusResponseContentFieldFeatureFlagName)
+}
+
+// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetAuthenticationFlow(authenticationFlow string) {
+	u.AuthenticationFlow = authenticationFlow
+	u.require(updateExperimentStatusResponseContentFieldAuthenticationFlow)
+}
+
+// SetAllocationStrategy sets the AllocationStrategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetAllocationStrategy(allocationStrategy AllocationStrategyEnum) {
+	u.AllocationStrategy = allocationStrategy
+	u.require(updateExperimentStatusResponseContentFieldAllocationStrategy)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetStatus(status ExperimentStatusEnum) {
+	u.Status = status
+	u.require(updateExperimentStatusResponseContentFieldStatus)
+}
+
+// SetIsValid sets the IsValid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetIsValid(isValid bool) {
+	u.IsValid = isValid
+	u.require(updateExperimentStatusResponseContentFieldIsValid)
+}
+
+// SetDefaultConfig sets the DefaultConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetDefaultConfig(defaultConfig *DefaultConfigEnum) {
+	u.DefaultConfig = defaultConfig
+	u.require(updateExperimentStatusResponseContentFieldDefaultConfig)
+}
+
+// SetFeatureFlagSnapshot sets the FeatureFlagSnapshot field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetFeatureFlagSnapshot(featureFlagSnapshot map[string]any) {
+	u.FeatureFlagSnapshot = featureFlagSnapshot
+	u.require(updateExperimentStatusResponseContentFieldFeatureFlagSnapshot)
+}
+
+// SetAllocations sets the Allocations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetAllocations(allocations []*AllocationItem) {
+	u.Allocations = allocations
+	u.require(updateExperimentStatusResponseContentFieldAllocations)
+}
+
+// SetEditableFields sets the EditableFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetEditableFields(editableFields []string) {
+	u.EditableFields = editableFields
+	u.require(updateExperimentStatusResponseContentFieldEditableFields)
+}
+
+// SetLevels sets the Levels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetLevels(levels []int) {
+	u.Levels = levels
+	u.require(updateExperimentStatusResponseContentFieldLevels)
+}
+
+// SetCurrentLevel sets the CurrentLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetCurrentLevel(currentLevel *int) {
+	u.CurrentLevel = currentLevel
+	u.require(updateExperimentStatusResponseContentFieldCurrentLevel)
+}
+
+// SetStartedAt sets the StartedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetStartedAt(startedAt *time.Time) {
+	u.StartedAt = startedAt
+	u.require(updateExperimentStatusResponseContentFieldStartedAt)
+}
+
+// SetEndedAt sets the EndedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetEndedAt(endedAt *time.Time) {
+	u.EndedAt = endedAt
+	u.require(updateExperimentStatusResponseContentFieldEndedAt)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateExperimentStatusResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateExperimentStatusResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateExperimentStatusResponseContentFieldUpdatedAt)
+}
+
+func (u *UpdateExperimentStatusResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateExperimentStatusResponseContent
+	var unmarshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateExperimentStatusResponseContent(unmarshaler.embed)
+	u.StartedAt = unmarshaler.StartedAt.TimePtr()
+	u.EndedAt = unmarshaler.EndedAt.TimePtr()
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateExperimentStatusResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateExperimentStatusResponseContent
+	var marshaler = struct {
+		embed
+		StartedAt *internal.DateTime `json:"started_at,omitempty"`
+		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*u),
+		StartedAt: internal.NewOptionalDateTime(u.StartedAt),
+		EndedAt:   internal.NewOptionalDateTime(u.EndedAt),
+		CreatedAt: internal.NewDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateExperimentStatusResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Configuration parameters for this feature flag
+type UpdateFeatureFlagParameters = map[string]*FeatureFlagConfigParam
+
+var (
+	updateFeatureFlagResponseContentFieldID          = big.NewInt(1 << 0)
+	updateFeatureFlagResponseContentFieldName        = big.NewInt(1 << 1)
+	updateFeatureFlagResponseContentFieldDescription = big.NewInt(1 << 2)
+	updateFeatureFlagResponseContentFieldType        = big.NewInt(1 << 3)
+	updateFeatureFlagResponseContentFieldStatus      = big.NewInt(1 << 4)
+	updateFeatureFlagResponseContentFieldParameters  = big.NewInt(1 << 5)
+	updateFeatureFlagResponseContentFieldCreatedAt   = big.NewInt(1 << 6)
+	updateFeatureFlagResponseContentFieldUpdatedAt   = big.NewInt(1 << 7)
+)
+
+type UpdateFeatureFlagResponseContent struct {
+	ID          string                   `json:"id" url:"id"`
+	Name        string                   `json:"name" url:"name"`
+	Description *string                  `json:"description,omitempty" url:"description,omitempty"`
+	Type        FeatureFlagTypeEnum      `json:"type" url:"type"`
+	Status      FeatureFlagStatusEnum    `json:"status" url:"status"`
+	Parameters  *FeatureFlagConfigParams `json:"parameters,omitempty" url:"parameters,omitempty"`
+	CreatedAt   time.Time                `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time                `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateFeatureFlagResponseContent) GetID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ID
+}
+
+func (u *UpdateFeatureFlagResponseContent) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UpdateFeatureFlagResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UpdateFeatureFlagResponseContent) GetType() FeatureFlagTypeEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UpdateFeatureFlagResponseContent) GetStatus() FeatureFlagStatusEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Status
+}
+
+func (u *UpdateFeatureFlagResponseContent) GetParameters() FeatureFlagConfigParams {
+	if u == nil || u.Parameters == nil {
+		return nil
+	}
+	return *u.Parameters
+}
+
+func (u *UpdateFeatureFlagResponseContent) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UpdateFeatureFlagResponseContent) GetUpdatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedAt
+}
+
+func (u *UpdateFeatureFlagResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateFeatureFlagResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagResponseContent) SetID(id string) {
+	u.ID = id
+	u.require(updateFeatureFlagResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagResponseContent) SetName(name string) {
+	u.Name = name
+	u.require(updateFeatureFlagResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateFeatureFlagResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagResponseContent) SetType(type_ FeatureFlagTypeEnum) {
+	u.Type = type_
+	u.require(updateFeatureFlagResponseContentFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagResponseContent) SetStatus(status FeatureFlagStatusEnum) {
+	u.Status = status
+	u.require(updateFeatureFlagResponseContentFieldStatus)
+}
+
+// SetParameters sets the Parameters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagResponseContent) SetParameters(parameters *FeatureFlagConfigParams) {
+	u.Parameters = parameters
+	u.require(updateFeatureFlagResponseContentFieldParameters)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagResponseContent) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateFeatureFlagResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateFeatureFlagResponseContentFieldUpdatedAt)
+}
+
+func (u *UpdateFeatureFlagResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateFeatureFlagResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateFeatureFlagResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateFeatureFlagResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateFeatureFlagResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*u),
+		CreatedAt: internal.NewDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateFeatureFlagResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateFeatureFlagStatusResponseContentFieldID          = big.NewInt(1 << 0)
+	updateFeatureFlagStatusResponseContentFieldName        = big.NewInt(1 << 1)
+	updateFeatureFlagStatusResponseContentFieldDescription = big.NewInt(1 << 2)
+	updateFeatureFlagStatusResponseContentFieldType        = big.NewInt(1 << 3)
+	updateFeatureFlagStatusResponseContentFieldStatus      = big.NewInt(1 << 4)
+	updateFeatureFlagStatusResponseContentFieldParameters  = big.NewInt(1 << 5)
+	updateFeatureFlagStatusResponseContentFieldCreatedAt   = big.NewInt(1 << 6)
+	updateFeatureFlagStatusResponseContentFieldUpdatedAt   = big.NewInt(1 << 7)
+)
+
+type UpdateFeatureFlagStatusResponseContent struct {
+	ID          string                   `json:"id" url:"id"`
+	Name        string                   `json:"name" url:"name"`
+	Description *string                  `json:"description,omitempty" url:"description,omitempty"`
+	Type        FeatureFlagTypeEnum      `json:"type" url:"type"`
+	Status      FeatureFlagStatusEnum    `json:"status" url:"status"`
+	Parameters  *FeatureFlagConfigParams `json:"parameters,omitempty" url:"parameters,omitempty"`
+	CreatedAt   time.Time                `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time                `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) GetID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ID
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) GetType() FeatureFlagTypeEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) GetStatus() FeatureFlagStatusEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Status
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) GetParameters() FeatureFlagConfigParams {
+	if u == nil || u.Parameters == nil {
+		return nil
+	}
+	return *u.Parameters
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) GetUpdatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedAt
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagStatusResponseContent) SetID(id string) {
+	u.ID = id
+	u.require(updateFeatureFlagStatusResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagStatusResponseContent) SetName(name string) {
+	u.Name = name
+	u.require(updateFeatureFlagStatusResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagStatusResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateFeatureFlagStatusResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagStatusResponseContent) SetType(type_ FeatureFlagTypeEnum) {
+	u.Type = type_
+	u.require(updateFeatureFlagStatusResponseContentFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagStatusResponseContent) SetStatus(status FeatureFlagStatusEnum) {
+	u.Status = status
+	u.require(updateFeatureFlagStatusResponseContentFieldStatus)
+}
+
+// SetParameters sets the Parameters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagStatusResponseContent) SetParameters(parameters *FeatureFlagConfigParams) {
+	u.Parameters = parameters
+	u.require(updateFeatureFlagStatusResponseContentFieldParameters)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagStatusResponseContent) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateFeatureFlagStatusResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFeatureFlagStatusResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateFeatureFlagStatusResponseContentFieldUpdatedAt)
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateFeatureFlagStatusResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateFeatureFlagStatusResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateFeatureFlagStatusResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*u),
+		CreatedAt: internal.NewDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateFeatureFlagStatusResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
 	updateFlowsVaultConnectionResponseContentFieldID          = big.NewInt(1 << 0)
 	updateFlowsVaultConnectionResponseContentFieldAppID       = big.NewInt(1 << 1)
 	updateFlowsVaultConnectionResponseContentFieldEnvironment = big.NewInt(1 << 2)
@@ -134478,6 +140136,198 @@ func (u *UpdateSCIMConfigurationResponseContent) String() string {
 }
 
 var (
+	updateSegmentResponseContentFieldID          = big.NewInt(1 << 0)
+	updateSegmentResponseContentFieldName        = big.NewInt(1 << 1)
+	updateSegmentResponseContentFieldDescription = big.NewInt(1 << 2)
+	updateSegmentResponseContentFieldType        = big.NewInt(1 << 3)
+	updateSegmentResponseContentFieldRules       = big.NewInt(1 << 4)
+	updateSegmentResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
+	updateSegmentResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+)
+
+type UpdateSegmentResponseContent struct {
+	ID          string          `json:"id" url:"id"`
+	Name        string          `json:"name" url:"name"`
+	Description *string         `json:"description,omitempty" url:"description,omitempty"`
+	Type        SegmentTypeEnum `json:"type" url:"type"`
+	Rules       []*SegmentRule  `json:"rules" url:"rules"`
+	CreatedAt   time.Time       `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time       `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateSegmentResponseContent) GetID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ID
+}
+
+func (u *UpdateSegmentResponseContent) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UpdateSegmentResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UpdateSegmentResponseContent) GetType() SegmentTypeEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UpdateSegmentResponseContent) GetRules() []*SegmentRule {
+	if u == nil {
+		return nil
+	}
+	return u.Rules
+}
+
+func (u *UpdateSegmentResponseContent) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UpdateSegmentResponseContent) GetUpdatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedAt
+}
+
+func (u *UpdateSegmentResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateSegmentResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSegmentResponseContent) SetID(id string) {
+	u.ID = id
+	u.require(updateSegmentResponseContentFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSegmentResponseContent) SetName(name string) {
+	u.Name = name
+	u.require(updateSegmentResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSegmentResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateSegmentResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSegmentResponseContent) SetType(type_ SegmentTypeEnum) {
+	u.Type = type_
+	u.require(updateSegmentResponseContentFieldType)
+}
+
+// SetRules sets the Rules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSegmentResponseContent) SetRules(rules []*SegmentRule) {
+	u.Rules = rules
+	u.require(updateSegmentResponseContentFieldRules)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSegmentResponseContent) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateSegmentResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSegmentResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateSegmentResponseContentFieldUpdatedAt)
+}
+
+func (u *UpdateSegmentResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateSegmentResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateSegmentResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateSegmentResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateSegmentResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*u),
+		CreatedAt: internal.NewDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateSegmentResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
 	updateSuspiciousIPThrottlingSettingsResponseContentFieldEnabled   = big.NewInt(1 << 0)
 	updateSuspiciousIPThrottlingSettingsResponseContentFieldShields   = big.NewInt(1 << 1)
 	updateSuspiciousIPThrottlingSettingsResponseContentFieldAllowlist = big.NewInt(1 << 2)
@@ -135893,6 +141743,201 @@ func (u *UpdateUserAuthenticationMethodResponseContent) MarshalJSON() ([]byte, e
 }
 
 func (u *UpdateUserAuthenticationMethodResponseContent) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Configuration overrides for this variation; keys must exist in the parent flag parameters. Empty {} is the baseline (control) variation that overrides nothing.
+type UpdateVariationOverridesMap = map[string]any
+
+var (
+	updateVariationResponseContentFieldID            = big.NewInt(1 << 0)
+	updateVariationResponseContentFieldFeatureFlagID = big.NewInt(1 << 1)
+	updateVariationResponseContentFieldName          = big.NewInt(1 << 2)
+	updateVariationResponseContentFieldDescription   = big.NewInt(1 << 3)
+	updateVariationResponseContentFieldOverrides     = big.NewInt(1 << 4)
+	updateVariationResponseContentFieldCreatedAt     = big.NewInt(1 << 5)
+	updateVariationResponseContentFieldUpdatedAt     = big.NewInt(1 << 6)
+)
+
+type UpdateVariationResponseContent struct {
+	ID            string                `json:"id" url:"id"`
+	FeatureFlagID string                `json:"feature_flag_id" url:"feature_flag_id"`
+	Name          string                `json:"name" url:"name"`
+	Description   *string               `json:"description,omitempty" url:"description,omitempty"`
+	Overrides     VariationOverridesMap `json:"overrides" url:"overrides"`
+	CreatedAt     time.Time             `json:"created_at" url:"created_at"`
+	UpdatedAt     time.Time             `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateVariationResponseContent) GetID() string {
+	if u == nil {
+		return ""
+	}
+	return u.ID
+}
+
+func (u *UpdateVariationResponseContent) GetFeatureFlagID() string {
+	if u == nil {
+		return ""
+	}
+	return u.FeatureFlagID
+}
+
+func (u *UpdateVariationResponseContent) GetName() string {
+	if u == nil {
+		return ""
+	}
+	return u.Name
+}
+
+func (u *UpdateVariationResponseContent) GetDescription() string {
+	if u == nil || u.Description == nil {
+		return ""
+	}
+	return *u.Description
+}
+
+func (u *UpdateVariationResponseContent) GetOverrides() VariationOverridesMap {
+	if u == nil {
+		return nil
+	}
+	return u.Overrides
+}
+
+func (u *UpdateVariationResponseContent) GetCreatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.CreatedAt
+}
+
+func (u *UpdateVariationResponseContent) GetUpdatedAt() time.Time {
+	if u == nil {
+		return time.Time{}
+	}
+	return u.UpdatedAt
+}
+
+func (u *UpdateVariationResponseContent) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateVariationResponseContent) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVariationResponseContent) SetID(id string) {
+	u.ID = id
+	u.require(updateVariationResponseContentFieldID)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVariationResponseContent) SetFeatureFlagID(featureFlagID string) {
+	u.FeatureFlagID = featureFlagID
+	u.require(updateVariationResponseContentFieldFeatureFlagID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVariationResponseContent) SetName(name string) {
+	u.Name = name
+	u.require(updateVariationResponseContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVariationResponseContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateVariationResponseContentFieldDescription)
+}
+
+// SetOverrides sets the Overrides field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVariationResponseContent) SetOverrides(overrides VariationOverridesMap) {
+	u.Overrides = overrides
+	u.require(updateVariationResponseContentFieldOverrides)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVariationResponseContent) SetCreatedAt(createdAt time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateVariationResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVariationResponseContent) SetUpdatedAt(updatedAt time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateVariationResponseContentFieldUpdatedAt)
+}
+
+func (u *UpdateVariationResponseContent) UnmarshalJSON(data []byte) error {
+	type embed UpdateVariationResponseContent
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = UpdateVariationResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.Time()
+	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateVariationResponseContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateVariationResponseContent
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*u),
+		CreatedAt: internal.NewDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateVariationResponseContent) String() string {
 	if u == nil {
 		return "<nil>"
 	}
@@ -138727,6 +144772,303 @@ func (u *UsersEnrollment) String() string {
 	}
 	return fmt.Sprintf("%#v", u)
 }
+
+var (
+	validateExperimentResponseContentFieldIsValid = big.NewInt(1 << 0)
+	validateExperimentResponseContentFieldErrors  = big.NewInt(1 << 1)
+)
+
+type ValidateExperimentResponseContent struct {
+	// Whether the experiment is ready to be activated.
+	IsValid bool `json:"is_valid" url:"is_valid"`
+	// List of validation errors preventing activation. Empty when is_valid is true.
+	Errors []*ExperimentValidationError `json:"errors" url:"errors"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (v *ValidateExperimentResponseContent) GetIsValid() bool {
+	if v == nil {
+		return false
+	}
+	return v.IsValid
+}
+
+func (v *ValidateExperimentResponseContent) GetErrors() []*ExperimentValidationError {
+	if v == nil {
+		return nil
+	}
+	return v.Errors
+}
+
+func (v *ValidateExperimentResponseContent) GetExtraProperties() map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+	return v.extraProperties
+}
+
+func (v *ValidateExperimentResponseContent) require(field *big.Int) {
+	if v.explicitFields == nil {
+		v.explicitFields = big.NewInt(0)
+	}
+	v.explicitFields.Or(v.explicitFields, field)
+}
+
+// SetIsValid sets the IsValid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *ValidateExperimentResponseContent) SetIsValid(isValid bool) {
+	v.IsValid = isValid
+	v.require(validateExperimentResponseContentFieldIsValid)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *ValidateExperimentResponseContent) SetErrors(errors []*ExperimentValidationError) {
+	v.Errors = errors
+	v.require(validateExperimentResponseContentFieldErrors)
+}
+
+func (v *ValidateExperimentResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ValidateExperimentResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*v = ValidateExperimentResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *v)
+	if err != nil {
+		return err
+	}
+	v.extraProperties = extraProperties
+	v.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (v *ValidateExperimentResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ValidateExperimentResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*v),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, v.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (v *ValidateExperimentResponseContent) String() string {
+	if v == nil {
+		return "<nil>"
+	}
+	if len(v.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
+}
+
+var (
+	variationFieldID            = big.NewInt(1 << 0)
+	variationFieldFeatureFlagID = big.NewInt(1 << 1)
+	variationFieldName          = big.NewInt(1 << 2)
+	variationFieldDescription   = big.NewInt(1 << 3)
+	variationFieldOverrides     = big.NewInt(1 << 4)
+	variationFieldCreatedAt     = big.NewInt(1 << 5)
+	variationFieldUpdatedAt     = big.NewInt(1 << 6)
+)
+
+type Variation struct {
+	ID            string                `json:"id" url:"id"`
+	FeatureFlagID string                `json:"feature_flag_id" url:"feature_flag_id"`
+	Name          string                `json:"name" url:"name"`
+	Description   *string               `json:"description,omitempty" url:"description,omitempty"`
+	Overrides     VariationOverridesMap `json:"overrides" url:"overrides"`
+	CreatedAt     time.Time             `json:"created_at" url:"created_at"`
+	UpdatedAt     time.Time             `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (v *Variation) GetID() string {
+	if v == nil {
+		return ""
+	}
+	return v.ID
+}
+
+func (v *Variation) GetFeatureFlagID() string {
+	if v == nil {
+		return ""
+	}
+	return v.FeatureFlagID
+}
+
+func (v *Variation) GetName() string {
+	if v == nil {
+		return ""
+	}
+	return v.Name
+}
+
+func (v *Variation) GetDescription() string {
+	if v == nil || v.Description == nil {
+		return ""
+	}
+	return *v.Description
+}
+
+func (v *Variation) GetOverrides() VariationOverridesMap {
+	if v == nil {
+		return nil
+	}
+	return v.Overrides
+}
+
+func (v *Variation) GetCreatedAt() time.Time {
+	if v == nil {
+		return time.Time{}
+	}
+	return v.CreatedAt
+}
+
+func (v *Variation) GetUpdatedAt() time.Time {
+	if v == nil {
+		return time.Time{}
+	}
+	return v.UpdatedAt
+}
+
+func (v *Variation) GetExtraProperties() map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+	return v.extraProperties
+}
+
+func (v *Variation) require(field *big.Int) {
+	if v.explicitFields == nil {
+		v.explicitFields = big.NewInt(0)
+	}
+	v.explicitFields.Or(v.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *Variation) SetID(id string) {
+	v.ID = id
+	v.require(variationFieldID)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *Variation) SetFeatureFlagID(featureFlagID string) {
+	v.FeatureFlagID = featureFlagID
+	v.require(variationFieldFeatureFlagID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *Variation) SetName(name string) {
+	v.Name = name
+	v.require(variationFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *Variation) SetDescription(description *string) {
+	v.Description = description
+	v.require(variationFieldDescription)
+}
+
+// SetOverrides sets the Overrides field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *Variation) SetOverrides(overrides VariationOverridesMap) {
+	v.Overrides = overrides
+	v.require(variationFieldOverrides)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *Variation) SetCreatedAt(createdAt time.Time) {
+	v.CreatedAt = createdAt
+	v.require(variationFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *Variation) SetUpdatedAt(updatedAt time.Time) {
+	v.UpdatedAt = updatedAt
+	v.require(variationFieldUpdatedAt)
+}
+
+func (v *Variation) UnmarshalJSON(data []byte) error {
+	type embed Variation
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*v),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*v = Variation(unmarshaler.embed)
+	v.CreatedAt = unmarshaler.CreatedAt.Time()
+	v.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *v)
+	if err != nil {
+		return err
+	}
+	v.extraProperties = extraProperties
+	v.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (v *Variation) MarshalJSON() ([]byte, error) {
+	type embed Variation
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*v),
+		CreatedAt: internal.NewDateTime(v.CreatedAt),
+		UpdatedAt: internal.NewDateTime(v.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, v.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (v *Variation) String() string {
+	if v == nil {
+		return "<nil>"
+	}
+	if len(v.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
+}
+
+// Configuration overrides for this variation
+type VariationOverridesMap = map[string]any
 
 var (
 	verifiableCredentialTemplateResponseFieldID                         = big.NewInt(1 << 0)

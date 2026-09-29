@@ -101,6 +101,7 @@ type AsyncApprovalNotificationsChannelsEnum string
 const (
 	AsyncApprovalNotificationsChannelsEnumGuardianPush AsyncApprovalNotificationsChannelsEnum = "guardian-push"
 	AsyncApprovalNotificationsChannelsEnumEmail        AsyncApprovalNotificationsChannelsEnum = "email"
+	AsyncApprovalNotificationsChannelsEnumMyAccount    AsyncApprovalNotificationsChannelsEnum = "my-account"
 )
 
 func NewAsyncApprovalNotificationsChannelsEnumFromString(s string) (AsyncApprovalNotificationsChannelsEnum, error) {
@@ -109,6 +110,8 @@ func NewAsyncApprovalNotificationsChannelsEnumFromString(s string) (AsyncApprova
 		return AsyncApprovalNotificationsChannelsEnumGuardianPush, nil
 	case "email":
 		return AsyncApprovalNotificationsChannelsEnumEmail, nil
+	case "my-account":
+		return AsyncApprovalNotificationsChannelsEnumMyAccount, nil
 	}
 	var t AsyncApprovalNotificationsChannelsEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -6185,10 +6188,10 @@ func (c ClientAppTypeEnum) Ptr() *ClientAppTypeEnum {
 	return &c
 }
 
-// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`, `my-account`.
 type ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration = []AsyncApprovalNotificationsChannelsEnum
 
-// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`, `my-account`.
 type ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration = []AsyncApprovalNotificationsChannelsEnum
 
 // Defines client authentication methods.
@@ -8592,6 +8595,7 @@ const (
 	ClientOidcBackchannelLogoutInitiatorsEnumEmailIdentifierChanged ClientOidcBackchannelLogoutInitiatorsEnum = "email-identifier-changed"
 	ClientOidcBackchannelLogoutInitiatorsEnumMfaPhoneUnenrolled     ClientOidcBackchannelLogoutInitiatorsEnum = "mfa-phone-unenrolled"
 	ClientOidcBackchannelLogoutInitiatorsEnumAccountDeactivated     ClientOidcBackchannelLogoutInitiatorsEnum = "account-deactivated"
+	ClientOidcBackchannelLogoutInitiatorsEnumProfileChanged         ClientOidcBackchannelLogoutInitiatorsEnum = "profile-changed"
 )
 
 func NewClientOidcBackchannelLogoutInitiatorsEnumFromString(s string) (ClientOidcBackchannelLogoutInitiatorsEnum, error) {
@@ -8614,6 +8618,8 @@ func NewClientOidcBackchannelLogoutInitiatorsEnumFromString(s string) (ClientOid
 		return ClientOidcBackchannelLogoutInitiatorsEnumMfaPhoneUnenrolled, nil
 	case "account-deactivated":
 		return ClientOidcBackchannelLogoutInitiatorsEnumAccountDeactivated, nil
+	case "profile-changed":
+		return ClientOidcBackchannelLogoutInitiatorsEnumProfileChanged, nil
 	}
 	var t ClientOidcBackchannelLogoutInitiatorsEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -8846,6 +8852,151 @@ func (c *ClientOidcBackchannelLogoutSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientOidcBackchannelLogoutSettings) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type ClientOidcSupportAllowedScopesEnum string
+
+const (
+	ClientOidcSupportAllowedScopesEnumProfile ClientOidcSupportAllowedScopesEnum = "profile"
+	ClientOidcSupportAllowedScopesEnumEmail   ClientOidcSupportAllowedScopesEnum = "email"
+	ClientOidcSupportAllowedScopesEnumAddress ClientOidcSupportAllowedScopesEnum = "address"
+	ClientOidcSupportAllowedScopesEnumPhone   ClientOidcSupportAllowedScopesEnum = "phone"
+)
+
+func NewClientOidcSupportAllowedScopesEnumFromString(s string) (ClientOidcSupportAllowedScopesEnum, error) {
+	switch s {
+	case "profile":
+		return ClientOidcSupportAllowedScopesEnumProfile, nil
+	case "email":
+		return ClientOidcSupportAllowedScopesEnumEmail, nil
+	case "address":
+		return ClientOidcSupportAllowedScopesEnumAddress, nil
+	case "phone":
+		return ClientOidcSupportAllowedScopesEnumPhone, nil
+	}
+	var t ClientOidcSupportAllowedScopesEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientOidcSupportAllowedScopesEnum) Ptr() *ClientOidcSupportAllowedScopesEnum {
+	return &c
+}
+
+// OIDC support configuration for a client. Controls whether OIDC flows are allowed and which scopes the client may request.
+var (
+	clientOidcSupportPostFieldIsAllowed      = big.NewInt(1 << 0)
+	clientOidcSupportPostFieldAllowAllScopes = big.NewInt(1 << 1)
+	clientOidcSupportPostFieldAllowedScopes  = big.NewInt(1 << 2)
+)
+
+type ClientOidcSupportPost struct {
+	IsAllowed      bool                                 `json:"is_allowed" url:"is_allowed"`
+	AllowAllScopes *bool                                `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+	AllowedScopes  []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientOidcSupportPost) GetIsAllowed() bool {
+	if c == nil {
+		return false
+	}
+	return c.IsAllowed
+}
+
+func (c *ClientOidcSupportPost) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
+}
+
+func (c *ClientOidcSupportPost) GetAllowedScopes() []ClientOidcSupportAllowedScopesEnum {
+	if c == nil || c.AllowedScopes == nil {
+		return nil
+	}
+	return c.AllowedScopes
+}
+
+func (c *ClientOidcSupportPost) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientOidcSupportPost) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetIsAllowed sets the IsAllowed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupportPost) SetIsAllowed(isAllowed bool) {
+	c.IsAllowed = isAllowed
+	c.require(clientOidcSupportPostFieldIsAllowed)
+}
+
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupportPost) SetAllowAllScopes(allowAllScopes *bool) {
+	c.AllowAllScopes = allowAllScopes
+	c.require(clientOidcSupportPostFieldAllowAllScopes)
+}
+
+// SetAllowedScopes sets the AllowedScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupportPost) SetAllowedScopes(allowedScopes []ClientOidcSupportAllowedScopesEnum) {
+	c.AllowedScopes = allowedScopes
+	c.require(clientOidcSupportPostFieldAllowedScopes)
+}
+
+func (c *ClientOidcSupportPost) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientOidcSupportPost
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientOidcSupportPost(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientOidcSupportPost) MarshalJSON() ([]byte, error) {
+	type embed ClientOidcSupportPost
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientOidcSupportPost) String() string {
 	if c == nil {
 		return "<nil>"
 	}

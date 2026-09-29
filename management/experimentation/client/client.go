@@ -5,11 +5,15 @@ package client
 import (
 	core "github.com/auth0/go-auth0/v3/management/core"
 	experiments "github.com/auth0/go-auth0/v3/management/experimentation/experiments"
+	client "github.com/auth0/go-auth0/v3/management/experimentation/featureflags/client"
+	segments "github.com/auth0/go-auth0/v3/management/experimentation/segments"
 	internal "github.com/auth0/go-auth0/v3/management/internal"
 )
 
 type Client struct {
-	Experiments *experiments.Client
+	Experiments  *experiments.Client
+	FeatureFlags *client.Client
+	Segments     *segments.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -18,9 +22,11 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		Experiments: experiments.NewClient(options),
-		options:     options,
-		baseURL:     options.BaseURL,
+		Experiments:  experiments.NewClient(options),
+		FeatureFlags: client.NewClient(options),
+		Segments:     segments.NewClient(options),
+		options:      options,
+		baseURL:      options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:         options.HTTPClient,
