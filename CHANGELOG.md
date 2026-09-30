@@ -1,5 +1,17 @@
 # Change Log
 
+## [v3.7.0](https://github.com/auth0/go-auth0/tree/v3.7.0) (2026-09-30)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.6.0...v3.7.0)
+
+**Breaking Changes**
+- Removed the `Organizations.OrganizationTemplate` client (`Get`, `AssignOrganizationTemplate`, and `UnassignOrganizationTemplate`), a beta feature that was exposed before it was ready for the stable release [\#881](https://github.com/auth0/go-auth0/pull/881) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Added**
+- feat: add the `Experimentation` client for A/B testing, with `Experiments` (`List`, `Create`, `Get`, `Update`, `Delete`, `AdvanceRamp`, `UpdateStatus`, `Validate`), `FeatureFlags` (`List`, `Create`, `Get`, `Update`, `Delete`, `UpdateStatus`), `FeatureFlags.Variations` (`List`, `Create`, `Get`, `Update`, `Delete`), and `Segments` (`List`, `Create`, `Get`, `Update`, `Delete`) [\#881](https://github.com/auth0/go-auth0/pull/881) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `RequireConsentNonRepudiation` to `ResourceServers.Create` and `ResourceServers.Update` (and the resource-server response types) for non-repudiation of consents [\#881](https://github.com/auth0/go-auth0/pull/881) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Thumbprints` and `ThumbprintsSha384` connection options (with the `ConnectionThumbprints` and `ConnectionThumbprintsSha384` types) for validating SAML signatures over WS-Federation [\#881](https://github.com/auth0/go-auth0/pull/881) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `OidcSupport` (the `ClientOidcSupportPost` type with `IsAllowed`, `AllowAllScopes`, and `AllowedScopes`) to `Clients.Create`, along with the `my-account` value on `AsyncApprovalNotificationsChannelsEnum` [\#881](https://github.com/auth0/go-auth0/pull/881) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v3.6.0](https://github.com/auth0/go-auth0/tree/v3.6.0) (2026-09-16)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.5.0...v3.6.0)
 
