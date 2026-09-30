@@ -162,6 +162,14 @@ func TestSettersCreateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetRequireConsentNonRepudiation", func(t *testing.T) {
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
+		assert.Equal(t, fernTestValueRequireConsentNonRepudiation, obj.RequireConsentNonRepudiation)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAuthorizationDetails", func(t *testing.T) {
 		obj := &CreateResourceServerResponseContent{}
 		var fernTestValueAuthorizationDetails []any
@@ -848,6 +856,40 @@ func TestGettersCreateResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetConsentPolicy() // Should return zero value
+	})
+
+	t.Run("GetRequireConsentNonRepudiation", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var value bool
+		obj.RequireConsentNonRepudiation = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRequireConsentNonRepudiation(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		obj.RequireConsentNonRepudiation = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRequireConsentNonRepudiation(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequireConsentNonRepudiation() // Should return zero value
 	})
 
 	t.Run("GetAuthorizationDetails", func(t *testing.T) {
@@ -1611,6 +1653,37 @@ func TestSettersMarkExplicitCreateResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetRequireConsentNonRepudiation_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+
+		// Act
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetAuthorizationDetails_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1918,6 +1991,14 @@ func TestSettersGetResourceServerResponseContent(t *testing.T) {
 		var fernTestValueConsentPolicy *ResourceServerConsentPolicyEnum
 		obj.SetConsentPolicy(fernTestValueConsentPolicy)
 		assert.Equal(t, fernTestValueConsentPolicy, obj.ConsentPolicy)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRequireConsentNonRepudiation", func(t *testing.T) {
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
+		assert.Equal(t, fernTestValueRequireConsentNonRepudiation, obj.RequireConsentNonRepudiation)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -2607,6 +2688,40 @@ func TestGettersGetResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetConsentPolicy() // Should return zero value
+	})
+
+	t.Run("GetRequireConsentNonRepudiation", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var value bool
+		obj.RequireConsentNonRepudiation = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRequireConsentNonRepudiation(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		obj.RequireConsentNonRepudiation = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRequireConsentNonRepudiation(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequireConsentNonRepudiation() // Should return zero value
 	})
 
 	t.Run("GetAuthorizationDetails", func(t *testing.T) {
@@ -3370,6 +3485,37 @@ func TestSettersMarkExplicitGetResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetRequireConsentNonRepudiation_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+
+		// Act
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetAuthorizationDetails_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -3977,6 +4123,14 @@ func TestSettersResourceServer(t *testing.T) {
 		var fernTestValueConsentPolicy *ResourceServerConsentPolicyEnum
 		obj.SetConsentPolicy(fernTestValueConsentPolicy)
 		assert.Equal(t, fernTestValueConsentPolicy, obj.ConsentPolicy)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRequireConsentNonRepudiation", func(t *testing.T) {
+		obj := &ResourceServer{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
+		assert.Equal(t, fernTestValueRequireConsentNonRepudiation, obj.RequireConsentNonRepudiation)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -4666,6 +4820,40 @@ func TestGettersResourceServer(t *testing.T) {
 			}
 		}()
 		_ = obj.GetConsentPolicy() // Should return zero value
+	})
+
+	t.Run("GetRequireConsentNonRepudiation", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var value bool
+		obj.RequireConsentNonRepudiation = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRequireConsentNonRepudiation(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		obj.RequireConsentNonRepudiation = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRequireConsentNonRepudiation(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServer
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequireConsentNonRepudiation() // Should return zero value
 	})
 
 	t.Run("GetAuthorizationDetails", func(t *testing.T) {
@@ -5429,6 +5617,37 @@ func TestSettersMarkExplicitResourceServer(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetRequireConsentNonRepudiation_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+
+		// Act
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetAuthorizationDetails_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -6152,6 +6371,14 @@ func TestSettersResourceServerSearchResponse(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetRequireConsentNonRepudiation", func(t *testing.T) {
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
+		assert.Equal(t, fernTestValueRequireConsentNonRepudiation, obj.RequireConsentNonRepudiation)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAuthorizationDetails", func(t *testing.T) {
 		obj := &ResourceServerSearchResponse{}
 		var fernTestValueAuthorizationDetails []any
@@ -6804,6 +7031,40 @@ func TestGettersResourceServerSearchResponse(t *testing.T) {
 			}
 		}()
 		_ = obj.GetConsentPolicy() // Should return zero value
+	})
+
+	t.Run("GetRequireConsentNonRepudiation", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var value bool
+		obj.RequireConsentNonRepudiation = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRequireConsentNonRepudiation(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		obj.RequireConsentNonRepudiation = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRequireConsentNonRepudiation(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServerSearchResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequireConsentNonRepudiation() // Should return zero value
 	})
 
 	t.Run("GetAuthorizationDetails", func(t *testing.T) {
@@ -7513,6 +7774,37 @@ func TestSettersMarkExplicitResourceServerSearchResponse(t *testing.T) {
 
 		// Act
 		obj.SetConsentPolicy(fernTestValueConsentPolicy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRequireConsentNonRepudiation_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+
+		// Act
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -8896,6 +9188,14 @@ func TestSettersUpdateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetRequireConsentNonRepudiation", func(t *testing.T) {
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
+		assert.Equal(t, fernTestValueRequireConsentNonRepudiation, obj.RequireConsentNonRepudiation)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAuthorizationDetails", func(t *testing.T) {
 		obj := &UpdateResourceServerResponseContent{}
 		var fernTestValueAuthorizationDetails []any
@@ -9582,6 +9882,40 @@ func TestGettersUpdateResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetConsentPolicy() // Should return zero value
+	})
+
+	t.Run("GetRequireConsentNonRepudiation", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var value bool
+		obj.RequireConsentNonRepudiation = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRequireConsentNonRepudiation(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		obj.RequireConsentNonRepudiation = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRequireConsentNonRepudiation(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRequireConsentNonRepudiation_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRequireConsentNonRepudiation() // Should return zero value
 	})
 
 	t.Run("GetAuthorizationDetails", func(t *testing.T) {
@@ -10322,6 +10656,37 @@ func TestSettersMarkExplicitUpdateResourceServerResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetConsentPolicy(fernTestValueConsentPolicy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRequireConsentNonRepudiation_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueRequireConsentNonRepudiation *bool
+
+		// Act
+		obj.SetRequireConsentNonRepudiation(fernTestValueRequireConsentNonRepudiation)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

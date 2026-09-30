@@ -2688,6 +2688,8 @@ var (
 	connectionPropertiesOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 39)
 	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 40)
 	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 41)
+	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 42)
+	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 43)
 )
 
 type ConnectionPropertiesOptions struct {
@@ -2739,6 +2741,8 @@ type ConnectionPropertiesOptions struct {
 	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
 	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
 	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Thumbprints                        *ConnectionThumbprints                         `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384                  *ConnectionThumbprintsSha384                   `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3040,6 +3044,20 @@ func (c *ConnectionPropertiesOptions) GetOidcMetadata() ConnectionsOidcMetadata 
 		return ConnectionsOidcMetadata{}
 	}
 	return *c.OidcMetadata
+}
+
+func (c *ConnectionPropertiesOptions) GetThumbprints() ConnectionThumbprints {
+	if c == nil || c.Thumbprints == nil {
+		return nil
+	}
+	return *c.Thumbprints
+}
+
+func (c *ConnectionPropertiesOptions) GetThumbprintsSha384() ConnectionThumbprintsSha384 {
+	if c == nil || c.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *c.ThumbprintsSha384
 }
 
 func (c *ConnectionPropertiesOptions) GetExtraProperties() map[string]interface{} {
@@ -3350,6 +3368,20 @@ func (c *ConnectionPropertiesOptions) SetOidcMetadata(oidcMetadata *ConnectionsO
 	c.require(connectionPropertiesOptionsFieldOidcMetadata)
 }
 
+// SetThumbprints sets the Thumbprints field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetThumbprints(thumbprints *ConnectionThumbprints) {
+	c.Thumbprints = thumbprints
+	c.require(connectionPropertiesOptionsFieldThumbprints)
+}
+
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384) {
+	c.ThumbprintsSha384 = thumbprintsSha384
+	c.require(connectionPropertiesOptionsFieldThumbprintsSha384)
+}
+
 func (c *ConnectionPropertiesOptions) UnmarshalJSON(data []byte) error {
 	type embed ConnectionPropertiesOptions
 	var unmarshaler = struct {
@@ -3447,6 +3479,12 @@ func NewConnectionSignupBehaviorEnumFromString(s string) (ConnectionSignupBehavi
 func (c ConnectionSignupBehaviorEnum) Ptr() *ConnectionSignupBehaviorEnum {
 	return &c
 }
+
+// Array of certificate thumbprints (SHA-128 hex hashes) for validating SAML signatures. Used with WS-Federation protocol. Maximum 20 thumbprints. Each thumbprint must be a hexadecimal string.
+type ConnectionThumbprints = []string
+
+// Array of certificate thumbprints (SHA-384 hex hashes) for validating SAML signatures. Used with WS-Federation protocol. Maximum 20 thumbprints. Each thumbprint must be a 96-character hexadecimal string.
+type ConnectionThumbprintsSha384 = []string
 
 // Authentication method used at the identity provider's token endpoint. 'client_secret_post' sends credentials in the request body; 'private_key_jwt' uses a signed JWT assertion for enhanced security.
 type ConnectionTokenEndpointAuthMethodEnum string
@@ -6528,6 +6566,8 @@ var (
 	updateConnectionOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 39)
 	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 40)
 	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 41)
+	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 42)
+	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 43)
 )
 
 type UpdateConnectionOptions struct {
@@ -6579,6 +6619,8 @@ type UpdateConnectionOptions struct {
 	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
 	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
 	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Thumbprints                        *ConnectionThumbprints                         `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384                  *ConnectionThumbprintsSha384                   `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -6880,6 +6922,20 @@ func (u *UpdateConnectionOptions) GetOidcMetadata() ConnectionsOidcMetadata {
 		return ConnectionsOidcMetadata{}
 	}
 	return *u.OidcMetadata
+}
+
+func (u *UpdateConnectionOptions) GetThumbprints() ConnectionThumbprints {
+	if u == nil || u.Thumbprints == nil {
+		return nil
+	}
+	return *u.Thumbprints
+}
+
+func (u *UpdateConnectionOptions) GetThumbprintsSha384() ConnectionThumbprintsSha384 {
+	if u == nil || u.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *u.ThumbprintsSha384
 }
 
 func (u *UpdateConnectionOptions) GetExtraProperties() map[string]interface{} {
@@ -7188,6 +7244,20 @@ func (u *UpdateConnectionOptions) SetDiscoveryURL(discoveryURL *ConnectionsDisco
 func (u *UpdateConnectionOptions) SetOidcMetadata(oidcMetadata *ConnectionsOidcMetadata) {
 	u.OidcMetadata = oidcMetadata
 	u.require(updateConnectionOptionsFieldOidcMetadata)
+}
+
+// SetThumbprints sets the Thumbprints field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetThumbprints(thumbprints *ConnectionThumbprints) {
+	u.Thumbprints = thumbprints
+	u.require(updateConnectionOptionsFieldThumbprints)
+}
+
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384) {
+	u.ThumbprintsSha384 = thumbprintsSha384
+	u.require(updateConnectionOptionsFieldThumbprintsSha384)
 }
 
 func (u *UpdateConnectionOptions) UnmarshalJSON(data []byte) error {

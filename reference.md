@@ -2284,6 +2284,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**oidcSupport:** `*management.ClientOidcSupportPost` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -11364,6 +11372,14 @@ client.ResourceServers.Create(
 <dl>
 <dd>
 
+**requireConsentNonRepudiation:** `*bool` — When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **authorizationDetails:** `[]any` 
     
 </dd>
@@ -11827,6 +11843,14 @@ client.ResourceServers.Update(
 <dd>
 
 **consentPolicy:** `*management.ResourceServerConsentPolicyEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requireConsentNonRepudiation:** `*bool` — When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
     
 </dd>
 </dl>
@@ -14895,8 +14919,8 @@ client.UserBlocks.ListByIdentifier(
 **considerBruteForceEnablement:** `*bool` 
 
 
-          If true and Brute Force Protection is enabled and configured to block logins, will return a list of blocked IP addresses.
-          If true and Brute Force Protection is disabled, will return an empty list.
+          If true, returns only blocks that are currently enforced (e.g. subject to protection status, IP allowlist, etc.).
+          If false or omitted, returns all blocks regardless of enforcement state.
         
     
 </dd>
@@ -15035,8 +15059,8 @@ client.UserBlocks.List(
 **considerBruteForceEnablement:** `*bool` 
 
 
-          If true and Brute Force Protection is enabled and configured to block logins, will return a list of blocked IP addresses.
-          If true and Brute Force Protection is disabled, will return an empty list.
+          If true, returns only blocks that are currently enforced (e.g. subject to protection status, IP allowlist, etc.).
+          If false or omitted, returns all blocks regardless of enforcement state.
         
     
 </dd>
@@ -15122,24 +15146,22 @@ client.UserBlocks.Delete(
 <dl>
 <dd>
 
-Retrieve details of users. It is possible to:
+This endpoint retrieves details of users. It's best suited to interactive, best-effort search and lookups where slightly stale results are acceptable. With it, you can:
 
-- Specify a search criteria for users
+- Specify search criteria for users
 - Sort the users to be returned
 - Select the fields to be returned
 - Specify the number of users to retrieve per page and the page index
 
+This endpoint is **not suited for use in critical paths**. It is eventually consistent and runs under a short (~2 second) query time limit, so results can be stale and heavy queries can return a 503.
 
+- Do not use this endpoint for authentication, account linking, or logic inside login-flow Actions. Instead, [look users up directly by ID or email](https://auth0.com/docs/manage-users/user-search/get-users-by-id-or-email#management-api) to get their current state.
+- Do not use this endpoint to keep an external system in sync with user data. Instead, subscribe to [Event Streams](https://auth0.com/docs/customize/events/sync-data-across-systems) to receive every change as it happens.
+- Do not use this endpoint to enumerate or export your entire user base. Instead, run a [bulk user export](https://auth0.com/docs/manage-users/user-migration/bulk-user-exports) to retrieve the full set.
 
-The `q` query parameter can be used to get users that match the specified criteria [using query string syntax.](https://auth0.com/docs/users/search/v3/query-syntax)
+Use the `q` query parameter to match users with [query string syntax](https://auth0.com/docs/manage-users/user-search/user-search-query-syntax). For full instructions and guidance, see [How to List and Search Users](https://auth0.com/docs/manage-users/user-search/list-and-search-users).
 
-[Learn more about searching for users.](https://auth0.com/docs/users/search/v3)
-
-Read about [best practices](https://auth0.com/docs/users/search/best-practices) when working with the API endpoints for retrieving users.
-
-
-
-Auth0 limits the number of users you can return. If you exceed this threshold, please redefine your search, use the [export job](https://auth0.com/docs/api/management/v2#!/Jobs/post_users_exports), or the [User Import / Export](https://auth0.com/docs/extensions/user-import-export) extension.
+For efficient queries, prefer indexed top-level fields and exact matches. Certain kinds of queries can be slow and may time out, such as filtering on freeform or multi-value fields (like user-defined attributes in `app_metadata` or `user_metadata`) or using leading wildcards.
 </dd>
 </dl>
 </dd>
@@ -22839,6 +22861,454 @@ client.EventStreams.Redeliveries.CreateByID(
 </details>
 
 ## Experimentation Experiments
+<details><summary><code>client.Experimentation.Experiments.List() -> *management.ListExperimentsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a paginated list of experiments for the tenant, with optional filters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListExperimentsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Status: management.ExperimentStatusEnumDraft.Ptr(),
+        AuthenticationFlow: management.String(
+            "authentication_flow",
+        ),
+        FeatureFlagID: management.String(
+            "feature_flag_id",
+        ),
+    }
+client.Experimentation.Experiments.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of experiments to return per page. Defaults to 25, maximum 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.ExperimentStatusEnum` — Filter by status. Exact match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authenticationFlow:** `*string` — Filter by authentication flow. Exact match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**featureFlagID:** `*string` — Filter by feature flag ID. Exact match.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Experiments.Create(request) -> *management.CreateExperimentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new experiment for A/B testing.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateExperimentRequestContent{
+        Name: "name",
+        FeatureFlagID: "feature_flag_id",
+        AuthenticationFlow: management.AuthenticationFlowEnumAuthentication,
+    }
+client.Experimentation.Experiments.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — A human-readable name for the experiment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` — A description of the experiment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**featureFlagID:** `string` — The ID of the feature flag this experiment is based on
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authenticationFlow:** `*management.AuthenticationFlowEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**defaultConfig:** `*management.DefaultConfigEnum` — Applies only to Auth0-managed flags. Controls where non-overridden config keys resolve from: 'tenant' inherits the tenant's live config so the experiment overlays only its changes, 'flag' uses the flag's frozen defaults for a complete config. Optional; defaults to 'tenant' when omitted. Rejected for customer-defined flags.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allocationStrategy:** `*management.AllocationStrategyEnum` — The traffic allocation strategy for this experiment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allocations:** `[]*management.AllocationRequestItem` — Traffic allocations mapping variations to weights or segments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**levels:** `[]int` — Ramp experiment levels configuration. A strictly-increasing sequence of exposure percentages, each an integer in [0, 100].
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Experiments.Get(ID) -> *management.GetExperimentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a single experiment with its allocations by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.Experiments.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the experiment to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Experiments.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently delete an experiment and its allocations by ID. Active experiments cannot be deleted; pause or complete first. Idempotent: returns 204 even if the experiment does not exist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.Experiments.Delete(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the experiment to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Experiments.Update(ID, request) -> *management.UpdateExperimentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Partially update an experiment by ID. Only provided fields are updated. Providing allocations replaces the entire allocations set.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateExperimentRequestParameters{}
+client.Experimentation.Experiments.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the experiment to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — A human-readable name for the experiment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` — A description of the experiment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authenticationFlow:** `*management.AuthenticationFlowEnum` — Specifies the target authentication flow for this experiment. This field can only be modified on draft experiments. Must be one of: authentication, mfa_enrollment, mfa_challenge, password_reset, passkey_enrollment, or all. Note that the all value targets every flow at once, but requires that this is the only active experiment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allocations:** `[]*management.AllocationRequestItem` — Replaces all traffic allocations. Cannot be modified while the experiment is active.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**defaultConfig:** `*management.DefaultConfigEnum` — Applies only to Auth0-managed flags. Controls where non-overridden config keys resolve from: 'tenant' inherits the tenant's live config, 'flag' uses the flag's frozen defaults. Can only be modified on draft experiments. Rejected for customer-defined flags.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**levels:** `[]int` — Ramp experiment levels configuration. A strictly-increasing sequence of exposure percentages, each an integer in [0, 100]. Can only be modified on draft experiments.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Experimentation.Experiments.AdvanceRamp(ID, request) -> *management.AdvanceRampResponseContent</code></summary>
 <dl>
 <dd>
@@ -22898,6 +23368,1314 @@ client.Experimentation.Experiments.AdvanceRamp(
 <dd>
 
 **targetLevel:** `int` — The target percentage level from the experiment schedule. Must be the immediate next level.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Experiments.UpdateStatus(ID, request) -> *management.UpdateExperimentStatusResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Transitions an experiment through its lifecycle: draft → active, active → paused, paused → active, active/paused → completed. Activation runs full readiness validation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateExperimentStatusRequestContent{
+        Status: management.ExperimentTransitionStatusEnumActive,
+    }
+client.Experimentation.Experiments.UpdateStatus(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the experiment to transition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.ExperimentTransitionStatusEnum` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Experiments.Validate(ID) -> *management.ValidateExperimentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Checks whether an experiment is ready to be activated. Returns is_valid boolean and an errors array describing any blockers. Read-only; no state is modified.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.Experiments.Validate(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the experiment to validate.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Experimentation FeatureFlags
+<details><summary><code>client.Experimentation.FeatureFlags.List() -> *management.ListFeatureFlagsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a paginated list of feature flags for the tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListFeatureFlagsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Type: management.FeatureFlagTypeEnumAuth0.Ptr(),
+        Status: management.FeatureFlagStatusEnumDraft.Ptr(),
+    }
+client.Experimentation.FeatureFlags.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of feature flags to return per page. Defaults to 25, maximum 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type_:** `*management.FeatureFlagTypeEnum` — Filter by type. Exact match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.FeatureFlagStatusEnum` — Filter by status. Exact match.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.FeatureFlags.Create(request) -> *management.CreateFeatureFlagResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new feature flag with parameters for use in experiments.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateFeatureFlagRequestContent{
+        Name: "name",
+        Parameters: map[string]*management.FeatureFlagConfigParam{},
+    }
+client.Experimentation.FeatureFlags.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — A human-readable name for the feature flag
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` — A description of what this feature flag controls
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parameters:** `management.CreateFeatureFlagParameters` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.FeatureFlags.Get(ID) -> *management.GetFeatureFlagResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a single feature flag by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.FeatureFlags.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the feature flag to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.FeatureFlags.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a feature flag by ID. Idempotent: returns 204 even if flag does not exist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.FeatureFlags.Delete(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the feature flag to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.FeatureFlags.Update(ID, request) -> *management.UpdateFeatureFlagResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Partially update a feature flag by ID. Only provided fields are updated.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateFeatureFlagRequestContent{}
+client.Experimentation.FeatureFlags.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the feature flag to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — A human-readable name for the feature flag
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` — A description of what this feature flag controls
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parameters:** `*management.UpdateFeatureFlagParameters` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.FeatureFlags.UpdateStatus(ID, request) -> *management.UpdateFeatureFlagStatusResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Transitions a feature flag through its lifecycle states: draft → active, draft → archived, active → archived.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateFeatureFlagStatusRequestContent{
+        Status: management.FeatureFlagStatusEnumDraft,
+    }
+client.Experimentation.FeatureFlags.UpdateStatus(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the feature flag to transition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.FeatureFlagStatusEnum` — The target status to transition the feature flag to.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Experimentation Segments
+<details><summary><code>client.Experimentation.Segments.List() -> *management.ListSegmentsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a paginated list of segments for the tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListSegmentsRequestParameters{
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Type: management.SegmentTypeFilterEnumAuth0.Ptr(),
+    }
+client.Experimentation.Segments.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of segments to return per page. Defaults to 25, maximum 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type_:** `*management.SegmentTypeFilterEnum` — Filter by type. Exact match.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Segments.Create(request) -> *management.CreateSegmentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new segment with rule-based membership criteria for use in experiments.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateSegmentRequestContent{
+        Name: "name",
+        Rules: []*management.SegmentRule{
+            &management.SegmentRule{},
+        },
+    }
+client.Experimentation.Segments.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` — A human-readable name for the segment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` — A description of the segment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rules:** `[]*management.SegmentRule` — An ordered list of rules. A segment matches if any rule matches. Each rule is limited to 4KB and the whole segment to 10KB (serialized).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Segments.Get(ID) -> *management.GetSegmentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a single segment by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.Segments.Get(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the segment to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Segments.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a segment by ID. Idempotent: returns 204 even if segment does not exist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.Segments.Delete(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the segment to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.Segments.Update(ID, request) -> *management.UpdateSegmentResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Partially update a segment by ID. Only provided fields are updated. Sending rules replaces the entire rules array.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateSegmentRequestContent{}
+client.Experimentation.Segments.Update(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the segment to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — A human-readable name for the segment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` — A description of the segment
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rules:** `[]*management.SegmentRule` — Replaces the entire rules array. Each rule is limited to 4KB and the whole segment to 10KB (serialized).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Experimentation FeatureFlags Variations
+<details><summary><code>client.Experimentation.FeatureFlags.Variations.List(ID) -> *management.ListVariationsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all variations defined for a specific feature flag.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.FeatureFlags.Variations.List(
+        context.TODO(),
+        "id",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the parent feature flag.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.FeatureFlags.Variations.Create(ID, request) -> *management.CreateVariationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new variation with parameter overrides for a specific feature flag.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateVariationRequestContent{
+        Name: "name",
+        Overrides: map[string]any{
+            "key": "value",
+        },
+    }
+client.Experimentation.FeatureFlags.Variations.Create(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the parent feature flag.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `string` — A human-readable name for the variation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` — A description of what this variation controls
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**overrides:** `management.VariationOverridesMap` — Configuration overrides for this variation; keys must exist in the parent flag parameters. Empty {} is the baseline (control) variation that overrides nothing.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.FeatureFlags.Variations.Get(ID, Vid) -> *management.GetVariationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a single variation by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.FeatureFlags.Variations.Get(
+        context.TODO(),
+        "id",
+        "vid",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the parent feature flag.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vid:** `string` — The ID of the variation to retrieve.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.FeatureFlags.Variations.Delete(ID, Vid) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a variation by ID. Returns 204 if the variation does not exist. Returns 404 if the parent feature flag does not exist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Experimentation.FeatureFlags.Variations.Delete(
+        context.TODO(),
+        "id",
+        "vid",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the parent feature flag.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vid:** `string` — The ID of the variation to delete.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Experimentation.FeatureFlags.Variations.Update(ID, Vid, request) -> *management.UpdateVariationResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Partially update a variation by ID. Only provided fields are updated.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateVariationRequestContent{}
+client.Experimentation.FeatureFlags.Variations.Update(
+        context.TODO(),
+        "id",
+        "vid",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the parent feature flag.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vid:** `string` — The ID of the variation to update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*string` — A human-readable name for the variation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*string` — A description of what this variation controls
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**overrides:** `*management.UpdateVariationOverridesMap` 
     
 </dd>
 </dl>
@@ -30246,199 +32024,6 @@ client.Organizations.Members.Delete(
 <dd>
 
 **members:** `[]string` — List of user IDs to remove from the organization.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Organizations OrganizationTemplate
-<details><summary><code>client.Organizations.OrganizationTemplate.Get(ID) -> *management.OrganizationTemplate</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the organization template assigned to a specific organization. Returns the template object if one is explicitly assigned, or a 404 if no template is assigned.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.OrganizationTemplate.Get(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — ID of the organization.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.OrganizationTemplate.AssignOrganizationTemplate(ID, TemplateID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Assign an Organization Template to an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.OrganizationTemplate.AssignOrganizationTemplate(
-        context.TODO(),
-        "id",
-        "template_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**templateID:** `string` — The ID of the organization template to assign.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Organizations.OrganizationTemplate.UnassignOrganizationTemplate(ID, TemplateID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove an Organization Template assignment from an organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Organizations.OrganizationTemplate.UnassignOrganizationTemplate(
-        context.TODO(),
-        "id",
-        "template_id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**templateID:** `string` — The ID of the organization template to unassign.
     
 </dd>
 </dl>

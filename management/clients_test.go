@@ -19343,6 +19343,222 @@ func TestSettersMarkExplicitClientOidcBackchannelLogoutSettings(t *testing.T) {
 
 }
 
+func TestSettersClientOidcSupportPost(t *testing.T) {
+	t.Run("SetIsAllowed", func(t *testing.T) {
+		obj := &ClientOidcSupportPost{}
+		var fernTestValueIsAllowed bool
+		obj.SetIsAllowed(fernTestValueIsAllowed)
+		assert.Equal(t, fernTestValueIsAllowed, obj.IsAllowed)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAllowAllScopes", func(t *testing.T) {
+		obj := &ClientOidcSupportPost{}
+		var fernTestValueAllowAllScopes *bool
+		obj.SetAllowAllScopes(fernTestValueAllowAllScopes)
+		assert.Equal(t, fernTestValueAllowAllScopes, obj.AllowAllScopes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAllowedScopes", func(t *testing.T) {
+		obj := &ClientOidcSupportPost{}
+		var fernTestValueAllowedScopes []ClientOidcSupportAllowedScopesEnum
+		obj.SetAllowedScopes(fernTestValueAllowedScopes)
+		assert.Equal(t, fernTestValueAllowedScopes, obj.AllowedScopes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersClientOidcSupportPost(t *testing.T) {
+	t.Run("GetIsAllowed", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupportPost{}
+		var expected bool
+		obj.IsAllowed = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetIsAllowed(), "getter should return the property value")
+	})
+
+	t.Run("GetIsAllowed_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupportPost
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIsAllowed() // Should return zero value
+	})
+
+	t.Run("GetAllowAllScopes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupportPost{}
+		var value bool
+		obj.AllowAllScopes = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowAllScopes(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowAllScopes_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupportPost{}
+		obj.AllowAllScopes = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowAllScopes(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowAllScopes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupportPost
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowAllScopes() // Should return zero value
+	})
+
+	t.Run("GetAllowedScopes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupportPost{}
+		var expected []ClientOidcSupportAllowedScopesEnum
+		obj.AllowedScopes = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAllowedScopes(), "getter should return the property value")
+	})
+
+	t.Run("GetAllowedScopes_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupportPost{}
+		obj.AllowedScopes = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAllowedScopes(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAllowedScopes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupportPost
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowedScopes() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitClientOidcSupportPost(t *testing.T) {
+	t.Run("SetIsAllowed_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupportPost{}
+		var fernTestValueIsAllowed bool
+
+		// Act
+		obj.SetIsAllowed(fernTestValueIsAllowed)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowAllScopes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupportPost{}
+		var fernTestValueAllowAllScopes *bool
+
+		// Act
+		obj.SetAllowAllScopes(fernTestValueAllowAllScopes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowedScopes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupportPost{}
+		var fernTestValueAllowedScopes []ClientOidcSupportAllowedScopesEnum
+
+		// Act
+		obj.SetAllowedScopes(fernTestValueAllowedScopes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersClientRefreshTokenConfiguration(t *testing.T) {
 	t.Run("SetRotationType", func(t *testing.T) {
 		obj := &ClientRefreshTokenConfiguration{}
@@ -48235,6 +48451,39 @@ func TestJSONMarshalingClientOidcBackchannelLogoutSettings(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingClientOidcSupportPost(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupportPost{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ClientOidcSupportPost
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientOidcSupportPost
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientOidcSupportPost
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingClientRefreshTokenConfiguration(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -50534,6 +50783,22 @@ func TestStringClientOidcBackchannelLogoutSettings(t *testing.T) {
 	})
 }
 
+func TestStringClientOidcSupportPost(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientOidcSupportPost{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupportPost
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringClientRefreshTokenConfiguration(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -51237,6 +51502,13 @@ func TestEnumAsyncApprovalNotificationsChannelsEnum(t *testing.T) {
 		assert.Equal(t, AsyncApprovalNotificationsChannelsEnum("email"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_my_account", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewAsyncApprovalNotificationsChannelsEnumFromString("my-account")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, AsyncApprovalNotificationsChannelsEnum("my-account"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewAsyncApprovalNotificationsChannelsEnumFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)
@@ -51837,6 +52109,13 @@ func TestEnumClientOidcBackchannelLogoutInitiatorsEnum(t *testing.T) {
 		assert.Equal(t, ClientOidcBackchannelLogoutInitiatorsEnum("account-deactivated"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_profile_changed", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientOidcBackchannelLogoutInitiatorsEnumFromString("profile-changed")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientOidcBackchannelLogoutInitiatorsEnum("profile-changed"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewClientOidcBackchannelLogoutInitiatorsEnumFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)
@@ -51873,6 +52152,49 @@ func TestEnumClientOidcBackchannelLogoutInitiatorsModeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewClientOidcBackchannelLogoutInitiatorsModeEnumFromString("custom")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumClientOidcSupportAllowedScopesEnum(t *testing.T) {
+	t.Run("NewFromString_profile", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientOidcSupportAllowedScopesEnumFromString("profile")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientOidcSupportAllowedScopesEnum("profile"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_email", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientOidcSupportAllowedScopesEnumFromString("email")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientOidcSupportAllowedScopesEnum("email"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_address", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientOidcSupportAllowedScopesEnumFromString("address")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientOidcSupportAllowedScopesEnum("address"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_phone", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientOidcSupportAllowedScopesEnumFromString("phone")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientOidcSupportAllowedScopesEnum("phone"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewClientOidcSupportAllowedScopesEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewClientOidcSupportAllowedScopesEnumFromString("profile")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -53661,6 +53983,29 @@ func TestExtraPropertiesClientOidcBackchannelLogoutSettings(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ClientOidcBackchannelLogoutSettings
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesClientOidcSupportPost(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientOidcSupportPost{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupportPost
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
