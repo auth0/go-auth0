@@ -15275,6 +15275,16 @@ func TestResourceServer_GetProofOfPossession(tt *testing.T) {
 	r.GetProofOfPossession()
 }
 
+func TestResourceServer_GetRequireConsentNonRepudiation(tt *testing.T) {
+	var zeroValue bool
+	r := &ResourceServer{RequireConsentNonRepudiation: &zeroValue}
+	r.GetRequireConsentNonRepudiation()
+	r = &ResourceServer{}
+	r.GetRequireConsentNonRepudiation()
+	r = nil
+	r.GetRequireConsentNonRepudiation()
+}
+
 func TestResourceServer_GetScopes(tt *testing.T) {
 	var zeroValue []ResourceServerScope
 	r := &ResourceServer{Scopes: &zeroValue}
