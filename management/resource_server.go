@@ -96,6 +96,14 @@ type ResourceServer struct {
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	ConsentPolicy *string `json:"consent_policy,omitempty"`
 
+	// RequireConsentNonRepudiation controls whether the authorization server rejects
+	// consent decisions that do not include a valid signature and kid.
+	// When true, end-users must cryptographically sign their consent decisions via the
+	// My Account API.
+	//
+	// This is an Early Access feature and requires it to be enabled for your tenant.
+	RequireConsentNonRepudiation *bool `json:"require_consent_non_repudiation,omitempty"`
+
 	// The list of authorization details for the resource server.
 	//
 	// To unset values (set to null), use a PATCH request like this:

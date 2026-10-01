@@ -12201,6 +12201,14 @@ func (r *ResourceServer) GetProofOfPossession() *ResourceServerProofOfPossession
 	return r.ProofOfPossession
 }
 
+// GetRequireConsentNonRepudiation returns the RequireConsentNonRepudiation field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetRequireConsentNonRepudiation() bool {
+	if r == nil || r.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *r.RequireConsentNonRepudiation
+}
+
 // GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetScopes() []ResourceServerScope {
 	if r == nil || r.Scopes == nil {
