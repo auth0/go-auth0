@@ -5,6 +5,11 @@ This guide provides comprehensive examples for using the Auth0 Go SDK v2, coveri
 ## Table of Contents
 
 - [Client Credentials Authentication](#client-credentials-authentication)
+  - [Passwordless OTP on Database Connections](#passwordless-otp-on-database-connections)
+    - [Prerequisites](#prerequisites)
+    - [Email OTP on Database Connection](#email-otp-on-database-connection)
+    - [Phone OTP on Database Connection](#phone-otp-on-database-connection)
+    - [Error Handling and MFA](#error-handling-and-mfa)
 - [Request Options](#request-options)
 - [Pagination](#pagination)
   - [Page-based Pagination](#page-based-pagination)
@@ -118,6 +123,233 @@ auth, err := authentication.New(
     authentication.WithClientID("YOUR_CLIENT_ID"),
     authentication.WithClientAssertion(privateKeyPEM, "RS256"),
 )
+```
+
+### Passwordless OTP on Database Connections
+
+> [!NOTE]
+> This feature is currently in Early Access (EA). Contact your Auth0 account team to have it enabled on your tenant.
+
+If your database connection is configured with `email_otp` or `phone_otp`, use this flow instead of the classic `SendEmail` and `SendSMS` passwordless flow. It has two steps:
+
+1. Start a challenge with `ChallengeWithEmail` or `ChallengeWithPhoneNumber`. This returns an opaque `AuthSession`, which you should pass along as is and never parse.
+2. Exchange the code the user entered, together with the `AuthSession`, for tokens using `LoginWithOTPChallenge`.
+
+The challenge succeeds even when the user does not exist, which prevents user enumeration.
+
+#### Prerequisites
+
+**Application**
+
+- Enable the Passwordless OTP grant type under Application Settings > Advanced Settings > Grant Types.
+- Enable the database connection on the application.
+- Confidential applications must authenticate, so configure the client with `authentication.WithClientSecret` or `authentication.WithClientAssertion`. Auth0 decides whether client authentication is required based on the application type.
+
+<details>
+<summary>Tenant and database connection setup</summary>
+
+**Tenant**
+
+- Set up the Identifier-First Authentication Profile.
+
+**Database connection, Authentication Methods** (Authentication > Databases > your connection > Authentication Methods)
+
+- Enable `email_otp` and/or `phone_otp`. Open Configure on the Email or Phone method and set OTP for login to Allow.
+
+**Database connection, Attributes**
+
+- Add an email and/or phone attribute and enable Use as Identifier on each one.
+- For email OTP, the email attribute's verification method must be OTP rather than link.
+- Enable Allow signup on the attribute if new users should be able to sign up through this flow (`AllowSignup: true`).
+
+**OTP delivery providers** (Branding)
+
+- Configure an email provider for email OTP and a phone provider for phone OTP.
+- For phone OTP, also enable the Unified Phone Experience under Branding > Phone Provider.
+- The challenge returns 200 even if delivery fails. If no code arrives, check the tenant logs for a failed notification.
+
+</details>
+
+#### Email OTP on Database Connection
+
+```go
+import (
+    "context"
+    "fmt"
+
+    "github.com/auth0/go-auth0/v3/authentication"
+    "github.com/auth0/go-auth0/v3/authentication/oauth"
+    "github.com/auth0/go-auth0/v3/authentication/passwordless"
+)
+
+ctx := context.Background()
+
+auth, err := authentication.New(
+    ctx,
+    "your-tenant.auth0.com",
+    authentication.WithClientID("YOUR_CLIENT_ID"),
+    authentication.WithClientSecret("YOUR_CLIENT_SECRET"),
+)
+if err != nil {
+    return err
+}
+
+// Step 1: start the challenge
+challenge, err := auth.Passwordless.ChallengeWithEmail(ctx, passwordless.ChallengeWithEmailRequest{
+    Connection:  "my-db-connection",
+    Email:       "user@example.com",
+    AllowSignup: true, // Optional: create the user if they don't exist
+})
+if err != nil {
+    return err
+}
+
+// The user receives the code by email.
+
+// Step 2: exchange the code and the auth session for tokens
+tokens, err := auth.Passwordless.LoginWithOTPChallenge(ctx, passwordless.LoginWithOTPChallengeRequest{
+    AuthSession: challenge.AuthSession,
+    OTP:         "123456", // code entered by the user
+    Scope:       "openid profile email offline_access",
+}, oauth.IDTokenValidationOptions{})
+if err != nil {
+    return err
+}
+
+fmt.Println("Access token:", tokens.AccessToken)
+fmt.Println("ID token:", tokens.IDToken)
+fmt.Println("Refresh token:", tokens.RefreshToken)
+```
+
+#### Phone OTP on Database Connection
+
+This example reuses the `auth` client from the previous snippet.
+
+```go
+challenge, err := auth.Passwordless.ChallengeWithPhoneNumber(ctx, passwordless.ChallengeWithPhoneNumberRequest{
+    Connection:     "my-db-connection",
+    PhoneNumber:    "+14155550100", // E.164 format
+    DeliveryMethod: "text",         // "text" (SMS) or "voice" (call); leave empty to let the server choose
+})
+if err != nil {
+    return err
+}
+
+tokens, err := auth.Passwordless.LoginWithOTPChallenge(ctx, passwordless.LoginWithOTPChallengeRequest{
+    AuthSession: challenge.AuthSession,
+    OTP:         "123456", // code entered by the user
+    Scope:       "openid profile",
+}, oauth.IDTokenValidationOptions{})
+if err != nil {
+    return err
+}
+```
+
+#### Error Handling and MFA
+
+The SDK checks the required fields (and the E.164 phone format) before sending any request and returns a plain error in that case, so no request is spent against the rate limit of 50 challenge requests per hour per IP. Errors returned by the API are `*authentication.Error` values with `StatusCode`, `Err` (the error code) and `Message` (the description).
+
+A challenge with an invalid email format fails with a 400 `invalid_request`, and `GetValidationErrors()` returns the field level details. A connection without OTP enabled or an unknown connection returns a 400 `invalid_connection` without validation errors. An invalid `DeliveryMethod` returns a 400 `invalid_request`.
+
+```go
+import (
+    "errors"
+    "fmt"
+
+    "github.com/auth0/go-auth0/v3/authentication"
+    "github.com/auth0/go-auth0/v3/authentication/passwordless"
+)
+
+challenge, err := auth.Passwordless.ChallengeWithEmail(ctx, passwordless.ChallengeWithEmailRequest{
+    Connection: "my-db-connection",
+    Email:      "not-an-email",
+})
+if err != nil {
+    var authErr *authentication.Error
+    if errors.As(err, &authErr) {
+        fmt.Printf("Challenge failed: %d %s: %s\n", authErr.StatusCode, authErr.Err, authErr.Message)
+        for _, ve := range authErr.GetValidationErrors() {
+            fmt.Printf("  %s: %s\n", ve.Field, ve.Message)
+        }
+    }
+    return err
+}
+```
+
+A wrong code, an already used auth session, and an unknown or expired auth session all fail the exchange with the same 400 `invalid_request` error and the description "Invalid or expired OTP code". If the user must complete MFA, the exchange fails with a 403 `mfa_required` error that carries an MFA token from `GetMFAToken()`, which you pass to the `MFA` client. `GetMFARequirements()` returns the factors to challenge or enroll when the API includes them and nil otherwise, so do not rely on it. Instead, list the user's authenticators with the MFA token. If there is no active `otp` authenticator, enroll one with `AddAuthenticator`, otherwise challenge the existing one. In both cases, finish with `VerifyWithOTP`, which also completes the enrollment and the login.
+
+```go
+import (
+    "errors"
+    "fmt"
+
+    "github.com/auth0/go-auth0/v3/authentication"
+    "github.com/auth0/go-auth0/v3/authentication/mfa"
+    "github.com/auth0/go-auth0/v3/authentication/oauth"
+    "github.com/auth0/go-auth0/v3/authentication/passwordless"
+)
+
+tokens, err := auth.Passwordless.LoginWithOTPChallenge(ctx, passwordless.LoginWithOTPChallengeRequest{
+    AuthSession: challenge.AuthSession,
+    OTP:         "123456",
+    Scope:       "openid profile",
+}, oauth.IDTokenValidationOptions{})
+if err != nil {
+    var authErr *authentication.Error
+    if !errors.As(err, &authErr) || authErr.GetMFAToken() == "" {
+        if authErr != nil {
+            // Wrong or expired code, rate limiting, or another API error
+            fmt.Printf("OTP exchange failed: %d %s: %s\n", authErr.StatusCode, authErr.Err, authErr.Message)
+        }
+        return err
+    }
+
+    // MFA is required; use the MFA token to continue with the MFA flow
+    mfaToken := authErr.GetMFAToken()
+
+    authenticators, err := auth.MFA.ListAuthenticators(ctx, mfaToken)
+    if err != nil {
+        return err
+    }
+
+    authenticatorID := ""
+    for _, a := range authenticators {
+        if a.AuthenticatorType == "otp" && a.Active {
+            authenticatorID = a.ID
+            break
+        }
+    }
+
+    if authenticatorID == "" {
+        // No OTP authenticator yet, so enroll one
+        enrollment, err := auth.MFA.AddAuthenticator(ctx, mfaToken, mfa.AddAuthenticatorRequest{
+            AuthenticatorTypes: []string{"otp"},
+        })
+        if err != nil {
+            return err
+        }
+        // Show enrollment.BarcodeURI / enrollment.Secret to the user so they can add it
+        // to their authenticator app, and store enrollment.RecoveryCodes safely.
+        fmt.Println("Add this secret to your authenticator app:", enrollment.Secret)
+    } else if _, err := auth.MFA.Challenge(ctx, mfa.ChallengeRequest{
+        MFAToken:        mfaToken,
+        ChallengeType:   "otp",
+        AuthenticatorID: authenticatorID,
+    }); err != nil {
+        return err
+    }
+
+    // Ask the user for the code from their authenticator app, then verify it
+    tokens, err = auth.MFA.VerifyWithOTP(ctx, mfa.VerifyWithOTPRequest{
+        MFAToken: mfaToken,
+        OTP:      "654321", // code from the authenticator app
+    })
+    if err != nil {
+        return err
+    }
+}
+
+// Use tokens.AccessToken, tokens.IDToken and tokens.RefreshToken
 ```
 
 ## Request Options

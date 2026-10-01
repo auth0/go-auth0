@@ -116,6 +116,8 @@ func removeSensitiveDataFromRecordings(t *testing.T, recorderTransport *recorder
 			redactHeaders(i)
 			redactClientAuth(t, i)
 			redactTokens(t, i)
+			redactAuthSession(t, i)
+			redactErrorResponse(t, i)
 
 			// Redact domain should always be ran last
 			redactDomain(i, domain)
@@ -157,6 +159,7 @@ func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 		"client_id":        true,
 		"client_secret":    true,
 		"client_assertion": true,
+		"auth_session":     true,
 	}
 
 	switch contentType {
@@ -165,6 +168,12 @@ func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 			if i.Request.Form.Has(param) {
 				i.Request.Form.Set(param, "test-"+param)
 			}
+		}
+
+		// Only redact the otp of the passwordless database connection flow, identified by
+		// auth_session. Other flows such as MFA send fixed test codes that must keep matching.
+		if i.Request.Form.Has("auth_session") && i.Request.Form.Has("otp") {
+			i.Request.Form.Set("otp", "test-otp")
 		}
 
 		i.Request.Body = i.Request.Form.Encode()
@@ -184,6 +193,12 @@ func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 			}
 		}
 
+		if _, ok := jsonBody["auth_session"]; ok {
+			if _, ok := jsonBody["otp"]; ok {
+				jsonBody["otp"] = "test-otp"
+			}
+		}
+
 		body, err := json.Marshal(jsonBody)
 		require.NoError(t, err)
 
@@ -192,11 +207,20 @@ func redactClientAuth(t *testing.T, i *cassette.Interaction) {
 }
 
 func redactTokens(t *testing.T, i *cassette.Interaction) {
-	if i.Response.Headers.Get("Content-Type") != "application/json" {
+	if !strings.HasPrefix(i.Response.Headers.Get("Content-Type"), "application/json") {
 		return
 	}
 
 	if i.Response.Code >= http.StatusBadRequest {
+		return
+	}
+
+	rawBody := map[string]interface{}{}
+	if err := json.Unmarshal([]byte(i.Response.Body), &rawBody); err != nil {
+		return
+	}
+
+	if _, ok := rawBody["access_token"]; !ok {
 		return
 	}
 
@@ -218,6 +242,68 @@ func redactTokens(t *testing.T, i *cassette.Interaction) {
 	require.NoError(t, err)
 
 	i.Response.Body = string(body)
+}
+
+func redactAuthSession(t *testing.T, i *cassette.Interaction) {
+	if !strings.HasPrefix(i.Response.Headers.Get("Content-Type"), "application/json") {
+		return
+	}
+
+	if i.Response.Code >= http.StatusBadRequest {
+		return
+	}
+
+	body := map[string]interface{}{}
+	if err := json.Unmarshal([]byte(i.Response.Body), &body); err != nil {
+		return
+	}
+
+	if _, ok := body["auth_session"]; !ok {
+		return
+	}
+
+	body["auth_session"] = "test-auth_session"
+
+	redacted, err := json.Marshal(body)
+	require.NoError(t, err)
+
+	i.Response.Body = string(redacted)
+}
+
+func redactErrorResponse(t *testing.T, i *cassette.Interaction) {
+	if !strings.HasPrefix(i.Response.Headers.Get("Content-Type"), "application/json") {
+		return
+	}
+
+	if i.Response.Code < http.StatusBadRequest {
+		return
+	}
+
+	body := map[string]interface{}{}
+	if err := json.Unmarshal([]byte(i.Response.Body), &body); err != nil {
+		return
+	}
+
+	redacted := false
+
+	if _, ok := body["mfa_token"]; ok {
+		body["mfa_token"] = "test-mfa-token"
+		redacted = true
+	}
+
+	if _, ok := body["auth_session"]; ok {
+		body["auth_session"] = "test-auth_session"
+		redacted = true
+	}
+
+	if !redacted {
+		return
+	}
+
+	out, err := json.Marshal(body)
+	require.NoError(t, err)
+
+	i.Response.Body = string(out)
 }
 
 func redactDomain(i *cassette.Interaction, domain string) {
