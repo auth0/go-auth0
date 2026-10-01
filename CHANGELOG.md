@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+**Added**
+- feat: add `RequireConsentNonRepudiation` field to `ResourceServer`, enabling operators to
+  require cryptographic signing of consent decisions via the My Account API (Early Access)
+  [#NNN](https://github.com/auth0/go-auth0/pull/NNN)
+
 ## [v1.50.0](https://github.com/auth0/go-auth0/tree/v1.50.0) (2026-09-18)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.49.0...v1.50.0)
 
